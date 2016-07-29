@@ -64,7 +64,7 @@ public interface Vector extends Cloneable, Serializable, DimensionEntity{
     double length();
     
     /**
-     * @Something not sure what is it
+     * @todo not sure what is it
      */
     double dot(Vector other);
     
