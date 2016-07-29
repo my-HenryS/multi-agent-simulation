@@ -5,4 +5,8 @@ package org.socialforce.entity;
  */
 public interface Force extends Vector {
 
+/**
+ * social force that influence the agent
+ * @see InteractiveEntity Agent
+ */
 }
