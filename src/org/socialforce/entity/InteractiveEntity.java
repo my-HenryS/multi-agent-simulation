@@ -10,7 +10,7 @@ public interface InteractiveEntity {
      * @param other could be any class of InteractiveEntity
      * @return depends on the class of InteractiveEntity
      * if InteractiveEntity is Agent
-     * @teturn Force
+     * @return Force
      * @see Shape Force Agent
      */
     void interact(InteractiveEntity other);
