@@ -53,10 +53,28 @@ public interface Vector extends Cloneable, Serializable, DimensionEntity{
      */
     boolean equals(Vector other);
 
-
+    /**
+     * @todo not sure what is it
+     */
     boolean epsilonEquals(Vector other, double epsilon);
+    
+    /**
+     * get the length of the vector
+     */
     double length();
+    
+    /**
+     * @anyThingYouWhatAndItWillBeRed not sure what is it
+     */
     double dot(Vector other);
+    
+    /**
+     * set vector from a array
+     */
     void get(double [] arrayToCopy);
+    
+    /**
+     * set vector from a scalar
+     */
     void set(double [] values);
 }
