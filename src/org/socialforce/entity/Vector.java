@@ -47,34 +47,46 @@ public interface Vector extends Cloneable, Serializable, DimensionEntity{
     boolean equals(Object object);
 
     /**
-     * check if this is <strong>strictly</strong> to another vector.
+     * check if this is <strong>strictly</strong> equals to another vector.
      * @param other the vector to be checked.
      * @return true if the dimensions are same and all the components are same; false otherwise.
      */
     boolean equals(Vector other);
 
     /**
-     * @todo not sure what is it
+     * check if the vector is approximately equal to other vector within the epsilon.
+     * two vectors are approximately equal only if the L-infinite distance between this and vector other is less than or equal to the epsilon.
+     * The L-infinite distance is equal to MAX[abs(x1-x2), abs(y1-y2)].
+     * @param other the vector other.
+     * @param epsilon the epsilon.
+     * @return Returns true if the vector is approximately equals with other,
+     * otherwise returns false.
      */
     boolean epsilonEquals(Vector other, double epsilon);
     
     /**
-     * get the length of the vector
+     * get the length of the vector.
+     * |<strong>v</strong>| in math.
+     * @return the length.
      */
     double length();
     
     /**
-     * @todo not sure what is it
+     * Computes the dot product of the this vector and other.
+     * <strong>a</strong>·<strong>b</strong> in math.
+     * @return the dot product.
      */
     double dot(Vector other);
     
     /**
-     * set vector from a array
+     * Copies the value of this vector into the array arrayToCopy.
+     * @param arrayToCopy array to copy.
      */
     void get(double [] arrayToCopy);
     
     /**
-     * set vector from a scalar
+     * set this vector's values to array values.
+     * @param values the values to be set.
      */
     void set(double [] values);
 }
