@@ -73,7 +73,7 @@ public interface Vector extends Cloneable, Serializable, DimensionEntity{
     
     /**
      * Computes the dot product of the this vector and other.
-     * <strong>a</strong>·<strong>b</strong> in math.
+     * |<strong>a</strong>||<strong>b</strong>|Cos&lt;<strong>a</strong>,<strong>b</strong>&gt; in math.
      * @return the dot product.
      */
     double dot(Vector other);
