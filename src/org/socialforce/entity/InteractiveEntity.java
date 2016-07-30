@@ -19,6 +19,9 @@ public interface InteractiveEntity {
      * line,square,circle etc.
      */
     Shape getShape();
-
+    double getMass();
+    Vector getVelocity();
+    void push(Force force);
+    void push(Force force, Point startPoint);
 }
 
