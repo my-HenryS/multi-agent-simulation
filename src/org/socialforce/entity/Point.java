@@ -9,15 +9,19 @@ public interface Point extends Vector {
      * get the X coordinate of the point
      * @return the X coordinate
      */ 
-    public double getX();
+    double getX();
     
     /**
      * get the Y coordinate of the point
      * @return the Y coordinate
      */ 
-    public double getY();
-    
+    double getY();
+
     /**
-     * @todo public double[dimention] getvector()?
+     * get the distance between this point and other point.
+     * could be multi-dimensional distance
+     * @param other the other point that should calculate the distance from
+     * @return distance.
      */
+    double distanceTo(Point other);
 }

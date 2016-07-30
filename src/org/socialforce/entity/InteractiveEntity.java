@@ -20,8 +20,5 @@ public interface InteractiveEntity {
      */
     Shape getShape();
     double getMass();
-    Vector getVelocity();
-    void push(Force force);
-    void push(Force force, Point startPoint);
 }
 
