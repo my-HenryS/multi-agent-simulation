@@ -7,13 +7,13 @@ public interface InteractiveEntity {
      /**
      * the prosses of stuff interacting with other stuff
      * such as agent, wall, fire etc.
-     * @param other could be any class of InteractiveEntity
+     * @param affectedEntity could be any class of InteractiveEntity
      * @return depends on the class of InteractiveEntity
      * if InteractiveEntity is Agent
      * @return Force
      * @see Shape Force Agent
      */
-    void interact(InteractiveEntity other);
+    void affect(InteractiveEntity affectedEntity);
     /**
      * get the class of Shape
      * line,square,circle etc.
