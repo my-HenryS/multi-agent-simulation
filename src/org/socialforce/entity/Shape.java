@@ -7,10 +7,14 @@ import java.io.Serializable;
  */
 public interface Shape extends Serializable, Cloneable, DimensionEntity{
     /**
-     * check if a point belongs to a <code>Shape</code>.
+     * check if a point belongs to this <code>Shape</code>.
      * @return true if the point is a part of the shape; otherwise false.
      */
     boolean contains(Point point);
     
     double getDistance(Point point);
+
+    void setDrawer(Drawer drawer);
+
+    Drawer getDrawer();
 }
