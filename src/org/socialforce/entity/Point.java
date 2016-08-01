@@ -1,6 +1,9 @@
 package org.socialforce.entity;
 
 /**
+ * represent a point in coordinate.
+ * @author Ledenel
+ * @see Vector
  * Created by Ledenel on 2016/7/28.
  */
 public interface Point extends Vector {
@@ -19,7 +22,7 @@ public interface Point extends Vector {
 
     /**
      * get the distance between this point and other point.
-     * could be multi-dimensional distance
+     * could be multi-dimensional distance.
      * @param other the other point that should calculate the distance from
      * @return distance.
      */
