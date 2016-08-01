@@ -20,5 +20,9 @@ public interface InteractiveEntity {
      */
     Shape getShape();
     double getMass();
+    SocialForceModel getModel();
+    void setModel(SocialForceModel model);
+    void placeOn(Point point);
+
 }
 

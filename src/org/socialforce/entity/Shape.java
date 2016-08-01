@@ -14,6 +14,8 @@ public interface Shape extends Serializable, Cloneable, DimensionEntity{
     
     double getDistance(Point point);
 
+    Point getReferencePoint();
+
     void setDrawer(Drawer drawer);
 
     Drawer getDrawer();
