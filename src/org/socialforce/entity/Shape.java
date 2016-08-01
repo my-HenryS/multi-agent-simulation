@@ -1,7 +1,5 @@
 package org.socialforce.entity;
 
-import com.sun.istack.internal.Nullable;
-
 import java.io.Serializable;
 
 /**
