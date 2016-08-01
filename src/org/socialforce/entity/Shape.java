@@ -7,6 +7,9 @@ import java.io.Serializable;
  * in 2-Dimensional space, may be a circle, line, triangle, rectangle, etc.
  * in 3-Dimensional space, may be a sphere, ball, cuboid, etc.
  * especially, a void shape contains nothing.
+ * @author Ledenel
+ * @see Box
+ * @see InteractiveEntity
  * Created by Ledenel on 2016/7/28.
  */
 public interface Shape extends Serializable, Cloneable, DimensionEntity, Drawable {
