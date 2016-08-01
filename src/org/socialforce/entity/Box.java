@@ -8,5 +8,5 @@ public interface Box extends Shape{
     Point getEndPoint();
     Vector getSize();
     Box intersect(Box other);
-    boolean hits(Shape other);
+
 }
