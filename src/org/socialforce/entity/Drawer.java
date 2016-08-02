@@ -22,7 +22,7 @@ public interface Drawer {
      * CAUTION: there is no guarantee that the color is the color drawed on the device.
      * please call draw() before to sync the color you get from the device.
      *
-     * @return
+     * @return the ARGB-format color.
      */
     int getColor();
 
@@ -32,7 +32,7 @@ public interface Drawer {
      * CAUTION: there is no guarantee that the pattern on the device will changed.
      * please call draw() to ensure that the changes have been applied on the device.
      *
-     * @param color
+     * @param color the ARGB-format color to set.
      */
     void setColor(int color);
 }
