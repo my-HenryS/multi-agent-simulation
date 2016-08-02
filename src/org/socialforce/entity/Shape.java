@@ -55,4 +55,12 @@ public interface Shape extends Serializable, Cloneable, DimensionEntity, Drawabl
      * @return true if intersects; otherwise false.
      */
     boolean hits(Box hitbox);
+
+    /**
+     * move the shape to a specified location.
+     * for the non-void shape, the reference point is equals to the location point.
+     * for the void shape, do nothing.
+     * @param location the specified location
+     */
+    void moveTo(Point location);
 }
