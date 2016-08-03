@@ -10,31 +10,36 @@ package org.socialforce.entity;
  * |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>
  * .-----------<br>
  * (start point)
+ *
  * @author Ledenel
  * @see Shape
  * Created by Ledenel on 2016/8/1.
  */
-public interface Box extends Shape{
+public interface Box extends Shape {
     /**
      * get the start point of the box.
+     *
      * @return the start point.
      */
     Point getStartPoint();
 
     /**
      * get the end point of the box.
+     *
      * @return the end point.
      */
     Point getEndPoint();
 
     /**
      * get the size of the box.
+     *
      * @return the vector represented the size.
      */
     Vector getSize();
 
     /**
      * returns the intersection of this box and other box.
+     *
      * @param other the box to be intersected.
      * @return the intersection.
      */
