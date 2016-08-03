@@ -7,4 +7,6 @@ public interface Scene {
     void stepNext();
     AgentPool getAllAgents();
     EntityPool getStaticEntities();
+    Point getStartPoint();
+    Vector getSize();
 }
