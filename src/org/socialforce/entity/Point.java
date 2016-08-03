@@ -27,4 +27,6 @@ public interface Point extends Vector {
      * @return distance.
      */
     double distanceTo(Point other);
+
+    Point clone();
 }

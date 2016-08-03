@@ -5,4 +5,5 @@ package org.socialforce.entity;
  */
 public interface Velocity extends Vector {
     Vector deltaDistance(double time);
+    Velocity clone();
 }

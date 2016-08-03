@@ -5,5 +5,5 @@ package org.socialforce.entity;
  */
 public interface Force extends Vector {
     Velocity deltaVelocity(double mass, double time);
-
+    Force clone();
 }

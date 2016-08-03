@@ -89,4 +89,6 @@ public interface Vector extends Cloneable, Serializable, DimensionEntity{
      * @param values the values to be set.
      */
     void set(double [] values);
+
+    Vector clone();
 }
