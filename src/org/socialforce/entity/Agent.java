@@ -5,6 +5,7 @@ package org.socialforce.entity;
  */
 public interface Agent extends MoveableEntity {
     Shape getView();
+    Velocity expect();
     void determine(int currSteps);
     void determineNext();
     int getCurrentSteps();
