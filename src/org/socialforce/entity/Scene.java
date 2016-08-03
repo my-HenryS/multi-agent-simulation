@@ -9,4 +9,5 @@ public interface Scene {
     EntityPool getStaticEntities();
     Point getStartPoint();
     Vector getSize();
+    int getCurrentSteps();
 }
