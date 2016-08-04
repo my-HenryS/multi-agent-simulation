@@ -63,4 +63,10 @@ public interface Shape extends Serializable, Cloneable, DimensionEntity, Drawabl
      * @param location the specified location
      */
     void moveTo(Point location);
+
+    /**
+     * creates and returns a copy of this shape.
+     * @return the copied shape.
+     */
+    Shape clone();
 }

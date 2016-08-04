@@ -90,5 +90,13 @@ public interface Vector extends Cloneable, Serializable, DimensionEntity{
      */
     void set(double [] values);
 
+    /**
+     * Creates and returns a copy of this vector.
+     * The precise meaning of "copy" may depend on the class of the vector.
+     * The general intent is that, for any vector x, the expression: <br>
+     * x.clone() != x <br>
+     * will be true.
+     * @return the copied vector.
+     */
     Vector clone();
 }
