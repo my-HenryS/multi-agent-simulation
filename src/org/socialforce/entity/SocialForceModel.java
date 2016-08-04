@@ -6,6 +6,7 @@ package org.socialforce.entity;
 public interface SocialForceModel {
     double getTimePerStep();
     Force calcualte(InteractiveEntity source, InteractiveEntity target);
+    Force getPower(InteractiveEntity source);
     Agent createAgent();
     Agent createAgent(Object arg);
     InteractiveEntity createStatic();
