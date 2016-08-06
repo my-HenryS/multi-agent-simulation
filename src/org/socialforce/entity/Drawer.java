@@ -10,7 +10,7 @@ package org.socialforce.entity;
  * @see Drawable
  * Created by Ledenel on 2016/7/31.
  */
-public interface Drawer {
+public interface Drawer<DeviceType> {
     /**
      * draw the pattern on the specific device.
      */
@@ -35,4 +35,16 @@ public interface Drawer {
      * @param color the ARGB-format color to set.
      */
     void setColor(int color);
+
+    /**
+     * get the device of the drawer.
+     * @return the device which the drawer is using.
+     */
+    DeviceType getDevice();
+
+    /**
+     * set the device for the drawer.
+     * @param device the device for the drawer.
+     */
+    void setDevice(DeviceType device);
 }
