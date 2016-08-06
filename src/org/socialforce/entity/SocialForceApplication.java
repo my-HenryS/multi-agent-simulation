@@ -1,0 +1,69 @@
+package org.socialforce.entity;
+
+/**
+ * a social force simulation application with a set of scenes.
+ * @see SocialForceModel
+ * @see ApplicationListener
+ * @author Ledenel
+ * Created by Ledenel on 2016/8/3.
+ */
+public interface SocialForceApplication {
+    /**
+     * start the application immediately.
+     */
+    void start();
+
+    /**
+     * get the social force model the application is using.
+     * @return the model.
+     */
+    SocialForceModel getModel();
+
+    /**
+     * set the social force model for the application.
+     * @param model the model to be set.
+     */
+    void setModel(SocialForceModel model);
+
+    /**
+     * get all the scenes the applicaion is simulating.
+     * @return all scenes to simulate.
+     */
+    Iterable<Scene> getAllScenes();
+
+    /**
+     * get the scene which is displayed to the user.
+     * @return the displaying scene.
+     */
+    Scene getCurrentScene();
+
+    /**
+     * changes the current scene to a specific one
+     * @param scene the scene to be changed.
+     */
+    void changeScene(Scene scene);
+
+    /**
+     * changes the current scene to a previous one.
+     * changes to the last if current scene is the first scene.
+     */
+    void prevScene();
+
+    /**
+     * changes the current scene to a next one.
+     * changes to the first if current scene is the last scene.
+     */
+    void nextScene();
+
+    /**
+     * get the application listener for the application.
+     * @return the application listener.
+     */
+    ApplicationListener getApplicationListener();
+
+    /**
+     * set a listener for application events.
+     * @param listener the listener to be set.
+     */
+    void setApplicationListener(ApplicationListener listener);
+}
