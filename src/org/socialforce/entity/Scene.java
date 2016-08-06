@@ -10,7 +10,7 @@ package org.socialforce.entity;
  * @author Ledenel
  * Created by Ledenel on 2016/7/31.
  */
-public interface Scene {
+public interface Scene extends Drawable{
     /**
      * calculate the next time step of the scene.
      * the time step will also forward 1 unit.
