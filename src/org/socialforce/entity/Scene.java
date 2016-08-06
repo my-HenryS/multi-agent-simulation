@@ -10,4 +10,6 @@ public interface Scene {
     Point getStartPoint();
     Vector getSize();
     int getCurrentSteps();
+    PathFinder getPathFinder();
+    void setPathFinder(PathFinder finder);
 }

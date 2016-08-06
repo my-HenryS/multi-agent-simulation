@@ -5,6 +5,7 @@ package org.socialforce.entity;
  */
 public interface SocialForceModel {
     double getTimePerStep();
+    Shape getAgentView();
     Force calcualte(InteractiveEntity source, InteractiveEntity target);
     Force getPower(InteractiveEntity source);
     Agent createAgent();
