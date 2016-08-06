@@ -60,7 +60,7 @@ public interface Agent extends MoveableEntity {
     void act();
 
     /**
-     * get the path for the agent.
+     * get the path of the agent.
      * @return the path object.
      */
     Path getPath();

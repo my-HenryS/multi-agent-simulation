@@ -7,6 +7,7 @@ import java.io.Serializable;
  *
  * vector can be add, substract with other vectors and scale to a new size. <br>
  * (use <code>double</code> to represent vector components.)
+ * if necessary, the default unit of the vector is meter.
  * @author Ledenel
  *
  * Created by Ledenel on 2016/7/25.
