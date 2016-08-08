@@ -3,6 +3,7 @@ package org.socialforce.entity;
 /**
  * represent a box.
  * a box is a special shape which can be bounds of other shapes. <br>
+ * usually it is rectangle or cuboid which edges are parallel to the coordinates.<br>
  * a start point and a end point define a box like this: <br>
  * -----------.(end point)<br>
  * |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>
