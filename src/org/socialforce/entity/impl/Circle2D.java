@@ -10,8 +10,10 @@ import org.socialforce.entity.Shape;
  * Created by Whatever on 2016/8/8.
  */
 public class Circle2D implements Shape {
-    protected double radius;//,center[];
-    protected Point center;
+    protected double radius=0;//,center[];
+    protected Point center = new Point2D(0,0);
+
+
 
     @Override
     public int dimension() {
@@ -29,6 +31,7 @@ public class Circle2D implements Shape {
         //drawer not initialized
     }
 
+
     @Override
     public boolean contains(Point point) {
         return (point.distanceTo(center)<radius);
@@ -37,7 +40,7 @@ public class Circle2D implements Shape {
     @Override
     public double getDistance(Point point) {
         if(this.contains(point)){
-        return 0;}
+            return 0;}
         else return point.distanceTo(center)-radius;
 
     }
@@ -48,8 +51,8 @@ public class Circle2D implements Shape {
     }
 
 
-    public  void getRadius(double radius){
-        this.radius = radius;
+    public  double getRadius(){
+        return radius;
     }
 
     @Override
@@ -67,11 +70,15 @@ public class Circle2D implements Shape {
         center = location.clone();
     }
 
+    public void setRadius(double radius){
+        this.radius = radius;
+    }
+
     @Override
     public Shape clone() {
         Circle2D circle = new Circle2D();
         circle.moveTo(center);
-        circle.getRadius(radius);
+        circle.setRadius(radius);
         return circle;
     }
 }
