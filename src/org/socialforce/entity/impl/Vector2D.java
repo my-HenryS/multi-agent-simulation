@@ -148,7 +148,7 @@ public class Vector2D implements Vector {
      */
     @Override
     public boolean equals(Vector other) {
-        if (this.dimension() == other.dimension()) {
+        /*if (this.dimension() == other.dimension()) {
             double[] c = new double[this.dimension()];
             other.get(c);
             for (int i = 0; i < values.length; i++) {
@@ -158,7 +158,8 @@ public class Vector2D implements Vector {
             }
             return true;
         }
-        return false;
+        return false;*/
+        return epsilonEquals(other, 1e10-15);
     }
 
     /**
@@ -221,7 +222,7 @@ public class Vector2D implements Vector {
      */
     @Override
     public void get(double[] arrayToCopy) {
-        System.arraycopy(values,0,arrayToCopy,0,values.length);
+        System.arraycopy(values,0,arrayToCopy,0,Math.min(arrayToCopy.length,this.values.length));
     }
 
     /**
@@ -231,7 +232,7 @@ public class Vector2D implements Vector {
      */
     @Override
     public void set(double[] values) {
-        System.arraycopy(values,0,this.values,0,values.length);
+        System.arraycopy(values,0,this.values,0,Math.min(values.length,this.values.length));
     }
 
     /**

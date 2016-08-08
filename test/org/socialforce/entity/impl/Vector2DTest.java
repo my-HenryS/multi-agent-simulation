@@ -45,7 +45,7 @@ public class Vector2DTest {
 
     @Test
     public void basicScale() throws Exception {
-        a.scale(0.1);
+        a.scale(10);
         assertEquals(new Vector2D(0.3,0.4),a);
     }
 
@@ -88,4 +88,5 @@ public class Vector2DTest {
         assertEquals("b.equals(b.clone()) should be true",b,cloned);
     }
 
+    //TODO: try to add more tests.
 }
