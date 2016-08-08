@@ -46,7 +46,8 @@ public class Vector2DTest {
     @Test
     public void basicScale() throws Exception {
         a.scale(10);
-        assertEquals(new Vector2D(0.3,0.4),a);
+        assertNotEquals(new Vector2D(0.3,0.4),a);
+        assertEquals(new Vector2D(30,40),a);
     }
 
     @Test

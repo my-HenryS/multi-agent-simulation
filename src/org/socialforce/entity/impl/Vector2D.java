@@ -159,7 +159,7 @@ public class Vector2D implements Vector {
             return true;
         }
         return false;*/
-        return epsilonEquals(other, 1e10-15);
+        return epsilonEquals(other, 1e-15);
     }
 
     /**
