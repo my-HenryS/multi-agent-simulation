@@ -195,7 +195,13 @@ public class Vector2D implements Vector {
      */
     @Override
     public double length() {
-        return 0;
+        double length=0;
+        for(int i = 0; i < values.length; i++){
+            length = length + values[i]*values[i];
+            length = Math.sqrt(length);
+        }
+
+        return length;
     }
 
     /**
