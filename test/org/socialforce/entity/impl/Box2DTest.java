@@ -57,11 +57,11 @@ public class Box2DTest {
     public void moveTo() throws Exception {              //@TODO 也没有留在原地，也没有跑到该去的地方。谜。
     Point2D destination = new Point2D(5,7);
         testBox.moveTo(destination);
-    //    assertEquals(destination,testBox.getReferencePoint());
-    //    assertEquals(false,testBox.contains(a));
-    //    assertEquals(true,testBox.contains(b));
+        assertEquals(destination,testBox.getReferencePoint());
+        assertEquals(false,testBox.contains(a));
+        assertEquals(true,testBox.contains(b));
         Point2D center = new Point2D(1.5,2);
-        assertEquals(0,testBox.getReferencePoint().distanceTo(center),0);
+        assertNotEquals(0,testBox.getReferencePoint().distanceTo(center),0);
     }
 
     @Test
