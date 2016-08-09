@@ -43,6 +43,12 @@ public class Vector2DTest {
         assertEquals(new Vector2D(6,2),a);
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void convertTest() throws Exception{
+        Vector notA2DVector=null;
+        a.quiteConvert(notA2DVector);
+    }
+
     @Test
     public void basicScale() throws Exception {
         a.scale(10);
@@ -65,7 +71,10 @@ public class Vector2DTest {
 
     @Test
     public void get() throws Exception {
-
+        double[] atest = {4,3};
+        a.get(atest);
+        assertEquals(atest[0],3,1e10-7);
+        assertEquals(atest[1],4,1e10-7);
     }
 
     @Test
