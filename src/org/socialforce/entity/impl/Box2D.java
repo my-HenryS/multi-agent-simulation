@@ -324,6 +324,22 @@ public class Box2D implements Box {
         return null;
     }
 
+    public double getXmin() {
+        return xmin;
+    }
+
+    public double getYmin() {
+        return ymin;
+    }
+
+    public double getXmax() {
+        return xmax;
+    }
+
+    public double getYmax() {
+        return ymax;
+    }
+
     /**
      * get the dimension of the DimensionEntity.
      *

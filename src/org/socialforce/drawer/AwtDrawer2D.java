@@ -8,18 +8,22 @@ import java.awt.geom.Rectangle2D;
 /**
  * Created by Ledenel on 2016/8/10.
  */
-public abstract class AwtDrawer2D implements Drawer<Graphics> {
+public abstract class AwtDrawer2D implements Drawer<Graphics2D> {
     @Override
-    public Graphics getDevice() {
+    public Graphics2D getDevice() {
         return device;
     }
 
     @Override
-    public void setDevice(Graphics device) {
+    public void setDevice(Graphics2D device) {
         this.device = device;
     }
 
-    protected Graphics device;
+    public AwtDrawer2D(Graphics2D device) {
+        this.device = device;
+    }
+
+    protected Graphics2D device;
 
     @Override
     public int getColor() {
@@ -47,7 +51,7 @@ public abstract class AwtDrawer2D implements Drawer<Graphics> {
 
     protected Color color = Color.black;
 
-    Rectangle2D bound = new Rectangle2D.Double();
+    //protected Rectangle2D bound = new Rectangle2D.Double();
 
     /**
      * draw the pattern on the specific device.
@@ -58,5 +62,9 @@ public abstract class AwtDrawer2D implements Drawer<Graphics> {
         renderShape(device);
     }
 
-    public abstract void renderShape(Graphics g);
+    /**
+     * render the shape on the @code {Graphics2D} with color built-in.
+     * @param g the graphics
+     */
+    public abstract void renderShape(Graphics2D g);
 }
