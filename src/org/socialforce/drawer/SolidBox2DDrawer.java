@@ -14,6 +14,14 @@ public class SolidBox2DDrawer extends AwtDrawer2D {
         this.box = box;
     }
 
+    public Box2D getBox() {
+        return box;
+    }
+
+    public void setBox(Box2D box) {
+        this.box = box;
+    }
+
     protected Box2D box;
 
     /**

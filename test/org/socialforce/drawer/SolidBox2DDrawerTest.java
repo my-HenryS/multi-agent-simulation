@@ -25,11 +25,10 @@ public class SolidBox2DDrawerTest {
     Box2D box;
 
 
-
     @Before
-    public void setUp() throws  Exception {
-        image = new BufferedImage(200,200,BufferedImage.TYPE_INT_ARGB);
-        box = new Box2D(0,0,3,4);
+    public void setUp() throws Exception {
+        image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
+        box = new Box2D(0, 0, 3, 4);
         Graphics2D gra = image.createGraphics();
 
 
@@ -37,27 +36,38 @@ public class SolidBox2DDrawerTest {
 
         AffineTransform transform = new AffineTransform();
 
-        transform.scale(image.getWidth()/10.0,image.getHeight()/10.0);
-        transform.translate(0,10.0);
-        transform.scale(1,-1);
-        transform.translate(5.0,5.0);
+        transform.scale(image.getWidth() / 10.0, image.getHeight() / 10.0);
+        transform.translate(0, 10.0);
+        transform.scale(1, -1);
+        transform.translate(5.0, 5.0);
 
         gra.transform(transform);
 
 
-        drawer = new SolidBox2DDrawer(gra,box);
+        drawer = new SolidBox2DDrawer(gra, null);
         drawer.setColor(0xFFFF0000);
 
 
     }
 
     @Test
-    public void renderShape() throws Exception {
+    public void renderBoxShape() throws Exception {
+        drawer.setBox(new Box2D(0, 0, 3, 4));
         drawer.draw();
         ImageUtils.assertImageSimilar(
-                image,
-                ImageIO.read(SolidBox2DDrawerTest.class.getResourceAsStream("SolidBox2DDrawer_base.png")));
+                ImageIO.read(SolidBox2DDrawerTest.class.getResourceAsStream("SolidBox2DDrawer_base.png")),
+                image);
 
     }
+
+    @Test
+    public void renderBoxOverflow() throws Exception {
+        drawer.setBox(new Box2D(-10, -10, 8, 9));
+        drawer.draw();
+        ImageUtils.assertImageSimilar(
+                ImageIO.read(SolidBox2DDrawerTest.class.getResourceAsStream("SolidBox2DDrawer_base_overflow.png")),
+                image);
+    }
+
 
 }
