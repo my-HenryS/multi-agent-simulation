@@ -2,6 +2,7 @@ package org.socialforce.entity.impl;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.socialforce.entity.Shape;
 
 import static org.junit.Assert.*;
 
@@ -40,21 +41,21 @@ public class Box2DTest {
 
     @Test
     public void getBounds() throws Exception {
-        assertEquals(testBox,testBox.getBounds());  //@TODO 哈希码对不上，不知道正确的应该怎么搞。
+        assertEquals(testBox,testBox.getBounds());
     }
 
     @Test
     public void hits() throws Exception {
-        //Box2D x = new Box2D(1,1,2,2);
+        Box2D x = new Box2D(1,1,2,2);
         Box2D y = new Box2D(-1,-1,3,3);
         Box2D z = new Box2D(10,10,2,2);
-        //assertEquals(false,testBox.hits(x));  @TODO 到底需不需要考虑两个BOX相互包含的情况？
+        assertEquals(true,testBox.hits(x));
         assertEquals(true,testBox.hits(y));
         assertEquals(false,testBox.hits(z));
     }
 
     @Test
-    public void moveTo() throws Exception {              //@TODO 也没有留在原地，也没有跑到该去的地方。谜。
+    public void moveTo() throws Exception {
     Point2D destination = new Point2D(5,7);
         testBox.moveTo(destination);
         assertEquals(destination,testBox.getReferencePoint());
@@ -66,6 +67,9 @@ public class Box2DTest {
 
     @Test
     public void testClone() throws Exception {
+        Shape cloned = testBox.clone();
+        assertEquals(cloned,testBox);
+        assertFalse(cloned == testBox);
 
     }
 
@@ -85,9 +89,11 @@ public class Box2DTest {
     }
 
     @Test
-    public void intersect() throws Exception {      //@TODO 还是说要不要考虑两个BOX相互包含的情况，报错还是怎么样？以及这个依然跑不通
+    public void intersect() throws Exception {
     Box2D temp = new Box2D(1,1,3,4);
+        Box2D temp1 = new Box2D(1,1,1,1);
         assertEquals(new Box2D(1,1,2,3),testBox.intersect(temp));
+        assertEquals(temp1,testBox.intersect(temp1));
     }
 
 }
