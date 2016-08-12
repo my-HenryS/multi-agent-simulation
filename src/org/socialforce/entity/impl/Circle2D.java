@@ -12,6 +12,18 @@ import org.socialforce.entity.Shape;
 public class Circle2D implements Shape {
     protected double radius=0;//,center[];
     protected Point center = new Point2D(0,0);
+    protected Drawer drawer;
+
+    @Override
+    public Drawer getDrawer() {
+        return drawer;
+    }
+
+    @Override
+    public void setDrawer(Drawer drawer) {
+        this.drawer = drawer;
+    }
+
 
 
 
@@ -20,16 +32,6 @@ public class Circle2D implements Shape {
         return 2;
     }
 
-    @Override
-    public void setDrawer(Drawer drawer) {
-    //drawer not initialized
-    }
-
-    @Override
-    public Drawer getDrawer() {
-        return null;
-        //drawer not initialized
-    }
 
 
     @Override
@@ -57,12 +59,13 @@ public class Circle2D implements Shape {
 
     @Override
     public Box getBounds() {
-        return null;
+        Box2D hitbox = new Box2D(getReferencePoint().getX()-radius,getReferencePoint().getY()-radius,2*radius,2*radius);
+        return hitbox;
     }
 
     @Override
     public boolean hits(Box hitbox) {
-        return false;
+        return getBounds().hits(hitbox);
     }
 
     @Override

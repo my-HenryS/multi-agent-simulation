@@ -98,5 +98,4 @@ public class Vector2DTest {
         assertEquals("b.equals(b.clone()) should be true",b,cloned);
     }
 
-    //TODO: try to add more tests.
 }
