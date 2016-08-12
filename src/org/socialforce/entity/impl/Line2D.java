@@ -148,7 +148,9 @@ public class Line2D implements Shape {
         this.k1 = 10000;
     }
 
-
+    /*这个方法从来没有被调用过，目前来说不会引发任何的问题，
+    主要是怕在set的时候如果k是无穷，只设置ab，没设置k1b1，导致之后直接调用k1b1时出现问题。
+    但是目前的方法里暂时没有这种情况出现。*/
     protected void quiteConvert(Line2D line){
             if (k1 < 9999) {
             //do nothing
