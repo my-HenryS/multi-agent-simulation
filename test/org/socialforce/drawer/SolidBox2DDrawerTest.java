@@ -19,36 +19,8 @@ import static org.junit.Assert.*;
 /**
  * Created by Ledenel on 2016/8/10.
  */
-public class SolidBox2DDrawerTest {
+public class SolidBox2DDrawerTest extends AwtMathDrawerTest {
     SolidBox2DDrawer drawer;
-    BufferedImage image;
-    Box2D box;
-
-
-    @Before
-    public void setUp() throws Exception {
-        image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
-        box = new Box2D(0, 0, 3, 4);
-        Graphics2D gra = image.createGraphics();
-
-
-        // transform shape to a coorniate x[-5,5], y[-5,5].
-
-        AffineTransform transform = new AffineTransform();
-
-        transform.scale(image.getWidth() / 10.0, image.getHeight() / 10.0);
-        transform.translate(0, 10.0);
-        transform.scale(1, -1);
-        transform.translate(5.0, 5.0);
-
-        gra.transform(transform);
-
-
-        drawer = new SolidBox2DDrawer(gra, null);
-        drawer.setColor(0xFFFF0000);
-
-
-    }
 
     @Test
     public void renderBoxShape() throws Exception {
@@ -70,4 +42,9 @@ public class SolidBox2DDrawerTest {
     }
 
 
+    @Override
+    protected void drawerInit(Graphics2D gra) {
+        drawer = new SolidBox2DDrawer(gra, null);
+        drawer.setColor(0xFFFF0000);
+    }
 }
