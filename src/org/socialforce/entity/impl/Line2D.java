@@ -132,7 +132,8 @@ public class Line2D implements Shape {
         if (b.distanceTo(point)< a.distanceTo(point)){
             temp = b.distanceTo(point);
         }
-        if (distance < temp){
+        if (b.distanceTo(point)*b.distanceTo(point)-a.distanceTo(point)*a.distanceTo(point)+a.distanceTo(b)*a.distanceTo(b)<0 ||
+                -b.distanceTo(point)*b.distanceTo(point)+a.distanceTo(point)*a.distanceTo(point)+a.distanceTo(b)*a.distanceTo(b)<0){
             distance = temp;
         }
         return distance;
