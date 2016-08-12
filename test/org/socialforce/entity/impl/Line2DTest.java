@@ -54,7 +54,7 @@ public class Line2DTest {
     public void cloneTest() throws Exception {
        Shape cloned = testline.clone();
        assertFalse(cloned == testline);
-       assertEquals(testline,cloned);           //@TODO 到底是怎么回事我也不懂了。总之是跑不通。
+       assertEquals(testline,cloned);
 
     }
 
@@ -63,4 +63,20 @@ public class Line2DTest {
         testline = new Line2D(3,5,1,1);
     }
 
+    @Test
+    public void setparXY(){
+        Line2D setX = new Line2D() ,setY = new Line2D();
+        setX.setParallelX(10,5,2);
+        setY.setParallelY(10,5,2);
+        assertEquals(8,setX.getDistance(new Point2D(0,2)),0);
+        assertEquals(10,setY.getDistance(new Point2D(0,2)),0);
+    }
+
+    @Test
+    public void distanceToSegment(){
+        assertEquals(0,testline.distanceToSegment(a),0);
+        assertEquals(2,testline.distanceToSegment(b),0);
+    }
+
 }
+
