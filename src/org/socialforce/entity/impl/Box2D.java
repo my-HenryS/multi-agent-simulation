@@ -118,7 +118,7 @@ public class Box2D implements Box {
     /**
      * check if a point belongs to this <code>Shape</code>.
      *
-     * @param point
+     * @param point the point to be checked.
      * @return true if the point is a part of the shape; otherwise false.
      */
     @Override

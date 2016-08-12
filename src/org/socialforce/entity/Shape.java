@@ -16,6 +16,8 @@ public interface Shape extends Serializable, Cloneable, DimensionEntity, Drawabl
     /**
      * check if a point belongs to this <code>Shape</code>.
      *
+     * @param point the point to be checked.
+     *
      * @return true if the point is a part of the shape; otherwise false.
      */
     boolean contains(Point point);
