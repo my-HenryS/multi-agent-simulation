@@ -12,7 +12,8 @@ import org.socialforce.entity.Shape;
  */
 public class Line2D implements Shape {
     protected Point2D a,b;
-    protected double k1,b1,startX,endX;
+    protected double k1=10000;
+    protected double b1,startX,endX;
     protected Drawer drawer;
 
     @Override
@@ -42,6 +43,7 @@ public class Line2D implements Shape {
         this.k1 = k1; this.b1 = b1; this.startX = startX; this.endX = endX;
         a = new Point2D(startX,k1*startX+b1);
         b = new Point2D(endX,k1*endX+b1);
+        this.k1 = 10000;
     }
 
     @Override
@@ -76,7 +78,6 @@ public class Line2D implements Shape {
                 break;
         }
         return distance;
-        //@TODO 姑且是实现了点到直线的距离 ，不知是不是需要点到线段的距离，再说。
     }
 
     @Override
@@ -122,4 +123,38 @@ public class Line2D implements Shape {
         }
         else {return false;}
     }
+
+    public double distanceToSegment(Point2D point){
+        double distance;
+        distance = getDistance(point);
+        if (distance > a.distanceTo(point)){
+            distance = a.distanceTo(point);
+        }
+        if (distance > b.distanceTo(point)){
+            distance = b.distanceTo(point);
+        }
+        return distance;
+    }
+    
+    public void setParallelX(double Y,double startX,double endX){
+    this.k1 = 0; this.b1 = Y;
+        this.startX = startX; this.endX = endX;
+        this.a = new Point2D(startX,Y); this.b = new Point2D(endX,Y);
+    }
+    
+    public void  setParallelY(double X,double startY,double endY){
+        this.a = new Point2D(X,startY);
+        this.b = new Point2D(X,endY);
+        this.k1 = 10000;
+    }
+
+
+    protected void quiteConvert(Line2D line){
+            if (k1 < 9999) {
+            //do nothing
+            } else {
+                throw new IllegalArgumentException("the slope of line is null or too big, please ues point A and B");
+            }
+        }
+
 }
