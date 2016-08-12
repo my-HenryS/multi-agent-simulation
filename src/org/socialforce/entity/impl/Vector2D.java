@@ -208,7 +208,7 @@ public class Vector2D implements Vector {
      * Computes the dot product of the this vector and other.
      * |<strong>a</strong>||<strong>b</strong>|Cos&lt;<strong>a</strong>,<strong>b</strong>&gt; in math.
      *
-     * @param other
+     * @param other the other vector to calculate dot product.
      * @return the dot product.
      */
     @Override

@@ -17,8 +17,8 @@ public interface Drawer<DeviceType> {
     void draw();
 
     /**
-     * get the primary color of the pattern. <br/>
-     * the color scheme is ARGB.</br>
+     * get the primary color of the pattern. <br>
+     * the color scheme is ARGB.<br>
      * CAUTION: there is no guarantee that the color is the color drawed on the device.
      * please call draw() before to sync the color you get from the device.
      *
@@ -27,8 +27,8 @@ public interface Drawer<DeviceType> {
     int getColor();
 
     /**
-     * set the primary color of the pattern. <br/>
-     * the color scheme is ARGB.</br>
+     * set the primary color of the pattern. <br>
+     * the color scheme is ARGB.<br>
      * CAUTION: there is no guarantee that the pattern on the device will changed.
      * please call draw() to ensure that the changes have been applied on the device.
      *

@@ -67,7 +67,7 @@ public interface Agent extends MoveableEntity {
 
     /**
      * set the path for the agent.
-     * @param path
+     * @param path the path to be set.
      */
     void setPath(Path path);
 }
