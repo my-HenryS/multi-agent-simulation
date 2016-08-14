@@ -35,6 +35,7 @@ public class Line2D implements Shape {
             endX = Math.max(a.getX(), b.getX());
         }
     }
+    /*
     public Line2D(double k1, double b1, double startX, double endX) {
         if (startX == endX) {
             throw new IllegalArgumentException("a and b can not be the same point");
@@ -45,7 +46,7 @@ public class Line2D implements Shape {
         this.endX = endX;
         a = new Point2D(startX, k1 * startX + b1);
         b = new Point2D(endX, k1 * endX + b1);
-    }
+    }*/
     @Override
     public int dimension() {
         return 2;
@@ -56,6 +57,7 @@ public class Line2D implements Shape {
             return true;
         } else return false;
     }
+
     @Override
     public double getDistance(Point point) {
         double distance = 0;
@@ -148,18 +150,19 @@ public class Line2D implements Shape {
     public void  setParallelY(double X,double startY,double endY){
         this.a = new Point2D(X,startY);
         this.b = new Point2D(X,endY);
-        this.k1 = 10000;
+        //this.k1 = 10000;
     }
 
     /*这个方法从来没有被调用过，目前来说不会引发任何的问题，
     主要是怕在set的时候如果k是无穷，只设置ab，没设置k1b1，导致之后直接调用k1b1时出现问题。
-    但是目前的方法里暂时没有这种情况出现。*/
+    但是目前的方法里暂时没有这种情况出现。
     protected void quiteConvert(Line2D line){
             if (k1 < 9999) {
             //do nothing
             } else {
                 throw new IllegalArgumentException("the slope of line is null or too big, please ues point A and B");
             }
-        }
+            
+        }*/
 
 }
