@@ -5,7 +5,11 @@ import org.socialforce.entity.*;
 /**
  * Created by Ledenel on 2016/8/14.
  */
-public class Wall extends Entity {
+public class Gate extends Entity implements InteractiveEntity {
+    public Gate(Shape shape) {
+        super(shape);
+    }
+
     /**
      * affect the target entity with this.
      * for example, walls can affect an agent (push them).
@@ -16,16 +20,27 @@ public class Wall extends Entity {
      */
     @Override
     public void affect(InteractiveEntity affectedEntity) {
-        if (affectedEntity instanceof Agent) {
+        if(affectedEntity instanceof Agent) {
             Agent agent = (Agent)affectedEntity;
-            agent.push(model.calcualte(this,affectedEntity));
+            agent.push(model.calcualte(this,agent));
+            if(shape.contains(agent.getShape().getReferencePoint())) {
+                //agent exited.
+                if(listener != null) {
+                    listener.onAgentEscape(null,agent); //FIXME: add valid scene.
+                }
+            }
         }
     }
 
-    public Wall(Shape shape) {
-        super(shape);
+    public ApplicationListener getListener() {
+        return listener;
     }
 
+    public void setListener(ApplicationListener listener) {
+        this.listener = listener;
+    }
+
+    ApplicationListener listener;
 
     /**
      * get the total mass of the entity.
@@ -37,5 +52,4 @@ public class Wall extends Entity {
     public double getMass() {
         return Double.POSITIVE_INFINITY;
     }
-
 }
