@@ -43,10 +43,10 @@ public class StraightPath implements Path {
      */
     @Override
     public Point getCurrentGoal(Point current) {
-        while (reached <= goals.length && goals[reached].epsilonEquals(current,10e-5)) {
+        while (reached < goals.length && goals[reached].epsilonEquals(current,10e-5)) {
             reached++;
         }
-        if(reached > goals.length) {
+        if(reached >= goals.length) {
             return null;
         }
         return goals[reached];
