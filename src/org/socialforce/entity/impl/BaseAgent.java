@@ -12,10 +12,15 @@ public class BaseAgent extends Entity implements Agent {
     int currTimestamp;
     Shape view;
     Force pushed;
+    Velocity deltaV;
+    Vector deltaS;
+    boolean escaped = false;
 
     public BaseAgent(Shape shape) {
         super(shape);
     }
+
+
 
     /**
      * get the velocity of this moving entity.
@@ -62,6 +67,8 @@ public class BaseAgent extends Entity implements Agent {
         return view;
     }
 
+
+
     /**
      * get the expecting moving velocity of agent.
      * the velocity usually depends on the agent itself and its goal.
@@ -71,7 +78,8 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public Velocity expect() {
-        return null; //TODO: encapsulate expect with this and target in social force model.
+        Point point = this.shape.getReferencePoint();
+        return model.getAgentMotivation(point, path.getCurrentGoal(point));
     }
 
     /**
@@ -87,7 +95,24 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public Vector determineNext(int currSteps) {
-        return null;
+        if(currSteps >= this.currTimestamp) {
+            int dt = currSteps - this.currTimestamp + 1;
+            Iterable<InteractiveEntity> statics = scene.getStaticEntities().select(view);
+            Iterable<Agent> neighbors = scene.getAllAgents().select(view);
+            for(InteractiveEntity entity : statics) {
+                entity.affect(this);
+            }
+            for(Agent agent : neighbors) {
+                agent.affect(this);
+            }
+            deltaV = this.pushed.deltaVelocity(mass,dt * model.getTimePerStep());
+            deltaS = deltaV.deltaDistance(dt * model.getTimePerStep());
+            this.currTimestamp = currSteps;
+            return deltaS;
+        }
+        else {
+            return null;
+        }
     }
 
     /**
@@ -99,7 +124,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public Vector determineNext() {
-        return null;
+        return determineNext(currTimestamp);
     }
 
     /**
@@ -118,11 +143,19 @@ public class BaseAgent extends Entity implements Agent {
      * this method will also push the time forward 1 step.
      * when act() succeed, the previous determinations will be cleared.
      * nothing happened if there are not available determinations in this agent.
-     * nothing happened if the agent reach its goal.
+     * nothing happened if the agent reach its goal (escaped).
      */
     @Override
     public void act() {
+        this.currTimestamp++;
+        this.currVelocity.add(deltaV);
+        Point point = shape.getReferencePoint();
+        point.add(deltaS);
+        this.shape.moveTo(point);
 
+        deltaS = model.zeroVector();
+        deltaV = model.zeroVelocity();
+        pushed = model.zeroForce();
     }
 
     /**
@@ -145,6 +178,37 @@ public class BaseAgent extends Entity implements Agent {
         this.path = path;
     }
 
+    protected Scene scene;
+
+    /**
+     * get the context the scene is in.
+     *
+     * @return the scene.
+     */
+    @Override
+    public Scene getScene() {
+        return scene;
+    }
+
+    /**
+     * set the scene for the agent.
+     *
+     * @param scene the scene to be set.
+     */
+    @Override
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    /**
+     * notify the agent which is escaped.
+     */
+    @Override
+    public void escape() {
+        escaped = true;
+        scene.onAgentEscape(this);
+    }
+
     /**
      * affect the target entity with this.
      * for example, walls can affect an agent (push them).
@@ -156,8 +220,8 @@ public class BaseAgent extends Entity implements Agent {
     @Override
     public void affect(InteractiveEntity affectedEntity) {
         if (affectedEntity instanceof Agent) {
-            Agent agent = (Agent)affectedEntity;
-            agent.push(model.calcualte(this,affectedEntity));
+            Agent agent = (Agent) affectedEntity;
+            agent.push(model.calcualte(this, affectedEntity));
         }
     }
 

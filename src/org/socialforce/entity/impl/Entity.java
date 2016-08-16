@@ -16,6 +16,11 @@ public abstract class Entity implements InteractiveEntity {
         this.shape = shape;
     }
 
+    public Entity(SocialForceModel model, Shape shape) {
+        this.model = model;
+        this.shape = shape;
+    }
+
     public void setShape(Shape shape) {
         this.shape = shape;
     }

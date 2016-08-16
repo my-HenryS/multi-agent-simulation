@@ -96,4 +96,12 @@ public interface SocialForceModel {
      * @return the zero force.
      */
     Force zeroForce();
+
+    /**
+     * get the motivate speed of an agent.
+     * @param current the point which agent is on.
+     * @param goal the point agent is going.
+     * @return the speed of the motivation.
+     */
+    Velocity getAgentMotivation(Point current,Point goal);
 }

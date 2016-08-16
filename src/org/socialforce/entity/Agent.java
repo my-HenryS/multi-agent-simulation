@@ -70,4 +70,21 @@ public interface Agent extends MoveableEntity {
      * @param path the path to be set.
      */
     void setPath(Path path);
+
+    /**
+     * get the context the scene is in.
+     * @return the scene.
+     */
+    Scene getScene();
+
+    /**
+     * set the scene for the agent.
+     * @param scene the scene to be set.
+     */
+    void setScene(Scene scene);
+
+    /**
+     * notify the agent which is escaped.
+     */
+    void escape();
 }

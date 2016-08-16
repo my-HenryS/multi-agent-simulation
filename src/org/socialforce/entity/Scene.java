@@ -52,4 +52,10 @@ public interface Scene extends Drawable{
      * @param finder the path finder for this scene.
      */
     void setPathFinder(PathFinder finder);
+
+    /**
+     * triggers while an agent is escaped.
+     * @param agent the escaped agent.
+     */
+    void onAgentEscape(Agent agent);
 }
