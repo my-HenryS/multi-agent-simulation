@@ -35,7 +35,7 @@ public class Line2D implements Shape {
             endX = Math.max(a.getX(), b.getX());
         }
     }
-    /*
+
     public Line2D(double k1, double b1, double startX, double endX) {
         if (startX == endX) {
             throw new IllegalArgumentException("a and b can not be the same point");
@@ -46,7 +46,7 @@ public class Line2D implements Shape {
         this.endX = endX;
         a = new Point2D(startX, k1 * startX + b1);
         b = new Point2D(endX, k1 * endX + b1);
-    }*/
+    }
     @Override
     public int dimension() {
         return 2;
