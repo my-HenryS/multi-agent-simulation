@@ -2,19 +2,22 @@ package org.socialforce.entity;
 
 /**
  * represent entities which are able to move.
+ *
  * @see Agent
  * Created by Ledenel on 2016/7/30.
  */
 public interface MoveableEntity extends InteractiveEntity {
     /**
      * get the velocity of this moving entity.
+     *
      * @return the velocity.
      */
-    Vector getVelocity();
+    Velocity getVelocity();
 
     /**
      * push the entity with a force on the reference point.
      * the force will move this entity.
+     *
      * @param force the force to push.
      */
     void push(Force force);
@@ -22,7 +25,8 @@ public interface MoveableEntity extends InteractiveEntity {
     /**
      * push the entity on a specific point.
      * this method can also cause entity to rotate.
-     * @param force the force to push.
+     *
+     * @param force      the force to push.
      * @param startPoint the point which the force is push on.
      */
     void push(Force force, Point startPoint);

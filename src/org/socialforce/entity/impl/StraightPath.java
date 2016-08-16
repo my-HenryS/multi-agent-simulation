@@ -23,7 +23,7 @@ public class StraightPath implements Path {
         this.goals = goals;
     }
 
-
+    protected int reached = 0;
 
     /**
      * get the end point of this path(the goal of this path).
@@ -43,15 +43,12 @@ public class StraightPath implements Path {
      */
     @Override
     public Point getCurrentGoal(Point current) {
-        double minDist = goals[0].distanceTo(current);
-        int pid = 0;
-        for (int i = 1; i < goals.length; i++) {
-            double curr = goals[i].distanceTo(current);
-            if(curr < minDist) {
-                minDist = curr;
-                pid = i;
-            }
+        while (reached <= goals.length && goals[reached].epsilonEquals(current,10e-5)) {
+            reached++;
         }
-        return goals[pid];
+        if(reached > goals.length) {
+            return null;
+        }
+        return goals[reached];
     }
 }

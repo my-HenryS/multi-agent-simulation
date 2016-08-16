@@ -6,6 +6,13 @@ import org.socialforce.entity.*;
  * Created by Ledenel on 2016/8/15.
  */
 public class BaseAgent extends Entity implements Agent {
+    Velocity currVelocity;
+    Path path;
+    double mass;
+    int currTimestamp;
+    Shape view;
+    Force pushed;
+
     public BaseAgent(Shape shape) {
         super(shape);
     }
@@ -16,8 +23,8 @@ public class BaseAgent extends Entity implements Agent {
      * @return the velocity.
      */
     @Override
-    public Vector getVelocity() {
-        return null;
+    public Velocity getVelocity() {
+        return currVelocity;
     }
 
     /**
@@ -28,7 +35,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public void push(Force force) {
-
+        this.pushed.add(force);
     }
 
     /**
@@ -40,7 +47,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public void push(Force force, Point startPoint) {
-
+        push(force);
     }
 
     /**
@@ -52,7 +59,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public Shape getView() {
-        return null;
+        return view;
     }
 
     /**
@@ -64,7 +71,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public Velocity expect() {
-        return null;
+        return null; //TODO: encapsulate expect with this and target in social force model.
     }
 
     /**
@@ -103,7 +110,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public int getCurrentSteps() {
-        return 0;
+        return currTimestamp;
     }
 
     /**
@@ -125,7 +132,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public Path getPath() {
-        return null;
+        return path;
     }
 
     /**
@@ -135,7 +142,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public void setPath(Path path) {
-
+        this.path = path;
     }
 
     /**
@@ -148,7 +155,10 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public void affect(InteractiveEntity affectedEntity) {
-
+        if (affectedEntity instanceof Agent) {
+            Agent agent = (Agent)affectedEntity;
+            agent.push(model.calcualte(this,affectedEntity));
+        }
     }
 
     /**
@@ -159,6 +169,6 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public double getMass() {
-        return 0;
+        return mass;
     }
 }
