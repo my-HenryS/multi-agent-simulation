@@ -45,7 +45,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
      */
     @Override
     public Force calcualte(InteractiveEntity source, InteractiveEntity target) {
-        return zeroForce();
+        return zeroForce(); // TODO: 2016/8/17 add calculation implements.
     }
 
     /**
