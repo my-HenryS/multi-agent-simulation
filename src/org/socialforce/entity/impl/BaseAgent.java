@@ -96,6 +96,7 @@ public class BaseAgent extends Entity implements Agent {
     @Override
     public Vector determineNext(int currSteps) {
         if(currSteps >= this.currTimestamp) {
+            this.pushed = model.getPower(this);
             int dt = currSteps - this.currTimestamp + 1;
             Iterable<InteractiveEntity> statics = scene.getStaticEntities().select(view);
             Iterable<Agent> neighbors = scene.getAllAgents().select(view);
