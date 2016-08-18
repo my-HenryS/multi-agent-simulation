@@ -2,6 +2,9 @@ package org.socialforce.entity.impl;
 
 import org.socialforce.entity.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by Ledenel on 2016/8/17.
  */
@@ -14,9 +17,14 @@ public class SimpleSocialForceModel implements SocialForceModel {
     public static final int STATIC_TYPE_WALL = 0;
     public static final int STATIC_TYPE_GATE = 1;
 
+    protected List<ForceRegulation> regulations;
+
+    public SimpleSocialForceModel() {
+        regulations = new LinkedList<>();
+    }
+
     /**
      * get the constraint that how much time is a step.
-     *
      * @return time per step. the unit is second.
      */
     @Override
