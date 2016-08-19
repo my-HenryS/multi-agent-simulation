@@ -2,6 +2,7 @@ package org.socialforce.entity.impl;
 
 import org.socialforce.entity.ForceRegulation;
 import org.socialforce.entity.InteractiveEntity;
+import org.socialforce.entity.SocialForceModel;
 
 /**
  * Created by Ledenel on 2016/8/19.
@@ -15,6 +16,13 @@ public abstract class TypeMatchRegulation<Source extends InteractiveEntity, Targ
     protected Class<Source> sourceClass;
     protected Class<Target> targetClass;
 
+    public TypeMatchRegulation(Class<Source> sourceClass, Class<Target> targetClass, SocialForceModel model) {
+        this.sourceClass = sourceClass;
+        this.targetClass = targetClass;
+        this.model = model;
+    }
+
+    protected SocialForceModel model;
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
         return sourceClass.isInstance(source) && targetClass.isInstance(target);

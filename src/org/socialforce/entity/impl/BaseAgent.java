@@ -15,12 +15,23 @@ public class BaseAgent extends Entity implements Agent {
     Velocity deltaV;
     Vector deltaS;
     boolean escaped = false;
+    DistanceShape shape;
 
-    public BaseAgent(Shape shape) {
+    public BaseAgent(DistanceShape shape) {
         super(shape);
+        this.shape = shape;
     }
 
-
+    /**
+     * get the Shape of this entity.
+     * line, square, circle etc.
+     *
+     * @return the shape.
+     */
+    @Override
+    public DistanceShape getShape() {
+        return shape;
+    }
 
     /**
      * get the velocity of this moving entity.
