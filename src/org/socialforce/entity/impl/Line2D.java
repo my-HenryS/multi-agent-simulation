@@ -85,7 +85,7 @@ public class Line2D implements Shape {
         dx12 *= dx12;
         dy12 *= dy12;
         double delta = dx12 + dy12 - dx1 - dy1 - dx2 - dy2;
-        return delta > 0 && Math.abs(4 * (dx1+dy1)*(dx2+dy2) - delta*delta) < 1e-15;
+        return delta >= 0 && Math.abs(4 * (dx1 + dy1) * (dx2 + dy2) - delta * delta) < 1e-15;
     }
 
     @Override
@@ -109,12 +109,37 @@ public class Line2D implements Shape {
                 distance = Math.abs(x1 - point.getX());
                 break;
         }*/
+        double x = point.getX(), y = point.getY();
         //equation: (x-x1)(y2-y1) - (x2-x1)(y-y1) = 0
-        double distance = 0;
-        double a = y2-y1;
-        double b = x2-x1;
-        // TODO: 2016/8/19 fix distance with equation. 
-        return distance;
+        double distance;
+        double dy12 = y2 - y1;
+        double dx12 = x2 - x1;
+        double dx1 = x - x1;
+        double dy1 = y - y1;
+       /* double dx2 = x - x2;
+        double dy2 = y - y2;*/
+        double dot = dx1*dx12+dy1*dy12;
+        double len_sq = dx12*dx12+dy12*dy12;
+        double scale = dot / len_sq;
+        double tx,ty;
+        if(scale < 0) {
+            tx = x1;
+            ty = y1;
+        } else if(scale > 1) {
+            tx = x2;
+            ty = y2;
+        } else {
+            tx = x1 + scale * dx12;
+            ty = y1+scale*dy12;
+        }
+        tx -= x;
+        ty -= y;
+        return Math.sqrt(tx*tx+ty*ty);
+        //2016/8/19 fix distance with equation.
+        /*distance = Math.abs(dx1 * a - dy1 * b) / Math.sqrt(a * a + b * b);
+        double disA = Math.sqrt(dx1 * dx1 + dy1 * dy1);
+        double disB = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+        return Math.min(Math.min(disA, disB), distance);*/
     }
 
     // TODO: 2016/8/19 refactor with x1,y1,x2,y2.; 
@@ -138,8 +163,12 @@ public class Line2D implements Shape {
         double movedX, movedY;
         movedX = getReferencePoint().getX() - location.getX();
         movedY = getReferencePoint().getY() - location.getY();
-        a = new Point2D(x1 - movedX, y1 - movedY);
-        b = new Point2D(x2 - movedX, y2 - movedY);
+        x1 -= movedX;
+        y1 -= movedY;
+        x2 -= movedX;
+        y2 -= movedY;
+        /*a = new Point2D(x1 - movedX, y1 - movedY);
+        b = new Point2D(x2 - movedX, y2 - movedY);*/
 /*        if (x1 != x2) {
             k1 = (y1 - y2) / (x1 - x2);
             b1 = y1 - k1 * x1;
@@ -150,21 +179,33 @@ public class Line2D implements Shape {
 
     @Override
     public Line2D clone() {
-        Line2D lineClone = new Line2D(a, b);
-        return lineClone;
+        Line2D cloned = new Line2D();
+        cloned.x1 = x1;
+        cloned.x2 = x2;
+        cloned.y1 = y1;
+        cloned.y2 = y2;
+        //Line2D lineClone = new Line2D(a, b);
+        return cloned;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Line2D) {
-            Line2D testLine = (Line2D) obj;
-            if (getReferencePoint().equals(testLine.getReferencePoint()) &&
+            Line2D tg = (Line2D) obj;
+            if (Math.abs(x1 - tg.x1) < 1e-15 && Math.abs(y1 - tg.y1) < 1e-15) {
+                return Math.abs(x2 - tg.x2) < 1e-15 && Math.abs(y2 - tg.y2) < 1e-15;
+            }
+            if (Math.abs(x1 - tg.x2) < 1e-15 && Math.abs(y1 - tg.y2) < 1e-15) {
+                return Math.abs(x2 - tg.x1) < 1e-15 && Math.abs(y2 - tg.y1) < 1e-15;
+            }
+            return false;
+            /*if (getReferencePoint().equals(testLine.getReferencePoint()) &&
                     a.distanceTo(testLine.getReferencePoint()) == a.distanceTo(getReferencePoint())
                     && testLine.getDistance(a) == 0) {
                 return true;
             } else {
                 return false;
-            }
+            }*/
         }
         return false;
     }
