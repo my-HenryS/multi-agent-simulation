@@ -98,6 +98,13 @@ public interface Vector extends Cloneable, Serializable, DimensionEntity {
     void get(double[] arrayToCopy);
 
     /**
+     * set this vector's values to vector other.
+     *
+     * @param other the other vector to set.
+     */
+    void set(Vector other);
+
+    /**
      * set this vector's values to array values.
      *
      * @param values the values to be set.

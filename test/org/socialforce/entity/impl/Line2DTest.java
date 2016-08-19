@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
  */
 public class Line2DTest {
     Line2D testline;
+    Line2D vecline;
     double k2,b2,startX1,endX1;
     Point2D a,b;
     @Before
@@ -18,6 +19,7 @@ public class Line2DTest {
     testline = new Line2D(1,2,0,5);
         a = new Point2D(0,2);
         b = new Point2D(0,0);
+        vecline = new Line2D(a,b);
     }
 
     @Test
@@ -30,6 +32,7 @@ public class Line2DTest {
     public void getDistance() throws Exception {
         assertEquals(0,testline.getDistance(a),0);
         assertEquals(1.414,testline.getDistance(b),0.001);
+        assertEquals(Math.sqrt(2),testline.getDistance(new Point2D(1,3)),1e-7);
     }
 
     @Test

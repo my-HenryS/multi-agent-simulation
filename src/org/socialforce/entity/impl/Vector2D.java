@@ -232,6 +232,18 @@ public class Vector2D implements Vector {
     }
 
     /**
+     * set this vector's values to vector other.
+     *
+     * @param other the other vector to set.
+     */
+    @Override
+    public void set(Vector other) {
+        double [] otherv = new double[2];
+        other.get(otherv);
+        this.set(otherv);
+    }
+
+    /**
      * set this vector's values to array values.
      *
      * @param values the values to be set.

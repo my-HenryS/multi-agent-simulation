@@ -1,15 +1,12 @@
 package org.socialforce.entity.impl;
 
-import org.socialforce.entity.Box;
-import org.socialforce.entity.Drawer;
-import org.socialforce.entity.Point;
-import org.socialforce.entity.Shape;
+import org.socialforce.entity.*;
 
 /**
  * this is a 2D-circle set by its radius and center
  * Created by Whatever on 2016/8/8.
  */
-public class Circle2D implements Shape {
+public class Circle2D implements DistanceShape {
     protected double radius=0;//,center[];
     protected Point center = new Point2D(0,0);
     protected Drawer drawer;
@@ -83,5 +80,10 @@ public class Circle2D implements Shape {
         circle.moveTo(center);
         circle.setRadius(radius);
         return circle;
+    }
+
+    @Override
+    public double distanceTo(Shape other) {
+        return other.getDistance(this.center) - this.radius;
     }
 }
