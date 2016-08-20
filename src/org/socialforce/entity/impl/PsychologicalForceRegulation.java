@@ -9,8 +9,8 @@ import org.socialforce.entity.SocialForceModel;
  */
 public class PsychologicalForceRegulation extends TypeMatchRegulation<Agent, Agent> {
 
-    public static final double A = 1.0;
-    public static final double B = 1.0;
+    public static final double A = 0.3;
+    public static final double B = 0.18;
 
     public PsychologicalForceRegulation(Class<Agent> agentClass, Class<Agent> agentClass2, SocialForceModel model) {
         super(agentClass, agentClass2, model);
@@ -18,6 +18,11 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Agent, Age
 
     @Override
     public Force getForce(Agent source, Agent target) {
-        return model.zeroForce();
+        Force force = model.zeroForce();
+        force.add(target.getShape().getReferencePoint());
+        force.sub(source.getShape().getReferencePoint());
+        double scale = A * Math.exp(source.getShape().distanceTo(target.getShape()) / B);
+        force.scale(scale / force.length());
+        return force;
     }
 }
