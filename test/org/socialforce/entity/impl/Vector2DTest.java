@@ -112,6 +112,5 @@ public class Vector2DTest {
         b.project(a);
         c.clearProject(a);
         assertEquals(0,c.dot(b),1e-7);
-        //assertEquals(13-(18*18/25.0),b.length() * b.length(),1e-7);
     }
 }

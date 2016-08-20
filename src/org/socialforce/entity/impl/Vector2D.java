@@ -268,8 +268,11 @@ public class Vector2D implements Vector {
     }
 
     protected double getProjectScale(Vector direction) {
-        Vector2D vector2D = quiteConvert(direction);
-        return this.dot(direction) / vector2D.length_sq();
+        double len_sq = quiteConvert(direction).length_sq();
+        if(len_sq == 0) {
+            return 0;
+        }
+        return this.dot(direction) / len_sq;
     }
 
     /**
