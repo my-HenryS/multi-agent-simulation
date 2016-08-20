@@ -57,7 +57,14 @@ public class SimpleSocialForceModel implements SocialForceModel {
      */
     @Override
     public Force calcualte(InteractiveEntity source, InteractiveEntity target) {
-        return zeroForce(); // TODO: 2016/8/17 add calculation implements.
+//        return zeroForce(); // added calculation implements.
+        Force force = this.zeroForce();
+        for(ForceRegulation regulation : regulations) {
+            if(regulation.hasForce(source, target)) {
+                force.add(regulation.getForce(source, target));
+            }
+        }
+        return force;
     }
 
     /**
