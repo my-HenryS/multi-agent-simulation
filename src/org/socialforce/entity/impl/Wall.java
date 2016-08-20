@@ -5,7 +5,7 @@ import org.socialforce.entity.*;
 /**
  * Created by Ledenel on 2016/8/14.
  */
-public class Wall extends Entity {
+public class Wall extends Entity implements Blockable{
     /**
      * affect the target entity with this.
      * for example, walls can affect an agent (push them).
