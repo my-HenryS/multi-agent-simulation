@@ -20,15 +20,16 @@ public class SimpleSocialForceModel implements SocialForceModel {
     public static final int STATIC_TYPE_GATE = 1;
 
 
-
     protected List<ForceRegulation> regulations;
 
     public SimpleSocialForceModel() {
         regulations = new LinkedList<>();
+        regulations.add(new PsychologicalForceRegulation(InteractiveEntity.class, Agent.class, this));
     }
 
     /**
      * get the constraint that how much time is a step.
+     *
      * @return time per step. the unit is second.
      */
     @Override
@@ -59,8 +60,8 @@ public class SimpleSocialForceModel implements SocialForceModel {
     public Force calcualte(InteractiveEntity source, InteractiveEntity target) {
 //        return zeroForce(); // added calculation implements.
         Force force = this.zeroForce();
-        for(ForceRegulation regulation : regulations) {
-            if(regulation.hasForce(source, target)) {
+        for (ForceRegulation regulation : regulations) {
+            if (regulation.hasForce(source, target)) {
                 force.add(regulation.getForce(source, target));
             }
         }
