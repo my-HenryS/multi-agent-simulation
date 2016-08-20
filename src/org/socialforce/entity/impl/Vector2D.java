@@ -195,12 +195,14 @@ public class Vector2D implements Vector {
      */
     @Override
     public double length() {
+        return Math.sqrt(length_sq());
+    }
+
+    protected double length_sq() {
         double length=0;
         for(int i = 0; i < values.length; i++){
-            length = length + values[i]*values[i];
-            length = Math.sqrt(length);
+            length += values[i]*values[i];
         }
-
         return length;
     }
 
@@ -251,6 +253,36 @@ public class Vector2D implements Vector {
     @Override
     public void set(double[] values) {
         System.arraycopy(values,0,this.values,0,Math.min(values.length,this.values.length));
+    }
+
+    /**
+     * project this vector on a specific direction.
+     *
+     * @param direction the direction to project.
+     */
+    @Override
+    public void project(Vector direction) {
+        double scale = getProjectScale(direction);
+        this.set(direction);
+        this.scale(scale);
+    }
+
+    protected double getProjectScale(Vector direction) {
+        Vector2D vector2D = quiteConvert(direction);
+        return this.dot(direction) / vector2D.length_sq();
+    }
+
+    /**
+     * clear this vector's projection on a specific direction.
+     * after clearing, this vector is vertical to this direction.
+     *
+     * @param direction the direction to clear.
+     */
+    @Override
+    public void clearProject(Vector direction) {
+        Vector2D projection = quiteConvert(this.clone());
+        projection.project(direction);
+        this.sub(projection);
     }
 
     /**
