@@ -46,9 +46,19 @@ public class StraightPath implements Path {
         while (reached < goals.length && goals[reached].epsilonEquals(current,10e-5)) {
             reached++;
         }
-        if(reached >= goals.length) {
-            return null;
+        if(done()) {
+            return goals[goals.length-1];
         }
         return goals[reached];
+    }
+
+    /**
+     * check if the path is walked completely.
+     *
+     * @return true if the path is done; otherwise false.
+     */
+    @Override
+    public boolean done() {
+        return reached >= goals.length;
     }
 }

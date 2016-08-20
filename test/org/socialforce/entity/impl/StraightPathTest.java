@@ -27,7 +27,12 @@ public class StraightPathTest {
         assertEquals(c,path.getCurrentGoal(b));
         assertEquals(c,path.getCurrentGoal(a));
         assertEquals(c,path.getCurrentGoal(b));
+        assertFalse(path.done());
         assertEquals(d,path.getCurrentGoal(c));
+        assertFalse(path.done());
+        assertEquals(d,path.getCurrentGoal(d));
+        assertTrue(path.done());
+        assertEquals(d,path.getCurrentGoal(d));
 
     }
 

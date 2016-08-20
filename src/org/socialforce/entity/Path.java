@@ -27,4 +27,10 @@ public interface Path {
      * @return the point that agent should go in this path.
      */
     Point getCurrentGoal(Point current);
+
+    /**
+     * check if the path is walked completely.
+     * @return true if the path is done; otherwise false.
+     */
+    boolean done();
 }
