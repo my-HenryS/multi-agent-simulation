@@ -98,4 +98,19 @@ public class Vector2DTest {
         assertEquals("b.equals(b.clone()) should be true",b,cloned);
     }
 
+    @Test
+    public void otherSetTest() throws Exception {
+        Vector vector = new Vector2D(-1,-5);
+        a.set(vector);
+        assertNotEquals(new Vector2D(3,4),a);
+        assertEquals(new Vector2D(-1,-5),a);
+    }
+
+    @Test
+    public void projectTest() throws Exception {
+        Vector c = b.clone();
+        b.project(a);
+        c.clearProject(a);
+        assertEquals(0,c.dot(b),1e-7);
+    }
 }

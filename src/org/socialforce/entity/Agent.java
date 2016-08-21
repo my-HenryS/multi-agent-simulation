@@ -5,8 +5,17 @@ package org.socialforce.entity;
  * @author Ledenel
  * Created by Ledenel on 2016/7/28.
  */
-public interface Agent extends MoveableEntity {
-    
+public interface Agent extends InteractiveEntity ,Moveable, Blockable {
+
+    /**
+     * get the Shape of this entity.
+     * line, square, circle etc.
+     *
+     * @return the shape.
+     */
+    @Override
+    DistanceShape getShape();
+
     /**
      * get the view of a agent.
      * agent only interact with other entities inside its view.

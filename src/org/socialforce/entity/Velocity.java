@@ -4,7 +4,7 @@ package org.socialforce.entity;
  * represent a velocity vector.
  * @author Ledenel
  * @see Agent
- * @see MoveableEntity
+ * @see Moveable
  * Created by Ledenel on 2016/7/30.
  */
 public interface Velocity extends Vector {

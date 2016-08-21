@@ -195,12 +195,14 @@ public class Vector2D implements Vector {
      */
     @Override
     public double length() {
+        return Math.sqrt(length_sq());
+    }
+
+    protected double length_sq() {
         double length=0;
         for(int i = 0; i < values.length; i++){
-            length = length + values[i]*values[i];
-            length = Math.sqrt(length);
+            length += values[i]*values[i];
         }
-
         return length;
     }
 
@@ -232,6 +234,18 @@ public class Vector2D implements Vector {
     }
 
     /**
+     * set this vector's values to vector other.
+     *
+     * @param other the other vector to set.
+     */
+    @Override
+    public void set(Vector other) {
+        double [] otherv = new double[2];
+        other.get(otherv);
+        this.set(otherv);
+    }
+
+    /**
      * set this vector's values to array values.
      *
      * @param values the values to be set.
@@ -239,6 +253,39 @@ public class Vector2D implements Vector {
     @Override
     public void set(double[] values) {
         System.arraycopy(values,0,this.values,0,Math.min(values.length,this.values.length));
+    }
+
+    /**
+     * project this vector on a specific direction.
+     *
+     * @param direction the direction to project.
+     */
+    @Override
+    public void project(Vector direction) {
+        double scale = getProjectScale(direction);
+        this.set(direction);
+        this.scale(scale);
+    }
+
+    protected double getProjectScale(Vector direction) {
+        double len_sq = quiteConvert(direction).length_sq();
+        if(len_sq == 0) {
+            return 0;
+        }
+        return this.dot(direction) / len_sq;
+    }
+
+    /**
+     * clear this vector's projection on a specific direction.
+     * after clearing, this vector is vertical to this direction.
+     *
+     * @param direction the direction to clear.
+     */
+    @Override
+    public void clearProject(Vector direction) {
+        Vector2D projection = quiteConvert(this.clone());
+        projection.project(direction);
+        this.sub(projection);
     }
 
     /**

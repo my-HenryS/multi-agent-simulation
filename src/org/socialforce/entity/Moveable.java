@@ -6,7 +6,7 @@ package org.socialforce.entity;
  * @see Agent
  * Created by Ledenel on 2016/7/30.
  */
-public interface MoveableEntity extends InteractiveEntity {
+public interface Moveable {
     /**
      * get the velocity of this moving entity.
      *

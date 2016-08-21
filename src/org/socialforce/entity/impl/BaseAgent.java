@@ -15,12 +15,23 @@ public class BaseAgent extends Entity implements Agent {
     Velocity deltaV;
     Vector deltaS;
     boolean escaped = false;
+    DistanceShape shape;
 
-    public BaseAgent(Shape shape) {
+    public BaseAgent(DistanceShape shape) {
         super(shape);
+        this.shape = shape;
     }
 
-
+    /**
+     * get the Shape of this entity.
+     * line, square, circle etc.
+     *
+     * @return the shape.
+     */
+    @Override
+    public DistanceShape getShape() {
+        return shape;
+    }
 
     /**
      * get the velocity of this moving entity.
@@ -96,6 +107,7 @@ public class BaseAgent extends Entity implements Agent {
     @Override
     public Vector determineNext(int currSteps) {
         if(currSteps >= this.currTimestamp) {
+            this.pushed = model.getPower(this);
             int dt = currSteps - this.currTimestamp + 1;
             Iterable<InteractiveEntity> statics = scene.getStaticEntities().select(view);
             Iterable<Agent> neighbors = scene.getAllAgents().select(view);

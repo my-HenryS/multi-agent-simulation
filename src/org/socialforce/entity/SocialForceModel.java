@@ -52,12 +52,21 @@ public interface SocialForceModel {
     Agent createAgent();
 
     /**
-     * create a agent with specific arguments.
+     * create a agent with specific shape.
      *
-     * @param args the arguments used to create the agent.
+     * @param shape the agent's shape.
      * @return the created agent.
      */
-    Agent createAgent(Object... args);
+    Agent createAgent(Shape shape);
+
+    /**
+     * create a agent with specific shape and type.
+     *
+     * @param shape the agent's shape.
+     * @param type  the type of the agent.
+     * @return the created agent.
+     */
+    Agent createAgent(Shape shape, int type);
 
     /**
      * create a static object with default presets.
@@ -71,10 +80,20 @@ public interface SocialForceModel {
      * create a static object with specific arguments.
      * the static object can be walls, gates, obstacles, etc.
      *
-     * @param args the arguments used to create the object.
+     * @param shape the static object's shape.
      * @return the static object.
      */
-    InteractiveEntity createStatic(Object... args);
+    InteractiveEntity createStatic(Shape shape);
+
+    /**
+     * create a static object with specific arguments.
+     * the static object can be walls, gates, obstacles, etc.
+     *
+     * @param shape the static object's shape.
+     * @param type  the static object's type.
+     * @return the static object.
+     */
+    InteractiveEntity createStatic(Shape shape, int type);
 
     /**
      * creates and returns a zero vector.
@@ -99,9 +118,10 @@ public interface SocialForceModel {
 
     /**
      * get the motivate speed of an agent.
+     *
      * @param current the point which agent is on.
-     * @param goal the point agent is going.
+     * @param goal    the point agent is going.
      * @return the speed of the motivation.
      */
-    Velocity getAgentMotivation(Point current,Point goal);
+    Velocity getAgentMotivation(Point current, Point goal);
 }

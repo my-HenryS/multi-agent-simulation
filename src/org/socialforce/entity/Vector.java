@@ -98,12 +98,31 @@ public interface Vector extends Cloneable, Serializable, DimensionEntity {
     void get(double[] arrayToCopy);
 
     /**
+     * set this vector's values to vector other.
+     *
+     * @param other the other vector to set.
+     */
+    void set(Vector other);
+
+    /**
      * set this vector's values to array values.
      *
      * @param values the values to be set.
      */
     void set(double[] values);
 
+    /**
+     * project this vector on a specific direction.
+     * @param direction the direction to project.
+     */
+    void project(Vector direction);
+
+    /**
+     * clear this vector's projection on a specific direction.
+     * after clearing, this vector is vertical to this direction.
+     * @param direction the direction to clear.
+     */
+    void clearProject(Vector direction);
     /**
      * Creates and returns a copy of this vector.
      * The precise meaning of "copy" may depend on the class of the vector.
