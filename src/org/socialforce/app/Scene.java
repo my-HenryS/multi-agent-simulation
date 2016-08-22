@@ -65,4 +65,7 @@ public interface Scene extends Drawable {
      * @param agent the escaped agent.
      */
     void onAgentEscape(Agent agent);
+
+    SocialForceApplication getApplication();
+    void setApplication(SocialForceApplication application);
 }
