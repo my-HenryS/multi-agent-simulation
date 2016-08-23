@@ -12,6 +12,19 @@ public abstract class Entity implements InteractiveEntity {
     protected SocialForceModel model;
     protected Shape shape;
 
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    protected String name;
+
+
     public Entity(Shape shape) {
         this.shape = shape;
     }

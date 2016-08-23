@@ -1,6 +1,9 @@
 package org.socialforce.app;
 
+import org.socialforce.model.PathFinder;
 import org.socialforce.model.SocialForceModel;
+
+import java.util.List;
 
 /**
  * a social force simulation application with a set of scenes.
@@ -34,30 +37,6 @@ public interface SocialForceApplication {
     Iterable<Scene> getAllScenes();
 
     /**
-     * get the scene which is displayed to the user.
-     * @return the displaying scene.
-     */
-    Scene getCurrentScene();
-
-    /**
-     * changes the current scene to a specific one
-     * @param scene the scene to be changed.
-     */
-    void changeScene(Scene scene);
-
-    /**
-     * changes the current scene to a previous one.
-     * changes to the last if current scene is the first scene.
-     */
-    void prevScene();
-
-    /**
-     * changes the current scene to a next one.
-     * changes to the first if current scene is the last scene.
-     */
-    void nextScene();
-
-    /**
      * get the application listener for the application.
      * @return the application listener.
      */
@@ -68,4 +47,8 @@ public interface SocialForceApplication {
      * @param listener the listener to be set.
      */
     void setApplicationListener(ApplicationListener listener);
+
+    Scene findScene(ValueSet set);
+
+    List<PathFinder> getAllPathFinders();
 }
