@@ -22,6 +22,30 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
         return new PoolSelectIterable(shape);
     }
 
+    @Override
+    public Iterable<T> findElementsByName(String name) {
+        return new PoolNameIterable(name);
+    }
+
+    public class PoolNameIterable implements Iterable<T> {
+        private String name;
+
+        public PoolNameIterable(String name) {
+            this.name = name;
+        }
+
+        /**
+         * Returns an iterator over elements of type {@code T}.
+         *
+         * @return an Iterator.
+         */
+        @Override
+        public Iterator<T> iterator() {
+            return LinkListPool.this.stream().filter(name ->
+                this.name.equals(name)).iterator();
+        }
+    }
+
     public class PoolSelectIterable implements Iterable<T> {
         public PoolSelectIterable(Shape shape) {
             this.shape = shape;

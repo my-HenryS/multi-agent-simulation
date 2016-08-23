@@ -158,4 +158,20 @@ public class SimpleScene implements Scene {
     public void setApplication(SocialForceApplication application) {
         this.application = application;
     }
+
+    // TODO: 2016/8/24 add visible settings and valueset.
+    @Override
+    public boolean isVisible() {
+        return false;
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+
+    }
+
+    @Override
+    public ValueSet getValueSet() {
+        return null;
+    }
 }

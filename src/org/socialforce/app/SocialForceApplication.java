@@ -1,6 +1,9 @@
 package org.socialforce.app;
 
+import org.socialforce.model.PathFinder;
 import org.socialforce.model.SocialForceModel;
+
+import java.util.List;
 
 /**
  * a social force simulation application with a set of scenes.
@@ -68,4 +71,6 @@ public interface SocialForceApplication {
      * @param listener the listener to be set.
      */
     void setApplicationListener(ApplicationListener listener);
+
+    List<PathFinder> getAllPathFinders();
 }

@@ -5,6 +5,7 @@ import org.socialforce.container.EntityPool;
 import org.socialforce.drawer.Drawable;
 import org.socialforce.geom.Box;
 import org.socialforce.model.Agent;
+import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.PathFinder;
 
 /**
@@ -68,4 +69,7 @@ public interface Scene extends Drawable {
 
     SocialForceApplication getApplication();
     void setApplication(SocialForceApplication application);
+    boolean isVisible();
+    void setVisible(boolean visible);
+    ValueSet getValueSet();
 }

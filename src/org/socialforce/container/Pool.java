@@ -18,4 +18,5 @@ public interface Pool<T extends InteractiveEntity> extends Collection<T> {
      * @return a set of selected entity.
      */
     Iterable<T> select(Shape shape);
+    Iterable<T> findElementsByName(String name);
 }

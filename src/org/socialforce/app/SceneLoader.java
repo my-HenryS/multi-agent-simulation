@@ -7,7 +7,8 @@ import java.io.InputStream;
  * Created by Ledenel on 2016/8/22.
  */
 public interface SceneLoader {
-    Iterable<Scene> loadDefault();
-    Iterable<Scene> loadFrom(InputStream stream);
-    Iterable<Scene> loadFrom(File file);
+    void setSource(InputStream stream);
+    void setSource(File file);
+    Scene readScene();
+    ParameterSet readParameterSet();
 }

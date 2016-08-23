@@ -15,6 +15,8 @@ import org.socialforce.geom.Shape;
  * @see Agent
  */
 public interface InteractiveEntity {
+    String getName();
+    void setName(String name);
     /**
      * affect the target entity with this.
      * for example, walls can affect an agent (push them).
