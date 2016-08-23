@@ -43,6 +43,7 @@ public class SimulationPanelMain {
     private JPanel scene4;
     private JLabel timeUsedLabel;
     private JTextArea logTextArea;
+    private JTextField timePerStepTextField;
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
