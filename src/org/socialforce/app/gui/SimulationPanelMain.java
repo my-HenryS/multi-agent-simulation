@@ -36,4 +36,17 @@ public class SimulationPanelMain {
     private JButton runButton;
     private JButton pauseButton;
     private JButton stopButton;
+    private JPanel sceneContainer;
+    private JPanel scene1;
+    private JPanel scene2;
+    private JPanel scene3;
+    private JPanel scene4;
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        scene1 = new SceneShower("Scene 1").getRoot();
+        scene2 = new SceneShower("Scene 2").getRoot();
+        scene3 = new SceneShower("Scene 3").getRoot();
+        scene4 = new SceneShower("Scene 4").getRoot();
+    }
 }
