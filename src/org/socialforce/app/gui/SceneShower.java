@@ -10,6 +10,11 @@ public class SceneShower {
     private JCheckBox visibleCheckBox;
     private JPanel showPanel;
     private JPanel root;
+    private JButton changeButton;
+    private JLabel totalPeopleLabel;
+    private JLabel remainPeopleLabel;
+    private JLabel timeLabel;
+    private JLabel trappedPeopleLabel;
     private String title;
 
     public SceneShower(String title) {
