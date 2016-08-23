@@ -44,6 +44,7 @@ public class SimulationPanelMain {
     private JLabel timeUsedLabel;
     private JTextArea logTextArea;
     private JTextField timePerStepTextField;
+    private JLabel fpsLabel;
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
