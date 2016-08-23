@@ -3,6 +3,7 @@ package org.socialforce.app.gui;
 import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by Ledenel on 2016/8/23.
@@ -12,21 +13,26 @@ public class SimulationPanelMain {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException e) {
-          //  e.printStackTrace();
+            //  e.printStackTrace();
         } catch (InstantiationException e) {
-          //  e.printStackTrace();
+            //  e.printStackTrace();
         } catch (IllegalAccessException e) {
-          //  e.printStackTrace();
+            //  e.printStackTrace();
         } catch (UnsupportedLookAndFeelException e) {
-          //  e.printStackTrace();
+            //  e.printStackTrace();
         } finally {
             //UIManager.look
         }
-        JFrame frame = new JFrame("SimulationPanelMain");
-        frame.setContentPane(new SimulationPanelMain().root);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+        try {
+            JFrame frame = new JFrame("SimulationPanelMain");
+            frame.setContentPane(new SimulationPanelMain().root);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.pack();
+            frame.setVisible(true);
+        } catch (HeadlessException e) {
+            System.out.println("GUI Not Supported on this machine.");
+        }
+
     }
 
     private JPanel root;
