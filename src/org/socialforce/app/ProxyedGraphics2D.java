@@ -1983,6 +1983,10 @@ public class ProxyedGraphics2D extends Graphics2D {
         }
     }
 
+    public boolean isEnable() {
+        return proxyed != null;
+    }
+
     public void disable() {
         proxyed = null;
     }
