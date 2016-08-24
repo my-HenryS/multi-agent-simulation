@@ -2,6 +2,7 @@ package org.socialforce.drawer;
 
 import org.socialforce.app.ProxyedGraphics2D;
 import org.socialforce.app.Scene;
+import org.socialforce.model.Agent;
 
 /**
  * Created by Ledenel on 2016/8/24.
@@ -12,14 +13,22 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D> {
      */
     @Override
     public void draw() {
-// TODO: 2016/8/24  add draw scene.
+        // TODO: 2016/8/24  add draw scene.
     }
 
     public SceneDrawer(Scene scene) {
         this.scene = scene;
+        scene.setDrawer(this);
+
+        Iterable<Agent> agents = scene.getAllAgents();
+        for(Agent agent : agents) {
+            //agent.getShape().setDrawer();
+            // TODO: 2016/8/24 add factory method for drawer.
+        }
+        // TODO: 2016/8/24 set device for scene entities.
     }
 
-    Scene scene;
+    protected Scene scene;
 
     protected int color;
 
