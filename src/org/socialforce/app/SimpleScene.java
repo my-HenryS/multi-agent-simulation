@@ -5,7 +5,7 @@ import org.socialforce.container.EntityPool;
 import org.socialforce.container.impl.LinkListAgentPool;
 import org.socialforce.container.impl.LinkListEntityPool;
 import org.socialforce.drawer.Drawer;
-import org.socialforce.drawer.SceneDrawer;
+import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.Box;
 import org.socialforce.model.Agent;
 import org.socialforce.model.PathFinder;
