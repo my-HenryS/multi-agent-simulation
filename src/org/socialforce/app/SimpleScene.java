@@ -160,16 +160,30 @@ public class SimpleScene implements Scene {
     }
 
     // TODO: 2016/8/24 add visible settings and valueset.
+
+    /**
+     * judege if it is visible
+     * @return
+     */
     @Override
     public boolean isVisible() {
         return false;
     }
 
+    /**
+     * set the application be visible
+     * @param visible
+     */
     @Override
     public void setVisible(boolean visible) {
 
     }
 
+    /**
+     * get the value have been set
+     * @return
+     * @see ValueSet
+     */
     @Override
     public ValueSet getValueSet() {
         return null;
