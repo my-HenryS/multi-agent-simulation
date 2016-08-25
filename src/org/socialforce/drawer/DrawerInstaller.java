@@ -12,4 +12,14 @@ public interface DrawerInstaller {
      * @return true if the installer has a proper drawer for the drawable; otherwise false.
      */
     boolean addDrawerSupport(Drawable drawable);
+
+    /**
+     * register a drawer in this installer for a specific drawable type.
+     * the drawer will be replaced while there is already a drawer registered for the type.
+     * @param registeredDrawer
+     * @param drawableType
+     */
+    void registerDrawer(Drawer registeredDrawer,Class<? extends Drawable> drawableType);
+
+    void unregister(Class<? extends Drawable> type);
 }
