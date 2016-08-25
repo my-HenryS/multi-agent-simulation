@@ -177,6 +177,11 @@ public class Line2D implements Shape {
         }*/
     }
 
+    /**
+     * * Creates and returns a copy of this Line.
+     * The precise meaning of "copy" may depend on the class of the line.
+     * @return the copied line
+     */
     @Override
     public Line2D clone() {
         Line2D cloned = new Line2D();

@@ -16,6 +16,12 @@ public abstract class TypeMatchRegulation<Source extends InteractiveEntity, Targ
     protected Class<Source> sourceClass;
     protected Class<Target> targetClass;
 
+    /**
+     *
+     * @param sourceClass
+     * @param targetClass
+     * @param model
+     */
     public TypeMatchRegulation(Class<Source> sourceClass, Class<Target> targetClass, SocialForceModel model) {
         this.sourceClass = sourceClass;
         this.targetClass = targetClass;
@@ -23,6 +29,13 @@ public abstract class TypeMatchRegulation<Source extends InteractiveEntity, Targ
     }
 
     protected SocialForceModel model;
+
+    /**
+     * judge if there has force between source and target
+     * @param source
+     * @param target
+     * @return true if there has force between source and target
+     */
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
         return sourceClass.isInstance(source) && targetClass.isInstance(target);

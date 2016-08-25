@@ -115,7 +115,7 @@ public class Circle2D implements DistanceShape {
     }
 
     /**
-     *
+     *move the center of circle to the location
      * @param location the specified location
      */
     @Override
@@ -128,8 +128,9 @@ public class Circle2D implements DistanceShape {
     }
 
     /**
-     *
-     * @return
+     * Creates and returns a copy of this circle.
+     * The precise meaning of "copy" may depend on the class of the circle.
+     * @return the copied circle
      */
     @Override
     public Shape clone() {
@@ -140,9 +141,9 @@ public class Circle2D implements DistanceShape {
     }
 
     /**
-     *
+     *calculate the distance to the bound of a circle()
      * @param other
-     * @return
+     * @return the distance
      */
     @Override
     public double distanceTo(Shape other) {

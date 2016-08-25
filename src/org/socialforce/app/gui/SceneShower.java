@@ -17,15 +17,26 @@ public class SceneShower {
     private JLabel trappedPeopleLabel;
     private String title;
 
+    /**
+     * show the title of the scene
+     * @param title
+     */
     public SceneShower(String title) {
         this.title = title;
     }
 
+    /**
+     * //////??????
+     * @return the root
+     */
     public JPanel getRoot() {
         root.setBorder(BorderFactory.createTitledBorder(title));
         return root;
     }
 
+    /**
+     *
+     */
     private void createUIComponents() {
         root = new JPanel();
         //root.setBorder(BorderFactory.createTitledBorder(title));
