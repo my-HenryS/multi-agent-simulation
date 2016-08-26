@@ -9,7 +9,7 @@ import org.socialforce.model.Agent;
 /**
  * Created by Ledenel on 2016/8/24.
  */
-public class SceneDrawer implements Drawer<ProxyedGraphics2D> {
+public class SceneDrawer implements Drawer<ProxyedGraphics2D, Drawable> {
     /**
      * draw the pattern on the specific device.
      * @param pattern

@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * Created by Ledenel on 2016/8/10.
  */
-public abstract class AwtDrawer2D implements Drawer<Graphics2D> {
+public abstract class AwtDrawer2D<DrawableType extends Drawable> implements Drawer<Graphics2D, DrawableType> {
     @Override
     public Graphics2D getDevice() {
         return device;
@@ -58,7 +58,7 @@ public abstract class AwtDrawer2D implements Drawer<Graphics2D> {
      * @param pattern
      */
     @Override
-    public void draw(Drawable pattern) {
+    public void draw(DrawableType pattern) {
         device.setColor(color);
         renderShape(device,pattern);
     }
@@ -68,5 +68,5 @@ public abstract class AwtDrawer2D implements Drawer<Graphics2D> {
      * @param g the graphics
      * @param pattern
      */
-    public abstract void renderShape(Graphics2D g, Drawable pattern);
+    public abstract void renderShape(Graphics2D g, DrawableType pattern);
 }

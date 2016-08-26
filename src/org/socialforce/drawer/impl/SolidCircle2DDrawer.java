@@ -10,9 +10,9 @@ import java.awt.geom.Ellipse2D;
 /**
  * Created by Ledenel on 2016/8/12.
  */
-public class SolidCircle2DDrawer extends AwtDrawer2D {
+public class SolidCircle2DDrawer extends AwtDrawer2D<Circle2D> {
 
-    public SolidCircle2DDrawer(Graphics2D device, Circle2D circle) {
+    public SolidCircle2DDrawer(Graphics2D device) {
         super(device);
     }
 
@@ -24,13 +24,12 @@ public class SolidCircle2DDrawer extends AwtDrawer2D {
      * @param pattern
      */
     @Override
-    public void renderShape(Graphics2D g, Drawable pattern) {
-        if (pattern instanceof Circle2D) {
-            Circle2D circle = (Circle2D) pattern;
-            Point point = circle.getReferencePoint();
-            double left = point.getX() - circle.getRadius();
-            double top = point.getY() - circle.getRadius();
-            double d = 2 * circle.getRadius();
+    public void renderShape(Graphics2D g, Circle2D pattern) {
+        if (pattern != null) {
+            Point point = pattern.getReferencePoint();
+            double left = point.getX() - pattern.getRadius();
+            double top = point.getY() - pattern.getRadius();
+            double d = 2 * pattern.getRadius();
             g.fill(new Ellipse2D.Double(left, top, d, d));
         }
     }

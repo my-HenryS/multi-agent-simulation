@@ -26,7 +26,7 @@ public class SolidCircle2DDrawerTest extends AwtMathDrawerTest {
 
     @Override
     protected void drawerInit(Graphics2D gra) {
-        drawer = new SolidCircle2DDrawer(gra, null);
+        drawer = new SolidCircle2DDrawer(gra);
         drawer.setColor(0xFFFF0000);
     }
 }

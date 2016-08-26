@@ -20,7 +20,7 @@ public class ShapeDrawer2DInstaller implements DrawerInstaller {
     public ShapeDrawer2DInstaller(Graphics2D graphics2D) {
         this();
         this.graphics2D = graphics2D;
-        drawerMap.put(Box2D.class,new SolidBox2DDrawer(graphics2D,null));
+        drawerMap.put(Box2D.class,new SolidBox2DDrawer(graphics2D));
    }
 
     Map<Class<? extends Drawable>,Drawer> drawerMap = new TreeMap<>();
