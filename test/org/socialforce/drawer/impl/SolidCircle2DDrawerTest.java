@@ -17,8 +17,7 @@ public class SolidCircle2DDrawerTest extends AwtMathDrawerTest {
         Circle2D circle2D = new Circle2D();
         circle2D.setRadius(3);
         circle2D.moveTo(new Point2D(-1, -1));
-        drawer.setCircle(circle2D);
-        drawer.draw();
+        drawer.draw(circle2D);
         ImageUtils.assertImageSimilar(image,
                 ImageIO.read(SolidCircle2DDrawerTest.class.getResourceAsStream("SolidCircle2DDrawer_base.png")));
     }

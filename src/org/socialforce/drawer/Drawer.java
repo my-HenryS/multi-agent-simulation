@@ -15,8 +15,9 @@ import org.socialforce.geom.Shape;
 public interface Drawer<DeviceType> {
     /**
      * draw the pattern on the specific device.
+     * @param pattern
      */
-    void draw();
+    void draw(Drawable pattern);
 
     /**
      * get the primary color of the pattern. <br>

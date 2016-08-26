@@ -15,8 +15,7 @@ public class SolidBox2DDrawerTest extends AwtMathDrawerTest {
 
     @Test
     public void renderBoxShape() throws Exception {
-        drawer.setBox(new Box2D(0, 0, 3, 4));
-        drawer.draw();
+        drawer.draw(new Box2D(0, 0, 3, 4));
         ImageUtils.assertImageSimilar(
                 ImageIO.read(SolidBox2DDrawerTest.class.getResourceAsStream("SolidBox2DDrawer_base.png")),
                 image);
@@ -25,8 +24,7 @@ public class SolidBox2DDrawerTest extends AwtMathDrawerTest {
 
     @Test
     public void renderBoxOverflow() throws Exception {
-        drawer.setBox(new Box2D(-10, -10, 8, 9));
-        drawer.draw();
+        drawer.draw(new Box2D(-10, -10, 8, 9));
         ImageUtils.assertImageSimilar(
                 ImageIO.read(SolidBox2DDrawerTest.class.getResourceAsStream("SolidBox2DDrawer_base_overflow.png")),
                 image);

@@ -3,8 +3,11 @@ package org.socialforce.drawer.impl;
 import org.socialforce.drawer.Drawable;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
+import org.socialforce.geom.impl.Box2D;
 
 import java.awt.*;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by Ledenel on 2016/8/25.
@@ -17,9 +20,10 @@ public class ShapeDrawer2DInstaller implements DrawerInstaller {
     public ShapeDrawer2DInstaller(Graphics2D graphics2D) {
         this();
         this.graphics2D = graphics2D;
-    }
+        drawerMap.put(Box2D.class,new SolidBox2DDrawer(graphics2D,null));
+   }
 
-
+    Map<Class<? extends Drawable>,Drawer> drawerMap = new TreeMap<>();
 
     protected Graphics2D graphics2D;
 

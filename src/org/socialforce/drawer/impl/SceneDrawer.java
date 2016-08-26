@@ -2,6 +2,7 @@ package org.socialforce.drawer.impl;
 
 import org.socialforce.app.ProxyedGraphics2D;
 import org.socialforce.app.Scene;
+import org.socialforce.drawer.Drawable;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.model.Agent;
 
@@ -11,9 +12,10 @@ import org.socialforce.model.Agent;
 public class SceneDrawer implements Drawer<ProxyedGraphics2D> {
     /**
      * draw the pattern on the specific device.
+     * @param pattern
      */
     @Override
-    public void draw() {
+    public void draw(Drawable pattern) {
         // TODO: 2016/8/24  add draw scene.
     }
 
