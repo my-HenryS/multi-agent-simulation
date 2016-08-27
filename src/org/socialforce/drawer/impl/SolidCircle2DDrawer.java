@@ -25,7 +25,7 @@ public class SolidCircle2DDrawer extends AwtDrawer2D<Circle2D> {
      */
     @Override
     public void renderShape(Graphics2D g, Circle2D pattern) {
-        if (pattern != null) {
+        if (g != null && pattern != null) {
             Point point = pattern.getReferencePoint();
             double left = point.getX() - pattern.getRadius();
             double top = point.getY() - pattern.getRadius();

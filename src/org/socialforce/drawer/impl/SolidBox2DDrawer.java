@@ -22,7 +22,7 @@ public class SolidBox2DDrawer extends AwtDrawer2D<Box2D> {
      */
     @Override
     public void renderShape(Graphics2D g, Box2D pattern) {
-        if (pattern != null) {
+        if (g != null && pattern != null) {
             double size[] = new double[2];
             pattern.getSize().get(size);
             g.fill(new Rectangle.Double(pattern.getXmin(), pattern.getYmin(), size[0], size[1]));

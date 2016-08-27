@@ -168,15 +168,19 @@ public class SimpleScene implements Scene {
     }
 
 
-    // TODO: 2016/8/24 add visible settings and valueset.
+    // TODO: 2016/8/24 add valueset settings.
     @Override
     public boolean isVisible() {
-        return false;
+        return drawer.getDevice().isEnable();
     }
 
     @Override
     public void setVisible(boolean visible) {
-
+        if(visible) {
+            drawer.getDevice().enable();
+        } else {
+            drawer.getDevice().disable();
+        }
     }
 
     @Override
