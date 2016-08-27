@@ -41,7 +41,7 @@ public interface Scene extends Drawable {
 
     /**
      * get a stream with all entities in the scene (including agents, walls, gates, etc.).
-     * the default implementation just concat agents and static entities.
+     * the default implementation just concat agents and static entities(ordered).
      * @return the stream.
      */
     default Stream<InteractiveEntity> getAllEntitiesStream() {
