@@ -4,10 +4,6 @@ import java.io.File;
 import java.io.InputStream;
 
 /**
- * Created by Ledenel on 2016/8/22.
- */
-
-/**
  * Loader a Scene
  *  @see Scene
  * @see  ParameterSet

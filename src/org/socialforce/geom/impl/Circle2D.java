@@ -11,16 +11,17 @@ import org.socialforce.geom.Shape;
  * Created by Whatever on 2016/8/8.
  */
 
-/**
- *
- */
+
 public class Circle2D implements DistanceShape {
     /**
-     * @param radius:the radius of a Circle2D
-     * @param center:the center of a Circle2D
+     * radius:the radius of a Circle2D
      * @see Drawer
      */
     protected double radius=0;//,center[];
+    /**
+     * the center of a Circle2D.
+     * @see Drawer
+     */
     protected Point center = new Point2D(0,0);
     protected Drawer drawer;
 

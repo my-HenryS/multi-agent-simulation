@@ -17,7 +17,7 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Interactiv
      * @param agentClass
      * @param agentClass2
      * @param model
-     * @return force
+     * return force
      */
     public PsychologicalForceRegulation(Class<InteractiveEntity> agentClass, Class<Agent> agentClass2, SocialForceModel model) {
         super(agentClass, agentClass2, model);

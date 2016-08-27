@@ -3,10 +3,6 @@ package org.socialforce.model;
 import org.socialforce.geom.Force;
 
 /**
- * Created by Ledenel on 2016/8/18.
- */
-
-/**
  *regulate the force between the Source entity and the target entity
  * @param <Source>
  * @param <Target>
