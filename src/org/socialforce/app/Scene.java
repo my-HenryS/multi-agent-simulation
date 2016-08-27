@@ -8,6 +8,8 @@ import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.PathFinder;
 
+import java.util.stream.Stream;
+
 /**
  * represent a scene in social force simulations.
  * it could be traditional scene,
@@ -37,6 +39,14 @@ public interface Scene extends Drawable {
      */
     EntityPool getStaticEntities();
 
+    /**
+     * get a stream with all entities in the scene (including agents, walls, gates, etc.).
+     * the default implementation just concat agents and static entities(ordered).
+     * @return the stream.
+     */
+    default Stream<InteractiveEntity> getAllEntitiesStream() {
+        return Stream.concat(getAllAgents().stream(),getStaticEntities().stream());
+    }
     /**
      * get the bound of the scene.
      * @return the bounds.

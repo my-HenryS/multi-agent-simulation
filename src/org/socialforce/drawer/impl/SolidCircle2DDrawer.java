@@ -1,5 +1,6 @@
 package org.socialforce.drawer.impl;
 
+import org.socialforce.drawer.Drawable;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.Point;
 
@@ -9,35 +10,27 @@ import java.awt.geom.Ellipse2D;
 /**
  * Created by Ledenel on 2016/8/12.
  */
-public class SolidCircle2DDrawer extends AwtDrawer2D {
-    public Circle2D getCircle() {
-        return circle;
-    }
+public class SolidCircle2DDrawer extends AwtDrawer2D<Circle2D> {
 
-    public void setCircle(Circle2D circle) {
-        this.circle = circle;
-    }
-
-    public SolidCircle2DDrawer(Graphics2D device, Circle2D circle) {
+    public SolidCircle2DDrawer(Graphics2D device) {
         super(device);
-        this.circle = circle;
     }
-
-    Circle2D circle;
-
 
 
     /**
      * render the shape on the @code {Graphics2D} with color built-in.
      *
-     * @param g the graphics
+     * @param g       the graphics
+     * @param pattern
      */
     @Override
-    public void renderShape(Graphics2D g) {
-        Point point = circle.getReferencePoint();
-        double left = point.getX() - circle.getRadius();
-        double top = point.getY() - circle.getRadius();
-        double d = 2 * circle.getRadius();
-        g.fill(new Ellipse2D.Double(left,top,d,d));
+    public void renderShape(Graphics2D g, Circle2D pattern) {
+        if (g != null && pattern != null) {
+            Point point = pattern.getReferencePoint();
+            double left = point.getX() - pattern.getRadius();
+            double top = point.getY() - pattern.getRadius();
+            double d = 2 * pattern.getRadius();
+            g.fill(new Ellipse2D.Double(left, top, d, d));
+        }
     }
 }
