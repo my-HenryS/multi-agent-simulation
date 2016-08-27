@@ -36,10 +36,18 @@ public class Gate extends Entity implements InteractiveEntity {
         }
     }
 
+    /**
+     * get the listener of the application
+     * @return
+     */
     public ApplicationListener getListener() {
         return listener;
     }
 
+    /**
+     * set the listener of the application
+     * @param listener
+     */
     public void setListener(ApplicationListener listener) {
         this.listener = listener;
     }

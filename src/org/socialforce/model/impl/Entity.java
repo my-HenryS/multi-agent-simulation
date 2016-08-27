@@ -12,11 +12,19 @@ public abstract class Entity implements InteractiveEntity {
     protected SocialForceModel model;
     protected Shape shape;
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String getName() {
         return name;
     }
 
+    /**
+     *  set the name of the entity
+     * @param name
+     */
     @Override
     public void setName(String name) {
         this.name = name;
@@ -24,16 +32,28 @@ public abstract class Entity implements InteractiveEntity {
 
     protected String name;
 
-
+    /**
+     *
+     * @param shape
+     */
     public Entity(Shape shape) {
         this.shape = shape;
     }
 
+    /**
+     *
+     * @param model
+     * @param shape
+     */
     public Entity(SocialForceModel model, Shape shape) {
         this.model = model;
         this.shape = shape;
     }
 
+    /**
+     * set the Shape of the entity
+     * @param shape
+     */
     public void setShape(Shape shape) {
         this.shape = shape;
     }

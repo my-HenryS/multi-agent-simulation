@@ -167,6 +167,12 @@ public class SimpleScene implements Scene {
         this.application = application;
     }
 
+    // TODO: 2016/8/24 add visible settings and valueset.
+
+    /**
+     * judege if it is visible
+     * @return
+     */
 
     // added valueset settings.
     @Override
@@ -174,6 +180,10 @@ public class SimpleScene implements Scene {
         return drawer.getDevice().isEnable();
     }
 
+    /**
+     * set the application be visible
+     * @param visible
+     */
     @Override
     public void setVisible(boolean visible) {
         if(visible) {
@@ -185,6 +195,11 @@ public class SimpleScene implements Scene {
 
     private ValueSet valueSet;
 
+    /**
+     * get the value have been set
+     * @return
+     * @see ValueSet
+     */
     @Override
     public ValueSet getValueSet() {
         return valueSet;
