@@ -26,7 +26,8 @@ public class SceneDrawerInstaller implements DrawerInstaller {
         if (drawable instanceof Scene) {
             drawable.setDrawer(sceneDrawer);
             Scene scene = (Scene) drawable;
-            for(InteractiveEntity entity : scene.getAllEntitiesStream()::iterator) {
+            Iterable<InteractiveEntity> iterable = scene.getAllEntitiesStream()::iterator;
+            for(InteractiveEntity entity : iterable) {
                 sceneDrawer.installer.addDrawerSupport(entity.getShape());
             }
             return true;
