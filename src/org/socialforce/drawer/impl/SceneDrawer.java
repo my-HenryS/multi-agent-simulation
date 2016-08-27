@@ -4,31 +4,46 @@ import org.socialforce.app.ProxyedGraphics2D;
 import org.socialforce.app.Scene;
 import org.socialforce.drawer.Drawable;
 import org.socialforce.drawer.Drawer;
+import org.socialforce.drawer.DrawerInstaller;
 import org.socialforce.model.Agent;
+import org.socialforce.model.InteractiveEntity;
+
+import java.awt.*;
 
 /**
  * Created by Ledenel on 2016/8/24.
  */
-public class SceneDrawer implements Drawer<ProxyedGraphics2D, Drawable> {
+public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
     /**
      * draw the pattern on the specific device.
      * @param pattern
      */
     @Override
-    public void draw(Drawable pattern) {
-        // TODO: 2016/8/24  add draw scene.
+    public void draw(Scene pattern) {
+        for (InteractiveEntity entity : pattern.getAllEntitiesStream()::iterator) {
+            entity.getShape().getDrawer().draw(entity.getShape());
+        }
+        // 2016/8/24  add draw scene.
+
     }
 
-    public SceneDrawer(Scene scene) {
-        this.scene = scene;
-        scene.setDrawer(this);
+    protected DrawerInstaller installer;
 
-        Iterable<Agent> agents = scene.getAllAgents();
-        for(Agent agent : agents) {
-            //agent.getShape().setDrawer();
-            // TODO: 2016/8/24 add factory method for drawer.
-        }
-        // TODO: 2016/8/24 set device for scene entities.
+    protected ProxyedGraphics2D graphics2D;
+
+    public SceneDrawer(Graphics2D graphics) {
+        // TODO: 2016/8/27 add coordinate transform for graphics.
+        graphics2D = new ProxyedGraphics2D(graphics);
+        installer = new ShapeDrawer2DInstaller(graphics);
+       // scene.setDrawer(this);
+
+//        Iterable<Agent> agents = scene.getAllAgents();
+//        for(Agent agent : agents) {
+//            //agent.getShape().setDrawer();
+//            // 2016/8/24 add factory method for drawer.
+//
+//        }
+        // 2016/8/24 set device for scene entities. done in installer.
     }
 
     protected Scene scene;
@@ -61,7 +76,6 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D, Drawable> {
         this.color = color;
     }
 
-    ProxyedGraphics2D graphics2D;
 
     /**
      * get the device of the drawer.

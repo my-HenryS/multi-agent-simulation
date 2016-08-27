@@ -22,4 +22,6 @@ public interface DrawerInstaller {
     void registerDrawer(Drawer registeredDrawer,Class<? extends Drawable> drawableType);
 
     void unregister(Class<? extends Drawable> type);
+
+    Iterable<Drawer> getRegisteredDrawers();
 }

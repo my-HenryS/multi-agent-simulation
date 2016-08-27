@@ -1,35 +1,20 @@
 package org.socialforce.drawer.impl;
 
+import org.socialforce.app.Scene;
 import org.socialforce.drawer.Drawable;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
-import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.Circle2D;
+import org.socialforce.model.Agent;
+import org.socialforce.model.InteractiveEntity;
 
 import java.awt.*;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
- * Created by Ledenel on 2016/8/25.
+ * Created by Ledenel on 2016/8/27.
  */
-public class ShapeDrawer2DInstaller implements DrawerInstaller {
-    protected ShapeDrawer2DInstaller() {
-
-    }
-
-    public ShapeDrawer2DInstaller(Graphics2D graphics2D) {
-        this();
-        this.graphics2D = graphics2D;
-        registerDrawer(new SolidBox2DDrawer(graphics2D),Box2D.class);
-        registerDrawer(new SolidCircle2DDrawer(graphics2D),Circle2D.class);
-   }
-
-    Map<Class<? extends Drawable>,Drawer> drawerMap = new TreeMap<>();
-
-    protected Graphics2D graphics2D;
-
-
+public class SceneDrawerInstaller implements DrawerInstaller {
     /**
      * creates and set a proper drawer for a drawable.
      *
@@ -38,14 +23,22 @@ public class ShapeDrawer2DInstaller implements DrawerInstaller {
      */
     @Override
     public boolean addDrawerSupport(Drawable drawable) {
-        Drawer supported = drawerMap.get(drawable.getClass());
-        if(supported != null) {
-            drawable.setDrawer(supported);
+        if (drawable instanceof Scene) {
+            drawable.setDrawer(sceneDrawer);
+            Scene scene = (Scene) drawable;
+            for(InteractiveEntity entity : scene.getAllEntitiesStream()::iterator) {
+                sceneDrawer.installer.addDrawerSupport(entity.getShape());
+            }
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
+
+    public SceneDrawerInstaller(Graphics2D graphics) {
+        this.sceneDrawer = new SceneDrawer(graphics);
+    }
+
+    protected SceneDrawer sceneDrawer;
 
     /**
      * register a drawer in this installer for a specific drawable type.
@@ -56,16 +49,18 @@ public class ShapeDrawer2DInstaller implements DrawerInstaller {
      */
     @Override
     public void registerDrawer(Drawer registeredDrawer, Class<? extends Drawable> drawableType) {
-        drawerMap.put(drawableType,registeredDrawer);
+        if (Scene.class.isAssignableFrom(drawableType) && registeredDrawer instanceof SceneDrawer) {
+            sceneDrawer = (SceneDrawer) registeredDrawer;
+        }
     }
 
     @Override
     public void unregister(Class<? extends Drawable> type) {
-        drawerMap.remove(type);
+        sceneDrawer = null;
     }
 
     @Override
     public Iterable<Drawer> getRegisteredDrawers() {
-        return drawerMap.values();
+        return Collections.singletonList(sceneDrawer);
     }
 }
