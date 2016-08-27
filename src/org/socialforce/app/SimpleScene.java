@@ -168,7 +168,7 @@ public class SimpleScene implements Scene {
     }
 
 
-    // TODO: 2016/8/24 add valueset settings.
+    // added valueset settings.
     @Override
     public boolean isVisible() {
         return drawer.getDevice().isEnable();
@@ -183,8 +183,14 @@ public class SimpleScene implements Scene {
         }
     }
 
+    private ValueSet valueSet;
+
     @Override
     public ValueSet getValueSet() {
-        return null;
+        return valueSet;
+    }
+
+    public void setValueSet(ValueSet valueSet) {
+        this.valueSet = valueSet;
     }
 }
