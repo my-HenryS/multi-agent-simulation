@@ -299,4 +299,17 @@ public class Vector2D implements Vector {
         System.arraycopy(values,0,vec.values,0,values.length);
         return vec;
     }
+
+
+    /**
+     * get reference vector
+     * has the same direction but the length is 1.
+     * @return the reference vector
+     */
+    public Vector getRefVector(){
+        Vector ref = new Vector2D(values[0],values[1]);
+        ref.scale(1/ref.length());
+        return ref;
+    }
+
 }
