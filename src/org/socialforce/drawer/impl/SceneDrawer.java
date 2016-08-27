@@ -20,7 +20,8 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
      */
     @Override
     public void draw(Scene pattern) {
-        for (InteractiveEntity entity : pattern.getAllEntitiesStream()::iterator) {
+        Iterable<InteractiveEntity> iterable = pattern.getAllEntitiesStream()::iterator;
+        for (InteractiveEntity entity : iterable) {
             Drawer drawer = entity.getShape().getDrawer();
             drawer.setDevice(this.getDevice());
             drawer.draw(entity.getShape());
