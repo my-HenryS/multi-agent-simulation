@@ -5,6 +5,7 @@ import org.socialforce.container.EntityPool;
 import org.socialforce.container.impl.LinkListAgentPool;
 import org.socialforce.container.impl.LinkListEntityPool;
 import org.socialforce.drawer.Drawer;
+import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.Box;
 import org.socialforce.model.Agent;
 import org.socialforce.model.PathFinder;
@@ -20,7 +21,7 @@ public class SimpleScene implements Scene {
      */
     @Override
     public void setDrawer(Drawer drawer) {
-        this.drawer = drawer;
+        this.drawer = (SceneDrawer) drawer;
     }
 
     public SimpleScene(Box bounds) {
@@ -30,7 +31,7 @@ public class SimpleScene implements Scene {
     }
 
     protected Box bounds;
-    protected Drawer drawer;
+    protected SceneDrawer drawer;
 
     /**
      * get the current drawer the object is using.
@@ -48,7 +49,14 @@ public class SimpleScene implements Scene {
      */
     @Override
     public void stepNext() {
-        // TODO: 2016/8/23 add step for all agent and statics.
+        for(Agent agent : allAgents) {
+            agent.determineNext();
+        }
+        for (Agent agent : allAgents) {
+            agent.act();
+        }
+        currentStep++;
+        // 2016/8/23 add step for all agent and statics.
     }
 
     public ApplicationListener getListener() {
@@ -165,9 +173,11 @@ public class SimpleScene implements Scene {
      * judege if it is visible
      * @return
      */
+
+    // added valueset settings.
     @Override
     public boolean isVisible() {
-        return false;
+        return drawer.getDevice().isEnable();
     }
 
     /**
@@ -176,8 +186,14 @@ public class SimpleScene implements Scene {
      */
     @Override
     public void setVisible(boolean visible) {
-
+        if(visible) {
+            drawer.getDevice().enable();
+        } else {
+            drawer.getDevice().disable();
+        }
     }
+
+    private ValueSet valueSet;
 
     /**
      * get the value have been set
@@ -186,6 +202,10 @@ public class SimpleScene implements Scene {
      */
     @Override
     public ValueSet getValueSet() {
-        return null;
+        return valueSet;
+    }
+
+    public void setValueSet(ValueSet valueSet) {
+        this.valueSet = valueSet;
     }
 }

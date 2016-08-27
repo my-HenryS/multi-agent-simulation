@@ -12,11 +12,12 @@ import org.socialforce.geom.Shape;
  * @see Drawable
  * Created by Ledenel on 2016/7/31.
  */
-public interface Drawer<DeviceType> {
+public interface Drawer<DeviceType, DrawableType extends Drawable> {
     /**
      * draw the pattern on the specific device.
+     * @param pattern
      */
-    void draw();
+    void draw(DrawableType pattern);
 
     /**
      * get the primary color of the pattern. <br>

@@ -1,5 +1,6 @@
 package org.socialforce.drawer.impl;
 
+import org.socialforce.drawer.Drawable;
 import org.socialforce.drawer.Drawer;
 
 import java.awt.*;
@@ -7,7 +8,7 @@ import java.awt.*;
 /**
  * Created by Ledenel on 2016/8/10.
  */
-public abstract class AwtDrawer2D implements Drawer<Graphics2D> {
+public abstract class AwtDrawer2D<DrawableType extends Drawable> implements Drawer<Graphics2D, DrawableType> {
     @Override
     public Graphics2D getDevice() {
         return device;
@@ -54,16 +55,18 @@ public abstract class AwtDrawer2D implements Drawer<Graphics2D> {
 
     /**
      * draw the pattern on the specific device.
+     * @param pattern
      */
     @Override
-    public void draw() {
+    public void draw(DrawableType pattern) {
         device.setColor(color);
-        renderShape(device);
+        renderShape(device,pattern);
     }
 
     /**
      * render the shape on the @code {Graphics2D} with color built-in.
      * @param g the graphics
+     * @param pattern
      */
-    public abstract void renderShape(Graphics2D g);
+    public abstract void renderShape(Graphics2D g, DrawableType pattern);
 }
