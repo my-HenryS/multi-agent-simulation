@@ -49,7 +49,14 @@ public class SimpleScene implements Scene {
      */
     @Override
     public void stepNext() {
-        // TODO: 2016/8/23 add step for all agent and statics.
+        for(Agent agent : allAgents) {
+            agent.determineNext();
+        }
+        for (Agent agent : allAgents) {
+            agent.act();
+        }
+        currentStep++;
+        // 2016/8/23 add step for all agent and statics.
     }
 
     public ApplicationListener getListener() {
