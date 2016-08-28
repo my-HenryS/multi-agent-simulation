@@ -3,8 +3,10 @@ package org.socialforce.app;
 /**
  * the parameter of a scene
  */
-public interface SceneParameter {
+public interface SceneParameter extends Comparable<SceneParameter> {
+    String getName();
     boolean isValid(SceneValue value);
-    int getSize();
+    int getPreferedSize();
     Iterable<SceneValue> sample(int size);
+    Iterable<SceneValue> sample();
 }
