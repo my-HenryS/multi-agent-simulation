@@ -7,5 +7,4 @@ import java.util.Set;
  * set the value of a map
  */
 public interface ValueSet extends Map<String,SceneValue> {
-    String showAsString();
 }
