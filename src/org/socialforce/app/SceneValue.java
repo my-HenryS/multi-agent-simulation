@@ -3,8 +3,8 @@ package org.socialforce.app;
 /**
  * get the value of scene
  */
-public interface SceneValue extends Comparable<SceneValue> {
+public interface SceneValue<T> extends Comparable<SceneValue<T>> {
     String getName();
-    Object getValue();
+    T getValue();
     void apply(Scene scene);
 }
