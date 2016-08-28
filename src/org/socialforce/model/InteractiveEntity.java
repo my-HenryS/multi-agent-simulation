@@ -15,6 +15,10 @@ import org.socialforce.geom.Shape;
  * @see Agent
  */
 public interface InteractiveEntity {
+    Scene getScene();
+
+    void setScene(Scene scene);
+
     String getName();
     void setName(String name);
     /**
