@@ -167,7 +167,7 @@ public class SimpleScene implements Scene {
         this.application = application;
     }
 
-    // TODO: 2016/8/24 add visible settings and valueset.
+    //  2016/8/24 add visible settings and valueset.
 
     /**
      * judege if it is visible
