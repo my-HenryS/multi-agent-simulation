@@ -142,7 +142,7 @@ public class Line2D implements Shape {
         return Math.min(Math.min(disA, disB), distance);*/
     }
 
-    // TODO: 2016/8/19 refactor with x1,y1,x2,y2.; 
+    //  2016/8/19 refactored with x1,y1,x2,y2.;
     @Override
     public Point getReferencePoint() {
         return new Point2D((x1 + x2) / 2, (y1 + y2) / 2);

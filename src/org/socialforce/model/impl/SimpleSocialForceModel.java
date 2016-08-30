@@ -107,10 +107,10 @@ public class SimpleSocialForceModel implements SocialForceModel {
     /**
      * create a agent with specific arguments.
      *
-     * @param shape@return the created agent.
+     * @param shape @return the created agent.
      */
     @Override
-    public Agent createAgent(Shape shape) {
+    public Agent createAgent(DistanceShape shape) {
         return createAgent();
     }
 
@@ -122,7 +122,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
      * @return the created agent.
      */
     @Override
-    public Agent createAgent(Shape shape, int type) {
+    public Agent createAgent(DistanceShape shape, int type) {
         return createAgent();
     }
 
@@ -161,7 +161,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
         if (type == STATIC_TYPE_WALL) {
             return new Wall(shape);
         } else if (type == STATIC_TYPE_GATE) {
-            return new Gate(shape);
+            return new SafetyRegion(shape);
         }
         return createStatic(shape);
     }

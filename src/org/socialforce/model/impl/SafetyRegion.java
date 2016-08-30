@@ -9,8 +9,8 @@ import org.socialforce.model.SocialForceModel;
 /**
  * Created by Ledenel on 2016/8/14.
  */
-public class Gate extends Entity implements InteractiveEntity {
-    public Gate(Shape shape) {
+public class SafetyRegion extends Entity implements InteractiveEntity {
+    public SafetyRegion(Shape shape) {
         super(shape);
     }
 
@@ -29,31 +29,31 @@ public class Gate extends Entity implements InteractiveEntity {
             agent.push(model.calcualte(this,agent));
             if(shape.contains(agent.getShape().getReferencePoint())) {
                 //agent exited.
-                if(listener != null) {
-                    listener.onAgentEscape(null,agent); //FIXME: add valid scene.
+                if(scene != null) {
+                    scene.onAgentEscape(agent); // add valid scene.
                 }
             }
         }
     }
 
-    /**
+    /*
      * get the listener of the application
      * @return
-     */
+
     public ApplicationListener getListener() {
         return listener;
     }
 
-    /**
+    /*
      * set the listener of the application
      * @param listener
-     */
+
     public void setListener(ApplicationListener listener) {
         this.listener = listener;
     }
 
     ApplicationListener listener;
-
+*/
     /**
      * get the total mass of the entity.
      * usually the mass is all on the shape's reference point.

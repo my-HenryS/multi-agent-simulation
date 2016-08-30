@@ -1,5 +1,6 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.app.Scene;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
@@ -11,6 +12,18 @@ import org.socialforce.model.SocialForceModel;
 public abstract class Entity implements InteractiveEntity {
     protected SocialForceModel model;
     protected Shape shape;
+
+    @Override
+    public Scene getScene() {
+        return scene;
+    }
+
+    @Override
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    protected Scene scene;
 
     /**
      *
