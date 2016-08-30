@@ -8,7 +8,7 @@ import org.socialforce.model.Agent;
  * @see SocialForceApplication
  * Created by Ledenel on 2016/8/3.
  */
-public interface ApplicationListener {
+public interface ApplicationListener extends AgentEscapeListener {
     /**
      * triggered while the application is start.
      */
@@ -26,10 +26,4 @@ public interface ApplicationListener {
      */
     void onStep(Scene scene);
 
-    /**
-     * triggered while a agent is escaped.
-     * @param scene the scene where the agent in.
-     * @param escapeAgent the escaped agent.
-     */
-    void onAgentEscape(Scene scene, Agent escapeAgent);
 }

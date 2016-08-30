@@ -25,9 +25,9 @@ public interface PathFinder {
 
     /**
      * generate a path from start point to end point.
-     * @param start the start point.
-     * @param end the end point.
+     * @param agent the start point.
+     * @param goal the end point.
      * @return the generated path.
      */
-    Path plan(Point start,Point end);
+    Path plan(Agent agent,Point goal);
 }

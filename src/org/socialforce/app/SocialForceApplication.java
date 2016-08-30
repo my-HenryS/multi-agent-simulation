@@ -40,13 +40,13 @@ public interface SocialForceApplication {
      * get the application listener for the application.
      * @return the application listener.
      */
-    ApplicationListener getApplicationListener();
+    AgentEscapeListener getApplicationListener();
 
     /**
      * set a listener for application events.
      * @param listener the listener to be set.
      */
-    void setApplicationListener(ApplicationListener listener);
+    void setApplicationListener(AgentEscapeListener listener);
 
     Scene findScene(ValueSet set);
 
