@@ -16,9 +16,10 @@ public interface PathFinder {
     /**
      * generate a path from start point to end point.
      *
-     * @param agent the start point.
-     * @param goal  the end point.
+     * @param targetScene 智能体所在的场景。
+     * @param agent       the start point.
+     * @param goal        the end point.
      * @return the generated path.
      */
-    Path plan(Agent agent, Point goal);
+    Path plan(Scene targetScene, Agent agent, Point goal);
 }
