@@ -161,7 +161,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
         if (type == STATIC_TYPE_WALL) {
             return new Wall(shape);
         } else if (type == STATIC_TYPE_GATE) {
-            return new Gate(shape);
+            return new SafetyRegion(shape);
         }
         return createStatic(shape);
     }

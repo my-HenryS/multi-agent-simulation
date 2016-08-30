@@ -9,8 +9,8 @@ import org.socialforce.model.SocialForceModel;
 /**
  * Created by Ledenel on 2016/8/14.
  */
-public class Gate extends Entity implements InteractiveEntity {
-    public Gate(Shape shape) {
+public class SafetyRegion extends Entity implements InteractiveEntity {
+    public SafetyRegion(Shape shape) {
         super(shape);
     }
 
