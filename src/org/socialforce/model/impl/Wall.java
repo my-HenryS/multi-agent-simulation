@@ -30,6 +30,9 @@ public class Wall extends Entity implements Blockable {
         super(shape);
     }
 
+    public Shape getShape(){
+        return shape;
+    }
 
     /**
      * get the total mass of the entity.

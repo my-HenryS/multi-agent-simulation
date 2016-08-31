@@ -13,7 +13,9 @@ public class SafetyRegion extends Entity implements InteractiveEntity {
     public SafetyRegion(Shape shape) {
         super(shape);
     }
-
+    public Shape getShape(){
+        return shape;
+    }
     /**
      * affect the target entity with this.
      * for example, walls can affect an agent (push them).

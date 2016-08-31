@@ -6,7 +6,7 @@ import org.socialforce.app.SceneValue;
 /**
  * Created by Whatever on 2016/8/31.
  */
-public class SVSR_ExitPosision implements SceneValue {
+public class SVSR_ExitPosition implements SceneValue{
     @Override
     public String getName() {
         return null;
