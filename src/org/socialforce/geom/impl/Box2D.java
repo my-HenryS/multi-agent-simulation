@@ -388,4 +388,25 @@ public class Box2D implements Box {
         }
         else throw new IllegalArgumentException("目前阶段不支持其它图形的切割，只支持两个矩形的切割");
     }
+
+    /**
+     * 控制伸展的方向。
+     * true为X方向，false为Y方向。
+     * 默认为0
+     */
+    protected boolean expandDirection = true;
+    public void setExpandDirection(boolean direction){
+        expandDirection = direction;
+    }
+    @Override
+    public void expandTo(double width) {
+        if (expandDirection){
+            xmin = (xmax+xmin-width)/2;
+            xmax = (xmin+xmax+width)/2;
+        }
+        else {
+            ymin = (ymax+ymin-width)/2;
+            ymax = (ymin+ymax+width)/2;
+        }
+    }
 }
