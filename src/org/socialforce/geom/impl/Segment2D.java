@@ -10,7 +10,7 @@ import org.socialforce.geom.Shape;
  * defined by two point
  * Created by Whatever on 2016/8/10.
  */
-public class Line2D implements Shape {
+public class Segment2D implements Shape {
     //protected Point2D a, b;
     //protected double k1, b1, startX, endX;
     protected double x1, x2, y1, y2;
@@ -26,10 +26,10 @@ public class Line2D implements Shape {
         this.drawer = drawer;
     }
 
-    public Line2D() {
+    public Segment2D() {
     }
 
-    public Line2D(Point2D a, Point2D b) {
+    public Segment2D(Point2D a, Point2D b) {
         if (a == b) {
             throw new IllegalArgumentException("a and b can not be the same point");
         }
@@ -47,7 +47,7 @@ public class Line2D implements Shape {
         }*/
     }
 
-    public Line2D(double k1, double b1, double startX, double endX) {
+    public Segment2D(double k1, double b1, double startX, double endX) {
         if (startX == endX) {
             throw new IllegalArgumentException("a and b can not be the same point");
         }
@@ -183,20 +183,20 @@ public class Line2D implements Shape {
      * @return the copied line
      */
     @Override
-    public Line2D clone() {
-        Line2D cloned = new Line2D();
+    public Segment2D clone() {
+        Segment2D cloned = new Segment2D();
         cloned.x1 = x1;
         cloned.x2 = x2;
         cloned.y1 = y1;
         cloned.y2 = y2;
-        //Line2D lineClone = new Line2D(a, b);
+        //Segment2D lineClone = new Segment2D(a, b);
         return cloned;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Line2D) {
-            Line2D tg = (Line2D) obj;
+        if (obj instanceof Segment2D) {
+            Segment2D tg = (Segment2D) obj;
             if (Math.abs(x1 - tg.x1) < 1e-15 && Math.abs(y1 - tg.y1) < 1e-15) {
                 return Math.abs(x2 - tg.x2) < 1e-15 && Math.abs(y2 - tg.y2) < 1e-15;
             } else {
@@ -245,7 +245,7 @@ public class Line2D implements Shape {
     /*这个方法从来没有被调用过，目前来说不会引发任何的问题，
     主要是怕在set的时候如果k是无穷，只设置ab，没设置k1b1，导致之后直接调用k1b1时出现问题。
     但是目前的方法里暂时没有这种情况出现。
-    protected void quiteConvert(Line2D line){
+    protected void quiteConvert(Segment2D line){
             if (k1 < 9999) {
             //do nothing
             } else {
