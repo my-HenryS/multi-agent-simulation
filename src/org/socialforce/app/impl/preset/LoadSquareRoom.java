@@ -13,17 +13,16 @@ import java.io.InputStream;
  * Created by Whatever on 2016/8/31.
  */
 public class LoadSquareRoom implements SceneLoader {
-    public Wall w1,w2,w3,w4,w5,w6,w7,w8;
-    public SafetyRegion s1,s2,s3,s4;
+    public Wall w1,w2,w3,w4;
 
     @Override
     public void setSource(InputStream stream) {
-        //目前不从流中读取
+        //矩形房间不从流中读取
     }
 
     @Override
     public void setSource(File file) {
-        //目前不从文件中读取
+        //矩形房间不从文件中读取
     }
 
     @Override

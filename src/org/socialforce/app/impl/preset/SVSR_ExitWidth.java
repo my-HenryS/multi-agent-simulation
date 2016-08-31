@@ -6,7 +6,7 @@ import org.socialforce.app.SceneValue;
 /**
  * Created by Whatever on 2016/8/31.
  */
-public class ScenceValueSquareRoom implements SceneValue {
+public class SVSR_ExitWidth implements SceneValue {
     @Override
     public String getName() {
         return null;
