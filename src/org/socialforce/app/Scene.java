@@ -11,10 +11,8 @@ import org.socialforce.model.PathFinder;
 import java.util.stream.Stream;
 
 /**
- * represent a scene in social force simulations.
- * it could be traditional scene,
- * a cloned scene in Cloning strategy,
- * a bucket-self-managed scene in Bucket Clone strategy.
+ * 代表社会力仿真的一个场景（scene）
+ * 可以代表一个传统场景，被常规克隆的场景或者使用bucket策略克隆的场景
  * @see SocialForceApplication
  * @see Agent
  * @author Ledenel
@@ -22,59 +20,59 @@ import java.util.stream.Stream;
  */
 public interface Scene extends Drawable {
     /**
-     * calculate the next time step of the scene.
-     * the time step will also forward 1 unit.
+     * 计算场景的下一时步
+     * 时间会向前推移1个单位
      */
     void stepNext();
 
     /**
-     * get a set of agents the scene is managing.
-     * @return all agents.
+     * 获得本场景中包含的所有agent
+     * @return 所有的agent
      */
     AgentPool getAllAgents();
 
     /**
-     * get a set of static entities the scene is managing.
-     * @return all static entitites.
+     * 获得一系列本场景中包含的实体
+     * @return 所有的静态实体
      */
     EntityPool getStaticEntities();
 
     /**
-     * get a stream with all entities in the scene (including agents, walls, gates, etc.).
-     * the default implementation just concat agents and static entities(ordered).
-     * @return the stream.
+     * 获得一个本场景中的实体流 (包括agent，墙，出口etc.).
+     * 默认场景为一系列有序的实体和agent
+     * @return 数据流
      */
     // TODO: 2016/8/28 add parallel stream support.
     default Stream<InteractiveEntity> getAllEntitiesStream() {
         return Stream.concat(getAllAgents().stream(),getStaticEntities().stream());
     }
     /**
-     * get the bound of the scene.
-     * @return the bounds.
+     * 获得场景的边界
+     * @return 场景的边界
      */
     Box getBounds();
 
     /**
-     * get current time step in this scene.
-     * @return the current step.
+     * 获得场景的当前时间
+     * @return 当前的时间
      */
     int getCurrentSteps();
 
     /**
-     * get the path finder for this scene.
-     * @return the path finder.
+     * 获得本场景使用的寻路器
+     * @return 需使用的寻路器
      */
     PathFinder getPathFinder();
 
     /**
-     * set a path finder for this scene.
-     * @param finder the path finder for this scene.
+     * 为本场景设置一个寻路器
+     * @param finder 当前场景所需的寻路器
      */
     void setPathFinder(PathFinder finder);
 
     /**
-     * triggers while an agent is escaped.
-     * @param agent the escaped agent.
+     * 当一个agent逃离场景时被触发
+     * @param agent 逃离场景的agent
      */
     void onAgentEscape(Agent agent);
 

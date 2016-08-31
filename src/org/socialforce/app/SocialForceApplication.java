@@ -6,7 +6,7 @@ import org.socialforce.model.SocialForceModel;
 import java.util.List;
 
 /**
- * a social force simulation application with a set of scenes.
+ * 包含一系列场景的一个社会力模型应用
  * @see SocialForceModel
  * @see ApplicationListener
  * @author Ledenel
@@ -14,12 +14,13 @@ import java.util.List;
  */
 public interface SocialForceApplication {
     /**
-     * start the application immediately.
+     * 立即执行此模拟
      */
     void start();
 
     /**
      * get the social force model the application is using.
+     * TODO 这什么鬼意思，下一堆同
      * @return the model.
      */
     SocialForceModel getModel();
@@ -37,14 +38,14 @@ public interface SocialForceApplication {
     Iterable<Scene> getAllScenes();
 
     /**
-     * get the application listener for the application.
-     * @return the application listener.
+     * 获取模拟中正在被使用的listener
+     * @return 模拟的listener
      */
     AgentEscapeListener getApplicationListener();
 
     /**
-     * set a listener for application events.
-     * @param listener the listener to be set.
+     * 为模拟设置listener
+     * @param listener 需要被设置的listener
      */
     void setApplicationListener(AgentEscapeListener listener);
 

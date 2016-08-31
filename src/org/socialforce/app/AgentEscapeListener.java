@@ -7,9 +7,9 @@ import org.socialforce.model.Agent;
  */
 public interface AgentEscapeListener {
     /**
-     * triggered while a agent is escaped.
-     * @param scene the scene where the agent in.
-     * @param escapeAgent the escaped agent.
+     * 在Agent逃离场景时被触发的listener
+     * @param scene Agent所在的场景
+     * @param escapeAgent 逃跑的Agent
      */
     void onAgentEscape(Scene scene, Agent escapeAgent);
 }

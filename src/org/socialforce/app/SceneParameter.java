@@ -1,7 +1,8 @@
 package org.socialforce.app;
 
 /**
- * the parameter of a scene
+ * 场景的所有可变参数的集合，由一系列SceneValue组成
+ * 一个SceneParameter唯一确定一个场景
  */
 public interface SceneParameter<T extends Comparable<T>> extends Comparable<SceneParameter<T>> {
     String getName();

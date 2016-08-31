@@ -14,28 +14,25 @@ import java.text.AttributedCharacterIterator;
 import java.util.Map;
 
 /**
+ * TODO 里面有少说1500行的文档，需要些时间慢慢推进
  * Created by Ledenel on 2016/8/24.
  */
 public class ProxyedGraphics2D extends Graphics2D {
     /**
-     * Draws a 3-D highlighted outline of the specified rectangle.
-     * The edges of the rectangle are highlighted so that they
-     * appear to be beveled and lit from the upper left corner.
+     * 绘制出指定长方形的3D高亮轮廓
+     * 长方形的四边被高亮显示以达到从左上角被斜拉起的效果
      * <p>
-     * The colors used for the highlighting effect are determined
-     * based on the current color.
-     * The resulting rectangle covers an area that is
-     * <code>width&nbsp;+&nbsp;1</code> pixels wide
-     * by <code>height&nbsp;+&nbsp;1</code> pixels tall.  This method
-     * uses the current <code>Color</code> exclusively and ignores
-     * the current <code>Paint</code>.
-     * @param x the x coordinate of the rectangle to be drawn.
-     * @param y the y coordinate of the rectangle to be drawn.
-     * @param width the width of the rectangle to be drawn.
-     * @param height the height of the rectangle to be drawn.
-     * @param raised a boolean that determines whether the rectangle
-     *                      appears to be raised above the surface
-     *                      or sunk into the surface.
+     * 高亮显示所用的颜色取决于当前使用的颜色
+     * 显示结果中的长方形边覆盖了
+     * <code>width&nbsp;+&nbsp;1</code> 个像素宽
+     * <code>height&nbsp;+&nbsp;1</code> 个像素高的区域
+     * 该方法使用仅当前 <code>Color</code>
+     * 并忽略当前的 <code>Paint</code>.
+     * @param x 所画长方形的X坐标
+     * @param y 所画长方形的Y坐标
+     * @param width 所画长方形的宽度
+     * @param height 所画长方形的高度
+     * @param raised 一个决定该长方形效果是浮于上方还是沉于下方的布尔函数
      * @see         Graphics#fill3DRect
      */
     @Override
@@ -44,20 +41,17 @@ public class ProxyedGraphics2D extends Graphics2D {
     }
 
     /**
-     * Paints a 3-D highlighted rectangle filled with the current color.
-     * The edges of the rectangle are highlighted so that it appears
-     * as if the edges were beveled and lit from the upper left corner.
-     * The colors used for the highlighting effect and for filling are
-     * determined from the current <code>Color</code>.  This method uses
-     * the current <code>Color</code> exclusively and ignores the current
-     * <code>Paint</code>.
-     * @param x the x coordinate of the rectangle to be filled.
-     * @param y the y coordinate of the rectangle to be filled.
-     * @param       width the width of the rectangle to be filled.
-     * @param       height the height of the rectangle to be filled.
-     * @param       raised a boolean value that determines whether the
-     *                      rectangle appears to be raised above the surface
-     *                      or etched into the surface.
+     * 填充指定长方形的3D高亮轮廓
+     * 长方形的四边被高亮显示以达到从左上角被斜拉起的效果
+     * <p>
+     * 高亮显示所用的颜色取决于当前使用的颜色
+     * 该方法使用仅当前 <code>Color</code>
+     * 并忽略当前的 <code>Paint</code>.
+     * @param x 所画长方形的X坐标
+     * @param y 所画长方形的Y坐标
+     * @param width 所画长方形的宽度
+     * @param height 所画长方形的高度
+     * @param raised 一个决定该长方形效果是浮于上方还是沉于下方的布尔函数
      * @see         Graphics#draw3DRect
      */
     @Override

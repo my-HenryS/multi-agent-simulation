@@ -3,26 +3,26 @@ package org.socialforce.app;
 import org.socialforce.model.Agent;
 
 /**
- * the listener for a social force simulation application.
+ * 包含一系列社会力模型应用的listener
  * @author Ledenel
  * @see SocialForceApplication
  * Created by Ledenel on 2016/8/3.
  */
 public interface ApplicationListener extends AgentEscapeListener {
     /**
-     * triggered while the application is start.
+     * 当该应用被启用时触发的listener
      */
     void onStart();
 
     /**
-     * triggered while the application is stop.
-     * @param terminated whether the application is forced to shut down.
+     * 当该应用停止时被触发的listener
+     * @param terminated 描述进程是否被强制终止
      */
     void onStop(boolean terminated);
 
     /**
-     * triggered while a scene is step-forwarded.
-     * @param scene the scene steped-forwarded.
+     * 当场景时序超前时被触发
+     * @param scene 时序超前的场景
      */
     void onStep(Scene scene);
 
