@@ -380,12 +380,12 @@ public class Box2D implements Box {
                         complexbox.SetWithArray(dictionary);
             return complexbox;
                     }
-                    else throw new IllegalArgumentException("目前阶段只支持十字形切两个矩形");
+                    else throw new IllegalArgumentException("目前阶段不支持以一般方式进行矩形切割，只支持十字形切割");
                 }
-                else throw new IllegalArgumentException("目前阶段只支持十字形切两个矩形");
+                else throw new IllegalArgumentException("目前阶段不支持以一般方式进行矩形切割，只支持十字形切割");
             }
             else return shape;
         }
-        else throw new IllegalArgumentException("目前阶段只支持切两个矩形");
+        else throw new IllegalArgumentException("目前阶段不支持其它图形的切割，只支持两个矩形的切割");
     }
 }
