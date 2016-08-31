@@ -6,7 +6,10 @@ import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
 
 /**
- * a set of Boxes
+ * 一组BOX的集合，对这些BOX的位置条件暂无要求。
+ * 可能需要避免重叠等。
+ * TODO: 明显需要支持更多的功能，包括更加奇怪的切削拼组，退化成BOX，和一些Shape的基本功能。
+ * @see Box
  * Created by Whatever on 2016/8/31.
  */
 public class ComplexBox2D implements Shape {
