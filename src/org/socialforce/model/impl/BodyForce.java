@@ -33,7 +33,7 @@ public class BodyForce implements ForceRegulation{
         k1 = 1.2 * 100000;
         k2 = 2.4 * 100000;
         g = 0;
-        argumentX = 1;
+        argumentX = 1;    //TODO: find proper argumentX
         double temp[] = new double[2];
         tempVector = (Vector2D) ((Agent)interactiveEntity).getVelocity().clone();
         tempVector.sub(((Agent)interactiveEntity2).getVelocity());
@@ -41,7 +41,7 @@ public class BodyForce implements ForceRegulation{
                 interactiveEntity.getShape().getReferencePoint().getY() -  interactiveEntity2.getShape().getReferencePoint().getY());
         n.set(n.getRefVector());
         n.get(temp);
-        t = new Vector2D(-temp[1],temp[0]);
+        t = new Vector2D(-temp[1],temp[0]);                   //TODO: 改为不直接关联几何层的概念
         distance = interactiveEntity.getShape().getReferencePoint().distanceTo(interactiveEntity2.getShape().getReferencePoint())
                 - ((Circle2D) interactiveEntity.getShape()).getRadius()-((Circle2D) interactiveEntity2.getShape()).getRadius();
         if (distance < 0){g = argumentX;}
