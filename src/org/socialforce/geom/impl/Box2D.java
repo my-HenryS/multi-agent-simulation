@@ -14,7 +14,7 @@ import java.util.HashMap;
  */
 public class Box2D implements Box {
     /**
-     * Indicates whether some other object is "equal to" this one.
+     * 指示是否有其他对象“等于”这一个.
      * <p>
      * The {@code equals} method implements an equivalence relation
      * on non-null object references:
@@ -119,10 +119,10 @@ public class Box2D implements Box {
     }
 
     /**
-     * check if a point belongs to this <code>Shape</code>.
+     * 检查点是否属于 <code>Shape</code>.
      *
-     * @param point the point to be checked.
-     * @return true if the point is a part of the shape; otherwise false.
+     * @param point 将被检查的点.
+     * @return 如果点是该形状的一部分，就为真，否则为假.
      */
     @Override
     public boolean contains(Point point) {
@@ -133,12 +133,12 @@ public class Box2D implements Box {
     }
 
     /**
-     * get the distance between a point and this shape.
-     * the distance is 0 if the point is in this shape.
-     * Double.NaN for the void shape.
+     * 获取点到形状的距离.
+     * 如果点在形状上，距离就是0.
+     * Double.NaN 表示空形状.
      *
-     * @param point the point to be checked.
-     * @return the distance. return Double.NaN if the point can't reach the shape.
+     * @param point 将被检查的点.
+     * @return 距离. 如果点不能到形状上话，返回 Double.NaN .
      */
     @Override
     public double getDistance(Point point) {
@@ -182,11 +182,11 @@ public class Box2D implements Box {
     }
 
     /**
-     * get the reference point of this shape.
-     * usually a reference point is the center point of this shape.
-     * for a circle/ball, it is the center.
+     * 获取这个形状的参考点.
+     * 参考点通常是这个形状的中心点.
+     * 对于球面/球体，参考点就是中心点.
      *
-     * @return the reference point. returns null if the shape is void.
+     * @return 参考点.如果该形状是空的话，就返回空.
      */
     @Override
     public Point getReferencePoint() {
@@ -194,11 +194,11 @@ public class Box2D implements Box {
     }
 
     /**
-     * get the bound of this shape.
-     * returns null if the shape can't be put into a box.
-     * returns a void shape if the shape itself is void.
+     * 获取该形状的边界.
+     * 如果该形状不能放进一个box的话，返回空.
+     * 如果该形状是空的话，返回空的形状.
      *
-     * @return a box represent the bounds of this shape.
+     * @return 一个代表该形状边界的box.
      */
     @Override
     public Box getBounds() {
@@ -214,10 +214,10 @@ public class Box2D implements Box {
     }
 
     /**
-     * checks if this shape intersects with a box called hitbox.
+     * 检查该形状是否与一个hitbox的box有交集.
      *
-     * @param hitbox the box to be checked.
-     * @return true if intersects; otherwise false.
+     * @param hitbox 将被检查的box.
+     * @return 如果相交，为真，否则为假.
      */
     @Override
     public boolean hits(Box hitbox) {
@@ -229,11 +229,11 @@ public class Box2D implements Box {
     }
 
     /**
-     * move the shape to a specified location.
-     * for the non-void shape, the reference point is equals to the location point.
-     * for the void shape, do nothing.
+     * 移动这个形状到一个指定的位置.
+     * 对于一个非空的形状，参考点等于位置点.
+     * 对于空的形状，什么也不做.
      *
-     * @param location the specified location
+     * @param location 指定的位置
      */
     @Override
     public void moveTo(Point location) {
@@ -259,9 +259,9 @@ public class Box2D implements Box {
     }
 
     /**
-     * creates and returns a copy of this shape.
+     * 创建并返回这个形状的副本.
      *
-     * @return the copied shape.
+     * @return 这个形状的副本.
      */
     @Override
     public Shape clone() {
@@ -274,9 +274,9 @@ public class Box2D implements Box {
     }
 
     /**
-     * get the start point of the box.
+     * 获取box的起点.
      *
-     * @return the start point.
+     * @return 起点.
      */
     @Override
     public Point getStartPoint() {
@@ -284,9 +284,9 @@ public class Box2D implements Box {
     }
 
     /**
-     * get the end point of the box.
+     * 获取box的终点.
      *
-     * @return the end point.
+     * @return 终点.
      */
     @Override
     public Point getEndPoint() {
@@ -294,9 +294,9 @@ public class Box2D implements Box {
     }
 
     /**
-     * get the size of the box.
+     * 获取box的规模大小.
      *
-     * @return the vector represented the size.
+     * @return 代表规模大小的向量.
      */
     @Override
     public Vector getSize() {
@@ -304,10 +304,10 @@ public class Box2D implements Box {
     }
 
     /**
-     * returns the intersection of this box and other box.
+     * 返回该box和另外box的交集.
      *
-     * @param other the box to be intersected.
-     * @return the intersection.
+     * @param other 有交集的box.
+     * @return 交集.
      */
     @Override
     public Box intersect(Box other) {
@@ -344,9 +344,9 @@ public class Box2D implements Box {
     }
 
     /**
-     * get the dimension of the DimensionEntity.
+     * 获取 DimensionEntity 的维度.
      *
-     * @return the dimension.
+     * @return 维度.
      */
     @Override
     public int dimension() {

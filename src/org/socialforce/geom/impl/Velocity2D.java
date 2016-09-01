@@ -16,10 +16,10 @@ public class Velocity2D extends Vector2D implements Velocity {
 
     /**
      * accumulate the total distance in specific time.
-     *
      * @param time the time to be accumulated.
      * @return the delta distance vector.
      */
+
     @Override
     public Vector deltaDistance(double time) {
         return new Vector2D(values[0] * time, values[1] * time);

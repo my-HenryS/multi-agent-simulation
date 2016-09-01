@@ -4,7 +4,7 @@ import org.socialforce.geom.Shape;
 import org.socialforce.geom.Vector;
 
 /**
- * represent objects which have dimesion-limits.
+ * 代表有尺寸限制的对象.
  * @author Ledenel
  * @see Vector
  * @see Shape
@@ -12,9 +12,9 @@ import org.socialforce.geom.Vector;
  */
 public interface DimensionEntity {
     /**
-     * get the dimension of the DimensionEntity.
+     * 获取该DimensionEntity的尺寸.
      *
-     * @return the dimension.
+     * @return 尺寸.
      */
     int dimension();
 

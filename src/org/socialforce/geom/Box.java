@@ -1,10 +1,10 @@
 package org.socialforce.geom;
 
 /**
- * represent a box.
- * a box is a special shape which can be bounds of other shapes. <br>
- * usually it is rectangle or cuboid which edges are parallel to the coordinates.<br>
- * a start point and a end point define a box like this: <br>
+ * 表示一个box.
+ * box是一种特殊的形状，它可以是其他形状的边界. <br>
+ * 它通常是边界坐标平行的长方形或长方体.<br>
+ * 一个起点和一个终点就可以定义一个box，定义如下: <br>
  * -----------.(end point)<br>
  * |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>
  * |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>
@@ -14,35 +14,35 @@ package org.socialforce.geom;
  *
  * @author Ledenel
  * @see Shape
- * Created by Ledenel on 2016/8/1.
+ * Created by Ledenel on 2016/8/1 .
  */
 public interface Box extends Shape {
     /**
-     * get the start point of the box.
+     * 获取box的起点.
      *
-     * @return the start point.
+     * @return 起点.
      */
     Point getStartPoint();
 
     /**
-     * get the end point of the box.
+     * 获取box的终点.
      *
-     * @return the end point.
+     * @return 终点.
      */
     Point getEndPoint();
 
     /**
-     * get the size of the box.
+     * 获取box规模大小.
      *
-     * @return the vector represented the size.
+     * @return 代表规模大小的向量.
      */
     Vector getSize();
 
     /**
-     * returns the intersection of this box and other box.
+     * 返回该box和其他box相交的部分.
      *
-     * @param other the box to be intersected.
-     * @return the intersection.
+     * @param other 该box是相交的.
+     * @return 相交的部分.
      */
     Box intersect(Box other);
 
