@@ -4,6 +4,7 @@ import org.socialforce.geom.Force;
 import org.socialforce.model.*;
 
 /**
+ * 定义了PsychologicalForceRegulation类，其继承于父类TypeMatchRegulation
  * Created by Ledenel on 2016/8/19.
  */
 
@@ -13,7 +14,8 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Interactiv
     public static final double B = 0.18;
 
     /**
-     * regualate(or caclculate) the psychological force between two agent
+     *TODO regulate 是翻译成调节还是控制，还是计算的意思？
+     *  计算两个agent之间的心理作用力。
      * @param agentClass
      * @param agentClass2
      * @param model
@@ -24,10 +26,10 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Interactiv
     }
 
     /**
-     * judge if there has psychological force between two agent(????应该得区别于ForceRegulation 中的 hasForce)
+     * 判断两个agent之间是否有心理作用力。
      * @param source
      * @param target
-     * @return tree if  there has psychological force between two agent.
+     * @return tree  如果两个agent之间是有心理作用力则返回真。
      */
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
@@ -35,7 +37,7 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Interactiv
     }
 
     /**
-     *  get the psychological force between  source and target
+     *获取源实体和目标实体之间的作用力。
      * @param source
      * @param target
      * @return force

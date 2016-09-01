@@ -10,7 +10,7 @@ import org.socialforce.model.*;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
+/**定义SimpleSocialForceModel类，其实现了接口SocialForceModel的方法
  * Created by Ledenel on 2016/8/17.
  */
 public class SimpleSocialForceModel implements SocialForceModel {
@@ -33,9 +33,9 @@ public class SimpleSocialForceModel implements SocialForceModel {
     }
 
     /**
-     * get the constraint that how much time is a step.
+     * 获取每一步的时间。
      *
-     * @return time per step. the unit is second.
+     * @return TIME_PER_STEP 每一步的时间，单位是s.
      */
     @Override
     public double getTimePerStep() {

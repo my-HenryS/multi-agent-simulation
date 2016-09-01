@@ -6,15 +6,16 @@ import org.socialforce.geom.Shape;
 import org.socialforce.model.SocialForceModel;
 
 /**
- * Created by Ledenel on 2016/8/14.
+ * 定义了抽象类Entity，其实现了接口InteractiveEntity的方法。
+ *  * Created by Ledenel on 2016/8/14.
  */
 public abstract class Entity implements InteractiveEntity {
     protected SocialForceModel model;
     protected Shape shape;
 
     /**
-     *
-     * @return
+     * 获取实体的名称
+     * @return name
      */
     @Override
     public String getName() {
@@ -22,7 +23,7 @@ public abstract class Entity implements InteractiveEntity {
     }
 
     /**
-     *  set the name of the entity
+     * 设置实体的名称
      * @param name
      */
     @Override
@@ -51,18 +52,20 @@ public abstract class Entity implements InteractiveEntity {
     }
 
     /**
-     * set the Shape of the entity
-     * @param shape
+     * 设置一个实体的形状
+     * 如线，矩形，圆等。
+     *
+     * @return shape 实体的形状.
      */
     public void setShape(Shape shape) {
         this.shape = shape;
     }
 
     /**
-     * get the Shape of this entity.
-     * line, square, circle etc.
+     * 获取一个实体的形状
+     * 如线，矩形，圆等。
      *
-     * @return the shape.
+     * @return shape 实体的形状.
      */
     @Override
     public Shape getShape() {
@@ -70,9 +73,9 @@ public abstract class Entity implements InteractiveEntity {
     }
 
     /**
-     * get the social force model the entity is using.
+     * 获取社会模型中使用的实体模型
      *
-     * @return the model.
+     * @return model 模型
      */
     @Override
     public SocialForceModel getModel() {
@@ -80,9 +83,9 @@ public abstract class Entity implements InteractiveEntity {
     }
 
     /**
-     * set the social force model.
+     * 设置社会力模型。
      *
-     * @param model the model.
+     * @param model 模型
      */
     @Override
     public void setModel(SocialForceModel model) {
@@ -90,10 +93,9 @@ public abstract class Entity implements InteractiveEntity {
     }
 
     /**
-     * place this entity on a specific point.
-     * the shape will {@code moveTo} that point.
-     *
-     * @param point the target point.
+     * 将该实体放置在一个特殊的点上。
+     * TODO the shape will {@code moveTo} that point.
+     * @param point 目标点。
      */
     @Override
     public void placeOn(Point point) {

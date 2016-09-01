@@ -18,9 +18,9 @@ import org.socialforce.geom.*;
  */
 public interface SocialForceModel {
     /**
-     * get the constraint that how much time is a step.
+     * 获取每一步的时间。
      *
-     * @return time per step. the unit is second.
+     * @return TIME_PER_STEP 每一步的时间，单位是s.
      */
     double getTimePerStep();
 

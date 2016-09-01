@@ -5,8 +5,8 @@ import org.socialforce.geom.*;
 import org.socialforce.model.*;
 
 /**
- * Created by Ledenel on 2016/8/15.
  * 定义BaseAgent类，其继承于父类Entity，并实现了接口Agent 的方法。
+ * Created by Ledenel on 2016/8/15.
  */
 public class BaseAgent extends Entity implements Agent {
     Velocity currVelocity;
@@ -50,7 +50,6 @@ public class BaseAgent extends Entity implements Agent {
      * 将实体以一定大小的力推向目标点。
      *
      * @param force 推时力的大小
-     * (TODO 为什么该方法也是@Override)
      */
     @Override
     public void push(Force force) {
@@ -237,7 +236,6 @@ public class BaseAgent extends Entity implements Agent {
     /**
      * 获取实体的质量。
      * 通常质量位于形状的参考点上（或者是位于质心上）TODO
-     *
      * @return the mass.
      */
     @Override

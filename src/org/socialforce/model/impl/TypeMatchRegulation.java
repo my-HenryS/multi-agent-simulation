@@ -31,10 +31,10 @@ public abstract class TypeMatchRegulation<Source extends InteractiveEntity, Targ
     protected SocialForceModel model;
 
     /**
-     * judge if there has force between source and target
+     * 判断两个agent之间是否有心理作用力。
      * @param source
      * @param target
-     * @return true if there has force between source and target
+     * @return tree  如果两个agent之间是有心理作用力则返回真。
      */
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
