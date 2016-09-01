@@ -394,13 +394,13 @@ public class Box2D implements Box {
      * true为X方向，false为Y方向。
      * 默认为0
      */
-    protected boolean expandDirection = true;
-    public void setExpandDirection(boolean direction){
-        expandDirection = direction;
+    protected boolean xAxisExpanded = true;
+    public void setxAxisExpanded(boolean direction){
+        xAxisExpanded = direction;
     }
     @Override
     public void expandTo(double width) {
-        if (expandDirection){
+        if (xAxisExpanded){
             xmin = (xmax+xmin-width)/2;
             xmax = (xmin+xmax+width)/2;
         }
