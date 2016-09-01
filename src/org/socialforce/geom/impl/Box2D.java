@@ -392,7 +392,7 @@ public class Box2D implements Box {
     /**
      * 控制伸展的方向。
      * true为X方向，false为Y方向。
-     * 默认为0
+     * 默认为向X方向伸展，即true
      */
     protected boolean xAxisExpanded = true;
     public void setxAxisExpanded(boolean direction){
