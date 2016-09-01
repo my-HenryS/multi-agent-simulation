@@ -16,7 +16,7 @@ package org.socialforce.geom;
  * @see Shape
  * Created by Ledenel on 2016/8/1.
  */
-public interface Box extends Shape,ClippableShape,ClipperShape {
+public interface Box extends Shape,ClippableShape,ClipperShape,Expandable {
     /**
      * get the start point of the box.
      *
