@@ -11,10 +11,9 @@ import org.socialforce.model.SocialForceModel;
  */
 public class Wall extends Entity implements Blockable {
     /**
-     * affect the target entity with this.
-     * for example, walls can affect an agent (push them).
-     *
-     * @param affectedEntity the entity to be affected.
+     * 当前this所影响的实体
+     * 例如，墙会影响agent(反作用，反推)
+     * @param affectedEntity 被影响的实体
      * @see Agent
      * @see SocialForceModel
      */
@@ -30,11 +29,9 @@ public class Wall extends Entity implements Blockable {
         super(shape);
     }
 
-
     /**
-     * get the total mass of the entity.
-     * usually the mass is all on the shape's reference point.
-     *
+     * 获取实体的质量。
+     * 通常质量位于形状的参考点上（或者是位于质心上）
      * @return the mass.
      */
     @Override

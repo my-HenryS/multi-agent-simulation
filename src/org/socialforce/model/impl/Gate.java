@@ -57,7 +57,8 @@ public class Gate extends Entity implements InteractiveEntity {
     /**
      * 获取实体的质量。
      * 通常质量位于形状的参考点上（或者是位于质心上）
-     * @return POSITIVE_INFINITY.
+     * TODO POSITIVE_INFINITY(返回正无穷？)
+     * @return mass.
      */
     @Override
     public double getMass() {
