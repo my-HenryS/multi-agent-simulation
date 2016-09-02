@@ -14,8 +14,9 @@ public interface PathFinder {
 
     /**
      * 从起点到目标点之间产生一条路径。
-     * @param start 起点。
-     * @param end 终点。
+     * @param targetScene 路径所在的场景。
+     * @param agent 需要规划的Agent。
+     * @param goal Agent的目标点。
      * @return 搜索出的路径。
      */
     Path plan(Scene targetScene, Agent agent, Point goal);
