@@ -1,10 +1,7 @@
 package org.socialforce.geom.impl;
 
 import org.socialforce.drawer.Drawer;
-import org.socialforce.geom.Box;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
-import org.socialforce.geom.Vector;
+import org.socialforce.geom.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -351,5 +348,65 @@ public class Box2D implements Box {
     @Override
     public int dimension() {
         return 2;
+    }
+
+
+    /**
+     * 目前只支持两个BOX以十字形互相切
+     * 其它奇怪切暂时不支持
+     * 等有支持的必要的时候再添加
+     * @param shape
+     * @return
+     */
+    @Override
+    public Shape clip(ClippableShape shape) {
+        ComplexBox2D complexbox = new ComplexBox2D();
+        Point[][] dictionary = new Point[2][];
+        if(shape instanceof Box2D){
+            if (hits(shape.getBounds())){
+                if ((((Box2D) shape).getStartPoint().getX()<getStartPoint().getX()&&getEndPoint().getX()<((Box2D) shape).getEndPoint().getX())
+                        ||(((Box2D) shape).getStartPoint().getX()>getStartPoint().getX()&&getEndPoint().getX()>((Box2D) shape).getEndPoint().getX())){
+                    if ((((Box2D) shape).getStartPoint().getY()<getStartPoint().getY()&&getEndPoint().getY()<((Box2D) shape).getEndPoint().getY())
+                            ||(((Box2D) shape).getStartPoint().getY()>getStartPoint().getY()&&getEndPoint().getY()>((Box2D) shape).getEndPoint().getY())){
+                        dictionary[0][0] = getStartPoint();
+                        dictionary[1][1] = getEndPoint();
+                        if (((Box2D) shape).getStartPoint().getX()<getStartPoint().getX()){
+                        dictionary[1][0] = new Point2D(((Box2D) shape).getStartPoint().getX(),getEndPoint().getY());
+                        dictionary[1][0] = new Point2D(((Box2D) shape).getEndPoint().getX(),getStartPoint().getY());}
+                        else {
+                            dictionary[1][0] = new Point2D(getEndPoint().getX(),((Box2D) shape).getStartPoint().getY());
+                            dictionary[1][0] = new Point2D(getStartPoint().getX(),((Box2D) shape).getEndPoint().getY());
+                        }
+                        complexbox.SetWithArray(dictionary);
+            return complexbox;
+                    }
+                    else throw new IllegalArgumentException("目前阶段不支持以一般方式进行矩形切割，只支持十字形切割");
+                }
+                else throw new IllegalArgumentException("目前阶段不支持以一般方式进行矩形切割，只支持十字形切割");
+            }
+            else return shape;
+        }
+        else throw new IllegalArgumentException("目前阶段不支持其它图形的切割，只支持两个矩形的切割");
+    }
+
+    /**
+     * 控制伸展的方向。
+     * true为X方向，false为Y方向。
+     * 默认为向X方向伸展，即true
+     */
+    protected boolean xAxisExpanded = true;
+    public void setxAxisExpanded(boolean direction){
+        xAxisExpanded = direction;
+    }
+    @Override
+    public void expandTo(double width) {
+        if (xAxisExpanded){
+            xmin = (xmax+xmin-width)/2;
+            xmax = (xmin+xmax+width)/2;
+        }
+        else {
+            ymin = (ymax+ymin-width)/2;
+            ymax = (ymin+ymax+width)/2;
+        }
     }
 }

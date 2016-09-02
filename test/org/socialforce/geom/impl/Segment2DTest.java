@@ -10,17 +10,17 @@ import static org.junit.Assert.*;
 /**
  * Created by Whatever on 2016/8/10.
  */
-public class Line2DTest {
-    Line2D testline;
-    Line2D vecline;
+public class Segment2DTest {
+    Segment2D testline;
+    Segment2D vecline;
     double k2,b2,startX1,endX1;
     Point2D a,b;
     @Before
     public void setUp() throws Exception {
-    testline = new Line2D(1,2,0,5);
+    testline = new Segment2D(1,2,0,5);
         a = new Point2D(0,2);
         b = new Point2D(0,0);
-        vecline = new Line2D(a,b);
+        vecline = new Segment2D(a,b);
     }
 
     @Test
@@ -64,12 +64,12 @@ public class Line2DTest {
 
     @Test (expected = IllegalArgumentException.class)
     public void setUpTest(){
-        testline = new Line2D(3,5,1,1);
+        testline = new Segment2D(3,5,1,1);
     }
 /*
     @Test
     public void setparXY(){
-        Line2D setX = new Line2D() ,setY = new Line2D();
+        Segment2D setX = new Segment2D() ,setY = new Segment2D();
         setX.setParallelX(10,5,2);
         setY.setParallelY(10,5,2);
         assertEquals(8,setX.getDistance(new Point2D(0,2)),0);

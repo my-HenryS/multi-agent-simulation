@@ -60,7 +60,7 @@ public interface SocialForceModel {
      * @param shape agent 的形状。
      * @return 返回被创建的agent.
      */
-    Agent createAgent(Shape shape);
+    Agent createAgent(DistanceShape shape);
 
     /**
      * 根据具体形状，类型参数来创建agent.
@@ -68,7 +68,7 @@ public interface SocialForceModel {
      * @param type  agent 的类型。
      * @return 返回被创建的agent.
      */
-    Agent createAgent(Shape shape, int type);
+    Agent createAgent(DistanceShape shape, int type);
 
     /**
      * 根据默认的设置来创建静态物体。

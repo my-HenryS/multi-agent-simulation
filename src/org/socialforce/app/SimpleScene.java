@@ -59,11 +59,11 @@ public class SimpleScene implements Scene {
         // 2016/8/23 add step for all agent and statics.
     }
 
-    public ApplicationListener getListener() {
+    public AgentEscapeListener getListener() {
         return listener;
     }
 
-    public void setListener(ApplicationListener listener) {
+    public void setListener(AgentEscapeListener listener) {
         this.listener = listener;
     }
 
@@ -143,7 +143,7 @@ public class SimpleScene implements Scene {
     }
 
 
-    ApplicationListener listener;
+    AgentEscapeListener listener;
     /**
      * triggers while an agent is escaped.
      *
@@ -167,7 +167,7 @@ public class SimpleScene implements Scene {
         this.application = application;
     }
 
-    // TODO: 2016/8/24 add visible settings and valueset.
+    //  2016/8/24 add visible settings and valueset.
 
     /**
      * judege if it is visible

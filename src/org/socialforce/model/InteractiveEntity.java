@@ -15,6 +15,10 @@ import org.socialforce.geom.Shape;
  * @see Agent
  */
 public interface InteractiveEntity {
+    Scene getScene();
+
+    void setScene(Scene scene);
+
     /**
      * 获取实体的名称
      * @return name 名称

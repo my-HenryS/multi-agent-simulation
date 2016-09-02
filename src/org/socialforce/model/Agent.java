@@ -11,7 +11,7 @@ import org.socialforce.geom.Velocity;
  * @author Ledenel
  * Created by Ledenel on 2016/7/28.
  */
-public interface Agent extends InteractiveEntity ,Moveable, Blockable {
+public interface Agent extends InteractiveEntity, Moveable, Blockable {
 
     /**
      * 获取一个实体的形状
@@ -37,7 +37,7 @@ public interface Agent extends InteractiveEntity ,Moveable, Blockable {
      * @see Velocity
      */
     Velocity expect();
-    
+
     /**
      * 决定下一步，agent要走向的目标点。
      * 同时，agent也会被社会力驱动。
@@ -56,14 +56,14 @@ public interface Agent extends InteractiveEntity ,Moveable, Blockable {
      * @return 代表要移动的距离和方向的向量。
      */
     Vector determineNext();
-    
+
     /**
      * 获取当前时刻，agent的timestep （TODO这里的这个timestep翻译成时刻？）
      * timestep从0开始（仿真开始）
      * @return 当前的timestep
      */
     int getCurrentSteps();
-
+    
     /**
      * 使用determineNext()方法计算出的结果。
      * 该方法会将时间往前推进一步。
