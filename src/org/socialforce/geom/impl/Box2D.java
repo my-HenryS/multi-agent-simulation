@@ -47,7 +47,7 @@ public class Box2D implements Box {
      * 注意，通常当此方法被重写了，就有必要重写{@code hashCode}方法，目的是保持{@code hashCode}法的一般的约定，
      * 即平等的对象必须具有相同散列码
      * @param obj 要进行比较的参考对象.
-     * @return  如果这个对象与该obj的参数相同就返回 {@code true} ，否则返回 {@code false} .
+     * @return  如果这个对象与该 obj 的参数相同就返回 {@code true} ，否则返回 {@code false}.
      * @see #hashCode()
      * @see HashMap
      */

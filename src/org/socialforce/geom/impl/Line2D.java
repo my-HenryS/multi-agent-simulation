@@ -7,7 +7,7 @@ import org.socialforce.geom.Shape;
 
 /**这是一个二维的线段
  *
- * 有两个点定义
+ * 有两个点定义.
  * Created by Whatever on 2016/8/10.
  */
 public class Line2D implements Shape {

@@ -15,7 +15,7 @@ public interface Point extends Vector {
     double getX();
     
     /**
-     * 获取该点的Y坐标
+     * 获取该点的Y坐标.
      * @return Y坐标
      */ 
     double getY();

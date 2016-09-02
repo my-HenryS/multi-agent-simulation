@@ -7,7 +7,7 @@ import org.socialforce.geom.Point;
  */
 public class Point2D extends Vector2D implements Point {
     /**
-     * 获取点的X坐标
+     * 获取点的X坐标.
      *
      * @return 坐标X
      */

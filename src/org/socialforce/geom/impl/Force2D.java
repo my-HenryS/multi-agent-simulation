@@ -15,7 +15,7 @@ public class Force2D extends Vector2D implements Force {
     }
 
     /**
-     * 累积的力和获取速度的增量.
+     * 累积的力和获取速度的增量 .
      *
      * @param mass 实体的质量.
      * @param time 累积的时间.

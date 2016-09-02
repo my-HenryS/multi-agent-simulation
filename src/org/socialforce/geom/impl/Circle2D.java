@@ -7,7 +7,7 @@ import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
 
 /**
- * 这是一个由它的半径和中心点设置的二维圆.
+ * 这是一个由它的半径和中心点设置的二维圆 .
  * Created by Whatever on 2016/8/8.
  */
 

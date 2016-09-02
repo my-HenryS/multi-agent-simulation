@@ -28,7 +28,7 @@ public class Velocity2D extends Vector2D implements Velocity {
     /**
      * 创建并返回这个向量的副本.
      * “复制”的精确含义可能取决于这个向量的类.
-     * 对于任意向量x，它的一般含义表达式是: <br>
+     * 对于任意向量x，它的一般含义表达式是:  <br>
      * x.clone() != x <br>
      * 将为真.
      *
