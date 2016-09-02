@@ -5,7 +5,7 @@ import org.socialforce.geom.Vector;
 import java.util.HashMap;
 
 /**
- * an simple 2-D Vector.
+ * 一个简单的二维向量an simple 2-D Vector.
  *
  * @author Ledenel
  * @see Vector
@@ -19,48 +19,40 @@ public class Vector2D implements Vector {
     }
 
     /**
-     * Indicates whether some other object is "equal to" this one.
+     * 表明是否有其他对象“等于”这一个.
      * <p>
-     * The {@code equals} method implements an equivalence relation
-     * on non-null object references:
+     * {@code equals} 在对非空对象引用上，该方法实现了一个等价关系:
      * <ul>
-     * <li>It is <i>reflexive</i>: for any non-null reference value
-     * {@code x}, {@code x.equals(x)} should return
+     * <li> 它是 <i> 它的对立是 </i>: 对于任何非空参考值
+     * {@code x}, {@code x.equals(x)} 应该返回
      * {@code true}.
-     * <li>It is <i>symmetric</i>: for any non-null reference values
-     * {@code x} and {@code y}, {@code x.equals(y)}
-     * should return {@code true} if and only if
-     * {@code y.equals(x)} returns {@code true}.
-     * <li>It is <i>transitive</i>: for any non-null reference values
-     * {@code x}, {@code y}, and {@code z}, if
-     * {@code x.equals(y)} returns {@code true} and
-     * {@code y.equals(z)} returns {@code true}, then
-     * {@code x.equals(z)} should return {@code true}.
-     * <li>It is <i>consistent</i>: for any non-null reference values
-     * {@code x} and {@code y}, multiple invocations of
-     * {@code x.equals(y)} consistently return {@code true}
-     * or consistently return {@code false}, provided no
-     * information used in {@code equals} comparisons on the
-     * objects is modified.
-     * <li>For any non-null reference value {@code x},
-     * {@code x.equals(null)} should return {@code false}.
+     * <li>它是 <i> 它的对称是</i>: 对于任何非空参考值
+     * {@code x} 和 {@code y}, {@code x.equals(y)}
+     * 应该返回 {@code true} 当且仅当
+     * {@code y.equals(x)} 返回 {@code true}.
+     * <li> 它是 <i> 它的传递是 </i>: 对于任何非空参考值
+     * {@code x}, {@code y}, 和 {@code z}, 如果
+     * {@code x.equals(y)} 返回 {@code true} 和
+     * {@code y.equals(z)} 返回 {@code true}, 然后
+     * {@code x.equals(z)} 应该返回 {@code true}.
+     * <li>它是 <i> 它的连续是 </i>: 对于任何非空参考值
+     * {@code x} 和 {@code y}, 多个连续的调用
+     * {@code x.equals(y)} 返回 {@code true}
+     * 或者连续返回 {@code false}, 在对对象的改进上，没有在提供信息用于 {@code equals} 的比较
+     * <li>对于任何非空参考值 {@code x},
+     * {@code x.equals(null)} 应该返回 {@code false}.
      * </ul>
      * <p>
-     * The {@code equals} method for class {@code Object} implements
-     * the most discriminating possible equivalence relation on objects;
-     * that is, for any non-null reference values {@code x} and
-     * {@code y}, this method returns {@code true} if and only
-     * if {@code x} and {@code y} refer to the same object
-     * ({@code x == y} has the value {@code true}).
+     * {@code Object}类的 {@code equals} 方法实现了对象的差别可能性最大的等价关系;
+     * 也就是说, 对于任何非空参考值 {@code x} 和
+     * {@code y}, 这种方法返回 {@code true} 当且仅当
+     *  {@code x} 和 {@code y} 参照相同的对象
+     * ({@code x == y} 有值 {@code true}).
      * <p>
-     * Note that it is generally necessary to override the {@code hashCode}
-     * method whenever this method is overridden, so as to maintain the
-     * general contract for the {@code hashCode} method, which states
-     * that equal objects must have equal hash codes.
-     *
-     * @param obj the reference object with which to compare.
-     * @return {@code true} if this object is the same as the obj
-     * argument; {@code false} otherwise.
+     * 注意，通常当此方法被重写了，就有必要重写{@code hashCode}方法，目的是保持{@code hashCode}法的一般的约定，
+     * 即平等的对象必须具有相同散列码
+     * @param obj 要进行比较的参考对象.
+     * @return  如果这个对象与该obj的参数相同就返回 {@code true} ，否则返回 {@code false} .
      * @see #hashCode()
      * @see HashMap
      */
@@ -78,9 +70,9 @@ public class Vector2D implements Vector {
 
 
     /**
-     * get the dimension of the vector.
+     * 获取向量的维度.
      *
-     * @return the dimension.
+     * @return 维度.
      */
     @Override
     public int dimension() {
@@ -88,10 +80,10 @@ public class Vector2D implements Vector {
     }
 
     /**
-     * add another vector on this vector.
-     * act like this = this + other.
+     * 该向量加上另外一个向量add another vector on this vector.
+     * 它的执行模式如 this = this + other.
      *
-     * @param other the other vector to be added.
+     * @param other 被加数.
      */
     @Override
     public void add(Vector other) {
@@ -110,10 +102,10 @@ public class Vector2D implements Vector {
     }
 
     /**
-     * subtract another vector on this vector.
-     * act like this = this - other.
+     * 该向量减去另外一个向量.
+     * 它的执行模式如 this = this - other.
      *
-     * @param other the other vector to be subtracted.
+     * @param other 被减数.
      */
     @Override
     public void sub(Vector other) {
@@ -124,10 +116,10 @@ public class Vector2D implements Vector {
     }
 
     /**
-     * multiply a number on this vector.
-     * act like this = this * rate.
+     * 该向量乘以一个数.
+     * 它的执行模式如 this = this * rate.
      *
-     * @param rate the rate to be multiplied.
+     * @param rate 被乘数.
      */
     @Override
     public void scale(double rate) {
@@ -137,10 +129,10 @@ public class Vector2D implements Vector {
     }
 
     /**
-     * check if this is <strong>strictly</strong> equals to another vector.
+     *  <strong>strictly</strong> 检查该向量是否与另外一个向量相等.
      *
-     * @param other the vector to be checked.
-     * @return true if the dimensions are same and all the components are same; false otherwise.
+     * @param other 将被检查的向量.
+     * @return 如果维度是一样并且所有参数都是一样的，就返回真，否则返回假.
      */
     @Override
     public boolean equals(Vector other) {
@@ -159,14 +151,14 @@ public class Vector2D implements Vector {
     }
 
     /**
-     * check if the vector is approximately equal to other vector within the epsilon.
-     * two vectors are approximately equal only if the L-infinite distance between this and vector other is less than or equal to the epsilon.
-     * The L-infinite distance is equal to MAX[abs(x1-x2), abs(y1-y2)].
+     * 检查该向量在ε范围内是否大约等于其他向量.
+     * 当且仅当两个向量间的 L-infinite distance 距离小于等于ε时，这两个向量大致相等.
+     * L-infinite 距离等于 MAX[abs(x1-x2), abs(y1-y2)].
      *
-     * @param other   the vector other.
-     * @param epsilon the epsilon.
-     * @return Returns true if the vector is approximately equals with other,
-     * otherwise returns false.
+     * @param other   另外一个向量.
+     * @param epsilon ε.
+     * @return 如果该向量大约与其他向量相等，就返回真,
+     * 否则返回假.
      */
     @Override
     public boolean epsilonEquals(Vector other, double epsilon) {
@@ -184,10 +176,10 @@ public class Vector2D implements Vector {
     }
 
     /**
-     * get the length of the vector.
-     * |<strong>v</strong>| in math.
+     * 获取向量的长度.
+     * |<strong>v</strong>| 在数学上.
      *
-     * @return the length.
+     * @return 长度.
      */
     @Override
     public double length() {
@@ -203,11 +195,11 @@ public class Vector2D implements Vector {
     }
 
     /**
-     * Computes the dot product of the this vector and other.
-     * |<strong>a</strong>||<strong>b</strong>|Cos&lt;<strong>a</strong>,<strong>b</strong>&gt; in math.
+     * 计算该向量与其他向量的点积.
+     * |<strong>a</strong>||<strong>b</strong>|Cos&lt;<strong>a</strong>,<strong>b</strong>&gt; 在数学上.
      *
-     * @param other the other vector to calculate dot product.
-     * @return the dot product.
+     * @param other 需要进行点积的另外一个向量.
+     * @return 点积结果.
      */
     @Override
     public double dot(Vector other) {
@@ -220,9 +212,9 @@ public class Vector2D implements Vector {
     }
 
     /**
-     * Copies the value of this vector into the array arrayToCopy.
+     * 复制该向量值并转化为数组 arrayToCopy.
      *
-     * @param arrayToCopy array to copy.
+     * @param arrayToCopy 复制的数组.
      */
     @Override
     public void get(double[] arrayToCopy) {
@@ -230,9 +222,9 @@ public class Vector2D implements Vector {
     }
 
     /**
-     * set this vector's values to vector other.
+     * 将此向量的值给另外一个向量.
      *
-     * @param other the other vector to set.
+     * @param other 将此向量的值给另外一个向量.
      */
     @Override
     public void set(Vector other) {
@@ -242,9 +234,9 @@ public class Vector2D implements Vector {
     }
 
     /**
-     * set this vector's values to array values.
+     * 将该向量的值设置成一个数组的值.
      *
-     * @param values the values to be set.
+     * @param values 将被设置的值.
      */
     @Override
     public void set(double[] values) {
@@ -252,9 +244,9 @@ public class Vector2D implements Vector {
     }
 
     /**
-     * project this vector on a specific direction.
+     * 在一个特定的方向上设定这个向量.
      *
-     * @param direction the direction to project.
+     * @param direction 设定的方向.
      */
     @Override
     public void project(Vector direction) {
@@ -272,10 +264,9 @@ public class Vector2D implements Vector {
     }
 
     /**
-     * clear this vector's projection on a specific direction.
-     * after clearing, this vector is vertical to this direction.
-     *
-     * @param direction the direction to clear.
+     * 清除该向量在一定方向上的投影.
+     * 清除之后，这个向量是垂直于该方向的.
+     * @param direction 清除的方向.
      */
     @Override
     public void clearProject(Vector direction) {
@@ -285,13 +276,13 @@ public class Vector2D implements Vector {
     }
 
     /**
-     * Creates and returns a copy of this vector.
-     * The precise meaning of "copy" may depend on the class of the vector.
-     * The general intent is that, for any vector x, the expression: <br>
+     * 创建并返回这个向量的副本.
+     * “复制”的精确含义可能取决于这个向量的类.
+     * 对于任意向量x，它的一般含义表达式是: <br>
      * x.clone() != x <br>
-     * will be true.
+     * 将是真.
      *
-     * @return the copied vector.
+     * @return 这个向量的副本.
      */
     @Override
     public Vector clone() {
@@ -302,9 +293,9 @@ public class Vector2D implements Vector {
 
 
     /**
-     * get reference vector
-     * has the same direction but the length is 1.
-     * @return the reference vector
+     * 获取参考的向量
+     * 与原向量同向但是长度为1.
+     * @return 参考向量，即单位向量
      */
     public Vector getRefVector(){
         Vector ref = new Vector2D(values[0],values[1]);

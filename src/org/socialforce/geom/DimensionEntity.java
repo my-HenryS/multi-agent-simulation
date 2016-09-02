@@ -12,7 +12,7 @@ import org.socialforce.geom.Vector;
  */
 public interface DimensionEntity {
     /**
-     * 获取该DimensionEntity的尺寸.
+     * 获取该维度实体的尺寸.
      *
      * @return 尺寸.
      */

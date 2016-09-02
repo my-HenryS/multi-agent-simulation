@@ -5,9 +5,9 @@ import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
 
-/**
- * this is a 2D segment
- * defined by two point
+/**这是一个二维的线段
+ *
+ * 有两个点定义
  * Created by Whatever on 2016/8/10.
  */
 public class Line2D implements Shape {
@@ -178,9 +178,9 @@ public class Line2D implements Shape {
     }
 
     /**
-     * * Creates and returns a copy of this Line.
-     * The precise meaning of "copy" may depend on the class of the line.
-     * @return the copied line
+     * * 创建并返回这条线段的副本.
+     * “复制”的精确含义可能取决于这条线的类.
+     * @return 线的副本
      */
     @Override
     public Line2D clone() {

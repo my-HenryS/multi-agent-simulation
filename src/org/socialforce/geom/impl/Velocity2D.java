@@ -15,9 +15,9 @@ public class Velocity2D extends Vector2D implements Velocity {
     }
 
     /**
-     * accumulate the total distance in specific time.
-     * @param time the time to be accumulated.
-     * @return the delta distance vector.
+     * 在一定的时间累积的总距离.
+     * @param time 累积的时间.
+     * @return 累积距离的向量.
      */
 
     @Override
@@ -26,13 +26,13 @@ public class Velocity2D extends Vector2D implements Velocity {
     }
 
     /**
-     * Creates and returns a copy of this vector.
-     * The precise meaning of "copy" may depend on the class of the vector.
-     * The general intent is that, for any vector x, the expression: <br>
+     * 创建并返回这个向量的副本.
+     * “复制”的精确含义可能取决于这个向量的类.
+     * 对于任意向量x，它的一般含义表达式是: <br>
      * x.clone() != x <br>
-     * will be true.
+     * 将为真.
      *
-     * @return the copied vector.
+     * @return 向量的副本.
      */
     @Override
     public Velocity clone() {

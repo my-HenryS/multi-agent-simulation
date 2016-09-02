@@ -100,7 +100,7 @@ public interface Vector extends Cloneable, Serializable, DimensionEntity {
     /**
      * 将此向量的值给另外一个向量.
      *
-     * @param other 将被赋值的另外一个向量.
+     * @param other 将此向量的值给另外一个向量.
      */
     void set(Vector other);
 
@@ -112,8 +112,8 @@ public interface Vector extends Cloneable, Serializable, DimensionEntity {
     void set(double[] values);
 
     /**
-     * 在一个特定的方向上设置这个向量.
-     * @param direction 设置的方向.
+     * 在一个特定的方向上设定这个向量.
+     * @param direction 设定的方向.
      */
     void project(Vector direction);
 
@@ -124,11 +124,11 @@ public interface Vector extends Cloneable, Serializable, DimensionEntity {
      */
     void clearProject(Vector direction);
     /**
-     * 创建并返回这个向量的副本Creates and returns a copy of this vector.
+     * 创建并返回这个向量的副本.
      * “复制”的精确含义可能取决于这个向量的类.
      * 对于任意向量x，它的一般含义表达式是: <br>
      * x.clone() != x <br>
-     * 是真.
+     * 将是真.
      *
      * @return 这个向量的副本.
      */
