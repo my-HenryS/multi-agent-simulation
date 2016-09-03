@@ -72,7 +72,7 @@ public interface Pool<T extends InteractiveEntity> extends Collection<T> {
 
     /**
      * 选择在池中覆盖在最上边的，与指定形状相交的实体。
-     * 按照 {@link #add(T)} 的添加顺序，最后添加的覆盖在最上面。
+     * 按照 {@link #add(InteractiveEntity)} 的添加顺序，最后添加的覆盖在最上面。
      *
      * @param shape 指定的形状。
      * @return 所选择的实体。如果池中没有与指定形状相交的实体，返回null。
@@ -82,7 +82,7 @@ public interface Pool<T extends InteractiveEntity> extends Collection<T> {
 
     /**
      * 选择在池中覆盖在最上边的，覆盖指定点的实体。
-     * 按照 {@link #add(T)} 的添加顺序，最后添加的覆盖在最上面。
+     * 按照 {@link #add(InteractiveEntity)} 的添加顺序，最后添加的覆盖在最上面。
      *
      * @param point 指定点。
      * @return 所选择的实体。如果池中没有覆盖指定点的实体，返回null。
@@ -91,7 +91,7 @@ public interface Pool<T extends InteractiveEntity> extends Collection<T> {
 
     /**
      * 选择在池中被覆盖在最下边的，与指定形状相交的实体。
-     * 按照 {@link #add(T)} 的添加顺序，最先添加的被覆盖在最下面。
+     * 按照 {@link #add(InteractiveEntity)} 的添加顺序，最先添加的被覆盖在最下面。
      *
      * @param shape 指定的形状。
      * @return 所选择的实体。如果池中没有与指定形状相交的实体，返回null。
@@ -100,7 +100,7 @@ public interface Pool<T extends InteractiveEntity> extends Collection<T> {
 
     /**
      * 选择在池中被覆盖在最下边的，覆盖指定点的实体。
-     * 按照 {@link #add(T)} 的添加顺序，最先添加的被覆盖在最下面。
+     * 按照 {@link #add(InteractiveEntity)} 的添加顺序，最先添加的被覆盖在最下面。
      *
      * @param point 指定点。
      * @return 所选择的实体。如果池中没有覆盖指定点的实体，返回null。
@@ -120,7 +120,7 @@ public interface Pool<T extends InteractiveEntity> extends Collection<T> {
 
     /**
      * 查找具有指定名称的，覆盖在最上层的实体。
-     * 按照 {@link #add(T)} 的添加顺序，最后添加的覆盖在最上层。
+     * 按照 {@link #add(InteractiveEntity)} 的添加顺序，最后添加的覆盖在最上层。
      *
      * @param name 要查找的名称。
      * @return 查找到的实体。如果池中没有指定名称的实体，返回null。
@@ -129,7 +129,7 @@ public interface Pool<T extends InteractiveEntity> extends Collection<T> {
 
     /**
      * 查找具有指定名称的，覆盖在最下层的实体。
-     * 按照 {@link #add(T)} 的添加顺序，最先添加的覆盖在最下层。
+     * 按照 {@link #add(InteractiveEntity)}} 的添加顺序，最先添加的覆盖在最下层。
      *
      * @param name 要查找的名称。
      * @return 查找到的实体。如果池中没有指定名称的实体，返回null。
