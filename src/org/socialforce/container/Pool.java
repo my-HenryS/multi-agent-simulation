@@ -10,8 +10,14 @@ import java.util.Collection;
  * 代表一个实体池，实体池能够像普通集合一样添加及删除实体。
  * 实体池像一个地图，可以获取指定范围内的一个实体，或者获取覆盖指定点的一个实体。
  *
+ * <p>
+ *     注意向池中添加实体只添加了对实体的引用，并不会复制一个实体，
+ *     即持有池中对象的引用即可操作池中对象。
+ * </p>
+ *
  * @param <T> 池中的实体类型。
  * @author Ledenel
+ * @see java.util.Collection
  */
 
 public interface Pool<T extends InteractiveEntity> extends Collection<T> {
