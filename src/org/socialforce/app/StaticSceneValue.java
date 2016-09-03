@@ -31,7 +31,7 @@ public abstract class StaticSceneValue<T extends Comparable<T>> implements Scene
 
     @Override
     public void apply(Scene scene) {
-        scene.getStaticEntities().findElementsByName(getName()).forEach(this::applyEach);
+        scene.getStaticEntities().find(getName()).forEach(this::applyEach);
     }
 
     public abstract void applyEach(InteractiveEntity entity);
