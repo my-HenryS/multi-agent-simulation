@@ -12,7 +12,7 @@ public class BaseAgent extends Entity implements Agent {
     Path path;
     double mass;
     int currTimestamp;
-    Shape view;
+    DistanceShape view;
     Force pushed;
     Velocity deltaV;
     Vector deltaS;
@@ -76,6 +76,7 @@ public class BaseAgent extends Entity implements Agent {
      * @see Shape
      */
     @Override
+    // FIXME: 2016/9/3 it should be DistanceShape to support pool selection.
     public Shape getView() {
         return view;
     }

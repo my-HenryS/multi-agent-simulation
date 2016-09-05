@@ -44,6 +44,7 @@ public interface Scene extends Drawable {
      * the default implementation just concat agents and static entities(ordered).
      * @return the stream.
      */
+    // TODO: 2016/8/28 add parallel stream support.
     default Stream<InteractiveEntity> getAllEntitiesStream() {
         return Stream.concat(getAllAgents().stream(),getStaticEntities().stream());
     }

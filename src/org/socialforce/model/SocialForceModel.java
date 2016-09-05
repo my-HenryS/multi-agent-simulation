@@ -61,7 +61,7 @@ public interface SocialForceModel {
      * @param shape the agent's shape.
      * @return the created agent.
      */
-    Agent createAgent(Shape shape);
+    Agent createAgent(DistanceShape shape);
 
     /**
      * create a agent with specific shape and type.
@@ -70,7 +70,7 @@ public interface SocialForceModel {
      * @param type  the type of the agent.
      * @return the created agent.
      */
-    Agent createAgent(Shape shape, int type);
+    Agent createAgent(DistanceShape shape, int type);
 
     /**
      * create a static object with default presets.

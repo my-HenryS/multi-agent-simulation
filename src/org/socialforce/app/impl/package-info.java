@@ -1,6 +1,7 @@
 /**
- * implements of interfaces in org.socialforce.entity.
+ * 代表应用-策略层的特定实现。
+ *
  * @author Ledenel
- * Created by Ledenel on 2016/7/26.
  */
+
 package org.socialforce.app.impl;

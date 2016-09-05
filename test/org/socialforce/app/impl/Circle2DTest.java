@@ -3,7 +3,7 @@ package org.socialforce.app.impl;
 import org.junit.Before;
 import org.junit.Test;
 import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Line2D;
+import org.socialforce.geom.impl.Segment2D;
 import org.socialforce.geom.impl.Point2D;
 
 import static org.junit.Assert.*;
@@ -55,7 +55,7 @@ public class Circle2DTest {
 
     @Test
     public void testDistanceBetweenShapes() throws Exception {
-        assertEquals(Math.sqrt(2) * 4 - 5,circleTest.distanceTo(new Line2D(a,new Point2D(-1,-1))),1e-7);
+        assertEquals(Math.sqrt(2) * 4 - 5,circleTest.distanceTo(new Segment2D(a,new Point2D(-1,-1))),1e-7);
 
     }
 }
