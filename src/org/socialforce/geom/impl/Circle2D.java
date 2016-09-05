@@ -7,27 +7,27 @@ import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
 
 /**
- * this is a 2D-circle set by its radius and center
+ * 这是一个由它的半径和中心点设置的二维圆 .
  * Created by Whatever on 2016/8/8.
  */
 
 
 public class Circle2D implements DistanceShape {
     /**
-     * radius:the radius of a Circle2D
+     * 半径:二维圆的半径.
      * @see Drawer
      */
     protected double radius=0;//,center[];
     /**
-     * the center of a Circle2D.
+     * 二维圆的中心点.
      * @see Drawer
      */
     protected Point center = new Point2D(0,0);
     protected Drawer drawer;
 
     /**
-     * get the drawer
-     * @return the drawer
+     * 获取绘制器
+     * @return 绘制器
      */
     @Override
     public Drawer getDrawer() {
@@ -35,8 +35,8 @@ public class Circle2D implements DistanceShape {
     }
 
     /**
-     * set the drawer
-     * @param drawer the drawer.
+     * 设置绘制器
+     * @param drawer 绘制器.
      */
     @Override
     public void setDrawer(Drawer drawer) {
@@ -44,7 +44,7 @@ public class Circle2D implements DistanceShape {
     }
 
     /**
-     * get the dimension
+     * 获取绘制器
      * @return
      */
     @Override
@@ -54,10 +54,10 @@ public class Circle2D implements DistanceShape {
 
 
     /**
-     *cacluate the distance between the point which in the circle and the center of the circle.
-     * @param point the point to be checked.
+     *计算圆圈内的点到圆心的距离.
+     * @param point 将被检查的点.
      *
-     * @return point.distanceto : the distance between a point and the center of a circle
+     * @return point.distanceto : 一个点到圆心的距离
      */
     @Override
     public boolean contains(Point point) {
@@ -65,11 +65,11 @@ public class Circle2D implements DistanceShape {
     }
 
     /**
-     * get the distance between a point,which out of the circle ,and the circle
-     * @param point the point to be checked.
-     * @return the distance.
-     *  return 0; if the point is contain in the circle
-     *  return point.distanceTo(center)-radius: if the point is out of the circle
+     * 获取一个圆外的点到圆的距离
+     * @param point 将被检查的点.
+     * @return 距离.
+     * 如果点再圆内： return 0;
+     *  如果点再圆外： return point.distanceTo(center)-radius
      */
     @Override
     public double getDistance(Point point) {
@@ -80,8 +80,8 @@ public class Circle2D implements DistanceShape {
     }
 
     /**
-     * get the reference circle of a point.
-     * @return center, the center of a circle.
+     * 获取圆的参考点.
+     * @return 中心点，即圆心.
      */
     @Override
     public Point getReferencePoint() {
@@ -89,15 +89,15 @@ public class Circle2D implements DistanceShape {
     }
 
     /**
-     * get the radius of a circle
-     * @return radius, the radius of a circle
+     * 获取一个圆的半径
+     * @return 半径, 圆的半径
      */
     public  double getRadius(){
         return radius;
     }
 
     /**
-     * get the bound of box
+     * 获取box的边界.
      * @return
      */
     @Override
@@ -106,9 +106,9 @@ public class Circle2D implements DistanceShape {
     }
 
     /**
-     *judge whether hit the box or not
-     * @param hitbox the box to be checked.
-     * @return tree if hit the box
+     * 判断是否是碰撞到box.
+     * @param hitbox 将被检查的box.
+     * @return 如果碰撞到box，为真.
      */
     @Override
     public boolean hits(Box hitbox) {
@@ -116,8 +116,8 @@ public class Circle2D implements DistanceShape {
     }
 
     /**
-     *move the center of circle to the location
-     * @param location the specified location
+     * 移动圆心到指定位置.
+     * @param location 指定的位置
      */
     @Override
     public void moveTo(Point location) {
@@ -129,9 +129,9 @@ public class Circle2D implements DistanceShape {
     }
 
     /**
-     * Creates and returns a copy of this circle.
-     * The precise meaning of "copy" may depend on the class of the circle.
-     * @return the copied circle
+     * 创建并返回圆的副本.
+     * “复制”的精确含义可能取决于这个圆的类.
+     * @return 圆的副本
      */
     @Override
     public Shape clone() {
@@ -142,9 +142,9 @@ public class Circle2D implements DistanceShape {
     }
 
     /**
-     *calculate the distance to the bound of a circle()
+     * 计算到圆边界上的距离
      * @param other
-     * @return the distance
+     * @return 距离
      */
     @Override
     public double distanceTo(Shape other) {

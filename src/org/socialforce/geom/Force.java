@@ -4,8 +4,8 @@ import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.SocialForceModel;
 
 /**
- * represent forces between interactive entity.
- * the force will be calculated in a social force model.
+ * 代表相互作用的实体之间的力.
+ * 该力将用社会力模型计算.
  * @see InteractiveEntity
  * @see SocialForceModel
  * @author Ledenel
@@ -13,17 +13,17 @@ import org.socialforce.model.SocialForceModel;
  */
 public interface Force extends Vector {
     /**
-     * accumulate the force and get the delta velocity.
-     * @param mass the mass of the entity.
-     * @param time the time to be accumulated.
-     * @return the delta velocity.
+     * 累积的力和获取速度的增量.
+     * @param mass 该实体的质量.
+     * @param time 累积的时间.
+     * @return 速度的增量.
      */
     Velocity deltaVelocity(double mass, double time);
 
     /**
-     * creates and returns a copy of this force.
-     * same as vector.
-     * @return the copied force.
+     * 创建并返回这个力的副本.
+     * 它是一个向量.
+     * @return 这个力的副本.
      */
     Force clone();
 }

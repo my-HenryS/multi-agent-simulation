@@ -5,9 +5,8 @@ package org.socialforce.geom;
  */
 public interface DistanceShape extends Shape {
     /**
-     * TODO谁目标形状的距离？
-     * 获取到目标形状的距离
-     * @return 到目标形状的距离
+     * 获取该形状与其他形状的距离.
+     * @return 距离.
      */
     double distanceTo(Shape other);
 
