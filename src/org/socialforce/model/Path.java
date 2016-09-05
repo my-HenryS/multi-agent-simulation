@@ -3,8 +3,8 @@ package org.socialforce.model;
 import org.socialforce.geom.Point;
 
 /**
- * represent a path for the agent.
- * a basic implement is a set of goal points.
+ * 表示agent的路径。
+ * 该接口的基本实现是获取一组目标点。
  * @author Ledenel
  * @see Agent
  * @see PathFinder
@@ -12,27 +12,27 @@ import org.socialforce.geom.Point;
  */
 public interface Path {
     /**
-     * get the start point of this path.
-     * @return the start point.
+     * 获取路径的起点。
+     * @return 返回起点。
      */
     Point getStartPoint();
 
     /**
-     * get the end point of this path(the goal of this path).
-     * @return the end point(the goal).
+     * 获取路径的目标点。
+     * @return 目标点。
      */
     Point getGoal();
 
     /**
-     * returns the next point the agent should go while at the current point.
-     * @param current the point that agent is there.
-     * @return the point that agent should go in this path.
+     *在当前位置获取下一个目标点。
+     * @param current agent 所在的当前位置点。
+     * @return 当前位置的目标点，该点为归还路径上的点。
      */
     Point getCurrentGoal(Point current);
 
     /**
-     * check if the path is walked completely.
-     * @return true if the path is done; otherwise false.
+     * 检查路径是否走完。
+     * @return 如果走完返回真，否则假。
      */
     boolean done();
 }

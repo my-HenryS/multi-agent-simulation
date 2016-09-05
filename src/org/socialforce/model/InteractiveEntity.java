@@ -6,7 +6,7 @@ import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
 
 /**
- * represent all interactive entities in scene.
+ *表示场景中所有可以进行交互的实体。
  *
  * @author Ledenel
  *         Created by Ledenel on 2016/7/28.
@@ -19,53 +19,59 @@ public interface InteractiveEntity {
 
     void setScene(Scene scene);
 
+    /**
+     * 获取实体的名称
+     * @return name 名称
+     */
     String getName();
+
+    /**
+     * 设置实体的名称
+     * @param name
+     */
     void setName(String name);
     /**
-     * affect the target entity with this.
-     * for example, walls can affect an agent (push them).
-     *
-     * @param affectedEntity the entity to be affected.
+     * 当前this所影响的实体
+     * 例如，墙会影响agent(反作用，反推)
+     * @param affectedEntity 被影响的实体
      * @see Agent
      * @see SocialForceModel
      */
     void affect(InteractiveEntity affectedEntity);
 
     /**
-     * get the Shape of this entity.
-     * line, square, circle etc.
+     * 获取一个实体的形状
+     * 如线，矩形，圆等。
      *
-     * @return the shape.
+     * @return 实体的形状.
      */
     Shape getShape();
 
     /**
-     * get the total mass of the entity.
-     * usually the mass is all on the shape's reference point.
-     *
+     * 获取实体的质量。
+     * 通常质量位于形状的参考点上（或者是位于质心上）TODO
      * @return the mass.
      */
     double getMass();
 
     /**
-     * get the social force model the entity is using.
+     * 获取社会模型中使用的实体模型
      *
-     * @return the model.
+     * @return model 模型
      */
     SocialForceModel getModel();
 
     /**
-     * set the social force model.
+     * 设置社会力模型。
      *
-     * @param model the model.
+     * @param model 模型
      */
     void setModel(SocialForceModel model);
 
     /**
-     * place this entity on a specific point.
-     * the shape will {@code moveTo} that point.
-     *
-     * @param point the target point.
+     * 将该实体放置在一个特殊的点上。
+     * TODO the shape will {@code moveTo} that point.
+     * @param point 目标点。
      */
     void placeOn(Point point);
 

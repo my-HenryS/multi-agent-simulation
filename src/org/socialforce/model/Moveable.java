@@ -5,33 +5,32 @@ import org.socialforce.geom.Point;
 import org.socialforce.geom.Velocity;
 
 /**
- * represent entities which are able to move.
+ * 表示可以移动的实体。
  *
  * @see Agent
  * Created by Ledenel on 2016/7/30.
  */
 public interface Moveable {
     /**
-     * get the velocity of this moving entity.
+     * 获取移动实体的速度。.
      *
-     * @return the velocity.
+     * @return currVelocity。 当前速度
      */
     Velocity getVelocity();
 
     /**
-     * push the entity with a force on the reference point.
-     * the force will move this entity.
+     * 将实体以一定大小的力推向目标点。
      *
-     * @param force the force to push.
+     * @param force 推时力的大小
      */
     void push(Force force);
 
     /**
-     * push the entity on a specific point.
-     * this method can also cause entity to rotate.
+     * 用大小为force的力推位于特定位置上的点。
+     * 该方法还可以使实体旋转。
      *
-     * @param force      the force to push.
-     * @param startPoint the point which the force is push on.
+     * @param force      推力大小
+     * @param startPoint 力作用的位置。
      */
     void push(Force force, Point startPoint);
 }

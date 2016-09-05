@@ -5,6 +5,7 @@ import org.socialforce.geom.*;
 import org.socialforce.model.*;
 
 /**
+ * 定义BaseAgent类，其继承于父类Entity，并实现了接口Agent 的方法。
  * Created by Ledenel on 2016/8/15.
  */
 public class BaseAgent extends Entity implements Agent {
@@ -25,10 +26,10 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     /**
-     * get the Shape of this entity.
-     * line, square, circle etc.
+     * 获取一个实体的形状
+     * 如线，矩形，圆等。
      *
-     * @return the shape.
+     * @return 实体的形状.
      */
     @Override
     public DistanceShape getShape() {
@@ -36,9 +37,9 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     /**
-     * get the velocity of this moving entity.
+     * 获取当前移动实体的速度
      *
-     * @return the velocity.
+     * @return 速度.
      */
     @Override
     public Velocity getVelocity() {
@@ -46,10 +47,9 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     /**
-     * push the entity with a force on the reference point.
-     * the force will move this entity.
+     * 将实体以一定大小的力推向目标点。
      *
-     * @param force the force to push.
+     * @param force 推时力的大小
      */
     @Override
     public void push(Force force) {
@@ -57,11 +57,11 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     /**
-     * push the entity on a specific point.
-     * this method can also cause entity to rotate.
+     * 用大小为force的力推位于特定位置上的点。
+     * 该方法还可以使实体旋转。
      *
-     * @param force      the force to push.
-     * @param startPoint the point which the force is push on.
+     * @param force      推力大小
+     * @param startPoint 力作用的位置。
      */
     @Override
     public void push(Force force, Point startPoint) {
@@ -69,10 +69,9 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     /**
-     * get the view of a agent.
-     * agent only interact with other entities inside its view.
-     *
-     * @return a shape represent the view area.
+     * 获取一个agent的视域范围。
+     * 该agent只和位于该视域范围内的agent进行交互
+     * @return 一个表示该视域范围的形状
      * @see Shape
      */
     @Override
@@ -84,10 +83,9 @@ public class BaseAgent extends Entity implements Agent {
 
 
     /**
-     * get the expecting moving velocity of agent.
-     * the velocity usually depends on the agent itself and its goal.
-     *
-     * @return the expected velocity
+     * 获取一个agent的期望速度。
+     * 该agent的速度通常来说取决于其自身及其目标。
+     * @return 期望速度
      * @see Velocity
      */
     @Override
@@ -97,15 +95,13 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     /**
-     * determine the next point to move.
-     * the agent will also be pushed by social force in determination.
-     * the determined result will be applied in act() method.
-     * if the current time step is not synchronized with the agent,
-     * the agent will try to catch up with that time
-     * (or ignore it if current time step is fall behind).
-     *
-     * @param currSteps the current timestep.
-     * @return the vector represent the direction and distance to move.
+     * 决定下一步，agent要走向的目标点。
+     * 同时，agent也会被社会力驱动。
+     * 最终的结果会被act() 方法使用。
+     * 如果当前的时间步长和该agent不同步，那么该agnet 会试着跟上
+     * (或者忽略当agent的时间落后于真正的时间)  TODO?
+     * @param currSteps 当前的时间
+     * @return 代表要移动的距离和方向的向量。
      */
     @Override
     public Vector determineNext(int currSteps) {
@@ -131,22 +127,21 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     /**
-     * determine the next point to move.
-     * the agent will also be pushed by social force in determination.
-     * the determined result will be applied in act() method.
-     *
-     * @return the vector represent the direction and distance to move.
+     * 决定下一步，agent要走向的目标点。
+     * 同时，agent也会被社会力驱动。
+     * 最终的结果会被act() 方法使用。
+     * @return 代表要移动的距离和方向的向量。
      */
     @Override
     public Vector determineNext() {
         return determineNext(currTimestamp);
     }
 
+
     /**
-     * get the current timestep of this agent.
-     * the timestep begin at 0(start of the simulation)
-     *
-     * @return the current timestep.
+     * 获取当前时刻，agent的timestep （TODO这里的这个timestep翻译成时刻？）
+     * timestep从0开始（仿真开始）
+     * @return 当前的timestep
      */
     @Override
     public int getCurrentSteps() {
@@ -154,11 +149,11 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     /**
-     * apply the determination made by determineNext() method.
-     * this method will also push the time forward 1 step.
-     * when act() succeed, the previous determinations will be cleared.
-     * nothing happened if there are not available determinations in this agent.
-     * nothing happened if the agent reach its goal (escaped).
+     * 使用determineNext()方法计算出的结果。
+     * 该方法会将时间往前推进一步。
+     * 当act()成功执行，其还会将之前determineNext()方法计算出的结果清零。
+     * 当无法获得该agent通过determineNext()方法计算所得的结果时，不会有移动。
+     * 当agnet到达目标（或者逃出）时，不会有移动。
      */
     @Override
     public void act() {
@@ -174,9 +169,9 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     /**
-     * get the path of the agent.
+     * 获取agent的路径
      *
-     * @return the path object.
+     * @return 路径对象
      */
     @Override
     public Path getPath() {
@@ -184,9 +179,9 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     /**
-     * set the path for the agent.
+     *为agent设置路径
      *
-     * @param path the path to be set.
+     * @param path 要设置的路径
      */
     @Override
     public void setPath(Path path) {
@@ -196,9 +191,8 @@ public class BaseAgent extends Entity implements Agent {
     protected Scene scene;
 
     /**
-     * get the context the scene is in.
-     *
-     * @return the scene.
+     * 获取当前场景的具体内容
+     * @return 场景
      */
     @Override
     public Scene getScene() {
@@ -206,9 +200,9 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     /**
-     * set the scene for the agent.
-     *
-     * @param scene the scene to be set.
+     * 设置agent所处的场景
+     * 
+     * @param scene 被设置的场景
      */
     @Override
     public void setScene(Scene scene) {
@@ -216,19 +210,19 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     /**
-     * notify the agent which is escaped.
+     * 标明已经逃离的agent
      */
     @Override
     public void escape() {
+         
         escaped = true;
         scene.onAgentEscape(this);
     }
 
     /**
-     * affect the target entity with this.
-     * for example, walls can affect an agent (push them).
-     *
-     * @param affectedEntity the entity to be affected.
+     * 当前this所影响的实体
+     * 例如，墙会影响agent(反作用，反推)
+     * @param affectedEntity 被影响的实体
      * @see Agent
      * @see SocialForceModel
      */
@@ -241,9 +235,8 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     /**
-     * get the total mass of the entity.
-     * usually the mass is all on the shape's reference point.
-     *
+     * 获取实体的质量。
+     * 通常质量位于形状的参考点上（或者是位于质心上）TODO
      * @return the mass.
      */
     @Override
