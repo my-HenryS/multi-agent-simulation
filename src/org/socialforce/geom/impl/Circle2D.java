@@ -150,4 +150,9 @@ public class Circle2D implements DistanceShape {
     public double distanceTo(Shape other) {
         return other.getDistance(this.center) - this.radius;
     }
+
+    @Override
+    public boolean intersects(Shape other) {
+        return distanceTo(other) <= 0;
+    }
 }

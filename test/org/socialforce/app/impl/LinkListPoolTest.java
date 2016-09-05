@@ -31,7 +31,7 @@ public class LinkListPoolTest {
 
     @Test
     public void testSelect() throws Exception {
-        Iterable<InteractiveEntity> iterable = entities.select(new Box2D(-1, -1, 1, 1));
+        Iterable<InteractiveEntity> iterable = entities.select(new Point2D(0,0));
         int count = 0;
         for (InteractiveEntity entity : iterable) {
             count++;
