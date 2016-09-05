@@ -9,9 +9,11 @@ import org.socialforce.model.ForceRegulation;
 import org.socialforce.model.InteractiveEntity;
 
 /**
- * apply Fij in the social force model
- * contains the 'body force' and  the 'sliding force'
+ * 在社会力模型中应用 Fij。
+ *其中包括“body force”和“sliding force”。
+ * 定义了BodyForce类，其实现了接口ForceRegulation 的方法
  * Created by Whatever on 2016/8/26.
+ *
  */
 public class BodyForce implements ForceRegulation{
     @Override

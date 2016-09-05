@@ -3,21 +3,21 @@ package org.socialforce.model;
 import org.socialforce.geom.Force;
 
 /**
- *regulate the force between the Source entity and the target entity
+ *控制（调节）源实体和目标实体之间的作用力。
  * @param <Source>
  * @param <Target>
  */
 public interface ForceRegulation<Source extends InteractiveEntity,Target extends InteractiveEntity> {
     /**
-     *judge if there has force between the source entity and the target entity
+     *判断源实体和目标实体之间是否有作用力。
      * @param source
      * @param target
-     * @return true if there has force between the source entity and the target entity
+     * @return true 当源实体和目标实体之间是有作用力时返回真。
      */
     boolean hasForce(InteractiveEntity source,InteractiveEntity target);
 
     /**
-     *get the force between the source entity and the target entity
+     *获取源实体和目标实体之间的作用力。
      * @param source
      * @param target
      * @return force

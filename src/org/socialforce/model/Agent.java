@@ -7,95 +7,101 @@ import org.socialforce.geom.Vector;
 import org.socialforce.geom.Velocity;
 
 /**
- * represent an agent in social force model.
- *
+ * 定义了社会力仿真模型中的agent接口，其继承于父类 InteractiveEntity ,Moveable, Blockable
  * @author Ledenel
- *         Created by Ledenel on 2016/7/28.
+ * Created by Ledenel on 2016/7/28.
  */
 public interface Agent extends InteractiveEntity, Moveable, Blockable {
 
     /**
-     * get the Shape of this entity.
-     * line, square, circle etc.
+     * 获取一个实体的形状
+     * 如线，矩形，圆等。
      *
-     * @return the shape.
+     * @return 实体的形状.
      */
     @Override
     DistanceShape getShape();
 
     /**
-     * get the view of a agent.
-     * agent only interact with other entities inside its view.
-     *
-     * @return a shape represent the view area.
+     * 获取一个agent的视域范围。
+     * 该agent只和位于该视域范围内的agent进行交互
+     * @return 一个表示该视域范围的形状
      * @see Shape
      */
     Shape getView();
-
+    
     /**
-     * get the expecting moving velocity of agent.
-     * the velocity usually depends on the agent itself and its goal.
-     *
-     * @return the expected velocity
+     * 获取一个agent的期望速度。
+     * 该agent的速度通常来说取决于其自身及其目标。
+     * @return 期望速度
      * @see Velocity
      */
     Velocity expect();
 
     /**
-     * determine the next point to move.
-     * the agent will also be pushed by social force in determination.
-     * the determined result will be applied in act() method.
-     * if the current time step is not synchronized with the agent,
-     * the agent will try to catch up with that time
-     * (or ignore it if current time step is fall behind).
-     *
-     * @param currSteps the current timestep.
-     * @return the vector represent the direction and distance to move.
+     * 决定下一步，agent要走向的目标点。
+     * 同时，agent也会被社会力驱动。
+     * 最终的结果会被act() 方法使用。
+     * 如果当前的时间步长和该agent不同步，那么该agnet 会试着跟上
+     * (或者忽略当agent的时间落后于真正的时间)  TODO?
+     * @param currSteps 当前的时间
+     * @return 代表要移动的距离和方向的向量。
      */
     Vector determineNext(int currSteps);
-
+    
     /**
-     * determine the next point to move.
-     * the agent will also be pushed by social force in determination.
-     * the determined result will be applied in act() method.
-     *
-     * @return the vector represent the direction and distance to move.
+     * 决定下一步，agent要走向的目标点。
+     * 同时，agent也会被社会力驱动。
+     * 最终的结果会被act() 方法使用。
+     * @return 代表要移动的距离和方向的向量。
      */
     Vector determineNext();
 
     /**
-     * get the current timestep of this agent.
-     * the timestep begin at 0(start of the simulation)
-     *
-     * @return the current timestep.
+     * 获取当前时刻，agent的timestep （TODO这里的这个timestep翻译成时刻？）
+     * timestep从0开始（仿真开始）
+     * @return 当前的timestep
      */
     int getCurrentSteps();
-
+    
     /**
-     * apply the determination made by determineNext() method.
-     * this method will also push the time forward 1 step.
-     * when act() succeed, the previous determinations will be cleared.
-     * nothing happened if there are not available determinations in this agent.
-     * nothing happened if the agent reach its goal.
+     * 使用determineNext()方法计算出的结果。
+     * 该方法会将时间往前推进一步。
+     * 当act()成功执行，其还会将之前determineNext()方法计算出的结果清零。
+     * 当无法获得该agent通过determineNext()方法计算所得的结果时，不会有移动。
+     * 当agnet到达目标（或者逃出）时，不会有移动。
      */
     void act();
 
     /**
-     * get the path of the agent.
+     * 获取agent的路径
      *
-     * @return the path object.
+     * @return 路径对象
      */
     Path getPath();
 
     /**
-     * set the path for the agent.
+     *为agent设置路径
      *
-     * @param path the path to be set.
+     * @param path 要设置的路径
      */
     void setPath(Path path);
 
     /**
-     * notify the agent which is escaped.
+     * 获取当前场景的具体内容
+     * @return 场景
+     */
+    Scene getScene();
+
+    /**
+     * 设置agent所处的场景
+     *
+     * @param scene 被设置的场景
+     */
+    void setScene(Scene scene);
+
+    /**
+     * 标明已经逃离的agent
      */
     void escape();
 }

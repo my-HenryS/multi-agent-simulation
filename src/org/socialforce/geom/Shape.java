@@ -6,10 +6,10 @@ import org.socialforce.model.InteractiveEntity;
 import java.io.Serializable;
 
 /**
- * represent a geometry shape in the coordinate.
- * in 2-Dimensional space, may be a circle, line, triangle, rectangle, etc.
- * in 3-Dimensional space, may be a sphere, ball, cuboid, etc.
- * especially, a void shape contains nothing.
+ * 代表坐标系中的一个几何形状.
+ * 在一个二维空间中, 可能是一个圆，线，三角形，矩形等.
+ * 在一个三维空间中，可能是一个球面，球体、长方体等.
+ * 特别注意，一个空的形状不包含任何东西.
  * @author Ledenel
  * @see Box
  * @see InteractiveEntity
@@ -17,61 +17,61 @@ import java.io.Serializable;
  */
 public interface Shape extends Serializable, Cloneable, DimensionEntity, Drawable {
     /**
-     * check if a point belongs to this <code>Shape</code>.
+     * 检查一个点是否属于 <code>Shape</code>.
      *
-     * @param point the point to be checked.
+     * @param point 将被检查的点.
      *
-     * @return true if the point is a part of the shape; otherwise false.
+     * @return 如果该点是该形状上的一部分，就返回真，否则返回假.
      */
     boolean contains(Point point);
 
     /**
-     * get the distance between a point and this shape.
-     * the distance is 0 if the point is in this shape.
-     * Double.NaN for the void shape.
+     * 获取一个点到这条直线的距离.
+     * 如果距离为0，就说明这个点在这个形状上.
+     * 空的形状为 Double.NaN .
      *
-     * @param point the point to be checked.
-     * @return the distance. return Double.NaN if the point can't reach the shape.
+     * @param point 将被检查的点.
+     * @return 该距离. 如果这个点到不了这个形状上的话，返回 Double.NaN .
      */
     double getDistance(Point point);
 
     /**
-     * get the reference point of this shape.
-     * usually a reference point is the center point of this shape.
-     * for a circle/ball, it is the center.
+     * 获取该形状的参考点.
+     * 通常一个参考点是该形状的的中心点.
+     * 对于球面/球体，它就是中心.
      *
-     * @return the reference point. returns null if the shape is void.
+     * @return 参考点. 如果这个形状是控的话，就返回空.
      */
     Point getReferencePoint();
 
     /**
-     * get the bound of this shape.
-     * returns null if the shape can't be put into a box.
-     * returns a void shape if the shape itself is void.
+     * 获取这个形状的边界.
+     * 如果这个形状不能放到一个box里的话，就返回空.
+     * 如果这个形状是空的，就返回一个空的形状.
      *
-     * @return a box represent the bounds of this shape.
+     * @return 代表这个形状的box.
      */
     Box getBounds();
 
     /**
-     * checks if this shape intersects with a box called hitbox.
+     * 检查这个形状是否与一个hitbox的box相交.
      *
-     * @param hitbox the box to be checked.
-     * @return true if intersects; otherwise false.
+     * @param hitbox 将要被检查的box.
+     * @return 如果相交，返回真，否则返回假.
      */
     boolean hits(Box hitbox);
 
     /**
-     * move the shape to a specified location.
-     * for the non-void shape, the reference point is equals to the location point.
-     * for the void shape, do nothing.
-     * @param location the specified location
+     * 移动这个形状到一个指定的位置.
+     * 对于非空形状，参考点是等于位置点.
+     * 对于空形状，什么也不做.
+     * @param location 指定的位置
      */
     void moveTo(Point location);
 
     /**
-     * creates and returns a copy of this shape.
-     * @return the copied shape.
+     * 创建并返回该形状的副本.
+     * @return 该形状的副本.
      */
     Shape clone();
 }

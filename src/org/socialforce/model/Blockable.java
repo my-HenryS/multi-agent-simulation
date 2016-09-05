@@ -1,13 +1,8 @@
 package org.socialforce.model;
 
 /**
- * represent objects which can block each other.
- *
+ * 表示相互之间是否会阻挡。 *
  * @author Ledenel
- */
-
-/*
- * judge whether it's blocked   ///////?????
  */
 public interface Blockable {
 }

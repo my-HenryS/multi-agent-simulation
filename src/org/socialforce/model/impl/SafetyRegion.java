@@ -7,7 +7,8 @@ import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.SocialForceModel;
 
 /**
- * Created by Ledenel on 2016/8/14.
+ * 定义Gate类，其继承于父类Entity， 并实现了接口InteractiveEntity 的方法
+ *  * Created by Ledenel on 2016/8/14.
  */
 public class SafetyRegion extends Entity implements InteractiveEntity {
     public SafetyRegion(Shape shape) {
@@ -17,10 +18,9 @@ public class SafetyRegion extends Entity implements InteractiveEntity {
         return shape;
     }
     /**
-     * affect the target entity with this.
-     * for example, walls can affect an agent (push them).
-     *
-     * @param affectedEntity the entity to be affected.
+     * 当前this所影响的实体
+     * 例如，墙会影响agent(反作用，反推)
+     * @param affectedEntity 被影响的实体
      * @see Agent
      * @see SocialForceModel
      */
@@ -57,10 +57,10 @@ public class SafetyRegion extends Entity implements InteractiveEntity {
     ApplicationListener listener;
 */
     /**
-     * get the total mass of the entity.
-     * usually the mass is all on the shape's reference point.
-     *
-     * @return the mass.
+     * 获取实体的质量。
+     * 通常质量位于形状的参考点上（或者是位于质心上）
+     * TODO POSITIVE_INFINITY(返回正无穷？)
+     * @return mass.
      */
     @Override
     public double getMass() {

@@ -5,6 +5,8 @@ import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.SocialForceModel;
 
 /**
+ * 定义了TypeMatchRegulation类，其实现了接口ForceRegulation的方法。
+ * TODO 这个类是类型匹配？
  * Created by Ledenel on 2016/8/19.
  */
 public abstract class TypeMatchRegulation<Source extends InteractiveEntity, Target extends InteractiveEntity> implements ForceRegulation<Source,Target> {
@@ -31,10 +33,10 @@ public abstract class TypeMatchRegulation<Source extends InteractiveEntity, Targ
     protected SocialForceModel model;
 
     /**
-     * judge if there has force between source and target
+     * 判断两个agent之间是否有心理作用力。
      * @param source
      * @param target
-     * @return true if there has force between source and target
+     * @return tree  如果两个agent之间是有心理作用力则返回真。
      */
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
