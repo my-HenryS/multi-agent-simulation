@@ -4,16 +4,38 @@ import org.socialforce.container.AgentPool;
 import org.socialforce.container.EntityPool;
 import org.socialforce.container.impl.LinkListAgentPool;
 import org.socialforce.container.impl.LinkListEntityPool;
+import org.socialforce.container.impl.LinkListPool;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.Box;
+import org.socialforce.geom.ClipperShape;
+import org.socialforce.geom.Shape;
+import org.socialforce.geom.impl.Box2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.PathFinder;
+import org.socialforce.model.impl.Wall;
 
 /**
  * Created by Ledenel on 2016/8/22.
  */
 public class SimpleScene implements Scene {
+    protected LinkListPool<Wall>walls = new LinkListPool<>();
+    public void setWalls(int num,Wall wall){
+        walls.set(num, wall);
+    }
+    public void setWallsByShape(int num,Shape shape){
+        setWalls(num,new Wall(shape));
+    }
+
+
+    /**
+     * 
+     * @param num 选定要挖的墙
+     * @param clipper 挖的洞的形状
+     */
+    public void Clippe(int num, ClipperShape clipper){
+
+    }
     /**
      * set the drawer for the drawable.
      *
