@@ -7,9 +7,9 @@ import org.socialforce.geom.Point;
  */
 public class Point2D extends Vector2D implements Point {
     /**
-     * get the X coordinate of the point
+     * 获取点的X坐标.
      *
-     * @return the X coordinate
+     * @return 坐标X
      */
     @Override
     public double getX() {
@@ -17,9 +17,9 @@ public class Point2D extends Vector2D implements Point {
     }
 
     /**
-     * get the Y coordinate of the point
+     * 获取点的Y坐标
      *
-     * @return the Y coordinate
+     * @return Y坐标
      */
     @Override
     public double getY() {
@@ -27,11 +27,11 @@ public class Point2D extends Vector2D implements Point {
     }
 
     /**
-     * get the distance between this point and other point.
-     * could be multi-dimensional distance.
+     * 获取该点到其他点的距离.
+     * 可以是多维度下的距离.
      *
-     * @param other the other point that should calculate the distance from
-     * @return distance.
+     * @param other 要计算距离的另外的一个点
+     * @return 距离.
      */
     @Override
     public double distanceTo(Point other) {
@@ -50,11 +50,11 @@ public class Point2D extends Vector2D implements Point {
     }
 
     /**
-     * Creates and returns a copy of this vector.
-     * The precise meaning of "copy" may depend on the class of the vector.
-     * The general intent is that, for any vector x, the expression: <br>
+     * 创建并返回这个向量的副本.
+     * “复制”的确切含义可能取决于向量的类.
+     * 对于任意向量x，它的一般含义表达式是: <br>
      * x.clone() != x <br>
-     * will be true.
+     * 将为真.
      *
      * @return the copied vector.
      */

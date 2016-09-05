@@ -15,11 +15,11 @@ public class Force2D extends Vector2D implements Force {
     }
 
     /**
-     * accumulate the force and get the delta velocity.
+     * 累积的力和获取速度的增量 .
      *
-     * @param mass the mass of the entity.
-     * @param time the time to be accumulated.
-     * @return the delta velocity.
+     * @param mass 实体的质量.
+     * @param time 累积的时间.
+     * @return 速度的增量.
      */
     @Override
     public Velocity deltaVelocity(double mass, double time) {
@@ -28,13 +28,13 @@ public class Force2D extends Vector2D implements Force {
     }
 
     /**
-     * Creates and returns a copy of this vector.
-     * The precise meaning of "copy" may depend on the class of the vector.
-     * The general intent is that, for any vector x, the expression: <br>
+     * 创建并返回此向量的副本.
+     * “复制”的确切含义可能取决于向量的类.
+     * 对于任意向量x，它的一般含义表达式是: <br>
      * x.clone() != x <br>
-     * will be true.
+     * 将是真.
      *
-     * @return the copied vector.
+     * @return 向量的副本.
      */
     @Override
     public Force clone() {
