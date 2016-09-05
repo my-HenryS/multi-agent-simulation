@@ -13,6 +13,7 @@ import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.PathFinder;
+import org.socialforce.model.impl.Air;
 import org.socialforce.model.impl.Wall;
 
 /**
@@ -27,14 +28,20 @@ public class SimpleScene implements Scene {
         setWalls(num,new Wall(shape));
     }
 
+    protected LinkListPool<Air>gates = new LinkListPool<>();
+    public void setGates(int num,Shape shape){
+        gates.set(num,new Air(shape));
+    }
 
     /**
-     * 
+     *
      * @param num 选定要挖的墙
      * @param clipper 挖的洞的形状
      */
     public void Clippe(int num, ClipperShape clipper){
-
+        if (walls.get(num).getShape() instanceof Box2D){
+        clipper.clip((Box2D)walls.get(num).getShape());}
+        else throw new IllegalArgumentException("暂时不支持一般的挖洞，只实现了简单矩形之间的挖洞");
     }
     /**
      * set the drawer for the drawable.
