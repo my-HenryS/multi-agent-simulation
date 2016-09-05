@@ -67,8 +67,6 @@ public abstract class Entity implements InteractiveEntity {
     /**
      * 设置一个实体的形状
      * 如线，矩形，圆等。
-     *
-     * @return shape 实体的形状.
      */
     public void setShape(Shape shape) {
         this.shape = shape;
