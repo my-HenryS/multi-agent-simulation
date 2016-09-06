@@ -40,6 +40,25 @@ public interface Scene extends Drawable {
     EntityPool getStaticEntities();
 
     /**
+     * 向场景中添加一个Agent。
+     * @param agent 要添加的Agent。
+     * @return 若确实添加了Agent，返回true。
+     */
+    default boolean addAgent(Agent agent) {
+        return getAllAgents().add(agent);
+    }
+
+    /**
+     * 向场景中添加一个静态的实体，
+     * 例如墙，安全区等物体。
+     * @param entity 要添加的静态实体。
+     * @return 若确实添加了该实体，返回true。
+     */
+    default boolean addStaticEntity(InteractiveEntity entity) {
+        return getStaticEntities().add(entity);
+    }
+
+    /**
      * get a stream with all entities in the scene (including agents, walls, gates, etc.).
      * the default implementation just concat agents and static entities(ordered).
      * @return the stream.
