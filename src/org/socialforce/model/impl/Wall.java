@@ -28,7 +28,9 @@ public class Wall extends Entity implements Blockable {
     public Wall(Shape shape) {
         super(shape);
     }
-
+    public Shape getShape(){
+        return shape;
+    }
     /**
      * 获取实体的质量。
      * 通常质量位于形状的参考点上（或者是位于质心上）

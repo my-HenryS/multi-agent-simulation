@@ -14,7 +14,9 @@ public class SafetyRegion extends Entity implements InteractiveEntity {
     public SafetyRegion(Shape shape) {
         super(shape);
     }
-
+    public Shape getShape(){
+        return shape;
+    }
     /**
      * 当前this所影响的实体
      * 例如，墙会影响agent(反作用，反推)
