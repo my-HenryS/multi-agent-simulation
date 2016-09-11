@@ -13,9 +13,10 @@ public class SVSR_SafetyRegion implements SceneValue {
     }
 
     @Override
-    public void setName() {
+    public void setName(String name) {
 
     }
+
 
     @Override
     public Comparable getValue() {
@@ -23,8 +24,18 @@ public class SVSR_SafetyRegion implements SceneValue {
     }
 
     @Override
+    public void setValue(Object value) {
+
+    }
+
+    @Override
     public void apply(Scene scene) {
 
+    }
+
+    @Override
+    public int compareTo(SceneValue o) {
+        return 0;
     }
 
     @Override

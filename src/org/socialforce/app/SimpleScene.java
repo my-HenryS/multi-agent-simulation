@@ -4,45 +4,16 @@ import org.socialforce.container.AgentPool;
 import org.socialforce.container.EntityPool;
 import org.socialforce.container.impl.LinkListAgentPool;
 import org.socialforce.container.impl.LinkListEntityPool;
-import org.socialforce.container.impl.LinkListPool;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.Box;
-import org.socialforce.geom.ClipperShape;
-import org.socialforce.geom.Shape;
-import org.socialforce.geom.impl.Box2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.PathFinder;
-import org.socialforce.model.impl.Air;
-import org.socialforce.model.impl.Wall;
 
 /**
  * Created by Ledenel on 2016/8/22.
  */
 public class SimpleScene implements Scene {
-    protected LinkListPool<Wall>walls = new LinkListPool<>();
-    public void setWalls(int num,Wall wall){
-        walls.set(num, wall);
-    }
-    public void setWallsByShape(int num,Shape shape){
-        setWalls(num,new Wall(shape));
-    }
-
-    protected LinkListPool<Air>gates = new LinkListPool<>();
-    public void setGates(int num,Shape shape){
-        gates.set(num,new Air(shape));
-    }
-
-    /**
-     *
-     * @param num 选定要挖的墙
-     * @param clipper 挖的洞的形状
-     */
-    public void Clippe(int num, ClipperShape clipper){
-        if (walls.get(num).getShape() instanceof Box2D){
-        clipper.clip((Box2D)walls.get(num).getShape());}
-        else throw new IllegalArgumentException("暂时不支持一般的挖洞，只实现了简单矩形之间的挖洞");
-    }
     /**
      * set the drawer for the drawable.
      *
@@ -124,7 +95,6 @@ public class SimpleScene implements Scene {
         return statics;
     }
 
-    //TODO: 并不是一个覆写的功能，可能会出现问题。我姑且先标着。
     public void setStaticEntities(EntityPool statics) {
         this.statics = statics;
     }
