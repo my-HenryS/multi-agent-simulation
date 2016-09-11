@@ -4,6 +4,8 @@ import org.socialforce.app.Scene;
 import org.socialforce.app.SceneValue;
 import org.socialforce.geom.ClippableShape;
 import org.socialforce.geom.Expandable;
+import org.socialforce.geom.Shape;
+import org.socialforce.geom.impl.Box2D;
 import org.socialforce.model.impl.Air;
 
 /**
@@ -39,7 +41,12 @@ public class SVSR_ExitWidth implements SceneValue {
     @Override
     public void apply(Scene scene) {
     for (int i = 0;i < width.length;i++){
+        Shape gate = scene.getStaticEntities().findBottom("gate").getShape();
         ((Expandable)scene.getStaticEntities().findBottom("gate").getShape()).expandTo(width[i]);
+        scene.getStaticEntities().remove(gate);
+        /*@TODO 由于返回的是一个EntityPool，而这里面没有实现set啊之类的功能，所以没法绕开。
+            尚且不明确设置Pool或Pool中变量名字的方法。
+         */
     }
     }
 
