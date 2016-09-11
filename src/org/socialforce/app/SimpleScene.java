@@ -95,6 +95,7 @@ public class SimpleScene implements Scene {
         return statics;
     }
 
+    //TODO: 并不是一个覆写的功能，可能会出现问题。我姑且先标着。
     public void setStaticEntities(EntityPool statics) {
         this.statics = statics;
     }
