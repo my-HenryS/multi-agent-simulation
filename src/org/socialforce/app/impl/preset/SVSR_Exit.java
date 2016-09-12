@@ -2,52 +2,37 @@ package org.socialforce.app.impl.preset;
 
 import org.socialforce.app.Scene;
 import org.socialforce.app.SceneValue;
+import org.socialforce.geom.ClippableShape;
 import org.socialforce.geom.ClipperShape;
+import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.Wall;
 
 /**
  * Created by Ledenel on 2016/9/12.
  */
-public class SVSR_ExitWidth implements SceneValue<ClipperShape> {
-    /**
-     * 获取参数的名称。
-     *
-     * @return 参数名称。
-     */
+public class SVSR_Exit implements SceneValue<ClipperShape> {
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
-    /**
-     * 设置参数的名称。
-     *
-     * @param name 要设置的参数名称。
-     */
     @Override
     public void setName(String name) {
-
+        this.name = name;
     }
 
-    /**
-     * 获得该场景参数赋值的值。
-     *
-     * @return 返回的具体值。
-     */
     @Override
     public ClipperShape getValue() {
-        return null;
+        return value;
     }
 
-    /**
-     * 设置改场景参数赋值的值。
-     *
-     * @param value 要设置的值。
-     */
     @Override
     public void setValue(ClipperShape value) {
-
+        this.value = value;
     }
 
+    private String name;
+    private ClipperShape value;
     /**
      * 将该赋值运用于特定场景。
      * 即，使用该赋值更改一个指定的场景。
@@ -56,7 +41,8 @@ public class SVSR_ExitWidth implements SceneValue<ClipperShape> {
      */
     @Override
     public void apply(Scene scene) {
-
+        Wall wall = (Wall) scene.getStaticEntities().findBottom(name);
+        wall.setShape(value.clip((ClippableShape) wall.getShape()));
     }
 
     /**
@@ -99,6 +85,6 @@ public class SVSR_ExitWidth implements SceneValue<ClipperShape> {
      */
     @Override
     public int compareTo(SceneValue<ClipperShape> o) {
-        return 0;
+        return o.getValue().hashCode() - this.value.hashCode();
     }
 }
