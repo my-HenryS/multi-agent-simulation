@@ -8,7 +8,9 @@ import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.Wall;
 
 /**
- * Created by Ledenel on 2016/9/12.
+ * 代表一个可变的缺口（出口）的一个具体取值。
+ * 该场景变量以name作为场景中的实体名，
+ * 以一个ClipperShape来规定出口的位置和大小。
  */
 public class SVSR_Exit implements SceneValue<ClipperShape> {
     @Override
