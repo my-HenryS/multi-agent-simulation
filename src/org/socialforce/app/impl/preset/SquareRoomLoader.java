@@ -28,6 +28,10 @@ public class SquareRoomLoader implements SceneLoader {
     @Override
     public Scene readScene() {
         Scene scene = new SimpleScene(new Box2D(-50,-50,100,100));
+        Wall [] walls = new Wall[4];
+        for(Wall wall : walls) {
+            //wall = new Wall();
+        }
         return scene;
     }
 
