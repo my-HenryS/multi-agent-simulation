@@ -102,4 +102,5 @@ public interface Scene extends Drawable {
     boolean isVisible();
     void setVisible(boolean visible);
     ValueSet getValueSet();
+    // TODO: 2016/9/14 add scene listener support.
 }
