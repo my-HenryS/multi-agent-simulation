@@ -98,6 +98,6 @@ public class SVSR_Exit implements SceneValue<ClipperShape> {
      */
     @Override
     public int compareTo(SceneValue<ClipperShape> o) {
-        return o.getValue().hashCode() - this.value.hashCode();
+        return o.getPriority() - this.getPriority();
     }
 }
