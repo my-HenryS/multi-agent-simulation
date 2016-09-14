@@ -33,6 +33,17 @@ public class SVSR_Exit implements SceneValue<ClipperShape> {
         this.value = value;
     }
 
+    @Override
+    public int getPriority() {
+        return priority;
+    }
+
+    @Override
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    private int priority;
     private String name;
     private ClipperShape value;
     /**
