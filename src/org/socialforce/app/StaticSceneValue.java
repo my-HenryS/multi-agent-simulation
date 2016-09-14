@@ -7,7 +7,7 @@ import org.socialforce.model.InteractiveEntity;
  */
 public abstract class StaticSceneValue<T extends Comparable<T>> implements SceneValue<T> {
 
-    public void setName(String name) {
+    public void setEntityName(String name) {
         this.name = name;
     }
 
@@ -20,7 +20,7 @@ public abstract class StaticSceneValue<T extends Comparable<T>> implements Scene
     protected T value;
 
     @Override
-    public String getName() {
+    public String getEntityName() {
         return name;
     }
 
@@ -31,7 +31,7 @@ public abstract class StaticSceneValue<T extends Comparable<T>> implements Scene
 
     @Override
     public void apply(Scene scene) {
-        scene.getStaticEntities().find(getName()).forEach(this::applyEach);
+        scene.getStaticEntities().find(getEntityName()).forEach(this::applyEach);
     }
 
     public abstract void applyEach(InteractiveEntity entity);

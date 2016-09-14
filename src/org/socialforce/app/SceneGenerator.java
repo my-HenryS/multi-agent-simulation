@@ -8,4 +8,5 @@ import org.socialforce.app.Scene;
  */
 public interface SceneGenerator {
     Iterable<Scene> generate(Scene template, ParameterSet params);
+    Iterable<Scene> generate(SceneLoader loader);
 }

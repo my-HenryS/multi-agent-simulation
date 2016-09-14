@@ -14,12 +14,12 @@ import org.socialforce.model.impl.Wall;
  */
 public class SVSR_Exit implements SceneValue<ClipperShape> {
     @Override
-    public String getName() {
+    public String getEntityName() {
         return name;
     }
 
     @Override
-    public void setName(String name) {
+    public void setEntityName(String name) {
         this.name = name;
     }
 
