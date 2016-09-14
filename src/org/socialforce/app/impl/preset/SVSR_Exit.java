@@ -2,6 +2,7 @@ package org.socialforce.app.impl.preset;
 
 import org.socialforce.app.Scene;
 import org.socialforce.app.SceneValue;
+import org.socialforce.app.StaticSceneValue;
 import org.socialforce.geom.ClippableShape;
 import org.socialforce.geom.ClipperShape;
 import org.socialforce.model.InteractiveEntity;
@@ -12,27 +13,7 @@ import org.socialforce.model.impl.Wall;
  * 该场景变量以name作为场景中的实体名，
  * 以一个ClipperShape来规定出口的位置和大小。
  */
-public class SVSR_Exit implements SceneValue<ClipperShape> {
-    @Override
-    public String getEntityName() {
-        return name;
-    }
-
-    @Override
-    public void setEntityName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public ClipperShape getValue() {
-        return value;
-    }
-
-    @Override
-    public void setValue(ClipperShape value) {
-        this.value = value;
-    }
-
+public class SVSR_Exit extends StaticSceneValue<ClipperShape> implements SceneValue<ClipperShape> {
     @Override
     public int getPriority() {
         return priority;
@@ -44,17 +25,10 @@ public class SVSR_Exit implements SceneValue<ClipperShape> {
     }
 
     private int priority;
-    private String name;
-    private ClipperShape value;
-    /**
-     * 将该赋值运用于特定场景。
-     * 即，使用该赋值更改一个指定的场景。
-     *
-     * @param scene 要被更改的场景。
-     */
+
     @Override
-    public void apply(Scene scene) {
-        Wall wall = (Wall) scene.getStaticEntities().findBottom(name);
+    public void applyEach(InteractiveEntity entity) {
+        Wall wall = (Wall) entity;
         wall.setShape(value.clip((ClippableShape) wall.getShape()));
     }
 
