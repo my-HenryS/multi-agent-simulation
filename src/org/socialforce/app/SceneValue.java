@@ -24,7 +24,19 @@ public interface SceneValue<T> extends Comparable<SceneValue<T>> {
      */
     void setEntityName(String name);
 
+    /**
+     * 将该场景参数赋值与指定实体相关联。
+     * @param entity 要关联的实体。
+     * @return 是否增加了关联关系。
+     */
+    boolean concat(InteractiveEntity entity);
 
+    /**
+     * 测试该场景参数赋值是否能与指定实体发生关联。
+     * @param entity 要关联的实体。
+     * @return 是否能够发生关联。
+     */
+    boolean canConcat(InteractiveEntity entity);
 
     /**
      * 获得该场景参数赋值的值。
