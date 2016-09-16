@@ -2,8 +2,6 @@ package org.socialforce.app.impl.preset;
 
 import org.socialforce.app.Scene;
 import org.socialforce.app.SceneValue;
-import org.socialforce.app.StaticSceneValue;
-import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.SafetyRegion;
 
 /**

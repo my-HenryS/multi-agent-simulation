@@ -2,12 +2,9 @@ package org.socialforce.app.impl.preset;
 
 import org.socialforce.app.Scene;
 import org.socialforce.app.SceneValue;
-import org.socialforce.app.StaticSceneValue;
 import org.socialforce.geom.Box;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.Agent;
-import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.SocialForceModel;
 
 /**
@@ -15,6 +12,10 @@ import org.socialforce.model.SocialForceModel;
  */
 public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.AgentGenerator> {
 
+    /**
+     * 用于描述一个刷怪笼
+     * 参数为XYZ方向的agent间距，生成人的范围还有在何种模型下生成人。
+     */
     protected class AgentGenerator{
         protected double X_distance,Y_distance,Z_distance;
         protected Box Area;
@@ -67,6 +68,10 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
 
     }
 
+    /**
+     * 注意生成agent使用的是SocialForceModel里的createAgent方法
+     * @param scene 要被更改的场景。
+     */
     @Override
     public void apply(Scene scene) {
         if (agentGenerator.Area instanceof Box2D) {

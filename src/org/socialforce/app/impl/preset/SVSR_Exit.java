@@ -26,10 +26,19 @@ public class SVSR_Exit extends StaticSceneValue<ClipperShape> implements SceneVa
 
     private int priority;
 
+    /**
+     * 如果门有宽度，就切墙。
+     * 如果门宽度为零，就什么也不做。
+     * @param entity 场景里所有的墙
+     */
     @Override
     public void applyEach(InteractiveEntity entity) {
-        Wall wall = (Wall) entity;
-        wall.setShape(value.clip((ClippableShape) wall.getShape()));
+        if (value.getBounds().getStartPoint().getX() != value.getBounds().getEndPoint().getX()
+                && value.getBounds().getStartPoint().getY() != value.getBounds().getEndPoint().getY()) {
+            Wall wall = (Wall) entity;
+            wall.setShape(value.clip((ClippableShape) wall.getShape()));
+        }
+        else /*do nothing*/;
     }
 
     /**
