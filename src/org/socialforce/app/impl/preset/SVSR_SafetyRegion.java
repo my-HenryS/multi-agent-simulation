@@ -7,7 +7,7 @@ import org.socialforce.model.impl.SafetyRegion;
 /**
  * Created by Whatever on 2016/9/16.
  */
-public class SVSR_SafetyReigion implements SceneValue<SafetyRegion>{
+public class SVSR_SafetyRegion implements SceneValue<SafetyRegion>{
     protected SafetyRegion safetyRegion;
     protected String name;
     @Override
