@@ -32,13 +32,12 @@ public class SquareRoomLoaderTest {
         assertEquals("wall0",entity.getName());
         entity = scene.getStaticEntities().selectTop(new Point2D(25.5,0));
         assertEquals("wall2",entity.getName());
-
     }
 
     @Test
     public void getShapeTest() throws Exception{
         Scene scene = loader.readScene();
         InteractiveEntity entity = scene.getStaticEntities().selectBottom(new Circle2D(new Point2D(0,0),100));
-        assertEquals(entity.getShape(),new  Box2D(new Point2D(0, 0), new Point2D(1, 16)));//TODO 我并不理解这是什么鬼但是就是跑不通，equals是好好覆写过的
+        assertEquals(entity.getShape(),new  Box2D(new Point2D(0, 0), new Point2D(1, 16)));
     }
 }
