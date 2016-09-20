@@ -17,11 +17,17 @@ import static org.junit.Assert.*;
 public class SVSR_ExitTest {
     Scene scene;
     SceneLoader loader = new SquareRoomLoader();
-    SVSR_Exit exit = new SVSR_Exit();              //TODO 初始化时会导致成片的空指针问题。
+    SVSR_Exit exit = new SVSR_Exit();
     @Before
     public void Setup(){
-        exit.setValue(new Box2D(-1,5,3,2));
+        exit.setValue(new Box2D[]{new Box2D(-1,5,4,2)});
     }
+
+    @Test
+    public void SetupTest(){
+        assertEquals(exit.getValue()[0],new Box2D(-1,5,4,2));
+    }
+
 
     @Test
     public void ApplyTest(){
