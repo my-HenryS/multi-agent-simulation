@@ -353,7 +353,7 @@ public class Box2D implements Box {
     @Override
     public Shape clip(ClippableShape shape) {
         ComplexBox2D complexbox = new ComplexBox2D();
-        Point[][] dictionary = new Point[2][];
+        Point[][] dictionary = new Point[2][2];
         if(shape instanceof Box2D){
             if (hits(shape.getBounds())){
                 if ((((Box2D) shape).getStartPoint().getX()<getStartPoint().getX()&&getEndPoint().getX()<((Box2D) shape).getEndPoint().getX())
@@ -363,9 +363,11 @@ public class Box2D implements Box {
                         dictionary[0][0] = getStartPoint();
                         dictionary[1][1] = getEndPoint();
                         if (((Box2D) shape).getStartPoint().getX()<getStartPoint().getX()){
-                        dictionary[1][0] = new Point2D(((Box2D) shape).getStartPoint().getX(),getEndPoint().getY());
+                            // FIXME: 2016/10/3 two assignment should be different.
+                            dictionary[1][0] = new Point2D(((Box2D) shape).getStartPoint().getX(),getEndPoint().getY());
                         dictionary[1][0] = new Point2D(((Box2D) shape).getEndPoint().getX(),getStartPoint().getY());}
                         else {
+                            // FIXME: 2016/10/3 two assignment should be different.
                             dictionary[1][0] = new Point2D(getEndPoint().getX(),((Box2D) shape).getStartPoint().getY());
                             dictionary[1][0] = new Point2D(getStartPoint().getX(),((Box2D) shape).getEndPoint().getY());
                         }
