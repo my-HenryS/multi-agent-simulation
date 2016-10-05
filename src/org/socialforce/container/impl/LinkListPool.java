@@ -40,7 +40,7 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
     }
 
     protected boolean shapeContains(T entity, DistanceShape shape) {
-        return shape.contains(entity.getShape().getReferencePoint());
+        return shape.intersects(entity.getShape());
     }
 
     protected boolean nameEquals(T entity, String name) {
