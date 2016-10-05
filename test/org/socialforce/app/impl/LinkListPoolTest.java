@@ -19,15 +19,20 @@ import static org.junit.Assert.*;
 public class LinkListPoolTest {
     Pool<InteractiveEntity> entities;
 
+    Circle2D circle2D;
+
     @Before
     public void setUp() throws Exception {
         entities = new LinkListPool<>();
         entities.add(new Wall(new Box2D(-1, -1, 2, 2)));
         entities.add(new Wall(new Segment2D(new Point2D(3, 3), new Point2D(4, 4))));
         Circle2D circle2D = new Circle2D();
+        this.circle2D = new Circle2D();
         circle2D.setRadius(4);
+        this.circle2D.setRadius(4);
         entities.add(new Wall(circle2D));
     }
+
 
     @Test
     public void testSelect() throws Exception {
@@ -41,5 +46,15 @@ public class LinkListPoolTest {
             count++;
         }
         assertEquals(4,count);
+    }
+
+    @Test
+    public void intersectSelect() throws Exception{
+        entities.add(new Wall(new Segment2D(new Point2D(2,2), new Point2D(20,20))));
+        int count = 0;
+        for(InteractiveEntity i:entities.select(circle2D)){
+            count++;
+        }
+        assertEquals(3,count);
     }
 }
