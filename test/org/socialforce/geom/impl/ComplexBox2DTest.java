@@ -24,6 +24,8 @@ public class ComplexBox2DTest {
         assertTrue(complexBox.contains(new Point2D(-1.5,-1.5)));
         assertTrue(complexBox.contains(new Point2D(1,1)));
         assertFalse(complexBox.contains(new Point2D(-0.5,0)));
+        assertFalse(complexBox.contains(new Point2D(-2,-3)));
+        assertFalse(complexBox.contains(new Point2D(-3,-2)));
     }
 
     @Test
@@ -33,7 +35,6 @@ public class ComplexBox2DTest {
 
     @Test
     public void getReferencePoint() throws Exception {
-
     }
 
     @Test

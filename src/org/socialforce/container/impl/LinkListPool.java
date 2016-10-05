@@ -43,15 +43,15 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
         return shape.contains(entity.getShape().getReferencePoint());
     }
 
-    protected boolean nameEquals(T entity, String name) {
-        return name.equals(entity.getName());
-    }
+     protected boolean nameEquals(T entity, String name) {
+     return name.equals(entity.getName());
+     }
 
-    protected boolean pointContains(T entity, Point point) {
-        return entity.getShape().contains(point);
-    }
+     protected boolean pointContains(T entity, Point point) {
+     return entity.getShape().contains(point);
+     }
 
-    /**
+     /**
      * 移除与指定形状相交的所有实体。
      *
      * @param shape 指定的形状。

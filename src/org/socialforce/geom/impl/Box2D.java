@@ -360,16 +360,14 @@ public class Box2D implements Box {
                         ||(((Box2D) shape).getStartPoint().getX()>getStartPoint().getX()&&getEndPoint().getX()>((Box2D) shape).getEndPoint().getX())){
                     if ((((Box2D) shape).getStartPoint().getY()<getStartPoint().getY()&&getEndPoint().getY()<((Box2D) shape).getEndPoint().getY())
                             ||(((Box2D) shape).getStartPoint().getY()>getStartPoint().getY()&&getEndPoint().getY()>((Box2D) shape).getEndPoint().getY())){
-                        dictionary[0][0] = getStartPoint();
-                        dictionary[1][1] = getEndPoint();
+                        dictionary[0][0] = ((Box2D) shape).getStartPoint();
+                        dictionary[1][1] = ((Box2D) shape).getEndPoint();
                         if (((Box2D) shape).getStartPoint().getX()<getStartPoint().getX()){
-                            // FIXME: 2016/10/3 two assignment should be different.
-                            dictionary[1][0] = new Point2D(((Box2D) shape).getStartPoint().getX(),getEndPoint().getY());
-                        dictionary[1][0] = new Point2D(((Box2D) shape).getEndPoint().getX(),getStartPoint().getY());}
-                        else {
-                            // FIXME: 2016/10/3 two assignment should be different.
-                            dictionary[1][0] = new Point2D(getEndPoint().getX(),((Box2D) shape).getStartPoint().getY());
                             dictionary[1][0] = new Point2D(getStartPoint().getX(),((Box2D) shape).getEndPoint().getY());
+                        dictionary[0][1] = new Point2D(getEndPoint().getX(),((Box2D) shape).getStartPoint().getY());}
+                        else {
+                            dictionary[1][0] = new Point2D(((Box2D) shape).getEndPoint().getX(),getStartPoint().getY());
+                            dictionary[0][1] = new Point2D(((Box2D) shape).getStartPoint().getX(),getEndPoint().getY());
                         }
                         complexbox.SetWithArray(dictionary);
             return complexbox;
