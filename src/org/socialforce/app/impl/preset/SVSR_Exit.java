@@ -15,29 +15,8 @@ import org.socialforce.model.impl.Wall;
  * 该场景变量以name作为场景中的实体名，
  * 以一个ClipperShape来规定出口的位置和大小。
  */
-public class SVSR_Exit implements SceneValue<ClipperShape[]> {
+public class SVSR_Exit extends SVSR_Base<ClipperShape[]> {
     protected ClipperShape[] exit;
-    protected String name;
-
-    /**
-     * 获取所关联的实体名称。
-     *
-     * @return 场景中的实体名称。
-     */
-    @Override
-    public String getEntityName() {
-        return name;
-    }
-
-    /**
-     * 设置获取所关联的实体名称。
-     *
-     * @param name 要设置的实体名称。
-     */
-    @Override
-    public void setEntityName(String name) {
-        this.name = name;
-    }
 
     /**
      * 获得该场景参数赋值的值。
@@ -82,19 +61,6 @@ public class SVSR_Exit implements SceneValue<ClipperShape[]> {
     public int compareTo(SceneValue<ClipperShape[]> o) {
         return 0;
     }
-
-
-    @Override
-    public int getPriority() {
-        return priority;
-    }
-
-    @Override
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
-    private int priority;
 
 
 }

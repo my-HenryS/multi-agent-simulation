@@ -10,7 +10,7 @@ import org.socialforce.model.SocialForceModel;
 /**
  * Created by Whatever on 2016/9/16.
  */
-public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.AgentGenerator> {
+public class SVSR_AgentGenerator extends SVSR_Base<SVSR_AgentGenerator.AgentGenerator> {
 
     /**
      * 用于描述一个刷怪笼
@@ -46,17 +46,7 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
     }
 
 
-    private int priority;
     protected AgentGenerator agentGenerator;
-    @Override
-    public String getEntityName() {
-        return null;
-    }
-
-    @Override
-    public void setEntityName(String name) {
-
-    }
 
     @Override
     public AgentGenerator getValue() {
@@ -88,13 +78,4 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
         return o.getPriority() - this.getPriority();
     }
 
-    @Override
-    public int getPriority() {
-        return priority;
-    }
-
-    @Override
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
 }

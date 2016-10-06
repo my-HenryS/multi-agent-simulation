@@ -7,18 +7,8 @@ import org.socialforce.model.impl.SafetyRegion;
 /**
  * Created by Whatever on 2016/9/16.
  */
-public class SVSR_SafetyRegion implements SceneValue<SafetyRegion>{
+public class SVSR_SafetyRegion extends SVSR_Base<SafetyRegion> {
     protected SafetyRegion safetyRegion;
-    protected String name;
-    @Override
-    public String getEntityName() {
-        return name;
-    }
-
-    @Override
-    public void setEntityName(String name) {
-        this.name = name;
-    }
 
     @Override
     public SafetyRegion getValue() {
@@ -41,14 +31,4 @@ public class SVSR_SafetyRegion implements SceneValue<SafetyRegion>{
         return o.getPriority() - this.getPriority();
     }
 
-    private int priority;
-    @Override
-    public int getPriority() {
-        return priority;
-    }
-
-    @Override
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
 }
