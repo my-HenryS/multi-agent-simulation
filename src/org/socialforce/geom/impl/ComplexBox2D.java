@@ -35,18 +35,19 @@ public class ComplexBox2D implements Shape {
 
     @Override
     public boolean contains(Point point) {
+        boolean flag = false;
         for (int i= 0;i<BoxDictionary[0].length;i++)
         {
             if (new Box2D(BoxDictionary[0][i],BoxDictionary[1][i]).contains(point)){
-                return true;
+                flag = true;
             }
         }
-        return false;
+        return flag;
     }
 
     @Override
     public double getDistance(Point point) {
-        double distance=0,temp;
+        double distance=Double.POSITIVE_INFINITY,temp;
         for (int i = 0;i < BoxDictionary[0].length;i++){
             temp = new Box2D(BoxDictionary[0][i],BoxDictionary[1][i]).getDistance(point);
             if (temp < distance){

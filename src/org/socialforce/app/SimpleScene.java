@@ -14,7 +14,19 @@ import org.socialforce.model.PathFinder;
  * Created by Ledenel on 2016/8/22.
  */
 public class SimpleScene implements Scene {
+    @Override
+    public SceneListener getSceneListener() {
+        return sceneListener;
+    }
+
+    public void setSceneListener(SceneListener sceneListener) {
+        this.sceneListener = sceneListener;
+    }
+
+    SceneListener sceneListener;
+
     /**
+     *
      * set the drawer for the drawable.
      *
      * @param drawer the drawer.

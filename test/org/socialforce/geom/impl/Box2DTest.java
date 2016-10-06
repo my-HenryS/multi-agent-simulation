@@ -12,13 +12,15 @@ import static org.junit.Assert.*;
  */
 public class Box2DTest {
         Box2D testBox;
-        Point2D a,b,pointStrat,pointEnd;
+        Point2D a,b,c,d,pointStrat,pointEnd;
 
     @Before
     public void setUp() throws Exception{
        testBox = new Box2D(0,0,3,4);
         a = new Point2D(1,1);
         b = new Point2D(6,8);
+        c = new Point2D(-4,-3);
+        d = new Point2D(1,-5);
         pointStrat = new Point2D(3,3);
         pointEnd = new Point2D(10,10);
     }
@@ -32,6 +34,8 @@ public class Box2DTest {
     public void getDistance() throws Exception {
         assertEquals(0,testBox.getDistance(a),0);
         assertEquals(5,testBox.getDistance(b),0);
+        assertEquals(5,testBox.getDistance(c),0);
+        assertEquals(5,testBox.getDistance(d),0);
     }
 
     @Test
