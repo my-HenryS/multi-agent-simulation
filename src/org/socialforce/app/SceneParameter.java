@@ -6,9 +6,11 @@ package org.socialforce.app;
  */
 public interface SceneParameter<T extends Comparable<T>> extends Comparable<SceneParameter<T>> {
     String getName();
-    void setName();
+    void setName(String name);
     boolean isValid(SceneValue<T> value);
     int getPreferedSize();
     Iterable<SceneValue<T>> sample(int size);
     Iterable<SceneValue<T>> sample();
+    int getPriority();
+    void setPriority(int priority);
 }
