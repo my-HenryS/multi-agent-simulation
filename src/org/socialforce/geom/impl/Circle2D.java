@@ -119,7 +119,9 @@ public class Circle2D implements DistanceShape {
      */
     @Override
     public boolean hits(Box hitbox) {
-        return getBounds().hits(hitbox);
+        if (hitbox.getDistance(center) <= radius){
+            return true;}
+        return false;
     }
 
     /**
