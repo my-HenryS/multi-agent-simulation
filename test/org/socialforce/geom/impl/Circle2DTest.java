@@ -1,4 +1,4 @@
-package org.socialforce.app.impl;
+package org.socialforce.geom.impl;
 
 import org.junit.Before;
 import org.junit.Test;
