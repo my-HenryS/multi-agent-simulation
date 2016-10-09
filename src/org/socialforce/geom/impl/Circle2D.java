@@ -1,5 +1,6 @@
 package org.socialforce.geom.impl;
 
+import org.omg.CORBA.Object;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.Box;
 import org.socialforce.geom.DistanceShape;
@@ -43,10 +44,6 @@ public class Circle2D implements DistanceShape {
         this.drawer = drawer;
     }
 
-    /**
-     * 获取绘制器
-     * @return
-     */
     @Override
     public int dimension() {
         return 2;
@@ -164,4 +161,12 @@ public class Circle2D implements DistanceShape {
     public boolean intersects(Shape other) {
         return distanceTo(other) <= 0;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        return obj instanceof Circle2D
+                && ((Circle2D) obj).getRadius()==radius
+                && ((Circle2D) obj).getReferencePoint().equals(getReferencePoint());
+    }
+    
 }
