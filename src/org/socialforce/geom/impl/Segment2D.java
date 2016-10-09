@@ -30,7 +30,7 @@ public class Segment2D implements Shape {
     }
 
     public Segment2D(Point2D a, Point2D b) {
-        if (a == b) {
+        if (a.equals(b)) {
             throw new IllegalArgumentException("a and b can not be the same point");
         }
         //this.a = a;
@@ -155,7 +155,30 @@ public class Segment2D implements Shape {
 
     @Override
     public boolean hits(Box hitbox) {
-        return getBounds().hits(hitbox);
+        boolean flag = false;
+        Box2D covBox;
+        double xmin,xmax,ymin,ymax;
+        if (getBounds().hits(hitbox)){
+            covBox = (Box2D) getBounds().intersect(hitbox);
+            xmin = covBox.getXmin();
+            xmax = covBox.getXmax();
+            ymin = covBox.getYmin();
+            ymax = covBox.getYmax();
+            if (xmin != xmax){
+                if (ymin != ymax){
+                    if (intersect(new Segment2D(new Point2D(xmin,ymin),new Point2D(xmin,ymax)))){return true;}
+                    if (intersect(new Segment2D(new Point2D(xmin,ymax),new Point2D(xmax,ymax)))){return true;}
+                    if (intersect(new Segment2D(new Point2D(xmax,ymax),new Point2D(xmax,ymin)))){return true;}
+                    if (intersect(new Segment2D(new Point2D(xmin,ymin),new Point2D(xmax,ymin)))){return true;}
+                }
+                else return intersect(new Segment2D(new Point2D(xmin,ymin),new Point2D(xmax,ymin)));
+            }
+            else if (ymin != ymax){
+                return intersect(new Segment2D(new Point2D(xmin,ymin),new Point2D(xmax,ymax)));
+            }
+            else return contains(new Point2D(xmin,ymin));
+        }
+        return false;
     }
 
     @Override
@@ -253,5 +276,29 @@ public class Segment2D implements Shape {
             }
             
         }*/
+
+    public Point2D[] getExtrimePoint(){
+        return new Point2D[]{new Point2D(x1,y1),new Point2D(x2,y2)};
+    }
+
+
+    public boolean intersect(Segment2D line){
+        double px3 = line.getExtrimePoint()[0].getX();
+        double px4 = line.getExtrimePoint()[1].getX();
+        double py3 = line.getExtrimePoint()[0].getY();
+        double py4 = line.getExtrimePoint()[1].getY();
+        boolean flag = false;
+        double d = (x2-x1)*(py4-py3) - (y2-y1)*(px4-px3);
+        if(d!=0)
+        {
+            double r = ((y1-py3)*(px4-px3)-(x1-px3)*(py4-py3))/d;
+            double s = ((y1-py3)*(x2-x1)-(x1-px3)*(y2-y1))/d;
+            if((r>=0) && (r <= 1) && (s >=0) && (s<=1))
+            {
+                flag = true;
+            }
+        }
+        return flag;
+    }
 
 }
