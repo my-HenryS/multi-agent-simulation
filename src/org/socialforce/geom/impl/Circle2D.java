@@ -1,6 +1,5 @@
 package org.socialforce.geom.impl;
 
-import org.omg.CORBA.Object;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.Box;
 import org.socialforce.geom.DistanceShape;
@@ -168,5 +167,5 @@ public class Circle2D implements DistanceShape {
                 && ((Circle2D) obj).getRadius()==radius
                 && ((Circle2D) obj).getReferencePoint().equals(getReferencePoint());
     }
-    
+
 }
