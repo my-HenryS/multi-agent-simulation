@@ -167,5 +167,4 @@ public class Circle2D implements DistanceShape {
                 && ((Circle2D) obj).getRadius()==radius
                 && ((Circle2D) obj).getReferencePoint().equals(getReferencePoint());
     }
-
 }
