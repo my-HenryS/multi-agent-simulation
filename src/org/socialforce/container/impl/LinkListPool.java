@@ -43,15 +43,15 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
         return shape.intersects(entity.getShape());
     }
 
-    protected boolean nameEquals(T entity, String name) {
-        return name.equals(entity.getName());
-    }
+     protected boolean nameEquals(T entity, String name) {
+     return name.equals(entity.getName());
+     }
 
-    protected boolean pointContains(T entity, Point point) {
-        return entity.getShape().contains(point);
-    }
+     protected boolean pointContains(T entity, Point point) {
+     return entity.getShape().contains(point);
+     }
 
-    /**
+     /**
      * 移除与指定形状相交的所有实体。
      *
      * @param shape 指定的形状。
@@ -107,7 +107,7 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
     }
 
     /**
-     * 选择在池中被覆盖在最下边的，与指定形状相交的实体。
+     * 选择在池中被覆盖在最下边的，被指定形状包含的实体。
      * 按照 {@link #add(InteractiveEntity)} 的添加顺序，最先添加的被覆盖在最下面。
      *
      * @param shape 指定的形状。

@@ -1,6 +1,8 @@
 package org.socialforce.app;
 
 
+import org.socialforce.model.InteractiveEntity;
+
 /**
  * 代表一个场景参数的具体赋值。
  * 场景参数值的主要作用是存储一个特定类型的参数的赋值，
@@ -10,17 +12,18 @@ package org.socialforce.app;
  */
 public interface SceneValue<T> extends Comparable<SceneValue<T>> {
     /**
-     * 获取参数的名称。
+     * 获取所关联的实体名称。
      *
-     * @return 参数名称。
+     * @return 场景中的实体名称。
      */
-    String getName();
+    String getEntityName();
 
     /**
-     * 设置参数的名称。
-     * @param name 要设置的参数名称。
+     * 设置获取所关联的实体名称。
+     *
+     * @param name 要设置的实体名称。
      */
-    void setName(String name);
+    void setEntityName(String name);
 
     /**
      * 获得该场景参数赋值的值。
@@ -31,6 +34,7 @@ public interface SceneValue<T> extends Comparable<SceneValue<T>> {
 
     /**
      * 设置改场景参数赋值的值。
+     *
      * @param value 要设置的值。
      */
     void setValue(T value);
@@ -83,4 +87,8 @@ public interface SceneValue<T> extends Comparable<SceneValue<T>> {
      */
     @Override
     int compareTo(SceneValue<T> o);
+
+    int getPriority();
+
+    void setPriority(int priority);
 }

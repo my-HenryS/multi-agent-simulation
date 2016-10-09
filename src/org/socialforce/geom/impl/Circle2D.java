@@ -53,6 +53,13 @@ public class Circle2D implements DistanceShape {
     }
 
 
+    public Circle2D(Point2D center,double radius){
+        this.moveTo(center);
+        this.radius = radius;
+    }
+    public Circle2D(){}
+
+
     /**
      *计算圆圈内的点到圆心的距离.
      * @param point 将被检查的点.
