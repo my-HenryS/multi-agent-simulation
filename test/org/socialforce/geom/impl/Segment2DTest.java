@@ -90,7 +90,12 @@ public class Segment2DTest {
         assertFalse(testline.intersect(new Segment2D(new Point2D(2,-1),new Point2D(0,-7))));
     }
 
-    
+    @Test
+    public void hitsTest() throws Exception{
+        assertTrue(testline.hits(new Box2D(0,3,2,2)));
+        assertTrue(testline.hits(new Box2D(1,2,1,1)));
+        assertFalse(testline.hits(new Box2D(0,3,-2,2)));
+    }
 
 }
 

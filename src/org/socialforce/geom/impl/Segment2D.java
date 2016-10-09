@@ -164,10 +164,19 @@ public class Segment2D implements Shape {
             xmax = covBox.getXmax();
             ymin = covBox.getYmin();
             ymax = covBox.getYmax();
-            if (intersect(new Segment2D(new Point2D(xmin,ymin),new Point2D(xmin,ymax)))){return true;}
-            if (intersect(new Segment2D(new Point2D(xmin,ymax),new Point2D(xmax,ymax)))){return true;}
-            if (intersect(new Segment2D(new Point2D(xmax,ymax),new Point2D(xmax,ymin)))){return true;}
-            if (intersect(new Segment2D(new Point2D(xmin,ymin),new Point2D(xmax,ymin)))){return true;}
+            if (xmin != xmax){
+                if (ymin != ymax){
+                    if (intersect(new Segment2D(new Point2D(xmin,ymin),new Point2D(xmin,ymax)))){return true;}
+                    if (intersect(new Segment2D(new Point2D(xmin,ymax),new Point2D(xmax,ymax)))){return true;}
+                    if (intersect(new Segment2D(new Point2D(xmax,ymax),new Point2D(xmax,ymin)))){return true;}
+                    if (intersect(new Segment2D(new Point2D(xmin,ymin),new Point2D(xmax,ymin)))){return true;}
+                }
+                else return intersect(new Segment2D(new Point2D(xmin,ymin),new Point2D(xmax,ymin)));
+            }
+            else if (ymin != ymax){
+                return intersect(new Segment2D(new Point2D(xmin,ymin),new Point2D(xmax,ymax)));
+            }
+            else return contains(new Point2D(xmin,ymin));
         }
         return false;
     }
