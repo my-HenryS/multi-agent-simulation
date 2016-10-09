@@ -82,5 +82,15 @@ public class Segment2DTest {
         assertEquals(2,testline.distanceToSegment(b),0);
     }
 */
+    @Test
+    public void intersectTest() throws Exception{
+        assertTrue(testline.intersect(vecline));
+        assertTrue(vecline.intersect(new Segment2D(a,new Point2D(5,7))));
+        assertTrue(testline.intersect(new Segment2D(new Point2D(2,-1),new Point2D(0,4))));
+        assertFalse(testline.intersect(new Segment2D(new Point2D(2,-1),new Point2D(0,-7))));
+    }
+
+    
+
 }
 
