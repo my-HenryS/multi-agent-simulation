@@ -69,7 +69,14 @@ public class ComplexBox2D implements Shape {
 
     @Override
     public boolean hits(Box hitbox) {
-        return false;
+        boolean flag = false;
+        for (int i= 0;i<BoxDictionary[0].length;i++)
+        {
+            if (new Box2D(BoxDictionary[0][i],BoxDictionary[1][i]).hits(hitbox)){
+                flag = true;
+            }
+        }
+        return flag;
     }
 
     @Override
