@@ -118,6 +118,16 @@ public class Box2DTest {
         assertEquals(testBox,new Box2D(3,4,-3,-4));
     }
 
+    @Test
+    public void expandTest(){
+        assertEquals(new Box2D(0,0,3,4),testBox);
+        testBox.expandTo(10);
+        assertNotEquals(new Box2D(0,0,3,4),testBox);
+        assertEquals(new Box2D(-3.5,0,10,4),testBox);
+        testBox.setxAxisExpanded(false);
+        testBox.expandTo(10);
+        assertEquals(new Box2D(-3.5,-3,10,10),testBox);
+    }
 
 
 }

@@ -73,6 +73,17 @@ public class Circle2DTest {
     }
 
     @Test
+    public void intersectTest(){
+        assertTrue(circleTest.intersects(new Box2D(2,2,2,2)));
+        assertTrue(circleTest.intersects(new Box2D(-1,-1,1,1)));
+        assertTrue(circleTest.intersects(new Box2D(2,-3,2,2)));
+        assertFalse(circleTest.intersects(new Box2D(-2,-2,1,1)));
+        assertTrue(circleTest.intersects(new Circle2D(b,1)));
+        assertTrue(circleTest.intersects(new Circle2D(a,1)));
+        assertFalse(circleTest.intersects(new Circle2D(a,0.5)));
+    }
+
+    @Test
     public void cloneTest(){
         assertEquals(circleTest,circleTest.clone());
         assertFalse(circleTest==circleTest.clone());

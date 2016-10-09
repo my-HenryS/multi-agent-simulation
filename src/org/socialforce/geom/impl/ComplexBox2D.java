@@ -8,7 +8,6 @@ import org.socialforce.geom.Shape;
 /**
  * 一组BOX的集合，对这些BOX的位置条件暂无要求。
  * 可能需要避免重叠等。
- * TODO: 明显需要支持更多的功能，包括更加奇怪的切削拼组，退化成BOX，和一些Shape的基本功能。
  * @see Box
  * Created by Whatever on 2016/8/31.
  */
@@ -18,6 +17,9 @@ public class ComplexBox2D implements Shape {
      * BoxDictionary[0]是起始点，[1]是结束点。
      */
     protected Point[][] BoxDictionary = new  Point[2][];
+    public ComplexBox2D(){
+
+    }
     @Override
     public void setDrawer(Drawer drawer) {
         this.drawer = drawer ;
@@ -59,12 +61,38 @@ public class ComplexBox2D implements Shape {
 
     @Override
     public Point getReferencePoint() {
-        return null;
+        return getBounds().getReferencePoint();
     }
 
     @Override
     public Box getBounds() {
-        return null;
+        double xmin,xmax,ymin,ymax,temp;
+        xmin = Double.POSITIVE_INFINITY;
+        ymin = Double.POSITIVE_INFINITY;
+        xmax = Double.NEGATIVE_INFINITY;
+        ymax = Double.NEGATIVE_INFINITY;
+        if (BoxDictionary[0].length > 0) {
+            for (int i = 0; i < BoxDictionary[0].length; i++) {
+                temp = BoxDictionary[0][i].getX();
+                if (temp < xmin) {
+                    xmin = temp;
+                }
+                temp = BoxDictionary[0][i].getY();
+                if (temp < ymin) {
+                    ymin = temp;
+                }
+                temp = BoxDictionary[1][i].getX();
+                if (temp > xmax) {
+                    xmax = temp;
+                }
+                temp = BoxDictionary[1][i].getY();
+                if (temp > ymax) {
+                    ymax = temp;
+                }
+            }
+            return new Box2D(xmin, ymin, xmax - xmin, ymax - ymin);
+        }
+        return new Box2D();
     }
 
     @Override
@@ -81,12 +109,20 @@ public class ComplexBox2D implements Shape {
 
     @Override
     public void moveTo(Point location) {
-
+        double movedX,movedY;
+        movedX = location.getX() - getReferencePoint().getX();
+        movedY = location.getY() - getReferencePoint().getY();
+        for (int i = 0;i < BoxDictionary[0].length;i++){
+            BoxDictionary[0][i] = new Point2D(BoxDictionary[0][i].getX()+movedX,BoxDictionary[0][i].getY()+movedY);
+            BoxDictionary[1][i] = new Point2D(BoxDictionary[1][i].getX()+movedX,BoxDictionary[1][i].getY()+movedY);
+        }
     }
 
     @Override
     public Shape clone() {
-        return null;
+        ComplexBox2D cloned = new ComplexBox2D();
+        cloned.SetWithArray(BoxDictionary);
+        return cloned;
     }
 
     public void SetWithArray(Point[][] boxDictionary){
