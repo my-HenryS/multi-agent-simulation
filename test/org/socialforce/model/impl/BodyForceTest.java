@@ -35,12 +35,13 @@ public class BodyForceTest {
     @Test
     public void hasForce() throws Exception {
         assertTrue(bodyForce.hasForce(baseAgent,targetAgent));
-        assertFalse(bodyForce.hasForce(baseAgent,targetAgent2));       
+        assertFalse(bodyForce.hasForce(baseAgent,targetAgent2));
 
     }
 
     @Test
     public void getForce() throws Exception {
+
 
     }
 
