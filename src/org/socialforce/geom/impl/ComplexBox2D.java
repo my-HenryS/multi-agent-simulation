@@ -128,4 +128,47 @@ public class ComplexBox2D implements Shape {
     public void SetWithArray(Point[][] boxDictionary){
         this.BoxDictionary = boxDictionary;
     }
+
+    public Point[][] getBoxDictionary(){
+        return BoxDictionary;
+    }
+
+
+    @Override
+    public boolean equals(Object obj){
+        Point[][] objDictionary;
+        boolean[] flag = new boolean[2*BoxDictionary[0].length];
+        boolean flag1 = true;
+        if (obj instanceof ComplexBox2D){
+            objDictionary = ((ComplexBox2D) obj).getBoxDictionary();
+            if (objDictionary[0].length == BoxDictionary[0].length){
+                for (int i = 0;i < BoxDictionary[0].length;i++){
+                    flag[i] = false;
+                    for (int j = 0;j < BoxDictionary[0].length;j++){
+                        if (objDictionary[0][i].equals(BoxDictionary[0][j])
+                                && objDictionary[1][i].equals(BoxDictionary[1][j])){
+                            flag[i] = true;
+                        }
+                    }
+                }
+                for (int i = 0;i < BoxDictionary[0].length;i++){
+                    flag[BoxDictionary[0].length+i] = false;
+                    for (int j = 0;j < BoxDictionary[0].length;j++){
+                        if (BoxDictionary[0][i].equals(objDictionary[0][j])
+                                && BoxDictionary[1][i].equals(objDictionary[1][j])){
+                            flag[BoxDictionary[0].length+i] = true;
+                        }
+                    }
+                }
+                for (int i = 0;i < flag.length;i++){
+                    if (flag[i] == false){
+                        flag1 = false;
+                    }
+                }
+                return flag1;
+            }
+            return false;
+        }
+        return false;
+    }
 }
