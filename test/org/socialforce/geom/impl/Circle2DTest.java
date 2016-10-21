@@ -1,4 +1,4 @@
-package org.socialforce.app.impl;
+package org.socialforce.geom.impl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -56,6 +56,36 @@ public class Circle2DTest {
     @Test
     public void testDistanceBetweenShapes() throws Exception {
         assertEquals(Math.sqrt(2) * 4 - 5,circleTest.distanceTo(new Segment2D(a,new Point2D(-1,-1))),1e-7);
+    }
 
+    @Test
+    public void getBoundTest(){
+        assertEquals(new Box2D(-2,-1,10,10),circleTest.getBounds());
+        assertEquals(new Box2D(0,0,0,0),new Circle2D(new Point2D(0,0),0).getBounds());
+    }
+
+    @Test
+    public void hitsTest(){
+        assertTrue(circleTest.hits(new Box2D(2,2,2,2)));
+        assertTrue(circleTest.hits(new Box2D(-1,-1,1,1)));
+        assertTrue(circleTest.hits(new Box2D(2,-3,2,2)));
+        assertFalse(circleTest.hits(new Box2D(-2,-2,1,1)));
+    }
+
+    @Test
+    public void intersectTest(){
+        assertTrue(circleTest.intersects(new Box2D(2,2,2,2)));
+        assertTrue(circleTest.intersects(new Box2D(-1,-1,1,1)));
+        assertTrue(circleTest.intersects(new Box2D(2,-3,2,2)));
+        assertFalse(circleTest.intersects(new Box2D(-2,-2,1,1)));
+        assertTrue(circleTest.intersects(new Circle2D(b,1)));
+        assertTrue(circleTest.intersects(new Circle2D(a,1)));
+        assertFalse(circleTest.intersects(new Circle2D(a,0.5)));
+    }
+
+    @Test
+    public void cloneTest(){
+        assertEquals(circleTest,circleTest.clone());
+        assertFalse(circleTest==circleTest.clone());
     }
 }

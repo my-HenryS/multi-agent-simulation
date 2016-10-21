@@ -113,4 +113,20 @@ public class Vector2DTest {
         c.clearProject(a);
         assertEquals(0,c.dot(b),1e-7);
     }
+
+    @Test
+    public void lenthTest() throws Exception{
+        assertEquals(a.length(),5,0.001);
+        assertEquals(b.length_sq(),13,0.001);
+    }
+
+    @Test
+    public void refVectorTest() throws Exception {
+        assertEquals(new Vector2D(0.6,0.8),a.getRefVector());
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void refVectorZero() throws Exception{
+        zero.getRefVector();
+    }
 }

@@ -392,13 +392,18 @@ public class Box2D implements Box {
     }
     @Override
     public void expandTo(double width) {
+        double tempmin,tempmax;
         if (xAxisExpanded){
-            xmin = (xmax+xmin-width)/2;
-            xmax = (xmin+xmax+width)/2;
+            tempmin = (xmax+xmin-width)/2;
+            tempmax = (xmin+xmax+width)/2;
+            xmin = tempmin;
+            xmax = tempmax;
         }
         else {
-            ymin = (ymax+ymin-width)/2;
-            ymax = (ymin+ymax+width)/2;
+            tempmin = (ymax+ymin-width)/2;
+            tempmax = (ymin+ymax+width)/2;
+            ymin = tempmin;
+            ymax = tempmax;
         }
     }
 }

@@ -295,10 +295,16 @@ public class Vector2D implements Vector {
     /**
      * 获取参考的向量
      * 与原向量同向但是长度为1.
+     * 零向量没有参考向量
      * @return 参考向量，即单位向量
      */
     public Vector getRefVector(){
-        Vector ref = new Vector2D(values[0],values[1]);
+        Vector ref;
+        if (values[0] == 0 && values[1] == 0){
+            throw new IllegalArgumentException("零向量不存在特征向量");
+        }
+        else
+        ref = new Vector2D(values[0],values[1]);
         ref.scale(1/ref.length());
         return ref;
     }

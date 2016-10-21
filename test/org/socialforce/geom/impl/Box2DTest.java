@@ -36,6 +36,16 @@ public class Box2DTest {
         assertEquals(5,testBox.getDistance(b),0);
         assertEquals(5,testBox.getDistance(c),0);
         assertEquals(5,testBox.getDistance(d),0);
+        a = new Point2D(1,9);
+        assertEquals(5,testBox.getDistance(a),0);
+        a = new Point2D(-4,7);
+        assertEquals(5,testBox.getDistance(a),0);
+        a = new Point2D(-5,2);
+        assertEquals(5,testBox.getDistance(a),0);
+        a = new Point2D(6,-4);
+        assertEquals(5,testBox.getDistance(a),0);
+        a = new Point2D(8,2);
+        assertEquals(5,testBox.getDistance(a),0);
     }
 
     @Test
@@ -100,5 +110,24 @@ public class Box2DTest {
         assertEquals(new Box2D(1,1,2,3),testBox.intersect(temp));
         assertEquals(temp1,testBox.intersect(temp1));
     }
+
+    @Test
+    public void negativeWeidthTest() throws Exception{
+        assertEquals(testBox,new Box2D(3,0,-3,4));
+        assertEquals(testBox,new Box2D(0,4,3,-4));
+        assertEquals(testBox,new Box2D(3,4,-3,-4));
+    }
+
+    @Test
+    public void expandTest(){
+        assertEquals(new Box2D(0,0,3,4),testBox);
+        testBox.expandTo(10);
+        assertNotEquals(new Box2D(0,0,3,4),testBox);
+        assertEquals(new Box2D(-3.5,0,10,4),testBox);
+        testBox.setxAxisExpanded(false);
+        testBox.expandTo(10);
+        assertEquals(new Box2D(-3.5,-3,10,10),testBox);
+    }
+
 
 }
