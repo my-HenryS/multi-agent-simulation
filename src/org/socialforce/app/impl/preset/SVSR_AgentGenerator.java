@@ -1,11 +1,16 @@
 package org.socialforce.app.impl.preset;
 
+import com.sun.xml.internal.rngom.parse.host.Base;
 import org.socialforce.app.Scene;
 import org.socialforce.app.SceneValue;
 import org.socialforce.geom.Box;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.model.Agent;
 import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.impl.BaseAgent;
+import org.socialforce.model.impl.SimpleSocialForceModel;
+import org.socialforce.model.impl.StraightPath;
 
 /**
  * Created by Whatever on 2016/9/16.
@@ -48,6 +53,11 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
 
     private int priority;
     protected AgentGenerator agentGenerator;
+
+    public SVSR_AgentGenerator(double X_distance,double Y_distance,double Z_distance,Box Area){
+        agentGenerator = new AgentGenerator(X_distance,Y_distance,Z_distance,Area);
+        agentGenerator.setModel(new SimpleSocialForceModel());
+    }
     @Override
     public String getEntityName() {
         return null;
@@ -74,12 +84,18 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
      */
     @Override
     public void apply(Scene scene) {
+        Agent new_agent;
         if (agentGenerator.Area instanceof Box2D) {
-            for (int i = 0; i < (agentGenerator.Area.getStartPoint().getX() - agentGenerator.Area.getEndPoint().getX()) / agentGenerator.X_distance; i++) {
-                for (int j = 0; j < (agentGenerator.Area.getStartPoint().getY() - agentGenerator.Area.getEndPoint().getY()) / agentGenerator.Y_distance; j++) {
-                    agentGenerator.model.createAgent().getShape().moveTo(new Point2D(agentGenerator.Area.getStartPoint().getX()+i*agentGenerator.X_distance,agentGenerator.Area.getStartPoint().getY()+j*agentGenerator.Y_distance)); }
+            for (int i = 0; i < (agentGenerator.Area.getEndPoint().getX() - agentGenerator.Area.getStartPoint().getX()) / agentGenerator.X_distance; i++) {
+                for (int j = 0; j < (agentGenerator.Area.getEndPoint().getY() - agentGenerator.Area.getStartPoint().getY()) / agentGenerator.Y_distance; j++) {
+                    new_agent = agentGenerator.model.createAgent();
+                    new_agent.setModel(agentGenerator.model);
+                    new_agent.getShape().moveTo(new Point2D(agentGenerator.Area.getStartPoint().getX()+i*agentGenerator.X_distance,agentGenerator.Area.getStartPoint().getY()+j*agentGenerator.Y_distance));
+                    scene.addAgent(new_agent);
+                }
             }
         }
+
         else throw new IllegalArgumentException("暂未实现非二维的生成区块");
     }
 
