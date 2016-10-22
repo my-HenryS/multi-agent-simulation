@@ -1,6 +1,5 @@
 package org.socialforce.model.impl;
 
-import javafx.scene.shape.Circle;
 import org.socialforce.app.*;
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Circle2D;
