@@ -36,13 +36,13 @@ public class SimpleApplication implements SocialForceApplication {
         exit.setValue((new Box2D[]{new Box2D(-1,5,4,6),new Box2D(10,-1,6,4),new Box2D(10,14,6,4),new Box2D(24,6,4,6)}));
         exit.apply(singleScene);
         agentGenerator.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(-1,5,-4,2)));
+        safetyRegion.setValue(new SafetyRegion(new Box2D(-1,5,-4,4)));
         safetyRegion.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(10,-1,2,-4)));
+        safetyRegion.setValue(new SafetyRegion(new Box2D(10,-1,4,-4)));
         safetyRegion.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(10,14,2,-4)));
+        safetyRegion.setValue(new SafetyRegion(new Box2D(10,18,4,4)));
         safetyRegion.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(24,10,-4,2)));
+        safetyRegion.setValue(new SafetyRegion(new Box2D(28,10,-4,4)));
         safetyRegion.apply(singleScene);
         Agent agent;
         Point2D goal,temp;
@@ -54,15 +54,21 @@ public class SimpleApplication implements SocialForceApplication {
             if (temp.distanceTo(agent.getShape().getReferencePoint())<goal.distanceTo(agent.getShape().getReferencePoint())){
                 goal = temp;
             }
-            temp = new Point2D(10,14);
+            temp = new Point2D(10,18);
             if (temp.distanceTo(agent.getShape().getReferencePoint())<goal.distanceTo(agent.getShape().getReferencePoint())){
                 goal = temp;
             }
-            temp = new Point2D(24,10);
+            temp = new Point2D(28,10);
             if (temp.distanceTo(agent.getShape().getReferencePoint())<goal.distanceTo(agent.getShape().getReferencePoint())){
                 goal = temp;
             }
-            agent.setPath(new StraightPath(agent.getShape().getReferencePoint(),goal));
+            switch ((int)goal.getY()){
+                case -1: temp = new Point2D(10,3);break;
+                case 5:  temp = new Point2D(3,5);break;
+                case 14: temp = new Point2D(10,14);break;
+                case 10: temp = new Point2D(24,10);break;
+            }
+            agent.setPath(new StraightPath(agent.getShape().getReferencePoint(),temp,goal));
         }
 
         while (!singleScene.getAllAgents().isEmpty()) {
