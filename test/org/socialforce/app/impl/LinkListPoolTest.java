@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  * Created by Ledenel on 2016/8/21.
  */
 public class LinkListPoolTest {
-    Pool<InteractiveEntity> entities;
+    LinkListPool<InteractiveEntity> entities;
 
     Circle2D circle2D;
 
@@ -33,6 +33,19 @@ public class LinkListPoolTest {
         entities.add(new Wall(circle2D));
     }
 
+
+    @Test
+    public void testShapeSelect() throws Exception {
+        Circle2D circle = new Circle2D();
+        circle.setRadius(2);
+        circle.moveTo(new Point2D(5,5));
+        Iterable<InteractiveEntity> iterable = entities.select(circle);
+        int count = 0;
+        for (InteractiveEntity entity : iterable) {
+            count++;
+        }
+        System.out.println(count);
+    }
 
     @Test
     public void testSelect() throws Exception {
@@ -52,7 +65,7 @@ public class LinkListPoolTest {
     public void intersectSelect() throws Exception{
         entities.add(new Wall(new Segment2D(new Point2D(2,2), new Point2D(20,20))));
         int count = 0;
-        for(InteractiveEntity i:entities.select(circle2D)){
+        for(InteractiveEntity i:entities.select(circle2D)) {
             count++;
         }
         assertEquals(3,count);
