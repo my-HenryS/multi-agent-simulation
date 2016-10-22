@@ -31,44 +31,44 @@ public class SimpleApplication implements SocialForceApplication {
     @Override
     public void start() {
         SVSR_Exit exit = new SVSR_Exit();
-        SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(3,3,1,new Box2D(3,3,10,10));
+        SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(1,1,1,new Box2D(3,3,20,10));
         SVSR_SafetyRegion safetyRegion = new SVSR_SafetyRegion();
         exit.setValue((new Box2D[]{new Box2D(-1,5,4,6),new Box2D(10,-1,6,4),new Box2D(10,14,6,4),new Box2D(24,6,4,6)}));
         exit.apply(singleScene);
         agentGenerator.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(-1,5,-4,4)));
+        safetyRegion.setValue(new SafetyRegion(new Box2D(-1,5,-4,6)));
         safetyRegion.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(10,-1,4,-4)));
+        safetyRegion.setValue(new SafetyRegion(new Box2D(10,-1,6,-4)));
         safetyRegion.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(10,18,4,4)));
+        safetyRegion.setValue(new SafetyRegion(new Box2D(10,18,6,4)));
         safetyRegion.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(28,10,-4,4)));
+        safetyRegion.setValue(new SafetyRegion(new Box2D(28,6,4,6)));
         safetyRegion.apply(singleScene);
         Agent agent;
         Point2D goal,temp;
         for (Iterator iter = singleScene.getAllAgents().iterator(); iter.hasNext();){
             //给所有agent设置path
             agent = (Agent)iter.next();
-            goal = new Point2D(-1,5);
-            temp = new Point2D(10,-1);
+            goal = new Point2D(-3,8);
+            temp = new Point2D(13,-3);
             if (temp.distanceTo(agent.getShape().getReferencePoint())<goal.distanceTo(agent.getShape().getReferencePoint())){
                 goal = temp;
             }
-            temp = new Point2D(10,18);
+            temp = new Point2D(13,20);
             if (temp.distanceTo(agent.getShape().getReferencePoint())<goal.distanceTo(agent.getShape().getReferencePoint())){
                 goal = temp;
             }
-            temp = new Point2D(28,10);
+            temp = new Point2D(30,9);
             if (temp.distanceTo(agent.getShape().getReferencePoint())<goal.distanceTo(agent.getShape().getReferencePoint())){
                 goal = temp;
             }
             switch ((int)goal.getY()){
-                case -1: temp = new Point2D(10,3);break;
-                case 5:  temp = new Point2D(3,5);break;
-                case 14: temp = new Point2D(10,14);break;
-                case 10: temp = new Point2D(24,10);break;
+                case -3: temp = new Point2D(13,1);break;
+                case 8:  temp = new Point2D(0,8);break;
+                case 20: temp = new Point2D(13,14);break;
+                case 9: temp = new Point2D(24,9);break;
             }
-            agent.setPath(new StraightPath(agent.getShape().getReferencePoint(),temp,goal));
+            agent.setPath(new StraightPath(agent.getShape().getReferencePoint(),goal));
         }
 
         while (!singleScene.getAllAgents().isEmpty()) {
