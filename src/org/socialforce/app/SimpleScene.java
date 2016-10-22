@@ -69,9 +69,11 @@ public class SimpleScene implements Scene {
         }
         allAgents.removeIf(Agent::isEscaped);
         currentStep++;
-        ApplicationListener listener = this.getApplication().getApplicationListener();// 2016/8/23 add step for all agent and statics.
-        if(listener != null) {
-            listener.onStep(this);
+        if(this.getApplication() != null) {
+            ApplicationListener listener = this.getApplication().getApplicationListener();// 2016/8/23 add step for all agent and statics.
+            if (listener != null) {
+                listener.onStep(this);
+            }
         }
     }
 
