@@ -3,6 +3,7 @@ package org.socialforce.app.impl.preset;
 import org.socialforce.app.Scene;
 import org.socialforce.app.SceneValue;
 import org.socialforce.model.impl.SafetyRegion;
+import org.socialforce.model.impl.SimpleSocialForceModel;
 
 /**
  * Created by Whatever on 2016/9/16.
@@ -34,6 +35,8 @@ public class SVSR_SafetyRegion implements SceneValue<SafetyRegion>{
     public void apply(Scene scene) {
         safetyRegion.setName("SafetyRegion");
         scene.getStaticEntities().add(safetyRegion);
+        safetyRegion.setScene(scene);
+        safetyRegion.setModel(new SimpleSocialForceModel());
     }
 
     @Override

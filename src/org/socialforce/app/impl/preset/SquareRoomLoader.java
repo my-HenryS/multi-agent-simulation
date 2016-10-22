@@ -6,6 +6,7 @@ import org.socialforce.app.SceneLoader;
 import org.socialforce.app.SimpleScene;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.model.impl.SimpleSocialForceModel;
 import org.socialforce.model.impl.Wall;
 
 import javax.naming.OperationNotSupportedException;
@@ -38,6 +39,8 @@ public class SquareRoomLoader implements SceneLoader {
         for (int i = 0;i<walls.length;i++) {
             walls[i].setName("wall" + i);
             scene.getStaticEntities().add(walls[i]);
+            walls[i].setScene(scene);
+            walls[i].setModel(new SimpleSocialForceModel());
         }
 
         return scene;
