@@ -24,6 +24,7 @@ public class SimpleApplication implements SocialForceApplication {
      */
     @Override
     public void start() {
+        singleScene = loader.readScene();
         SVSR_Exit exit = new SVSR_Exit();
         SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(1,1,1,new Box2D(3,3,20,10));
         SVSR_SafetyRegion safetyRegion = new SVSR_SafetyRegion();
@@ -58,8 +59,10 @@ public class SimpleApplication implements SocialForceApplication {
             }
             agent.setPath(new StraightPath(agent.getShape().getReferencePoint(),goal));
         }
+        while (!singleScene.getAllAgents().isEmpty()) {
+        singleScene.stepNext();}
+
     }
-    private SimpleSceneGenerator generator;
     private SceneLoader loader = new SquareRoomLoader();
 
     protected SocialForceModel model;

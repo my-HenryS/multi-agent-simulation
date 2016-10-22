@@ -1,6 +1,5 @@
 package org.socialforce.app.impl.preset;
 
-import com.sun.xml.internal.rngom.parse.host.Base;
 import org.socialforce.app.Scene;
 import org.socialforce.app.SceneValue;
 import org.socialforce.geom.Box;
@@ -8,9 +7,7 @@ import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.SocialForceModel;
-import org.socialforce.model.impl.BaseAgent;
 import org.socialforce.model.impl.SimpleSocialForceModel;
-import org.socialforce.model.impl.StraightPath;
 
 /**
  * Created by Whatever on 2016/9/16.
