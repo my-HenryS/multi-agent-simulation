@@ -7,6 +7,7 @@ import org.socialforce.app.SocialForceApplication;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
+import org.socialforce.model.impl.BaseAgent;
 
 /**
  * Created by Whatever on 2016/10/22.
@@ -70,12 +71,12 @@ public class balabalaMain implements ApplicationListener {
         int number = scene.getAllAgents().size();
         int time = scene.getCurrentSteps();
         if (!scene.getAllAgents().isEmpty()) {
-            //if(time%10 == 0){
+            if(time%10 ==0){
             System.out.println("目前时间" + time);
             System.out.println("场景中人数" + scene.getAllAgents().size());
             System.out.println("目前一号智能体的位置是" + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getX() +
                     "," + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getY());
-            //}
+            }
         }
     }
 }
