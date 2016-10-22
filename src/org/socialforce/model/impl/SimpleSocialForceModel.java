@@ -85,7 +85,6 @@ public class SimpleSocialForceModel implements SocialForceModel {
             Agent agent = (Agent) source;
             Force force = this.zeroForce();
             force.add(agent.expect());
-            force.sub(agent.getVelocity());
             force.scale(agent.getMass() / REACT_TIME);
             return force;
         }
