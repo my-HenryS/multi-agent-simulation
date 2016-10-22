@@ -26,11 +26,11 @@ public class BaseAgent extends Entity implements Agent {
         super(shape);
         this.shape = shape;
         this.currTimestamp = 0;
-        this.currVelocity = new Velocity2D(0,0);
+        this.currVelocity = new Velocity2D(0, 0);
         this.mass = 1;
         Circle2D circle = new Circle2D();
         circle.setRadius(2);
-        this.view  = circle;
+        this.view = circle;
     }
 
     /**
@@ -79,6 +79,7 @@ public class BaseAgent extends Entity implements Agent {
     /**
      * 获取一个agent的视域范围。
      * 该agent只和位于该视域范围内的agent进行交互
+     *
      * @return 一个表示该视域范围的形状
      * @see Shape
      */
@@ -89,10 +90,10 @@ public class BaseAgent extends Entity implements Agent {
     }
 
 
-
     /**
      * 获取一个agent的期望速度。
      * 该agent的速度通常来说取决于其自身及其目标。
+     *
      * @return 期望速度
      * @see Velocity
      */
@@ -108,29 +109,29 @@ public class BaseAgent extends Entity implements Agent {
      * 最终的结果会被act() 方法使用。
      * 如果当前的时间步长和该agent不同步，那么该agnet 会试着跟上
      * (或者忽略当agent的时间落后于真正的时间)  TODO?
+     *
      * @param currSteps 当前的时间
      * @return 代表要移动的距离和方向的向量。
      */
     @Override
     public Vector determineNext(int currSteps) {
-        if(currSteps >= this.currTimestamp) {
+        if (currSteps >= this.currTimestamp) {
             this.pushed = model.getPower(this);
             int dt = currSteps - this.currTimestamp + 1;
             Iterable<InteractiveEntity> statics = scene.getStaticEntities().select(view);
             Iterable<Agent> neighbors = scene.getAllAgents().select(view);
-            for(InteractiveEntity entity : statics) {
+            for (InteractiveEntity entity : statics) {
 
                 entity.affect(this);
             }
-            for(Agent agent : neighbors) {
+            for (Agent agent : neighbors) {
                 agent.affect(this);
             }
-            deltaV = this.pushed.deltaVelocity(mass,dt * model.getTimePerStep());
+            deltaV = this.pushed.deltaVelocity(mass, dt * model.getTimePerStep());
             deltaS = deltaV.deltaDistance(dt * model.getTimePerStep());
             this.currTimestamp = currSteps;
             return deltaS;
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -139,6 +140,7 @@ public class BaseAgent extends Entity implements Agent {
      * 决定下一步，agent要走向的目标点。
      * 同时，agent也会被社会力驱动。
      * 最终的结果会被act() 方法使用。
+     *
      * @return 代表要移动的距离和方向的向量。
      */
     @Override
@@ -150,6 +152,7 @@ public class BaseAgent extends Entity implements Agent {
     /**
      * 获取当前时刻，agent的timestep （TODO这里的这个timestep翻译成时刻？）
      * timestep从0开始（仿真开始）
+     *
      * @return 当前的timestep
      */
     @Override
@@ -188,7 +191,7 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     /**
-     *为agent设置路径
+     * 为agent设置路径
      *
      * @param path 要设置的路径
      */
@@ -201,6 +204,7 @@ public class BaseAgent extends Entity implements Agent {
 
     /**
      * 获取当前场景的具体内容
+     *
      * @return 场景
      */
     @Override
@@ -210,7 +214,7 @@ public class BaseAgent extends Entity implements Agent {
 
     /**
      * 设置agent所处的场景
-     * 
+     *
      * @param scene 被设置的场景
      */
     @Override
@@ -219,18 +223,27 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     /**
-     * 标明已经逃离的agent
+     * 标明这个Agent已经逃离，稍后将被移除。
      */
     @Override
     public void escape() {
-         
         escaped = true;
-        scene.onAgentEscape(this);
+    }
+
+    /**
+     * 检查这个Agent是否已经逃离。
+     *
+     * @return 是否已经逃离。
+     */
+    @Override
+    public boolean isEscaped() {
+        return escaped;
     }
 
     /**
      * 当前this所影响的实体
      * 例如，墙会影响agent(反作用，反推)
+     *
      * @param affectedEntity 被影响的实体
      * @see Agent
      * @see SocialForceModel
@@ -246,6 +259,7 @@ public class BaseAgent extends Entity implements Agent {
     /**
      * 获取实体的质量。
      * 通常质量位于形状的参考点上（或者是位于质心上）TODO
+     *
      * @return the mass.
      */
     @Override

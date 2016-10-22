@@ -67,6 +67,7 @@ public class SimpleScene implements Scene {
         for (Agent agent : allAgents) {
             agent.act();
         }
+        allAgents.removeIf(Agent::isEscaped);
         currentStep++;
         // 2016/8/23 add step for all agent and statics.
     }
@@ -166,7 +167,7 @@ public class SimpleScene implements Scene {
         if(listener != null) {
             listener.onAgentEscape(this,agent);
         }
-        this.allAgents.remove(agent);
+        agent.escape();
     }
 
     SocialForceApplication application;
