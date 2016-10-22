@@ -166,6 +166,7 @@ public class SimpleScene implements Scene {
         if(listener != null) {
             listener.onAgentEscape(this,agent);
         }
+        this.allAgents.remove(agent);
     }
 
     SocialForceApplication application;
