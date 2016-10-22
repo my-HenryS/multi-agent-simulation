@@ -67,14 +67,15 @@ public class balabalaMain implements ApplicationListener {
     public void onStep(Scene scene) {
         //TODO: Add your output code HERE
         Circle2D circle = new Circle2D(new Point2D(0,0),100);
-        while (!scene.getAllAgents().isEmpty()){
-            int time = scene.getCurrentSteps();
-            if(time%10 == 0){
-            System.out.println("目前时间"+time);
-            System.out.println("场景中人数"+scene.getAllAgents().size());
-            System.out.println("目前一号智能体的位置是"+scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getX()+
-                    ","+scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getY());
-            }
+        int number = scene.getAllAgents().size();
+        int time = scene.getCurrentSteps();
+        if (!scene.getAllAgents().isEmpty()) {
+            //if(time%10 == 0){
+            System.out.println("目前时间" + time);
+            System.out.println("场景中人数" + scene.getAllAgents().size());
+            System.out.println("目前一号智能体的位置是" + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getX() +
+                    "," + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getY());
+            //}
         }
     }
 }
