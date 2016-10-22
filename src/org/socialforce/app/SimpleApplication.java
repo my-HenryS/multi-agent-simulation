@@ -23,13 +23,10 @@ public class SimpleApplication implements SocialForceApplication {
     public SimpleApplication() {
         singleScene = loader.readScene();
         singleScene.setApplication(this);
+        SetUp();
     }
 
-    /**
-     * start the application immediately.
-     */
-    @Override
-    public void start() {
+    public void SetUp(){
         SVSR_Exit exit = new SVSR_Exit();
         SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(1,1,1,new Box2D(3,3,20,10));
         SVSR_SafetyRegion safetyRegion = new SVSR_SafetyRegion();
@@ -44,6 +41,13 @@ public class SimpleApplication implements SocialForceApplication {
         safetyRegion.apply(singleScene);
         safetyRegion.setValue(new SafetyRegion(new Box2D(28,6,4,6)));
         safetyRegion.apply(singleScene);
+    }
+
+    /**
+     * start the application immediately.
+     */
+    @Override
+    public void start() {
         Agent agent;
         Point2D goal,temp;
         for (Iterator iter = singleScene.getAllAgents().iterator(); iter.hasNext();){
