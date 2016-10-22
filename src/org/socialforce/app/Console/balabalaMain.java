@@ -4,6 +4,8 @@ import org.socialforce.app.ApplicationListener;
 import org.socialforce.app.Scene;
 import org.socialforce.app.SimpleApplication;
 import org.socialforce.app.SocialForceApplication;
+import org.socialforce.geom.impl.Circle2D;
+import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 
 /**
@@ -64,12 +66,14 @@ public class balabalaMain implements ApplicationListener {
     @Override
     public void onStep(Scene scene) {
         //TODO: Add your output code HERE
+        Circle2D circle = new Circle2D(new Point2D(0,0),100);
         while (!scene.getAllAgents().isEmpty()){
             int time = scene.getCurrentSteps();
             if(time%10 == 0){
             System.out.println("目前时间"+time);
             System.out.println("场景中人数"+scene.getAllAgents().size());
-            
+            System.out.println("目前一号智能体的位置是"+scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getX()+
+                    ","+scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getY());
             }
         }
     }
