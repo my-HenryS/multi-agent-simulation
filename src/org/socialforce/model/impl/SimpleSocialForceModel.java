@@ -92,6 +92,11 @@ public class SimpleSocialForceModel implements SocialForceModel {
         return zeroForce();
     }
 
+    private <T extends InteractiveEntity> T reg(T entity) {
+        entity.setModel(this);
+        return entity;
+    }
+
     /**
      * 用默认的设置方法来创建一个agent.
      *
@@ -101,7 +106,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
     public Agent createAgent() {
         Circle2D size = new Circle2D();
         size.setRadius(AGENT_SIZE);
-        return new BaseAgent(size);
+        return reg(new BaseAgent(size));
     }
 
     /**
@@ -133,7 +138,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
      */
     @Override
     public InteractiveEntity createStatic() {
-        return new Wall(null);
+        return reg(new Wall(null));
     }
 
     /**
@@ -144,7 +149,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
      */
     @Override
     public InteractiveEntity createStatic(Shape shape) {
-        return new Wall(shape);
+        return reg(new Wall(shape));
     }
 
     /**
@@ -157,11 +162,11 @@ public class SimpleSocialForceModel implements SocialForceModel {
     @Override
     public InteractiveEntity createStatic(Shape shape, int type) {
         if (type == STATIC_TYPE_WALL) {
-            return new Wall(shape);
+            return reg(new Wall(shape));
         } else if (type == STATIC_TYPE_GATE) {
-            return new SafetyRegion(shape);
+            return reg(new SafetyRegion(shape));
         }
-        return createStatic(shape);
+        return reg(createStatic(shape));
     }
 
     /**
