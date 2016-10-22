@@ -64,6 +64,10 @@ public class balabalaMain implements ApplicationListener {
     @Override
     public void onStep(Scene scene) {
         //TODO: Add your output code HERE
-
+        while (!scene.getAllAgents().isEmpty()){
+            int time = scene.getCurrentSteps();
+            System.out.println("目前时间"+time);
+            System.out.println("场景中人数");
+        }
     }
 }
