@@ -32,8 +32,8 @@ public class BodyForce implements ForceRegulation{
         Vector2D t,n,tempVector;
         A = 2000;
         B = 0.1;
-        k1 = 1.2 * 100;
-        k2 = 2.4 * 100;
+        k1 = 1.2 * 100000;
+        k2 = 2.4 * 100000;
         g = 0;
         argumentX = 1;
         double temp[] = new double[2];
