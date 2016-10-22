@@ -1,6 +1,7 @@
 package org.socialforce.app.gui;
 
 import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
+import org.socialforce.app.SocialForceApplication;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,4 +60,14 @@ public class SimulationPanelMain {
         scene3 = new SceneShower("Scene 3").getRoot();
         scene4 = new SceneShower("Scene 4").getRoot();
     }
+
+    public SocialForceApplication getApplication() {
+        return application;
+    }
+
+    public void setApplication(SocialForceApplication application) {
+        this.application = application;
+    }
+
+    SocialForceApplication application;
 }
