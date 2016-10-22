@@ -1,10 +1,15 @@
 package org.socialforce.app;
 
+import org.socialforce.app.impl.preset.SVSR_AgentGenerator;
+import org.socialforce.app.impl.preset.SVSR_Exit;
+import org.socialforce.app.impl.preset.SVSR_SafetyRegion;
 import org.socialforce.app.impl.preset.SquareRoomLoader;
+import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.PathFinder;
 import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.model.impl.StraightPath;
 
 import java.util.Iterator;
@@ -19,9 +24,20 @@ public class SimpleApplication implements SocialForceApplication {
      */
     @Override
     public void start() {
-        generator = new SimpleSceneGenerator();
-        singleScene = (Scene) generator.generate(loader);
-        singleScene = (Scene) generator.generate(singleScene,new SimpleParameterSet());
+        SVSR_Exit exit = new SVSR_Exit();
+        SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(1,1,1,new Box2D(3,3,20,10));
+        SVSR_SafetyRegion safetyRegion = new SVSR_SafetyRegion();
+        exit.setValue((new Box2D[]{new Box2D(-1,5,4,2),new Box2D(10,-1,2,4),new Box2D(10,14,2,4),new Box2D(24,10,4,2)}));
+        exit.apply(singleScene);
+        agentGenerator.apply(singleScene);
+        safetyRegion.setValue(new SafetyRegion(new Box2D(-1,5,-4,2)));
+        safetyRegion.apply(singleScene);
+        safetyRegion.setValue(new SafetyRegion(new Box2D(10,-1,2,-4)));
+        safetyRegion.apply(singleScene);
+        safetyRegion.setValue(new SafetyRegion(new Box2D(10,14,2,-4)));
+        safetyRegion.apply(singleScene);
+        safetyRegion.setValue(new SafetyRegion(new Box2D(24,10,-4,2)));
+        safetyRegion.apply(singleScene);
         Agent agent;
         Point2D goal,temp;
         for (Iterator iter = singleScene.getAllAgents().iterator(); iter.hasNext();){
