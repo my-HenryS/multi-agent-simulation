@@ -120,6 +120,7 @@ public class BaseAgent extends Entity implements Agent {
             Iterable<InteractiveEntity> statics = scene.getStaticEntities().select(view);
             Iterable<Agent> neighbors = scene.getAllAgents().select(view);
             for(InteractiveEntity entity : statics) {
+
                 entity.affect(this);
             }
             for(Agent agent : neighbors) {
@@ -172,7 +173,6 @@ public class BaseAgent extends Entity implements Agent {
         point.add(deltaS);
         this.shape.moveTo(point);
         this.view.moveTo(point);                      //改变视野
-        System.out.println(point.getX()+","+point.getY());
         deltaS = model.zeroVector();
         deltaV = model.zeroVelocity();
         pushed = model.zeroForce();
@@ -238,7 +238,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public void affect(InteractiveEntity affectedEntity) {
-        if (affectedEntity instanceof Agent) {
+        if (affectedEntity instanceof Agent && !this.equals(affectedEntity)) {
             Agent agent = (Agent) affectedEntity;
             agent.push(model.calcualte(this, affectedEntity));
         }
