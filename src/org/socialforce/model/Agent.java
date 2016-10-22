@@ -104,4 +104,10 @@ public interface Agent extends InteractiveEntity, Moveable, Blockable {
      * 标明已经逃离的agent
      */
     void escape();
+
+    /**
+     * 检查这个Agent是否已经逃离。
+     * @return 是否已经逃离。
+     */
+    boolean isEscaped();
 }
