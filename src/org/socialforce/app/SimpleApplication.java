@@ -20,12 +20,16 @@ import java.util.stream.Stream;
  * Created by Whatever on 2016/10/22.
  */
 public class SimpleApplication implements SocialForceApplication {
+    public SimpleApplication() {
+        singleScene = loader.readScene();
+        singleScene.setApplication(this);
+    }
+
     /**
      * start the application immediately.
      */
     @Override
     public void start() {
-        singleScene = loader.readScene();
         SVSR_Exit exit = new SVSR_Exit();
         SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(1,1,1,new Box2D(3,3,20,10));
         SVSR_SafetyRegion safetyRegion = new SVSR_SafetyRegion();

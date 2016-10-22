@@ -39,7 +39,7 @@ public class SimulationPanelMain implements ApplicationListener {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
             frame.setVisible(true);
-
+            application.start();
         } catch (HeadlessException e) {
             System.out.println("GUI Not Supported on this machine.");
         }

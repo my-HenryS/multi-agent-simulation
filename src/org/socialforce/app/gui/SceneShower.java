@@ -64,7 +64,4 @@ public class SceneShower {
 
     Scene scene;
 
-    public void redraw() {
-        scene.getDrawer().draw(scene);
-    }
 }
