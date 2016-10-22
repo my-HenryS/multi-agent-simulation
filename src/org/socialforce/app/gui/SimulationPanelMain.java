@@ -8,6 +8,7 @@ import org.socialforce.model.Agent;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by Ledenel on 2016/8/23.
@@ -56,9 +57,17 @@ public class SimulationPanelMain implements ApplicationListener {
     private JTextField timePerStepTextField;
     private JLabel fpsLabel;
 
+    SceneShower shower1;
+
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        scene1 = new SceneShower("Scene 1").getRoot();
+        shower1 = new SceneShower("Scene 1");
+        scene1 = shower1.getRoot();
+        // FIXME: here, panel only find a default scene and show it.
+        Scene def = StreamSupport.stream(application.getAllScenes().spliterator(),false)
+            .findFirst()
+            .orElse(null);
+        shower1.setScene(def);
         scene2 = new SceneShower("Scene 2").getRoot();
         scene3 = new SceneShower("Scene 3").getRoot();
         scene4 = new SceneShower("Scene 4").getRoot();
@@ -110,6 +119,6 @@ public class SimulationPanelMain implements ApplicationListener {
      */
     @Override
     public void onStep(Scene scene) {
-        
+        scene.getDrawer().draw(scene);
     }
 }
