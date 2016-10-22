@@ -1,7 +1,10 @@
 package org.socialforce.app.gui;
 
 import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
+import org.socialforce.app.ApplicationListener;
+import org.socialforce.app.Scene;
 import org.socialforce.app.SocialForceApplication;
+import org.socialforce.model.Agent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +12,7 @@ import java.awt.*;
 /**
  * Created by Ledenel on 2016/8/23.
  */
-public class SimulationPanelMain {
+public class SimulationPanelMain implements ApplicationListener {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -70,4 +73,43 @@ public class SimulationPanelMain {
     }
 
     SocialForceApplication application;
+
+    /**
+     * triggered while a agent is escaped.
+     *
+     * @param scene       the scene where the agent in.
+     * @param escapeAgent the escaped agent.
+     */
+    @Override
+    public void onAgentEscape(Scene scene, Agent escapeAgent) {
+
+    }
+
+    /**
+     * triggered while the application is start.
+     */
+    @Override
+    public void onStart() {
+
+    }
+
+    /**
+     * triggered while the application is stop.
+     *
+     * @param terminated whether the application is forced to shut down.
+     */
+    @Override
+    public void onStop(boolean terminated) {
+
+    }
+
+    /**
+     * triggered while a scene is step-forwarded.
+     *
+     * @param scene the scene steped-forwarded.
+     */
+    @Override
+    public void onStep(Scene scene) {
+        
+    }
 }
