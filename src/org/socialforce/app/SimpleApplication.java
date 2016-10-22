@@ -23,6 +23,41 @@ public class SimpleApplication implements SocialForceApplication {
     public SimpleApplication() {
         singleScene = loader.readScene();
         singleScene.setApplication(this);
+        SVSR_Exit exit = new SVSR_Exit();
+        SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(1, 1, 1, new Box2D(3, 3, 20, 10));
+        SVSR_SafetyRegion safetyRegion = new SVSR_SafetyRegion();
+        exit.setValue((new Box2D[]{new Box2D(-1, 5, 4, 2), new Box2D(10, -1, 2, 4), new Box2D(10, 14, 2, 4), new Box2D(24, 10, 4, 2)}));
+        exit.apply(singleScene);
+        agentGenerator.apply(singleScene);
+        safetyRegion.setValue(new SafetyRegion(new Box2D(-1, 5, -4, 2)));
+        safetyRegion.apply(singleScene);
+        safetyRegion.setValue(new SafetyRegion(new Box2D(10, -1, 2, -4)));
+        safetyRegion.apply(singleScene);
+        safetyRegion.setValue(new SafetyRegion(new Box2D(10, 14, 2, -4)));
+        safetyRegion.apply(singleScene);
+        safetyRegion.setValue(new SafetyRegion(new Box2D(24, 10, -4, 2)));
+        safetyRegion.apply(singleScene);
+        Agent agent;
+        Point2D goal, temp;
+        for (Iterator iter = singleScene.getAllAgents().iterator(); iter.hasNext(); ) {
+            //给所有agent设置path
+            agent = (Agent) iter.next();
+            goal = new Point2D(-1, 5);
+            temp = new Point2D(10, -1);
+            if (temp.distanceTo(agent.getShape().getReferencePoint()) < goal.distanceTo(agent.getShape().getReferencePoint())) {
+                goal = temp;
+            }
+            temp = new Point2D(10, 14);
+            if (temp.distanceTo(agent.getShape().getReferencePoint()) < goal.distanceTo(agent.getShape().getReferencePoint())) {
+                goal = temp;
+            }
+            temp = new Point2D(24, 10);
+            if (temp.distanceTo(agent.getShape().getReferencePoint()) < goal.distanceTo(agent.getShape().getReferencePoint())) {
+                goal = temp;
+            }
+            agent.setPath(new StraightPath(agent.getShape().getReferencePoint(), goal));
+        }
+
     }
 
     /**
@@ -30,49 +65,17 @@ public class SimpleApplication implements SocialForceApplication {
      */
     @Override
     public void start() {
-        SVSR_Exit exit = new SVSR_Exit();
-        SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(1,1,1,new Box2D(3,3,20,10));
-        SVSR_SafetyRegion safetyRegion = new SVSR_SafetyRegion();
-        exit.setValue((new Box2D[]{new Box2D(-1,5,4,2),new Box2D(10,-1,2,4),new Box2D(10,14,2,4),new Box2D(24,10,4,2)}));
-        exit.apply(singleScene);
-        agentGenerator.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(-1,5,-4,2)));
-        safetyRegion.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(10,-1,2,-4)));
-        safetyRegion.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(10,14,2,-4)));
-        safetyRegion.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(24,10,-4,2)));
-        safetyRegion.apply(singleScene);
-        Agent agent;
-        Point2D goal,temp;
-        for (Iterator iter = singleScene.getAllAgents().iterator(); iter.hasNext();){
-            //给所有agent设置path
-            agent = (Agent)iter.next();
-            goal = new Point2D(-1,5);
-            temp = new Point2D(10,-1);
-            if (temp.distanceTo(agent.getShape().getReferencePoint())<goal.distanceTo(agent.getShape().getReferencePoint())){
-                goal = temp;
-            }
-            temp = new Point2D(10,14);
-            if (temp.distanceTo(agent.getShape().getReferencePoint())<goal.distanceTo(agent.getShape().getReferencePoint())){
-                goal = temp;
-            }
-            temp = new Point2D(24,10);
-            if (temp.distanceTo(agent.getShape().getReferencePoint())<goal.distanceTo(agent.getShape().getReferencePoint())){
-                goal = temp;
-            }
-            agent.setPath(new StraightPath(agent.getShape().getReferencePoint(),goal));
-        }
 
         while (!singleScene.getAllAgents().isEmpty()) {
-        singleScene.stepNext();}
+            singleScene.stepNext();
+        }
     }
 
 
     protected SceneLoader loader = new SquareRoomLoader();
 
     protected SocialForceModel model;
+
     /**
      * get the social force model the application is using.
      *
@@ -94,7 +97,8 @@ public class SimpleApplication implements SocialForceApplication {
     }
 
 
-    protected Scene singleScene = new SimpleScene(new Box2D(-50,-50,100,100));
+    protected Scene singleScene = new SimpleScene(new Box2D(-50, -50, 100, 100));
+
     /**
      * get all the scenes the applicaion is simulating.
      *
@@ -106,8 +110,8 @@ public class SimpleApplication implements SocialForceApplication {
     }
 
 
-
     protected ApplicationListener listener;
+
     /**
      * get the application listener for the application.
      *
@@ -133,7 +137,8 @@ public class SimpleApplication implements SocialForceApplication {
         return singleScene;
     }
 
-    protected  List<PathFinder> pathFinder;
+    protected List<PathFinder> pathFinder;
+
     @Override
     public List<PathFinder> getAllPathFinders() {
         return pathFinder;

@@ -38,7 +38,6 @@ public class SceneShower {
      */
     public JPanel getRoot() {
         root.setBorder(BorderFactory.createTitledBorder(title));
-        drawerInstaller = new SceneDrawerInstaller((Graphics2D) showPanel.getGraphics());
         return root;
 
     }
@@ -59,6 +58,7 @@ public class SceneShower {
 
     public void setScene(Scene scene) {
         this.scene = scene;
+        drawerInstaller = new SceneDrawerInstaller((Graphics2D) showPanel.getGraphics(), this.showPanel.getWidth(), this.showPanel.getHeight());
         drawerInstaller.addDrawerSupport(scene);
     }
 

@@ -35,8 +35,8 @@ public class SceneDrawerInstaller implements DrawerInstaller {
         return false;
     }
 
-    public SceneDrawerInstaller(Graphics2D graphics) {
-        this.sceneDrawer = new SceneDrawer(graphics);
+    public SceneDrawerInstaller(Graphics2D graphics, double ctrlWidth, double ctrlHeight) {
+        this.sceneDrawer = new SceneDrawer(graphics, ctrlWidth,ctrlHeight);
     }
 
     protected SceneDrawer sceneDrawer;
