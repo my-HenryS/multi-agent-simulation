@@ -66,8 +66,11 @@ public class balabalaMain implements ApplicationListener {
         //TODO: Add your output code HERE
         while (!scene.getAllAgents().isEmpty()){
             int time = scene.getCurrentSteps();
+            if(time%10 == 0){
             System.out.println("目前时间"+time);
-            System.out.println("场景中人数");
+            System.out.println("场景中人数"+scene.getAllAgents().size());
+            
+            }
         }
     }
 }
