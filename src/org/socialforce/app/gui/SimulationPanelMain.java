@@ -3,6 +3,7 @@ package org.socialforce.app.gui;
 import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import org.socialforce.app.ApplicationListener;
 import org.socialforce.app.Scene;
+import org.socialforce.app.SimpleApplication;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.model.Agent;
 
@@ -30,10 +31,15 @@ public class SimulationPanelMain implements ApplicationListener {
         }
         try {
             JFrame frame = new JFrame("SimulationPanelMain");
-            frame.setContentPane(new SimulationPanelMain().root);
+            SimulationPanelMain mainPanel = new SimulationPanelMain();
+            SimpleApplication application = new SimpleApplication();
+            application.setApplicationListener(mainPanel);
+            mainPanel.setApplication(application);
+            frame.setContentPane(mainPanel.root);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
             frame.setVisible(true);
+
         } catch (HeadlessException e) {
             System.out.println("GUI Not Supported on this machine.");
         }
@@ -63,11 +69,6 @@ public class SimulationPanelMain implements ApplicationListener {
         // TODO: place custom component creation code here
         shower1 = new SceneShower("Scene 1");
         scene1 = shower1.getRoot();
-        // FIXME: here, panel only find a default scene and show it.
-        Scene def = StreamSupport.stream(application.getAllScenes().spliterator(),false)
-            .findFirst()
-            .orElse(null);
-        shower1.setScene(def);
         scene2 = new SceneShower("Scene 2").getRoot();
         scene3 = new SceneShower("Scene 3").getRoot();
         scene4 = new SceneShower("Scene 4").getRoot();
@@ -79,6 +80,12 @@ public class SimulationPanelMain implements ApplicationListener {
 
     public void setApplication(SocialForceApplication application) {
         this.application = application;
+
+        // TODO: here, panel only find a default scene and show it.
+        Scene def = StreamSupport.stream(application.getAllScenes().spliterator(),false)
+                .findFirst()
+                .orElse(null);
+        shower1.setScene(def);
     }
 
     SocialForceApplication application;

@@ -14,6 +14,7 @@ import org.socialforce.model.impl.StraightPath;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by Whatever on 2016/10/22.
@@ -97,18 +98,19 @@ public class SimpleApplication implements SocialForceApplication {
      */
     @Override
     public Iterable<Scene> getAllScenes() {
-        return (Iterable<Scene>) singleScene;//TODO 加相关方法，不然不对
+        return Stream.of(singleScene)::iterator;
     }
 
 
-    protected AgentEscapeListener listener;
+
+    protected ApplicationListener listener;
     /**
      * get the application listener for the application.
      *
      * @return the application listener.
      */
     @Override
-    public AgentEscapeListener getApplicationListener() {
+    public ApplicationListener getApplicationListener() {
         return listener;
     }
 
@@ -118,7 +120,7 @@ public class SimpleApplication implements SocialForceApplication {
      * @param listener the listener to be set.
      */
     @Override
-    public void setApplicationListener(AgentEscapeListener listener) {
+    public void setApplicationListener(ApplicationListener listener) {
         this.listener = listener;
     }
 
