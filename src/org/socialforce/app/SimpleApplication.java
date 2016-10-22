@@ -33,7 +33,7 @@ public class SimpleApplication implements SocialForceApplication {
         SVSR_Exit exit = new SVSR_Exit();
         SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(1,1,1,new Box2D(3,3,20,10));
         SVSR_SafetyRegion safetyRegion = new SVSR_SafetyRegion();
-        exit.setValue((new Box2D[]{new Box2D(-1,5,4,2),new Box2D(10,-1,2,4),new Box2D(10,14,2,4),new Box2D(24,10,4,2)}));
+        exit.setValue((new Box2D[]{new Box2D(-1,5,4,6),new Box2D(10,-1,6,4),new Box2D(10,14,6,4),new Box2D(24,6,4,6)}));
         exit.apply(singleScene);
         agentGenerator.apply(singleScene);
         safetyRegion.setValue(new SafetyRegion(new Box2D(-1,5,-4,2)));
