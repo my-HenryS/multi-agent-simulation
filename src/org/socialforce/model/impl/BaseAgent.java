@@ -1,7 +1,10 @@
 package org.socialforce.model.impl;
 
+import javafx.scene.shape.Circle;
 import org.socialforce.app.*;
 import org.socialforce.geom.*;
+import org.socialforce.geom.impl.Circle2D;
+import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.*;
 
 /**
@@ -23,6 +26,12 @@ public class BaseAgent extends Entity implements Agent {
     public BaseAgent(DistanceShape shape) {
         super(shape);
         this.shape = shape;
+        this.currTimestamp = 0;
+        this.currVelocity = new Velocity2D(0,0);
+        this.mass = 1;
+        Circle2D circle = new Circle2D();
+        circle.setRadius(2);
+        this.view  = circle;
     }
 
     /**
@@ -162,7 +171,8 @@ public class BaseAgent extends Entity implements Agent {
         Point point = shape.getReferencePoint();
         point.add(deltaS);
         this.shape.moveTo(point);
-
+        this.view.moveTo(point);                      //改变视野
+        System.out.println(point.getX()+","+point.getY());
         deltaS = model.zeroVector();
         deltaV = model.zeroVelocity();
         pushed = model.zeroForce();
