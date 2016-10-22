@@ -1,8 +1,13 @@
 package org.socialforce.app;
 
+import org.socialforce.app.impl.preset.SquareRoomLoader;
+import org.socialforce.geom.impl.Point2D;
+import org.socialforce.model.Agent;
 import org.socialforce.model.PathFinder;
 import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.impl.StraightPath;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -14,8 +19,32 @@ public class SimpleApplication implements SocialForceApplication {
      */
     @Override
     public void start() {
-
+        generator = new SimpleSceneGenerator();
+        singleScene = (Scene) generator.generate(loader);
+        singleScene = (Scene) generator.generate(singleScene,new SimpleParameterSet());
+        Agent agent;
+        Point2D goal,temp;
+        for (Iterator iter = singleScene.getAllAgents().iterator(); iter.hasNext();){
+            //给所有agent设置path
+            agent = (Agent)iter.next();
+            goal = new Point2D(-1,5);
+            temp = new Point2D(10,-1);
+            if (temp.distanceTo(agent.getShape().getReferencePoint())<goal.distanceTo(agent.getShape().getReferencePoint())){
+                goal = temp;
+            }
+            temp = new Point2D(10,14);
+            if (temp.distanceTo(agent.getShape().getReferencePoint())<goal.distanceTo(agent.getShape().getReferencePoint())){
+                goal = temp;
+            }
+            temp = new Point2D(24,10);
+            if (temp.distanceTo(agent.getShape().getReferencePoint())<goal.distanceTo(agent.getShape().getReferencePoint())){
+                goal = temp;
+            }
+            agent.setPath(new StraightPath(agent.getShape().getReferencePoint(),goal));
+        }
     }
+    private SimpleSceneGenerator generator;
+    private SceneLoader loader = new SquareRoomLoader();
 
     protected SocialForceModel model;
     /**
