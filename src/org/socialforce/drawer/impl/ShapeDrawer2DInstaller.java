@@ -7,6 +7,7 @@ import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -25,7 +26,7 @@ public class ShapeDrawer2DInstaller implements DrawerInstaller {
         registerDrawer(new SolidCircle2DDrawer(graphics2D),Circle2D.class);
    }
 
-    Map<Class<? extends Drawable>,Drawer> drawerMap = new TreeMap<>();
+    Map<Class<? extends Drawable>,Drawer> drawerMap = new HashMap<>(1000);
 
     protected Graphics2D graphics2D;
 
