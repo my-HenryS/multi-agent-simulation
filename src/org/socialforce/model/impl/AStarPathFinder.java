@@ -20,14 +20,14 @@ public class AStarPathFinder implements PathFinder {
     static final int min_div = 1;
     @Override
     public Path plan(Scene targetScene, Agent agent, Point goal) {
-        AStarPath path = new AStarPath();
+        //AStarPath path = new AStarPath();
         Point start_point = agent.getShape().getReferencePoint();
         EntityPool all_blocks = targetScene.getStaticEntities();
         for (InteractiveEntity entity : all_blocks) {
             assert(!entity.getShape().contains(start_point));
 
         }
-        return path;
+        return null;
     }
 
     public double [][] map_initiate(Scene targetScene, Agent agent, Point goal){

@@ -59,11 +59,13 @@ public class SimpleApplication implements SocialForceApplication {
             }
             agent.setPath(new StraightPath(agent.getShape().getReferencePoint(),goal));
         }
+
         while (!singleScene.getAllAgents().isEmpty()) {
         singleScene.stepNext();}
-
     }
-    private SceneLoader loader = new SquareRoomLoader();
+
+
+    protected SceneLoader loader = new SquareRoomLoader();
 
     protected SocialForceModel model;
     /**
@@ -87,7 +89,7 @@ public class SimpleApplication implements SocialForceApplication {
     }
 
 
-    protected Scene singleScene;
+    protected Scene singleScene = new SimpleScene(new Box2D(-50,-50,100,100));
     /**
      * get all the scenes the applicaion is simulating.
      *

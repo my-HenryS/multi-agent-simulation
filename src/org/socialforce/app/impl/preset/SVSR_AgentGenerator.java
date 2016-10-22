@@ -89,6 +89,7 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
                     new_agent.setModel(agentGenerator.model);
                     new_agent.getShape().moveTo(new Point2D(agentGenerator.Area.getStartPoint().getX()+i*agentGenerator.X_distance,agentGenerator.Area.getStartPoint().getY()+j*agentGenerator.Y_distance));
                     scene.addAgent(new_agent);
+                    new_agent.setScene(scene);
                 }
             }
         }
