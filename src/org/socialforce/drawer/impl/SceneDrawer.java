@@ -13,6 +13,7 @@ import org.socialforce.model.InteractiveEntity;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Rectangle2D;
 
 /**
  * Created by Ledenel on 2016/8/24.
@@ -32,12 +33,21 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         } catch (NoninvertibleTransformException e) {
             e.printStackTrace();
         }
-
+        getDevice().transform(transform);
+        getDevice().setColor(Color.WHITE);
+        double pt[] = new double[2];
+        double sz[] = new double[2];
+        clip.getStartPoint().get(pt);
+        clip.getSize().get(sz);
+        getDevice().fill(new Rectangle2D.Double(pt[0],pt[1],sz[0],sz[1]));
         for (InteractiveEntity entity : iterable) {
             Drawer drawer = entity.getShape().getDrawer();
-            drawer.setDevice(this.getDevice());
-            drawer.draw(entity.getShape());
+            if(drawer != null) {
+                drawer.setDevice(this.getDevice());
+                drawer.draw(entity.getShape());
+            }
         }
+        getDevice().transform(reverse);
         // 2016/8/24  add draw scene.
 
     }
@@ -56,6 +66,22 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
 
     protected ProxyedGraphics2D graphics2D;
 
+    public double getCtrlWidth() {
+        return ctrlWidth;
+    }
+
+    public void setCtrlWidth(double ctrlWidth) {
+        this.ctrlWidth = ctrlWidth;
+    }
+
+    public double getCtrlHeight() {
+        return ctrlHeight;
+    }
+
+    public void setCtrlHeight(double ctrlHeight) {
+        this.ctrlHeight = ctrlHeight;
+    }
+
     double ctrlWidth;
     double ctrlHeight;
 
@@ -66,7 +92,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         this.ctrlHeight = ctrlHeight;
         this.ctrlWidth = ctrlWidth;
 
-        graphics.transform(getTransform());
+        //graphics.transform(getTransform());
 
         graphics2D = new ProxyedGraphics2D(graphics);
         installer = new ShapeDrawer2DInstaller(graphics);
@@ -92,7 +118,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         transform.scale(ctrlWidth / cp[0], ctrlHeight / cp[1]);
         transform.translate(0, cp[1]);
         transform.scale(1, -1);
-        transform.translate(start[0], start[1]);
+        transform.translate(-start[0],-start[1]);
 
         //transform.re
         return transform;

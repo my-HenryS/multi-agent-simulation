@@ -42,6 +42,8 @@ public class SceneShower {
 
     }
 
+    private SceneBoard board;
+
     /**
      *
      */
@@ -50,7 +52,11 @@ public class SceneShower {
 
         //root.setBorder(BorderFactory.createTitledBorder(title));
         // TODO: place custom component creation code here
+        board = new SceneBoard();
+        showPanel = board;
+
     }
+
 
     public Scene getScene() {
         return scene;
@@ -60,6 +66,7 @@ public class SceneShower {
         this.scene = scene;
         drawerInstaller = new SceneDrawerInstaller((Graphics2D) showPanel.getGraphics(), this.showPanel.getWidth(), this.showPanel.getHeight());
         drawerInstaller.addDrawerSupport(scene);
+        board.setScene(scene);
     }
 
     Scene scene;
