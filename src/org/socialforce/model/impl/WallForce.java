@@ -46,7 +46,7 @@ public class WallForce implements ForceRegulation {
             double y = ForcePoint.getY() - target.getShape().getReferencePoint().getY();
             Vector2D vector2D = new Vector2D(x,y);
             vector2D = (Vector2D) vector2D.getRefVector();
-            vector2D.scale(20);
+            vector2D.scale(-500);
             double[] force = new double[2];
             vector2D.get(force);
             return new Force2D(force[0],force[1]);

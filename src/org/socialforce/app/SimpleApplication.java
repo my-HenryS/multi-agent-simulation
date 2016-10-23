@@ -142,7 +142,7 @@ public class SimpleApplication implements SocialForceApplication {
 
     protected SceneLoader loader = new SquareRoomLoader();
 
-    protected SocialForceModel model;
+    protected SocialForceModel model = new SimpleSocialForceModel();
 
     /**
      * get the social force model the application is using.
