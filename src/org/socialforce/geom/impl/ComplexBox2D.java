@@ -171,4 +171,13 @@ public class ComplexBox2D implements Shape {
         }
         return false;
     }
+
+
+    public Box2D[] BreakDown(){
+        Box2D[] Boxes = new Box2D[BoxDictionary.length];
+        for (int i = 0;i<BoxDictionary.length;i++){
+            Boxes[i] = new Box2D(BoxDictionary[0][i],BoxDictionary[1][i]);
+        }
+        return Boxes;
+    }
 }
