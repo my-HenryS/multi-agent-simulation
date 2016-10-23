@@ -8,17 +8,16 @@ import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.impl.BaseAgent;
 
 /**
  * Created by Whatever on 2016/10/22.
  */
-public class balabalaMain implements ApplicationListener {
+public class TextOutputMain implements ApplicationListener {
     public static void main(String[] args) {
-        balabalaMain balabalaMain = new balabalaMain();
-        balabalaMain.setApplication(new SimpleApplication());
-        balabalaMain.getApplication().setApplicationListener(balabalaMain);
-        balabalaMain.getApplication().start();
+        TextOutputMain TextOutputMain = new TextOutputMain();
+        TextOutputMain.setApplication(new SimpleApplication());
+        TextOutputMain.getApplication().setApplicationListener(TextOutputMain);
+        TextOutputMain.getApplication().start();
     }
 
     public SocialForceApplication getApplication() {
