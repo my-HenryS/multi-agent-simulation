@@ -36,7 +36,7 @@ public class BodyForce implements ForceRegulation{
         argumentX = 1;
         double temp[] = new double[2];
         if (source instanceof Moveable){
-        tempVector = (Vector2D) ((Agent)source).getVelocity().clone();}
+        tempVector = (Vector2D) ((Moveable)source).getVelocity().clone();}
         else tempVector = new Vector2D(0,0);
         tempVector.sub(((Agent)target).getVelocity());
         n = new Vector2D(source.getShape().getReferencePoint().getX() -  target.getShape().getReferencePoint().getX(),
@@ -44,8 +44,7 @@ public class BodyForce implements ForceRegulation{
         n.set(n.getRefVector());
         n.get(temp);
         t = new Vector2D(-temp[1],temp[0]);
-        distance = source.getShape().getReferencePoint().distanceTo(target.getShape().getReferencePoint())
-                - ((Circle2D) source.getShape()).getRadius()-((Circle2D) target.getShape()).getRadius();
+        distance = ((Circle2D)target.getShape()).distanceTo(source.getShape());
         if (distance < 0){g = argumentX;}
         bodyForce = A*Math.exp(-distance/B) + k1*g*distance;
         slidingForce = k2*g*distance*t.dot(tempVector);
