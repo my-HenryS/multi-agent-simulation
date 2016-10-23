@@ -84,7 +84,7 @@ public class balabalaMain implements ApplicationListener {
                 for (int i = -20; i < 80; i++) {
                     for (int j = -20; j < 60; j++) {
                         //Point2D here = new Point2D(i, j);
-                        Circle2D here = new Circle2D(new Point2D(0.5*i,0.5*j),0.1);
+                        Circle2D here = new Circle2D(new Point2D(0.5*i,0.5*j),0.05);
                         int count = 0;
                         Iterable<Agent> agents = scene.getAllAgents().select(here);
                         for (InteractiveEntity agent : agents) {

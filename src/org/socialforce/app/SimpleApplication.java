@@ -33,11 +33,11 @@ public class SimpleApplication implements SocialForceApplication {
         exit.setValue((new Box2D[]{new Box2D(-1,5,4,6),new Box2D(10,-1,6,4),new Box2D(10,14,6,4),new Box2D(24,6,4,6)}));
         exit.apply(singleScene);
         agentGenerator.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(-1,5,-4,6)));
+        safetyRegion.setValue(new SafetyRegion(new Box2D(-2,5,-4,6)));
         safetyRegion.apply(singleScene);
         safetyRegion.setValue(new SafetyRegion(new Box2D(10,-1,6,-4)));
         safetyRegion.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(10,18,6,4)));
+        safetyRegion.setValue(new SafetyRegion(new Box2D(10,19,6,4)));
         safetyRegion.apply(singleScene);
         safetyRegion.setValue(new SafetyRegion(new Box2D(28,6,4,6)));
         safetyRegion.apply(singleScene);
@@ -67,10 +67,10 @@ public class SimpleApplication implements SocialForceApplication {
                 goal = temp;
             }
             switch ((int)goal.getY()){
-                case -3: temp = new Point2D(13,1);break;
-                case 8:  temp = new Point2D(0,8);break;
-                case 20: temp = new Point2D(13,14);break;
-                case 9: temp = new Point2D(24,9);break;
+                case -3: temp = new Point2D(13,2);break;
+                case 8:  temp = new Point2D(1,8);break;
+                case 20: temp = new Point2D(13,13);break;
+                case 9: temp = new Point2D(23,9);break;
             }
             agent.setPath(new StraightPath(agent.getShape().getReferencePoint(),goal));
         }
