@@ -16,7 +16,7 @@ import org.socialforce.model.*;
 public class BodyForce implements ForceRegulation{
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
-        if (source instanceof Blockable && target instanceof Agent &&
+        if (source instanceof Agent && target instanceof Agent &&
                 ((Agent) target).getView().hits(source.getShape().getBounds())){
             return true;
         }

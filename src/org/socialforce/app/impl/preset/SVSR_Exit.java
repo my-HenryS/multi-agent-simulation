@@ -5,7 +5,9 @@ import org.socialforce.app.SceneValue;
 import org.socialforce.app.StaticSceneValue;
 import org.socialforce.geom.ClippableShape;
 import org.socialforce.geom.ClipperShape;
+import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
+import org.socialforce.geom.impl.ComplexBox2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.Wall;
@@ -72,7 +74,11 @@ public class SVSR_Exit implements SceneValue<ClipperShape[]> {
             if (exit[i].getBounds().getStartPoint().getX() != exit[i].getBounds().getEndPoint().getX()
                  && exit[i].getBounds().getStartPoint().getY() != exit[i].getBounds().getEndPoint().getY()) {
              Wall wall = (Wall) scene.getStaticEntities().selectTop((Point2D) exit[i].getReferencePoint());
-              wall.setShape(exit[i].clip((ClippableShape) wall.getShape()));
+                ComplexBox2D complexBox2D = (ComplexBox2D) exit[i].clip((ClippableShape) wall.getShape());
+                Box2D[] boxes = new Box2D[2];
+                boxes = complexBox2D.BreakDown();
+              wall.setShape(boxes[0]);
+                scene.getStaticEntities().add(new Wall(boxes[1]));
          }
          else /*do nothing*/;
     }

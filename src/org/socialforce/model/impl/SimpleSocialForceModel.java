@@ -31,6 +31,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
         regulations = new LinkedList<>();
         regulations.add(new PsychologicalForceRegulation(InteractiveEntity.class, Agent.class, this));
         regulations.add(new BodyForce());
+        regulations.add(new WallForce());
     }
 
     /**

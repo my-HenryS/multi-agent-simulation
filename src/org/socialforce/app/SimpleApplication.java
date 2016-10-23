@@ -47,6 +47,7 @@ public class SimpleApplication implements SocialForceApplication {
         safetyRegion.setValue(new SafetyRegion(new Box2D(28, 6, 4, 6)));
         safetyRegion.apply(singleScene);
         //为解决穿墙的问题把墙每隔一米切分成多个墙
+        /*
         for (InteractiveEntity entity : singleScene.getStaticEntities()){
             if (entity instanceof ComplexBox2D){
                 Box2D[] temp = ((ComplexBox2D) entity).BreakDown();
@@ -80,6 +81,7 @@ public class SimpleApplication implements SocialForceApplication {
                 singleScene.getStaticEntities().remove(entity);
             }
         }
+        */
     }
 
     /**
