@@ -2,7 +2,9 @@
 
 # SocialForceSimulation
 
-**本版本为Release0.1版本，各功能仍在不断更新调整中，可能出现重构。**
+**本版本为Release1.0.3版本，各功能仍在不断更新调整中，可能出现重构。**
+
+**欲开始运行仿真请打开app包，并运行其中的一个Main程序。Gui内的SimulationPanelMain是可视化的仿真界面，主要用于演示；Console内的TextOutputMain是可以将运行结果以字符串形式输出的Main程序，主要用于输出具体的数据以便实验使用。**
 
 ***项目分为5个package，分别为app、container、drawer、geom、model***
 
