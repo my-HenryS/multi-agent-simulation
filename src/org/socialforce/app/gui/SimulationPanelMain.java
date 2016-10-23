@@ -34,9 +34,9 @@ public class SimulationPanelMain implements ApplicationListener {
             SimulationPanelMain mainPanel = new SimulationPanelMain();
             SimpleApplication application = new SimpleApplication();
             application.setApplicationListener(mainPanel);
-
             frame.setContentPane(mainPanel.root);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setResizable(false);
             frame.pack();
             frame.setVisible(true);
             mainPanel.setApplication(application);
