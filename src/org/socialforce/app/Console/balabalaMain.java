@@ -8,7 +8,11 @@ import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.impl.BaseAgent;
+
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 
 /**
  * Created by Whatever on 2016/10/22.
@@ -72,6 +76,8 @@ public class balabalaMain implements ApplicationListener {
         String[][] SquareRoom = new String[100][80];
         int number = scene.getAllAgents().size();
         int time = scene.getCurrentSteps();
+        File file = new File("D:\\","File.txt");
+        file.createNewFile();
         if (!scene.getAllAgents().isEmpty()) {
             /*if(time%10 ==0){
             System.out.println("目前时间" + time);
