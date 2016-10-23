@@ -266,4 +266,9 @@ public class BaseAgent extends Entity implements Agent {
     public double getMass() {
         return mass;
     }
+
+
+    public String toString(){
+        return this.shape.toString();
+    }
 }

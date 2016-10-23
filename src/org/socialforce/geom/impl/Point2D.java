@@ -64,4 +64,8 @@ public class Point2D extends Vector2D implements Point {
         this.get(point2D.values);
         return point2D;
     }
+
+    public String toString(){
+        return "坐标为： ("+values[0]+"," +values[1]+")";
+    }
 }

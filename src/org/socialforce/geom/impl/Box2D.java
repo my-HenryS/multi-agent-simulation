@@ -406,4 +406,8 @@ public class Box2D implements Box {
             ymax = tempmax;
         }
     }
+
+    public String toString(){
+        return "左下右上坐标为： ("+xmin+"," +ymin+")，("+xmax+ ","+ymax+ ")";
+    }
 }

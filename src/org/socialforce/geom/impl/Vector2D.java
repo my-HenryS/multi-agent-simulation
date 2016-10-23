@@ -309,4 +309,8 @@ public class Vector2D implements Vector {
         return ref;
     }
 
+    public String toString(){
+        return "坐标为： ("+values[0]+"," +values[1]+")";
+    }
+
 }
