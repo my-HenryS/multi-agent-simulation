@@ -129,7 +129,11 @@
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
-                    <properties/>
+                    <properties>
+                      <model>
+                        <item value="Plain Directions"/>
+                      </model>
+                    </properties>
                   </component>
                 </children>
               </grid>
@@ -138,7 +142,10 @@
                 <constraints>
                   <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <enabled value="false"/>
+                  <visible value="true"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <component id="8b6a" class="javax.swing.JButton" binding="pauseButton" default-binding="true">
@@ -149,9 +156,10 @@
                       </grid>
                     </constraints>
                     <properties>
+                      <enabled value="false"/>
                       <font size="24"/>
                       <text value="Pause"/>
-                      <visible value="false"/>
+                      <visible value="true"/>
                     </properties>
                   </component>
                   <component id="f8dd8" class="javax.swing.JButton" binding="stopButton">
@@ -162,9 +170,10 @@
                       </grid>
                     </constraints>
                     <properties>
+                      <enabled value="false"/>
                       <font size="24"/>
                       <text value="Stop"/>
-                      <visible value="false"/>
+                      <visible value="true"/>
                     </properties>
                   </component>
                 </children>
@@ -177,7 +186,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <enabled value="true"/>
+                  <enabled value="false"/>
                   <font size="24"/>
                   <text value="Run"/>
                 </properties>
