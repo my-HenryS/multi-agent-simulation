@@ -3,15 +3,12 @@
 # SocialForceSimulation
 
 **本版本为Release0.1版本，各功能仍在不断更新调整中，可能出现重构。**
-//以下参照文档修改
 
 ***项目分为5个package，分别为app、container、drawer、geom、model***
 
 1. **app为应用层**，设计的基本接口有Scene, SceneGenerator, SceneListener, SceneLoader, SceneParameter, SceneValue, SocialForceApplication。目前已实例化的类有SquareRoomLoader, 负责加载基本矩形房间；SVSR_AgentGenerator，负责在限定区域内等间距均匀生成Agent, SVSR_Exit设计缺口，SVSR_SafetyRegion在Scene中添加安全区域。SimpleApplication类包含一系列Scene(目前设计为1个)模拟行人疏散过程。
 
 2. **container是克隆所需的库**，主要用于在未来实现各种的加速功能。设计接口有AgentPool, EntityPool, Pool。已实例化LinkListPool类，即装有不同/相同Entity的Pool。
-
-   //drawer待完善
 
 3. **drawer是用于实现场景可视化的层**。
 
