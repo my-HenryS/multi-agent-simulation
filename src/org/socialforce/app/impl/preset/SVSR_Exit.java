@@ -77,10 +77,12 @@ public class SVSR_Exit implements SceneValue<ClipperShape[]> {
                  && exit[i].getBounds().getStartPoint().getY() != exit[i].getBounds().getEndPoint().getY()) {
              Wall wall = (Wall) scene.getStaticEntities().selectTop((Point2D) exit[i].getReferencePoint());
                 ComplexBox2D complexBox2D = (ComplexBox2D) exit[i].clip((ClippableShape) wall.getShape());
-                Box2D[] boxes = new Box2D[2];
+                Box2D[] boxes;
                 boxes = complexBox2D.BreakDown();
-              wall.setShape(boxes[0]);
-                scene.getStaticEntities().add(new Wall(boxes[1]));
+                for (int j = 0;j<boxes.length;j++){
+                scene.getStaticEntities().add(model.createStatic(boxes[j],SimpleSocialForceModel.STATIC_TYPE_WALL));}
+                scene.getStaticEntities().remove(wall);
+
          }
          else /*do nothing*/;
     }
