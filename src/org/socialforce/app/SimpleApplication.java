@@ -11,10 +11,7 @@ import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.PathFinder;
 import org.socialforce.model.SocialForceModel;
-import org.socialforce.model.impl.Entity;
-import org.socialforce.model.impl.SafetyRegion;
-import org.socialforce.model.impl.StraightPath;
-import org.socialforce.model.impl.Wall;
+import org.socialforce.model.impl.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,7 +23,7 @@ import java.util.stream.Stream;
  */
 public class SimpleApplication implements SocialForceApplication {
     public SimpleApplication() {
-        singleScene = loader.readScene();
+        //singleScene = loader.readScene();
         singleScene.setApplication(this);
         SetUp();
     }
@@ -46,6 +43,14 @@ public class SimpleApplication implements SocialForceApplication {
         safetyRegion.apply(singleScene);
         safetyRegion.setValue(new SafetyRegion(new Box2D(28, 6, 4, 6)));
         safetyRegion.apply(singleScene);
+        singleScene.getStaticEntities().add(model.createStatic(new Box2D(0,0,1,6), SimpleSocialForceModel.STATIC_TYPE_WALL));
+        singleScene.getStaticEntities().add(model.createStatic(new Box2D(0,12,1,4), SimpleSocialForceModel.STATIC_TYPE_WALL));
+        singleScene.getStaticEntities().add(model.createStatic(new Box2D(1,0,10,1), SimpleSocialForceModel.STATIC_TYPE_WALL));
+        singleScene.getStaticEntities().add(model.createStatic(new Box2D(16,0,10,1), SimpleSocialForceModel.STATIC_TYPE_WALL));
+        singleScene.getStaticEntities().add(model.createStatic(new Box2D(1,15,10,1), SimpleSocialForceModel.STATIC_TYPE_WALL));
+        singleScene.getStaticEntities().add(model.createStatic(new Box2D(17,15,9,1), SimpleSocialForceModel.STATIC_TYPE_WALL));
+        singleScene.getStaticEntities().add(model.createStatic(new Box2D(25,1,1,6), SimpleSocialForceModel.STATIC_TYPE_WALL));
+        singleScene.getStaticEntities().add(model.createStatic(new Box2D(25,13,1,2), SimpleSocialForceModel.STATIC_TYPE_WALL));
         //为解决穿墙的问题把墙每隔一米切分成多个墙
         /*
         for (InteractiveEntity entity : singleScene.getStaticEntities()){

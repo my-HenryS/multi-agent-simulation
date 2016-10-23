@@ -72,21 +72,25 @@ public class SVSR_Exit implements SceneValue<ClipperShape[]> {
      */
     @Override
     public void apply(Scene scene) {
-        for (int i = 0;i < exit.length;i++){
+        /*for (int i = 0;i < exit.length;i++){
+            Iterable<InteractiveEntity> walls;
             if (exit[i].getBounds().getStartPoint().getX() != exit[i].getBounds().getEndPoint().getX()
                  && exit[i].getBounds().getStartPoint().getY() != exit[i].getBounds().getEndPoint().getY()) {
-             Wall wall = (Wall) scene.getStaticEntities().selectTop((Point2D) exit[i].getReferencePoint());
-                ComplexBox2D complexBox2D = (ComplexBox2D) exit[i].clip((ClippableShape) wall.getShape());
-                Box2D[] boxes;
-                boxes = complexBox2D.BreakDown();
-                for (int j = 0;j<boxes.length;j++){
-                scene.getStaticEntities().add(model.createStatic(boxes[j],SimpleSocialForceModel.STATIC_TYPE_WALL));}
-                scene.getStaticEntities().remove(wall);
+                    walls = scene.getStaticEntities().select((Point2D) exit[i].getReferencePoint());
+                for (InteractiveEntity wall : walls){
+                    ComplexBox2D complexBox2D = (ComplexBox2D) exit[i].clip((ClippableShape) wall.getShape());
+                    Box2D[] boxes;
+                    boxes = complexBox2D.BreakDown();
+                    for (int j = 0; j < boxes.length; j++) {
+                        scene.getStaticEntities().add(model.createStatic(boxes[j], SimpleSocialForceModel.STATIC_TYPE_WALL));
+                    }
+                //scene.getStaticEntities().add(model.createStatic(exit[i].clip((ClippableShape) wall.getShape()), SimpleSocialForceModel.STATIC_TYPE_WALL));
+                    scene.getStaticEntities().remove(wall);}
 
          }
          else /*do nothing*/;
     }
-    }
+
 
     @Override
     public int compareTo(SceneValue<ClipperShape[]> o) {
