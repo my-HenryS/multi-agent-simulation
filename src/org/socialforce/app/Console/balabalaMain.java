@@ -69,7 +69,7 @@ public class balabalaMain implements ApplicationListener {
     public void onStep(Scene scene) {
         //TODO: Add your output code HERE
         Circle2D circle = new Circle2D(new Point2D(0, 0), 100);
-        String[][] SquareRoom = new String[50][40];
+        String[][] SquareRoom = new String[100][80];
         int number = scene.getAllAgents().size();
         int time = scene.getCurrentSteps();
         if (!scene.getAllAgents().isEmpty()) {
@@ -78,18 +78,20 @@ public class balabalaMain implements ApplicationListener {
             System.out.println("场景中人数" + scene.getAllAgents().size());
             System.out.println("目前一号智能体的位置是" + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getX() +
                     "," + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getY());*/
-            if (time == 1) {
-                for (int i = -10; i < 40; i++) {
-                    for (int j = -10; j < 30; j++) {
+            if (time % 20 == 0) {
+                System.out.println();System.out.println();
+                System.out.println("目前时间" + time);System.out.println();System.out.println();
+                for (int i = -20; i < 80; i++) {
+                    for (int j = -20; j < 60; j++) {
                         //Point2D here = new Point2D(i, j);
-                        Circle2D here = new Circle2D(new Point2D(i,j),0.5);
+                        Circle2D here = new Circle2D(new Point2D(0.5*i,0.5*j),0.1);
                         int count = 0;
                         Iterable<Agent> agents = scene.getAllAgents().select(here);
                         for (InteractiveEntity agent : agents) {
                             count++;
                         }
                         if (count >= 1) {
-                            SquareRoom[i + 10][j + 10] = "@";
+                            SquareRoom[i + 20][j + 20] = "@";
                             continue;
                         }
                         count = 0;
@@ -98,15 +100,15 @@ public class balabalaMain implements ApplicationListener {
                             count++;
                         }
                         if (count >= 1) {
-                            SquareRoom[i + 10][j + 10] = "O";
+                            SquareRoom[i + 20][j + 20] = "O";
                             continue;
                         }
-                        SquareRoom[i + 10][j + 10] = "+";
+                        SquareRoom[i + 20][j + 20] = "+";
                     }
                 }
 
-                for (int i = 0; i < 40; i++) {
-                    for (int j = 0; j < 50; j++) {
+                for (int i = 0; i < 80; i++) {
+                    for (int j = 0; j < 100; j++) {
                         System.out.print(SquareRoom[j][i]);
                     }
                     System.out.println();
