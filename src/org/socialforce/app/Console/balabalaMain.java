@@ -7,6 +7,7 @@ import org.socialforce.app.SocialForceApplication;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
+import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.BaseAgent;
 
 /**
@@ -82,14 +83,25 @@ public class balabalaMain implements ApplicationListener {
                     for (int j = -10; j < 30; j++) {
                         //Point2D here = new Point2D(i, j);
                         Circle2D here = new Circle2D(new Point2D(i,j),0.5);
-                        if (scene.getAllAgents().select(here) != null) {
+                        int count = 0;
+                        Iterable<Agent> agents = scene.getAllAgents().select(here);
+                        for (InteractiveEntity agent : agents) {
+                            count++;
+                        }
+                        if (count >= 1) {
                             SquareRoom[i + 10][j + 10] = "@";
+                            continue;
                         }
-                        ;
-                        if (scene.getStaticEntities().select(here) != null) {
+                        count = 0;
+                        Iterable<InteractiveEntity> entities = scene.getStaticEntities().select(here);
+                        for (InteractiveEntity entity : entities) {
+                            count++;
+                        }
+                        if (count >= 1) {
                             SquareRoom[i + 10][j + 10] = "O";
+                            continue;
                         }
-                        ;
+                        SquareRoom[i + 10][j + 10] = "+";
                     }
                 }
 
