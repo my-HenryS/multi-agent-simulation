@@ -30,7 +30,7 @@ public class SimpleApplication implements SocialForceApplication {
 
     public void SetUp() {
         SVSR_Exit exit = new SVSR_Exit();
-        SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(2, 2, 1, new Box2D(3, 3, 20, 10));
+        SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(2, 2, 1, new Box2D(3, 3, 21, 12));
         SVSR_SafetyRegion safetyRegion = new SVSR_SafetyRegion();
         exit.setValue((new Box2D[]{new Box2D(-1, 5, 4, 6), new Box2D(10, -1, 6, 4), new Box2D(10, 14, 6, 4), new Box2D(24, 6, 4, 6)}));
         exit.apply(singleScene);
@@ -43,14 +43,14 @@ public class SimpleApplication implements SocialForceApplication {
         safetyRegion.apply(singleScene);
         safetyRegion.setValue(new SafetyRegion(new Box2D(28, 6, 4, 6)));
         safetyRegion.apply(singleScene);
-        singleScene.getStaticEntities().add(model.createStatic(new Box2D(0,0,1,6), SimpleSocialForceModel.STATIC_TYPE_WALL));
-        singleScene.getStaticEntities().add(model.createStatic(new Box2D(0,12,1,4), SimpleSocialForceModel.STATIC_TYPE_WALL));
-        singleScene.getStaticEntities().add(model.createStatic(new Box2D(1,0,10,1), SimpleSocialForceModel.STATIC_TYPE_WALL));
-        singleScene.getStaticEntities().add(model.createStatic(new Box2D(16,0,10,1), SimpleSocialForceModel.STATIC_TYPE_WALL));
+        singleScene.getStaticEntities().add(model.createStatic(new Box2D(0,0,1,7), SimpleSocialForceModel.STATIC_TYPE_WALL));
+        singleScene.getStaticEntities().add(model.createStatic(new Box2D(0,11,1,5), SimpleSocialForceModel.STATIC_TYPE_WALL));
+        singleScene.getStaticEntities().add(model.createStatic(new Box2D(1,0,11,1), SimpleSocialForceModel.STATIC_TYPE_WALL));
+        singleScene.getStaticEntities().add(model.createStatic(new Box2D(15,0,11,1), SimpleSocialForceModel.STATIC_TYPE_WALL));
         singleScene.getStaticEntities().add(model.createStatic(new Box2D(1,15,10,1), SimpleSocialForceModel.STATIC_TYPE_WALL));
-        singleScene.getStaticEntities().add(model.createStatic(new Box2D(17,15,9,1), SimpleSocialForceModel.STATIC_TYPE_WALL));
-        singleScene.getStaticEntities().add(model.createStatic(new Box2D(25,1,1,6), SimpleSocialForceModel.STATIC_TYPE_WALL));
-        singleScene.getStaticEntities().add(model.createStatic(new Box2D(25,13,1,2), SimpleSocialForceModel.STATIC_TYPE_WALL));
+        singleScene.getStaticEntities().add(model.createStatic(new Box2D(15,15,10,1), SimpleSocialForceModel.STATIC_TYPE_WALL));
+        singleScene.getStaticEntities().add(model.createStatic(new Box2D(25,1,1,7), SimpleSocialForceModel.STATIC_TYPE_WALL));
+        singleScene.getStaticEntities().add(model.createStatic(new Box2D(25,12,1,4), SimpleSocialForceModel.STATIC_TYPE_WALL));
         //为解决穿墙的问题把墙每隔一米切分成多个墙
         /*
         for (InteractiveEntity entity : singleScene.getStaticEntities()){
