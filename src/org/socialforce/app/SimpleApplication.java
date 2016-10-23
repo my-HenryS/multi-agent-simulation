@@ -5,13 +5,18 @@ import org.socialforce.app.impl.preset.SVSR_Exit;
 import org.socialforce.app.impl.preset.SVSR_SafetyRegion;
 import org.socialforce.app.impl.preset.SquareRoomLoader;
 import org.socialforce.geom.impl.Box2D;
+import org.socialforce.geom.impl.ComplexBox2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
+import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.PathFinder;
 import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.impl.Entity;
 import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.model.impl.StraightPath;
+import org.socialforce.model.impl.Wall;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
@@ -41,6 +46,40 @@ public class SimpleApplication implements SocialForceApplication {
         safetyRegion.apply(singleScene);
         safetyRegion.setValue(new SafetyRegion(new Box2D(28, 6, 4, 6)));
         safetyRegion.apply(singleScene);
+        //为解决穿墙的问题把墙每隔一米切分成多个墙
+        for (InteractiveEntity entity : singleScene.getStaticEntities()){
+            if (entity instanceof ComplexBox2D){
+                Box2D[] temp = ((ComplexBox2D) entity).BreakDown();
+                Box2D[] temp1;
+                List<Box2D> list = new ArrayList<Box2D>();
+                double Xmin = ((ComplexBox2D) entity).getBounds().getStartPoint().getX();
+                double Ymin = ((ComplexBox2D) entity).getBounds().getStartPoint().getY();
+                double Xmax = ((ComplexBox2D) entity).getBounds().getEndPoint().getX();
+                double Ymax = ((ComplexBox2D) entity).getBounds().getEndPoint().getY();
+                double min = Xmin,max = Xmax;
+                int flag =0;
+                if (Ymax - Ymin > Xmax - Xmin){min = Ymin;max = Ymax;flag = 1;}
+                for (double a = min;a<max;a++){
+                    for (int b = 0;b < temp.length;b++) {
+                        if (flag == 0) {
+                            if (temp[b].contains(new Point2D(a, Ymax)) && temp[b].contains(new Point2D(a + 1, Ymax))) {
+                                list.add(new Box2D(new Point2D(a, Ymin), new Point2D(a + 1, Ymax)));
+                            }
+                        }
+                        if (flag == 1) {
+                            if (temp[b].contains(new Point2D(Xmax, a)) && temp[b].contains(new Point2D(Xmax, a+1))) {
+                                list.add(new Box2D(new Point2D(Xmin,a ), new Point2D(Xmax, a+1)));
+                            }
+                        }
+                    }
+                }
+                temp1 = list.toArray(new Box2D[1]);
+                for (int i = 0; i < temp1.length;i++){
+                    singleScene.getStaticEntities().add(new Wall(temp1[i]));
+                }
+                singleScene.getStaticEntities().remove(entity);
+            }
+        }
     }
 
     /**
