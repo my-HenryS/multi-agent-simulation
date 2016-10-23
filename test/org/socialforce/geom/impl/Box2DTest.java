@@ -64,9 +64,12 @@ public class Box2DTest {
         Box2D x = new Box2D(1,1,2,2);
         Box2D y = new Box2D(-1,-1,3,3);
         Box2D z = new Box2D(10,10,2,2);
+        Box2D sad = new Box2D(new Point2D(0,0),new Point2D(1,5));
+        Box2D so_sad = new Box2D(new Point2D(2.5,2.5),new Point2D(3.48,3.48));
         assertEquals(true,testBox.hits(x));
         assertEquals(true,testBox.hits(y));
         assertEquals(false,testBox.hits(z));
+        assertFalse(sad.hits(so_sad));
     }
 
     @Test

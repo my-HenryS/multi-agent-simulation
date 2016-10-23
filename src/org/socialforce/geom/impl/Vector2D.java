@@ -301,7 +301,7 @@ public class Vector2D implements Vector {
     public Vector getRefVector(){
         Vector ref;
         if (values[0] == 0 && values[1] == 0){
-            throw new IllegalArgumentException("零向量不存在特征向量");
+            return new Vector2D(0,0);
         }
         else
         ref = new Vector2D(values[0],values[1]);

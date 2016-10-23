@@ -10,6 +10,7 @@ import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.ComplexBox2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.SimpleSocialForceModel;
 import org.socialforce.model.impl.Wall;
 
 /**
@@ -20,6 +21,7 @@ import org.socialforce.model.impl.Wall;
 public class SVSR_Exit implements SceneValue<ClipperShape[]> {
     protected ClipperShape[] exit;
     protected String name;
+    protected SimpleSocialForceModel model = new SimpleSocialForceModel();
 
     /**
      * 获取所关联的实体名称。

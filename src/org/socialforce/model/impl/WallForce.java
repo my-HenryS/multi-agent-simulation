@@ -39,7 +39,8 @@ public class WallForce implements ForceRegulation {
      */
     @Override
     public Force getForce(InteractiveEntity source, InteractiveEntity target) {
-        if (source.getShape().hits(target.getShape().getBounds())){
+        if (source.getShape().hits(target.getShape().getBounds())
+                && ((Box2D)source.getShape()).intersect(target.getShape().getBounds()).getReferencePoint() != null){
             Point2D ForcePoint = (Point2D) ((Box2D)source.getShape()).intersect(target.getShape().getBounds()).getReferencePoint();
             double x = ForcePoint.getX() - target.getShape().getReferencePoint().getX();
             double y = ForcePoint.getY() - target.getShape().getReferencePoint().getY();
