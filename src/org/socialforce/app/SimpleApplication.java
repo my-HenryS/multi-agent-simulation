@@ -107,7 +107,7 @@ public class SimpleApplication implements SocialForceApplication {
             }
             switch ((int) goal.getY()) {
                 case -3:
-                    temp = new Point2D(13, 2);
+                    temp = new Point2D(13, 1);
                     break;
                 case 8:
                     temp = new Point2D(1, 8);
@@ -119,7 +119,7 @@ public class SimpleApplication implements SocialForceApplication {
                     temp = new Point2D(23, 9);
                     break;
             }
-            agent.setPath(new StraightPath(agent.getShape().getReferencePoint(), goal));
+            agent.setPath(new StraightPath(agent.getShape().getReferencePoint(),temp, goal));
         }
 
         while (!singleScene.getAllAgents().isEmpty()) {
