@@ -57,10 +57,12 @@ public class SceneBoard extends JPanel {
         super.paintComponent(g);
         if(scene != null) {
             SceneDrawer sc = (SceneDrawer) scene.getDrawer();
-            sc.setCtrlHeight(this.getHeight());
-            sc.setCtrlWidth(this.getWidth());
-            sc.getDevice().setProxy((Graphics2D) g);
-            sc.draw(scene);
+            /*synchronized (sc) {
+                sc.setCtrlHeight(this.getHeight());
+                sc.setCtrlWidth(this.getWidth());
+                sc.getDevice().setProxy((Graphics2D) g);
+                sc.draw(scene);
+            }*/
         }
     }
 }
