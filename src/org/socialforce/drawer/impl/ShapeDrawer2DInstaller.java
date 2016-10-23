@@ -26,7 +26,6 @@ public class ShapeDrawer2DInstaller implements DrawerInstaller {
         registerDrawer(new SolidBox2DDrawer(graphics2D),Box2D.class);
         registerDrawer(new SolidCircle2DDrawer(graphics2D),Circle2D.class);
         registerDrawer(new SolidComplexBox2DDrawer(graphics2D), ComplexBox2D.class);
-        //FIXME: add complex box drawing support.
    }
 
     Map<Class<? extends Drawable>,Drawer> drawerMap = new HashMap<>(1000);
