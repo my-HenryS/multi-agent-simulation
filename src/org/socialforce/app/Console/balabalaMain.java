@@ -67,15 +67,39 @@ public class balabalaMain implements ApplicationListener {
     @Override
     public void onStep(Scene scene) {
         //TODO: Add your output code HERE
-        Circle2D circle = new Circle2D(new Point2D(0,0),100);
+        Circle2D circle = new Circle2D(new Point2D(0, 0), 100);
+        String[][] SquareRoom = new String[50][40];
         int number = scene.getAllAgents().size();
         int time = scene.getCurrentSteps();
         if (!scene.getAllAgents().isEmpty()) {
-            if(time%10 ==0){
+            /*if(time%10 ==0){
             System.out.println("目前时间" + time);
             System.out.println("场景中人数" + scene.getAllAgents().size());
             System.out.println("目前一号智能体的位置是" + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getX() +
-                    "," + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getY());
+                    "," + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getY());*/
+            if (time == 1) {
+                for (int i = -10; i < 40; i++) {
+                    for (int j = -10; j < 30; j++) {
+                        //Point2D here = new Point2D(i, j);
+                        Circle2D here = new Circle2D(new Point2D(i,j),0.5);
+                        if (scene.getAllAgents().select(here) != null) {
+                            SquareRoom[i + 10][j + 10] = "@";
+                        }
+                        ;
+                        if (scene.getStaticEntities().select(here) != null) {
+                            SquareRoom[i + 10][j + 10] = "O";
+                        }
+                        ;
+                    }
+                }
+
+                for (int i = 0; i < 40; i++) {
+                    for (int j = 0; j < 50; j++) {
+                        System.out.print(SquareRoom[j][i]);
+                    }
+                    System.out.println();
+                }
+
             }
         }
     }
