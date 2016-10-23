@@ -5,6 +5,7 @@ import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
+import org.socialforce.geom.impl.ComplexBox2D;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class ShapeDrawer2DInstaller implements DrawerInstaller {
         this.graphics2D = graphics2D;
         registerDrawer(new SolidBox2DDrawer(graphics2D),Box2D.class);
         registerDrawer(new SolidCircle2DDrawer(graphics2D),Circle2D.class);
+        registerDrawer(new SolidComplexBox2DDrawer(graphics2D), ComplexBox2D.class);
         //FIXME: add complex box drawing support.
    }
 

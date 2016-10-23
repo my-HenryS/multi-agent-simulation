@@ -1,6 +1,8 @@
 package org.socialforce.drawer.impl;
 
+import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.ComplexBox2D;
+import org.socialforce.model.impl.BodyForce;
 
 import java.awt.*;
 
@@ -24,6 +26,9 @@ public class SolidComplexBox2DDrawer extends AwtDrawer2D<ComplexBox2D> {
      */
     @Override
     public void renderShape(Graphics2D g, ComplexBox2D pattern) {
-        pattern.getBoxDictionary();
+        Box2D[] box2Ds = pattern.BreakDown();
+        for(Box2D box2D : box2Ds) {
+            drawer.draw(box2D);
+        }
     }
 }
