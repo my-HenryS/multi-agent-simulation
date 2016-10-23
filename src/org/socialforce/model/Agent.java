@@ -28,7 +28,7 @@ public interface Agent extends InteractiveEntity, Moveable, Blockable {
      * @return 一个表示该视域范围的形状
      * @see Shape
      */
-    Shape getView();
+    DistanceShape getView();
     
     /**
      * 获取一个agent的期望速度。

@@ -85,7 +85,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     // FIXME: 2016/9/3 it should be DistanceShape to support pool selection.
-    public Shape getView() {
+    public DistanceShape getView() {
         return view;
     }
 

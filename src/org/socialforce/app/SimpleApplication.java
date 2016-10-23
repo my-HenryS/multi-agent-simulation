@@ -119,7 +119,7 @@ public class SimpleApplication implements SocialForceApplication {
                     temp = new Point2D(23, 9);
                     break;
             }
-            agent.setPath(new StraightPath(agent.getShape().getReferencePoint(),temp, goal));
+            agent.setPath(new StraightPath(agent.getShape().getReferencePoint(), goal));
         }
 
         while (!singleScene.getAllAgents().isEmpty()) {
