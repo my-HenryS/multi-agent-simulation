@@ -49,7 +49,7 @@ public class BodyForce implements ForceRegulation{
         if (distance < 0){g = argumentX;}
         bodyForce = A*Math.exp(-distance/B) + k1*g*distance;
         slidingForce = k2*g*distance*t.dot(tempVector);
-        n.scale(bodyForce);
+        n.scale(-bodyForce);
         t.scale(slidingForce);
         n.add(t);
         n.get(temp);
