@@ -84,7 +84,7 @@
                     </constraints>
                     <properties>
                       <editable value="false"/>
-                      <text value=""/>
+                      <text value="SquareRoom"/>
                     </properties>
                   </component>
                   <component id="e9dfa" class="javax.swing.JButton" binding="importFromFileButton" default-binding="true">
@@ -95,6 +95,7 @@
                     </constraints>
                     <properties>
                       <text value="Import From File..."/>
+                      <visible value="false"/>
                     </properties>
                   </component>
                 </children>
@@ -150,6 +151,7 @@
                     <properties>
                       <font size="24"/>
                       <text value="Pause"/>
+                      <visible value="false"/>
                     </properties>
                   </component>
                   <component id="f8dd8" class="javax.swing.JButton" binding="stopButton">
@@ -162,6 +164,7 @@
                     <properties>
                       <font size="24"/>
                       <text value="Stop"/>
+                      <visible value="false"/>
                     </properties>
                   </component>
                 </children>
@@ -192,7 +195,9 @@
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
-                    <properties/>
+                    <properties>
+                      <visible value="false"/>
+                    </properties>
                     <border type="none" title="Statics"/>
                     <children>
                       <grid id="ae963" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -322,6 +327,7 @@
                       </grid>
                     </constraints>
                     <properties>
+                      <editable value="false"/>
                       <text value="0.1"/>
                     </properties>
                   </component>
