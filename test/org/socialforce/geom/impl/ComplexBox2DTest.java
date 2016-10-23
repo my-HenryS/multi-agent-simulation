@@ -75,4 +75,13 @@ public class ComplexBox2DTest {
         tempBox = (ComplexBox2D) complexBox.clone();
         assertEquals(tempBox,complexBox);
     }
+
+    @Test
+    public void BreakDownTest(){
+        Box2D[] Breaked = complexBox.BreakDown();
+        //assertEquals(new Box2D[]{new Box2D(new Point2D(-2,-2),new Point2D(-1,3)),new Box2D(0,-2,3,3)},complexBox.BreakDown());
+        assertEquals(new Box2D(new Point2D(-2,-2),new Point2D(-1,3)),Breaked[0]);
+        assertEquals(new Box2D(0,-2,3,5),Breaked[1]);
+    }
+
 }
