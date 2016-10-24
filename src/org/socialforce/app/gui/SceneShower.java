@@ -7,6 +7,7 @@ import org.socialforce.drawer.impl.SceneDrawerInstaller;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * Created by Ledenel on 2016/8/23.
@@ -44,6 +45,14 @@ public class SceneShower {
 
     private SceneBoard board;
 
+    public SceneBoard getBoard() {
+        return board;
+    }
+
+    public void setBoard(SceneBoard board) {
+        this.board = board;
+    }
+
     /**
      *
      */
@@ -54,9 +63,9 @@ public class SceneShower {
         // TODO: place custom component creation code here
         board = new SceneBoard();
         showPanel = board;
-
     }
 
+    BufferedImage image;
 
     public Scene getScene() {
         return scene;
@@ -64,8 +73,10 @@ public class SceneShower {
 
     public void setScene(Scene scene) {
         this.scene = scene;
-        drawerInstaller = new SceneDrawerInstaller((Graphics2D) showPanel.getGraphics(), this.showPanel.getWidth(), this.showPanel.getHeight());
+        image = new BufferedImage(1024,1024, BufferedImage.TYPE_INT_ARGB);
+        drawerInstaller = new SceneDrawerInstaller((Graphics2D) image.getGraphics(), image.getWidth(), image.getHeight());
         drawerInstaller.addDrawerSupport(scene);
+        board.setImage(image);
         board.setScene(scene);
     }
 

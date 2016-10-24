@@ -128,5 +128,6 @@ public class SimulationPanelMain implements ApplicationListener {
     @Override
     public void onStep(Scene scene) {
         scene.getDrawer().draw(scene);
+        this.shower1.getBoard().refresh();
     }
 }

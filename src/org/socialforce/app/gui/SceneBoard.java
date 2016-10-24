@@ -6,6 +6,7 @@ import org.socialforce.drawer.impl.SceneDrawer;
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * Created by Ledenel on 2016/10/23.
@@ -51,6 +52,21 @@ public class SceneBoard extends JPanel {
 
     Scene scene;
 
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
+
+    BufferedImage image;
+
+    public void refresh() {
+        if(image != null) {
+            this.getGraphics().drawImage(image,0,0,null);
+        }
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
