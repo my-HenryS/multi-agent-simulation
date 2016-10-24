@@ -78,5 +78,6 @@ public class SceneBoard extends JPanel {
                 sc.setCtrlWidth(this.getWidth());
             }
         }
+        refresh();
     }
 }
