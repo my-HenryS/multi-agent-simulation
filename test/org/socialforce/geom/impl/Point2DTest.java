@@ -10,11 +10,12 @@ import static org.junit.Assert.*;
  * Created by Ledenel on 2016/8/8.
  */
 public class Point2DTest {
-    Point2D x,y;
+    Point2D x,y,z;
     @Before
     public void setUp() throws Exception {
         x = new Point2D(0,0);
         y = new Point2D(3,4);
+        z = new Point2D(0,0);
     }
 
     @Test
@@ -38,6 +39,7 @@ public class Point2DTest {
     public void testClone() throws Exception {
         Point cloned = x.clone();
         assertFalse(x == cloned);
+        assertTrue( x.equals(z));
         assertEquals(x,cloned);
         cloned.set(new double[]{0.1,0});
         assertNotEquals(x,cloned);
