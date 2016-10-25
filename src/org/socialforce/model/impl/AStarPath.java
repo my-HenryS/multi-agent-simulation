@@ -62,4 +62,12 @@ public class AStarPath implements Path {
     public boolean done() {
         return reached >= goals.length;
     }
+
+    public String toString(){
+        String string = "路径为";
+        for(int i =0; i<goals.length; i++){
+            string += goals[i].toString()+"， ";
+        }
+        return string;
+    }
 }
