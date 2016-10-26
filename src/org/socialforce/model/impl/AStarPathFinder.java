@@ -27,14 +27,15 @@ public class AStarPathFinder implements PathFinder {
     private double map[][];
     double distance[][];
     Point previous[][];
+    Point start_point;
+    Point goal;
+    Agent agent;
+    Scene scene;
 
-    public AStarPathFinder(){
-
-    }
     /**
      * assign map directly
      */
-    public AStarPathFinder(double[][] map){
+    public AStarPathFinder(double[][] map, Agent agent, Point goal){
         this.map = map;
         distance = new double[map.length][map[0].length];
         previous = new Point[map.length][map[0].length];
@@ -44,17 +45,19 @@ public class AStarPathFinder implements PathFinder {
                 previous[i][j] = temp;
             }
         }
+        this.goal = goal;
+        this.agent = agent;
+        start_point = new Point2D((int) agent.getShape().getReferencePoint().getX(), (int) agent.getShape().getReferencePoint().getY());
     }
 
-    @Override
-    public Path plan(Scene targetScene, Agent agent, Point goal) {
-        Point start_point = new Point2D((int) agent.getShape().getReferencePoint().getX(), (int) agent.getShape().getReferencePoint().getY());
-        EntityPool all_blocks = targetScene.getStaticEntities();
-        for (InteractiveEntity entity : all_blocks) {
-            assert (!entity.getShape().contains(start_point));
-
-        }
-        map = map_initiate(targetScene, agent, goal);
+    /**
+     * assign map with scene, agent and goal
+     */
+    public AStarPathFinder(Scene targetScene, Agent agent, Point goal){
+        this.goal = goal;
+        this.agent = agent;
+        this.scene = targetScene;
+        map = map_initiate();
         distance = new double[map.length][map[0].length];
         previous = new Point[map.length][map[0].length];
         for(int i =0; i<map.length; i++){
@@ -63,15 +66,25 @@ public class AStarPathFinder implements PathFinder {
                 previous[i][j] = temp;
             }
         }
-        return plan_for(start_point, goal);
+        start_point = new Point2D((int) agent.getShape().getReferencePoint().getX(), (int) agent.getShape().getReferencePoint().getY());
+        EntityPool all_blocks = targetScene.getStaticEntities();
+        for (InteractiveEntity entity : all_blocks) {
+            assert (!entity.getShape().contains(start_point));
+
+        }
     }
 
-    public double[][] map_initiate(Scene targetScene, Agent agent, Point goal) {
-        double x_range = targetScene.getBounds().getEndPoint().getX() - targetScene.getBounds().getStartPoint().getX(),
-                y_range = targetScene.getBounds().getEndPoint().getY() - targetScene.getBounds().getStartPoint().getY();
+    public Path plan(Scene targetScene, Agent agent, Point goal){             //接口有待讨论 先做一个假实现
+        return null;
+    }
+
+
+    public double[][] map_initiate() {
+        double x_range = scene.getBounds().getEndPoint().getX() - scene.getBounds().getStartPoint().getX(),
+                y_range = scene.getBounds().getEndPoint().getY() - scene.getBounds().getStartPoint().getY();
         double[][] map = new double[(int) x_range / min_div][(int) y_range / min_div];
-        EntityPool all_blocks = targetScene.getStaticEntities();
-        Shape agent_shape = agent.getShape();
+        EntityPool all_blocks = scene.getStaticEntities();
+        Shape agent_shape = agent.getShape().clone();
         for (int i = 0; i < (int) x_range / min_div; i++) {
             for (int j = 0; j < (int) y_range / min_div; j++) {
                 map[i][j] = 0;
@@ -91,7 +104,7 @@ public class AStarPathFinder implements PathFinder {
     }
 
 
-    public AStarPath plan_for(Point start_point, Point goal) {
+    public Path plan_for() {
         LinkedBlockingQueue<Point> points = new LinkedBlockingQueue<Point>();
         points.offer(start_point);
         Point curr_point = points.poll();
