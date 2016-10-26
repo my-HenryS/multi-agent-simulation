@@ -40,14 +40,18 @@ public class Point2D extends Vector2D implements Point {
         return Math.sqrt(dx*dx+dy*dy);
     }
 
-    public void moveTo(double x, double y) {
+    @Override
+    public Point moveTo(double x, double y) {
         this.values[0] = x;
         this.values[1] = y;
+        return this;
     }
 
-    public void moveBy(double x, double y) {
+    @Override
+    public Point moveBy(double x, double y) {
         this.values[0] += x;
         this.values[1] += y;
+        return this;
     }
 
 
