@@ -18,6 +18,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by sunjh1999 on 2016/10/21.
+ * 目前不支持相对坐标 需要保证创建的scene的起始点为（0，0）
+ * 预计将在今后两天解决
+ * 测试基本补充完全
  */
 public class AStarPathFinder implements PathFinder {
     static final int min_div = 1;
