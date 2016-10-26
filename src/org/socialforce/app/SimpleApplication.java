@@ -7,10 +7,7 @@ import org.socialforce.app.impl.preset.SquareRoomLoader;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.ComplexBox2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.Agent;
-import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.PathFinder;
-import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.*;
 import org.socialforce.model.impl.*;
 
 import java.util.ArrayList;
@@ -30,7 +27,7 @@ public class SimpleApplication implements SocialForceApplication {
 
     public void SetUp() {
         SVSR_Exit exit = new SVSR_Exit();
-        SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(2, 2, 1, new Box2D(3, 3, 21, 12));
+        SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(2, 2, 1, new Box2D(3, 3, 22, 12));
         SVSR_SafetyRegion safetyRegion = new SVSR_SafetyRegion();
         exit.setValue((new Box2D[]{new Box2D(-1, 5, 4, 6), new Box2D(10, -1, 6, 4), new Box2D(10, 14, 6, 4), new Box2D(24, 6, 4, 6)}));
         exit.apply(singleScene);
@@ -126,7 +123,9 @@ public class SimpleApplication implements SocialForceApplication {
                     temp = new Point2D(23, 9);
                     break;
             }
-            agent.setPath(new StraightPath(agent.getShape().getReferencePoint(), goal));
+            //agent.setPath(new StraightPath(agent.getShape().getReferencePoint(), goal));
+            //System.out.println(agent.getPath().toString());
+            agent.setPath(new AStarPathFinder(singleScene, agent, goal).plan_for());
         }
 
         while (!singleScene.getAllAgents().isEmpty()) {
