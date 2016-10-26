@@ -18,8 +18,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by sunjh1999 on 2016/10/21.
- * 目前不支持相对坐标 需要保证创建的scene的起始点为（0，0）
- * 预计将在今后两天解决
  * 测试基本补充完全
  */
 public class AStarPathFinder implements PathFinder {
@@ -31,6 +29,8 @@ public class AStarPathFinder implements PathFinder {
     Point goal;
     Agent agent;
     Scene scene;
+    double delta_x = 0;        //偏移量x
+    double delta_y = 0;        //偏移量y
 
     /**
      * assign map directly
@@ -57,6 +57,15 @@ public class AStarPathFinder implements PathFinder {
         this.goal = goal;
         this.agent = agent;
         this.scene = targetScene;
+        delta_x = scene.getBounds().getStartPoint().getX();
+        delta_y = scene.getBounds().getStartPoint().getY();
+        EntityPool all_blocks = scene.getStaticEntities();
+        start_point = new Point2D((int) agent.getShape().getReferencePoint().getX(), (int) agent.getShape().getReferencePoint().getY());
+        for (InteractiveEntity entity : all_blocks) {
+            entity.getShape().moveTo(entity.getShape().getReferencePoint().moveBy(-delta_x, -delta_y));
+            assert (!entity.getShape().contains(start_point));
+
+        }
         map = map_initiate();
         distance = new double[map.length][map[0].length];
         previous = new Point[map.length][map[0].length];
@@ -66,18 +75,14 @@ public class AStarPathFinder implements PathFinder {
                 previous[i][j] = temp;
             }
         }
+        goal.moveBy(-delta_x, -delta_y);
+        agent.getShape().getReferencePoint().moveBy(-delta_x, -delta_y);
         start_point = new Point2D((int) agent.getShape().getReferencePoint().getX(), (int) agent.getShape().getReferencePoint().getY());
-        EntityPool all_blocks = targetScene.getStaticEntities();
-        for (InteractiveEntity entity : all_blocks) {
-            assert (!entity.getShape().contains(start_point));
-
-        }
     }
 
     public Path plan(Scene targetScene, Agent agent, Point goal){             //接口有待讨论 先做一个假实现
         return null;
     }
-
 
     public double[][] map_initiate() {
         double x_range = scene.getBounds().getEndPoint().getX() - scene.getBounds().getStartPoint().getX(),
@@ -91,11 +96,8 @@ public class AStarPathFinder implements PathFinder {
                 for (InteractiveEntity entity : all_blocks) {
                     agent_shape.moveTo(new Point2D(i, j));
                     //assert( == entity.getShape().getClass());
-                    if (agent_shape.hits((Box) entity.getShape())) {
+                    if (!(entity instanceof SafetyRegion) && agent_shape.hits((Box) entity.getShape())) {
                         map[i][j] = 1;
-                    }
-                    else {
-                        map[i][j] = 0;        //暂定1为有障碍物占领
                     }
                 }
             }
@@ -115,7 +117,7 @@ public class AStarPathFinder implements PathFinder {
         }
 
         Stack<Point> point_stack = new Stack<Point>();
-        curr_point = goal;
+        curr_point = goal.clone();
         point_stack.push(curr_point);
         while(!curr_point.equals(start_point)){
             curr_point = previous[(int)curr_point.getX()][(int)curr_point.getY()];
@@ -123,9 +125,10 @@ public class AStarPathFinder implements PathFinder {
         }
         Point[] goals = new Point[point_stack.size()];
         for(int i = 0; i<goals.length; i++){
-            goals[i] = point_stack.pop();
+            goals[i] = point_stack.pop().moveBy(delta_x, delta_y);
         }
         AStarPath path = new AStarPath(goals);
+        if(scene!=null) send_back();
         return path;
     }
 
@@ -151,5 +154,14 @@ public class AStarPathFinder implements PathFinder {
 
     public boolean available(int x, int y){
         return x>=0 && y>=0 && x<map.length && y<map[0].length;
+    }
+
+    public void send_back(){
+        EntityPool all_blocks = scene.getStaticEntities();
+        for (InteractiveEntity entity : all_blocks) {
+            entity.getShape().moveTo(entity.getShape().getReferencePoint().moveBy(delta_x, delta_y));
+        }
+        goal.moveBy(delta_x, delta_y);
+        agent.getShape().getReferencePoint().moveBy(delta_x, delta_y);
     }
 }
