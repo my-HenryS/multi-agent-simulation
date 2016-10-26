@@ -45,7 +45,7 @@ public class Point2D extends Vector2D implements Point {
         this.values[1] = y;
     }
 
-    public void moveB(double x, double y) {
+    public void moveBy(double x, double y) {
         this.values[0] += x;
         this.values[1] += y;
     }
