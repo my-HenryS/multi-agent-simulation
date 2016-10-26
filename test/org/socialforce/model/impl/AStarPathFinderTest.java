@@ -38,7 +38,8 @@ public class AStarPathFinderTest {
 
     @Test
     public void testMap() throws Exception {
-        aStarPathFinder = new AStarPathFinder(new double[][]{{0, 0, 0, 0, 0}, {0, 1, 0, 0, 0}, {0, 0, 0, 1, 0},{0, 0, 1, 1, 0}, {0, 0, 0, 0, 0}},  new BaseAgent(agent_shape) , goal);
+        double[][]map=new double[][]{{0, 0, 0, 0, 0}, {0, 1, 0, 0, 0}, {0, 0, 0, 1, 0},{0, 0, 1, 1, 0}, {0, 0, 0, 0, 0}};
+        aStarPathFinder = new AStarPathFinder(map,  new BaseAgent(agent_shape) , goal);
         Path path = aStarPathFinder.plan_for();
         System.out.println(path.toString());
     }
