@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
  * Created by sunjh1999 on 2016/10/23.
  */
 public class AStarPathFinderTest {
-    AStarPathFinder aStarPathFinder = new AStarPathFinder(new double[][]{{0, 0, 0}, {0, 1, 0}, {0, 0, 0}});
+    AStarPathFinder aStarPathFinder;
     Point start_point;
     Point goal;
     Circle2D agent_shape = new Circle2D();
@@ -37,20 +37,19 @@ public class AStarPathFinderTest {
     }
 
     @Test
-    public void plan_for() throws Exception {
-        AStarPath path = aStarPathFinder.plan_for(start_point, goal);
+    public void testMap() throws Exception {
+        aStarPathFinder = new AStarPathFinder(new double[][]{{0, 0, 0, 0, 0}, {0, 1, 0, 0, 0}, {0, 0, 0, 1, 0},{0, 0, 1, 1, 0}, {0, 0, 0, 0, 0}},  new BaseAgent(agent_shape) , goal);
+        Path path = aStarPathFinder.plan_for();
         System.out.println(path.toString());
     }
 
     @Test
-    public void plan() throws Exception {
+    public void testScene() throws Exception {
         SquareRoomLoader square = new SquareRoomLoader();
         Scene scene = square.readScene();
-        Path path = aStarPathFinder.plan(scene, new BaseAgent(agent_shape) , goal);
+        aStarPathFinder = new AStarPathFinder(scene, new BaseAgent(agent_shape), goal);
+        Path path = aStarPathFinder.plan_for();
         System.out.println(path.toString());
-
     }
-
-
 
 }
