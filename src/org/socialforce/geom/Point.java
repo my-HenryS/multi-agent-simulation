@@ -33,4 +33,8 @@ public interface Point extends Vector {
      * @return 这个点的副本.
      */
     Point clone();
+
+    Point moveTo(double x, double y);
+
+    Point moveBy(double x, double y);
 }
