@@ -184,4 +184,38 @@ public class Rectangle2D implements Shape {
     public void spin(double angle){
         this.angle = this.angle +angle;
     }
+
+    public double getAngle(){
+        return angle;
+    }
+
+    public double[] getScale(){
+        return new double[]{length,weidth};
+    }
+    @Override
+    public boolean equals(Object obj){
+        if (obj instanceof Rectangle2D){
+            Point2D point1,point2,point3,point4,objPoint1,objPoint2,objPoint3,objPoint4;
+            point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
+            point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
+            point3 = new Point2D(center.getX()+length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
+            point4 = new Point2D(center.getX()-length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
+            Point2D[] point = new Point2D[]{point1,point2,point3,point4};
+            objPoint1 = new Point2D(((Rectangle2D) obj).center.getX()-((Rectangle2D) obj).length*Math.cos(((Rectangle2D) obj).angle)/2+((Rectangle2D) obj).weidth*Math.sin(((Rectangle2D) obj).angle)/2,((Rectangle2D) obj).center.getY()-((Rectangle2D) obj).length*Math.sin(((Rectangle2D) obj).angle)/2-((Rectangle2D) obj).weidth*Math.cos(((Rectangle2D) obj).angle)/2);
+            objPoint2 = new Point2D(((Rectangle2D) obj).center.getX()+((Rectangle2D) obj).length*Math.cos(((Rectangle2D) obj).angle)/2+((Rectangle2D) obj).weidth*Math.sin(((Rectangle2D) obj).angle)/2,((Rectangle2D) obj).center.getY()+((Rectangle2D) obj).length*Math.sin(((Rectangle2D) obj).angle)/2-((Rectangle2D) obj).weidth*Math.cos(((Rectangle2D) obj).angle)/2);
+            objPoint3 = new Point2D(((Rectangle2D) obj).center.getX()+((Rectangle2D) obj).length*Math.cos(((Rectangle2D) obj).angle)/2-((Rectangle2D) obj).weidth*Math.sin(((Rectangle2D) obj).angle)/2,((Rectangle2D) obj).center.getY()+((Rectangle2D) obj).length*Math.sin(((Rectangle2D) obj).angle)/2+((Rectangle2D) obj).weidth*Math.cos(((Rectangle2D) obj).angle)/2);
+            objPoint4 = new Point2D(((Rectangle2D) obj).center.getX()-((Rectangle2D) obj).length*Math.cos(((Rectangle2D) obj).angle)/2-((Rectangle2D) obj).weidth*Math.sin(((Rectangle2D) obj).angle)/2,((Rectangle2D) obj).center.getY()-((Rectangle2D) obj).length*Math.sin(((Rectangle2D) obj).angle)/2+((Rectangle2D) obj).weidth*Math.cos(((Rectangle2D) obj).angle)/2);
+            Point2D[] objPoint = new Point2D[]{objPoint1,objPoint2,objPoint3,objPoint4};
+            for (int i = 0;i < point.length;i++){
+                if (!((Rectangle2D) obj).contains(point[i])){
+                    return false;
+                }
+                if (!contains(objPoint[i])){
+                    return false;
+                }
+            }
+            return true; //既不大于也不小于，则等于
+        }
+        else return false;
+    }
 }
