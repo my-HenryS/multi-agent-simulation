@@ -68,14 +68,14 @@ public class SVSR_Exit implements SceneValue<ClipperShape[]> {
      */
     @Override
     public void apply(Scene scene) {
-        for (int i = 0;i < exit.length;i++){
+/*        for (int i = 0;i < exit.length;i++){
             if (exit[i].getBounds().getStartPoint().getX() != exit[i].getBounds().getEndPoint().getX()
                  && exit[i].getBounds().getStartPoint().getY() != exit[i].getBounds().getEndPoint().getY()) {
              Wall wall = (Wall) scene.getStaticEntities().selectTop((Point2D) exit[i].getReferencePoint());
               wall.setShape(exit[i].clip((ClippableShape) wall.getShape()));
          }
-         else /*do nothing*/;
-    }
+         else //do nothing;
+    }*/
     }
 
     @Override

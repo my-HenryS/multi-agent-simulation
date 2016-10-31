@@ -365,7 +365,7 @@ public class Box2D implements Box {
     public Shape[] clip(ClippableShape shape) {
         Point[][] dictionary = new Point[2][2];
         if(shape instanceof Box2D){
-            Box2D[] Boxes;
+            Shape[] Boxes;
             if (hits(shape.getBounds())){
                 if ((((Box2D) shape).getStartPoint().getX()<getStartPoint().getX()&&getEndPoint().getX()<((Box2D) shape).getEndPoint().getX())
                         ||(((Box2D) shape).getStartPoint().getX()>getStartPoint().getX()&&getEndPoint().getX()>((Box2D) shape).getEndPoint().getX())){
@@ -380,7 +380,7 @@ public class Box2D implements Box {
                             dictionary[1][0] = new Point2D(((Box2D) shape).getEndPoint().getX(),getStartPoint().getY());
                             dictionary[0][1] = new Point2D(((Box2D) shape).getStartPoint().getX(),getEndPoint().getY());
                         }
-                        Boxes = new Box2D[]{new Box2D((dictionary)[0][0],dictionary[1][0]),new Box2D(dictionary[0][1],dictionary[1][1])};
+                        Boxes = new Shape[]{new Box2D((dictionary)[0][0],dictionary[1][0]),new Box2D(dictionary[0][1],dictionary[1][1])};
                         return Boxes;
                     }
                     else throw new IllegalArgumentException("目前阶段不支持以一般方式进行矩形切割，只支持十字形切割");
