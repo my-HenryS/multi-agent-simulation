@@ -138,7 +138,21 @@ public class Rectangle2D implements Shape {
      */
     @Override
     public boolean hits(Box hitbox) {
-        return false;
+        Segment2D[] bounds;
+        Point2D point1,point2,point3,point4;
+        if (!getBounds().hits(hitbox)){return false;}
+        else point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
+        point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
+        point3 = new Point2D(center.getX()+length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
+        point4 = new Point2D(center.getX()-length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
+        bounds = new Segment2D[]{new Segment2D(point1,point2),new Segment2D(point2,point3),new Segment2D(point3,point4),new Segment2D(point4,point1)};
+        for (int i = 0;i < bounds.length;i++){
+            if (bounds[i].hits(hitbox)){
+                return true;
+            }
+        }
+        if (contains(hitbox.getReferencePoint())){return true;}
+        else return false;
     }
 
     /**
