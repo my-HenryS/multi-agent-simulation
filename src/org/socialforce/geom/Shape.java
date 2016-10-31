@@ -26,14 +26,14 @@ public interface Shape extends Serializable, Cloneable, DimensionEntity, Drawabl
     boolean contains(Point point);
 
     /**
-     * 获取一个点到这条直线的距离.
+     * 获取一个点到这条直线的距离矢量.
      * 如果距离为0，就说明这个点在这个形状上.
      * 空的形状为 Double.NaN .
-     *
+     * 方向指向目标点
      * @param point 将被检查的点.
      * @return 该距离. 如果这个点到不了这个形状上的话，返回 Double.NaN .
      */
-    double getDistance(Point point);
+    Vector getDistance(Point point);
 
     /**
      * 获取该形状的参考点.

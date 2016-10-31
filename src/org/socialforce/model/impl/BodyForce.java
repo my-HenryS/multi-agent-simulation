@@ -44,8 +44,7 @@ public class BodyForce implements ForceRegulation{
         n.set(n.getRefVector());
         n.get(temp);
         t = new Vector2D(-temp[1],temp[0]);
-        distance = interactiveEntity.getShape().getReferencePoint().distanceTo(interactiveEntity2.getShape().getReferencePoint())
-                - ((Circle2D) interactiveEntity.getShape()).getRadius()-((Circle2D) interactiveEntity2.getShape()).getRadius();
+        distance = 0;
         if (distance < 0){g = argumentX;}
         bodyForce = A*Math.exp(-distance/B) + k1*g*distance;
         slidingForce = k2*g*distance*t.dot(tempVector);

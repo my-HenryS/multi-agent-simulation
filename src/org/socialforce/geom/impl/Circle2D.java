@@ -1,10 +1,7 @@
 package org.socialforce.geom.impl;
 
 import org.socialforce.drawer.Drawer;
-import org.socialforce.geom.Box;
-import org.socialforce.geom.DistanceShape;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.*;
 
 /**
  * 这是一个由它的半径和中心点设置的二维圆 .
@@ -64,7 +61,7 @@ public class Circle2D implements DistanceShape {
      */
     @Override
     public boolean contains(Point point) {
-        return (point.distanceTo(center)<radius);
+        return (point.distanceTo(center).length()<radius);
     }
 
     /**
@@ -75,11 +72,15 @@ public class Circle2D implements DistanceShape {
      *  如果点再圆外： return point.distanceTo(center)-radius
      */
     @Override
-    public double getDistance(Point point) {
+    public Vector getDistance(Point point) {
+        double distance;
+        Vector2D vector2D = (Vector2D) center.distanceTo(point);
         if(this.contains(point)){
-            return 0;}
-        else return point.distanceTo(center)-radius;
-
+            return new Vector2D(0,0);}
+        else distance = point.distanceTo(center).length() - radius;
+            vector2D = (Vector2D) vector2D.getRefVector();
+            vector2D.scale(distance);
+            return vector2D;
     }
 
     /**
@@ -115,7 +116,7 @@ public class Circle2D implements DistanceShape {
      */
     @Override
     public boolean hits(Box hitbox) {
-        if (hitbox.getDistance(center) <= radius){
+        if (hitbox.getDistance(center).length() <= radius){
             return true;}
         return false;
     }
@@ -152,13 +153,19 @@ public class Circle2D implements DistanceShape {
      * @return 距离
      */
     @Override
-    public double distanceTo(Shape other) {
-        return other.getDistance(this.center) - this.radius;
+    public Vector distanceTo(Shape other) {
+        double distance =  other.getDistance(this.center).length() - this.radius;
+        if (distance > 0){
+        Vector2D vector2D = (Vector2D) other.getDistance(center);
+        vector2D = (Vector2D) vector2D.getRefVector();
+            vector2D.scale(-distance);
+        return vector2D;}
+        else return new Vector2D(0,0);
     }
 
     @Override
     public boolean intersects(Shape other) {
-        return distanceTo(other) <= 0;
+        return distanceTo(other).length() <= 0;
     }
 
     @Override

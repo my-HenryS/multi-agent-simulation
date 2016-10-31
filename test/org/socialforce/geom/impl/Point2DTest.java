@@ -31,7 +31,8 @@ public class Point2DTest {
 
     @Test
     public void distanceTo() throws Exception {
-        assertEquals(5,x.distanceTo(y),1e-7);
+        assertEquals(5,x.distanceTo(y).length(),1e-7);
+        assertEquals(new Vector2D(3,4),x.distanceTo(y));
     }
 
     @Test
