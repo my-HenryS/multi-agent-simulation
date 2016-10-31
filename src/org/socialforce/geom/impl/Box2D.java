@@ -222,10 +222,10 @@ public class Box2D implements Box {
     @Override
     public boolean hits(Box hitbox) {
         Box2D in = quiteConvert(hitbox);
-        return ymin <= in.ymin && in.ymin <= ymax ||
-                ymin <= in.ymax && in.ymax <= ymax ||
-                xmin <= in.xmin && in.xmin <= xmax ||
-                xmin <= in.xmax && in.xmax <= xmax;
+        return (ymin <= in.ymin && in.ymin <= ymax ||
+                ymin <= in.ymax && in.ymax <= ymax) &&
+                (xmin <= in.xmin && in.xmin <= xmax ||
+                xmin <= in.xmax && in.xmax <= xmax);
     }
 
     /**

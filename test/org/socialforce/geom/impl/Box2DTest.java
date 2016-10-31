@@ -71,6 +71,7 @@ public class Box2DTest {
         assertEquals(true,testBox.hits(x));
         assertEquals(true,testBox.hits(y));
         assertEquals(false,testBox.hits(z));
+        assertEquals(false,testBox.hits(new Box2D(-5,-5,2,20)));
     }
 
     @Test
