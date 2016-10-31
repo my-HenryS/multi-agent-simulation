@@ -133,5 +133,12 @@ public class Box2DTest {
         assertEquals(new Box2D(-3.5,-3,10,10),testBox);
     }
 
+    @Test
+    public void ClipTest(){
+        Box2D clipper = new Box2D(1,-1,1,10);
+        Shape[] boxes = clipper.clip(testBox);
+        assertEquals(boxes[0],new Box2D(0,0,1,4));
+        assertEquals(boxes[1],new Box2D(2,0,1,4));
+    }
 
 }
