@@ -135,7 +135,7 @@ public class Segment2D implements Shape {
         }
         tx -= x;
         ty -= y;
-        return new Vector2D(tx,ty);
+        return new Vector2D(-tx,-ty);
         //2016/8/19 fix distance with equation.
         /*distance = Math.abs(dx1 * a - dy1 * b) / Math.sqrt(a * a + b * b);
         double disA = Math.sqrt(dx1 * dx1 + dy1 * dy1);

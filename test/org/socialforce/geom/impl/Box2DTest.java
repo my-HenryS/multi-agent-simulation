@@ -32,20 +32,24 @@ public class Box2DTest {
 
     @Test
     public void getDistance() throws Exception {
-        assertEquals(0,testBox.getDistance(a),0);
-        assertEquals(5,testBox.getDistance(b),0);
-        assertEquals(5,testBox.getDistance(c),0);
-        assertEquals(5,testBox.getDistance(d),0);
+        assertEquals(0,testBox.getDistance(a).length(),0);
+        assertEquals(new Vector2D(0,0),testBox.getDistance(a));
+        assertEquals(5,testBox.getDistance(b).length(),0);
+        assertEquals(new Vector2D(3,4),testBox.getDistance(b));
+        assertEquals(5,testBox.getDistance(c).length(),0);
+        assertEquals(new Vector2D(-4,-3),testBox.getDistance(c));
+        assertEquals(5,testBox.getDistance(d).length(),0);
+        assertEquals(new Vector2D(0,-5),testBox.getDistance(d));
         a = new Point2D(1,9);
-        assertEquals(5,testBox.getDistance(a),0);
+        assertEquals(5,testBox.getDistance(a).length(),0);
         a = new Point2D(-4,7);
-        assertEquals(5,testBox.getDistance(a),0);
+        assertEquals(5,testBox.getDistance(a).length(),0);
         a = new Point2D(-5,2);
-        assertEquals(5,testBox.getDistance(a),0);
+        assertEquals(5,testBox.getDistance(a).length(),0);
         a = new Point2D(6,-4);
-        assertEquals(5,testBox.getDistance(a),0);
+        assertEquals(5,testBox.getDistance(a).length(),0);
         a = new Point2D(8,2);
-        assertEquals(5,testBox.getDistance(a),0);
+        assertEquals(5,testBox.getDistance(a).length(),0);
     }
 
     @Test
@@ -77,7 +81,7 @@ public class Box2DTest {
         assertEquals(false,testBox.contains(a));
         assertEquals(true,testBox.contains(b));
         Point2D center = new Point2D(1.5,2);
-        assertNotEquals(0,testBox.getReferencePoint().distanceTo(center),0);
+        assertNotEquals(0,testBox.getReferencePoint().distanceTo(center).length(),0);
     }
 
     @Test

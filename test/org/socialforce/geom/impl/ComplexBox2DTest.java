@@ -32,7 +32,7 @@ public class ComplexBox2DTest {
 
     @Test
     public void getDistance() throws Exception {
-        assertEquals(Math.sqrt(2),complexBox.getDistance(new Point2D(-3,-3)),1e-7);
+        assertEquals(Math.sqrt(2),complexBox.getDistance(new Point2D(-3,-3)).length(),1e-7);
     }
 
     @Test

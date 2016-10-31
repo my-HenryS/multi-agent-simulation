@@ -50,18 +50,6 @@ public class SimpleApplication implements SocialForceApplication {
             //给所有agent设置path
             agent = (Agent)iter.next();
             goal = new Point2D(-1,5);
-            temp = new Point2D(10,-1);
-            if (temp.distanceTo(agent.getShape().getReferencePoint())<goal.distanceTo(agent.getShape().getReferencePoint())){
-                goal = temp;
-            }
-            temp = new Point2D(10,14);
-            if (temp.distanceTo(agent.getShape().getReferencePoint())<goal.distanceTo(agent.getShape().getReferencePoint())){
-                goal = temp;
-            }
-            temp = new Point2D(24,10);
-            if (temp.distanceTo(agent.getShape().getReferencePoint())<goal.distanceTo(agent.getShape().getReferencePoint())){
-                goal = temp;
-            }
             agent.setPath(new StraightPath(agent.getShape().getReferencePoint(),goal));
         }
 

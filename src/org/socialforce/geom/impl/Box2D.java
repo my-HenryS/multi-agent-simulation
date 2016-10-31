@@ -138,11 +138,14 @@ public class Box2D implements Box {
         double dsy = point.getY() - ymin;
         double dex = point.getX() - xmax;
         double dey = point.getY() - ymax;
+        Vector vector;
         if (dsx > 0) {
             if (dsy > 0) {
                 if (dex > 0) {
                     if (dey > 0) {
-                        return point.distanceTo(new Point2D(xmax, ymax));
+                        vector = point.distanceTo(new Point2D(xmax, ymax));
+                        vector.scale(-1);
+                        return vector;
                     } else { // dey <= 0
                         return new Vector2D(dex,0);
                     }
@@ -151,7 +154,9 @@ public class Box2D implements Box {
                 }
             } else { // dsy <= 0
                 if (dex > 0) {
-                    return point.distanceTo(new Point2D(xmax, ymin));
+                    vector = point.distanceTo(new Point2D(xmax, ymin));
+                    vector.scale(-1);
+                    return vector;
                 } else { // dex <= 0
                     return new Vector2D(0,dsy);
                 }
@@ -159,12 +164,16 @@ public class Box2D implements Box {
         } else { // dsx <= 0
             if (dsy > 0) {
                 if (dey > 0) {
-                    return point.distanceTo(new Point2D(xmin, ymax));
+                    vector = point.distanceTo(new Point2D(xmin, ymax));
+                    vector.scale(-1);
+                    return vector;
                 } else { // dey <= 0
                     return new Vector2D(dsx,0);
                 }
             } else { // dsy <= 0
-                return point.distanceTo(new Point2D(xmin, ymin));
+                vector = point.distanceTo(new Point2D(xmin, ymin));
+                vector.scale(-1);
+                return vector;
             }
         }
         //return Double.NaN;

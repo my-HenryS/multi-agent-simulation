@@ -78,7 +78,8 @@ public class Circle2D implements DistanceShape {
         if(this.contains(point)){
             return new Vector2D(0,0);}
         else distance = point.distanceTo(center).length() - radius;
-            vector2D.getRefVector().scale(distance);
+            vector2D = (Vector2D) vector2D.getRefVector();
+            vector2D.scale(distance);
             return vector2D;
     }
 
@@ -155,8 +156,9 @@ public class Circle2D implements DistanceShape {
     public Vector distanceTo(Shape other) {
         double distance =  other.getDistance(this.center).length() - this.radius;
         if (distance > 0){
-        Vector2D vector2D = (Vector2D) center.distanceTo(other.getReferencePoint());
-        vector2D.getRefVector().scale(distance);
+        Vector2D vector2D = (Vector2D) other.getDistance(center);
+        vector2D = (Vector2D) vector2D.getRefVector();
+            vector2D.scale(-distance);
         return vector2D;}
         else return new Vector2D(0,0);
     }
