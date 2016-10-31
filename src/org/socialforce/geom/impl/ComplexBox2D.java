@@ -4,6 +4,7 @@ import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.Box;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
+import org.socialforce.geom.Vector;
 
 /**
  * 一组BOX的集合，对这些BOX的位置条件暂无要求。
@@ -48,12 +49,14 @@ public class ComplexBox2D implements Shape {
     }
 
     @Override
-    public double getDistance(Point point) {
-        double distance=Double.POSITIVE_INFINITY,temp;
+    public Vector getDistance(Point point) {
+        double distanceN=Double.POSITIVE_INFINITY;
+        Vector temp,distance = new Vector2D(0,0);
         for (int i = 0;i < BoxDictionary[0].length;i++){
             temp = new Box2D(BoxDictionary[0][i],BoxDictionary[1][i]).getDistance(point);
-            if (temp < distance){
+            if (temp.length() < distanceN){
                 distance = temp;
+                distanceN = distance.length();
             }
         }
         return distance;

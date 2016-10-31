@@ -1,6 +1,7 @@
 package org.socialforce.geom.impl;
 
 import org.socialforce.geom.Point;
+import org.socialforce.geom.Vector;
 
 /**
  * Created by Ledenel on 2016/8/8.
@@ -29,15 +30,15 @@ public class Point2D extends Vector2D implements Point {
     /**
      * 获取该点到其他点的距离.
      * 可以是多维度下的距离.
-     *
+     * 方向是指向目标点
      * @param other 要计算距离的另外的一个点
      * @return 距离.
      */
     @Override
-    public double distanceTo(Point other) {
+    public Vector distanceTo(Point other) {
         double dx = this.getX() - other.getX();
         double dy = this.getY() - other.getY();
-        return Math.sqrt(dx*dx+dy*dy);
+        return new Vector2D(-dx,-dy);
     }
 
 

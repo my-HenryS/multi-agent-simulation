@@ -4,6 +4,7 @@ import org.socialforce.geom.Box;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
+import org.socialforce.geom.Vector;
 
 /**这是一个二维的线段
  *
@@ -89,7 +90,7 @@ public class Segment2D implements Shape {
     }
 
     @Override
-    public double getDistance(Point point) {
+    public Vector getDistance(Point point) {
         /*double distance = 0;
         int flag = 0;
         if (y1 == y2) {
@@ -134,7 +135,7 @@ public class Segment2D implements Shape {
         }
         tx -= x;
         ty -= y;
-        return Math.sqrt(tx*tx+ty*ty);
+        return new Vector2D(tx,ty);
         //2016/8/19 fix distance with equation.
         /*distance = Math.abs(dx1 * a - dy1 * b) / Math.sqrt(a * a + b * b);
         double disA = Math.sqrt(dx1 * dx1 + dy1 * dy1);

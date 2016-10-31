@@ -130,9 +130,9 @@ public class Box2D implements Box {
      * @return 距离. 如果点不能到形状上话，返回 Double.NaN .
      */
     @Override
-    public double getDistance(Point point) {
+    public Vector getDistance(Point point) {
         if (contains(point)) {
-            return 0;
+            return new Vector2D(0,0);
         }
         double dsx = point.getX() - xmin;
         double dsy = point.getY() - ymin;
@@ -144,16 +144,16 @@ public class Box2D implements Box {
                     if (dey > 0) {
                         return point.distanceTo(new Point2D(xmax, ymax));
                     } else { // dey <= 0
-                        return dex;
+                        return new Vector2D(dex,0);
                     }
                 } else { // dex <= 0
-                    return dey;
+                    return new Vector2D(0,dey);
                 }
             } else { // dsy <= 0
                 if (dex > 0) {
                     return point.distanceTo(new Point2D(xmax, ymin));
                 } else { // dex <= 0
-                    return -dsy;
+                    return new Vector2D(0,dsy);
                 }
             }
         } else { // dsx <= 0
@@ -161,7 +161,7 @@ public class Box2D implements Box {
                 if (dey > 0) {
                     return point.distanceTo(new Point2D(xmin, ymax));
                 } else { // dey <= 0
-                    return -dsx;
+                    return new Vector2D(dsx,0);
                 }
             } else { // dsy <= 0
                 return point.distanceTo(new Point2D(xmin, ymin));
