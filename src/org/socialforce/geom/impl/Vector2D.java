@@ -309,4 +309,17 @@ public class Vector2D implements Vector {
         return ref;
     }
 
+    /**
+     * 逆时针旋转某个角度
+     * @param angle 旋转的角度，为弧度制
+     */
+    public void spin(double angle){
+        double r,t;
+        r = length();
+        t = Math.atan(values[1]/values[0]);
+        t = t+angle;
+        values[0] = r*Math.cos(t);
+        values[1] = r*Math.sin(t);
+    }
+
 }
