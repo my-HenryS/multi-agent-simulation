@@ -27,16 +27,17 @@ public class SceneDrawerInstaller implements DrawerInstaller {
             drawable.setDrawer(sceneDrawer);
             Scene scene = (Scene) drawable;
             Iterable<InteractiveEntity> iterable = scene.getAllEntitiesStream()::iterator;
+            boolean succ = true;
             for(InteractiveEntity entity : iterable) {
-                sceneDrawer.installer.addDrawerSupport(entity.getShape());
+                succ = succ && sceneDrawer.installer.addDrawerSupport(entity.getShape());
             }
-            return true;
+            return succ;
         }
         return false;
     }
 
-    public SceneDrawerInstaller(Graphics2D graphics) {
-        this.sceneDrawer = new SceneDrawer(graphics);
+    public SceneDrawerInstaller(Graphics2D graphics, double ctrlWidth, double ctrlHeight) {
+        this.sceneDrawer = new SceneDrawer(graphics, ctrlWidth,ctrlHeight);
     }
 
     protected SceneDrawer sceneDrawer;

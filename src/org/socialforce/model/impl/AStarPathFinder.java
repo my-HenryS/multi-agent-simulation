@@ -18,6 +18,7 @@ import org.socialforce.model.PathFinder;
  */
 public class AStarPathFinder implements PathFinder {
     static final int min_div = 1;
+    double map[][];
     @Override
     public Path plan(Scene targetScene, Agent agent, Point goal) {
         //AStarPath path = new AStarPath();
@@ -27,6 +28,7 @@ public class AStarPathFinder implements PathFinder {
             assert(!entity.getShape().contains(start_point));
 
         }
+        map = map_initiate(targetScene, agent, goal);
         return null;
     }
 
@@ -43,12 +45,17 @@ public class AStarPathFinder implements PathFinder {
                     agent_shape.moveTo(new Point2D(i,j));
                     //assert( == entity.getShape().getClass());
                     if(agent_shape.hits((Box2D)entity.getShape())){
-
+                        map[i][j] = 1;
+                    }
+                    else if(i<goal.getX() && goal.getX()<i+1 && j<goal.getY() && goal.getY()<=i+1){
+                        map[i][j] = 2;        //暂定2为目标点，目标点为goalx,y坐标的向下取整
+                    }
+                    else{
+                        map[i][j] = 0;        //暂定1为有障碍物占领
                     }
                 }
             }
         }
-
         return map;
     }
 }
