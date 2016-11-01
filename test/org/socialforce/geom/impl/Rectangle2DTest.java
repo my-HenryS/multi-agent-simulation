@@ -21,7 +21,7 @@ public class Rectangle2DTest {
         b = new Point2D(3,3);
         c = new Point2D(0,0);
         d = new Point2D(1,2);
-        e = new Point2D(4,5);
+        e = new Point2D(4,4);
     }
 
     @Test

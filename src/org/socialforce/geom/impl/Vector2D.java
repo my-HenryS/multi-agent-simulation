@@ -321,7 +321,7 @@ public class Vector2D implements Vector {
             ;//do nothing
         }
         else
-        t = Math.atan(values[1]/values[0]);
+        t = Math.atan2(values[1],values[0]);
         t = t+angle;
         values[0] = r*Math.cos(t);
         values[1] = r*Math.sin(t);
