@@ -48,6 +48,11 @@ public class Rectangle2DTest {
     @Test
     public void getBounds() throws Exception {
         assertEquals(new Box2D(new Point2D(3-2.5*Math.sqrt(2),3-2.5*Math.sqrt(2)),new Point2D(3+2.5*Math.sqrt(2),3+2.5*Math.sqrt(2))),testRec.getBounds());
+        testRec.spin(Math.PI/4);
+        assertEquals(new Box2D(0,1,6,4),testRec.getBounds());
+        testRec.spin(Math.PI/2);
+        assertEquals(new Box2D(1,0,4,6),testRec.getBounds());
+
     }
 
     @Test

@@ -125,8 +125,16 @@ public class Vector2DTest {
         assertEquals(new Vector2D(0.6,0.8),a.getRefVector());
     }
 
-    @Test (expected = IllegalArgumentException.class)
-    public void refVectorZero() throws Exception{
-        zero.getRefVector();
+
+    @Test
+    public void SpinTest() throws Exception{
+        zero.spin(1231);
+        assertEquals(new Vector2D(0,0),zero);
+        Vector2D vector2D = new Vector2D(5,0);
+        vector2D.spin(Math.atan2(4,3));
+        assertEquals(a,vector2D);
+        a.spin(Math.PI/2);
+        assertEquals(new Vector2D(-4,3),a);
+
     }
 }
