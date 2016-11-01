@@ -327,4 +327,8 @@ public class Vector2D implements Vector {
         values[1] = r*Math.sin(t);
     }
 
+    public String toString(){
+        return "坐标为： ("+values[0]+"," +values[1]+")";
+    }
+
 }
