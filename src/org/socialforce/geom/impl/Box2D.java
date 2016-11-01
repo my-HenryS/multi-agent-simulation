@@ -56,10 +56,10 @@ public class Box2D implements Box {
     public boolean equals(Object obj) {
         if(obj instanceof Box2D) {
             Box2D box = (Box2D) obj;
-            return box.xmin == xmin &&
-                    box.xmax == xmax &&
-                    box.ymin == ymin &&
-                    box.ymax == ymax;
+            return Math.abs(box.xmin-xmin) < 10e-7 &&
+                    Math.abs(box.xmax-xmax) < 10e-7 &&
+                    Math.abs(box.ymin-ymin) < 10e-7 &&
+                    Math.abs(box.ymax-ymax) < 10e-7;
         }
         return false;
     }
