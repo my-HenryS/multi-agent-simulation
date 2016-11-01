@@ -11,6 +11,7 @@ public class SimpleApplicationTest {
     SimpleApplication application = new SimpleApplication();
     @Test
     public void start() throws Exception {
+        //application.start();
 //        application.start();
     }
 

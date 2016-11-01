@@ -174,4 +174,8 @@ public class Circle2D implements DistanceShape {
                 && ((Circle2D) obj).getRadius()==radius
                 && ((Circle2D) obj).getReferencePoint().equals(getReferencePoint());
     }
+
+    public String toString(){
+        return "半径为:"+radius+", 圆心"+center.toString();
+    }
 }

@@ -62,13 +62,19 @@ public class Rectangle2D implements Shape {
      */
     @Override
     public boolean contains(Point point) {
+        Rectangle2D rectangle2D = (Rectangle2D) clone();
+        Box bound;
         double temp = angle;
-        boolean result;
-        Vector2D distance = (Vector2D) getDistance(point);
-        spin(-temp);
+        boolean result = false;
+        Vector2D distance = (Vector2D) center.distanceTo(point);
+        rectangle2D.spin(-temp);
         distance.spin(-temp);
-        result = getBounds().contains(new Point2D(center.getX()+distance.values[0],center.getY()+distance.values[1]));
-        spin(temp);
+        bound = rectangle2D.getBounds();
+        Point2D point2D = new Point2D(center.getX()+distance.values[0],center.getY()+distance.values[1]);
+        //result = bound.contains(new Point2D(center.getX()+distance.values[0],center.getY()+distance.values[1]));
+        if (bound.getDistance(point2D).length()<10e-7){
+            result = true;
+        }
         return result;
     }
 
