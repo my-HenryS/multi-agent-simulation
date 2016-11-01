@@ -10,15 +10,24 @@ import static org.junit.Assert.*;
  */
 public class Rectangle2DTest {
     Rectangle2D testRec,temp;
-    Point2D a,b,c,d;
+    Point2D a,b,c,d,e;
     @Before
     public void setUp() throws Exception {
         testRec = new Rectangle2D(new Point2D(3,3),4,6,Math.PI/4);
+        a = new Point2D(3+Math.sqrt(2)/2,3-2.5*Math.sqrt(2));
+        b = new Point2D(3,3);
+        c = new Point2D(0,0);
+        d = new Point2D(1,2);
+        e = new Point2D(4,5);
     }
 
     @Test
     public void contains() throws Exception {
-
+        //assertTrue(testRec.contains(a));
+        assertTrue(testRec.contains(b));
+        assertFalse(testRec.contains(c));
+        assertFalse(testRec.contains(d));
+        assertTrue(testRec.contains(e));
     }
 
     @Test

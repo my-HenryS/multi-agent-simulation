@@ -64,7 +64,7 @@ public class Rectangle2D implements Shape {
     public boolean contains(Point point) {
         double temp = angle;
         boolean result;
-        Vector2D distance = (Vector2D) getDistance(point);
+        Vector2D distance = (Vector2D) center.distanceTo(point);
         spin(-temp);
         distance.spin(-temp);
         result = getBounds().contains(new Point2D(center.getX()+distance.values[0],center.getY()+distance.values[1]));
