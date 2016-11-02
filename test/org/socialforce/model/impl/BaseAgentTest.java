@@ -38,7 +38,7 @@ public class BaseAgentTest {
     @Test
     public void determineNext() throws Exception {
         baseAgent.determineNext();
-
+        System.out.println(baseAgent.toString());
     }
 
 }

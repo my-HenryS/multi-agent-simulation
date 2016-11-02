@@ -35,4 +35,6 @@ public interface Path {
      * @return 如果走完返回真，否则假。
      */
     boolean done();
+
+    Path moveBy(double x, double y);
 }
