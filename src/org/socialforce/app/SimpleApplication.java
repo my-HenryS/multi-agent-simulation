@@ -5,7 +5,6 @@ import org.socialforce.app.impl.preset.SVSR_Exit;
 import org.socialforce.app.impl.preset.SVSR_SafetyRegion;
 import org.socialforce.app.impl.preset.SquareRoomLoader;
 import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.ComplexBox2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.*;
 import org.socialforce.model.impl.*;
@@ -98,15 +97,15 @@ public class SimpleApplication implements SocialForceApplication {
             agent = (Agent) iter.next();
             goal = new Point2D(-3, 8);
             temp = new Point2D(13, -3);
-            if (temp.distanceTo(agent.getShape().getReferencePoint()) < goal.distanceTo(agent.getShape().getReferencePoint())) {
+            if (temp.distanceTo(agent.getShape().getReferencePoint()).length() < goal.distanceTo(agent.getShape().getReferencePoint()).length()) {
                 goal = temp;
             }
             temp = new Point2D(13, 20);
-            if (temp.distanceTo(agent.getShape().getReferencePoint()) < goal.distanceTo(agent.getShape().getReferencePoint())) {
+            if (temp.distanceTo(agent.getShape().getReferencePoint()).length() < goal.distanceTo(agent.getShape().getReferencePoint()).length()) {
                 goal = temp;
             }
             temp = new Point2D(30, 9);
-            if (temp.distanceTo(agent.getShape().getReferencePoint()) < goal.distanceTo(agent.getShape().getReferencePoint())) {
+            if (temp.distanceTo(agent.getShape().getReferencePoint()).length() < goal.distanceTo(agent.getShape().getReferencePoint()).length()) {
                 goal = temp;
             }
             switch ((int) goal.getY()) {
