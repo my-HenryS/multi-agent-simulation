@@ -17,7 +17,7 @@ public class BodyForce implements ForceRegulation{
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
         if (source instanceof Agent && target instanceof Agent &&
-                ((Agent) target).getView().intersects(source.getShape().getBounds())){
+                ((Agent) target).getView().intersects(source.getShape())){
             return true;
         }
         else
