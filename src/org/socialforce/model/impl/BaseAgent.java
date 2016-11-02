@@ -11,6 +11,7 @@ import org.socialforce.model.*;
  * Created by Ledenel on 2016/8/15.
  */
 public class BaseAgent extends Entity implements Agent {
+    static int agent_id = 0;
     Velocity currVelocity;
     Path path;
     double mass;
@@ -30,6 +31,7 @@ public class BaseAgent extends Entity implements Agent {
         this.mass = 50;
         Circle2D circle = new Circle2D(shape.getReferencePoint(),2);
         this.view = circle;
+        agent_id +=1 ;
     }
 
     /**
@@ -266,6 +268,9 @@ public class BaseAgent extends Entity implements Agent {
         return mass;
     }
 
+    public int getId() {
+        return agent_id;
+    }
 
     public String toString(){
         return this.shape.toString();
