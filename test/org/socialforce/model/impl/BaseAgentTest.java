@@ -41,4 +41,9 @@ public class BaseAgentTest {
         System.out.println(baseAgent.toString());
     }
 
+    @Test
+    public void getId() throws Exception {
+        assertEquals(1, baseAgent.getId());
+    }
+
 }
