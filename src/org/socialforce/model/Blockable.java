@@ -5,4 +5,8 @@ package org.socialforce.model;
  * @author Ledenel
  */
 public interface Blockable {
+    /*
+     * 返回id号
+     */
+    public int getId();
 }
