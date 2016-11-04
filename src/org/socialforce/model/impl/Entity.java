@@ -11,6 +11,7 @@ import org.socialforce.model.SocialForceModel;
  *  * Created by Ledenel on 2016/8/14.
  */
 public abstract class Entity implements InteractiveEntity {
+    static int entity_id = 0;
     protected SocialForceModel model;
     protected Shape shape;
 
@@ -52,6 +53,7 @@ public abstract class Entity implements InteractiveEntity {
      */
     public Entity(Shape shape) {
         this.shape = shape;
+        entity_id += 1;
     }
 
     /**
@@ -62,6 +64,7 @@ public abstract class Entity implements InteractiveEntity {
     public Entity(SocialForceModel model, Shape shape) {
         this.model = model;
         this.shape = shape;
+        entity_id += 1;
     }
 
     /**
