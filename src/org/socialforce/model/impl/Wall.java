@@ -39,4 +39,8 @@ public class Wall extends Entity implements Blockable {
         return Double.POSITIVE_INFINITY;
     }
 
+    public int getId(){
+        return this.entity_id;
+    }
+
 }
