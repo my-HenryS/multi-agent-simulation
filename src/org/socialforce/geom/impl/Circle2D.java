@@ -10,6 +10,8 @@ import org.socialforce.geom.*;
 
 
 public class Circle2D implements DistanceShape {
+
+    static int circle_id = 0;
     /**
      * 半径:二维圆的半径.
      * @see Drawer
@@ -49,8 +51,11 @@ public class Circle2D implements DistanceShape {
     public Circle2D(Point center,double radius){
         this.moveTo(center);
         this.radius = radius;
+        circle_id += 1;
     }
-    public Circle2D(){}
+    public Circle2D(){
+        circle_id += 1;
+    }
 
 
     /**
