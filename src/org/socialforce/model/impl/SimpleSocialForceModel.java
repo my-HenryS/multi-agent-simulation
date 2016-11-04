@@ -23,6 +23,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
 
     public static final int STATIC_TYPE_WALL = 0;
     public static final int STATIC_TYPE_GATE = 1;
+    public static SimpleSocialForceModel Model = null;
 
 
     protected List<ForceRegulation> regulations;
@@ -32,6 +33,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
         regulations.add(new PsychologicalForceRegulation(InteractiveEntity.class, Agent.class, this));
         regulations.add(new BodyForce());
         regulations.add(new WallForce());
+        Model = this;
     }
 
     /**
