@@ -19,7 +19,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
     public static final double EXPECTED_SPEED = 1.4;
     public static final double REACT_TIME = 0.4;
 
-    public static final double AGENT_SIZE = 0.486;
+    public static final double AGENT_SIZE = 0.486/2;
 
     public static final int STATIC_TYPE_WALL = 0;
     public static final int STATIC_TYPE_GATE = 1;
