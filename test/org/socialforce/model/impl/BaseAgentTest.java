@@ -43,7 +43,7 @@ public class BaseAgentTest {
 
     @Test
     public void getId() throws Exception {
-        assertEquals(1, baseAgent.getId());
+        assertEquals(1, baseAgent.entity_id);
     }
 
 }
