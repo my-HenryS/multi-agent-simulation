@@ -74,12 +74,14 @@ public class Box2D implements Box {
         this.drawer = drawer;
     }
 
+    static int box_id = 0;
+
     protected Drawer drawer;
 
     protected double xmin, ymin, xmax, ymax;
 
     public Box2D() {
-
+        box_id += 1;
     }
 
     public Box2D(double left, double bottom, double width, double height) {
@@ -100,6 +102,7 @@ public class Box2D implements Box {
         xmax = right;
         ymin = bottom;
         ymax = top;
+        box_id += 1;
     }
 
     public Box2D(Point start, Point end) {
@@ -107,6 +110,7 @@ public class Box2D implements Box {
                 start.getY(),
                 end.getX() - start.getX(),
                 end.getY() - start.getY());
+        box_id += 1;
     }
 
     /**
