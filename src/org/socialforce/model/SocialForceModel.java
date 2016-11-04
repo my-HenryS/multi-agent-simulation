@@ -1,8 +1,10 @@
 package org.socialforce.model;
 
 import org.socialforce.app.Scene;
+import org.socialforce.app.SimpleApplication;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.geom.*;
+import org.socialforce.model.impl.SimpleSocialForceModel;
 
 /**
  * the social force model.
@@ -124,4 +126,14 @@ public interface SocialForceModel {
      * @return expected.驱动的速度。
      */
     Velocity getAgentMotivation(Point current, Point goal);
+
+    /**
+     * 获取当前model
+     * @return this (空则new）
+     */
+
+    static SocialForceModel getInstance(){
+        if(SimpleSocialForceModel.Model !=null ) return SimpleSocialForceModel.Model;
+        else return new SimpleSocialForceModel();
+    }
 }
