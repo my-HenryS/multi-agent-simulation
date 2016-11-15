@@ -6,7 +6,9 @@ import org.socialforce.geom.Box;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
+import org.socialforce.model.AgentDecorator;
 import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.impl.BaseAgentDecorator;
 import org.socialforce.model.impl.SimpleSocialForceModel;
 
 /**
@@ -21,6 +23,7 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
     protected class AgentGenerator{
         protected double X_distance,Y_distance,Z_distance;
         protected Box Area;
+        protected AgentDecorator decorator;
         protected SocialForceModel model;
 
         public AgentGenerator(double X_distance,double Y_distance,double Z_distance,Box Area){
@@ -42,9 +45,10 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
         public Box getArea(){
             return Area;
         }
-        public void setModel(SocialForceModel model){
-            this.model = model;
+        public void setDecorator(AgentDecorator decorator){
+            this.decorator = decorator;
         }
+        public void setModel(SocialForceModel model){this.model = model;}
     }
 
 
@@ -53,6 +57,7 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
 
     public SVSR_AgentGenerator(double X_distance,double Y_distance,double Z_distance,Box Area){
         agentGenerator = new AgentGenerator(X_distance,Y_distance,Z_distance,Area);
+        agentGenerator.setDecorator(new BaseAgentDecorator());
         agentGenerator.setModel(new SimpleSocialForceModel());
     }
     @Override
@@ -85,9 +90,8 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
         if (agentGenerator.Area instanceof Box2D) {
             for (int i = 0; i < (agentGenerator.Area.getEndPoint().getX() - agentGenerator.Area.getStartPoint().getX()) / agentGenerator.X_distance; i++) {
                 for (int j = 0; j < (agentGenerator.Area.getEndPoint().getY() - agentGenerator.Area.getStartPoint().getY()) / agentGenerator.Y_distance; j++) {
-                    new_agent = agentGenerator.model.createAgent();
+                    new_agent = agentGenerator.decorator.createAgent(new Point2D(agentGenerator.Area.getStartPoint().getX()+i*agentGenerator.X_distance,agentGenerator.Area.getStartPoint().getY()+j*agentGenerator.Y_distance));
                     new_agent.setModel(agentGenerator.model);
-                    new_agent.getShape().moveTo(new Point2D(agentGenerator.Area.getStartPoint().getX()+i*agentGenerator.X_distance,agentGenerator.Area.getStartPoint().getY()+j*agentGenerator.Y_distance));
                     scene.addAgent(new_agent);
                     new_agent.setScene(scene);
                 }
