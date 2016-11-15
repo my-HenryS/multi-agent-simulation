@@ -5,6 +5,7 @@ import org.socialforce.app.SceneValue;
 import org.socialforce.app.StaticSceneValue;
 import org.socialforce.geom.ClippableShape;
 import org.socialforce.geom.ClipperShape;
+import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
@@ -71,23 +72,25 @@ public class SVSR_Exit implements SceneValue<ClipperShape[]> {
      */
     @Override
     public void apply(Scene scene) {
-        /*for (int i = 0;i < exit.length;i++){
+        for (int i = 0; i < exit.length; i++) {
             Iterable<InteractiveEntity> walls;
+            Wall temp;
             if (exit[i].getBounds().getStartPoint().getX() != exit[i].getBounds().getEndPoint().getX()
-                 && exit[i].getBounds().getStartPoint().getY() != exit[i].getBounds().getEndPoint().getY()) {
-                    walls = scene.getStaticEntities().select((Point2D) exit[i].getReferencePoint());
-                for (InteractiveEntity wall : walls){
-                    ComplexBox2D complexBox2D = (ComplexBox2D) exit[i].clip((ClippableShape) wall.getShape());
-                    Box2D[] boxes;
-                    boxes = complexBox2D.BreakDown();
-                    for (int j = 0; j < boxes.length; j++) {
-                        scene.getStaticEntities().add(model.createStatic(boxes[j], SimpleSocialForceModel.STATIC_TYPE_WALL));
+                    && exit[i].getBounds().getStartPoint().getY() != exit[i].getBounds().getEndPoint().getY()) {
+                walls = scene.getStaticEntities().select(exit[i].getReferencePoint());
+                for (InteractiveEntity wall : walls) {
+                    Box2D wallShape = (Box2D) wall.getShape();
+                    Shape[] boxes =  exit[i].clip(wallShape);
+                    for (int j=0;j<boxes.length;j++){
+                        temp = new Wall(boxes[j]);
+                        temp.setModel(model);
+                        scene.getStaticEntities().add(temp);
                     }
-                //scene.getStaticEntities().add(model.createStatic(exit[i].clip((ClippableShape) wall.getShape()), SimpleSocialForceModel.STATIC_TYPE_WALL));
-                    scene.getStaticEntities().remove(wall);}
+                    scene.getStaticEntities().remove(wall);
+                }
 
-         }
-         else /*do nothing*/;
+            } else /*do nothing*/;
+        }
     }
 
 
