@@ -46,7 +46,7 @@ public class Circle2D implements DistanceShape {
     }
 
 
-    public Circle2D(Point2D center,double radius){
+    public Circle2D(Point center,double radius){
         this.moveTo(center);
         this.radius = radius;
     }

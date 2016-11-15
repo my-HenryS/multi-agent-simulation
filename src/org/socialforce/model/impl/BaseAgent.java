@@ -28,8 +28,7 @@ public class BaseAgent extends Entity implements Agent {
         this.currTimestamp = 0;
         this.currVelocity = new Velocity2D(0, 0);
         this.mass = 50;
-        Circle2D circle = new Circle2D();
-        circle.setRadius(2);
+        Circle2D circle = new Circle2D(shape.getReferencePoint(),2);
         this.view = circle;
     }
 
@@ -85,7 +84,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     // FIXME: 2016/9/3 it should be DistanceShape to support pool selection.
-    public Shape getView() {
+    public DistanceShape getView() {
         return view;
     }
 

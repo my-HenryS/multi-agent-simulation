@@ -41,6 +41,20 @@ public class Point2D extends Vector2D implements Point {
         return new Vector2D(-dx,-dy);
     }
 
+    @Override
+    public Point moveTo(double x, double y) {
+        this.values[0] = x;
+        this.values[1] = y;
+        return this;
+    }
+
+    @Override
+    public Point moveBy(double x, double y) {
+        this.values[0] += x;
+        this.values[1] += y;
+        return this;
+    }
+
 
     public Point2D() {
         super();
