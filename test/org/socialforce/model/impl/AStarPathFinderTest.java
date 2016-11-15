@@ -1,6 +1,6 @@
 package org.socialforce.model.impl;
 
-import com.sun.xml.internal.rngom.parse.host.Base;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.socialforce.app.Scene;
