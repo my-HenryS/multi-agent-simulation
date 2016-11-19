@@ -140,8 +140,8 @@ public class AStarPathFinder implements PathFinder {
                 if(i==x && j==y) continue;
                 if(i==start.getX() && j==start.getY()) continue;
                 Point tmp_point = new Point2D(i,j);
-                if(available(i,j) && map[i][j]==0 && (distance[i][j]==0 || distance[i][j] > distance[x][y]+center.distanceTo(tmp_point) )){
-                    distance[i][j] = distance[x][y]+center.distanceTo(tmp_point);
+                if(available(i,j) && map[i][j]==0 && (distance[i][j]==0 || distance[i][j] > distance[x][y]+center.distanceTo(tmp_point).length() )){
+                    distance[i][j] = distance[x][y]+center.distanceTo(tmp_point).length();
                     point_set.add(tmp_point);
                     previous[i][j] = center;
                 }

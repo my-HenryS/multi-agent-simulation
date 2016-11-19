@@ -18,12 +18,10 @@ public class SimpleSocialForceModel implements SocialForceModel {
     public static final double AGENT_VIEW_RADIUS = 6;
     public static final double EXPECTED_SPEED = 1.4;
     public static final double REACT_TIME = 0.4;
-
-    public static final double AGENT_SIZE = 0.486;
-
     public static final int STATIC_TYPE_WALL = 0;
     public static final int STATIC_TYPE_GATE = 1;
 
+    public static final double AGENT_SIZE = 0.486;
 
     protected List<ForceRegulation> regulations;
 
@@ -103,7 +101,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
      *
      * @return 返回创建的agent.
      */
-    @Override
+
     public Agent createAgent() {
         Circle2D size = new Circle2D();
         size.setRadius(AGENT_SIZE);
@@ -115,7 +113,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
      * @param shape agent 的形状。
      * @return 返回被创建的agent.
      */
-    @Override
+
     public Agent createAgent(DistanceShape shape) {
         return createAgent();
     }
@@ -126,7 +124,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
      * @param type  agent 的类型。
      * @return 返回被创建的agent.
      */
-    @Override
+
     public Agent createAgent(DistanceShape shape, int type) {
         return createAgent();
     }

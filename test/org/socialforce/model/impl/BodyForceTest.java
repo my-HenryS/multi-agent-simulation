@@ -23,19 +23,18 @@ public class BodyForceTest {
         circle.moveTo(initPoint);
         circle.setRadius(5);
         circle2.moveTo(initPoint2);
-        circle2.setRadius(5);
+        circle2.setRadius(8);
         circle3.moveTo(initPoint2);
         circle3.setRadius(1);
         baseAgent = new BaseAgent(circle);
-        baseAgent.view  = circle;
         targetAgent = new BaseAgent(circle2);
         targetAgent2 = new BaseAgent(circle3);
 
     }
     @Test
     public void hasForce() throws Exception {
-        assertTrue(bodyForce.hasForce(baseAgent,targetAgent));
-        assertFalse(bodyForce.hasForce(baseAgent,targetAgent2));
+        assertTrue(bodyForce.hasForce(targetAgent,baseAgent));
+        assertFalse(bodyForce.hasForce(targetAgent2,baseAgent));
 
     }
 

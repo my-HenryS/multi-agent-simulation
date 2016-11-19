@@ -48,27 +48,6 @@ public interface SocialForceModel {
      */
     Force getPower(InteractiveEntity source);
 
-    /**
-     * 用默认的设置方法来创建一个agent.
-     *
-     * @return 返回创建的agent.
-     */
-    Agent createAgent();
-
-    /**
-     * 根据具体形状参数来创建agent.
-     * @param shape agent 的形状。
-     * @return 返回被创建的agent.
-     */
-    Agent createAgent(DistanceShape shape);
-
-    /**
-     * 根据具体形状，类型参数来创建agent.
-     * @param shape agent 的形状。
-     * @param type  agent 的类型。
-     * @return 返回被创建的agent.
-     */
-    Agent createAgent(DistanceShape shape, int type);
 
     /**
      * 根据默认的设置来创建静态物体。
