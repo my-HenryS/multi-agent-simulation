@@ -3,8 +3,11 @@ package org.socialforce.app.impl.preset;
 import org.socialforce.app.Scene;
 import org.socialforce.app.SceneValue;
 import org.socialforce.geom.Box;
+import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Box2D;
+import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.geom.impl.Semicircle2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.AgentDecorator;
 import org.socialforce.model.SocialForceModel;
@@ -22,11 +25,11 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
      */
     protected class AgentGenerator{
         protected double X_distance,Y_distance,Z_distance;
-        protected Box Area;
+        protected Shape Area;
         protected AgentDecorator decorator;
         protected SocialForceModel model;
 
-        public AgentGenerator(double X_distance,double Y_distance,double Z_distance,Box Area){
+        public AgentGenerator(double X_distance,double Y_distance,double Z_distance,Shape Area){
             this.X_distance = X_distance;
             this.Y_distance = Y_distance;
             this.Z_distance = Z_distance;
@@ -42,7 +45,7 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
         public double getZ_distance(){
             return Z_distance;
         }
-        public Box getArea(){
+        public Shape getArea(){
             return Area;
         }
         public void setDecorator(AgentDecorator decorator){
@@ -55,7 +58,7 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
     private int priority;
     protected AgentGenerator agentGenerator;
 
-    public SVSR_AgentGenerator(double X_distance,double Y_distance,double Z_distance,Box Area){
+    public SVSR_AgentGenerator(double X_distance,double Y_distance,double Z_distance,Shape Area){
         agentGenerator = new AgentGenerator(X_distance,Y_distance,Z_distance,Area);
         agentGenerator.setDecorator(new BaseAgentDecorator());
         agentGenerator.setModel(new SimpleSocialForceModel());
@@ -87,13 +90,17 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
     @Override
     public void apply(Scene scene) {
         Agent new_agent;
-        if (agentGenerator.Area instanceof Box2D) {
-            for (int i = 0; i < (agentGenerator.Area.getEndPoint().getX() - agentGenerator.Area.getStartPoint().getX()) / agentGenerator.X_distance; i++) {
-                for (int j = 0; j < (agentGenerator.Area.getEndPoint().getY() - agentGenerator.Area.getStartPoint().getY()) / agentGenerator.Y_distance; j++) {
-                    new_agent = agentGenerator.decorator.createAgent(new Point2D(agentGenerator.Area.getStartPoint().getX()+i*agentGenerator.X_distance,agentGenerator.Area.getStartPoint().getY()+j*agentGenerator.Y_distance));
-                    new_agent.setModel(agentGenerator.model);
-                    scene.addAgent(new_agent);
-                    new_agent.setScene(scene);
+        if (agentGenerator.Area instanceof Box2D || agentGenerator.Area instanceof Semicircle2D || agentGenerator.Area instanceof Circle2D) {
+            for (int i = 0; i < (agentGenerator.Area.getBounds().getEndPoint().getX() - agentGenerator.Area.getBounds().getStartPoint().getX()) / agentGenerator.X_distance; i++) {
+                for (int j = 0; j < (agentGenerator.Area.getBounds().getEndPoint().getY() - agentGenerator.Area.getBounds().getStartPoint().getY()) / agentGenerator.Y_distance; j++) {
+                    Point2D point = new Point2D(agentGenerator.Area.getBounds().getStartPoint().getX()+i*agentGenerator.X_distance,agentGenerator.Area.getBounds().getStartPoint().getY()+j*agentGenerator.Y_distance);
+                    if(agentGenerator.Area.contains(point)){
+                        new_agent = agentGenerator.decorator.createAgent(point);
+                        new_agent.setModel(agentGenerator.model);
+                        scene.addAgent(new_agent);
+                        new_agent.setScene(scene);
+                    }
+
                 }
             }
         }
