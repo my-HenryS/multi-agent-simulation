@@ -2,13 +2,9 @@ package org.socialforce.app.impl.preset;
 
 import org.socialforce.app.Scene;
 import org.socialforce.app.SceneValue;
-import org.socialforce.app.StaticSceneValue;
-import org.socialforce.geom.ClippableShape;
 import org.socialforce.geom.ClipperShape;
 import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.SimpleSocialForceModel;
 import org.socialforce.model.impl.Wall;
