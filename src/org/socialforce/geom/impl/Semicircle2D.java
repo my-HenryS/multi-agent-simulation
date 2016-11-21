@@ -21,7 +21,7 @@ public class Semicircle2D implements Shape {
         this.center = center;
         this.angle = angle;
         bounding_circle = new Circle2D(center,radius);
-        bounding_box = new Rectangle2D(new Point2D(center.getX()-radius*Math.sin(angle),center.getY()+radius*Math.cos(angle)),2*radius,radius,angle);
+        bounding_box = new Rectangle2D(new Point2D(center.getX()-0.5*radius*Math.sin(angle),center.getY()+0.5*radius*Math.cos(angle)),2*radius,radius,angle);
     }
     @Override
     public void setDrawer(Drawer drawer) {
