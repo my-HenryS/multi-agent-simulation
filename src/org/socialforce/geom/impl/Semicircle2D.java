@@ -58,7 +58,7 @@ public class Semicircle2D implements Shape {
 
     @Override
     public Box getBounds() {
-        return null;
+        return bounding_box.getBounds().intersect(bounding_circle.getBounds());
     }
 
     @Override
