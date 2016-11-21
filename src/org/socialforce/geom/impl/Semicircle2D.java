@@ -68,7 +68,7 @@ public class Semicircle2D implements Shape {
     public void moveTo(Point location) {
          //并不建议在实际应用中用此方法 最好新建一个半圆形区域
         bounding_circle.moveTo(location);
-        bounding_box.moveTo(new Point2D(center.getX()-radius*Math.sin(angle),center.getY()+radius*Math.cos(angle)));
+        bounding_box.moveTo(new Point2D(center.getX()-0.5*radius*Math.sin(angle),center.getY()+0.5*radius*Math.cos(angle)));
     }
 
     public void spin(double angle){
