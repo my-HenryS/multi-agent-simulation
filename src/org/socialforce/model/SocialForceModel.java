@@ -29,7 +29,7 @@ public interface SocialForceModel {
      *
      * @return circle2D 返回一个圆形区域。
      */
-    Shape getAgentView();
+    Shape getAgentView();           //// TODO: 2016/11/21  model不应该控制agent的视野  
 
     /**
      * 计算源实体对目标实体的作用力。
