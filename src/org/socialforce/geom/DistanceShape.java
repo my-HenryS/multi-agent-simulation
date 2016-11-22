@@ -9,7 +9,7 @@ public interface DistanceShape extends Shape {
      * 方向指向目标形状
      * @return 距离.
      */
-    Vector distanceTo(Shape other);
+    double distanceTo(Shape other);
 
     /**
      * 判断该形状是否与另一个形状严格相交。

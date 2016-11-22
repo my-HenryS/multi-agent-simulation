@@ -40,8 +40,8 @@ public class BodyForceTest {
 
     @Test
     public void getForce() throws Exception {
-
-
+        System.out.println(bodyForce.getForce(targetAgent,baseAgent).toString());
+        System.out.println(bodyForce.getForce(targetAgent2,baseAgent).toString());
     }
 
 }

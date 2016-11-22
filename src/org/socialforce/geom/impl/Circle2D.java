@@ -153,19 +153,14 @@ public class Circle2D implements DistanceShape {
      * @return 距离
      */
     @Override
-    public Vector distanceTo(Shape other) {
+    public double distanceTo(Shape other) {
         double distance =  other.getDistance(this.center).length() - this.radius;
-        if (distance > 0){
-        Vector2D vector2D = (Vector2D) other.getDistance(center);
-        vector2D = (Vector2D) vector2D.getRefVector();
-            vector2D.scale(-distance);
-        return vector2D;}
-        else return new Vector2D(0,0);
+        return distance;
     }
 
     @Override
     public boolean intersects(Shape other) {
-        return distanceTo(other).length() <= 0;
+        return distanceTo(other)<= 0;
     }
 
     @Override

@@ -186,7 +186,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <enabled value="false"/>
+                  <enabled value="true"/>
                   <font size="24"/>
                   <text value="Run"/>
                 </properties>
@@ -336,7 +336,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <editable value="false"/>
+                      <editable value="true"/>
                       <text value="0.1"/>
                     </properties>
                   </component>

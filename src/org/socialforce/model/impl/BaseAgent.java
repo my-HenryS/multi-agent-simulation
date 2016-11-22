@@ -28,7 +28,7 @@ public class BaseAgent extends Entity implements Agent {
         this.currTimestamp = 0;
         this.currVelocity = new Velocity2D(0, 0);
         this.mass = 50;
-        Circle2D circle = new Circle2D(shape.getReferencePoint(),2);
+        Circle2D circle = new Circle2D(shape.getReferencePoint(),6);
         this.view = circle;
     }
 

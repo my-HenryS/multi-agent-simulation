@@ -1,6 +1,5 @@
 package org.socialforce.app.gui;
 
-import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import org.socialforce.app.ApplicationListener;
 import org.socialforce.app.Scene;
 import org.socialforce.app.SimpleApplication;
@@ -9,12 +8,27 @@ import org.socialforce.model.Agent;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.stream.StreamSupport;
 
 /**
  * Created by Ledenel on 2016/8/23.
  */
 public class SimulationPanelMain implements ApplicationListener {
+    public SimulationPanelMain() {
+        runButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //super.mouseClicked(e);
+                String s = timePerStepTextField.getText();
+                application.getModel().setTimePerStep(Double.valueOf(s));
+            }
+        });
+    }
+
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");

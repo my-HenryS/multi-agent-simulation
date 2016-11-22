@@ -47,7 +47,7 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Interactiv
         Force force = model.zeroForce();
         force.add(target.getShape().getReferencePoint());
         force.sub(source.getShape().getReferencePoint());
-        double scale = A * Math.exp(- target.getShape().distanceTo(source.getShape()).length() / B);
+        double scale = A * Math.exp(- target.getShape().distanceTo(source.getShape())/ B);
         force.scale(scale / force.length());
         return force;
     }
