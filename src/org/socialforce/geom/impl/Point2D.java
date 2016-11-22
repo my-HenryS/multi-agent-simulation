@@ -55,6 +55,13 @@ public class Point2D extends Vector2D implements Point {
         return this;
     }
 
+    @Override
+    public Point scaleBy(double s) {
+        this.values[0] *= s;
+        this.values[1] *= s;
+        return this;
+    }
+
 
     public Point2D() {
         super();
