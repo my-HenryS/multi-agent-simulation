@@ -31,9 +31,9 @@ public class Circle2DTest {
 
     @Test
     public void getDistance() throws Exception {
-        assertEquals(0,circleTest.getDistance(b).length(),0);
+        assertEquals(0,circleTest.getDistance(b),0);
         assertEquals(new Vector2D(1,0),circleTest.getDistance(new Point2D(9,4)));
-        assertEquals(4*Math.sqrt(2)-5,circleTest.getDistance(a).length(),0.01);
+        assertEquals(4*Math.sqrt(2)-5,circleTest.getDistance(a),0.01);
     }
 
     @Test

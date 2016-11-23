@@ -72,15 +72,8 @@ public class Circle2D implements DistanceShape {
      *  如果点再圆外： return point.distanceTo(center)-radius
      */
     @Override
-    public Vector getDistance(Point point) {
-        double distance;
-        Vector2D vector2D = (Vector2D) center.distanceTo(point);
-        if(this.contains(point)){
-            return new Vector2D(0,0);}
-        else distance = point.distanceTo(center).length() - radius;
-            vector2D = (Vector2D) vector2D.getRefVector();
-            vector2D.scale(distance);
-            return vector2D;
+    public double getDistance(Point point) {
+        return point.distanceTo(center).length() - radius;
     }
 
     /**
@@ -116,7 +109,7 @@ public class Circle2D implements DistanceShape {
      */
     @Override
     public boolean hits(Box hitbox) {
-        if (hitbox.getDistance(center).length() <= radius){
+        if (hitbox.getDistance(center) <= radius){
             return true;}
         return false;
     }
@@ -154,7 +147,7 @@ public class Circle2D implements DistanceShape {
      */
     @Override
     public double distanceTo(Shape other) {
-        double distance =  other.getDistance(this.center).length() - this.radius;
+        double distance =  other.getDistance(this.center) - this.radius;
         return distance;
     }
 

@@ -132,50 +132,46 @@ public class Box2D implements Box {
      * @return 距离. 如果点不能到形状上话，返回 Double.NaN .
      */
     @Override
-    public Vector getDistance(Point point) {
-        if (contains(point)) {
-            return new Vector2D(0,0);
-        }
+    public double getDistance(Point point) {
         double dsx = point.getX() - xmin;
         double dsy = point.getY() - ymin;
         double dex = point.getX() - xmax;
         double dey = point.getY() - ymax;
         Vector vector;
+        if(this.contains(point)){
+            return -Math.min(Math.min(Math.abs(dsx),Math.abs(dsy)),Math.min(Math.abs(dex),Math.abs(dey)));
+        }
         if (dsx > 0) {
             if (dsy > 0) {
                 if (dex > 0) {
                     if (dey > 0) {
                         vector = point.distanceTo(new Point2D(xmax, ymax));
-                        vector.scale(-1);
-                        return vector;
+                        return vector.length();
                     } else { // dey <= 0
-                        return new Vector2D(dex,0);
+                        return new Vector2D(dex,0).length();
                     }
                 } else { // dex <= 0
-                    return new Vector2D(0,dey);
+                    return new Vector2D(0,dey).length();
                 }
             } else { // dsy <= 0
                 if (dex > 0) {
                     vector = point.distanceTo(new Point2D(xmax, ymin));
-                    vector.scale(-1);
-                    return vector;
+                    return vector.length();
                 } else { // dex <= 0
-                    return new Vector2D(0,dsy);
+                    return new Vector2D(0,dsy).length();
                 }
             }
         } else { // dsx <= 0
             if (dsy > 0) {
                 if (dey > 0) {
                     vector = point.distanceTo(new Point2D(xmin, ymax));
-                    vector.scale(-1);
-                    return vector;
+                    return vector.length();
                 } else { // dey <= 0
-                    return new Vector2D(dsx,0);
+                    return new Vector2D(dsx,0).length();
                 }
             } else { // dsy <= 0
                 vector = point.distanceTo(new Point2D(xmin, ymin));
-                vector.scale(-1);
-                return vector;
+                return vector.length();
             }
         }
         //return Double.NaN;

@@ -28,8 +28,8 @@ public class BodyForce implements ForceRegulation{
     public Force getForce(InteractiveEntity source, InteractiveEntity target) {
         double A,B,k1,k2,g,bodyForce,slidingForce,distance,argumentX;
         Vector2D t,n,tempVector;
-        k1 = 1.2*100000;
-        k2 = 2.4*100000;
+        k1 = 1.2*10000;
+        k2 = 2.4*10000;
         argumentX = 1;
         double temp[] = new double[2];
         if (source instanceof Moveable){
@@ -47,7 +47,7 @@ public class BodyForce implements ForceRegulation{
         slidingForce = k2*g*distance*t.dot(tempVector);
         n.scale(bodyForce);
         t.scale(slidingForce);
-        n.add(t);
+        //n.add(t);
         n.get(temp);
         if(this.hasForce(source, target)) return new Force2D(temp[0],temp[1]);
         else return new Force2D(0,0);

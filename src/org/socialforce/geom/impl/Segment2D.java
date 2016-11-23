@@ -90,7 +90,7 @@ public class Segment2D implements Shape {
     }
 
     @Override
-    public Vector getDistance(Point point) {
+    public double getDistance(Point point) {
         /*double distance = 0;
         int flag = 0;
         if (y1 == y2) {
@@ -135,7 +135,7 @@ public class Segment2D implements Shape {
         }
         tx -= x;
         ty -= y;
-        return new Vector2D(-tx,-ty);
+        return new Vector2D(-tx,-ty).length();
         //2016/8/19 fix distance with equation.
         /*distance = Math.abs(dx1 * a - dy1 * b) / Math.sqrt(a * a + b * b);
         double disA = Math.sqrt(dx1 * dx1 + dy1 * dy1);

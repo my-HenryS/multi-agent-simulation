@@ -72,7 +72,7 @@ public class Rectangle2D implements Shape {
         bound = rectangle2D.getBounds();
         Point2D point2D = new Point2D(center.getX()+distance.values[0],center.getY()+distance.values[1]);
         //result = bound.contains(new Point2D(center.getX()+distance.values[0],center.getY()+distance.values[1]));
-        if (bound.getDistance(point2D).length()<10e-7){
+        if (bound.getDistance(point2D)<10e-7){
             result = true;
         }
         return result;
@@ -88,12 +88,14 @@ public class Rectangle2D implements Shape {
      * @return 该距离. 如果这个点到不了这个形状上的话，返回 Double.NaN .
      */
     @Override
-    public Vector getDistance(Point point) {
+    public double getDistance(Point point) {
         Segment2D[] bounds;
         Point2D point1,point2,point3,point4;
-        Vector distance = new Vector2D(0,0),temp;
+        double distance = 0,temp;
         double distanceN = Double.POSITIVE_INFINITY;
-        if (contains(point)){return distance;}
+        if (contains(point)){
+            return distance;     //// TODO: 2016/11/23  精确化distance
+        } 
         else point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
         point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
         point3 = new Point2D(center.getX()+length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
@@ -101,8 +103,8 @@ public class Rectangle2D implements Shape {
             bounds = new Segment2D[]{new Segment2D(point1,point2),new Segment2D(point2,point3),new Segment2D(point3,point4),new Segment2D(point4,point1)};
         for (int i = 0;i < bounds.length;i++){
             temp = bounds[i].getDistance(point);
-            if (temp.length()<distanceN){
-                distanceN = temp.length();
+            if (temp<distanceN){
+                distanceN = temp;
                 distance = temp;
             }
         }

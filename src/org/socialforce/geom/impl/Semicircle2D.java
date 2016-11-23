@@ -45,8 +45,8 @@ public class Semicircle2D implements Shape {
     }
 
     @Override
-    public Vector getDistance(Point point) {
-        if(bounding_box.getDistance(point).length() > bounding_circle.getDistance(point).length())
+    public double getDistance(Point point) {
+        if(bounding_box.getDistance(point) > bounding_circle.getDistance(point))
             return bounding_box.getDistance(point);
         else return bounding_circle.getDistance(point);
     }

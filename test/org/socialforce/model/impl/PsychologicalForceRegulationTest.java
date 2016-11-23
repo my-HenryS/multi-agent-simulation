@@ -27,11 +27,11 @@ public class PsychologicalForceRegulationTest {
     public void setUp() throws Exception {
         p = new PsychologicalForceRegulation(InteractiveEntity.class,Agent.class,model);
         initPoint = new Point2D(3,4);
-        initPoint2 = new Point2D(10,10);
+        initPoint2 = new Point2D(3,4.1);
         circle.moveTo(initPoint);
-        circle.setRadius(5);
+        circle.setRadius(0.243);
         circle2.moveTo(initPoint2);
-        circle2.setRadius(8);
+        circle2.setRadius(0.243);
         circle3.moveTo(initPoint2);
         circle3.setRadius(1);
         baseAgent = new BaseAgent(circle);
