@@ -133,14 +133,27 @@ public class Box2D implements Box {
      */
     @Override
     public Vector getDistance(Point point) {
+        Vector vector,temp;
+        Point2D a,b,c,d;
+        a = new Point2D(getStartPoint().getX(),getStartPoint().getY());
+        b = new Point2D(getStartPoint().getX(),getEndPoint().getY());
+        c = new Point2D(getEndPoint().getX(),getEndPoint().getY());
+        d = new Point2D(getEndPoint().getX(),getStartPoint().getY());
+
         if (contains(point)) {
-            return new Vector2D(0,0);
+            vector = new Segment2D(a,b).getDistance(point);
+            temp = new Segment2D(b,c).getDistance(point);
+            if (temp.length()<vector.length()){vector = temp;}
+            temp = new Segment2D(c,d).getDistance(point);
+            if (temp.length()<vector.length()){vector = temp;}
+            temp = new Segment2D(d,a).getDistance(point);
+            if (temp.length()<vector.length()){vector = temp;}
+            return vector;
         }
         double dsx = point.getX() - xmin;
         double dsy = point.getY() - ymin;
         double dex = point.getX() - xmax;
         double dey = point.getY() - ymax;
-        Vector vector;
         if (dsx > 0) {
             if (dsy > 0) {
                 if (dex > 0) {

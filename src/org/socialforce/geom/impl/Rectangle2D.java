@@ -93,8 +93,7 @@ public class Rectangle2D implements Shape {
         Point2D point1,point2,point3,point4;
         Vector distance = new Vector2D(0,0),temp;
         double distanceN = Double.POSITIVE_INFINITY;
-        if (contains(point)){return distance;}
-        else point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
+        point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
         point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
         point3 = new Point2D(center.getX()+length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
         point4 = new Point2D(center.getX()-length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
