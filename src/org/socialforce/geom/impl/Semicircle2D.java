@@ -44,6 +44,11 @@ public class Semicircle2D implements Shape {
         return bounding_box.contains(point) && bounding_circle.contains(point);
     }
 
+    /**
+     * 距离相等时返回距离半圆的距离
+     * @param point 将被检查的点.
+     * @return
+     */
     @Override
     public Vector getDistance(Point point) {
         if(bounding_box.getDistance(point).length() > bounding_circle.getDistance(point).length())

@@ -32,8 +32,8 @@ public class Box2DTest {
 
     @Test
     public void getDistance() throws Exception {
-        assertEquals(0,testBox.getDistance(a).length(),0);
-        assertEquals(new Vector2D(0,0),testBox.getDistance(a));
+        assertEquals(1,testBox.getDistance(a).length(),0);
+        assertEquals(new Vector2D(1,0),testBox.getDistance(a));
         assertEquals(5,testBox.getDistance(b).length(),0);
         assertEquals(new Vector2D(3,4),testBox.getDistance(b));
         assertEquals(5,testBox.getDistance(c).length(),0);

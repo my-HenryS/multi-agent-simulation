@@ -125,9 +125,9 @@ public class Box2D implements Box {
 
     /**
      * 获取点到形状的距离.
-     * 如果点在形状上，距离就是0.
+     * .
      * Double.NaN 表示空形状.
-     *
+     * 在内对角线上时，优先返回从向西开始逆时针的大小。
      * @param point 将被检查的点.
      * @return 距离. 如果点不能到形状上话，返回 Double.NaN .
      */
