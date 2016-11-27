@@ -20,6 +20,24 @@ public class SceneBoard extends JPanel {
         this.scene = scene;
     }
 
+    Scene scene;
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
+
+    BufferedImage image;
+
+    public void refresh() {
+        if(image != null) {
+            this.getGraphics().drawImage(image,0,0,null);
+        }
+    }
+
     /**
      * Calls the UI delegate's paint method, if the UI delegate
      * is non-<code>null</code>.  We pass the delegate a copy of the
@@ -49,24 +67,6 @@ public class SceneBoard extends JPanel {
      * @see #paint
      * @see ComponentUI
      */
-
-    Scene scene;
-
-    public BufferedImage getImage() {
-        return image;
-    }
-
-    public void setImage(BufferedImage image) {
-        this.image = image;
-    }
-
-    BufferedImage image;
-
-    public void refresh() {
-        if(image != null) {
-            this.getGraphics().drawImage(image,0,0,null);
-        }
-    }
 
     @Override
     protected void paintComponent(Graphics g) {
