@@ -18,6 +18,10 @@ public class SVSR_Exit implements SceneValue<ClipperShape[]> {
     protected ClipperShape[] exit;
     protected String name;
     protected SimpleSocialForceModel model = new SimpleSocialForceModel();
+    public SVSR_Exit(){}
+    public SVSR_Exit(ClipperShape[] exit){
+        this.exit = exit;
+    }
 
     /**
      * 获取所关联的实体名称。
