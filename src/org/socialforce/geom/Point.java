@@ -38,4 +38,6 @@ public interface Point extends Vector {
     Point moveTo(double x, double y);
 
     Point moveBy(double x, double y);
+
+    Point scaleBy(double s);
 }

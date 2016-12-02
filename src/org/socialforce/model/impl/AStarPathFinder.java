@@ -21,7 +21,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * 测试基本补充完全
  */
 public class AStarPathFinder implements PathFinder {
-    static final int min_div = 1;
+    static final double min_div = 1;
     private double map[][];
     double distance[][];
     Point previous[][];
@@ -75,9 +75,9 @@ public class AStarPathFinder implements PathFinder {
                 previous[i][j] = temp;
             }
         }
-        goal.moveBy(-delta_x, -delta_y);
+        goal.moveBy(-delta_x, -delta_y).scaleBy(1/min_div);
         agent.getShape().getReferencePoint().moveBy(-delta_x, -delta_y);
-        start_point = new Point2D((int) agent.getShape().getReferencePoint().getX(), (int) agent.getShape().getReferencePoint().getY());
+        start_point = new Point2D((int) (agent.getShape().getReferencePoint().getX()/min_div), (int) (agent.getShape().getReferencePoint().getY()/min_div));
     }
 
     public Path plan(Scene targetScene, Agent agent, Point goal){             //接口有待讨论 先做一个假实现
@@ -87,11 +87,11 @@ public class AStarPathFinder implements PathFinder {
     public double[][] map_initiate() {
         double x_range = scene.getBounds().getEndPoint().getX() - scene.getBounds().getStartPoint().getX(),
                 y_range = scene.getBounds().getEndPoint().getY() - scene.getBounds().getStartPoint().getY();
-        double[][] map = new double[(int) x_range / min_div][(int) y_range / min_div];
+        double[][] map = new double[(int)(x_range / min_div)][(int) (y_range / min_div)];
         EntityPool all_blocks = scene.getStaticEntities();
         Shape agent_shape = agent.getShape().clone();
-        for (int i = 0; i < (int) x_range / min_div; i++) {
-            for (int j = 0; j < (int) y_range / min_div; j++) {
+        for (int i = 0; i < (int) (x_range / min_div); i++) {
+            for (int j = 0; j < (int) (y_range / min_div); j++) {
                 map[i][j] = 0;
                 for (InteractiveEntity entity : all_blocks) {
                     agent_shape.moveTo(new Point2D(i, j));
@@ -124,11 +124,20 @@ public class AStarPathFinder implements PathFinder {
             point_stack.push(curr_point);
         }
         Point[] goals = new Point[point_stack.size()];
-        for(int i = 0; i<goals.length; i++){
-            goals[i] = point_stack.pop().moveBy(delta_x, delta_y);
+        AStarPath path;
+        if(scene!=null){
+            for(int i = 0; i<goals.length; i++){
+                goals[i] = point_stack.pop().scaleBy(min_div).moveBy(delta_x, delta_y);
+            }
+            path = new AStarPath(goals);
+            send_back();
         }
-        AStarPath path = new AStarPath(goals);
-        if(scene!=null) send_back();
+        else{
+            for(int i = 0; i<goals.length; i++){
+                goals[i] = point_stack.pop();
+            }
+            path = new AStarPath(goals);
+        }
         return path;
     }
 
@@ -161,7 +170,7 @@ public class AStarPathFinder implements PathFinder {
         for (InteractiveEntity entity : all_blocks) {
             entity.getShape().moveTo(entity.getShape().getReferencePoint().moveBy(delta_x, delta_y));
         }
-        goal.moveBy(delta_x, delta_y);
+        goal.moveBy(delta_x, delta_y).scaleBy(min_div);
         agent.getShape().getReferencePoint().moveBy(delta_x, delta_y);
     }
 }
