@@ -36,7 +36,7 @@ public class SimpleSceneParameter implements SceneParameter {
      * 我有点怀疑这个是不是设计的初衷，先mark
      * 应该是个ValueSet？
      */
-    protected LinkedList<SceneValue> values;
+    protected LinkedList<SceneValue> values = new LinkedList<>();
     public void addValue(SceneValue value){
         if (isValid(value)){
             values.addLast(value);

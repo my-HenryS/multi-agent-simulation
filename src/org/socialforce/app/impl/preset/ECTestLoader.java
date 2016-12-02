@@ -30,7 +30,7 @@ public class ECTestLoader implements SceneLoader {
     public Scene readScene() {
         Scene scene = new SimpleScene(new Box2D(-50, -50, 100, 100));
         Wall[] walls = new Wall[]{
-                new Wall(new Box2D(new Point2D(0, 0), new Point2D(1, 20))),
+                new Wall(new Box2D(new Point2D(0, 0), new Point2D(20, 1))),
         };
         for (int i = 0;i<walls.length;i++) {
             walls[i].setName("wall" + i);

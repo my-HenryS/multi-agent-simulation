@@ -72,7 +72,7 @@ public class ApplicationForECTest implements SocialForceApplication {
     }
 
     protected ParameterSet parameterSet;//目前先不用这个，之后肯定要用
-    protected LinkedList<SceneParameter> parameters;
+    protected LinkedList<SceneParameter> parameters = new LinkedList<>();
 
     public void SetUpParameter(){
         SimpleSceneParameter parameter = new SimpleSceneParameter();
@@ -129,7 +129,7 @@ public class ApplicationForECTest implements SocialForceApplication {
     public Iterable<Scene> getAllScenes() {
         return scenes;
     }
-    protected LinkedList<Scene> scenes;
+    protected LinkedList<Scene> scenes = new LinkedList<>();
 
     /**
      * get the application listener for the application.
