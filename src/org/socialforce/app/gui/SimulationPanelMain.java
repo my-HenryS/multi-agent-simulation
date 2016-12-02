@@ -1,9 +1,8 @@
 package org.socialforce.app.gui;
 
-import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import org.socialforce.app.ApplicationListener;
 import org.socialforce.app.Scene;
-import org.socialforce.app.SimpleApplication;
+import org.socialforce.app.Applications.SimpleApplication;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.model.Agent;
 

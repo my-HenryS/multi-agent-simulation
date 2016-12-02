@@ -1,13 +1,20 @@
-package org.socialforce.app;
+package org.socialforce.app.impl;
+
+import org.socialforce.app.SceneValue;
+import org.socialforce.app.ValueSet;
 
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by Whatever on 2016/10/22.
+ * Created by Whatever on 2016/12/2.
+ * 老老实实用dictionary能死系列
  */
-public class SimpleParameterSet implements ParameterSet{
+public class SimpleValueSet implements ValueSet {
+    protected LinkedList<String> key = new LinkedList<>();
+    protected LinkedList<SceneValue> values = new LinkedList<>();
     /**
      * Returns the number of key-value mappings in this map.  If the
      * map contains more than <tt>Integer.MAX_VALUE</tt> elements, returns
@@ -17,7 +24,7 @@ public class SimpleParameterSet implements ParameterSet{
      */
     @Override
     public int size() {
-        return 0;
+        return values.size();
     }
 
     /**
@@ -27,7 +34,7 @@ public class SimpleParameterSet implements ParameterSet{
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return values.isEmpty();
     }
 
     /**
@@ -49,7 +56,7 @@ public class SimpleParameterSet implements ParameterSet{
      */
     @Override
     public boolean containsKey(Object key) {
-        return false;
+        return this.key.contains(key);
     }
 
     /**
@@ -72,7 +79,7 @@ public class SimpleParameterSet implements ParameterSet{
      */
     @Override
     public boolean containsValue(Object value) {
-        return false;
+        return this.values.contains(value);
     }
 
     /**
@@ -101,8 +108,11 @@ public class SimpleParameterSet implements ParameterSet{
      *                              (<a href="{@docRoot}/java/util/Collection.html#optional-restrictions">optional</a>)
      */
     @Override
-    public SceneParameter get(Object key) {
-        return null;
+    public SceneValue get(Object key) {
+        if (containsKey(key)){
+            return null;
+        }
+        else return null;
     }
 
     /**
@@ -130,7 +140,7 @@ public class SimpleParameterSet implements ParameterSet{
      *                                       or value prevents it from being stored in this map
      */
     @Override
-    public SceneParameter put(String key, SceneParameter value) {
+    public SceneValue put(String key, SceneValue value) {
         return null;
     }
 
@@ -165,7 +175,7 @@ public class SimpleParameterSet implements ParameterSet{
      *                                       (<a href="{@docRoot}/java/util/Collection.html#optional-restrictions">optional</a>)
      */
     @Override
-    public SceneParameter remove(Object key) {
+    public SceneValue remove(Object key) {
         return null;
     }
 
@@ -189,7 +199,7 @@ public class SimpleParameterSet implements ParameterSet{
      *                                       the specified map prevents it from being stored in this map
      */
     @Override
-    public void putAll(Map<? extends String, ? extends SceneParameter> m) {
+    public void putAll(Map<? extends String, ? extends SceneValue> m) {
 
     }
 
@@ -241,7 +251,7 @@ public class SimpleParameterSet implements ParameterSet{
      * @return a collection view of the values contained in this map
      */
     @Override
-    public Collection<SceneParameter> values() {
+    public Collection<SceneValue> values() {
         return null;
     }
 
@@ -262,7 +272,7 @@ public class SimpleParameterSet implements ParameterSet{
      * @return a set view of the mappings contained in this map
      */
     @Override
-    public Set<Entry<String, SceneParameter>> entrySet() {
+    public Set<Entry<String, SceneValue>> entrySet() {
         return null;
     }
 }

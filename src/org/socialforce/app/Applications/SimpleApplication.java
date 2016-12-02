@@ -1,5 +1,6 @@
-package org.socialforce.app;
+package org.socialforce.app.Applications;
 
+import org.socialforce.app.*;
 import org.socialforce.app.impl.preset.SVSR_AgentGenerator;
 import org.socialforce.app.impl.preset.SVSR_Exit;
 import org.socialforce.app.impl.preset.SVSR_SafetyRegion;

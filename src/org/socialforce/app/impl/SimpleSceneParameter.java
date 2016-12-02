@@ -34,6 +34,7 @@ public class SimpleSceneParameter implements SceneParameter {
     /**
      * 这个真的没问题么……
      * 我有点怀疑这个是不是设计的初衷，先mark
+     * 应该是个ValueSet？
      */
     protected LinkedList<SceneValue> values;
     public void addValue(SceneValue value){
