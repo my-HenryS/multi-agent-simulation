@@ -2,10 +2,7 @@ package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
 import org.socialforce.app.impl.SimpleSceneParameter;
-import org.socialforce.app.impl.preset.ECTestLoader;
-import org.socialforce.app.impl.preset.SVSR_AgentGenerator;
-import org.socialforce.app.impl.preset.SVSR_Exit;
-import org.socialforce.app.impl.preset.SVSR_SafetyRegion;
+import org.socialforce.app.impl.preset.*;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Semicircle2D;
@@ -58,6 +55,7 @@ public class ApplicationForECTest implements SocialForceApplication {
         {
             SceneParameter parameter = iterator.next();
             SceneLoader loader = new ECTestLoader();
+            //SceneLoader loader = new SquareRoomLoader();
             Scene scene = loader.readScene();
             if (parameter instanceof SimpleSceneParameter){
                 while (true){

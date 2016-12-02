@@ -32,7 +32,8 @@ public class SimulationPanelMain implements ApplicationListener {
         try {
             JFrame frame = new JFrame("SimulationPanelMain");
             SimulationPanelMain mainPanel = new SimulationPanelMain();
-            ApplicationForECTest application = new ApplicationForECTest();//应用在这里！
+            //ApplicationForECTest application = new ApplicationForECTest();//应用在这里！
+            SimpleApplication application = new SimpleApplication();
             application.setApplicationListener(mainPanel);
             frame.setContentPane(mainPanel.root);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
