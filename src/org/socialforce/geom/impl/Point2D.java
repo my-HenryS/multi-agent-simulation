@@ -35,11 +35,18 @@ public class Point2D extends Vector2D implements Point {
      * @return 距离.
      */
     @Override
-    public Vector distanceTo(Point other) {
+    public double distanceTo(Point other) {
         double dx = this.getX() - other.getX();
         double dy = this.getY() - other.getY();
-        return new Vector2D(-dx,-dy);
+        return new Vector2D(-dx,-dy).length();
     }
+
+    public Vector directionTo(Point other){
+        double dx = this.getX() - other.getX();
+        double dy = this.getY() - other.getY();
+        return new Vector2D(-dx,-dy).getRefVector();
+    }
+
 
     @Override
     public Point moveTo(double x, double y) {
