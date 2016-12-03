@@ -132,20 +132,69 @@ public class Box2D implements Box {
      * @return 距离. 如果点不能到形状上话，返回 Double.NaN .
      */
     @Override
-    public Vector getDistance(Point point) {
-        if (contains(point)) {
-            return new Vector2D(0,0);
-        }
+    public double getDistance(Point point) {
         double dsx = point.getX() - xmin;
         double dsy = point.getY() - ymin;
         double dex = point.getX() - xmax;
         double dey = point.getY() - ymax;
-        Vector vector;
+        if (contains(point)) {
+            return -Math.min(Math.min(dsx,dsy), Math.min(dex,dey));
+        }
         if (dsx > 0) {
             if (dsy > 0) {
                 if (dex > 0) {
                     if (dey > 0) {
-                        vector = point.distanceTo(new Point2D(xmax, ymax));
+                        return point.distanceTo(new Point2D(xmax, ymax));
+                    } else { // dey <= 0
+                        return dex;
+                    }
+                } else { // dex <= 0
+                    return dey;
+                }
+            } else { // dsy <= 0
+                if (dex > 0) {
+                    return point.distanceTo(new Point2D(xmax, ymin));
+                } else { // dex <= 0
+                    return dsy;
+                }
+            }
+        } else { // dsx <= 0
+            if (dsy > 0) {
+                if (dey > 0) {
+                    return point.distanceTo(new Point2D(xmin, ymax));
+                } else { // dey <= 0
+                    return dsx;
+                }
+            } else { // dsy <= 0
+                return point.distanceTo(new Point2D(xmin, ymin));
+            }
+        }
+        //return Double.NaN;
+    }
+
+    public Vector getDirection(Point point){
+        Vector vector,temp;
+        Point2D a,b,c,d;
+        a = new Point2D(getStartPoint().getX(),getStartPoint().getY());
+        b = new Point2D(getStartPoint().getX(),getEndPoint().getY());
+        c = new Point2D(getEndPoint().getX(),getEndPoint().getY());
+        d = new Point2D(getEndPoint().getX(),getStartPoint().getY());
+        double dsx = point.getX() - xmin;
+        double dsy = point.getY() - ymin;
+        double dex = point.getX() - xmax;
+        double dey = point.getY() - ymax;
+        if (contains(point)) {
+            double result = Math.min(Math.min(dsx,dsy), Math.min(dex,dey));
+            if(result == new Segment2D(a,b).getDistance(point)) return new Segment2D(a,b).getDirection(point);
+            if(result == new Segment2D(b,c).getDistance(point)) return new Segment2D(b,c).getDirection(point);
+            if(result == new Segment2D(c,d).getDistance(point)) return new Segment2D(c,d).getDirection(point);
+            if(result == new Segment2D(d,a).getDistance(point)) return new Segment2D(d,a).getDirection(point);
+        }
+        if (dsx > 0) {
+            if (dsy > 0) {
+                if (dex > 0) {
+                    if (dey > 0) {
+                        vector = point.directionTo(new Point2D(xmax, ymax));
                         vector.scale(-1);
                         return vector;
                     } else { // dey <= 0
@@ -156,7 +205,7 @@ public class Box2D implements Box {
                 }
             } else { // dsy <= 0
                 if (dex > 0) {
-                    vector = point.distanceTo(new Point2D(xmax, ymin));
+                    vector = point.directionTo(new Point2D(xmax, ymin));
                     vector.scale(-1);
                     return vector;
                 } else { // dex <= 0
@@ -166,14 +215,14 @@ public class Box2D implements Box {
         } else { // dsx <= 0
             if (dsy > 0) {
                 if (dey > 0) {
-                    vector = point.distanceTo(new Point2D(xmin, ymax));
+                    vector = point.directionTo(new Point2D(xmin, ymax));
                     vector.scale(-1);
                     return vector;
                 } else { // dey <= 0
                     return new Vector2D(dsx,0);
                 }
             } else { // dsy <= 0
-                vector = point.distanceTo(new Point2D(xmin, ymin));
+                vector = point.directionTo(new Point2D(xmin, ymin));
                 vector.scale(-1);
                 return vector;
             }
