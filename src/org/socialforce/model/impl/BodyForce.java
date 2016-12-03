@@ -46,7 +46,7 @@ public class BodyForce implements ForceRegulation{
         slidingForce = k2*g*distance*t.dot(tempVector);
         n.scale(-bodyForce);
         t.scale(slidingForce);
-        n.add(t);
+        //n.add(t);
         n.get(temp);
         return new Force2D(temp[0],temp[1]);
     }

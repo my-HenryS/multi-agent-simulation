@@ -138,7 +138,7 @@ public class Box2D implements Box {
         double dex = point.getX() - xmax;
         double dey = point.getY() - ymax;
         if (contains(point)) {
-            return -Math.min(Math.min(dsx,dsy), Math.min(dex,dey));
+            return -Math.min(Math.min(Math.abs(dsx),Math.abs(dsy)), Math.min(Math.abs(dex),Math.abs(dey)));
         }
         if (dsx > 0) {
             if (dsy > 0) {
@@ -146,16 +146,16 @@ public class Box2D implements Box {
                     if (dey > 0) {
                         return point.distanceTo(new Point2D(xmax, ymax));
                     } else { // dey <= 0
-                        return dex;
+                        return Math.abs(dex);
                     }
                 } else { // dex <= 0
-                    return dey;
+                    return Math.abs(dey);
                 }
             } else { // dsy <= 0
                 if (dex > 0) {
                     return point.distanceTo(new Point2D(xmax, ymin));
                 } else { // dex <= 0
-                    return dsy;
+                    return Math.abs(dsy);
                 }
             }
         } else { // dsx <= 0
@@ -163,7 +163,7 @@ public class Box2D implements Box {
                 if (dey > 0) {
                     return point.distanceTo(new Point2D(xmin, ymax));
                 } else { // dey <= 0
-                    return dsx;
+                    return Math.abs(dsx);
                 }
             } else { // dsy <= 0
                 return point.distanceTo(new Point2D(xmin, ymin));
@@ -184,7 +184,7 @@ public class Box2D implements Box {
         double dex = point.getX() - xmax;
         double dey = point.getY() - ymax;
         if (contains(point)) {
-            double result = Math.min(Math.min(dsx,dsy), Math.min(dex,dey));
+            double result = Math.min(Math.min(Math.abs(dsx),Math.abs(dsy)), Math.min(Math.abs(dex),Math.abs(dey)));
             if(result == new Segment2D(a,b).getDistance(point)) return new Segment2D(a,b).getDirection(point);
             if(result == new Segment2D(b,c).getDistance(point)) return new Segment2D(b,c).getDirection(point);
             if(result == new Segment2D(c,d).getDistance(point)) return new Segment2D(c,d).getDirection(point);
@@ -198,10 +198,10 @@ public class Box2D implements Box {
                         vector.scale(-1);
                         return vector;
                     } else { // dey <= 0
-                        return new Vector2D(dex,0);
+                        return new Vector2D(dex,0).getRefVector();
                     }
                 } else { // dex <= 0
-                    return new Vector2D(0,dey);
+                    return new Vector2D(0,dey).getRefVector();
                 }
             } else { // dsy <= 0
                 if (dex > 0) {
@@ -209,7 +209,7 @@ public class Box2D implements Box {
                     vector.scale(-1);
                     return vector;
                 } else { // dex <= 0
-                    return new Vector2D(0,dsy);
+                    return new Vector2D(0,dsy).getRefVector();
                 }
             }
         } else { // dsx <= 0
@@ -219,7 +219,7 @@ public class Box2D implements Box {
                     vector.scale(-1);
                     return vector;
                 } else { // dey <= 0
-                    return new Vector2D(dsx,0);
+                    return new Vector2D(dsx,0).getRefVector();
                 }
             } else { // dsy <= 0
                 vector = point.directionTo(new Point2D(xmin, ymin));

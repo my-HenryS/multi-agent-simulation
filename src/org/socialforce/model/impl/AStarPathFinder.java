@@ -21,7 +21,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * 测试基本补充完全
  */
 public class AStarPathFinder implements PathFinder {
-    static final double min_div = 0.5;
+    static final double min_div = 0.25;
     private double map[][];
     double distance[][];
     Point previous[][];
@@ -149,8 +149,8 @@ public class AStarPathFinder implements PathFinder {
                 if(i==x && j==y) continue;
                 if(i==start.getX() && j==start.getY()) continue;
                 Point tmp_point = new Point2D(i,j);
-                if(available(i,j) && map[i][j]==0 && (distance[i][j]==0 || distance[i][j] > distance[x][y]+center.distanceTo(tmp_point).length() )){
-                    distance[i][j] = distance[x][y]+center.distanceTo(tmp_point).length();
+                if(available(i,j) && map[i][j]==0 && (distance[i][j]==0 || distance[i][j] > distance[x][y]+center.distanceTo(tmp_point) )){
+                    distance[i][j] = distance[x][y]+center.distanceTo(tmp_point);
                     point_set.add(tmp_point);
                     previous[i][j] = center;
                 }

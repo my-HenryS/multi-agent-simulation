@@ -67,7 +67,7 @@ public class Rectangle2D implements Shape {
         double temp = angle;
         boolean result = false;
         Vector2D distance = (Vector2D) center.directionTo(point);
-        distance.scale(center.distanceTo(point));
+        distance.scale(Math.abs(center.distanceTo(point)));
         rectangle2D.spin(-temp);
         distance.spin(-temp);
         bound = rectangle2D.getBounds();
@@ -77,6 +77,8 @@ public class Rectangle2D implements Shape {
             result = true;
         }
         return result;
+
+
     }
 
     /**
@@ -106,6 +108,7 @@ public class Rectangle2D implements Shape {
                 distance = bounds[i].getDirection(point);
             }
         }
+        if(contains(point)) distanceN = -distanceN;
         return distanceN;
     }
 

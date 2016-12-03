@@ -101,15 +101,15 @@ public class SimpleApplication implements SocialForceApplication {
             agent = (Agent) iter.next();
             goal = new Point2D(-3, 8);
             temp = new Point2D(13, -3);
-            if (temp.distanceTo(agent.getShape().getReferencePoint()).length() < goal.distanceTo(agent.getShape().getReferencePoint()).length()) {
+            if (temp.distanceTo(agent.getShape().getReferencePoint()) < goal.distanceTo(agent.getShape().getReferencePoint())) {
                 goal = temp;
             }
             temp = new Point2D(13, 20);
-            if (temp.distanceTo(agent.getShape().getReferencePoint()).length() < goal.distanceTo(agent.getShape().getReferencePoint()).length()) {
+            if (temp.distanceTo(agent.getShape().getReferencePoint()) < goal.distanceTo(agent.getShape().getReferencePoint())) {
                 goal = temp;
             }
             temp = new Point2D(30, 9);
-            if (temp.distanceTo(agent.getShape().getReferencePoint()).length() < goal.distanceTo(agent.getShape().getReferencePoint()).length()) {
+            if (temp.distanceTo(agent.getShape().getReferencePoint()) < goal.distanceTo(agent.getShape().getReferencePoint())) {
                 goal = temp;
             }
             switch ((int) goal.getY()) {
@@ -134,7 +134,7 @@ public class SimpleApplication implements SocialForceApplication {
         while (!singleScene.getAllAgents().isEmpty()) {
             singleScene.stepNext();
             try {
-                Thread.sleep(100);
+                Thread.sleep(0);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
