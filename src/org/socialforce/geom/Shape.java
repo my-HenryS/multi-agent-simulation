@@ -33,7 +33,9 @@ public interface Shape extends Serializable, Cloneable, DimensionEntity, Drawabl
      * @param point 将被检查的点.
      * @return 该距离. 如果这个点到不了这个形状上的话，返回 Double.NaN .
      */
-    Vector getDistance(Point point);
+    double getDistance(Point point);
+
+    Vector getDirection(Point point);
 
     /**
      * 获取该形状的参考点.
