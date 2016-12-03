@@ -28,7 +28,7 @@ public class BaseAgent extends Entity implements Agent {
         this.currTimestamp = 0;
         this.currVelocity = new Velocity2D(0, 0);
         this.mass = 50;
-        Circle2D circle = new Circle2D(shape.getReferencePoint(),2);
+        Circle2D circle = new Circle2D(shape.getReferencePoint(),6);
         this.view = circle;
     }
 
@@ -128,6 +128,11 @@ public class BaseAgent extends Entity implements Agent {
             }
             deltaV = this.pushed.deltaVelocity(mass, dt * model.getTimePerStep());
             deltaS = deltaV.deltaDistance(dt * model.getTimePerStep());
+            if(pushed.length()>10000) {
+                System.out.println(pushed.length());
+                System.out.println(deltaV.length());
+                System.out.println(deltaS.length());
+            }
             this.currTimestamp = currSteps;
             return deltaS;
         } else {
