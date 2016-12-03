@@ -11,6 +11,7 @@ import org.socialforce.model.PathFinder;
 import org.socialforce.model.SocialForceModel;
 import org.socialforce.model.impl.AStarPathFinder;
 import org.socialforce.model.impl.SimpleSocialForceModel;
+import org.socialforce.model.impl.StraightPath;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -92,7 +93,8 @@ public class ApplicationForECTest implements SocialForceApplication {
                  goal = new Point2D(10, 8);
             //agent.setPath(new StraightPath(agent.getShape().getReferencePoint(), goal));
             //System.out.println(agent.getPath().toString());
-            agent.setPath(new AStarPathFinder(scene, agent, goal).plan_for());
+           // agent.setPath(new AStarPathFinder(scene, agent, goal).plan_for());
+                agent.setPath(new StraightPath(new Point2D(9,8), goal));
              }
         }
     }
