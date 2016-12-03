@@ -21,7 +21,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * 测试基本补充完全
  */
 public class AStarPathFinder implements PathFinder {
-    static final double min_div = 1;
+    static final double min_div = 0.5;
     private double map[][];
     double distance[][];
     Point previous[][];
