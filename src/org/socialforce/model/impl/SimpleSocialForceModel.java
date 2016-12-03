@@ -14,8 +14,8 @@ import java.util.List;
  * Created by Ledenel on 2016/8/17.
  */
 public class SimpleSocialForceModel implements SocialForceModel {
-    public static final double TIME_PER_STEP = 0.1;
-    public static final double AGENT_VIEW_RADIUS = 6;
+    public static final double TIME_PER_STEP = 0.03;
+    public static final double AGENT_VIEW_RADIUS = 2;
     public static final double EXPECTED_SPEED = 1.4;
     public static final double REACT_TIME = 0.4;
     public static final int STATIC_TYPE_WALL = 0;
@@ -28,7 +28,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
         regulations = new LinkedList<>();
         regulations.add(new PsychologicalForceRegulation(InteractiveEntity.class, Agent.class, this));
         regulations.add(new BodyForce());
-        regulations.add(new WallForce());
+        //regulations.add(new WallForce());
     }
 
     /**
