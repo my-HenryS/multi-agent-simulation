@@ -128,11 +128,6 @@ public class BaseAgent extends Entity implements Agent {
             }
             deltaV = this.pushed.deltaVelocity(mass, dt * model.getTimePerStep());
             deltaS = deltaV.deltaDistance(dt * model.getTimePerStep());
-            if(pushed.length()>10000) {
-                System.out.println(pushed.length());
-                System.out.println(deltaV.length());
-                System.out.println(deltaS.length());
-            }
             this.currTimestamp = currSteps;
             return deltaS;
         } else {
