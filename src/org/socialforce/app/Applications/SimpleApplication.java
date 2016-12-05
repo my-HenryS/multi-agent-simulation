@@ -29,9 +29,9 @@ public class SimpleApplication implements SocialForceApplication {
 
     public void SetUp() {
         SVSR_Exit exit = new SVSR_Exit();
-        SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(1, 1, 1, new Circle2D(new Point2D(13,6),7));
+        SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(1, 2, 1, new Circle2D(new Point2D(13,6),7));
         SVSR_SafetyRegion safetyRegion = new SVSR_SafetyRegion();
-        exit.setValue((new Box2D[]{new Box2D(-1, 5, 4, 6), new Box2D(10, -1, 6, 4), new Box2D(10, 14, 6, 4), new Box2D(24, 6, 4, 6)}));
+        exit.setValue((new Box2D[]{new Box2D(-1, 5, 4, 3), new Box2D(10, -1, 3, 4), new Box2D(10, 14, 3, 4), new Box2D(24, 6, 4, 3)}));
         exit.apply(singleScene);
         agentGenerator.apply(singleScene);
         safetyRegion.setValue(new SafetyRegion(new Box2D(-2, 5, -4, 6)));

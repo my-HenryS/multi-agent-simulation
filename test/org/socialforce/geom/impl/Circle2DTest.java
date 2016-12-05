@@ -57,7 +57,7 @@ public class Circle2DTest {
     @Test
     public void testDistanceBetweenShapes() throws Exception {
         assertEquals(Math.sqrt(2) * 4 - 5,circleTest.distanceTo(new Segment2D(a,new Point2D(-1,-1))),1e-7);
-        assertEquals(new Vector2D(0.6,0.8),circleTest.directionTo(new Box2D(9,12,6,7)));
+        assertEquals(new Vector2D(-0.6,-0.8),circleTest.directionTo(new Box2D(9,12,6,7)));
     }
 
     @Test

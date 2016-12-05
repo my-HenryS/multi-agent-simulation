@@ -24,6 +24,8 @@ public interface SocialForceModel {
      */
     double getTimePerStep();
 
+    void setTimePerStep(double t);
+
     /**
      * 获取agent的视域范围。
      *

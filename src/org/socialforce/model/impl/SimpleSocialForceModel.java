@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Ledenel on 2016/8/17.
  */
 public class SimpleSocialForceModel implements SocialForceModel {
-    public static final double TIME_PER_STEP = 0.03;
+    double TIME_PER_STEP = 0.03;
     public static final double AGENT_VIEW_RADIUS = 2;
     public static final double EXPECTED_SPEED = 1.4;
     public static final double REACT_TIME = 0.4;
@@ -39,6 +39,11 @@ public class SimpleSocialForceModel implements SocialForceModel {
     @Override
     public double getTimePerStep() {
         return TIME_PER_STEP;
+    }
+
+    @Override
+    public void setTimePerStep(double t) {
+        TIME_PER_STEP = t;
     }
 
     /**
