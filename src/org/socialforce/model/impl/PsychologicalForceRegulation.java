@@ -10,7 +10,7 @@ import org.socialforce.model.*;
 
 public class PsychologicalForceRegulation extends TypeMatchRegulation<InteractiveEntity, Agent> {
 
-    public static final double A = 2000;
+    public static final double A = 1000;
     public static final double B = 0.18;
 
     /**
@@ -33,7 +33,8 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Interactiv
      */
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
-        return super.hasForce(source, target) && source instanceof Blockable;
+        return super.hasForce(source, target) && source instanceof Blockable &&
+        ((Agent) target).getView().intersects(source.getShape());
     }
 
     /**
