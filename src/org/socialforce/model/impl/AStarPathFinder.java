@@ -94,7 +94,7 @@ public class AStarPathFinder implements PathFinder {
             for (int j = 0; j < (int) (y_range / min_div); j++) {
                 map[i][j] = 0;
                 for (InteractiveEntity entity : all_blocks) {
-                    agent_shape.moveTo(new Point2D(i, j));
+                    agent_shape.moveTo(new Point2D(i*min_div, j*min_div));
                     //assert( == entity.getShape().getClass());
                     if (!(entity instanceof SafetyRegion) && agent_shape.hits((Box) entity.getShape())) {
                         map[i][j] = 1;
