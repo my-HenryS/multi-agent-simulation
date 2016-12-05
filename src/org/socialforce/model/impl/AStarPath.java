@@ -44,7 +44,7 @@ public class AStarPath implements Path {
      */
     @Override
     public Point getCurrentGoal(Point current) {
-        while (reached < goals.length && goals[reached].epsilonEquals(current,0.5)) {
+        while (reached < goals.length && goals[reached].epsilonEquals(current,AStarPathFinder.min_div)) {
             reached++;
         }
         if(done()) {
