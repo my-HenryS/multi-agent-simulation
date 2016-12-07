@@ -13,11 +13,8 @@ import org.socialforce.geom.Point;
 public interface PathFinder {
 
     /**
-     * 从起点到目标点之间产生一条路径。
-     * @param targetScene 路径所在的场景。
-     * @param agent 需要规划的Agent。
-     * @param goal Agent的目标点。
+     * 获取Pathfinder为Agent生成的路径。
      * @return 搜索出的路径。
      */
-    Path plan(Scene targetScene, Agent agent, Point goal);
+    Path plan_for();
 }
