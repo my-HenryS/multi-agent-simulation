@@ -10,8 +10,8 @@ import org.socialforce.model.*;
 
 public class PsychologicalForceRegulation extends TypeMatchRegulation<InteractiveEntity, Agent> {
 
-    public static final double A = 0.3;
-    public static final double B = 0.18;
+    public static final double A = 3000;
+    public static final double B = 0.08;
 
     /**
      *TODO regulate 是翻译成调节还是控制，还是计算的意思？
@@ -33,7 +33,8 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Interactiv
      */
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
-        return super.hasForce(source, target) && source instanceof Blockable;
+        return super.hasForce(source, target) && source instanceof Blockable &&
+        ((Agent) target).getView().intersects(source.getShape());
     }
 
     /**
@@ -45,9 +46,8 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Interactiv
     @Override
     public Force getForce(InteractiveEntity source, Agent target) {
         Force force = model.zeroForce();
-        force.add(target.getShape().getReferencePoint());
-        force.sub(source.getShape().getReferencePoint());
-        double scale = A * Math.exp(- target.getShape().distanceTo(source.getShape()).length() / B);
+        force.add((target.getShape()).directionTo(source.getShape()));
+        double scale = A * Math.exp(- target.getShape().distanceTo(source.getShape()) / B);
         force.scale(scale / force.length());
         return force;
     }

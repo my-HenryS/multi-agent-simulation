@@ -44,7 +44,7 @@ public class AStarPath implements Path {
      */
     @Override
     public Point getCurrentGoal(Point current) {
-        while (reached < goals.length && goals[reached].epsilonEquals(current,10e-1-0.001)) {
+        while (reached < goals.length && goals[reached].epsilonEquals(current,AStarPathFinder.min_div)) {
             reached++;
         }
         if(done()) {
@@ -61,13 +61,6 @@ public class AStarPath implements Path {
     @Override
     public boolean done() {
         return reached >= goals.length;
-    }
-
-    public Path moveBy(double x, double y){
-        for(int i =0; i<goals.length; i++){
-            goals[i].moveBy(x,y);
-        }
-        return this;
     }
 
     public String toString(){

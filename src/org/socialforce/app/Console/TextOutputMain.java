@@ -1,8 +1,9 @@
 package org.socialforce.app.Console;
 
 import org.socialforce.app.ApplicationListener;
+import org.socialforce.app.Applications.ApplicationForECTest;
 import org.socialforce.app.Scene;
-import org.socialforce.app.SimpleApplication;
+import org.socialforce.app.Applications.SimpleApplication;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
@@ -15,7 +16,7 @@ import org.socialforce.model.InteractiveEntity;
 public class TextOutputMain implements ApplicationListener {
     public static void main(String[] args) {
         TextOutputMain TextOutputMain = new TextOutputMain();
-        TextOutputMain.setApplication(new SimpleApplication());
+        TextOutputMain.setApplication(new ApplicationForECTest());//改应用在这里！
         TextOutputMain.getApplication().setApplicationListener(TextOutputMain);
         TextOutputMain.getApplication().start();
     }

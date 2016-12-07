@@ -5,11 +5,20 @@ package org.socialforce.geom;
  */
 public interface DistanceShape extends Shape {
     /**
-     * 获取该形状与其他形状的距离矢量.
-     * 方向指向目标形状
+     * 获取该形状与其他形状的距离.
+     * 相交则为负
+     * @param other 另一个形状
      * @return 距离.
      */
-    Vector distanceTo(Shape other);
+    double distanceTo(Shape other);
+
+    /**
+     * 获取该形状与其他形状的距离矢量.
+     * 方向指向目标形状
+     * @param other 另一个形状
+     * @return 距离矢量.
+     */
+    Vector directionTo(Shape other);
 
     /**
      * 判断该形状是否与另一个形状严格相交。

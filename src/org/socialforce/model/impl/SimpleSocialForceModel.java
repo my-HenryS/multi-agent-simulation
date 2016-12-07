@@ -14,14 +14,13 @@ import java.util.List;
  * Created by Ledenel on 2016/8/17.
  */
 public class SimpleSocialForceModel implements SocialForceModel {
-    public static final double TIME_PER_STEP = 0.1;
+    double TIME_PER_STEP = 0.002;
     public static final double AGENT_VIEW_RADIUS = 6;
-    public static final double EXPECTED_SPEED = 1.4;
-    public static final double REACT_TIME = 0.4;
+    public static final double EXPECTED_SPEED = 2;
+    public static final double REACT_TIME = 0.5;
     public static final int STATIC_TYPE_WALL = 0;
     public static final int STATIC_TYPE_GATE = 1;
 
-    public static final double AGENT_SIZE = 0.486;
 
     protected List<ForceRegulation> regulations;
 
@@ -29,7 +28,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
         regulations = new LinkedList<>();
         regulations.add(new PsychologicalForceRegulation(InteractiveEntity.class, Agent.class, this));
         regulations.add(new BodyForce());
-        regulations.add(new WallForce());
+        //regulations.add(new WallForce());
     }
 
     /**
@@ -40,6 +39,11 @@ public class SimpleSocialForceModel implements SocialForceModel {
     @Override
     public double getTimePerStep() {
         return TIME_PER_STEP;
+    }
+
+    @Override
+    public void setTimePerStep(double t) {
+        TIME_PER_STEP = t;
     }
 
     /**
@@ -85,6 +89,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
             Agent agent = (Agent) source;
             Force force = this.zeroForce();
             force.add(agent.expect());
+            force.sub(agent.getVelocity());
             force.scale(agent.getMass() / REACT_TIME);
             return force;
         }
@@ -94,39 +99,6 @@ public class SimpleSocialForceModel implements SocialForceModel {
     private <T extends InteractiveEntity> T reg(T entity) {
         entity.setModel(this);
         return entity;
-    }
-
-    /**
-     * 用默认的设置方法来创建一个agent.
-     *
-     * @return 返回创建的agent.
-     */
-
-    public Agent createAgent() {
-        Circle2D size = new Circle2D();
-        size.setRadius(AGENT_SIZE);
-        return reg(new BaseAgent(size));
-    }
-
-    /**
-     * 根据具体形状参数来创建agent.
-     * @param shape agent 的形状。
-     * @return 返回被创建的agent.
-     */
-
-    public Agent createAgent(DistanceShape shape) {
-        return createAgent();
-    }
-
-    /**
-     * 根据具体形状，类型参数来创建agent.
-     * @param shape agent 的形状。
-     * @param type  agent 的类型。
-     * @return 返回被创建的agent.
-     */
-
-    public Agent createAgent(DistanceShape shape, int type) {
-        return createAgent();
     }
 
     /**
