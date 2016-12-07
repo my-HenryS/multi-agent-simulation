@@ -17,7 +17,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
     double TIME_PER_STEP = 0.03;
     public static final double AGENT_VIEW_RADIUS = 2;
     public static final double EXPECTED_SPEED = 1.4;
-    public static final double REACT_TIME = 0.4;
+    public static final double REACT_TIME = 0.2;
     public static final int STATIC_TYPE_WALL = 0;
     public static final int STATIC_TYPE_GATE = 1;
 
@@ -89,6 +89,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
             Agent agent = (Agent) source;
             Force force = this.zeroForce();
             force.add(agent.expect());
+            force.sub(agent.getVelocity());
             force.scale(agent.getMass() / REACT_TIME);
             return force;
         }
