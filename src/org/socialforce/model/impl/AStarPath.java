@@ -63,13 +63,6 @@ public class AStarPath implements Path {
         return reached >= goals.length;
     }
 
-    public Path moveBy(double x, double y){
-        for(int i =0; i<goals.length; i++){
-            goals[i].moveBy(x,y);
-        }
-        return this;
-    }
-
     public String toString(){
         String string = "路径为";
         for(int i =0; i<goals.length; i++){
