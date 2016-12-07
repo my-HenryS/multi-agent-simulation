@@ -28,8 +28,8 @@ public interface Point extends Vector {
     double distanceTo(Point other);
 
     /**
-     * 获取该点到另一个点的距离矢量.
-     * 可以是多维度的距离.
+     * 获取该点到另一个点的方向矢量.
+     * 这个向量的模长为1.
      * 方向指向目标点
      * @param other 需要计算距离的另一个点
      * @return 距离.

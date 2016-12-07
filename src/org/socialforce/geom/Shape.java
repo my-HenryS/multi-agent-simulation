@@ -35,8 +35,8 @@ public interface Shape extends Serializable, Cloneable, DimensionEntity, Drawabl
     double getDistance(Point point);
 
     /**
-     * 获取一个点到这条直线的距离矢量.
-     * 方向指向目标点
+     * 获取该点到另一个点的方向矢量.
+     * 这个向量的模长为1.
      * @param point 将被检查的点.
      * @return 该距离矢量.
      */
