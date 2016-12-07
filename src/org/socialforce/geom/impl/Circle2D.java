@@ -160,7 +160,7 @@ public class Circle2D implements DistanceShape {
 
     public Vector directionTo(Shape other){
         Vector2D vector2D = (Vector2D) other.getDirection(center);
-        //vector2D.scale(-1);
+        if(distanceTo(other)<-radius) vector2D.scale(-1);
         return vector2D;
     }
 

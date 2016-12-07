@@ -21,7 +21,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * 测试基本补充完全
  */
 public class AStarPathFinder implements PathFinder {
-    static final double min_div = 0.25;
+    static final double min_div = 0.5;
     private double map[][];
     double distance[][];
     Point previous[][];
@@ -94,7 +94,7 @@ public class AStarPathFinder implements PathFinder {
             for (int j = 0; j < (int) (y_range / min_div); j++) {
                 map[i][j] = 0;
                 for (InteractiveEntity entity : all_blocks) {
-                    agent_shape.moveTo(new Point2D(i, j));
+                    agent_shape.moveTo(new Point2D(i*min_div, j*min_div));
                     //assert( == entity.getShape().getClass());
                     if (!(entity instanceof SafetyRegion) && agent_shape.hits((Box) entity.getShape())) {
                         map[i][j] = 1;
