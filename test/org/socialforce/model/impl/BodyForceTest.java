@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.impl.BodyForce;
 
 import static org.junit.Assert.*;
@@ -42,6 +43,8 @@ public class BodyForceTest {
     public void getForce() throws Exception {
         System.out.println(bodyForce.getForce(targetAgent,baseAgent).toString());
         System.out.println(targetAgent.getShape().distanceTo(baseAgent.getShape()));
+        baseAgent.currVelocity = new Velocity2D(1,0);
+        targetAgent2.currVelocity = new Velocity2D(0,1);
         System.out.println(bodyForce.getForce(targetAgent2,baseAgent).toString());
     }
 
