@@ -94,6 +94,15 @@ public class Point2D extends Vector2D implements Point {
         return point2D;
     }
 
+    /**
+     * 计算该点和其他点的曼哈顿距离
+     * @param point 其他点
+     * @return 曼哈顿距离
+     */
+    public double Manhattan_Distance(Point point){
+        return Math.abs(this.getX() - point.getX()) + Math.abs(this.getY() - point.getY());
+    }
+
     public String toString(){
         return "坐标为： ("+values[0]+"," +values[1]+")";
     }
