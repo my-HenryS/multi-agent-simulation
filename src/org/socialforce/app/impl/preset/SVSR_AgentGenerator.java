@@ -14,6 +14,8 @@ import org.socialforce.model.SocialForceModel;
 import org.socialforce.model.impl.BaseAgentDecorator;
 import org.socialforce.model.impl.SimpleSocialForceModel;
 
+import java.util.Random;
+
 /**
  * Created by Whatever on 2016/9/16.
  */
@@ -25,6 +27,7 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
      */
     protected class AgentGenerator{
         protected double X_distance,Y_distance,Z_distance;
+        protected double agent_num;
         protected Shape Area;
         protected AgentDecorator decorator;
         protected SocialForceModel model;
@@ -33,6 +36,11 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
             this.X_distance = X_distance;
             this.Y_distance = Y_distance;
             this.Z_distance = Z_distance;
+            this.Area = Area;
+        }
+
+        public AgentGenerator(double agent_num,Shape Area){
+            this.agent_num = agent_num;
             this.Area = Area;
         }
 
@@ -63,6 +71,12 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
         agentGenerator.setDecorator(new BaseAgentDecorator());
         agentGenerator.setModel(new SimpleSocialForceModel());
     }
+
+    public SVSR_AgentGenerator(double agent_num,Shape Area){
+        agentGenerator = new AgentGenerator(agent_num,Area);
+        agentGenerator.setDecorator(new BaseAgentDecorator());
+        agentGenerator.setModel(new SimpleSocialForceModel());
+    }
     @Override
     public String getEntityName() {
         return null;
@@ -90,17 +104,40 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
     @Override
     public void apply(Scene scene) {
         Agent new_agent;
-        if (agentGenerator.Area instanceof Box2D || agentGenerator.Area instanceof Semicircle2D || agentGenerator.Area instanceof Circle2D) {
-            for (int i = 0; i < (agentGenerator.Area.getBounds().getEndPoint().getX() - agentGenerator.Area.getBounds().getStartPoint().getX()) / agentGenerator.X_distance; i++) {
-                for (int j = 0; j < (agentGenerator.Area.getBounds().getEndPoint().getY() - agentGenerator.Area.getBounds().getStartPoint().getY()) / agentGenerator.Y_distance; j++) {
-                    Point2D point = new Point2D(agentGenerator.Area.getBounds().getStartPoint().getX()+i*agentGenerator.X_distance,agentGenerator.Area.getBounds().getStartPoint().getY()+j*agentGenerator.Y_distance);
-                    if(agentGenerator.Area.contains(point)){
+        Random rand = new Random();
+        int cur_num = 0;
+        if (agentGenerator.Area instanceof Box2D || agentGenerator.Area instanceof Semicircle2D || agentGenerator.Area instanceof Circle2D){
+            if(agentGenerator.agent_num == 0){
+                for (int i = 0; i < (agentGenerator.Area.getBounds().getEndPoint().getX() - agentGenerator.Area.getBounds().getStartPoint().getX()) / agentGenerator.X_distance; i++) {
+                    for (int j = 0; j < (agentGenerator.Area.getBounds().getEndPoint().getY() - agentGenerator.Area.getBounds().getStartPoint().getY()) / agentGenerator.Y_distance; j++) {
+                        Point2D point = new Point2D(agentGenerator.Area.getBounds().getStartPoint().getX()+i*agentGenerator.X_distance,agentGenerator.Area.getBounds().getStartPoint().getY()+j*agentGenerator.Y_distance);
+                        if(agentGenerator.Area.contains(point)){
+                            new_agent = agentGenerator.decorator.createAgent(point);
+                            new_agent.setModel(agentGenerator.model);
+                            scene.addAgent(new_agent);
+                            new_agent.setScene(scene);
+                        }
+
+                    }
+                }
+            }
+           else{
+                while (cur_num < agentGenerator.agent_num) {
+                    int is_able_flag = 0;
+                    double rand_x = agentGenerator.Area.getBounds().getStartPoint().getX() + rand.nextDouble() * (agentGenerator.Area.getBounds().getEndPoint().getX() - agentGenerator.Area.getBounds().getStartPoint().getX());
+                    double rand_y = agentGenerator.Area.getBounds().getStartPoint().getY() + rand.nextDouble() * (agentGenerator.Area.getBounds().getEndPoint().getY() - agentGenerator.Area.getBounds().getStartPoint().getY());
+                    Point2D point = new Point2D(rand_x, rand_y);
+                    Iterable<Agent> agents = scene.getAllAgents();
+                    for (Agent agent : agents) {
+                        if(point.distanceTo(agent.getShape().getReferencePoint()) < 0.486) is_able_flag = 1;
+                    }
+                    if (agentGenerator.Area.contains(point) && is_able_flag == 0) {
                         new_agent = agentGenerator.decorator.createAgent(point);
                         new_agent.setModel(agentGenerator.model);
                         scene.addAgent(new_agent);
                         new_agent.setScene(scene);
+                        cur_num += 1;
                     }
-
                 }
             }
         }
