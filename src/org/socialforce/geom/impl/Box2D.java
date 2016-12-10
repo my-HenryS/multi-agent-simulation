@@ -405,6 +405,7 @@ public class Box2D implements Box {
     public void setxAxisExpanded(boolean direction){
         xAxisExpanded = direction;
     }
+    public boolean getAxisExpanede(){return xAxisExpanded;}
     @Override
     public void expandTo(double width) {
         double tempmin,tempmax;

@@ -3,23 +3,18 @@ package org.socialforce.app.impl;
 
 import org.socialforce.app.SceneParameter;
 import org.socialforce.app.SceneValue;
-import org.socialforce.app.impl.preset.SVSR_AgentGenerator;
-import org.socialforce.app.impl.preset.SVSR_Exit;
-import org.socialforce.app.impl.preset.SVSR_SafetyRegion;
+import org.socialforce.app.impl.preset.SVSR_SingleExit;
+import org.socialforce.geom.impl.Box2D;
+import org.socialforce.geom.impl.Point2D;
 
 import java.util.LinkedList;
 
 
 /**
+ * 这里后面应该是尖括号，但是会出一些我不懂的问题，再说。
  * Created by Whatever on 2016/12/2.
  */
-public class SimpleSceneParameter implements SceneParameter {
-
-    public SimpleSceneParameter(){}
-    public SimpleSceneParameter(LinkedList<SceneValue> values){
-        this.values = values;
-    }
-
+public class SP_SingleExitWidth implements SceneParameter {
     protected String name;
     @Override
     public String getName() {
@@ -31,67 +26,96 @@ public class SimpleSceneParameter implements SceneParameter {
         this.name = name;
     }
 
-    /**
-     * 这个真的没问题么……
-     * 我有点怀疑这个是不是设计的初衷，先mark
-     */
-    protected LinkedList<SceneValue> values;
-    public void addValue(SceneValue value){
-        if (isValid(value)){
-            values.addLast(value);
-        }
-        else ;//TODO 可能需要一个warning或者什么的，不确定
+    protected Box2D exit = new Box2D(0,0,2,2);
+    protected Point2D position = new Point2D(0,0);
+    public void setPosition(Point2D position){
+        this.position = position;
     }
-
-    public SceneValue removeValue(){
-        if (!values.isEmpty()){
-            return values.removeLast();
-        }
-        else return null;
-    }
-
-    public LinkedList<SceneValue> getParameter(){
-        return values;
-    }
-
-
 
     /**
-     * 作用应该是判断是不是合适的value
-     * 实现上来说似乎只能先这么搞……
-     * 具体什么样的参数才算valid再说吧。
-     * TODO 在判据中加入具体的东西
-     * @param value
-     * @return
+     * 判断一个门的值是不是合理的
+     * @param value 需要判断的sceneValue
+     * @return 合理返回true
      */
     @Override
     public boolean isValid(SceneValue value) {
-        if (value instanceof SVSR_AgentGenerator){
-            return true;
+        if (value instanceof SVSR_SingleExit){
+            if (value.getValue() instanceof Box2D) {
+                Box2D temp = (Box2D) value.getValue();
+                double width;
+                if (temp.getAxisExpanede()){//X轴方向伸展，为门宽
+                    width = temp.getEndPoint().getX()-temp.getStartPoint().getX();
+                }
+                else width = temp.getEndPoint().getY()-temp.getStartPoint().getY();
+                if (width>=Min_width && width <= Max_width){
+                    return true;
+                }
+                else return false;
+            }
+            else return false;//TODO 之后可能会有不是BOX的value……吗？
         }
-        if (value instanceof SVSR_Exit){
-            return true;
-        }
-        if (value instanceof SVSR_SafetyRegion){
-            return true;
-        }
-        return false;
+        else return false;
     }
 
+    /**
+     * 获取一个默认的样本数量
+     * @return
+     */
     @Override
     public int getPreferedSize() {
-        return 0;
+        return (int) ((Max_width - Min_width)/0.25)+1;
     }
 
+    /**
+     * 自定义样本数量生成SceneValue
+     * @param size 样本的数量
+     * @return 一系列SceneValue
+     */
     @Override
     public Iterable<SceneValue> sample(int size) {
-        return null;
+        double delta = (Max_width - Min_width)/(size-1);
+        LinkedList<SceneValue> exits = new LinkedList<>();
+        exit.moveTo(position);
+        for (int i = 0;i<size;i++){
+            SVSR_SingleExit oneExit = new SVSR_SingleExit();
+            exit.expandTo(Min_width+i*delta);
+            oneExit.setValue(exit);
+            exits.addLast(oneExit);
+        }
+        return exits;
     }
 
+    /**
+     * 生成一组默认数量的SceneValue
+     * @return
+     */
     @Override
     public Iterable<SceneValue> sample() {
-        return null;
+        return sample(getPreferedSize());
     }
+
+    /**
+     * 最大宽度和最小宽度
+     */
+    protected double Max_width, Min_width;
+
+    public void setWidths(double min_width, double max_width){
+        if (min_width > max_width){
+            double temp = min_width;
+            min_width = max_width;
+            max_width = temp;
+        }
+        this.Min_width = min_width;
+        this.Max_width = max_width;
+    }
+
+    public void setWidths(){
+        Min_width = 0.5;
+        Max_width = 2;
+    }
+
+
+
 
     /**
      * Compares this object with the specified object for order.  Returns a
@@ -134,9 +158,5 @@ public class SimpleSceneParameter implements SceneParameter {
     @Override
     public int compareTo(Object o) {
         return 0;
-    }
-
-    public SceneParameter clone(){
-        return new SimpleSceneParameter(getParameter());
     }
 }
