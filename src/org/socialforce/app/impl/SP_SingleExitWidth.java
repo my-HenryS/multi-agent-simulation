@@ -114,6 +114,14 @@ public class SP_SingleExitWidth implements SceneParameter {
         Max_width = 2;
     }
 
+    /**
+     * True for X,False for Y
+     * @param direction
+     */
+    public void setExitDirection(boolean direction){
+        exit.setxAxisExpanded(direction);
+    }
+
 
 
 
