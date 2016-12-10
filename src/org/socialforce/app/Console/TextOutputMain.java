@@ -76,8 +76,8 @@ public class TextOutputMain implements ApplicationListener {
             /*if(time%10 ==0){
             System.out.println("目前时间" + time);*/
             if (time % 200 == 0) {
-                System.out.println();System.out.println();
-                System.out.println("目前时间" + time);System.out.println();System.out.println();
+                System.out.println();
+                System.out.println("场景"+scene.getName()+"目前时间" + time);
                 System.out.println("场景中人数" + scene.getAllAgents().size());
                 for (int i = -20; i < 80; i++) {
                     for (int j = -20; j < 60; j++) {

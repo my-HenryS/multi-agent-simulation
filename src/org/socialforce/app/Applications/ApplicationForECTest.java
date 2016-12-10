@@ -54,8 +54,10 @@ public class ApplicationForECTest implements SocialForceApplication {
      * 手动map
      */
     public void setUpScenes(){
+        int i = 0;
         for (Iterator<SceneValue> iterator = SV_exit1.iterator(); iterator.hasNext();)
         {
+            i++;
             SceneValue exit = iterator.next();
             SceneLoader loader = new ECTestLoader();
             Scene scene = loader.readScene();
@@ -65,6 +67,7 @@ public class ApplicationForECTest implements SocialForceApplication {
             }
             exit.apply(scene);
             scene.setApplication(this);
+            scene.setName("scene"+i);
             scenes.addLast(scene);
         }
     }

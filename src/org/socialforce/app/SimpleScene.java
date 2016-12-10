@@ -28,6 +28,17 @@ public class SimpleScene implements Scene {
         return allAgents.isEmpty();
     }
 
+    protected String name;
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
     SceneListener sceneListener;
 
     /**
