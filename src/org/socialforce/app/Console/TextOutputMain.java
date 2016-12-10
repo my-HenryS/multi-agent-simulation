@@ -9,6 +9,7 @@ import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.BaseAgent;
 
 /**
  * Created by Whatever on 2016/10/22.
@@ -78,9 +79,10 @@ public class TextOutputMain implements ApplicationListener {
             System.out.println("场景中人数" + scene.getAllAgents().size());
             System.out.println("目前一号智能体的位置是" + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getX() +
                     "," + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getY());*/
-            if (time % 20 == 0) {
-                System.out.println();System.out.println();
-                System.out.println("目前时间" + time);System.out.println();System.out.println();
+            if (time % 150 == 0) {
+               // System.out.println();System.out.println();
+                System.out.println("目前时间" + time*0.002);System.out.println();System.out.println();Iterable<Agent> agents = scene.getAllAgents();
+                /*
                 for (int i = -20; i < 80; i++) {
                     for (int j = -20; j < 60; j++) {
                         //Point2D here = new Point2D(i, j);
@@ -113,7 +115,7 @@ public class TextOutputMain implements ApplicationListener {
                     }
                     System.out.println();
                 }
-
+            */
             }
         }
     }

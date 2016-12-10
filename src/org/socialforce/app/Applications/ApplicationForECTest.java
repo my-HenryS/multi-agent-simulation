@@ -75,9 +75,9 @@ public class ApplicationForECTest implements SocialForceApplication {
 
     public void SetUpParameter(){
         SimpleSceneParameter parameter = new SimpleSceneParameter();
-        parameter.addValue(new SVSR_Exit(new Box2D[]{new Box2D(9,-2,2,5)}));
+        parameter.addValue(new SVSR_Exit(new Box2D[]{new Box2D(9,-2,1.25,5)}));
         //parameter.addValue(new SVSR_AgentGenerator(0.5,0.5,1,new Box2D(5,-5,10,3)));
-        parameter.addValue(new SVSR_RandomAgentGenerator(100,new Box2D(5,-5,10,3)));
+        parameter.addValue(new SVSR_RandomAgentGenerator(100,new Semicircle2D(new Point2D(9,-1), 4.5, Math.PI)));
         parameter.addValue(new SVSR_SafetyRegion(new Box2D(6,1,8,1)));
         parameters.addLast(parameter);
     }
