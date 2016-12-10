@@ -1,20 +1,35 @@
 package org.socialforce.app.gui;
 
-import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import org.socialforce.app.ApplicationListener;
+import org.socialforce.app.Applications.ApplicationForECTest;
 import org.socialforce.app.Scene;
-import org.socialforce.app.SimpleApplication;
+import org.socialforce.app.Applications.SimpleApplication;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.model.Agent;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.stream.StreamSupport;
 
 /**
  * Created by Ledenel on 2016/8/23.
  */
 public class SimulationPanelMain implements ApplicationListener {
+    public SimulationPanelMain() {
+        runButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //super.mouseClicked(e);
+                String s = timePerStepTextField.getText();
+                application.getModel().setTimePerStep(Double.valueOf(s));
+            }
+        });
+    }
+
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -32,7 +47,8 @@ public class SimulationPanelMain implements ApplicationListener {
         try {
             JFrame frame = new JFrame("SimulationPanelMain");
             SimulationPanelMain mainPanel = new SimulationPanelMain();
-            SimpleApplication application = new SimpleApplication();
+            ApplicationForECTest application = new ApplicationForECTest();//应用在这里！
+            //SimpleApplication application = new SimpleApplication();
             application.setApplicationListener(mainPanel);
             frame.setContentPane(mainPanel.root);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

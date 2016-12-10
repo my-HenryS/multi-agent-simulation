@@ -31,12 +31,12 @@ public class Segment2DTest {
 
     @Test
     public void getDistance() throws Exception {
-        assertEquals(0,testline.getDistance(a).length(),0);
-        assertEquals(2.0,testline.getDistance(b).length(),0.001);
-        assertEquals(Math.sqrt(2),vecline.getDistance(new Point2D(1,3)).length(),1e-7);
-        assertEquals(new Vector2D(0,-2),testline.getDistance(b));
-        assertEquals(new Vector2D(0,2),testline.getDistance(new Point2D(5,9)));
-        assertEquals(new Vector2D(-2,0),testline.getDistance(new Point2D(-2,2)));
+        assertEquals(0,testline.getDistance(a),0);
+        assertEquals(2.0,testline.getDistance(b),0.001);
+        assertEquals(Math.sqrt(2),vecline.getDistance(new Point2D(1,3)),1e-7);
+        assertEquals(new Vector2D(0,-1),testline.getDirection(b));
+        assertEquals(new Vector2D(0,1),testline.getDirection(new Point2D(5,9)));
+        assertEquals(new Vector2D(-1,0),testline.getDirection(new Point2D(-2,2)));
     }
 
     @Test
@@ -53,8 +53,8 @@ public class Segment2DTest {
     @Test
     public void moveTo() throws Exception {
         testline.moveTo(new Point2D(0,0));
-        assertEquals(0,testline.getDistance(b).length(),0);
-        assertEquals(1.414,testline.getDistance(a).length(),0.001);
+        assertEquals(0,testline.getDistance(b),0);
+        assertEquals(1.414,testline.getDistance(a),0.001);
     }
 
    @Test

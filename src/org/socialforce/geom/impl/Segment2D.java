@@ -90,35 +90,13 @@ public class Segment2D implements Shape {
     }
 
     @Override
-    public Vector getDistance(Point point) {
-        /*double distance = 0;
-        int flag = 0;
-        if (y1 == y2) {
-            flag = 1;
-        }
-        if (x1 == x2) {
-            flag = 2;
-        }
-        switch (flag) {
-            case 0:
-                distance = Math.abs((k1 * point.getX() - point.getY() + b1) / Math.sqrt(k1 * k1 + 1));
-                break;
-            case 1:
-                distance = Math.abs(y1 - point.getY());
-                break;
-            case 2:
-                distance = Math.abs(x1 - point.getX());
-                break;
-        }*/
+    public double getDistance(Point point) {
         double x = point.getX(), y = point.getY();
         //equation: (x-x1)(y2-y1) - (x2-x1)(y-y1) = 0
-        double distance;
         double dy12 = y2 - y1;
         double dx12 = x2 - x1;
         double dx1 = x - x1;
         double dy1 = y - y1;
-       /* double dx2 = x - x2;
-        double dy2 = y - y2;*/
         double dot = dx1*dx12+dy1*dy12;
         double len_sq = dx12*dx12+dy12*dy12;
         double scale = dot / len_sq;
@@ -135,12 +113,33 @@ public class Segment2D implements Shape {
         }
         tx -= x;
         ty -= y;
-        return new Vector2D(-tx,-ty);
-        //2016/8/19 fix distance with equation.
-        /*distance = Math.abs(dx1 * a - dy1 * b) / Math.sqrt(a * a + b * b);
-        double disA = Math.sqrt(dx1 * dx1 + dy1 * dy1);
-        double disB = Math.sqrt(dx2 * dx2 + dy2 * dy2);
-        return Math.min(Math.min(disA, disB), distance);*/
+        return new Vector2D(-tx,-ty).length();
+    }
+
+    public Vector getDirection(Point point){
+        double x = point.getX(), y = point.getY();
+        //equation: (x-x1)(y2-y1) - (x2-x1)(y-y1) = 0
+        double dy12 = y2 - y1;
+        double dx12 = x2 - x1;
+        double dx1 = x - x1;
+        double dy1 = y - y1;
+        double dot = dx1*dx12+dy1*dy12;
+        double len_sq = dx12*dx12+dy12*dy12;
+        double scale = dot / len_sq;
+        double tx,ty;
+        if(scale < 0) {
+            tx = x1;
+            ty = y1;
+        } else if(scale > 1) {
+            tx = x2;
+            ty = y2;
+        } else {
+            tx = x1 + scale * dx12;
+            ty = y1+scale*dy12;
+        }
+        tx -= x;
+        ty -= y;
+        return new Vector2D(-tx,-ty).getRefVector();
     }
 
     //  2016/8/19 refactored with x1,y1,x2,y2.;

@@ -36,5 +36,4 @@ public interface Path {
      */
     boolean done();
 
-    Path moveBy(double x, double y);
 }

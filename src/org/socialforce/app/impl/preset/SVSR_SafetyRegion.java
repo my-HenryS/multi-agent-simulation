@@ -2,6 +2,7 @@ package org.socialforce.app.impl.preset;
 
 import org.socialforce.app.Scene;
 import org.socialforce.app.SceneValue;
+import org.socialforce.geom.Shape;
 import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.model.impl.SimpleSocialForceModel;
 
@@ -11,6 +12,8 @@ import org.socialforce.model.impl.SimpleSocialForceModel;
 public class SVSR_SafetyRegion implements SceneValue<SafetyRegion>{
     protected SafetyRegion safetyRegion;
     protected String name;
+    public SVSR_SafetyRegion(){}
+    public SVSR_SafetyRegion(Shape shape){this.safetyRegion = new SafetyRegion(shape);}
     @Override
     public String getEntityName() {
         return name;

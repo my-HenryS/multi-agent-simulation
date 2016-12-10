@@ -61,7 +61,7 @@ public class Circle2D implements DistanceShape {
      */
     @Override
     public boolean contains(Point point) {
-        return (point.distanceTo(center).length()<radius);
+        return (point.distanceTo(center)<radius);
     }
 
     /**
@@ -72,15 +72,16 @@ public class Circle2D implements DistanceShape {
      *  如果点再圆外： return point.distanceTo(center)-radius
      */
     @Override
-    public Vector getDistance(Point point) {
+    public double getDistance(Point point) {
         double distance;
-        Vector2D vector2D = (Vector2D) center.distanceTo(point);
-        if(this.contains(point)){
-            return new Vector2D(0,0);}
-        else distance = point.distanceTo(center).length() - radius;
-            vector2D = (Vector2D) vector2D.getRefVector();
-            vector2D.scale(distance);
-            return vector2D;
+        distance = point.distanceTo(center) - radius;
+        return distance;
+    }
+
+    public Vector getDirection(Point point){
+        Vector2D vector2D = (Vector2D) center.directionTo(point);
+        if(contains(point)) vector2D.scale(-1);
+        return vector2D;
     }
 
     /**
@@ -96,7 +97,7 @@ public class Circle2D implements DistanceShape {
      * 获取一个圆的半径
      * @return 半径, 圆的半径
      */
-    public  double getRadius(){
+    public double getRadius(){
         return radius;
     }
 
@@ -116,7 +117,7 @@ public class Circle2D implements DistanceShape {
      */
     @Override
     public boolean hits(Box hitbox) {
-        if (hitbox.getDistance(center).length() <= radius){
+        if (hitbox.getDistance(center) <= radius){
             return true;}
         return false;
     }
@@ -153,19 +154,24 @@ public class Circle2D implements DistanceShape {
      * @return 距离
      */
     @Override
-    public Vector distanceTo(Shape other) {
-        double distance =  other.getDistance(this.center).length() - this.radius;
-        if (distance > 0){
-        Vector2D vector2D = (Vector2D) other.getDistance(center);
-        vector2D = (Vector2D) vector2D.getRefVector();
-            vector2D.scale(-distance);
-        return vector2D;}
-        else return new Vector2D(0,0);
+    public double distanceTo(Shape other) {
+        double distance =  other.getDistance(this.center) - this.radius;
+        return distance;
     }
+
+    public Vector directionTo(Shape other){
+        Vector2D vector2D = (Vector2D) other.getDirection(center);
+        if(distanceTo(other)<-radius) vector2D.scale(-1);
+        return vector2D;
+    }
+
+
+
+
 
     @Override
     public boolean intersects(Shape other) {
-        return distanceTo(other).length() <= 0;
+        return distanceTo(other) <= 0;
     }
 
     @Override

@@ -31,9 +31,9 @@ public class Circle2DTest {
 
     @Test
     public void getDistance() throws Exception {
-        assertEquals(0,circleTest.getDistance(b).length(),0);
-        assertEquals(new Vector2D(1,0),circleTest.getDistance(new Point2D(9,4)));
-        assertEquals(4*Math.sqrt(2)-5,circleTest.getDistance(a).length(),0.01);
+        assertEquals(-4,circleTest.getDistance(b),0);
+        assertEquals(new Vector2D(1,0),circleTest.getDirection(new Point2D(9,4)));
+        assertEquals(4*Math.sqrt(2)-5,circleTest.getDistance(a),0.01);
     }
 
     @Test
@@ -56,8 +56,8 @@ public class Circle2DTest {
 
     @Test
     public void testDistanceBetweenShapes() throws Exception {
-        assertEquals(Math.sqrt(2) * 4 - 5,circleTest.distanceTo(new Segment2D(a,new Point2D(-1,-1))).length(),1e-7);
-        assertEquals(new Vector2D(3,4),circleTest.distanceTo(new Box2D(9,12,6,7)));
+        assertEquals(Math.sqrt(2) * 4 - 5,circleTest.distanceTo(new Segment2D(a,new Point2D(-1,-1))),1e-7);
+        assertEquals(new Vector2D(-0.6,-0.8),circleTest.directionTo(new Box2D(9,12,6,7)));
     }
 
     @Test

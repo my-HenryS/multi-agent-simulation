@@ -27,8 +27,8 @@ public class BaseAgent extends Entity implements Agent {
         this.shape = shape;
         this.currTimestamp = 0;
         this.currVelocity = new Velocity2D(0, 0);
-        this.mass = 50;
-        Circle2D circle = new Circle2D(shape.getReferencePoint(),2);
+        this.mass = 80;
+        Circle2D circle = new Circle2D(shape.getReferencePoint(),6);
         this.view = circle;
     }
 
@@ -126,8 +126,11 @@ public class BaseAgent extends Entity implements Agent {
             for (Agent agent : neighbors) {
                 agent.affect(this);
             }
+            Velocity temp_v = new Velocity2D(0,0);
             deltaV = this.pushed.deltaVelocity(mass, dt * model.getTimePerStep());
-            deltaS = deltaV.deltaDistance(dt * model.getTimePerStep());
+            temp_v.add(currVelocity);
+            temp_v.add(deltaV);
+            deltaS = temp_v.deltaDistance(dt * model.getTimePerStep());
             this.currTimestamp = currSteps;
             return deltaS;
         } else {

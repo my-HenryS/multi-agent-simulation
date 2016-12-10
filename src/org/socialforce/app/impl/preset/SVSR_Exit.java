@@ -3,6 +3,7 @@ package org.socialforce.app.impl.preset;
 import org.socialforce.app.Scene;
 import org.socialforce.app.SceneValue;
 import org.socialforce.geom.ClipperShape;
+import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.model.InteractiveEntity;
@@ -18,6 +19,10 @@ public class SVSR_Exit implements SceneValue<ClipperShape[]> {
     protected ClipperShape[] exit;
     protected String name;
     protected SimpleSocialForceModel model = new SimpleSocialForceModel();
+    public SVSR_Exit(){}
+    public SVSR_Exit(ClipperShape[] exit){
+        this.exit = exit;
+    }
 
     /**
      * 获取所关联的实体名称。
@@ -69,22 +74,19 @@ public class SVSR_Exit implements SceneValue<ClipperShape[]> {
     @Override
     public void apply(Scene scene) {
         for (int i = 0; i < exit.length; i++) {
-            Iterable<InteractiveEntity> walls;
+            InteractiveEntity wall;
             Wall temp;
             if (exit[i].getBounds().getStartPoint().getX() != exit[i].getBounds().getEndPoint().getX()
                     && exit[i].getBounds().getStartPoint().getY() != exit[i].getBounds().getEndPoint().getY()) {
-                walls = scene.getStaticEntities().select(exit[i].getReferencePoint());
-                for (InteractiveEntity wall : walls) {
-                    Box2D wallShape = (Box2D) wall.getShape();
-                    Shape[] boxes =  exit[i].clip(wallShape);
-                    for (int j=0;j<boxes.length;j++){
-                        temp = new Wall(boxes[j]);
-                        temp.setModel(model);
-                        scene.getStaticEntities().add(temp);
-                    }
-                    scene.getStaticEntities().remove(wall);
+                wall = scene.getStaticEntities().selectTop(exit[i].getReferencePoint());
+                Box2D wallShape = (Box2D) wall.getShape();
+                Shape[] boxes =  exit[i].clip(wallShape);
+                for (int j=0;j<boxes.length;j++){
+                    temp = new Wall(boxes[j]);
+                    temp.setModel(model);
+                    scene.getStaticEntities().add(temp);
                 }
-
+                scene.getStaticEntities().remove(wall);
             } else /*do nothing*/;
         }
     }

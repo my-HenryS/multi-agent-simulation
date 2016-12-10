@@ -1,8 +1,7 @@
 package org.socialforce.app;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.socialforce.app.Applications.SimpleApplication;
 
 /**
  * Created by Whatever on 2016/10/22.

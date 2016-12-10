@@ -27,13 +27,20 @@ public interface Shape extends Serializable, Cloneable, DimensionEntity, Drawabl
 
     /**
      * 获取一个点到这条直线的距离矢量.
-     * 如果距离为0，就说明这个点在这个形状上.
+     * 如果距离为负，就说明这个点在这个形状上.
      * 空的形状为 Double.NaN .
-     * 方向指向目标点
      * @param point 将被检查的点.
-     * @return 该距离. 如果这个点到不了这个形状上的话，返回 Double.NaN .
+     * @return 该距离 .
      */
-    Vector getDistance(Point point);
+    double getDistance(Point point);
+
+    /**
+     * 获取该点到另一个点的方向矢量.
+     * 这个向量的模长为1.
+     * @param point 将被检查的点.
+     * @return 该距离矢量.
+     */
+    Vector getDirection(Point point);
 
     /**
      * 获取该形状的参考点.
