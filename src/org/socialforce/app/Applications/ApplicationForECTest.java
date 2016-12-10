@@ -1,17 +1,15 @@
 package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
-import org.socialforce.app.impl.SimpleSceneParameter;
+import org.socialforce.app.impl.SP_SingleExitWidth;
 import org.socialforce.app.impl.preset.*;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.geom.impl.Semicircle2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.PathFinder;
 import org.socialforce.model.SocialForceModel;
 import org.socialforce.model.impl.AStarPathFinder;
 import org.socialforce.model.impl.SimpleSocialForceModel;
-import org.socialforce.model.impl.StraightPath;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -24,6 +22,7 @@ public class ApplicationForECTest implements SocialForceApplication {
 
     public ApplicationForECTest(){
         SetUpParameter();
+        SetUpValues();
         setUpScenes();
         setUpStrategy();
     }
@@ -35,15 +34,11 @@ public class ApplicationForECTest implements SocialForceApplication {
     public void start() {
         for (Iterator<Scene>iterator = scenes.iterator();iterator.hasNext();){
             Scene scene = iterator.next();
-        while (!scene.getAllAgents().isEmpty()) {
             scene.stepNext();
-            try {
-                Thread.sleep(0);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (scene.getAllAgents().isEmpty()){
+                scenes.remove(scene);
             }
         }
-    }
     }
 
     /**
@@ -52,34 +47,52 @@ public class ApplicationForECTest implements SocialForceApplication {
      * 手动map
      */
     public void setUpScenes(){
-        for (Iterator<SceneParameter> iterator = parameters.iterator(); iterator.hasNext();)
+        for (Iterator<SceneValue> iterator = SV_exit1.iterator(); iterator.hasNext();)
         {
-            SceneParameter parameter = iterator.next();
+            SceneValue exit = iterator.next();
             SceneLoader loader = new ECTestLoader();
-            //SceneLoader loader = new SquareRoomLoader();
             Scene scene = loader.readScene();
-            if (parameter instanceof SimpleSceneParameter){
-                while (true){
-                    SceneValue sceneValue =((SimpleSceneParameter) parameter).removeValue();
-                    if (sceneValue == null){break;}
-                    else sceneValue.apply(scene);
-                }
+            for (Iterator<SceneValue> iterator1 = statics.iterator();iterator1.hasNext();){
+                SceneValue sceneValue = iterator1.next();
+                sceneValue.apply(scene);
             }
+            exit.apply(scene);
             scene.setApplication(this);
             scenes.addLast(scene);
         }
     }
 
     protected ParameterSet parameterSet;//目前先不用这个，之后肯定要用
-    protected LinkedList<SceneParameter> parameters = new LinkedList<>();
+    protected Iterable<SceneValue> SV_exit1;
+    LinkedList<SceneValue> statics;
 
-    public void SetUpParameter(){
+    public void SetUpParameter(){/*
         SimpleSceneParameter parameter = new SimpleSceneParameter();
         parameter.addValue(new SVSR_Exit(new Box2D[]{new Box2D(9,-2,2,5)}));
         //parameter.addValue(new SVSR_AgentGenerator(0.5,0.5,1,new Box2D(5,-5,10,3)));
         parameter.addValue(new SVSR_RandomAgentGenerator(100,new Box2D(5,-5,10,3)));
         parameter.addValue(new SVSR_SafetyRegion(new Box2D(6,1,8,1)));
-        parameters.addLast(parameter);
+        parameters.addLast(parameter);*/
+        SP_SingleExitWidth exit1 = new SP_SingleExitWidth();
+        exit1.setPosition(new Point2D(10,1));
+        exit1.setExitDirection(true);
+        exit1.setWidths(0.5,2);
+        SV_exit1 = exit1.sample(10);
+    }
+
+    /**
+     * TODO 这部分是一个临时类，
+     * 目前也可以认为是场景的“静态”的部分，不枚举他们。
+     * 之后对应的parameter一个个实现后都会挪到SetUpParameter里
+     * 最后把所有SetUpParameter整个挪到ParameterSet里
+     * 注意上一句话中，前一个Set指设置，后一个Set指集合
+     */
+    public void SetUpValues(){
+        SVSR_RandomAgentGenerator generator = new SVSR_RandomAgentGenerator(100,new Box2D(5,-5,10,3));
+        SVSR_SafetyRegion safetyRegion = new SVSR_SafetyRegion(new Box2D(6,1,8,1));
+        statics = new LinkedList<>();
+        statics.addLast(generator);
+        statics.addLast(safetyRegion);
     }
 
     public void setUpStrategy(){
