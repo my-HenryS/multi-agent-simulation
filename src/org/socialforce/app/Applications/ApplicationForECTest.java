@@ -33,10 +33,17 @@ public class ApplicationForECTest implements SocialForceApplication {
      */
     @Override
     public void start() {
-        for (Iterator<Scene>iterator = scenes.iterator();iterator.hasNext();){
-            Scene scene = iterator.next();
-            if (!scene.isFreeze()){
-                scene.stepNext();
+        while (true) {
+            int i = 0;
+            for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext(); ) {
+                Scene scene = iterator.next();
+                if (!scene.isFreeze()) {
+                    scene.stepNext();
+                }
+                else i++;
+            }
+            if (i == scenes.size()){
+                break;
             }
         }
     }
@@ -79,7 +86,7 @@ public class ApplicationForECTest implements SocialForceApplication {
         exit1.setPosition(new Point2D(10,0.5));
         exit1.setExitDirection(true);
         exit1.setWidths(0.5,2);
-        SV_exit1 = exit1.sample(1);
+        SV_exit1 = exit1.sample(5);
     }
 
     /**
@@ -90,7 +97,7 @@ public class ApplicationForECTest implements SocialForceApplication {
      * 注意上一句话中，前一个Set指设置，后一个Set指集合
      */
     public void SetUpValues(){
-        SVSR_RandomAgentGenerator generator = new SVSR_RandomAgentGenerator(1,new Box2D(5,-5,10,3));
+        SVSR_RandomAgentGenerator generator = new SVSR_RandomAgentGenerator(10,new Box2D(5,-5,10,3));
         SVSR_SafetyRegion safetyRegion = new SVSR_SafetyRegion(new Box2D(6,1,8,1));
         statics = new LinkedList<>();
         statics.addLast(generator);

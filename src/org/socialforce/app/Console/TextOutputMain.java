@@ -75,7 +75,7 @@ public class TextOutputMain implements ApplicationListener {
         if (!scene.getAllAgents().isEmpty()) {
             /*if(time%10 ==0){
             System.out.println("目前时间" + time);*/
-            if (time % 20 == 0) {
+            if (time % 200 == 0) {
                 System.out.println();System.out.println();
                 System.out.println("目前时间" + time);System.out.println();System.out.println();
                 System.out.println("场景中人数" + scene.getAllAgents().size());
@@ -107,9 +107,9 @@ public class TextOutputMain implements ApplicationListener {
 
                 for (int i = 0; i < 80; i++) {
                     for (int j = 0; j < 100; j++) {
-                        System.out.print(SquareRoom[j][i]);
+                        //System.out.print(SquareRoom[j][i]);
                     }
-                    System.out.println();
+                    //System.out.println();
                 }
 
             }
