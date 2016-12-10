@@ -73,11 +73,22 @@ public class SP_SingleExitWidth implements SceneParameter {
      */
     @Override
     public Iterable<SceneValue> sample(int size) {
-        double delta = (Max_width - Min_width)/(size-1);
         LinkedList<SceneValue> exits = new LinkedList<>();
+        SVSR_SingleExit oneExit;
+        if (size <=0){throw new IllegalArgumentException("至少取样一个点！");}
+        if (size == 1){
+            exit.expandTo(Max_width);
+            exit.moveTo(position);
+            oneExit = new SVSR_SingleExit();
+            oneExit.setValue(exit);
+            exits.addLast(oneExit);
+            return exits;
+        }
+        else;
+        double delta = (Max_width - Min_width)/(size-1);
         exit.moveTo(position);
         for (int i = 0;i<size;i++){
-            SVSR_SingleExit oneExit = new SVSR_SingleExit();
+            oneExit = new SVSR_SingleExit();
             exit.expandTo(Min_width+i*delta);
             oneExit.setValue(exit);
             exits.addLast(oneExit);
