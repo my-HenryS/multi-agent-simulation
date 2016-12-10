@@ -105,4 +105,6 @@ public interface Scene extends Drawable {
     SceneListener getSceneListener();
     void setSceneListener(SceneListener listener);
     // TODO: 2016/9/14 add scene listener support.
+
+    boolean isFreeze();
 }

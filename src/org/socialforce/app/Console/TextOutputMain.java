@@ -74,13 +74,11 @@ public class TextOutputMain implements ApplicationListener {
         int time = scene.getCurrentSteps();
         if (!scene.getAllAgents().isEmpty()) {
             /*if(time%10 ==0){
-            System.out.println("目前时间" + time);
-            System.out.println("场景中人数" + scene.getAllAgents().size());
-            System.out.println("目前一号智能体的位置是" + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getX() +
-                    "," + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getY());*/
+            System.out.println("目前时间" + time);*/
             if (time % 20 == 0) {
                 System.out.println();System.out.println();
                 System.out.println("目前时间" + time);System.out.println();System.out.println();
+                System.out.println("场景中人数" + scene.getAllAgents().size());
                 for (int i = -20; i < 80; i++) {
                     for (int j = -20; j < 60; j++) {
                         //Point2D here = new Point2D(i, j);
@@ -109,9 +107,9 @@ public class TextOutputMain implements ApplicationListener {
 
                 for (int i = 0; i < 80; i++) {
                     for (int j = 0; j < 100; j++) {
-                        System.out.print(SquareRoom[j][i]);
+                        //System.out.print(SquareRoom[j][i]);
                     }
-                    System.out.println();
+                    //System.out.println();
                 }
 
             }

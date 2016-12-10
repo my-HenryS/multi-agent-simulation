@@ -23,6 +23,11 @@ public class SimpleScene implements Scene {
         this.sceneListener = sceneListener;
     }
 
+    @Override
+    public boolean isFreeze() {
+        return allAgents.isEmpty();
+    }
+
     SceneListener sceneListener;
 
     /**

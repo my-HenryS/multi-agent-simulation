@@ -66,23 +66,20 @@ public class SVSR_SingleExit implements SceneValue<ClipperShape> {
      */
     @Override
     public void apply(Scene scene) {
-            Iterable<InteractiveEntity> walls;
-            Wall temp;
-            if (exit.getBounds().getStartPoint().getX() != exit.getBounds().getEndPoint().getX()
-                    && exit.getBounds().getStartPoint().getY() != exit.getBounds().getEndPoint().getY()) {
-                walls = scene.getStaticEntities().select(exit.getReferencePoint());
-                for (InteractiveEntity wall : walls) {
-                    Box2D wallShape = (Box2D) wall.getShape();
-                    Shape[] boxes =  exit.clip(wallShape);
-                    for (int j=0;j<boxes.length;j++){
-                        temp = new Wall(boxes[j]);
-                        temp.setModel(model);
-                        scene.getStaticEntities().add(temp);
-                    }
-                    scene.getStaticEntities().remove(wall);
-                }
-
-            } else /*do nothing*/;
+        InteractiveEntity wall;
+        Wall temp;
+        if (exit.getBounds().getStartPoint().getX() != exit.getBounds().getEndPoint().getX()
+                && exit.getBounds().getStartPoint().getY() != exit.getBounds().getEndPoint().getY()) {
+            wall = scene.getStaticEntities().selectTop(exit.getReferencePoint());
+            Box2D wallShape = (Box2D) wall.getShape();
+            Shape[] boxes =  exit.clip(wallShape);
+            for (int j=0;j<boxes.length;j++){
+                temp = new Wall(boxes[j]);
+                temp.setModel(model);
+                scene.getStaticEntities().add(temp);
+            }
+            scene.getStaticEntities().remove(wall);
+        } else /*do nothing*/;
         }
 
 

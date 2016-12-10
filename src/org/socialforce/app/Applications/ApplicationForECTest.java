@@ -10,6 +10,7 @@ import org.socialforce.model.PathFinder;
 import org.socialforce.model.SocialForceModel;
 import org.socialforce.model.impl.AStarPathFinder;
 import org.socialforce.model.impl.SimpleSocialForceModel;
+import org.socialforce.model.impl.StraightPath;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -34,9 +35,8 @@ public class ApplicationForECTest implements SocialForceApplication {
     public void start() {
         for (Iterator<Scene>iterator = scenes.iterator();iterator.hasNext();){
             Scene scene = iterator.next();
-            scene.stepNext();
-            if (scene.getAllAgents().isEmpty()){
-                scenes.remove(scene);
+            if (!scene.isFreeze()){
+                scene.stepNext();
             }
         }
     }
@@ -74,10 +74,10 @@ public class ApplicationForECTest implements SocialForceApplication {
         parameter.addValue(new SVSR_SafetyRegion(new Box2D(6,1,8,1)));
         parameters.addLast(parameter);*/
         SP_SingleExitWidth exit1 = new SP_SingleExitWidth();
-        exit1.setPosition(new Point2D(10,1));
+        exit1.setPosition(new Point2D(10,0.5));
         exit1.setExitDirection(true);
         exit1.setWidths(0.5,2);
-        SV_exit1 = exit1.sample(10);
+        SV_exit1 = exit1.sample(3);
     }
 
     /**
