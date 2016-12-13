@@ -31,6 +31,7 @@ public class AStarPathFinder implements PathFinder {
     Scene scene;
     double delta_x = 0;        //偏移量x
     double delta_y = 0;        //偏移量y
+    double manhattan_distance = 0;
 
     /**
      * assign map directly
@@ -48,6 +49,7 @@ public class AStarPathFinder implements PathFinder {
         this.goal = goal;
         this.agent = agent;
         start_point = new Point2D((int) agent.getShape().getReferencePoint().getX(), (int) agent.getShape().getReferencePoint().getY());
+        this.manhattan_distance = goal.Manhattan_Distance(agent.getShape().getReferencePoint());
     }
 
     /**
@@ -77,12 +79,10 @@ public class AStarPathFinder implements PathFinder {
         }
         goal.moveBy(-delta_x, -delta_y).scaleBy(1/min_div);
         agent.getShape().getReferencePoint().moveBy(-delta_x, -delta_y);
+        this.manhattan_distance = goal.Manhattan_Distance(agent.getShape().getReferencePoint());
         start_point = new Point2D((int) (agent.getShape().getReferencePoint().getX()/min_div), (int) (agent.getShape().getReferencePoint().getY()/min_div));
     }
 
-    public Path plan(Scene targetScene, Agent agent, Point goal){             //接口有待讨论 先做一个假实现
-        return null;
-    }
 
     public double[][] map_initiate() {
         double x_range = scene.getBounds().getEndPoint().getX() - scene.getBounds().getStartPoint().getX(),
@@ -149,7 +149,7 @@ public class AStarPathFinder implements PathFinder {
                 if(i==x && j==y) continue;
                 if(i==start.getX() && j==start.getY()) continue;
                 Point tmp_point = new Point2D(i,j);
-                if(available(i,j) && map[i][j]==0 && (distance[i][j]==0 || distance[i][j] > distance[x][y]+center.distanceTo(tmp_point) )){
+                if(available(i,j) && map[i][j]==0 && (distance[i][j]==0 || distance[i][j] > distance[x][y]+center.distanceTo(tmp_point )) && tmp_point.Manhattan_Distance(start)<=manhattan_distance){
                     distance[i][j] = distance[x][y]+center.distanceTo(tmp_point);
                     point_set.add(tmp_point);
                     previous[i][j] = center;

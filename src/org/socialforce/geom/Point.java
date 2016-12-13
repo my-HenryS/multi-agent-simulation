@@ -64,4 +64,11 @@ public interface Point extends Vector {
      * @return 移动后的点.
      */
     Point scaleBy(double s);
+
+    /**
+     * 计算该点和其他点的曼哈顿距离
+     * @param point 其他点
+     * @return 曼哈顿距离
+     */
+    double Manhattan_Distance(Point point);
 }
