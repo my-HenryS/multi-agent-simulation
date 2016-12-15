@@ -1,6 +1,6 @@
 package org.socialforce.app;
 
-import org.socialforce.model.PathFinder;
+import org.socialforce.strategy.PathFinder;
 import org.socialforce.model.SocialForceModel;
 
 import java.util.List;

@@ -5,6 +5,7 @@ import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Shape;
 import org.socialforce.geom.Vector;
 import org.socialforce.geom.Velocity;
+import org.socialforce.strategy.Path;
 
 /**
  * 定义了社会力仿真模型中的agent接口，其继承于父类 InteractiveEntity ,Moveable, Blockable

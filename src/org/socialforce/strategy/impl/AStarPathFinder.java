@@ -1,4 +1,4 @@
-package org.socialforce.model.impl;
+package org.socialforce.strategy.impl;
 
 import org.socialforce.app.Scene;
 import org.socialforce.container.EntityPool;
@@ -8,17 +8,17 @@ import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.Path;
-import org.socialforce.model.PathFinder;
+import org.socialforce.strategy.Path;
+import org.socialforce.strategy.PathFinder;
+import org.socialforce.model.impl.SafetyRegion;
 
-import java.util.LinkedList;
 import java.util.Stack;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
 /**
  * Created by sunjh1999 on 2016/10/21.
- * 测试基本补充完全
+ * TODO 性能优化 需结合scene重构
  */
 public class AStarPathFinder implements PathFinder {
     static final double min_div = 0.5;
@@ -57,37 +57,36 @@ public class AStarPathFinder implements PathFinder {
         this.goal = goal;
         this.agent = agent;
         this.scene = targetScene;
+        standardize();
+        maps_initiate();
+    }
+
+    public AStarPathFinder(){};
+
+    public void setParameters(Scene targetScene, Agent agent, Point goal){
+        this.goal = goal;
+        this.agent = agent;
+        this.scene = targetScene;
+        standardize();
+        maps_initiate();
+    }
+
+    public void standardize(){
         delta_x = scene.getBounds().getStartPoint().getX();
         delta_y = scene.getBounds().getStartPoint().getY();
         EntityPool all_blocks = scene.getStaticEntities();
-        start_point = new Point2D((int) agent.getShape().getReferencePoint().getX(), (int) agent.getShape().getReferencePoint().getY());
         for (InteractiveEntity entity : all_blocks) {
             entity.getShape().moveTo(entity.getShape().getReferencePoint().moveBy(-delta_x, -delta_y));
-            assert (!entity.getShape().contains(start_point));
-
-        }
-        map = map_initiate();
-        distance = new double[map.length][map[0].length];
-        previous = new Point[map.length][map[0].length];
-        for(int i =0; i<map.length; i++){
-            for(int j=0; j<map[0].length; j++){
-                Point temp = new Point2D();
-                previous[i][j] = temp;
-            }
         }
         goal.moveBy(-delta_x, -delta_y).scaleBy(1/min_div);
         agent.getShape().getReferencePoint().moveBy(-delta_x, -delta_y);
         start_point = new Point2D((int) (agent.getShape().getReferencePoint().getX()/min_div), (int) (agent.getShape().getReferencePoint().getY()/min_div));
     }
 
-    public Path plan(Scene targetScene, Agent agent, Point goal){             //接口有待讨论 先做一个假实现
-        return null;
-    }
-
-    public double[][] map_initiate() {
+    public void maps_initiate() {
         double x_range = scene.getBounds().getEndPoint().getX() - scene.getBounds().getStartPoint().getX(),
                 y_range = scene.getBounds().getEndPoint().getY() - scene.getBounds().getStartPoint().getY();
-        double[][] map = new double[(int)(x_range / min_div)][(int) (y_range / min_div)];
+        map = new double[(int)(x_range / min_div)][(int) (y_range / min_div)];
         EntityPool all_blocks = scene.getStaticEntities();
         Shape agent_shape = agent.getShape().clone();
         for (int i = 0; i < (int) (x_range / min_div); i++) {
@@ -102,7 +101,14 @@ public class AStarPathFinder implements PathFinder {
                 }
             }
         }
-        return map;
+        distance = new double[map.length][map[0].length];
+        previous = new Point[map.length][map[0].length];
+        for(int i =0; i<map.length; i++){
+            for(int j=0; j<map[0].length; j++){
+                Point temp = new Point2D();
+                previous[i][j] = temp;
+            }
+        }
     }
 
 
@@ -130,7 +136,7 @@ public class AStarPathFinder implements PathFinder {
                 goals[i] = point_stack.pop().scaleBy(min_div).moveBy(delta_x, delta_y);
             }
             path = new AStarPath(goals);
-            send_back();
+            recover();
         }
         else{
             for(int i = 0; i<goals.length; i++){
@@ -165,7 +171,7 @@ public class AStarPathFinder implements PathFinder {
         return x>=0 && y>=0 && x<map.length && y<map[0].length;
     }
 
-    public void send_back(){
+    public void recover(){
         EntityPool all_blocks = scene.getStaticEntities();
         for (InteractiveEntity entity : all_blocks) {
             entity.getShape().moveTo(entity.getShape().getReferencePoint().moveBy(delta_x, delta_y));

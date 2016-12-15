@@ -1,13 +1,13 @@
-package org.socialforce.model.impl;
+package org.socialforce.strategy.impl;
 
-import org.socialforce.model.Path;
+import org.socialforce.strategy.Path;
 import org.socialforce.geom.Point;
 
 /**
  * 定义StraightPath类，其实现了接口Path的方法。
  * Created by Ledenel on 2016/8/14.
  */
-public class AStarPath implements Path {
+public class StraightPath implements Path {
     /**
      * 获取路径的起点。
      *
@@ -20,7 +20,7 @@ public class AStarPath implements Path {
 
     protected Point[] goals;
 
-    public AStarPath(Point ... goals) {
+    public StraightPath(Point ... goals) {
         this.goals = goals;
     }
 
@@ -44,7 +44,7 @@ public class AStarPath implements Path {
      */
     @Override
     public Point getCurrentGoal(Point current) {
-        while (reached < goals.length && goals[reached].epsilonEquals(current,AStarPathFinder.min_div)) {
+        while (reached < goals.length && goals[reached].epsilonEquals(current,10e-1-0.001)) {
             reached++;
         }
         if(done()) {
@@ -63,11 +63,26 @@ public class AStarPath implements Path {
         return reached >= goals.length;
     }
 
+    public Path moveBy(double x, double y){
+        for(int i =0; i<goals.length; i++){
+            goals[i].moveBy(x,y);
+        }
+        return this;
+    }
+
     public String toString(){
         String string = "路径为";
         for(int i =0; i<goals.length; i++){
             string += goals[i].toString()+"， ";
         }
         return string;
+    }
+
+    public double length(){
+        double length = 0;
+        for(int i =1; i<goals.length; i++){
+            length += goals[i].distanceTo(goals[i-1]);
+        }
+        return length;
     }
 }

@@ -2,16 +2,13 @@ package org.socialforce.model.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.socialforce.app.Scene;
 import org.socialforce.app.SimpleScene;
 import org.socialforce.app.impl.preset.SVSR_AgentGenerator;
-import org.socialforce.app.impl.preset.SquareRoomLoader;
 import org.socialforce.container.AgentPool;
 import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
-import org.socialforce.model.InteractiveEntity;
+import org.socialforce.strategy.impl.StraightPath;
 
 /**
  * Created by sunjh1999 on 2016/10/22.

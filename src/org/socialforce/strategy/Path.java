@@ -1,6 +1,7 @@
-package org.socialforce.model;
+package org.socialforce.strategy;
 
 import org.socialforce.geom.Point;
+import org.socialforce.model.Agent;
 
 /**
  * 表示agent的路径。
@@ -36,4 +37,9 @@ public interface Path {
      */
     boolean done();
 
+    /**
+     * 计算路径长度
+     * @return 返回路径长度
+     */
+    double length();
 }

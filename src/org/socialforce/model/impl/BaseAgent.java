@@ -5,6 +5,7 @@ import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.*;
+import org.socialforce.strategy.Path;
 
 /**
  * 定义BaseAgent类，其继承于父类Entity，并实现了接口Agent 的方法。

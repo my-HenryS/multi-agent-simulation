@@ -8,11 +8,11 @@ import org.socialforce.app.impl.preset.SquareRoomLoader;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.geom.impl.Semicircle2D;
 import org.socialforce.model.*;
 import org.socialforce.model.impl.*;
+import org.socialforce.strategy.PathFinder;
+import org.socialforce.strategy.impl.AStarPathFinder;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;

@@ -4,15 +4,12 @@ package org.socialforce.model.impl;
 import org.junit.Before;
 import org.junit.Test;
 import org.socialforce.app.Scene;
-import org.socialforce.app.impl.preset.SVSR_AgentGenerator;
 import org.socialforce.app.impl.preset.SquareRoomLoader;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.Path;
-
-import static org.junit.Assert.*;
+import org.socialforce.strategy.Path;
+import org.socialforce.strategy.impl.AStarPathFinder;
 
 /**
  * Created by sunjh1999 on 2016/10/23.

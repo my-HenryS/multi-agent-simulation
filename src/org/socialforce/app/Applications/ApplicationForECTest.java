@@ -5,13 +5,11 @@ import org.socialforce.app.impl.SimpleSceneParameter;
 import org.socialforce.app.impl.preset.*;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.geom.impl.Semicircle2D;
 import org.socialforce.model.Agent;
-import org.socialforce.model.PathFinder;
+import org.socialforce.strategy.PathFinder;
 import org.socialforce.model.SocialForceModel;
-import org.socialforce.model.impl.AStarPathFinder;
+import org.socialforce.strategy.impl.AStarPathFinder;
 import org.socialforce.model.impl.SimpleSocialForceModel;
-import org.socialforce.model.impl.StraightPath;
 
 import java.util.Iterator;
 import java.util.LinkedList;

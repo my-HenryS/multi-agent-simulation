@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.impl.StraightPath;
+import org.socialforce.strategy.impl.StraightPath;
 
 import static org.junit.Assert.*;
 
