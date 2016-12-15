@@ -11,6 +11,7 @@ import org.socialforce.model.PathFinder;
 import org.socialforce.model.SocialForceModel;
 import org.socialforce.model.impl.AStarPathFinder;
 import org.socialforce.model.impl.SimpleSocialForceModel;
+import org.socialforce.model.impl.StraightPath;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -73,7 +74,7 @@ public class ApplicationForECStrategy implements SocialForceApplication{
 
     public void SetUpParameter(){
         SimpleSceneParameter parameter = new SimpleSceneParameter();
-        parameter.addValue(new SVSR_RandomAgentGenerator(100,new Box2D(4.5,4.5,15.5,27.5)));
+        parameter.addValue(new SVSR_RandomAgentGenerator(100,new Box2D(4.5,4.5,27.5,15.5)));
         parameter.addValue(new SVSR_SafetyRegion(new Box2D(24,2,4,1)));
         parameter.addValue(new SVSR_SafetyRegion(new Box2D(33,12,1,4)));
         parameter.addValue(new SVSR_SafetyRegion(new Box2D(2,8,1,4)));
@@ -106,8 +107,8 @@ public class ApplicationForECStrategy implements SocialForceApplication{
                 }
                 //agent.setPath(new StraightPath(agent.getShape().getReferencePoint(), goal));
                 //System.out.println(agent.getPath().toString());
-                agent.setPath(new AStarPathFinder(scene, agent, goal).plan_for());
-                //agent.setPath(new StraightPath(new Point2D(9,8), goal));
+                //agent.setPath(new AStarPathFinder(scene, agent, goal).plan_for());
+                agent.setPath(new StraightPath(present, goal));
             }
         }
     }
