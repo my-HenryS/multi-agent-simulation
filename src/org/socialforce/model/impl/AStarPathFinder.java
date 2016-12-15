@@ -3,6 +3,7 @@ package org.socialforce.model.impl;
 import org.socialforce.app.Scene;
 import org.socialforce.container.EntityPool;
 import org.socialforce.geom.Box;
+import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Shape;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Point2D;
@@ -89,14 +90,14 @@ public class AStarPathFinder implements PathFinder {
                 y_range = scene.getBounds().getEndPoint().getY() - scene.getBounds().getStartPoint().getY();
         double[][] map = new double[(int)(x_range / min_div)][(int) (y_range / min_div)];
         EntityPool all_blocks = scene.getStaticEntities();
-        Shape agent_shape = agent.getShape().clone();
+        DistanceShape agent_shape = (DistanceShape) agent.getShape().clone();
         for (int i = 0; i < (int) (x_range / min_div); i++) {
             for (int j = 0; j < (int) (y_range / min_div); j++) {
                 map[i][j] = 0;
                 for (InteractiveEntity entity : all_blocks) {
                     agent_shape.moveTo(new Point2D(i*min_div, j*min_div));
                     //assert( == entity.getShape().getClass());
-                    if (!(entity instanceof SafetyRegion) && agent_shape.hits((Box) entity.getShape())) {
+                    if (!(entity instanceof SafetyRegion) && agent_shape.distanceTo(entity.getShape())<0) {
                         map[i][j] = 1;
                     }
                 }
