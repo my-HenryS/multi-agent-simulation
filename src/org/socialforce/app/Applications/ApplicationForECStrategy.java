@@ -73,7 +73,7 @@ public class ApplicationForECStrategy implements SocialForceApplication{
 
     public void SetUpParameter(){
         SimpleSceneParameter parameter = new SimpleSceneParameter();
-        parameter.addValue(new SVSR_RandomAgentGenerator(100,new Box2D(4.1,4.1,15.8,27.8)));
+        parameter.addValue(new SVSR_RandomAgentGenerator(100,new Box2D(4.5,4.5,15.5,27.5)));
         parameter.addValue(new SVSR_SafetyRegion(new Box2D(24,2,4,1)));
         parameter.addValue(new SVSR_SafetyRegion(new Box2D(33,12,1,4)));
         parameter.addValue(new SVSR_SafetyRegion(new Box2D(2,8,1,4)));

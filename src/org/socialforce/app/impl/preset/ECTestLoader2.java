@@ -31,14 +31,14 @@ public class ECTestLoader2 implements SceneLoader {
     public Scene readScene() {
         Scene scene = new SimpleScene(new Box2D(-50, -50, 100, 100));
         Wall[] walls = new Wall[]{
-                new Wall(new Box2D(new Point2D(4, 4), new Point2D(25, 4))),
-                new Wall(new Box2D(new Point2D(26.75,4), new Point2D(32,4))),
-                new Wall(new Box2D(new Point2D(32, 4), new Point2D(32, 13.5))),
-                new Wall(new Box2D(new Point2D(32, 14.5), new Point2D(32, 20))),
-                new Wall(new Box2D(new Point2D(4, 4), new Point2D(4, 9.5))),
-                new Wall(new Box2D(new Point2D(4, 10.25), new Point2D(4,20))),
-                new Wall(new Box2D(new Point2D(4, 20), new Point2D(13, 20))),//???
-                new Wall(new Box2D(new Point2D(14.5,20), new Point2D(32, 20))),
+                new Wall(new Box2D(new Point2D(4, 3), new Point2D(25, 4))),
+                new Wall(new Box2D(new Point2D(26.75,3), new Point2D(32,4))),
+                new Wall(new Box2D(new Point2D(32, 4), new Point2D(33, 13.5))),
+                new Wall(new Box2D(new Point2D(32, 14.5), new Point2D(33, 20))),
+                new Wall(new Box2D(new Point2D(3, 4), new Point2D(4, 9.5))),
+                new Wall(new Box2D(new Point2D(3, 10.25), new Point2D(4,20))),
+                new Wall(new Box2D(new Point2D(4, 20), new Point2D(13, 21))),//???
+                new Wall(new Box2D(new Point2D(14.5,20), new Point2D(32, 21))),
                 new Wall(new Circle2D(new Point2D(11.5,11),2)),
                 new Wall(new Circle2D(new Point2D(26,11.5),2))
         };
