@@ -2,6 +2,8 @@ package org.socialforce.app.impl.preset;
 
 import org.socialforce.app.Scene;
 import org.socialforce.app.SceneValue;
+import org.socialforce.container.EntityPool;
+import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
@@ -9,8 +11,11 @@ import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Semicircle2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.AgentDecorator;
+import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.impl.BaseAgent;
 import org.socialforce.model.impl.BaseAgentDecorator;
+import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.model.impl.SimpleSocialForceModel;
 
 import java.util.Random;
@@ -92,15 +97,28 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
                 double rand_y = agentGenerator.Area.getBounds().getStartPoint().getY() + rand.nextDouble() * (agentGenerator.Area.getBounds().getEndPoint().getY() - agentGenerator.Area.getBounds().getStartPoint().getY());
                 Point2D point = new Point2D(rand_x, rand_y);
                 Iterable<Agent> agents = scene.getAllAgents();
+                new_agent = agentGenerator.decorator.createAgent(point);
                 for (Agent agent : agents) {
-                    if(point.distanceTo(agent.getShape().getReferencePoint()) < 0.486) is_able_flag = 1;
+                    if(new_agent.getShape().distanceTo(agent.getShape()) < 0){
+                        is_able_flag = 1;
+                        break;
+                    }
                 }
+                if(is_able_flag == 0){
+                    EntityPool all_blocks = scene.getStaticEntities();
+                    for (InteractiveEntity entity : all_blocks) {
+                        if (!(entity instanceof SafetyRegion) && new_agent.getShape().distanceTo(entity.getShape()) < 0){
+                            is_able_flag = 1;
+                            break;
+                        }
+                    }
+                }
+
                 if(is_able_flag == 1){
                     is_able_flag = 0;
                     continue;
                 }
                 if (agentGenerator.Area.contains(point)) {
-                    new_agent = agentGenerator.decorator.createAgent(point);
                     new_agent.setModel(agentGenerator.model);
                     scene.addAgent(new_agent);
                     new_agent.setScene(scene);
