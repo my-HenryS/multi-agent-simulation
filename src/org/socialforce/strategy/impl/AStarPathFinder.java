@@ -109,7 +109,7 @@ public class AStarPathFinder implements PathFinder {
                 for (InteractiveEntity entity : all_blocks) {
                     agentShape.moveTo(new Point2D(i*min_div, j*min_div));
                     //assert( == entity.getShape().getClass());
-                    if (!(entity instanceof SafetyRegion) && agentShape.hits((Box) entity.getShape())) {
+                    if (!(entity instanceof SafetyRegion) && ((DistanceShape)agentShape).distanceTo(entity.getShape()) < 0) {
                         map[i][j] = 1;
                     }
                 }
@@ -150,7 +150,7 @@ public class AStarPathFinder implements PathFinder {
         AStarPath path;
         if(scene!=null){
             for(int i = 0; i<goals.length; i++){
-                goals[i] = point_stack.pop().scaleBy(min_div).moveBy(delta_x, delta_y);
+                goals[i] = point_stack.pop().clone().scaleBy(min_div).moveBy(delta_x, delta_y);
             }
             path = new AStarPath(goals);
         }
