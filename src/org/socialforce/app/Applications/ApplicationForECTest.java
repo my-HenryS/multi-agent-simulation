@@ -8,8 +8,10 @@ import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.model.SocialForceModel;
+import org.socialforce.strategy.StaticStrategy;
 import org.socialforce.strategy.impl.AStarPathFinder;
 import org.socialforce.model.impl.SimpleSocialForceModel;
+import org.socialforce.strategy.impl.NearestGoalStrategy;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -79,21 +81,15 @@ public class ApplicationForECTest implements SocialForceApplication {
         parameters.addLast(parameter);
     }
 
+    protected StaticStrategy strategy;
+
     public void setUpStrategy(){
-        Agent agent;
         Scene scene;
-        Point2D goal;
         for (Iterator<Scene> iterator = scenes.iterator();iterator.hasNext();){
             scene = iterator.next();
-            for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
-                 //给所有agent设置path
-                 agent = (Agent) iter.next();
-                 goal = new Point2D(10, 8);
-            //agent.setPath(new StraightPath(agent.getShape().getReferencePoint(), goal));
-            //System.out.println(agent.getPath().toString());
-           agent.setPath(new AStarPathFinder(scene, agent, goal).plan_for());
-               // agent.setPath(new StraightPath(new Point2D(9,8), goal));
-             }
+            PathFinder pathFinder = new AStarPathFinder(scene);
+            strategy = new NearestGoalStrategy(scene, pathFinder, new Point2D(10, 8));
+            strategy.pathDecision();
         }
     }
 
