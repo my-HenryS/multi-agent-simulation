@@ -80,6 +80,7 @@ public class Circle2D implements DistanceShape {
 
     public Vector getDirection(Point point){
         Vector2D vector2D = (Vector2D) center.directionTo(point);
+        if(contains(point)) vector2D.scale(-1);
         return vector2D;
     }
 

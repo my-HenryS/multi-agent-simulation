@@ -5,6 +5,7 @@ import org.socialforce.app.SceneParameter;
 import org.socialforce.app.SceneValue;
 import org.socialforce.app.impl.preset.SVSR_AgentGenerator;
 import org.socialforce.app.impl.preset.SVSR_Exit;
+import org.socialforce.app.impl.preset.SVSR_RandomAgentGenerator;
 import org.socialforce.app.impl.preset.SVSR_SafetyRegion;
 
 import java.util.LinkedList;
@@ -67,7 +68,7 @@ public class SimpleSceneParameter implements SceneParameter {
      */
     @Override
     public boolean isValid(SceneValue value) {
-        if (value instanceof SVSR_AgentGenerator){
+        if (value instanceof SVSR_AgentGenerator || value instanceof SVSR_RandomAgentGenerator){
             return true;
         }
         if (value instanceof SVSR_Exit){
