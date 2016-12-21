@@ -1,5 +1,4 @@
-package org.socialforce.model.impl;
-
+package org.socialforce.strategy.impl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,8 +7,8 @@ import org.socialforce.app.impl.preset.SquareRoomLoader;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.model.impl.BaseAgent;
 import org.socialforce.strategy.Path;
-import org.socialforce.strategy.impl.AStarPathFinder;
 
 /**
  * Created by sunjh1999 on 2016/10/23.
