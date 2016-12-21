@@ -25,6 +25,9 @@ public class AStarPathFinderTest {
         goal = new Point2D(2,2);
         agent_shape.moveTo(new Point2D(4,4));
         agent_shape.setRadius(0.484);
+        SquareRoomLoader square = new SquareRoomLoader();
+        Scene scene = square.readScene();
+        aStarPathFinder = new AStarPathFinder(scene, new BaseAgent(agent_shape), goal);
         /*
         start_point = new Point2D(0,0);
         goal = new Point2D(0,0);
@@ -43,11 +46,38 @@ public class AStarPathFinderTest {
 
     @Test
     public void testScene() throws Exception {
-        SquareRoomLoader square = new SquareRoomLoader();
-        Scene scene = square.readScene();
-        aStarPathFinder = new AStarPathFinder(scene, new BaseAgent(agent_shape), goal);
         Path path = aStarPathFinder.plan_for();
         System.out.println(path.toString());
     }
 
+    @Test
+    public void testApply() throws Exception {
+        aStarPathFinder.applyGoal(new Point2D(8,8));
+        Path path = aStarPathFinder.plan_for();
+        System.out.println(path.toString());
+        agent_shape.moveTo(new Point2D(3,3));
+        aStarPathFinder.applyAgent(new BaseAgent(agent_shape));
+        path = aStarPathFinder.plan_for();
+        System.out.println(path.toString());
+    }
+
+    @Test
+    public void testApply2() throws Exception {
+        SquareRoomLoader square = new SquareRoomLoader();
+        Scene scene = square.readScene();
+        aStarPathFinder = new AStarPathFinder(scene);
+        aStarPathFinder.applyGoal(new Point2D(8,8));
+        agent_shape.moveTo(new Point2D(3,3));
+        aStarPathFinder.applyAgent(new BaseAgent(agent_shape));
+        Path path = aStarPathFinder.plan_for();
+        System.out.println(path.toString());
+    }
+
+    @Test
+    public void testAssert() throws Exception {
+        SquareRoomLoader square = new SquareRoomLoader();
+        Scene scene = square.readScene();
+        aStarPathFinder = new AStarPathFinder(scene);
+        aStarPathFinder.plan_for();
+    }
 }
