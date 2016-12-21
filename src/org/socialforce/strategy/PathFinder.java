@@ -22,9 +22,18 @@ public interface PathFinder {
 
     /**
      * 设置Pathfinder的参数。
-     * @param targetScene 目标场景
      * @param agent 目标agent
+     */
+    void applyAgent(Agent agent);
+
+    /**
+     * 设置Pathfinder的参数。
      * @param goal 目标位置
      */
-    void setParameters(Scene targetScene, Agent agent, Point goal);
+    void applyGoal(Point goal);
+
+    /**
+     * 后续处理，目前特指对pathfinder的更改复原（在scene的clone()实现后取消）。
+     */
+    void postProcessing();
 }
