@@ -1,6 +1,7 @@
 package org.socialforce.app.Console;
 
 import org.socialforce.app.ApplicationListener;
+import org.socialforce.app.Applications.ApplicationForECStrategy;
 import org.socialforce.app.Applications.ApplicationForECTest;
 import org.socialforce.app.Scene;
 import org.socialforce.app.Applications.SimpleApplication;
@@ -17,7 +18,7 @@ import org.socialforce.model.impl.BaseAgent;
 public class TextOutputMain implements ApplicationListener {
     public static void main(String[] args) {
         TextOutputMain TextOutputMain = new TextOutputMain();
-        TextOutputMain.setApplication(new ApplicationForECTest());//改应用在这里！
+        TextOutputMain.setApplication(new ApplicationForECStrategy());//改应用在这里！
         TextOutputMain.getApplication().setApplicationListener(TextOutputMain);
         TextOutputMain.getApplication().start();
     }
