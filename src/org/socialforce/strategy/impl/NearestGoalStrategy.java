@@ -14,12 +14,9 @@ import java.util.Iterator;
  * Created by sunjh1999 on 2016/12/14.
  */
 public class NearestGoalStrategy implements StaticStrategy{
-    Point destination;
-    Path designed_path;
     Point [] goals;
     Scene scene;
     PathFinder pathFinder;
-    double path_length = Double.POSITIVE_INFINITY;
 
     public NearestGoalStrategy(Scene scene, PathFinder pathFinder, Point ... candidate_goals){
         this.goals = candidate_goals;
@@ -33,6 +30,8 @@ public class NearestGoalStrategy implements StaticStrategy{
         Agent agent;
         for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
             agent = (Agent) iter.next();
+            Path designed_path = new AStarPath();
+            double path_length = Double.POSITIVE_INFINITY;
             pathFinder.applyAgent(agent);
             for (Point goal : goals) {
                 pathFinder.applyGoal(goal);
