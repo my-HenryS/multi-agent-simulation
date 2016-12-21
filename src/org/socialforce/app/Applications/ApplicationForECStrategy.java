@@ -5,13 +5,12 @@ import org.socialforce.app.impl.SimpleSceneParameter;
 import org.socialforce.app.impl.preset.*;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.geom.impl.Semicircle2D;
-import org.socialforce.model.Agent;
-import org.socialforce.model.PathFinder;
 import org.socialforce.model.SocialForceModel;
-import org.socialforce.model.impl.AStarPathFinder;
 import org.socialforce.model.impl.SimpleSocialForceModel;
-import org.socialforce.model.impl.StraightPath;
+import org.socialforce.strategy.PathFinder;
+import org.socialforce.strategy.StaticStrategy;
+import org.socialforce.strategy.impl.AStarPathFinder;
+import org.socialforce.strategy.impl.NearestGoalStrategy;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -74,42 +73,22 @@ public class ApplicationForECStrategy implements SocialForceApplication{
 
     public void SetUpParameter(){
         SimpleSceneParameter parameter = new SimpleSceneParameter();
-        parameter.addValue(new SVSR_RandomAgentGenerator(100,new Box2D(4.5,4.5,27.5,15.5)));
+        parameter.addValue(new SVSR_RandomAgentGenerator(50,new Box2D(13,6,4.5,4.5)));
         parameter.addValue(new SVSR_SafetyRegion(new Box2D(24,2,4,1)));
         parameter.addValue(new SVSR_SafetyRegion(new Box2D(33,12,1,4)));
         parameter.addValue(new SVSR_SafetyRegion(new Box2D(2,8,1,4)));
         parameter.addValue(new SVSR_SafetyRegion(new Box2D(12,21,4,1)));
         parameters.addLast(parameter);
     }
+    protected StaticStrategy strategy;
 
     public void setUpStrategy(){
-        Agent agent;
         Scene scene;
-        Point2D goal,temp,present;
         for (Iterator<Scene> iterator = scenes.iterator();iterator.hasNext();){
             scene = iterator.next();
-            for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
-                //给所有agent设置path
-                agent = (Agent) iter.next();
-                present = (Point2D) agent.getShape().getReferencePoint();
-                goal = new Point2D((25+26.75)/2,2);
-                temp = new Point2D(34,14);
-                if (present.distanceTo(temp)<=present.distanceTo(goal)){
-                    goal = temp;
-                }
-                temp = new Point2D((13+14.5)/2,22);
-                if (present.distanceTo(temp)<=present.distanceTo(goal)){
-                    goal = temp;
-                }
-                temp = new Point2D(2,(9.5+10.25)/2);
-                if (present.distanceTo(temp)<=present.distanceTo(goal)){
-                    goal = temp;
-                }
-                //agent.setPath(new StraightPath(agent.getShape().getReferencePoint(), goal));
-                //System.out.println(agent.getPath().toString());
-                //agent.setPath(new AStarPathFinder(scene, agent, goal).plan_for());
-                agent.setPath(new StraightPath(present, goal));
-            }
+            PathFinder pathFinder = new AStarPathFinder(scene);
+            strategy = new NearestGoalStrategy(scene, pathFinder,  new Point2D((25+26.75)/2,2), new Point2D(34,14), new Point2D((13+14.5)/2,22), new Point2D(2,(9.5+10.25)/2));
+            strategy.pathDecision();
         }
     }
 
