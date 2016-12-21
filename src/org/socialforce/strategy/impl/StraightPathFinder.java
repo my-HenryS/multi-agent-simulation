@@ -2,6 +2,7 @@ package org.socialforce.strategy.impl;
 
 import org.socialforce.app.Scene;
 import org.socialforce.geom.Point;
+import org.socialforce.geom.Shape;
 import org.socialforce.model.Agent;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
@@ -11,17 +12,19 @@ import org.socialforce.strategy.PathFinder;
  */
 public class StraightPathFinder implements PathFinder {
     Point goal;
-    Agent agent;
+    Shape agentShape;
     Scene scene;
 
     public StraightPathFinder(Scene targetScene, Agent agent, Point goal) {
         this.goal = goal;
-        this.agent = agent;
+        this.agentShape = agent.getShape().clone();
         this.scene = targetScene;
 
     }
 
-    public StraightPathFinder(){};
+    public StraightPathFinder(Scene targetScene){
+        this.scene = targetScene;
+    }
 
     /**
      * 从起点到目标点之间产生一条路径。
@@ -29,12 +32,16 @@ public class StraightPathFinder implements PathFinder {
      */
     @Override
     public Path plan_for(){
-        return new StraightPath(agent.getShape().getReferencePoint(),goal);
+        return new StraightPath(agentShape.getReferencePoint(),goal);
     }
 
-    public void setParameters(Scene targetScene, Agent agent, Point goal){
-        this.goal = goal;
-        this.agent = agent;
-        this.scene = targetScene;
+    public void applyGoal(Point goal){
+        this.goal = goal.clone();
     }
+
+    public void applyAgent(Agent agent){
+        this.agentShape = agent.getShape().clone();
+    }
+
+    public void postProcessing(){}
 }
