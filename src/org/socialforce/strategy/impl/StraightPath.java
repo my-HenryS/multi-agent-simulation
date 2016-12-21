@@ -85,4 +85,6 @@ public class StraightPath implements Path {
         }
         return length;
     }
+
+    public void postProcessing(){}
 }
