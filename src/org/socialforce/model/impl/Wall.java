@@ -21,7 +21,7 @@ public class Wall extends Entity implements Blockable {
     public void affect(InteractiveEntity affectedEntity) {
         if (affectedEntity instanceof Agent) {
             Agent agent = (Agent)affectedEntity;
-            agent.push(model.calcualte(this,affectedEntity));
+            agent.push(model.calculate(this,affectedEntity));
         }
     }
 

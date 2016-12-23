@@ -7,8 +7,7 @@ import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.SocialForceModel;
-
-import static org.junit.Assert.*;
+import org.socialforce.strategy.impl.StraightPath;
 
 /**
  * Created by sunjh1999 on 2016/10/18.

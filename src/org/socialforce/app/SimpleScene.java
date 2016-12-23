@@ -8,7 +8,7 @@ import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.Box;
 import org.socialforce.model.Agent;
-import org.socialforce.model.PathFinder;
+import org.socialforce.strategy.PathFinder;
 
 /**
  * Created by Ledenel on 2016/8/22.

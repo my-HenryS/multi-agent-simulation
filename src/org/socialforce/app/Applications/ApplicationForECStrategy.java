@@ -5,12 +5,11 @@ import org.socialforce.app.impl.SimpleSceneParameter;
 import org.socialforce.app.impl.preset.*;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.Agent;
-import org.socialforce.strategy.PathFinder;
 import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.impl.SimpleSocialForceModel;
+import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.StaticStrategy;
 import org.socialforce.strategy.impl.AStarPathFinder;
-import org.socialforce.model.impl.SimpleSocialForceModel;
 import org.socialforce.strategy.impl.NearestGoalStrategy;
 
 import java.util.Iterator;
@@ -18,11 +17,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Whatever on 2016/12/2.
+ * Created by Whatever on 2016/12/15.
  */
-public class ApplicationForECTest implements SocialForceApplication {
+public class ApplicationForECStrategy implements SocialForceApplication{
 
-    public ApplicationForECTest(){
+    public ApplicationForECStrategy(){
         SetUpParameter();
         setUpScenes();
         setUpStrategy();
@@ -33,17 +32,17 @@ public class ApplicationForECTest implements SocialForceApplication {
      */
     @Override
     public void start() {
-        for (Iterator<Scene>iterator = scenes.iterator();iterator.hasNext();){
+        for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
             Scene scene = iterator.next();
-        while (!scene.getAllAgents().isEmpty()) {
-            scene.stepNext();
-            try {
-                Thread.sleep(0);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            while (!scene.getAllAgents().isEmpty()) {
+                scene.stepNext();
+                try {
+                    Thread.sleep(0);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
-    }
     }
 
     /**
@@ -55,8 +54,7 @@ public class ApplicationForECTest implements SocialForceApplication {
         for (Iterator<SceneParameter> iterator = parameters.iterator(); iterator.hasNext();)
         {
             SceneParameter parameter = iterator.next();
-            SceneLoader loader = new ECTestLoader();
-            //SceneLoader loader = new SquareRoomLoader();
+            SceneLoader loader = new ECTestLoader2();
             Scene scene = loader.readScene();
             if (parameter instanceof SimpleSceneParameter){
                 while (true){
@@ -75,12 +73,13 @@ public class ApplicationForECTest implements SocialForceApplication {
 
     public void SetUpParameter(){
         SimpleSceneParameter parameter = new SimpleSceneParameter();
-        parameter.addValue(new SVSR_Exit(new Box2D[]{new Box2D(9,-2,2,5)}));
-        parameter.addValue(new SVSR_RandomAgentGenerator(60,new Box2D(5,-5,10,3)));
-        parameter.addValue(new SVSR_SafetyRegion(new Box2D(6,1,8,1)));
+        parameter.addValue(new SVSR_RandomAgentGenerator(400,new Box2D(4,4,26.5,14.5)));
+        parameter.addValue(new SVSR_SafetyRegion(new Box2D(24,2,4,1)));
+        parameter.addValue(new SVSR_SafetyRegion(new Box2D(33,12,1,4)));
+        parameter.addValue(new SVSR_SafetyRegion(new Box2D(2,8,1,4)));
+        parameter.addValue(new SVSR_SafetyRegion(new Box2D(12,21,4,1)));
         parameters.addLast(parameter);
     }
-
     protected StaticStrategy strategy;
 
     public void setUpStrategy(){
@@ -88,7 +87,7 @@ public class ApplicationForECTest implements SocialForceApplication {
         for (Iterator<Scene> iterator = scenes.iterator();iterator.hasNext();){
             scene = iterator.next();
             PathFinder pathFinder = new AStarPathFinder(scene);
-            strategy = new NearestGoalStrategy(scene, pathFinder, new Point2D(10, 8));
+            strategy = new NearestGoalStrategy(scene, pathFinder,  new Point2D((25+26.75)/2,2), new Point2D(34,14), new Point2D((13+14.5)/2,22), new Point2D(2,(9.5+10.25)/2));
             strategy.pathDecision();
         }
     }

@@ -143,7 +143,7 @@ public class Circle2D implements DistanceShape {
     @Override
     public Shape clone() {
         Circle2D circle = new Circle2D();
-        circle.moveTo(center);
+        circle.moveTo(center.clone());
         circle.setRadius(radius);
         return circle;
     }

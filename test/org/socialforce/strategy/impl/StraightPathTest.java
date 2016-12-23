@@ -1,4 +1,4 @@
-package org.socialforce.model.impl;
+package org.socialforce.strategy.impl;
 
 import org.junit.Before;
 import org.junit.Test;

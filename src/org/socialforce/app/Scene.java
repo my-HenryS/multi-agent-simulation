@@ -6,7 +6,7 @@ import org.socialforce.drawer.Drawable;
 import org.socialforce.geom.Box;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.PathFinder;
+import org.socialforce.strategy.PathFinder;
 
 import java.util.stream.Stream;
 
@@ -15,6 +15,7 @@ import java.util.stream.Stream;
  * it could be traditional scene,
  * a cloned scene in Cloning strategy,
  * a bucket-self-managed scene in Bucket Clone strategy.
+ * TODO 加入clone()方法
  * @see SocialForceApplication
  * @see Agent
  * @author Ledenel

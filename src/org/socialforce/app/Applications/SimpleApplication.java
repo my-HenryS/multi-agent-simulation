@@ -8,11 +8,11 @@ import org.socialforce.app.impl.preset.SquareRoomLoader;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.geom.impl.Semicircle2D;
 import org.socialforce.model.*;
 import org.socialforce.model.impl.*;
+import org.socialforce.strategy.PathFinder;
+import org.socialforce.strategy.impl.AStarPathFinder;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
@@ -29,7 +29,7 @@ public class SimpleApplication implements SocialForceApplication {
 
     public void SetUp() {
         SVSR_Exit exit = new SVSR_Exit();
-        SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(1, 2, 1, new Circle2D(new Point2D(13,6),7));
+        SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(0.7, 0.7, 1, new Box2D(1,1,25,15));
         SVSR_SafetyRegion safetyRegion = new SVSR_SafetyRegion();
         exit.setValue((new Box2D[]{new Box2D(-1, 5, 4, 3), new Box2D(10, -1, 3, 4), new Box2D(10, 14, 3, 4), new Box2D(24, 6, 4, 3)}));
         exit.apply(singleScene);

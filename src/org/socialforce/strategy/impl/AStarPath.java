@@ -1,6 +1,6 @@
-package org.socialforce.model.impl;
+package org.socialforce.strategy.impl;
 
-import org.socialforce.model.Path;
+import org.socialforce.strategy.Path;
 import org.socialforce.geom.Point;
 
 /**
@@ -44,7 +44,7 @@ public class AStarPath implements Path {
      */
     @Override
     public Point getCurrentGoal(Point current) {
-        while (reached < goals.length && goals[reached].epsilonEquals(current,AStarPathFinder.min_div*3)) {
+        while (reached < goals.length && goals[reached].epsilonEquals(current, AStarPathFinder.min_div*3)) {
             reached++;
         }
         if(done()) {
@@ -69,5 +69,13 @@ public class AStarPath implements Path {
             string += goals[i].toString()+"， ";
         }
         return string;
+    }
+
+    public double length(){
+        double length = 0;
+        for(int i =1; i<goals.length; i++){
+            length += goals[i].distanceTo(goals[i-1]);
+        }
+        return length;
     }
 }
