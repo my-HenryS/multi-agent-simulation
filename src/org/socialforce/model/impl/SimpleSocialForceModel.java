@@ -185,4 +185,9 @@ public class SimpleSocialForceModel implements SocialForceModel {
         expected.scale(EXPECTED_SPEED / expected.length());
         return expected;
     }
+
+    @Override
+    public double getExpectedSpeed() {
+        return EXPECTED_SPEED;
+    }
 }

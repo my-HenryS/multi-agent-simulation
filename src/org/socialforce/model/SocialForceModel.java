@@ -105,4 +105,9 @@ public interface SocialForceModel {
      * @return expected.驱动的速度。
      */
     Velocity getAgentMotivation(Point current, Point goal);
+
+    /**
+     * 获取当前model的行人期望速度值
+     */
+    double getExpectedSpeed();
 }
