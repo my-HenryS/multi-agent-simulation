@@ -65,18 +65,26 @@ public class AStarPathFinderTest {
         SquareRoomLoader square = new SquareRoomLoader();
         Scene scene = square.readScene();
         aStarPathFinder = new AStarPathFinder(scene);
-        aStarPathFinder.applyGoal(new Point2D(8,8));
         agent_shape.moveTo(new Point2D(3,3));
         aStarPathFinder.applyAgent(new BaseAgent(agent_shape));
+        aStarPathFinder.applyGoal(new Point2D(8,8));
         Path path = aStarPathFinder.plan_for();
+        System.out.println(path.toString());
+        aStarPathFinder.applyGoal(new Point2D(8,8));
+        path = aStarPathFinder.plan_for();
         System.out.println(path.toString());
     }
 
     @Test
-    public void testAssert() throws Exception {
+    public void testAssert(){
         SquareRoomLoader square = new SquareRoomLoader();
         Scene scene = square.readScene();
         aStarPathFinder = new AStarPathFinder(scene);
-        aStarPathFinder.plan_for();
+        try{
+            aStarPathFinder.plan_for();
+        }catch(java.lang.IllegalStateException e){
+            System.out.println("Exception caught");
+        }
+
     }
 }
