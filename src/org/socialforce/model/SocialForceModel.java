@@ -40,7 +40,7 @@ public interface SocialForceModel {
      * @param target 受力的作用的实体。
      * @return the force. 返回力的大小，其单位是牛。
      */
-    Force calcualte(InteractiveEntity source, InteractiveEntity target);
+    Force calculate(InteractiveEntity source, InteractiveEntity target);
 
     /**
      * 当力作用于实体本身时，计算该社会力。

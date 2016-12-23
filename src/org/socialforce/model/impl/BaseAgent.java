@@ -255,7 +255,7 @@ public class BaseAgent extends Entity implements Agent {
     public void affect(InteractiveEntity affectedEntity) {
         if (affectedEntity instanceof Agent && !this.equals(affectedEntity)) {
             Agent agent = (Agent) affectedEntity;
-            agent.push(model.calcualte(this, affectedEntity));
+            agent.push(model.calculate(this, affectedEntity));
         }
     }
 

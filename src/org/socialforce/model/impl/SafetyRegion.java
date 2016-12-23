@@ -1,6 +1,5 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.app.*;
 import org.socialforce.geom.Shape;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
@@ -26,7 +25,7 @@ public class SafetyRegion extends Entity implements InteractiveEntity {
     public void affect(InteractiveEntity affectedEntity) {
         if(affectedEntity instanceof Agent) {
             Agent agent = (Agent)affectedEntity;
-            agent.push(model.calcualte(this,agent));
+            agent.push(model.calculate(this,agent));
             if(shape.contains(agent.getShape().getReferencePoint())) {
                 //agent exited.
                 if(scene != null) {
