@@ -16,8 +16,8 @@ import java.util.List;
 public class SimpleSocialForceModel implements SocialForceModel {
     double TIME_PER_STEP = 0.002;
     public static final double AGENT_VIEW_RADIUS = 2;
-    public static final double EXPECTED_SPEED = 3;
-    public static final double REACT_TIME = 0.5;
+    double EXPECTED_SPEED = 3;
+    double REACT_TIME = 0.5;
     public static final int STATIC_TYPE_WALL = 0;
     public static final int STATIC_TYPE_GATE = 1;
 
@@ -190,4 +190,8 @@ public class SimpleSocialForceModel implements SocialForceModel {
     public double getExpectedSpeed() {
         return EXPECTED_SPEED;
     }
+
+    public double getREACT_TIME() {return REACT_TIME; }
+
+    public double getTIME_PER_STEP() {return TIME_PER_STEP; }
 }
