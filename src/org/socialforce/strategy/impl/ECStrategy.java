@@ -50,6 +50,7 @@ public class ECStrategy extends LifeBeltStrategy implements DynamicStrategy {
     }
 
     public double EC(double width, double velocity){
-        return (3.054+-0.44*Math.exp(-0.65*(velocity-3.57)))*(2.1*(width-0.386));
+        double ec=(2.871+(-1.306)*Math.exp(-0.27*velocity+0.81))*(3.359*(width-0.4958));
+        return ec<0? 0.01:ec;
     }
 }
