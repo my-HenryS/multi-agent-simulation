@@ -110,4 +110,8 @@ public interface SocialForceModel {
      * 获取当前model的行人期望速度值
      */
     double getExpectedSpeed();
+
+    double getREACT_TIME();
+
+    double getTIME_PER_STEP();
 }
