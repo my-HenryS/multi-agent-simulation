@@ -7,6 +7,7 @@ import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
 import org.socialforce.geom.Box;
 import org.socialforce.geom.impl.Box2D;
+import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 
@@ -44,7 +45,11 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
             Drawer drawer = entity.getShape().getDrawer();
             if(drawer != null) {
                 drawer.setDevice(this.getDevice());
+                if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D((25+26.75)/2,2))) ((AwtDrawer2D)drawer).setColor(Color.red);
+                if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(34,14))) ((AwtDrawer2D)drawer).setColor(Color.green);
+                if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D((13+14.5)/2,22))) ((AwtDrawer2D)drawer).setColor(Color.blue);
                 drawer.draw(entity.getShape());
+                ((AwtDrawer2D)drawer).setColor(Color.black);
             }
         }
         getDevice().transform(reverse);
