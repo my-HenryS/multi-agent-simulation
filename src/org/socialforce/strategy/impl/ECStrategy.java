@@ -32,7 +32,7 @@ public class ECStrategy extends LifeBeltStrategy implements DynamicStrategy {
                 //设置最优path
                 Path path = pathFinder.plan_for();
                 double pathLength = path.length();
-                double velocity = agent.getVelocity().length();
+                double velocity = agent.getModel().getExpectedSpeed();
                 double t = pathLength / velocity + front_num / EC(Width.widthOf(goal), velocity);
                 if(t < factor_t){
                     factor_t = t;
@@ -50,7 +50,8 @@ public class ECStrategy extends LifeBeltStrategy implements DynamicStrategy {
     }
 
     public double EC(double width, double velocity){
-        double ec=(2.871+(-1.306)*Math.exp(-0.27*velocity+0.81))*(3.359*(width-0.4958));
+        double a0 = 8.515, b1 = 0.4852, k0 = 0.3712, b0 = 0.1291;
+        double ec=a0*(1-Math.exp(-k0*velocity+b0))*(width-b1);
         return ec<0? 0.01:ec;
     }
 }
