@@ -80,7 +80,7 @@ public class TextOutputMain implements ApplicationListener {
             System.out.println("场景中人数" + scene.getAllAgents().size());
             System.out.println("目前一号智能体的位置是" + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getX() +
                     "," + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getY());*/
-            if (time % 150 == 0) {
+            if (time % 50 == 0) {
                // System.out.println();System.out.println();
                 System.out.println("目前时间" + time*0.002);System.out.println();System.out.println();Iterable<Agent> agents = scene.getAllAgents();
                 /*
@@ -120,4 +120,5 @@ public class TextOutputMain implements ApplicationListener {
             }
         }
     }
+
 }
