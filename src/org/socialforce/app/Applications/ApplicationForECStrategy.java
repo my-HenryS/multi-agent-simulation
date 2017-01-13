@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by Whatever on 2016/12/15.
  */
-public class ApplicationForECStrategy implements SocialForceApplication{
+public class ApplicationForECStrategy extends ApplicationForECTest implements SocialForceApplication{
 
     public ApplicationForECStrategy(){
         SetUpParameter();
@@ -27,7 +27,6 @@ public class ApplicationForECStrategy implements SocialForceApplication{
         //setUpStrategy();
     }
 
-    protected StaticStrategy strategy;
     /**
      * start the application immediately.
      * TODO start和setUpstrategy重构，将strategy独立于scene
@@ -49,12 +48,8 @@ public class ApplicationForECStrategy implements SocialForceApplication{
                 if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
                     ((DynamicStrategy) strategy).dynamicDecision();
                 }
-                try {
-                    Thread.sleep(0);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
+
         }
     }
 
@@ -63,6 +58,7 @@ public class ApplicationForECStrategy implements SocialForceApplication{
      * 目前就先随便生成一堆算了……
      * 手动map
      */
+    @Override
     public void setUpScenes(){
         for (Iterator<SceneParameter> iterator = parameters.iterator(); iterator.hasNext();)
         {
@@ -81,9 +77,7 @@ public class ApplicationForECStrategy implements SocialForceApplication{
         }
     }
 
-    protected ParameterSet parameterSet;//目前先不用这个，之后肯定要用
-    protected LinkedList<SceneParameter> parameters = new LinkedList<>();
-
+    @Override
     public void SetUpParameter(){
         SimpleSceneParameter parameter = new SimpleSceneParameter();
         parameter.addValue(new SVSR_RandomAgentGenerator(400,new Box2D(4,4 ,27.5,15.5)));
@@ -94,66 +88,4 @@ public class ApplicationForECStrategy implements SocialForceApplication{
         parameters.addLast(parameter);
     }
 
-    /**
-     * get the social force model the application is using.
-     *
-     * @return the model.
-     */
-    @Override
-    public SocialForceModel getModel() {
-        return model;
-    }
-    protected SocialForceModel model = new SimpleSocialForceModel();
-
-    /**
-     * set the social force model for the application.
-     *
-     * @param model the model to be set.
-     */
-    @Override
-    public void setModel(SocialForceModel model) {
-        this.model = model;
-    }
-
-    /**
-     * get all the scenes the applicaion is simulating.
-     *
-     * @return all scenes to simulate.
-     */
-    @Override
-    public Iterable<Scene> getAllScenes() {
-        return scenes;
-    }
-    protected LinkedList<Scene> scenes = new LinkedList<>();
-
-    /**
-     * get the application listener for the application.
-     *
-     * @return the application listener.
-     */
-    @Override
-    public ApplicationListener getApplicationListener() {
-        return listener;
-    }
-    protected ApplicationListener listener;
-
-    /**
-     * set a listener for application events.
-     *
-     * @param listener the listener to be set.
-     */
-    @Override
-    public void setApplicationListener(ApplicationListener listener) {
-        this.listener = listener;
-    }
-
-    @Override
-    public Scene findScene(ValueSet set) {
-        return null;
-    }
-
-    @Override
-    public List<PathFinder> getAllPathFinders() {
-        return null;
-    }
 }

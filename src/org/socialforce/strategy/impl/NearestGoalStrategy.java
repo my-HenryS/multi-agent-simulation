@@ -30,7 +30,7 @@ public class NearestGoalStrategy implements StaticStrategy{
         Agent agent;
         for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
             agent = (Agent) iter.next();
-            Path designed_path = new AStarPath();
+            Path designed_path = null;
             double path_length = Double.POSITIVE_INFINITY;
             pathFinder.applyAgent(agent);
             for (Point goal : goals) {

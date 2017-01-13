@@ -99,7 +99,7 @@ public class SimulationPanelMain implements ApplicationListener {
         this.application = application;
 
         // TODO: here, panel only find a default scene and show it.
-        Scene def = StreamSupport.stream(application.getAllScenes().spliterator(),false)
+        Scene def = StreamSupport.stream(application.getAllScenes().spliterator(), false)
                 .findFirst()
                 .orElse(null);
         shower1.setScene(def);
@@ -143,7 +143,9 @@ public class SimulationPanelMain implements ApplicationListener {
      */
     @Override
     public void onStep(Scene scene) {
+
         scene.getDrawer().draw(scene);
-        this.shower1.getBoard().refresh();
+        SimulationPanelMain.this.shower1.getBoard().refresh();
+
     }
 }

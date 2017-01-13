@@ -21,7 +21,7 @@ public class DynamicLifeBeltStrategy extends LifeBeltStrategy implements Dynamic
         Agent agent;
         for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
             agent = (Agent) iter.next();
-            Path designed_path = new AStarPath();
+            Path designed_path = null;
             double factor_t = Double.POSITIVE_INFINITY;
             pathFinder.applyAgent(agent);
             for (Point goal : goals) {
