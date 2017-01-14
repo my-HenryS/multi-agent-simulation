@@ -140,7 +140,7 @@ public class SimulationPanelMain implements ApplicationListener {
      */
     @Override
     public void onStep(Scene scene) {
-
+        if(scene.getDrawer() == null) shower1.setScene(scene);
         scene.getDrawer().draw(scene);
         SimulationPanelMain.this.shower1.getBoard().refresh();
 
