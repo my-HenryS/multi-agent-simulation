@@ -1,20 +1,18 @@
-package org.socialforce.app.impl;
+package org.socialforce.container.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.socialforce.container.impl.LinkListPool;
-import org.socialforce.geom.impl.Segment2D;
-import org.socialforce.model.InteractiveEntity;
-import org.socialforce.container.Pool;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.geom.impl.Segment2D;
+import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.Wall;
 
 import static org.junit.Assert.*;
 
 /**
- * Created by Ledenel on 2016/8/21.
+ * Created by sunjh1999 on 2017/1/14.
  */
 public class LinkListPoolTest {
     LinkListPool<InteractiveEntity> entities;
