@@ -3,10 +3,6 @@ package org.socialforce.app.impl;
 
 import org.socialforce.app.SceneParameter;
 import org.socialforce.app.SceneValue;
-import org.socialforce.app.impl.preset.SVSR_AgentGenerator;
-import org.socialforce.app.impl.preset.SVSR_Exit;
-import org.socialforce.app.impl.preset.SVSR_RandomAgentGenerator;
-import org.socialforce.app.impl.preset.SVSR_SafetyRegion;
 
 import java.util.LinkedList;
 
@@ -18,10 +14,13 @@ public class SimpleSceneParameter implements SceneParameter {
 
     public SimpleSceneParameter(){}
     public SimpleSceneParameter(LinkedList<SceneValue> values){
-        this.values = values;
+        if(isValid(values)){
+            this.values = values;
+        }
     }
 
     protected String name;
+    protected Class parameterclass = null;
     @Override
     public String getName() {
         return name;
@@ -68,16 +67,27 @@ public class SimpleSceneParameter implements SceneParameter {
      */
     @Override
     public boolean isValid(SceneValue value) {
-        if (value instanceof SVSR_AgentGenerator || value instanceof SVSR_RandomAgentGenerator){
+        if(parameterclass == null){
+            parameterclass = value.getClass();
             return true;
         }
-        if (value instanceof SVSR_Exit){
-            return true;
+        else{
+            return value.getClass() == parameterclass;
         }
-        if (value instanceof SVSR_SafetyRegion){
-            return true;
+
+    }
+
+    public boolean isValid(LinkedList<SceneValue> values) {
+        for(SceneValue value : values){
+            if(parameterclass == null){
+                parameterclass = value.getClass();
+            }
+            else{
+                if(parameterclass == value.getClass()) continue;
+                else return false;
+            }
         }
-        return false;
+        return true;
     }
 
     @Override
