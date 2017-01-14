@@ -3,11 +3,15 @@ package org.socialforce.strategy.impl;
 import org.junit.Before;
 import org.junit.Test;
 import org.socialforce.app.Scene;
-import org.socialforce.app.impl.preset.SquareRoomLoader;
+import org.socialforce.app.SceneLoader;
+import org.socialforce.app.impl.SimpleScene;
+import org.socialforce.app.impl.StandardSceneLoader;
 import org.socialforce.geom.Point;
+import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.impl.BaseAgent;
+import org.socialforce.model.impl.Wall;
 import org.socialforce.strategy.Path;
 
 /**
@@ -24,8 +28,14 @@ public class AStarPathFinderTest {
         goal = new Point2D(2,2);
         agent_shape.moveTo(new Point2D(4,4));
         agent_shape.setRadius(0.484);
-        SquareRoomLoader square = new SquareRoomLoader();
-        Scene scene = square.readScene();
+        SceneLoader square =  new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
+                new Wall[]{
+                        new Wall(new Box2D(new Point2D(0, 0), new Point2D(1, 16))),
+                        new Wall(new Box2D(new Point2D(1, 15), new Point2D(25, 16))),
+                        new Wall(new Box2D(new Point2D(25, 0), new Point2D(26, 16))),
+                        new Wall(new Box2D(new Point2D(1, 0), new Point2D(25, 1)))
+                });
+        Scene scene = square.staticScene();
         aStarPathFinder = new AStarPathFinder(scene, new BaseAgent(agent_shape), goal);
         /*
         start_point = new Point2D(0,0);
@@ -62,8 +72,14 @@ public class AStarPathFinderTest {
 
     @Test
     public void testApply2() throws Exception {
-        SquareRoomLoader square = new SquareRoomLoader();
-        Scene scene = square.readScene();
+        SceneLoader square =  new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
+                new Wall[]{
+                        new Wall(new Box2D(new Point2D(0, 0), new Point2D(1, 16))),
+                        new Wall(new Box2D(new Point2D(1, 15), new Point2D(25, 16))),
+                        new Wall(new Box2D(new Point2D(25, 0), new Point2D(26, 16))),
+                        new Wall(new Box2D(new Point2D(1, 0), new Point2D(25, 1)))
+                });
+        Scene scene = square.staticScene();
         aStarPathFinder = new AStarPathFinder(scene);
         agent_shape.moveTo(new Point2D(3,3));
         aStarPathFinder.applyAgent(new BaseAgent(agent_shape));
@@ -77,8 +93,14 @@ public class AStarPathFinderTest {
 
     @Test
     public void testAssert(){
-        SquareRoomLoader square = new SquareRoomLoader();
-        Scene scene = square.readScene();
+        SceneLoader square =  new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
+                new Wall[]{
+                        new Wall(new Box2D(new Point2D(0, 0), new Point2D(1, 16))),
+                        new Wall(new Box2D(new Point2D(1, 15), new Point2D(25, 16))),
+                        new Wall(new Box2D(new Point2D(25, 0), new Point2D(26, 16))),
+                        new Wall(new Box2D(new Point2D(1, 0), new Point2D(25, 1)))
+                });
+        Scene scene = square.staticScene();
         aStarPathFinder = new AStarPathFinder(scene);
         try{
             aStarPathFinder.plan_for();

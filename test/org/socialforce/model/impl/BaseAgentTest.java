@@ -2,7 +2,7 @@ package org.socialforce.model.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.socialforce.app.SimpleScene;
+import org.socialforce.app.impl.SimpleScene;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;

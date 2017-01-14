@@ -1,13 +1,16 @@
 package org.socialforce.app.impl.preset;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.socialforce.app.Scene;
 import org.socialforce.app.SceneLoader;
+import org.socialforce.app.impl.SVSR_Exit;
+import org.socialforce.app.impl.SimpleScene;
+import org.socialforce.app.impl.StandardSceneLoader;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.Wall;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +19,13 @@ import static org.junit.Assert.*;
  */
 public class SVSR_ExitTest {
     Scene scene;
-    SceneLoader loader = new SquareRoomLoader();
+    SceneLoader loader =  new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
+            new Wall[]{
+                    new Wall(new Box2D(new Point2D(0, 0), new Point2D(1, 16))),
+                    new Wall(new Box2D(new Point2D(1, 15), new Point2D(25, 16))),
+                    new Wall(new Box2D(new Point2D(25, 0), new Point2D(26, 16))),
+                    new Wall(new Box2D(new Point2D(1, 0), new Point2D(25, 1)))
+            });
     SVSR_Exit exit = new SVSR_Exit();
     @Before
     public void Setup(){
@@ -31,7 +40,7 @@ public class SVSR_ExitTest {
 
     @Test
     public void ApplyTest(){
-        scene = loader.readScene();
+        scene = loader.staticScene();
         InteractiveEntity entity,entity1;
         entity = scene.getStaticEntities().selectTop(new Point2D(5,0.5));
         entity1 = scene.getStaticEntities().selectTop(new Point2D(0.5,6));
