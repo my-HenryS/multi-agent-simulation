@@ -33,14 +33,18 @@ public class StandardSceneLoader implements SceneLoader {
     }
 
     public Scene staticScene() {
-        Scene newscene = scene.simpleclone();
-        for (int i = 0;i<walls.length;i++) {
-            walls[i].setName("wall" + i);
-            scene.getStaticEntities().add(walls[i]);
-            walls[i].setScene(scene);
-            walls[i].setModel(new SimpleSocialForceModel());
+        Scene new_scene = scene.simpleclone();
+        Wall[] new_walls = new Wall[walls.length];
+        for(int i = 0; i < walls.length; i++){
+            new_walls[i] = walls[i].simpleclone();
         }
-        return scene;
+        for (int i = 0;i < new_walls.length;i++) {
+            new_walls[i].setName("wall" + i);
+            new_scene.getStaticEntities().add(new_walls[i]);
+            new_walls[i].setScene(new_scene);
+            new_walls[i].setModel(new SimpleSocialForceModel());
+        }
+        return new_scene;
     }
 
     @Override
@@ -54,12 +58,10 @@ public class StandardSceneLoader implements SceneLoader {
         }
         //遍历 -- 全组合问题
         for(int i = 0; i < total_num; i++){
-            int loop_num = 1;
             ValueSet values = new SimpleValueSet();
             for (Iterator<SceneParameter> iterator = parameterSet.iterator(); iterator.hasNext();){
                 SimpleSceneParameter parameter = (SimpleSceneParameter) iterator.next();
-                loop_num *= parameter.getParameter().size();    //记录当前parameter的循环周长
-                values.add(parameter.getParameter().get(i%loop_num));   //根据相对周长的偏移量计算当前应添加的SceneValue
+                values.add(parameter.getParameter().get(i%parameter.getParameter().size()));   //根据相对周长的偏移量计算当前应添加的SceneValue
             }
             Scene scene = staticScene();
             scene = SceneGenerator.generate(scene,values);
