@@ -1,12 +1,19 @@
 package org.socialforce.app;
 
-import org.socialforce.app.ParameterSet;
-import org.socialforce.app.Scene;
+import java.util.Iterator;
 
 /**
  * Generator a Scene
  */
 public interface SceneGenerator {
-    Iterable<Scene> generate(Scene template, ParameterSet params);
-    Iterable<Scene> generate(SceneLoader loader);
+    static Scene generate(Scene scene, ValueSet values) {
+        for(Iterator<SceneValue> iterator = values.iterator(); iterator.hasNext();){
+            SceneValue sceneValue = iterator.next();
+            if (sceneValue == null){
+                break;
+            }
+            else sceneValue.apply(scene);
+        }
+        return scene;
+    }
 }
