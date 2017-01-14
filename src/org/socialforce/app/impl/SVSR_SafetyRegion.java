@@ -1,4 +1,4 @@
-package org.socialforce.app.impl.preset;
+package org.socialforce.app.impl;
 
 import org.socialforce.app.Scene;
 import org.socialforce.app.SceneValue;
