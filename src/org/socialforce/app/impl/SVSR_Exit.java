@@ -1,9 +1,8 @@
-package org.socialforce.app.impl.preset;
+package org.socialforce.app.impl;
 
 import org.socialforce.app.Scene;
 import org.socialforce.app.SceneValue;
 import org.socialforce.geom.ClipperShape;
-import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.model.InteractiveEntity;
