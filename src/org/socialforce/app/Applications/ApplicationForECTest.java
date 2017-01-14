@@ -1,11 +1,10 @@
 package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
-import org.socialforce.app.impl.SimpleSceneParameter;
-import org.socialforce.app.impl.preset.*;
+import org.socialforce.app.impl.*;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.Agent;
+import org.socialforce.model.impl.Wall;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.model.SocialForceModel;
 import org.socialforce.strategy.StaticStrategy;
@@ -23,7 +22,6 @@ import java.util.List;
 public class ApplicationForECTest implements SocialForceApplication {
 
     public ApplicationForECTest(){
-        SetUpParameter();
         setUpScenes();
         setUpStrategy();
     }
@@ -46,40 +44,26 @@ public class ApplicationForECTest implements SocialForceApplication {
     }
     }
 
+
     /**
      * 需要根据parameter的map来生成一系列scene
-     * 目前就先随便生成一堆算了……
-     * 手动map
      */
     public void setUpScenes(){
-        for (Iterator<SceneParameter> iterator = parameters.iterator(); iterator.hasNext();)
-        {
-            SceneParameter parameter = iterator.next();
-            SceneLoader loader = new ECTestLoader();
-            //SceneLoader loader = new SquareRoomLoader();
-            Scene scene = loader.readScene();
-            if (parameter instanceof SimpleSceneParameter){
-                while (true){
-                    SceneValue sceneValue =((SimpleSceneParameter) parameter).removeValue();
-                    if (sceneValue == null){break;}
-                    else sceneValue.apply(scene);
-                }
-            }
-            scene.setApplication(this);
-            scenes.addLast(scene);
-        }
-    }
-
-    protected ParameterSet parameterSet;//目前先不用这个，之后肯定要用
-    protected LinkedList<SceneParameter> parameters = new LinkedList<>();
-
-    public void SetUpParameter(){
+        ParameterPool parameters = new SimpleParameterPool();
+        SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
+                new Wall[]{
+                        new Wall(new Box2D(-10,0,60,1))
+                });
         SimpleSceneParameter parameter = new SimpleSceneParameter();
         parameter.addValue(new SVSR_Exit(new Box2D[]{new Box2D(9,-2,2,5)}));
         parameter.addValue(new SVSR_RandomAgentGenerator(60,new Box2D(5,-5,10,3)));
         parameter.addValue(new SVSR_SafetyRegion(new Box2D(6,1,8,1)));
         parameters.addLast(parameter);
+        loader.readParameterSet(parameters);
+        scenes = loader.readScene(this);
     }
+
+
 
     protected StaticStrategy strategy;
 
