@@ -4,14 +4,11 @@ import org.socialforce.app.ApplicationListener;
 import org.socialforce.app.Applications.ApplicationForECStrategy;
 import org.socialforce.app.Applications.ApplicationForECTest;
 import org.socialforce.app.Scene;
-import org.socialforce.app.Applications.SimpleApplication;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.model.Agent;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.stream.StreamSupport;
