@@ -1,5 +1,6 @@
-package org.socialforce.app;
+package org.socialforce.app.impl;
 
+import org.socialforce.app.*;
 import org.socialforce.container.AgentPool;
 import org.socialforce.container.EntityPool;
 import org.socialforce.container.impl.LinkListAgentPool;
@@ -227,4 +228,9 @@ public class SimpleScene implements Scene {
     public void setValueSet(ValueSet valueSet) {
         this.valueSet = valueSet;
     }
+
+    public Scene simpleclone(){
+        return new SimpleScene(bounds);
+    }
+
 }
