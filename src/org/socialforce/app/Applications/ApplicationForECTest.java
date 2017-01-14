@@ -5,11 +5,14 @@ import org.socialforce.app.impl.*;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.impl.Wall;
+import org.socialforce.strategy.DynamicStrategy;
+import org.socialforce.strategy.GoalStrategy;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.model.SocialForceModel;
 import org.socialforce.strategy.StaticStrategy;
 import org.socialforce.strategy.impl.AStarPathFinder;
 import org.socialforce.model.impl.SimpleSocialForceModel;
+import org.socialforce.strategy.impl.ECStrategy;
 import org.socialforce.strategy.impl.NearestGoalStrategy;
 
 import java.util.Iterator;
@@ -20,10 +23,15 @@ import java.util.List;
  * Created by Whatever on 2016/12/2.
  */
 public class ApplicationForECTest implements SocialForceApplication {
+    protected GoalStrategy strategy;
+    protected LinkedList<Scene> scenes = new LinkedList<>();
+    protected ApplicationListener listener;
+    protected SocialForceModel model = new SimpleSocialForceModel();
+
+
 
     public ApplicationForECTest(){
         setUpScenes();
-        setUpStrategy();
     }
 
     /**
@@ -31,17 +39,16 @@ public class ApplicationForECTest implements SocialForceApplication {
      */
     @Override
     public void start() {
-        for (Iterator<Scene>iterator = scenes.iterator();iterator.hasNext();){
+        for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
             Scene scene = iterator.next();
-        while (!scene.getAllAgents().isEmpty()) {
-            scene.stepNext();
-            try {
-                Thread.sleep(0);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            PathFinder pathFinder = new AStarPathFinder(scene);
+            strategy.pathDecision();
+            strategy = new NearestGoalStrategy(scene, pathFinder, new Point2D(10, 8));
+            while (!scene.getAllAgents().isEmpty()) {
+                scene.stepNext();
             }
+
         }
-    }
     }
 
 
@@ -63,20 +70,6 @@ public class ApplicationForECTest implements SocialForceApplication {
         scenes = loader.readScene(this);
     }
 
-
-
-    protected StaticStrategy strategy;
-
-    public void setUpStrategy(){
-        Scene scene;
-        for (Iterator<Scene> iterator = scenes.iterator();iterator.hasNext();){
-            scene = iterator.next();
-            PathFinder pathFinder = new AStarPathFinder(scene);
-            strategy = new NearestGoalStrategy(scene, pathFinder, new Point2D(10, 8));
-            strategy.pathDecision();
-        }
-    }
-
     /**
      * get the social force model the application is using.
      *
@@ -86,8 +79,6 @@ public class ApplicationForECTest implements SocialForceApplication {
     public SocialForceModel getModel() {
         return model;
     }
-    protected SocialForceModel model = new SimpleSocialForceModel();
-
     /**
      * set the social force model for the application.
      *
@@ -104,11 +95,9 @@ public class ApplicationForECTest implements SocialForceApplication {
      * @return all scenes to simulate.
      */
     @Override
-    public Iterable<Scene> getAllScenes() {
+    public LinkedList<Scene> getAllScenes() {
         return scenes;
     }
-    protected LinkedList<Scene> scenes = new LinkedList<>();
-
     /**
      * get the application listener for the application.
      *
@@ -118,7 +107,6 @@ public class ApplicationForECTest implements SocialForceApplication {
     public ApplicationListener getApplicationListener() {
         return listener;
     }
-    protected ApplicationListener listener;
 
     /**
      * set a listener for application events.
