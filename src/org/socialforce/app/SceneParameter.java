@@ -10,4 +10,6 @@ public interface SceneParameter<T extends Comparable<T>> extends Comparable<Scen
     int getPreferedSize();
     Iterable<SceneValue<T>> sample(int size);
     Iterable<SceneValue<T>> sample();
+    void addValue(SceneValue value);
+    SceneValue removeValue();
 }
