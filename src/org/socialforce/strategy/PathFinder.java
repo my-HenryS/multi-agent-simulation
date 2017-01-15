@@ -1,9 +1,7 @@
 package org.socialforce.strategy;
 
-import org.socialforce.app.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.model.Agent;
-import org.socialforce.strategy.Path;
 
 /**
  *在场景中，agent 的路径搜索器，

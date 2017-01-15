@@ -1,4 +1,4 @@
-package org.socialforce.app.impl;
+package org.socialforce.scene.impl;
 
 import org.socialforce.app.*;
 import org.socialforce.container.AgentPool;
@@ -9,6 +9,8 @@ import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.Box;
 import org.socialforce.model.Agent;
+import org.socialforce.scene.Scene;
+import org.socialforce.scene.ValueSet;
 import org.socialforce.strategy.PathFinder;
 
 /**

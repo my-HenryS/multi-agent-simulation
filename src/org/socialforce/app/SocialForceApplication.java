@@ -1,5 +1,7 @@
 package org.socialforce.app;
 
+import org.socialforce.scene.Scene;
+import org.socialforce.scene.ValueSet;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.model.SocialForceModel;
 

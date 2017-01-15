@@ -1,7 +1,5 @@
-package org.socialforce.app;
+package org.socialforce.scene;
 
-
-import org.socialforce.model.InteractiveEntity;
 
 /**
  * 代表一个场景参数的具体赋值。

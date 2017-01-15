@@ -1,6 +1,6 @@
 package org.socialforce.model;
 
-import org.socialforce.app.Scene;
+import org.socialforce.scene.Scene;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.geom.*;
 

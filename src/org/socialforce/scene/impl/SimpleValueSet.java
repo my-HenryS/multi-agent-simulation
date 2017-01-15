@@ -1,7 +1,7 @@
-package org.socialforce.app.impl;
+package org.socialforce.scene.impl;
 
-import org.socialforce.app.SceneValue;
-import org.socialforce.app.ValueSet;
+import org.socialforce.scene.SceneValue;
+import org.socialforce.scene.ValueSet;
 
 import java.util.*;
 

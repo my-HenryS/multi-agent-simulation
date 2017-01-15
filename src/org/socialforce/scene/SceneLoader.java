@@ -1,4 +1,6 @@
-package org.socialforce.app;
+package org.socialforce.scene;
+
+import org.socialforce.app.SocialForceApplication;
 
 import java.io.File;
 import java.io.InputStream;

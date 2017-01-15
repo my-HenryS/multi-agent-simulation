@@ -1,6 +1,6 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.app.Scene;
+import org.socialforce.scene.Scene;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;

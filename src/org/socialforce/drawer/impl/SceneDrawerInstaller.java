@@ -1,14 +1,12 @@
 package org.socialforce.drawer.impl;
 
-import org.socialforce.app.Scene;
+import org.socialforce.scene.Scene;
 import org.socialforce.drawer.Drawable;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
-import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.Collections;
 
 /**

@@ -2,8 +2,7 @@ package org.socialforce.app.gui;
 
 import org.socialforce.app.ApplicationListener;
 import org.socialforce.app.Applications.ApplicationForECStrategy;
-import org.socialforce.app.Applications.ApplicationForECTest;
-import org.socialforce.app.Scene;
+import org.socialforce.scene.Scene;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.model.Agent;
 

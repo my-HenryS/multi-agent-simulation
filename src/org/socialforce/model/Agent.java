@@ -1,6 +1,6 @@
 package org.socialforce.model;
 
-import org.socialforce.app.Scene;
+import org.socialforce.scene.Scene;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Shape;
 import org.socialforce.geom.Vector;

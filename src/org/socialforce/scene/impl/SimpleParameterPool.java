@@ -1,7 +1,7 @@
-package org.socialforce.app.impl;
+package org.socialforce.scene.impl;
 
-import org.socialforce.app.ParameterPool;
-import org.socialforce.app.SceneParameter;
+import org.socialforce.scene.ParameterPool;
+import org.socialforce.scene.SceneParameter;
 
 import java.util.Iterator;
 import java.util.LinkedList;

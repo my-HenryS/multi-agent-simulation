@@ -1,6 +1,6 @@
 package org.socialforce.strategy.impl;
 
-import org.socialforce.app.Scene;
+import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.model.Agent;
 import org.socialforce.strategy.DynamicStrategy;

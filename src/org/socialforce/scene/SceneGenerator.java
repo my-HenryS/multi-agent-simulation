@@ -1,4 +1,4 @@
-package org.socialforce.app;
+package org.socialforce.scene;
 
 import java.util.Iterator;
 

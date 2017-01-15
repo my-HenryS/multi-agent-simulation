@@ -1,8 +1,8 @@
-package org.socialforce.app.impl;
+package org.socialforce.scene.impl;
 
 
-import org.socialforce.app.SceneParameter;
-import org.socialforce.app.SceneValue;
+import org.socialforce.scene.SceneParameter;
+import org.socialforce.scene.SceneValue;
 
 import java.util.LinkedList;
 

@@ -2,8 +2,8 @@ package org.socialforce.model.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.socialforce.app.impl.SimpleScene;
-import org.socialforce.app.impl.SVSR_AgentGenerator;
+import org.socialforce.scene.impl.SimpleScene;
+import org.socialforce.scene.impl.SVSR_AgentGenerator;
 import org.socialforce.container.AgentPool;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;

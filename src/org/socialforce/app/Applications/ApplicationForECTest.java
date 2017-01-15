@@ -1,18 +1,19 @@
 package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
-import org.socialforce.app.impl.*;
+import org.socialforce.scene.ParameterPool;
+import org.socialforce.scene.Scene;
+import org.socialforce.scene.SceneLoader;
+import org.socialforce.scene.ValueSet;
+import org.socialforce.scene.impl.*;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.impl.Wall;
-import org.socialforce.strategy.DynamicStrategy;
 import org.socialforce.strategy.GoalStrategy;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.model.SocialForceModel;
-import org.socialforce.strategy.StaticStrategy;
 import org.socialforce.strategy.impl.AStarPathFinder;
 import org.socialforce.model.impl.SimpleSocialForceModel;
-import org.socialforce.strategy.impl.ECStrategy;
 import org.socialforce.strategy.impl.NearestGoalStrategy;
 
 import java.util.Iterator;

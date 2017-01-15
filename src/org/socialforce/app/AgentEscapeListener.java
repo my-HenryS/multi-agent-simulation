@@ -1,6 +1,7 @@
 package org.socialforce.app;
 
 import org.socialforce.model.Agent;
+import org.socialforce.scene.Scene;
 
 /**
  * Created by Ledenel on 2016/8/30.

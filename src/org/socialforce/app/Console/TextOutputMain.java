@@ -2,7 +2,7 @@ package org.socialforce.app.Console;
 
 import org.socialforce.app.ApplicationListener;
 import org.socialforce.app.Applications.ApplicationForECStrategy;
-import org.socialforce.app.Scene;
+import org.socialforce.scene.Scene;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;

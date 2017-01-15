@@ -1,8 +1,6 @@
-package org.socialforce.app;
+package org.socialforce.scene;
 
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * set the value of a map

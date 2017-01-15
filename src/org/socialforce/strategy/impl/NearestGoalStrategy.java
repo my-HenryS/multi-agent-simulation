@@ -1,8 +1,7 @@
 package org.socialforce.strategy.impl;
 
-import org.socialforce.app.Scene;
+import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;

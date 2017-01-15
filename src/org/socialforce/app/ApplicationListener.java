@@ -1,6 +1,6 @@
 package org.socialforce.app;
 
-import org.socialforce.model.Agent;
+import org.socialforce.scene.Scene;
 
 /**
  * the listener for a social force simulation application.

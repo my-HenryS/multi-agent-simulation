@@ -1,6 +1,6 @@
-package org.socialforce.app.impl;
-import org.socialforce.app.Scene;
-import org.socialforce.app.SceneValue;
+package org.socialforce.scene.impl;
+import org.socialforce.scene.Scene;
+import org.socialforce.scene.SceneValue;
 import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;

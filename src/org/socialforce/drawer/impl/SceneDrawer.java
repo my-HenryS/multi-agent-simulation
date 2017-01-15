@@ -1,8 +1,7 @@
 package org.socialforce.drawer.impl;
 
 import org.socialforce.app.ProxyedGraphics2D;
-import org.socialforce.app.Scene;
-import org.socialforce.drawer.Drawable;
+import org.socialforce.scene.Scene;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
 import org.socialforce.geom.Box;

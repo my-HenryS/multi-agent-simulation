@@ -2,10 +2,10 @@ package org.socialforce.strategy.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.socialforce.app.Scene;
-import org.socialforce.app.SceneLoader;
-import org.socialforce.app.impl.SimpleScene;
-import org.socialforce.app.impl.StandardSceneLoader;
+import org.socialforce.scene.Scene;
+import org.socialforce.scene.SceneLoader;
+import org.socialforce.scene.impl.SimpleScene;
+import org.socialforce.scene.impl.StandardSceneLoader;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;

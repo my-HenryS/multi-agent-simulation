@@ -1,8 +1,9 @@
-package org.socialforce.app.impl;
+package org.socialforce.scene.impl;
 
 import org.socialforce.app.*;
 import org.socialforce.model.impl.SimpleSocialForceModel;
 import org.socialforce.model.impl.Wall;
+import org.socialforce.scene.*;
 
 import java.io.File;
 import java.io.InputStream;

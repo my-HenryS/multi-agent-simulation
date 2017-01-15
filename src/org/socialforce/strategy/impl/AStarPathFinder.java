@@ -1,8 +1,7 @@
 package org.socialforce.strategy.impl;
 
-import org.socialforce.app.Scene;
+import org.socialforce.scene.Scene;
 import org.socialforce.container.EntityPool;
-import org.socialforce.geom.Box;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Shape;
 import org.socialforce.geom.Point;
@@ -13,9 +12,7 @@ import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.model.impl.SafetyRegion;
 
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Stack;
 import java.util.concurrent.LinkedBlockingQueue;
 
 

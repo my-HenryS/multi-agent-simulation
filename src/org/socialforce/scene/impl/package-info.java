@@ -4,4 +4,4 @@
  * @author Ledenel
  */
 
-package org.socialforce.app.impl;
+package org.socialforce.scene.impl;

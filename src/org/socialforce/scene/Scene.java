@@ -1,5 +1,7 @@
-package org.socialforce.app;
+package org.socialforce.scene;
 
+import org.socialforce.app.SceneListener;
+import org.socialforce.app.SocialForceApplication;
 import org.socialforce.container.AgentPool;
 import org.socialforce.container.EntityPool;
 import org.socialforce.drawer.Drawable;

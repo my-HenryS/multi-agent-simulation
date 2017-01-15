@@ -1,6 +1,6 @@
 package org.socialforce.app.gui;
 
-import org.socialforce.app.Scene;
+import org.socialforce.scene.Scene;
 import org.socialforce.drawer.impl.SceneDrawer;
 
 import javax.swing.*;

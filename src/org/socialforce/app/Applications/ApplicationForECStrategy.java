@@ -1,7 +1,8 @@
 package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
-import org.socialforce.app.impl.*;
+import org.socialforce.scene.*;
+import org.socialforce.scene.impl.*;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
@@ -74,7 +75,7 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
         scenes = loader.readScene(this);
     }
 
-    public SceneParameter genParameter(SceneValue ... sceneValue){
+    public SceneParameter genParameter(SceneValue... sceneValue){
         SceneParameter parameter;
         LinkedList<SceneValue> values = new LinkedList<>();
         for(SceneValue value : sceneValue){

@@ -1,10 +1,10 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.app.*;
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.*;
+import org.socialforce.scene.Scene;
 import org.socialforce.strategy.Path;
 
 /**

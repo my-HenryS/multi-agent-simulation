@@ -1,12 +1,9 @@
-package org.socialforce.app.impl;
+package org.socialforce.scene.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.socialforce.app.Scene;
-import org.socialforce.app.SceneLoader;
-import org.socialforce.app.impl.SVSR_Exit;
-import org.socialforce.app.impl.SimpleScene;
-import org.socialforce.app.impl.StandardSceneLoader;
+import org.socialforce.scene.Scene;
+import org.socialforce.scene.SceneLoader;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.InteractiveEntity;

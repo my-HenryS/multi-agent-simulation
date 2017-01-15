@@ -1,11 +1,10 @@
 package org.socialforce.app.gui;
 
-import org.socialforce.app.Scene;
+import org.socialforce.scene.Scene;
 import org.socialforce.drawer.DrawerInstaller;
 import org.socialforce.drawer.impl.SceneDrawerInstaller;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 

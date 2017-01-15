@@ -1,7 +1,7 @@
 package org.socialforce.model;
 
 import org.socialforce.container.Pool;
-import org.socialforce.app.Scene;
+import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
 

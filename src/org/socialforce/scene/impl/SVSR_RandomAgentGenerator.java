@@ -1,7 +1,7 @@
-package org.socialforce.app.impl;
+package org.socialforce.scene.impl;
 
-import org.socialforce.app.Scene;
-import org.socialforce.app.SceneValue;
+import org.socialforce.scene.Scene;
+import org.socialforce.scene.SceneValue;
 import org.socialforce.container.EntityPool;
 import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Box2D;
