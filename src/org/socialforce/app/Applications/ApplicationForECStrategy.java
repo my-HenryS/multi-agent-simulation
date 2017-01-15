@@ -1,6 +1,7 @@
 package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
+import org.socialforce.app.impl.SimpleInterpreter;
 import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
 import org.socialforce.geom.impl.Box2D;
@@ -11,6 +12,7 @@ import org.socialforce.strategy.DynamicStrategy;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.*;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -50,15 +52,10 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
 
 
     public void setUpScenes(){
-        SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
-                new Wall[]{
-                        new Wall(new Box2D(new Point2D(4, 3),  new Point2D(32,4))),
-                        new Wall(new Box2D(new Point2D(32, 4), new Point2D(33, 20))),
-                        new Wall(new Box2D(new Point2D(3, 4),  new Point2D(4,20))),
-                        new Wall(new Box2D(new Point2D(4, 20),  new Point2D(32, 21))),
-                        new Wall(new Circle2D(new Point2D(11.5,11),2)),
-                        new Wall(new Circle2D(new Point2D(26,11.5),2))
-                });
+        File file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/test/org/socialforce/app/impl/test.s");
+        Interpreter interpreter = new SimpleInterpreter();
+        interpreter.loadFile(file);
+        SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
         parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(400,new Box2D(4,4 ,27.5,15.5))));
         parameters.addLast(genParameter((new SVSR_SafetyRegion(new Box2D(24,2,4,1)))));
