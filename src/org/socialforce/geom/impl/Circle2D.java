@@ -141,7 +141,7 @@ public class Circle2D implements DistanceShape {
      * @return 圆的副本
      */
     @Override
-    public Shape clone() {
+    public Circle2D clone() {
         Circle2D circle = new Circle2D();
         circle.moveTo(center.clone());
         circle.setRadius(radius);

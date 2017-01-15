@@ -42,4 +42,9 @@ public class Wall extends Entity implements Blockable {
     public Wall simpleclone(){
         return new Wall(this.getShape());
     }
+
+    @Override
+    public Wall standardclone() {
+        return new Wall(shape.clone());
+    }
 }

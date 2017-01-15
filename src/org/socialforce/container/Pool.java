@@ -5,6 +5,7 @@ import org.socialforce.geom.Point;
 import org.socialforce.model.InteractiveEntity;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * 代表一个实体池，实体池能够像普通集合一样添加及删除实体。
@@ -135,4 +136,6 @@ public interface Pool<T extends InteractiveEntity> extends Collection<T> {
      * @return 查找到的实体。如果池中没有指定名称的实体，返回null。
      */
     T findBottom(String name);
+
+    Pool clone();
 }

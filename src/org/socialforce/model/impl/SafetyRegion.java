@@ -63,4 +63,9 @@ public class SafetyRegion extends Entity implements InteractiveEntity {
     public double getMass() {
         return Double.POSITIVE_INFINITY;
     }
+
+    @Override
+    public SafetyRegion standardclone() {
+        return new SafetyRegion(shape.clone());
+    }
 }

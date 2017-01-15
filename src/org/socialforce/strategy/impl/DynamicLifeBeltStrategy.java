@@ -13,8 +13,8 @@ import java.util.Iterator;
  * Created by sunjh1999 on 2016/12/24.
  */
 public class DynamicLifeBeltStrategy extends LifeBeltStrategy implements DynamicStrategy {
-    public DynamicLifeBeltStrategy(Scene scene, PathFinder pathFinder, Point... candidate_goals) {
-        super(scene, pathFinder, candidate_goals);
+    public DynamicLifeBeltStrategy(Scene scene, PathFinder pathFinder) {
+        super(scene, pathFinder);
     }
 
     public void dynamicDecision(){
@@ -30,7 +30,7 @@ public class DynamicLifeBeltStrategy extends LifeBeltStrategy implements Dynamic
                 //设置最优path
                 Path path = pathFinder.plan_for();
                 double pathLength = path.length();
-                double velocity = agent.getVelocity().length();
+                double velocity = agent.getModel().getExpectedSpeed();
                 double t = pathLength / velocity + front_num / Width.widthOf(goal);
                 if(t < factor_t){
                     factor_t = t;

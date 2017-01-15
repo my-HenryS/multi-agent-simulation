@@ -33,10 +33,10 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
             Scene scene = iterator.next();
             int iteration = 0;
             PathFinder pathFinder = new AStarPathFinder(scene);
-            strategy = new ECStrategy(scene, pathFinder,  new Point2D((25+26.75)/2,2), new Point2D(34,14), new Point2D((13+14.5)/2,22), new Point2D(2,(9.5+10.25)/2));
-            //strategy = new DynamicLifeBeltStrategy(scene, pathFinder,  new Point2D((25+26.75)/2,2), new Point2D(34,14), new Point2D((13+14.5)/2,22), new Point2D(2,(9.5+10.25)/2));
-            //strategy = new LifeBeltStrategy(scene, pathFinder,  new Point2D((25+26.75)/2,2), new Point2D(34,14), new Point2D((13+14.5)/2,22), new Point2D(2,(9.5+10.25)/2));
-            //strategy = new NearestGoalStrategy(scene, pathFinder,  new Point2D((25+26.75)/2,2), new Point2D(34,14), new Point2D((13+14.5)/2,22), new Point2D(2,(9.5+10.25)/2));
+            strategy = new ECStrategy(scene, pathFinder);
+            //strategy = new DynamicLifeBeltStrategy(scene, pathFinder);
+            //strategy = new LifeBeltStrategy(scene, pathFinder);
+            //strategy = new NearestGoalStrategy(scene, pathFinder);
             strategy.pathDecision();
             while (!scene.getAllAgents().isEmpty()) {
                 scene.stepNext();
@@ -45,8 +45,6 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
                     ((DynamicStrategy) strategy).dynamicDecision();
                 }
             }
-            System.out.println("empty! go on next");
-
         }
     }
 
@@ -62,7 +60,7 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
                         new Wall(new Circle2D(new Point2D(26,11.5),2))
                 });
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(10,new Box2D(4,4 ,27.5,15.5)), new SVSR_RandomAgentGenerator(600,new Box2D(4,4 ,27.5,15.5))));
+        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(400,new Box2D(4,4 ,27.5,15.5))));
         parameters.addLast(genParameter((new SVSR_SafetyRegion(new Box2D(24,2,4,1)))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(33,12,1,4))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(2,8,1,4))));

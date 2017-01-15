@@ -235,4 +235,10 @@ public class SimpleScene implements Scene {
         return new SimpleScene(bounds);
     }
 
+    public Scene standardclone() {
+        SimpleScene newscene = new SimpleScene(bounds);
+        newscene.setStaticEntities((EntityPool) this.getStaticEntities().clone());
+        return newscene;
+    }
+
 }

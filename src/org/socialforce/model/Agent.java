@@ -111,4 +111,6 @@ public interface Agent extends InteractiveEntity, Moveable, Blockable {
      * @return 是否已经逃离。
      */
     boolean isEscaped();
+
+    double averageSpeed(int span);
 }

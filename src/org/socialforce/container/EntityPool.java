@@ -12,5 +12,4 @@ import org.socialforce.model.InteractiveEntity;
  * generate Entity, the entity generate from one pool have the same properties
  */
 public interface EntityPool extends Pool<InteractiveEntity> {
-
 }

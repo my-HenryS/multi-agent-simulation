@@ -1,5 +1,6 @@
 package org.socialforce.strategy.impl;
 
+import org.socialforce.model.impl.BaseAgent;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.model.Agent;
@@ -14,8 +15,8 @@ import java.util.Iterator;
  */
 public class ECStrategy extends LifeBeltStrategy implements DynamicStrategy {
 
-    public ECStrategy(Scene scene, PathFinder pathFinder, Point... candidate_goals) {
-        super(scene, pathFinder, candidate_goals);
+    public ECStrategy(Scene scene, PathFinder pathFinder) {
+        super(scene, pathFinder);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class ECStrategy extends LifeBeltStrategy implements DynamicStrategy {
                 Path path = pathFinder.plan_for();
                 double pathLength = path.length();
                 double velocity = agent.getModel().getExpectedSpeed();
-                double t = pathLength / velocity + front_num / EC(Width.widthOf(goal), velocity);
+                double t = pathLength / velocity + front_num / EC(Width.widthOf(goal), agent.getModel().getExpectedSpeed());
                 if(t < factor_t){
                     factor_t = t;
                     designed_path = path;

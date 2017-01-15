@@ -74,7 +74,7 @@ public class AStarPathFinder implements PathFinder {
     public AStarPathFinder(Scene targetScene, Agent agent, Point goal){
         this.goal = goal.clone();
         this.agentShape = agent.getShape().clone();
-        this.scene = targetScene;
+        this.scene = targetScene.standardclone();
         scene_standardize();
         goal_standardize();
         start_point_standardize();
@@ -84,7 +84,7 @@ public class AStarPathFinder implements PathFinder {
     }
 
     public AStarPathFinder(Scene targetScene){
-        this.scene = targetScene;
+        this.scene = targetScene.standardclone();
         scene_standardize();
     }
 
@@ -228,15 +228,6 @@ public class AStarPathFinder implements PathFinder {
 
     public boolean available(int x, int y){
         return x>=0 && y>=0 && x<map.length && y<map[0].length;
-    }
-
-    public void postProcessing(){
-        if(scene != null){
-            EntityPool all_blocks = scene.getStaticEntities();
-            for (InteractiveEntity entity : all_blocks) {
-                entity.getShape().moveTo(entity.getShape().getReferencePoint().moveBy(delta_x, delta_y));
-            }
-        }
     }
 
     public void set_deltax(double x){

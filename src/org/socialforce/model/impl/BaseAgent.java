@@ -7,12 +7,15 @@ import org.socialforce.model.*;
 import org.socialforce.scene.Scene;
 import org.socialforce.strategy.Path;
 
+import java.util.LinkedList;
+
 /**
  * 定义BaseAgent类，其继承于父类Entity，并实现了接口Agent 的方法。
  * Created by Ledenel on 2016/8/15.
  */
 public class BaseAgent extends Entity implements Agent {
     Velocity currVelocity;
+    LinkedList<Velocity> velocities = new LinkedList<>();
     Path path;
     double mass;
     int currTimestamp;
@@ -174,6 +177,7 @@ public class BaseAgent extends Entity implements Agent {
     public void act() {
         this.currTimestamp++;
         this.currVelocity.add(deltaV);
+        velocities.addLast(currVelocity);
         Point point = shape.getReferencePoint();
         point.add(deltaS);
         this.shape.moveTo(point);
@@ -270,8 +274,24 @@ public class BaseAgent extends Entity implements Agent {
         return mass;
     }
 
+    @Override
+    public BaseAgent standardclone() {
+        return new BaseAgent(shape.clone());
+    }
+
 
     public String toString(){
         return this.shape.toString();
+    }
+
+    public double averageSpeed(int span){
+        double aver = 0;
+        int interval= (int)(span/this.getModel().getTimePerStep());
+        int baseline  =((velocities.size() - interval) >= 0)? velocities.size() - interval : 0;
+        for(int i =velocities.size()-1; i >= baseline; i--){
+            aver += velocities.get(i).length();
+        }
+        aver /= interval;
+        return aver;
     }
 }

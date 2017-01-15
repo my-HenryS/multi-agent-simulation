@@ -26,4 +26,10 @@ public interface DistanceShape extends Shape {
      * @return 相交时返回true；否则返回false。
      */
     boolean intersects(Shape other);
+
+    /**
+     * 创建并返回该形状的副本.
+     * @return 该形状的副本.
+     */
+    DistanceShape clone();
 }

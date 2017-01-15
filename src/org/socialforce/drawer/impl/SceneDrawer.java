@@ -44,9 +44,9 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
             Drawer drawer = entity.getShape().getDrawer();
             if(drawer != null) {
                 drawer.setDevice(this.getDevice());
-                if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D((25+26.75)/2,2))) ((AwtDrawer2D)drawer).setColor(Color.red);
-                if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(34,14))) ((AwtDrawer2D)drawer).setColor(Color.green);
-                if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D((13+14.5)/2,22))) ((AwtDrawer2D)drawer).setColor(Color.blue);
+                if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(26.0,2.5))) ((AwtDrawer2D)drawer).setColor(Color.red);
+                if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(33.5,14))) ((AwtDrawer2D)drawer).setColor(Color.green);
+                if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(14.0,21.5))) ((AwtDrawer2D)drawer).setColor(Color.blue);
                 drawer.draw(entity.getShape());
                 ((AwtDrawer2D)drawer).setColor(Color.black);
             }

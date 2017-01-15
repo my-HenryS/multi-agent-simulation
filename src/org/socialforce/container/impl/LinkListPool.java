@@ -171,6 +171,14 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
                 .orElse(null);
     }
 
+    public LinkListPool clone(){
+        LinkListPool<InteractiveEntity> newpool = new LinkListPool();
+        for(InteractiveEntity t: this){
+            newpool.addLast(t.standardclone());
+        }
+        return newpool;
+    }
+
     public class PoolNameIterable implements Iterable<T> {
         private String name;
 

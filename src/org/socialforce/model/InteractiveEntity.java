@@ -75,5 +75,7 @@ public interface InteractiveEntity {
      */
     void placeOn(Point point);
 
+    InteractiveEntity standardclone();
+
 }
 

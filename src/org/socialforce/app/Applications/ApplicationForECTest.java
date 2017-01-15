@@ -44,7 +44,7 @@ public class ApplicationForECTest implements SocialForceApplication {
             Scene scene = iterator.next();
             PathFinder pathFinder = new AStarPathFinder(scene);
             strategy.pathDecision();
-            strategy = new NearestGoalStrategy(scene, pathFinder, new Point2D(10, 8));
+            strategy = new NearestGoalStrategy(scene, pathFinder);
             while (!scene.getAllAgents().isEmpty()) {
                 scene.stepNext();
             }

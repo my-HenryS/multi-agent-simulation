@@ -67,6 +67,7 @@ public class StandardSceneLoader implements SceneLoader {
             Scene scene = staticScene();
             scene = SceneGenerator.generate(scene,values);
             scene.setApplication(application);
+            scene.setValueSet(values);
             scenes.addLast(scene);
         }
         return scenes;
