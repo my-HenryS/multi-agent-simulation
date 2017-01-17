@@ -31,6 +31,7 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
      */
     @Override
     public void start() {
+        System.out.println("Application starts!!");
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
             Scene scene = iterator.next();
             int iteration = 0;
@@ -40,7 +41,7 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
             //strategy = new LifeBeltStrategy(scene, pathFinder);
             //strategy = new NearestGoalStrategy(scene, pathFinder);
             strategy.pathDecision();
-            while (!scene.getAllAgents().isEmpty()) {
+            while (scene.getAllAgents().size() > 5) {
                 scene.stepNext();
                 iteration += 1;
                 if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
@@ -57,7 +58,7 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
         interpreter.loadFile(file);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(400,new Box2D(4,4 ,27.5,15.5))));
+        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5)), new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5))));
         parameters.addLast(genParameter((new SVSR_SafetyRegion(new Box2D(24,2,4,1)))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(33,12,1,4))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(2,8,1,4))));
