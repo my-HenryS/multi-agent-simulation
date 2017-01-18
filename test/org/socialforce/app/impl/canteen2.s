@@ -52,11 +52,12 @@ Walls:
     Wall:
         Box:15,3,16,18;
     Wall:
-        Box:17,3,18,18;
+        Box:17,4,18,18;
     Wall:
         Box:19,4,20,18;
     Wall:
         Box:21,8,22,18;
+
 
 
 End;
