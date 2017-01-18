@@ -31,7 +31,7 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
     @Override
     public void start() {
         System.out.println("Application starts!!");
-        for(int i = 20; i < 40; i++){
+        for(int i = 0; i < 40; i++){
             setUpScenes();
             for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
                 Scene scene = iterator.next();
