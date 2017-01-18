@@ -28,17 +28,17 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
      * 参数为XYZ方向的agent间距，生成人的范围还有在何种模型下生成人。
      */
     protected class AgentGenerator{
-        protected double agent_num;
+        protected int agent_num;
         protected Shape Area;
         protected AgentDecorator decorator;
         protected SocialForceModel model;
 
-        public AgentGenerator(double agent_num,Shape Area){
+        public AgentGenerator(int agent_num,Shape Area){
             this.agent_num = agent_num;
             this.Area = Area;
         }
 
-        public double getAgent_num(){
+        public int getAgent_num(){
             return agent_num;
         }
         public Shape getArea(){
@@ -54,7 +54,7 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
     private int priority;
     protected AgentGenerator agentGenerator;
 
-    public SVSR_RandomAgentGenerator(double agent_num,Shape Area){
+    public SVSR_RandomAgentGenerator(int agent_num,Shape Area){
         agentGenerator = new AgentGenerator(agent_num,Area);
         agentGenerator.setDecorator(new BaseAgentDecorator());
         agentGenerator.setModel(new SimpleSocialForceModel());
@@ -141,6 +141,10 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
     @Override
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public int get_Agentnum(){
+        return agentGenerator.getAgent_num();
     }
 }
 
