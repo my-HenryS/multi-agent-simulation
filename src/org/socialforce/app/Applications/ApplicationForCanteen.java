@@ -31,7 +31,7 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
     @Override
     public void start() {
         System.out.println("Application starts!!");
-        for(int i = 0; i < 40; i++){
+        for(int i = 20; i < 40; i++){
             setUpScenes();
             for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
                 Scene scene = iterator.next();
@@ -62,7 +62,7 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
                     strategy = new NearestGoalStrategy(scene, pathFinder);
                 }
                 strategy.pathDecision();
-                while (scene.getAllAgents().size() > 0) {
+                while (scene.getAllAgents().size() > 5) {
                     scene.stepNext();
                     iteration += 1;
                     if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
@@ -80,8 +80,8 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
         interpreter.loadFile(file);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(150,new Box2D(0,0,25,18)), new SVSR_RandomAgentGenerator(200,new Box2D(0,0,25,18)), new SVSR_RandomAgentGenerator(250,new Box2D(0,0,25,18))));
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(150,new Box2D(0,18,25,3))));
+        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(150,new Box2D(0,0,25,18)), new SVSR_RandomAgentGenerator(250,new Box2D(0,0,25,18)), new SVSR_RandomAgentGenerator(350,new Box2D(0,0,25,18))));
+        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(155,new Box2D(0,18,25,3))));
         parameters.addLast(genParameter((new SVSR_SafetyRegion(new Box2D(-3,-0.5,1,4)))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(18.5,-3,4,1))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(30,17.5,1,4))));
