@@ -30,7 +30,7 @@ public class SolidSegment2DDrawer extends AwtDrawer2D<Segment2D> {
             double x2 = pattern.getExtrimePoint()[1].getX();
             double y1 = pattern.getExtrimePoint()[0].getY();
             double y2 = pattern.getExtrimePoint()[1].getY();
-            g.drawLine((int)x1,(int)x2,(int)y1,(int)y2);
+            g.fill(new Rectangle.Double(2,2,10,10));
         }
     }
 }

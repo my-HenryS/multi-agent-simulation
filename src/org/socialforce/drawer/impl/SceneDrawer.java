@@ -91,7 +91,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
     public SceneDrawer(Graphics2D graphics, double ctrlWidth, double ctrlHeight) {
         // TODO: 2016/8/27 add coordinate transform for graphics.
 
-        clip = new Box2D(-10, -10, 50, 50);
+        clip = new Box2D(0, 0, 100, 100);
         this.ctrlHeight = ctrlHeight;
         this.ctrlWidth = ctrlWidth;
 

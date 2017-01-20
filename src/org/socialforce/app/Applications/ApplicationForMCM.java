@@ -36,7 +36,7 @@ public class ApplicationForMCM extends ApplicationForECTest implements SocialFor
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
             Scene scene = iterator.next();
             int iteration = 0;
-            PathFinder pathFinder = new AStarPathFinder(scene);
+            PathFinder pathFinder = new StraightPathFinder(scene);
             //strategy = new ECStrategy(scene, pathFinder);
             //strategy = new DynamicLifeBeltStrategy(scene, pathFinder);
             //strategy = new LifeBeltStrategy(scene, pathFinder);
@@ -54,16 +54,17 @@ public class ApplicationForMCM extends ApplicationForECTest implements SocialFor
 
 
     public void setUpScenes(){
-        SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
+        SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(0, 0, 100, 100)),
                 new Wall[]{
-                    new Wall(new Rectangle2D(new Point2D(10,10), 0.6, 10, 0))
-        });
+                        new Wall(new Rectangle2D(new Point2D(10,9.5), 20, 0.8, 7*Math.PI/18)),
+                        new Wall(new Rectangle2D(new Point2D(20.5,9.5), 20, 0.8, 29*Math.PI/18)),
+                        new Wall(new Rectangle2D(new Point2D(20.5,9.5), 20, 0.8, 29*Math.PI/18)),
+                        new Wall(new Rectangle2D(new Point2D(20.5,9.5), 20, 0.8, 29*Math.PI/18)),
+
+                });
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5))));
-                parameters.addLast(genParameter((new SVSR_SafetyRegion(new Box2D(24,2,4,1)))));
-        parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(33,12,1,4))));
-        parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(2,8,1,4))));
-        parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(12,21,4,1))));
+        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(105,new Box2D(0, 0,100,20))));
+        parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(43,99,14,1))));
         loader.readParameterSet(parameters);
         scenes = loader.readScene(this);
     }
