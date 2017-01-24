@@ -1,23 +1,46 @@
 package org.socialforce.app.gui;
 
-import org.socialforce.scene.Scene;
 import org.socialforce.drawer.impl.SceneDrawer;
+import org.socialforce.scene.Scene;
 
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * Created by Ledenel on 2016/10/23.
  */
 public class SceneBoard extends JPanel {
+
+    public ResizeListener getResizeListener() {
+        return resizeListener;
+    }
+
+    private ResizeListener resizeListener;
+
     public Scene getScene() {
         return scene;
     }
 
     public void setScene(Scene scene) {
         this.scene = scene;
+        this.removeComponentListener(resizeListener);
+        this.addComponentListener(resizeListener);
+    }
+
+    /**
+     * Creates a new <code>JPanel</code> with a double buffer
+     * and a flow layout.
+     */
+    public SceneBoard() {
+        //this.setPreferredSize(new Dimension(800,800));
+        resizeListener = new ResizeListener();
+        this.setBackground(Color.white);
     }
 
     Scene scene;
@@ -32,9 +55,11 @@ public class SceneBoard extends JPanel {
 
     BufferedImage image;
 
-    public void refresh() {
-        if(image != null) {
-            this.getGraphics().drawImage(image,0,0,null);
+    public void refresh(Graphics g) {
+        if (image != null) {
+            //synchronized (image) {
+                g.drawImage(image, 0, 0, null);
+            //}
         }
     }
 
@@ -68,16 +93,29 @@ public class SceneBoard extends JPanel {
      * @see ComponentUI
      */
 
+
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(scene != null) {
+        refresh(g);
+    }
+
+    public class ResizeListener extends ComponentAdapter {
+        /**
+         * Invoked when the component's size changes.
+         *
+         * @param e
+         */
+        @Override
+        public void componentResized(ComponentEvent e) {
             SceneDrawer sc = (SceneDrawer) scene.getDrawer();
             synchronized (sc) {
-                sc.setCtrlHeight(this.getHeight());
-                sc.setCtrlWidth(this.getWidth());
+                sc.setCtrlHeight(SceneBoard.this.getHeight());
+                sc.setCtrlWidth(SceneBoard.this.getWidth());
             }
         }
-        refresh();
     }
+
+
 }

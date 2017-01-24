@@ -72,11 +72,12 @@ public class SceneShower {
 
     public void setScene(Scene scene) {
         this.scene = scene;
-        image = new BufferedImage(1024,1024, BufferedImage.TYPE_INT_ARGB);
+        image = new BufferedImage(1920,1080, BufferedImage.TYPE_INT_ARGB);
         drawerInstaller = new SceneDrawerInstaller((Graphics2D) image.getGraphics(), image.getWidth(), image.getHeight());
         drawerInstaller.addDrawerSupport(scene);
         board.setImage(image);
         board.setScene(scene);
+        board.getResizeListener().componentResized(null);
     }
 
     Scene scene;

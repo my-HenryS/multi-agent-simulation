@@ -75,7 +75,7 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
 
 
     public void setUpScenes(){
-        File file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/test/org/socialforce/app/impl/canteen2.s");
+        File file = new File("canteen2.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFile(file);
         SceneLoader loader = interpreter.setLoader();

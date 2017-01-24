@@ -2,10 +2,9 @@ package org.socialforce.app.gui;
 
 import org.socialforce.app.ApplicationListener;
 import org.socialforce.app.Applications.ApplicationForCanteen;
-import org.socialforce.app.Applications.ApplicationForECStrategy;
-import org.socialforce.scene.Scene;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.model.Agent;
+import org.socialforce.scene.Scene;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,7 +48,7 @@ public class SimulationPanelMain implements ApplicationListener {
             application.setApplicationListener(mainPanel);
             frame.setContentPane(mainPanel.root);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setResizable(false);
+            //frame.setResizable(false);
             frame.pack();
             frame.setVisible(true);
             mainPanel.setApplication(application);
@@ -140,9 +139,11 @@ public class SimulationPanelMain implements ApplicationListener {
      */
     @Override
     public void onStep(Scene scene) {
-        if(scene.getDrawer() == null) shower1.setScene(scene);
+        if (scene.getDrawer() == null) {
+            shower1.setScene(scene);
+        }
         scene.getDrawer().draw(scene);
-        SimulationPanelMain.this.shower1.getBoard().refresh();
+        SimulationPanelMain.this.shower1.getBoard().repaint();//refresh();
 
     }
 }
