@@ -29,7 +29,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         double [] start = new double[2];
         clip = pattern.getBounds();
         clip.getSize().get(start);
-        scaleRate = calcScaleRate(pattern.getBounds());
+        //scaleRate = calcScaleRate(pattern.getBounds());
         AffineTransform transform = getTransform(start);
         AffineTransform reverse = null;
         try {
@@ -103,7 +103,9 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
     }
 
     public void setScaleRate(double scaleRate) {
-        this.scaleRate = scaleRate;
+        if(scaleRate > minScaleRate) {
+            this.scaleRate = scaleRate;
+        }
     }
 
     double scaleRate = 4;
