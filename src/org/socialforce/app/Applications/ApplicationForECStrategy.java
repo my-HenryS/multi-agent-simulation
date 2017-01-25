@@ -53,12 +53,12 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
 
 
     public void setUpScenes(){
-        File file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/test/org/socialforce/app/impl/test.s");
+        File file = new File("C:\\Users\\Whatever\\Desktop\\CNU\\UnrealSocialForceSimulation\\SocialForceSimulation\\test\\org\\socialforce\\app\\impl\\test.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFile(file);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5)), new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5))));
+        parameters.addLast(genParameter(-1,new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5)), new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5))));
         parameters.addLast(genParameter((new SVSR_SafetyRegion(new Box2D(24,2,4,1)))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(33,12,1,4))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(2,8,1,4))));
@@ -78,6 +78,15 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
             values.addLast(value);
         }
         parameter = new SimpleSceneParameter(values);
+        return parameter;
+    }
+
+    public SceneParameter genParameter(int priority, SceneValue... sceneValue){
+        SceneParameter parameter;
+        parameter = new SimpleSceneParameter(priority);
+        for(SceneValue value : sceneValue){
+        parameter.addValue(value);
+        }
         return parameter;
     }
 
