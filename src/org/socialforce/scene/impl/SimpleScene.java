@@ -8,7 +8,11 @@ import org.socialforce.container.impl.LinkListEntityPool;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.Box;
+import org.socialforce.geom.impl.Box2D;
+import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
+import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.Entity;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.ValueSet;
 import org.socialforce.strategy.PathFinder;
@@ -239,6 +243,43 @@ public class SimpleScene implements Scene {
         SimpleScene newscene = new SimpleScene(bounds);
         newscene.setStaticEntities((EntityPool) this.getStaticEntities().clone());
         return newscene;
+    }
+
+    @Override
+    public void pack(){
+        double xmin = Double.POSITIVE_INFINITY,xmax = Double.NEGATIVE_INFINITY,ymin = Double.POSITIVE_INFINITY,ymax = Double.NEGATIVE_INFINITY;
+        Box bound;
+        for(Agent agent : allAgents){
+            bound = agent.getShape().getBounds();
+            if (bound.getStartPoint().getX() < xmin){
+                xmin = bound.getStartPoint().getX();
+            }
+            if (bound.getStartPoint().getY() < ymin){
+                xmin = bound.getStartPoint().getY();
+            }
+            if (bound.getEndPoint().getX() > xmax){
+                xmax = bound.getEndPoint().getX();
+            }
+            if (bound.getEndPoint().getX() > ymax){
+                xmax = bound.getEndPoint().getY();
+            }
+        }
+        for (InteractiveEntity entity : statics){
+            bound = entity.getShape().getBounds();
+            if (bound.getStartPoint().getX() < xmin){
+                xmin = bound.getStartPoint().getX();
+            }
+            if (bound.getStartPoint().getY() < ymin){
+                xmin = bound.getStartPoint().getY();
+            }
+            if (bound.getEndPoint().getX() > xmax){
+                xmax = bound.getEndPoint().getX();
+            }
+            if (bound.getEndPoint().getX() > ymax){
+                xmax = bound.getEndPoint().getY();
+            }
+        }
+        this.bounds = new Box2D(new Point2D(xmin-5,ymin-5),new Point2D(xmax+5,ymax+5));
     }
 
 }
