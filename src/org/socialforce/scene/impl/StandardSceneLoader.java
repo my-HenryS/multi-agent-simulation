@@ -65,6 +65,7 @@ public class StandardSceneLoader implements SceneLoader {
                 values.add(parameter.getParameter().get(i%parameter.getParameter().size()));   //根据相对周长的偏移量计算当前应添加的SceneValue
             }
             Scene scene = staticScene();
+            System.out.print("F");
             scene = SceneGenerator.generate(scene,values);
             scene.setApplication(application);
             scene.setValueSet(values);

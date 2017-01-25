@@ -255,13 +255,13 @@ public class SimpleScene implements Scene {
                 xmin = bound.getStartPoint().getX();
             }
             if (bound.getStartPoint().getY() < ymin){
-                xmin = bound.getStartPoint().getY();
+                ymin = bound.getStartPoint().getY();
             }
             if (bound.getEndPoint().getX() > xmax){
                 xmax = bound.getEndPoint().getX();
             }
             if (bound.getEndPoint().getX() > ymax){
-                xmax = bound.getEndPoint().getY();
+                ymax = bound.getEndPoint().getY();
             }
         }
         for (InteractiveEntity entity : statics){
