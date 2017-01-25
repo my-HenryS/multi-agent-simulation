@@ -260,7 +260,7 @@ public class SimpleScene implements Scene {
             if (bound.getEndPoint().getX() > xmax){
                 xmax = bound.getEndPoint().getX();
             }
-            if (bound.getEndPoint().getX() > ymax){
+            if (bound.getEndPoint().getY() > ymax){
                 ymax = bound.getEndPoint().getY();
             }
         }
@@ -270,13 +270,13 @@ public class SimpleScene implements Scene {
                 xmin = bound.getStartPoint().getX();
             }
             if (bound.getStartPoint().getY() < ymin){
-                xmin = bound.getStartPoint().getY();
+                ymin = bound.getStartPoint().getY();
             }
             if (bound.getEndPoint().getX() > xmax){
                 xmax = bound.getEndPoint().getX();
             }
-            if (bound.getEndPoint().getX() > ymax){
-                xmax = bound.getEndPoint().getY();
+            if (bound.getEndPoint().getY() > ymax){
+                ymax = bound.getEndPoint().getY();
             }
         }
         this.bounds = new Box2D(new Point2D(xmin-5,ymin-5),new Point2D(xmax+5,ymax+5));
