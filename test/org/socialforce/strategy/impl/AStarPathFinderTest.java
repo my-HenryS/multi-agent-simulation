@@ -2,6 +2,7 @@ package org.socialforce.strategy.impl;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
 import org.socialforce.scene.impl.SimpleScene;
@@ -36,7 +37,7 @@ public class AStarPathFinderTest {
                         new Wall(new Box2D(new Point2D(1, 0), new Point2D(25, 1)))
                 });
         Scene scene = square.staticScene();
-        aStarPathFinder = new AStarPathFinder(scene, new BaseAgent(agent_shape), goal);
+        aStarPathFinder = new AStarPathFinder(scene, new BaseAgent(agent_shape, new Velocity2D(0,0)), goal);
         /*
         start_point = new Point2D(0,0);
         goal = new Point2D(0,0);
@@ -48,7 +49,7 @@ public class AStarPathFinderTest {
     @Test
     public void testMap() throws Exception {
         double[][]map=new double[][]{{0, 0, 0, 0, 0}, {0, 1, 0, 0, 0}, {0, 0, 0, 1, 0},{0, 0, 1, 1, 0}, {0, 0, 0, 0, 0}};
-        aStarPathFinder = new AStarPathFinder(map,  new BaseAgent(agent_shape) , goal);
+        aStarPathFinder = new AStarPathFinder(map,  new BaseAgent(agent_shape, new Velocity2D(0,0)) , goal);
         Path path = aStarPathFinder.plan_for();
         System.out.println(path.toString());
     }
@@ -65,7 +66,7 @@ public class AStarPathFinderTest {
         Path path = aStarPathFinder.plan_for();
         System.out.println(path.toString());
         agent_shape.moveTo(new Point2D(3,3));
-        aStarPathFinder.applyAgent(new BaseAgent(agent_shape));
+        aStarPathFinder.applyAgent(new BaseAgent(agent_shape, new Velocity2D(0,0)));
         path = aStarPathFinder.plan_for();
         System.out.println(path.toString());
     }
@@ -82,7 +83,7 @@ public class AStarPathFinderTest {
         Scene scene = square.staticScene();
         aStarPathFinder = new AStarPathFinder(scene);
         agent_shape.moveTo(new Point2D(3,3));
-        aStarPathFinder.applyAgent(new BaseAgent(agent_shape));
+        aStarPathFinder.applyAgent(new BaseAgent(agent_shape, new Velocity2D(0,0)));
         aStarPathFinder.applyGoal(new Point2D(8,8));
         Path path = aStarPathFinder.plan_for();
         System.out.println(path.toString());

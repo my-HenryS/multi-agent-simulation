@@ -1,6 +1,7 @@
 package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
+import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.scene.ParameterPool;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
@@ -64,7 +65,7 @@ public class ApplicationForECTest implements SocialForceApplication {
                 });
         SimpleSceneParameter parameter = new SimpleSceneParameter();
         parameter.addValue(new SVSR_Exit(new Box2D[]{new Box2D(9,-2,2,5)}));
-        parameter.addValue(new SVSR_RandomAgentGenerator(60,new Box2D(5,-5,10,3)));
+        parameter.addValue(new SVSR_RandomAgentGenerator(60,new Box2D(5,-5,10,3), new Velocity2D(0,0)));
         parameter.addValue(new SVSR_SafetyRegion(new Box2D(6,1,8,1)));
         parameters.addLast(parameter);
         loader.readParameterSet(parameters);

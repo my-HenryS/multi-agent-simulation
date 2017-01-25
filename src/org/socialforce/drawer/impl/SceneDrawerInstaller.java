@@ -22,7 +22,7 @@ public class SceneDrawerInstaller implements DrawerInstaller {
     @Override
     public boolean addDrawerSupport(Drawable drawable) {
         if (drawable instanceof Scene) {
-            drawable.setDrawer(sceneDrawer);
+            if (drawable.getDrawer() == null)drawable.setDrawer(sceneDrawer);
             Scene scene = (Scene) drawable;
             Iterable<InteractiveEntity> iterable = scene.getAllEntitiesStream()::iterator;
             boolean succ = true;

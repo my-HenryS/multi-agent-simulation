@@ -101,6 +101,7 @@ public class SimulationPanelMain implements ApplicationListener {
                 .findFirst()
                 .orElse(null);
         shower1.setScene(def);
+        ((ApplicationForMCM)application).setShower(shower1);
     }
 
     SocialForceApplication application;

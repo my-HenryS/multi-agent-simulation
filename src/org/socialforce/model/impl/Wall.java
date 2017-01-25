@@ -39,10 +39,6 @@ public class Wall extends Entity implements Blockable {
         return Double.POSITIVE_INFINITY;
     }
 
-    public Wall simpleclone(){
-        return new Wall(this.getShape());
-    }
-
     @Override
     public Wall standardclone() {
         return new Wall(shape.clone());

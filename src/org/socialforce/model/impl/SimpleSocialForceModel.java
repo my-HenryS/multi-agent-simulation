@@ -1,5 +1,6 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.app.SocialForceApplication;
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Force2D;
@@ -14,9 +15,9 @@ import java.util.List;
  * Created by Ledenel on 2016/8/17.
  */
 public class SimpleSocialForceModel implements SocialForceModel {
-    double TIME_PER_STEP = 0.002;
-    public static final double AGENT_VIEW_RADIUS = 2;
-    double EXPECTED_SPEED = 6;
+    double TIME_PER_STEP = 0.001;
+    public static final double AGENT_VIEW_RADIUS = 20;
+    double EXPECTED_SPEED = 30;
     double REACT_TIME = 0.5;
     public static final int STATIC_TYPE_WALL = 0;
     public static final int STATIC_TYPE_GATE = 1;
@@ -191,7 +192,13 @@ public class SimpleSocialForceModel implements SocialForceModel {
         return EXPECTED_SPEED;
     }
 
+    public void setExpectedSpeed(double speed) {
+        this.EXPECTED_SPEED = speed;
+    }
+
     public double getREACT_TIME() {return REACT_TIME; }
 
-    public double getTIME_PER_STEP() {return TIME_PER_STEP; }
+    public SocialForceModel clone(){
+        return new SimpleSocialForceModel();
+    }
 }

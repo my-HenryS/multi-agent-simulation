@@ -25,7 +25,7 @@ public class SafetyRegion extends Entity implements InteractiveEntity {
     public void affect(InteractiveEntity affectedEntity) {
         if(affectedEntity instanceof Agent) {
             Agent agent = (Agent)affectedEntity;
-            agent.push(model.calculate(this,agent));
+            //agent.push(model.calculate(this,agent));
             if(shape.contains(agent.getShape().getReferencePoint())) {
                 //agent exited.
                 if(scene != null) {

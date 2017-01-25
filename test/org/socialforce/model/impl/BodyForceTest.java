@@ -27,9 +27,9 @@ public class BodyForceTest {
         circle2.setRadius(0.243);
         circle3.moveTo(initPoint2);
         circle3.setRadius(0.243);
-        baseAgent = new BaseAgent(circle);
-        targetAgent = new BaseAgent(circle2);
-        targetAgent2 = new BaseAgent(circle3);
+        baseAgent = new BaseAgent(circle, new Velocity2D(0,0));
+        targetAgent = new BaseAgent(circle2, new Velocity2D(0,0));
+        targetAgent2 = new BaseAgent(circle3, new Velocity2D(0,0));
 
     }
     @Test

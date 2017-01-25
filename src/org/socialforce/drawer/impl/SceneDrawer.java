@@ -1,6 +1,8 @@
 package org.socialforce.drawer.impl;
 
 import org.socialforce.app.ProxyedGraphics2D;
+import org.socialforce.model.impl.BaseAgent;
+import org.socialforce.model.impl.SelfDrivingCar;
 import org.socialforce.scene.Scene;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
@@ -44,9 +46,8 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
             Drawer drawer = entity.getShape().getDrawer();
             if(drawer != null) {
                 drawer.setDevice(this.getDevice());
-                if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(26.0,2.5))) ((AwtDrawer2D)drawer).setColor(Color.red);
-                if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(33.5,14))) ((AwtDrawer2D)drawer).setColor(Color.green);
-                if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(14.0,21.5))) ((AwtDrawer2D)drawer).setColor(Color.blue);
+                if(entity instanceof BaseAgent) ((AwtDrawer2D)drawer).setColor(Color.red);
+                if(entity instanceof SelfDrivingCar) ((AwtDrawer2D)drawer).setColor(Color.blue);
                 drawer.draw(entity.getShape());
                 ((AwtDrawer2D)drawer).setColor(Color.black);
             }
@@ -91,7 +92,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
     public SceneDrawer(Graphics2D graphics, double ctrlWidth, double ctrlHeight) {
         // TODO: 2016/8/27 add coordinate transform for graphics.
 
-        clip = new Box2D(0, 0, 100, 100);
+        clip = new Box2D(0, 0, 250, 250);
         this.ctrlHeight = ctrlHeight;
         this.ctrlWidth = ctrlWidth;
 

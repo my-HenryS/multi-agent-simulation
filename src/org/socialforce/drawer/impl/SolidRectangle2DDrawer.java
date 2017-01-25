@@ -27,11 +27,11 @@ public class SolidRectangle2DDrawer extends AwtDrawer2D<Rectangle2D> {
     @Override
     public void renderShape(Graphics2D g, Rectangle2D pattern) {
         if (g != null && pattern != null) {
-            float thick=0.6f;
-            g.setStroke(new BasicStroke(thick, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_ROUND));
-            Point center = pattern.getReferencePoint();
             double length = pattern.getScale()[0], weidth = pattern.getScale()[1];
             double angle = pattern.getAngle();
+            float thick= (float) weidth;
+            g.setStroke(new BasicStroke(thick, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_ROUND));
+            Point center = pattern.getReferencePoint();
             double x1 = center.getX()-length*Math.cos(angle)/2;
             double y1 = center.getY()-length*Math.sin(angle)/2;
             double x2 = center.getX()+length*Math.cos(angle)/2;

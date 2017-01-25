@@ -5,6 +5,7 @@ import org.socialforce.app.SocialForceApplication;
 import org.socialforce.app.impl.SimpleInterpreter;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
 import org.socialforce.strategy.DynamicStrategy;
@@ -80,8 +81,8 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
         interpreter.loadFile(file);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(150,new Box2D(0,0,25,18)), new SVSR_RandomAgentGenerator(250,new Box2D(0,0,25,18)), new SVSR_RandomAgentGenerator(350,new Box2D(0,0,25,18))));
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(155,new Box2D(0,18,25,3))));
+        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(150,new Box2D(0,0,25,18),new Velocity2D(0,0))));
+        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(155,new Box2D(0,18,25,3), new Velocity2D(0,0))));
         parameters.addLast(genParameter((new SVSR_SafetyRegion(new Box2D(-3,-0.5,1,4)))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(18.5,-3,4,1))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(30,17.5,1,4))));

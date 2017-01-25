@@ -3,6 +3,7 @@ package org.socialforce.app.Console;
 import org.socialforce.app.ApplicationListener;
 import org.socialforce.app.Applications.ApplicationForCanteen;
 import org.socialforce.app.Applications.ApplicationForECStrategy;
+import org.socialforce.app.Applications.ApplicationForMCM;
 import org.socialforce.scene.Scene;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.geom.impl.Circle2D;
@@ -15,7 +16,7 @@ import org.socialforce.model.Agent;
 public class TextOutputMain implements ApplicationListener {
     public static void main(String[] args) {
         TextOutputMain TextOutputMain = new TextOutputMain();
-        TextOutputMain.setApplication(new ApplicationForCanteen());//改应用在这里！
+        TextOutputMain.setApplication(new ApplicationForMCM());//改应用在这里！
         TextOutputMain.getApplication().setApplicationListener(TextOutputMain);
         TextOutputMain.getApplication().start();
     }
@@ -71,7 +72,7 @@ public class TextOutputMain implements ApplicationListener {
         String[][] SquareRoom = new String[100][80];
         int number = scene.getAllAgents().size();
         int time = scene.getCurrentSteps();
-        if (scene.getAllAgents().size() == 5) {
+        if (scene.getAllAgents().size() != 0) {
             /*if(time%10 ==0){
             System.out.println("目前时间" + time);
             System.out.println("场景中人数" + scene.getAllAgents().size());
@@ -79,7 +80,7 @@ public class TextOutputMain implements ApplicationListener {
                     "," + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getY());*/
             //if (time % 50 == 0) {
                // System.out.println();System.out.println();
-                System.out.println("result is : " + time*0.002);
+                //System.out.println("-----------------------------------");
             //System.out.println();System.out.println();Iterable<Agent> agents = scene.getAllAgents();
                 /*
                 for (int i = -20; i < 80; i++) {

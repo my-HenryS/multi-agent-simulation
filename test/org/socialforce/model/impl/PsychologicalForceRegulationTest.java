@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.internal.Classes;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.SocialForceModel;
@@ -34,9 +35,9 @@ public class PsychologicalForceRegulationTest {
         circle2.setRadius(0.243);
         circle3.moveTo(initPoint2);
         circle3.setRadius(1);
-        baseAgent = new BaseAgent(circle);
-        targetAgent = new BaseAgent(circle2);
-        targetAgent2 = new BaseAgent(circle3);
+        baseAgent = new BaseAgent(circle, new Velocity2D(0,0));
+        targetAgent = new BaseAgent(circle2, new Velocity2D(0,0));
+        targetAgent2 = new BaseAgent(circle3, new Velocity2D(0,0));
     }
     @Test
     public void hasForce() throws Exception {
