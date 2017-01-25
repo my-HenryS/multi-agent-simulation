@@ -17,4 +17,7 @@ public interface ValueSet{
     SceneValue remove(SceneValue value);
 
     Iterator<SceneValue> iterator();
+
+    int getMaxPriority();
+    int getMinPriority();
 }

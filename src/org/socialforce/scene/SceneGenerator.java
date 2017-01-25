@@ -9,8 +9,7 @@ import java.util.Iterator;
  */
 public interface SceneGenerator {
     static Scene generate(Scene scene, ValueSet values) {
-        if (values instanceof SimpleValueSet)
-        for (int i = ((SimpleValueSet) values).getMaxPriority(); i >= ((SimpleValueSet) values).getMinPriority();i--) {
+        for (int i = values.getMaxPriority(); i >=  values.getMinPriority();i--) {
             for (Iterator<SceneValue> iterator = values.iterator(); iterator.hasNext(); ) {
                 SceneValue sceneValue = iterator.next();
                 int priority = sceneValue.getPriority();

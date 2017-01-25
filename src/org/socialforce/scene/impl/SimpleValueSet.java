@@ -38,6 +38,7 @@ public class SimpleValueSet implements ValueSet {
         return values.iterator();
     }
 
+    @Override
     public int getMaxPriority(){
         int maxPriority = Integer.MIN_VALUE;
         for (SceneValue value : values){
@@ -48,6 +49,7 @@ public class SimpleValueSet implements ValueSet {
         return maxPriority;
     }
 
+    @Override
     public int getMinPriority(){
         int minPriority = Integer.MAX_VALUE;
         for (SceneValue value : values){
