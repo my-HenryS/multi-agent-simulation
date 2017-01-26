@@ -60,7 +60,7 @@ public class AStarPathFinder implements PathFinder {
             int tempX = 0, tempY = 0;
             for(int i = (int)x-1; i<= x+1; i++){
                 for(int j = (int)y-1; j<= y+1; j++){
-                    if(map[i][j] == 0){
+                    if(available(i,j) && map[i][j] == 0){
                         if(new Point2D(i,j).distanceTo(new Point2D(x,y)) < distance){
                             tempX = i; tempY = j;
                             distance = new Point2D(i,j).distanceTo(new Point2D(x,y));

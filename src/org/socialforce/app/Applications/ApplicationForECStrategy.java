@@ -43,6 +43,7 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
             //strategy = new LifeBeltStrategy(scene, pathFinder);
             //strategy = new NearestGoalStrategy(scene, pathFinder);
             strategy.pathDecision();
+            long span = System.currentTimeMillis();
             while (scene.getAllAgents().size() > 5) {
                 scene.stepNext();
                 iteration += 1;
@@ -50,6 +51,7 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
                     ((DynamicStrategy) strategy).dynamicDecision();
                 }
             }
+            System.out.println("Duration time: "+(System.currentTimeMillis() - span));
         }
     }
 
