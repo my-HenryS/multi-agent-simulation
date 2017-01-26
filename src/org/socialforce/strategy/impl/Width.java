@@ -13,6 +13,10 @@ public class Width {
         if (goal.equals(new Point2D(-2.5,1.5))) return 1.36;
         if (goal.equals(new Point2D(20.5,-2.5))) return 1.36;
         if (goal.equals(new Point2D(30.5,19.5))) return 1.36;
+        if (goal.equals(new Point2D(33.5,14.0))) return 1;
+        if (goal.equals(new Point2D(14.0,21.5))) return 1.5;
+        if (goal.equals(new Point2D(26.0,2.5))) return 1.75;
+        if (goal.equals(new Point2D(2.5,10.0))) return 0.75;
         return 0;
     }
 }

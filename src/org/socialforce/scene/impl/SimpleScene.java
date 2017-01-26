@@ -242,6 +242,7 @@ public class SimpleScene implements Scene {
     public Scene standardclone() {
         SimpleScene newscene = new SimpleScene(bounds);
         newscene.setStaticEntities((EntityPool) this.getStaticEntities().clone());
+        newscene.setValueSet(valueSet);
         return newscene;
     }
 

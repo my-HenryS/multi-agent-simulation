@@ -13,12 +13,6 @@ import org.socialforce.model.Agent;
  */
 public interface Path {
     /**
-     * 获取路径的起点。
-     * @return 返回起点。
-     */
-    Point getStartPoint();
-
-    /**
      * 获取路径的目标点。
      * @return 目标点。
      */
@@ -32,14 +26,13 @@ public interface Path {
     Point getCurrentGoal(Point current);
 
     /**
-     * 检查路径是否走完。
-     * @return 如果走完返回真，否则假。
-     */
-    boolean done();
-
-    /**
      * 计算路径长度
      * @return 返回路径长度
      */
-    double length();
+    double length(Point current);
+
+    /**
+     * toString方法
+     */
+    String toString(Point current);
 }

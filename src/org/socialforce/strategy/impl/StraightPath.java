@@ -8,16 +8,6 @@ import org.socialforce.geom.Point;
  * Created by Ledenel on 2016/8/14.
  */
 public class StraightPath implements Path {
-    /**
-     * 获取路径的起点。
-     *
-     * @return 返回起点。
-     */
-    @Override
-    public Point getStartPoint() {
-        return goals[0];
-    }
-
     protected Point[] goals;
 
     public StraightPath(Point ... goals) {
@@ -44,47 +34,44 @@ public class StraightPath implements Path {
      */
     @Override
     public Point getCurrentGoal(Point current) {
-        while (reached < goals.length && goals[reached].epsilonEquals(current,0.3)) {
-            reached++;
+        int index = 0;
+        double length = Double.POSITIVE_INFINITY;
+        for(int i = 0; i < goals.length; i++) {
+            Point point = goals[i];
+            if (current.distanceTo(point) < length) {
+                length = current.distanceTo(point);
+                index = i;
+            }
         }
-        if(done()) {
-            return goals[goals.length-1];
-        }
-        return goals[reached];
+        return goals[index];
     }
 
-    /**
-     * 检查路径是否走完。
-     *
-     * @return 如果走完返回真，否则假。
-     */
-    @Override
-    public boolean done() {
-        return reached >= goals.length;
-    }
-
-    public Path moveBy(double x, double y){
-        for(int i =0; i<goals.length; i++){
-            goals[i].moveBy(x,y);
+    public int getNext(Point current) {
+        int index = 0;
+        double length = Double.POSITIVE_INFINITY;
+        for(int i = 0; i < goals.length; i++) {
+            Point point = goals[i];
+            if (current.distanceTo(point) < length) {
+                length = current.distanceTo(point);
+                index = i;
+            }
         }
-        return this;
+        return index;
     }
 
-    public String toString(){
+    public String toString(Point current){
         String string = "路径为";
-        for(int i =0; i<goals.length; i++){
+        for(int i = getNext(current); i<goals.length; i++){
             string += goals[i].toString()+"， ";
         }
         return string;
     }
 
-    public double length(){
+    public double length(Point current){
         double length = 0;
-        for(int i =1; i<goals.length; i++){
+        for(int i = getNext(current); i<goals.length; i++){
             length += goals[i].distanceTo(goals[i-1]);
         }
         return length;
     }
-
-    public void postProcessing(){}
 }

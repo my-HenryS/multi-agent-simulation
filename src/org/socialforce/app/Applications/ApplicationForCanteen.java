@@ -4,6 +4,7 @@ import org.socialforce.app.Interpreter;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.app.impl.SimpleInterpreter;
 import org.socialforce.geom.impl.Box2D;
+import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
@@ -44,7 +45,7 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
                 }
                 System.out.print("Population of "+total_num);
                 int iteration = 0;
-                PathFinder pathFinder = new AStarPathFinder(scene);
+                PathFinder pathFinder = new AStarPathFinder(scene, new Circle2D(new Point2D(0,0),0.486/2));
                 if(i<10){
                     System.out.print(" with ECStrategy, ");
                     strategy = new ECStrategy(scene, pathFinder);
@@ -75,7 +76,7 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
 
 
     public void setUpScenes(){
-        File file = new File("canteen2.s");
+        File file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/test/org/socialforce/app/impl/canteen2.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFile(file);
         SceneLoader loader = interpreter.setLoader();
@@ -95,14 +96,6 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
         scenes = loader.readScene(this);
     }
 
-    public SceneParameter genParameter(SceneValue... sceneValue){
-        SceneParameter parameter;
-        LinkedList<SceneValue> values = new LinkedList<>();
-        for(SceneValue value : sceneValue){
-            values.addLast(value);
-        }
-        parameter = new SimpleSceneParameter(values);
-        return parameter;
-    }
+
 
 }

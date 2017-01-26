@@ -13,26 +13,29 @@ import java.util.Iterator;
 /**
  * Created by sunjh1999 on 2016/12/24.
  */
-public class ECStrategy extends LifeBeltStrategy implements DynamicStrategy {
+public class ECStrategy implements DynamicStrategy {
+    Point[] goals;
+    Scene scene;
+    PathFinder pathFinder;
 
     public ECStrategy(Scene scene, PathFinder pathFinder) {
-        super(scene, pathFinder);
+        this.scene = scene;
+        this.pathFinder = pathFinder;
+        this.goals = pathFinder.getGoals();
     }
 
     @Override
-    public void dynamicDecision(){
+    public void pathDecision(){
         Agent agent;
         for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
             agent = (Agent) iter.next();
             Path designed_path = null;
             double factor_t = Double.POSITIVE_INFINITY;
-            pathFinder.applyAgent(agent);
             for (Point goal : goals) {
                 int front_num = fronts(agent, goal);
-                pathFinder.applyGoal(goal);
                 //设置最优path
-                Path path = pathFinder.plan_for();
-                double pathLength = path.length();
+                Path path = pathFinder.plan_for(goal);
+                double pathLength = path.length(agent.getShape().getReferencePoint());
                 double velocity = agent.getModel().getExpectedSpeed();
                 double t = pathLength / velocity + front_num / EC(Width.widthOf(goal), agent.getModel().getExpectedSpeed());
                 if(t < factor_t){
@@ -45,9 +48,19 @@ public class ECStrategy extends LifeBeltStrategy implements DynamicStrategy {
     }
 
     @Override
-    public double factorT(double pathLength, Agent agent, int front_num, Point goal){
-        double velocity = agent.getModel().getExpectedSpeed();
-        return pathLength / velocity + front_num / EC(Width.widthOf(goal), velocity);
+    public void dynamicDecision(){
+        pathDecision();
+    }
+
+    public int fronts(Agent agent, Point goal){
+        int front_num = 0;
+        for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
+            Agent target_agent = (Agent) iter.next();
+            if(agent.getShape().getDistance(goal) > target_agent.getShape().getDistance(goal)){
+                front_num += 1;
+            }
+        }
+        return front_num;
     }
 
     public double EC(double width, double velocity){

@@ -13,21 +13,14 @@ import org.socialforce.model.Agent;
 public interface PathFinder {
 
     /**
-     * 获取Pathfinder为Agent生成的路径。
+     * 获取Pathfinder根据goal生成的矢量场。
      * @return 搜索出的路径。
      */
-    Path plan_for();
+    Path plan_for(Point goal);
 
     /**
-     * 设置Pathfinder的参数。
-     * @param agent 目标agent
+     * 获取goals集合
      */
-    void applyAgent(Agent agent);
-
-    /**
-     * 设置Pathfinder的参数。
-     * @param goal 目标位置
-     */
-    void applyGoal(Point goal);
+    Point[] getGoals();
 
 }

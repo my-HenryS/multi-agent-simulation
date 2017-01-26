@@ -22,6 +22,8 @@ public class AStarPathFinderTest {
     Point start_point;
     Point goal;
     Circle2D agent_shape = new Circle2D();
+
+    /*
     @Before
     public void setUp() throws Exception {
         start_point = new Point2D(0,0);
@@ -37,12 +39,10 @@ public class AStarPathFinderTest {
                 });
         Scene scene = square.staticScene();
         aStarPathFinder = new AStarPathFinder(scene, new BaseAgent(agent_shape), goal);
-        /*
         start_point = new Point2D(0,0);
         goal = new Point2D(0,0);
-        agent_shape.moveTo(new Point2D(20,20));               此种设定会出现行人规划路径避开障碍物的情况
+        agent_shape.moveTo(new Point2D(20,20));
         agent_shape.setRadius(0.484);
-         */
     }
 
     @Test
@@ -109,4 +109,6 @@ public class AStarPathFinderTest {
         }
 
     }
+    */
+
 }
