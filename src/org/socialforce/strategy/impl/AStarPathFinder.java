@@ -24,7 +24,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * TODO 性能优化 需结合scene重构
  */
 public class AStarPathFinder implements PathFinder {
-    static final double min_div = 0.2;
+    static final double min_div = 0.3;
     private double map[][];
     double distance[][];
     Point previous[][];
@@ -54,28 +54,23 @@ public class AStarPathFinder implements PathFinder {
         }
 
         public Point findNext(Point start_point){
-            int x = (int)Math.round((start_point.getX() - delta_x ) / min_div);
-            int y = (int)Math.round((start_point.getY() - delta_y ) / min_div);
-            if(map[x][y] == 1){
-                double distance = Double.POSITIVE_INFINITY;
-                int tempX = 0, tempY = 0;
-                for(int i = x-1; i<= x+1; i++){
-                    for(int j = y-1; j<= y+1; j++){
-                        if(map[i][j] == 0){
-                            if(new Point2D(i,j).distanceTo(getGoal()) < distance){
-                                tempX = i; tempY = j;
-                                distance = new Point2D(i,j).distanceTo(getGoal());
-                            }
+            double x = (start_point.getX() - delta_x ) / min_div;
+            double y = (start_point.getY() - delta_y ) / min_div;
+            double distance = Double.POSITIVE_INFINITY;
+            int tempX = 0, tempY = 0;
+            for(int i = (int)x-1; i<= x+1; i++){
+                for(int j = (int)y-1; j<= y+1; j++){
+                    if(map[i][j] == 0){
+                        if(new Point2D(i,j).distanceTo(new Point2D(x,y)) < distance){
+                            tempX = i; tempY = j;
+                            distance = new Point2D(i,j).distanceTo(new Point2D(x,y));
                         }
                     }
                 }
-                x = tempX;
-                y = tempY;
             }
-            Point next = previous[x][y];
-            if(next.distanceTo(new Point2D(x,y)) < 0.0001){
-                next = previous[(int)next.getX()][(int)next.getY()];
-            }
+            x = tempX;
+            y = tempY;
+            Point next = previous[(int)x][(int)y];
             Point tobeReturn = next.clone().scaleBy(min_div).moveBy(delta_x, delta_y);
             return tobeReturn;
         }
