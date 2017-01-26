@@ -147,7 +147,7 @@ public class SimulationPanelMain implements ApplicationListener {
         scene.getDrawer().draw(scene);
         SimulationPanelMain.this.shower1.getBoard().repaint();//refresh();
         try {
-            Thread.sleep(0);
+            Thread.sleep(7);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

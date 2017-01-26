@@ -51,7 +51,6 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
                     ((DynamicStrategy) strategy).dynamicDecision();
                 }
             }
-            System.out.println("Duration time: "+(System.currentTimeMillis() - span));
         }
     }
 

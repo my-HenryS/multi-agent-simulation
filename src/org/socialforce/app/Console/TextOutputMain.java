@@ -15,7 +15,7 @@ import org.socialforce.model.Agent;
 public class TextOutputMain implements ApplicationListener {
     public static void main(String[] args) {
         TextOutputMain TextOutputMain = new TextOutputMain();
-        TextOutputMain.setApplication(new ApplicationForECStrategy());//改应用在这里！
+        TextOutputMain.setApplication(new ApplicationForCanteen());//改应用在这里！
         TextOutputMain.getApplication().setApplicationListener(TextOutputMain);
         TextOutputMain.getApplication().start();
     }
