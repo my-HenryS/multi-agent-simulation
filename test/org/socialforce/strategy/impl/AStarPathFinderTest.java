@@ -46,13 +46,15 @@ public class AStarPathFinderTest {
     @Test
     public void testMap() throws Exception {
         double[][]map=new double[][]{{0, 0, 0, 0, 0}, {0, 1, 0, 0, 0}, {0, 0, 0, 1, 0},{0, 0, 1, 1, 0}, {0, 0, 0, 0, 0}};
-        aStarPathFinder = new AStarPathFinder(map,  new BaseAgent(agent_shape) , goal);
-        Path path = aStarPathFinder.plan_for(goal);
-        System.out.println(path.toString());
+        aStarPathFinder = new AStarPathFinder(map,  new BaseAgent(agent_shape) , new Point2D(3,3));
+        Path path = aStarPathFinder.plan_for(new Point2D(3,3));
+        System.out.println(path.toString(new Point2D(1,1)));
     }
 
     @Test
-    public void testScene() throws Exception {
+    public void testSceneAfterMap() throws Exception {
+        double[][]map=new double[][]{{0, 0, 0, 0, 0}, {0, 1, 0, 0, 0}, {0, 0, 0, 1, 0},{0, 0, 1, 1, 0}, {0, 0, 0, 0, 0}};
+        aStarPathFinder = new AStarPathFinder(map,  new BaseAgent(agent_shape) , new Point2D(3,3));
         aStarPathFinder = new AStarPathFinder(scene, agent_shape);
         Path path = aStarPathFinder.plan_for(goal);
         System.out.println(path.toString(new Point2D(10,10)));

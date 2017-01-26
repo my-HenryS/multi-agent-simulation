@@ -24,7 +24,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * TODO 性能优化 需结合scene重构
  */
 public class AStarPathFinder implements PathFinder {
-    static final double min_div = 0.3;
+    double min_div = 0.3;
     private double map[][];
     double distance[][];
     Point previous[][];
@@ -83,6 +83,7 @@ public class AStarPathFinder implements PathFinder {
      * assign map directly
      */
     public AStarPathFinder(double[][] new_map, Agent agent, Point ... goals){
+        min_div = 1;
         this.map = new_map;
         for(Point goal : goals){
             this.goals.addLast(goal.clone());
