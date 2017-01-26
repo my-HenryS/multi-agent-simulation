@@ -28,16 +28,16 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         Iterable<InteractiveEntity> iterable = pattern.getAllEntitiesStream()::iterator;
         double [] start = new double[2];
         clip = pattern.getBounds();
-        clip.getSize().get(start);
+        clip.getReferencePoint().get(start);
         //scaleRate = calcScaleRate(pattern.getBounds());
         AffineTransform transform = getTransform(start);
-        AffineTransform reverse = null;
+        /*AffineTransform reverse = null;
         try {
             reverse = transform.createInverse();
         } catch (NoninvertibleTransformException e) {
             e.printStackTrace();
         }
-
+/*/
         getDevice().setColor(Color.WHITE);
         double pt[] = new double[2];
         double sz[] = new double[2];
@@ -45,7 +45,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         clip.getSize().get(sz);
 
         getDevice().fill(new Rectangle2D.Double(0,0,ctrlWidth,ctrlHeight));
-
+        AffineTransform oldT = getDevice().getTransform();
         getDevice().transform(transform);
         getDevice().setColor(new Color(150,255,150));
         getDevice().draw(new Rectangle2D.Double(pt[0],pt[1],sz[0],sz[1]));
@@ -54,14 +54,15 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
             Drawer drawer = entity.getShape().getDrawer();
             if(drawer != null) {
                 drawer.setDevice(this.getDevice());
-                if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(26.0,2.5))) ((AwtDrawer2D)drawer).setColor(Color.red);
-                if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(33.5,14))) ((AwtDrawer2D)drawer).setColor(Color.green);
-                if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(14.0,21.5))) ((AwtDrawer2D)drawer).setColor(Color.blue);
+ //               if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(26.0,2.5))) ((AwtDrawer2D)drawer).setColor(Color.red);
+ //               if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(33.5,14))) ((AwtDrawer2D)drawer).setColor(Color.green);
+ //               if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(14.0,21.5))) ((AwtDrawer2D)drawer).setColor(Color.blue);
                 drawer.draw(entity.getShape());
                 ((AwtDrawer2D)drawer).setColor(Color.black);
             }
         }
-        getDevice().transform(reverse);
+        //getDevice().transform(reverse);
+        getDevice().setTransform(oldT);
         // 2016/8/24  add draw scene.
     }
 
@@ -138,7 +139,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         return Math.max(minScaleRate, Math.min(ctrlWidth / sz[0],ctrlHeight / sz[1]));
     }
 
-    protected AffineTransform getTransform(double[] size) {
+    protected AffineTransform getTransform(double[] center) {
         AffineTransform transform = new AffineTransform();
 //-50 -50 50 50
 //-10 -10 40 30
@@ -148,6 +149,8 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         transform.scale(scaleRate,scaleRate);
 
         transform.scale(1, -1);
+        transform.translate(-center[0],-center[1]);
+
         //transform.translate(-size[0] / 2,-size[1] / 2);
 
 
