@@ -35,7 +35,8 @@ public class AStarPathFinderTest {
                         new Wall(new Box2D(new Point2D(0, 0), new Point2D(1, 16))),
                         new Wall(new Box2D(new Point2D(1, 15), new Point2D(25, 16))),
                         new Wall(new Box2D(new Point2D(25, 0), new Point2D(26, 16))),
-                        new Wall(new Box2D(new Point2D(1, 0), new Point2D(25, 1)))
+                        new Wall(new Box2D(new Point2D(1, 0), new Point2D(25, 1))),
+                        new Wall(new Box2D(new Point2D(5, 5), new Point2D(20, 6)))
                 });
         ParameterPool parameters = new SimpleParameterPool();
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(6,1,8,1))));
@@ -58,6 +59,14 @@ public class AStarPathFinderTest {
         aStarPathFinder = new AStarPathFinder(scene, agent_shape);
         Path path = aStarPathFinder.plan_for(goal);
         System.out.println(path.toString(new Point2D(10,10)));
+    }
+
+    @Test
+    public void length(){
+        aStarPathFinder = new AStarPathFinder(scene, agent_shape);
+        Path path = aStarPathFinder.plan_for(goal);
+        System.out.println(path.length(new Point2D(20,7)));
+        System.out.println(((AStarPath)path).Length(new Point2D(20,7)));
     }
 
 

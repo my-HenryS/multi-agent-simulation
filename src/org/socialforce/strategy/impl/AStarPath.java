@@ -49,13 +49,18 @@ public class AStarPath implements Path {
         return string;
     }
 
-    public double length(Point current){
+    //Old version of length
+    public double Length(Point current){
         double length = 0;
         LinkedList<Point> path = predict(current);
         for(int i = 0; i < path.size() - 1; i++){
             length += path.get(i).distanceTo(path.get(i+1));
         }
         return length;
+    }
+
+    public double length(Point current){
+        return map.getDistance(current);
     }
 
     public LinkedList<Point> predict(Point current){

@@ -24,7 +24,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * TODO 性能优化 需结合scene重构
  */
 public class AStarPathFinder implements PathFinder {
-    double min_div = 0.3;
+    double min_div = 0.1;
     private double map[][];
     double distance[][];
     Point previous[][];
@@ -77,6 +77,26 @@ public class AStarPathFinder implements PathFinder {
 
         public Point getGoal(){
             return goal.clone().scaleBy(min_div).moveBy(delta_x, delta_y);
+        }
+
+        public double getDistance(Point current){
+            double x = (current.getX() - delta_x ) / min_div;
+            double y = (current.getY() - delta_y ) / min_div;
+            double Distance = Double.POSITIVE_INFINITY;
+            int tempX = 0, tempY = 0;
+            for(int i = (int)x-1; i<= x+1; i++){
+                for(int j = (int)y-1; j<= y+1; j++){
+                    if(map[i][j] == 0){
+                        if(new Point2D(i,j).distanceTo(new Point2D(x,y)) < Distance){
+                            tempX = i; tempY = j;
+                            Distance = new Point2D(i,j).distanceTo(new Point2D(x,y));
+                        }
+                    }
+                }
+            }
+            x = tempX;
+            y = tempY;
+            return distance[(int)x][(int)y]*min_div;
         }
     }
     /**
