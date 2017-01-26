@@ -16,6 +16,8 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import static org.socialforce.scene.SceneLoader.genParameter;
+
 /**
  * Created by Whatever on 2016/12/15.
  */
@@ -69,16 +71,6 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
                                              new Box2D(new Point2D(13,19), new Point2D(14.5,22))})));
         loader.readParameterSet(parameters);
         scenes = loader.readScene(this);
-    }
-
-    public SceneParameter genParameter(SceneValue... sceneValue){
-        SceneParameter parameter;
-        LinkedList<SceneValue> values = new LinkedList<>();
-        for(SceneValue value : sceneValue){
-            values.addLast(value);
-        }
-        parameter = new SimpleSceneParameter(values);
-        return parameter;
     }
 
 }

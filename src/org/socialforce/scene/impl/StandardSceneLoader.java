@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import static org.socialforce.scene.SceneGenerator.generate;
+
 /**
  * Created by sunjh1999 on 2017/1/14.
  */
@@ -65,7 +67,7 @@ public class StandardSceneLoader implements SceneLoader {
                 values.add(parameter.getParameter().get(i%parameter.getParameter().size()));   //根据相对周长的偏移量计算当前应添加的SceneValue
             }
             Scene scene = staticScene();
-            scene = SceneGenerator.generate(scene,values);
+            scene = generate(scene,values);
             scene.setApplication(application);
             scene.setValueSet(values);
             scene.pack();

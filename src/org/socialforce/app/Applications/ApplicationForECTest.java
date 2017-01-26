@@ -18,6 +18,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.socialforce.scene.SceneLoader.genParameter;
+
 /**
  * Created by Whatever on 2016/12/2.
  */
@@ -125,13 +127,4 @@ public class ApplicationForECTest implements SocialForceApplication {
         return null;
     }
 
-    public SceneParameter genParameter(SceneValue... sceneValue){
-        SceneParameter parameter;
-        LinkedList<SceneValue> values = new LinkedList<>();
-        for(SceneValue value : sceneValue){
-            values.addLast(value);
-        }
-        parameter = new SimpleSceneParameter(values);
-        return parameter;
-    }
 }

@@ -16,6 +16,8 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import static org.socialforce.scene.SceneLoader.genParameter;
+
 /**
  * Created by sunjh1999 on 2017/1/13.
  */
