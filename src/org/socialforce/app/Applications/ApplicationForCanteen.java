@@ -13,8 +13,10 @@ import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.*;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 
 import static org.socialforce.scene.SceneLoader.genParameter;
 
@@ -78,9 +80,10 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
 
 
     public void setUpScenes(){
-        File file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/test/org/socialforce/app/impl/canteen2.s");
+        //File file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/test/org/socialforce/app/impl/canteen2.s");
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("canteen2.s");
         Interpreter interpreter = new SimpleInterpreter();
-        interpreter.loadFile(file);
+        interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
         parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(150,new Box2D(0,0,25,18)), new SVSR_RandomAgentGenerator(250,new Box2D(0,0,25,18)), new SVSR_RandomAgentGenerator(350,new Box2D(0,0,25,18))));

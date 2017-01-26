@@ -31,11 +31,20 @@ public class SimpleInterpreter implements Interpreter {
     @Override
     public void loadFile(File file) {
         this.file = file;
+        FileInputStream stream = null;
         try {
-            reader = new BufferedReader(new FileReader(file));
+            stream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        loadFrom(stream);
+    }
+
+    @Override
+    public void loadFrom(InputStream stream) {
+        reader = new BufferedReader(new InputStreamReader(stream));
+
         try {
             String tempString;
             // 一次读入一行，直到读入null为文件结束
