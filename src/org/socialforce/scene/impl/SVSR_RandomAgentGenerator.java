@@ -2,14 +2,11 @@ package org.socialforce.scene.impl;
 
 import org.socialforce.drawer.impl.SolidCircle2DDrawer;
 import org.socialforce.geom.Velocity;
+import org.socialforce.geom.impl.*;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneValue;
 import org.socialforce.container.EntityPool;
 import org.socialforce.geom.Shape;
-import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Point2D;
-import org.socialforce.geom.impl.Semicircle2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.AgentDecorator;
 import org.socialforce.model.InteractiveEntity;
@@ -64,6 +61,13 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
         agentGenerator.setDecorator(new BaseAgentDecorator());
         agentGenerator.setModel(new SimpleSocialForceModel());
         agentGenerator.velocity = velocity;
+    }
+
+    public SVSR_RandomAgentGenerator(int agent_num, Shape Area){
+        agentGenerator = new AgentGenerator(agent_num,Area);
+        agentGenerator.setDecorator(new BaseAgentDecorator());
+        agentGenerator.setModel(new SimpleSocialForceModel());
+        agentGenerator.velocity = new Velocity2D(0,0);
     }
     @Override
     public String getEntityName() {

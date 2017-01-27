@@ -53,8 +53,8 @@ public class ApplicationForMCM extends ApplicationForECTest implements SocialFor
                     SVSR_RandomAgentGenerator agentGenerator = new SVSR_RandomTimeAgentGenerator(a,new Box2D(75, 4.5  ,46.5,10), new Velocity2D(0,13));
                     agentGenerator.apply(scene);
                     if(shower!=null)shower.getDrawerInstaller().addDrawerSupport(scene);
-                    PathFinder pathFinder = new StraightPathFinder(scene);
-                    strategy = new DynamicNearestGoalStrategy(scene, pathFinder);
+                    PathFinder pathFinder = new AStarPathFinder(scene, new Circle2D(new Point2D(0,0), 0.486/2));
+                    strategy = new NearestGoalStrategy(scene, pathFinder);
                     strategy.pathDecision();
                     System.out.println("flow now "+a);
                     while (iteration <= 50000) {

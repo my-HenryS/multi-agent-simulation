@@ -32,8 +32,8 @@ public class BaseAgent extends Entity implements Agent {
         this.shape = shape;
         this.currTimestamp = 0;
         this.currVelocity = velocity;
-        this.mass = 1000;
-        Circle2D circle = new Circle2D(shape.getReferencePoint(),10);
+        this.mass = 80;
+        Circle2D circle = new Circle2D(shape.getReferencePoint(),2);
         this.view = circle;
     }
 
@@ -179,12 +179,6 @@ public class BaseAgent extends Entity implements Agent {
         this.currTimestamp++;
         if(!stoped){
             this.currVelocity.add(deltaV);
-            double [] v = new double[2];
-            currVelocity.get(v);
-            if(v[1] < 0){
-                v[1] = 0;
-                currVelocity.set(v);
-            }
             velocities.addLast(currVelocity);
             Point point = shape.getReferencePoint();
             point.add(deltaS);

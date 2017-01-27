@@ -28,8 +28,8 @@ public class BodyForce implements ForceRegulation{
     public Force getForce(InteractiveEntity source, InteractiveEntity target) {
         double k1,k2,g,bodyForce,slidingForce,distance,argumentX;
         Vector2D t,n,tempVector;
-        k1 = 0;
-        k2 = 0;
+        k1 = 1.2 * 100000;
+        k2 = 2.4 * 100000;
         g = 0;
         argumentX = 1;
         double temp[] = new double[2];

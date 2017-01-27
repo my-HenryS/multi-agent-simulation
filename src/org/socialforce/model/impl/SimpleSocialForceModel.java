@@ -15,9 +15,9 @@ import java.util.List;
  * Created by Ledenel on 2016/8/17.
  */
 public class SimpleSocialForceModel implements SocialForceModel {
-    double TIME_PER_STEP = 0.001;
-    public static final double AGENT_VIEW_RADIUS = 20;
-    double EXPECTED_SPEED = 30;
+    double TIME_PER_STEP = 0.002;
+    public static final double AGENT_VIEW_RADIUS = 2;
+    double EXPECTED_SPEED = 3;
     double REACT_TIME = 0.5;
     public static final int STATIC_TYPE_WALL = 0;
     public static final int STATIC_TYPE_GATE = 1;

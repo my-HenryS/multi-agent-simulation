@@ -38,21 +38,17 @@ public class DynamicNearestGoalStrategy implements DynamicStrategy {
                 if(agent.getPath().getGoal().equals(goals.get(0))){
                     continue;
                 }
-                if(agent.getPath().done()){
-                    pathFinder.applyAgent(agent);
-                    pathFinder.applyGoal(goals.get(0));
-                    agent.setPath(pathFinder.plan_for());
+                if(agent.getPath().getGoal().distanceTo(agent.getShape().getReferencePoint()) < 0.3){
+                    agent.setPath(pathFinder.plan_for(goals.get(0)));
                     continue;
                 }
             }
             Path designed_path = null;
             double path_length = Double.POSITIVE_INFINITY;
-            pathFinder.applyAgent(agent);
             for (Point goal : transits) {
-                pathFinder.applyGoal(goal);
                 //设置最优path
-                Path path = pathFinder.plan_for();
-                double pathLength = path.length();
+                Path path = pathFinder.plan_for(goal);
+                double pathLength = path.length(agent.getShape().getReferencePoint());
                 if (pathLength < path_length) {
                     path_length = pathLength;
                     designed_path = path;

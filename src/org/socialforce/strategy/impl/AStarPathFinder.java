@@ -225,7 +225,7 @@ public class AStarPathFinder implements PathFinder {
  */
 
     public Path plan_for(Point goal) {
-        Point destination = goal.clone();
+        Point destination;
         destination = goal_standardize(goal.clone());
         if(agentShape == null){
             throw new IllegalStateException("No agent applied");
