@@ -58,8 +58,8 @@ public class AStarPathFinder implements PathFinder {
             double y = (start_point.getY() - delta_y ) / min_div;
             double distance = Double.POSITIVE_INFINITY;
             int tempX = 0, tempY = 0;
-            for(int i = (int)x-1; i<= x+1; i++){
-                for(int j = (int)y-1; j<= y+1; j++){
+            for(int i = (int)x; i<= x+1; i++){
+                for(int j = (int)y; j<= y+1; j++){
                     if(available(i,j) && map[i][j] == 0){
                         if(new Point2D(i,j).distanceTo(new Point2D(x,y)) < distance){
                             tempX = i; tempY = j;
