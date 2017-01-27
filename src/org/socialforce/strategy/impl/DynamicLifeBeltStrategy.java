@@ -18,26 +18,6 @@ public class DynamicLifeBeltStrategy extends LifeBeltStrategy implements Dynamic
     }
 
     public void dynamicDecision(){
-        Agent agent;
-        for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
-            agent = (Agent) iter.next();
-            Path designed_path = null;
-            double factor_t = Double.POSITIVE_INFINITY;
-            pathFinder.applyAgent(agent);
-            for (Point goal : goals) {
-                int front_num = fronts(agent, goal);
-                pathFinder.applyGoal(goal);
-                //设置最优path
-                Path path = pathFinder.plan_for();
-                double pathLength = path.length();
-                double velocity = agent.getModel().getExpectedSpeed();
-                double t = pathLength / velocity + front_num / Width.widthOf(goal);
-                if(t < factor_t){
-                    factor_t = t;
-                    designed_path = path;
-                }
-            }
-            agent.setPath(designed_path);
-        }
+        pathDecision();
     }
 }

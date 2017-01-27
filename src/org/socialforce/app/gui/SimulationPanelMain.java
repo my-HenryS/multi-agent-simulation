@@ -3,10 +3,10 @@ package org.socialforce.app.gui;
 import org.socialforce.app.ApplicationListener;
 import org.socialforce.app.Applications.ApplicationForCanteen;
 import org.socialforce.app.Applications.ApplicationForECStrategy;
-import org.socialforce.app.Applications.ApplicationForMCM;
-import org.socialforce.scene.Scene;
+import org.socialforce.app.Applications.ApplicationForECTest;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.model.Agent;
+import org.socialforce.scene.Scene;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,11 +46,11 @@ public class SimulationPanelMain implements ApplicationListener {
         try {
             JFrame frame = new JFrame("SimulationPanelMain");
             SimulationPanelMain mainPanel = new SimulationPanelMain();
-            SocialForceApplication application = new ApplicationForMCM();//应用在这里！
+            SocialForceApplication application = new ApplicationForCanteen();//应用在这里！
             application.setApplicationListener(mainPanel);
             frame.setContentPane(mainPanel.root);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setResizable(false);
+            //frame.setResizable(false);
             frame.pack();
             frame.setVisible(true);
             mainPanel.setApplication(application);
@@ -101,7 +101,6 @@ public class SimulationPanelMain implements ApplicationListener {
                 .findFirst()
                 .orElse(null);
         shower1.setScene(def);
-        ((ApplicationForMCM)application).setShower(shower1);
     }
 
     SocialForceApplication application;
@@ -142,9 +141,15 @@ public class SimulationPanelMain implements ApplicationListener {
      */
     @Override
     public void onStep(Scene scene) {
-        if(scene.getDrawer() == null) shower1.setScene(scene);
+        if (scene.getDrawer() == null) {
+            shower1.setScene(scene);
+        }
         scene.getDrawer().draw(scene);
-        SimulationPanelMain.this.shower1.getBoard().refresh();
-
+        SimulationPanelMain.this.shower1.getBoard().repaint();//refresh();
+        try {
+            Thread.sleep(7);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -3,25 +3,18 @@ package org.socialforce.strategy.impl;
 import org.socialforce.strategy.Path;
 import org.socialforce.geom.Point;
 
+import java.util.LinkedList;
+import java.util.Map;
+
 /**
  * 定义StraightPath类，其实现了接口Path的方法。
  * Created by Ledenel on 2016/8/14.
  */
 public class AStarPath implements Path {
-    /**
-     * 获取路径的起点。
-     *
-     * @return 返回起点。
-     */
-    @Override
-    public Point getStartPoint() {
-        return goals[0];
-    }
+    protected AStarPathFinder.Maps map;
 
-    protected Point[] goals;
-
-    public AStarPath(Point ... goals) {
-        this.goals = goals;
+    public AStarPath(AStarPathFinder.Maps map) {
+        this.map = map;
     }
 
     protected int reached = 0;
@@ -33,7 +26,7 @@ public class AStarPath implements Path {
      */
     @Override
     public Point getGoal() {
-        return goals[goals.length-1];
+        return map.getGoal();
     }
 
     /**
@@ -44,38 +37,40 @@ public class AStarPath implements Path {
      */
     @Override
     public Point getCurrentGoal(Point current) {
-        while (reached < goals.length && ((goals[reached].distanceTo(current) < AStarPathFinder.min_div*3) )) {
-            reached++;
-        }
-        if(done()) {
-            return goals[goals.length-1];
-        }
-        return goals[reached];
+        return map.findNext(current);
     }
 
-    /**
-     * 检查路径是否走完。
-     *
-     * @return 如果走完返回真，否则假。
-     */
-    @Override
-    public boolean done() {
-        return reached >= goals.length;
-    }
-
-    public String toString(){
+    public String toString(Point current){
         String string = "路径为";
-        for(int i =0; i<goals.length; i++){
-            string += goals[i].toString()+"， ";
+        LinkedList<Point> path = predict(current);
+        for(int i = 0; i < path.size(); i++){
+            string += path.get(i).toString()+"， ";
         }
         return string;
     }
 
-    public double length(){
+    //Old version of length
+    public double Length(Point current){
         double length = 0;
-        for(int i =1; i<goals.length; i++){
-            length += goals[i].distanceTo(goals[i-1]);
+        LinkedList<Point> path = predict(current);
+        for(int i = 0; i < path.size() - 1; i++){
+            length += path.get(i).distanceTo(path.get(i+1));
         }
         return length;
+    }
+
+    public double length(Point current){
+        return map.getDistance(current);
+    }
+
+    public LinkedList<Point> predict(Point current){
+        LinkedList<Point> path = new LinkedList<>();
+        Point temp = current.clone();
+        while(!temp.equals(getGoal())){
+            path.addLast(temp);
+            temp = getCurrentGoal(temp);
+        }
+        path.addLast(temp);
+        return path;
     }
 }

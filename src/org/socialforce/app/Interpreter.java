@@ -5,6 +5,7 @@ import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
 
 import java.io.File;
+import java.io.InputStream;
 import java.lang.reflect.Parameter;
 
 /**
@@ -12,6 +13,8 @@ import java.lang.reflect.Parameter;
  */
 public interface Interpreter {
     void loadFile(File file);
+
+    void loadFrom(InputStream stream);
 
     String getContent();
 

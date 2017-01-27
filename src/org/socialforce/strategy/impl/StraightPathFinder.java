@@ -4,26 +4,32 @@ import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
 import org.socialforce.model.Agent;
+import org.socialforce.scene.SceneValue;
+import org.socialforce.scene.impl.SVSR_SafetyRegion;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
+
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * Created by Whatever on 2016/10/22.
  */
 public class StraightPathFinder implements PathFinder {
-    Point goal;
+    LinkedList<Point> goals = new LinkedList<>();
     Shape agentShape;
     Scene scene;
 
-    public StraightPathFinder(Scene targetScene, Agent agent, Point goal) {
-        this.goal = goal;
-        this.agentShape = agent.getShape().clone();
+    public StraightPathFinder(Scene targetScene, Shape agentShape) {
+        for(Iterator<SceneValue> iterator = scene.getValueSet().iterator(); iterator.hasNext();){
+            SceneValue sceneValue = iterator.next();
+            if(sceneValue instanceof SVSR_SafetyRegion){
+                goals.addLast(((SVSR_SafetyRegion)sceneValue).getValue().getShape().getReferencePoint().clone()) ;
+            }
+        }
+        this.agentShape = agentShape.clone();
         this.scene = targetScene;
 
-    }
-
-    public StraightPathFinder(Scene targetScene){
-        this.scene = targetScene;
     }
 
     /**
@@ -31,17 +37,17 @@ public class StraightPathFinder implements PathFinder {
      * @return 搜索出的路径。
      */
     @Override
-    public Path plan_for(){
-        return new StraightPath(agentShape.getReferencePoint(),goal);
+    public Path plan_for(Point goal) {
+        return new StraightPath(goal);
     }
 
-    public void applyGoal(Point goal){
-        this.goal = goal.clone();
+    @Override
+    public Point[] getGoals() {
+        Point [] points = new Point[goals.size()];
+        for(int i = 0; i < points.length; i++){
+            points[i] = goals.get(i);
+        }
+        return points;
     }
 
-    public void applyAgent(Agent agent){
-        this.agentShape = agent.getShape().clone();
-    }
-
-    public void postProcessing(){}
 }

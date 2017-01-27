@@ -4,6 +4,7 @@ import org.socialforce.app.Interpreter;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.app.impl.SimpleInterpreter;
 import org.socialforce.geom.impl.Box2D;
+import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.scene.*;
@@ -13,8 +14,12 @@ import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.*;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.ResourceBundle;
+
+import static org.socialforce.scene.SceneLoader.genParameter;
 
 /**
  * Created by sunjh1999 on 2017/1/13.
@@ -45,7 +50,7 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
                 }
                 System.out.print("Population of "+total_num);
                 int iteration = 0;
-                PathFinder pathFinder = new AStarPathFinder(scene);
+                PathFinder pathFinder = new AStarPathFinder(scene, new Circle2D(new Point2D(0,0),0.486/2));
                 if(i<10){
                     System.out.print(" with ECStrategy, ");
                     strategy = new ECStrategy(scene, pathFinder);
@@ -76,9 +81,10 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
 
 
     public void setUpScenes(){
-        File file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/test/org/socialforce/app/impl/canteen2.s");
+        //File file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/test/org/socialforce/app/impl/canteen2.s");
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("canteen2.s");
         Interpreter interpreter = new SimpleInterpreter();
-        interpreter.loadFile(file);
+        interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
         parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(150,new Box2D(0,0,25,18),new Velocity2D(0,0))));
@@ -96,14 +102,6 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
         scenes = loader.readScene(this);
     }
 
-    public SceneParameter genParameter(SceneValue... sceneValue){
-        SceneParameter parameter;
-        LinkedList<SceneValue> values = new LinkedList<>();
-        for(SceneValue value : sceneValue){
-            values.addLast(value);
-        }
-        parameter = new SimpleSceneParameter(values);
-        return parameter;
-    }
+
 
 }

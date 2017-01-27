@@ -1,11 +1,8 @@
 package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
-import org.socialforce.geom.impl.Velocity2D;
-import org.socialforce.scene.ParameterPool;
-import org.socialforce.scene.Scene;
-import org.socialforce.scene.SceneLoader;
-import org.socialforce.scene.ValueSet;
+import org.socialforce.geom.impl.Circle2D;
+import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
@@ -20,6 +17,8 @@ import org.socialforce.strategy.impl.NearestGoalStrategy;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import static org.socialforce.scene.SceneLoader.genParameter;
 
 /**
  * Created by Whatever on 2016/12/2.
@@ -43,9 +42,9 @@ public class ApplicationForECTest implements SocialForceApplication {
     public void start() {
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
             Scene scene = iterator.next();
-            PathFinder pathFinder = new AStarPathFinder(scene);
+            PathFinder pathFinder = new AStarPathFinder(scene, new Circle2D(new Point2D(0,0),0.486/2));
+            GoalStrategy strategy = new NearestGoalStrategy(scene, pathFinder);
             strategy.pathDecision();
-            strategy = new NearestGoalStrategy(scene, pathFinder);
             while (!scene.getAllAgents().isEmpty()) {
                 scene.stepNext();
             }
@@ -58,16 +57,14 @@ public class ApplicationForECTest implements SocialForceApplication {
      * 需要根据parameter的map来生成一系列scene
      */
     public void setUpScenes(){
-        ParameterPool parameters = new SimpleParameterPool();
         SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
                 new Wall[]{
                         new Wall(new Box2D(-10,0,60,1))
                 });
-        SimpleSceneParameter parameter = new SimpleSceneParameter();
-        parameter.addValue(new SVSR_Exit(new Box2D[]{new Box2D(9,-2,2,5)}));
-        parameter.addValue(new SVSR_RandomAgentGenerator(60,new Box2D(5,-5,10,3), new Velocity2D(0,0)));
-        parameter.addValue(new SVSR_SafetyRegion(new Box2D(6,1,8,1)));
-        parameters.addLast(parameter);
+        ParameterPool parameters = new SimpleParameterPool();
+        parameters.addLast(genParameter(new SVSR_Exit(new Box2D[]{new Box2D(9,-2,2,5)})));
+        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(60,new Box2D(5,-5,10,3))));
+        parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(6,1,8,1))));
         loader.readParameterSet(parameters);
         scenes = loader.readScene(this);
     }

@@ -115,4 +115,5 @@ public interface Scene extends Drawable {
 
     //拷贝bounds和
     Scene standardclone();
+    void pack();
 }

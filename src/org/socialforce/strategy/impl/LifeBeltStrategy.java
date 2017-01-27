@@ -16,15 +16,9 @@ import java.util.LinkedList;
 /**
  * Created by sunjh1999 on 2016/12/23.
  */
-public class LifeBeltStrategy implements StaticStrategy{
-    LinkedList<Point> goals = new LinkedList<>();
-    Scene scene;
-    PathFinder pathFinder;
-
+public class LifeBeltStrategy extends NearestGoalStrategy implements StaticStrategy{
     public LifeBeltStrategy(Scene scene, PathFinder pathFinder){
-        this.scene = scene;
-        findGoals();
-        this.pathFinder = pathFinder;
+        super(scene,pathFinder);
     }
 
     @Override
@@ -34,13 +28,11 @@ public class LifeBeltStrategy implements StaticStrategy{
             agent = (Agent) iter.next();
             Path designed_path = null;
             double factor_t = Double.POSITIVE_INFINITY;
-            pathFinder.applyAgent(agent);
             for (Point goal : goals) {
                 int front_num = fronts(agent, goal);
-                pathFinder.applyGoal(goal);
                 //设置最优path
-                Path path = pathFinder.plan_for();
-                double pathLength = path.length();
+                Path path = pathFinder.plan_for(goal);
+                double pathLength = path.length(agent.getShape().getReferencePoint());
                 double t =  factorT(pathLength, agent, front_num, goal);
                 if(t < factor_t){
                     factor_t = t;
@@ -65,14 +57,4 @@ public class LifeBeltStrategy implements StaticStrategy{
     public double factorT(double pathLength, Agent agent, int front_num, Point goal){
         return pathLength / agent.getModel().getExpectedSpeed() + front_num / Width.widthOf(goal);
     }
-
-    private void findGoals(){
-        for(Iterator<SceneValue> iterator = scene.getValueSet().iterator(); iterator.hasNext();){
-            SceneValue sceneValue = iterator.next();
-            if(sceneValue instanceof SVSR_SafetyRegion){
-                goals.addLast(((SVSR_SafetyRegion)sceneValue).getValue().getShape().getReferencePoint());
-            }
-        }
-    }
-
 }

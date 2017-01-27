@@ -16,6 +16,8 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import static org.socialforce.scene.SceneLoader.genParameter;
+
 /**
  * Created by Whatever on 2016/12/15.
  */
@@ -35,12 +37,13 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
             Scene scene = iterator.next();
             int iteration = 0;
-            PathFinder pathFinder = new AStarPathFinder(scene);
-            //strategy = new ECStrategy(scene, pathFinder);
+            PathFinder pathFinder = new AStarPathFinder(scene, new Circle2D(new Point2D(0,0),0.486/2));
+            strategy = new ECStrategy(scene, pathFinder);
             //strategy = new DynamicLifeBeltStrategy(scene, pathFinder);
             //strategy = new LifeBeltStrategy(scene, pathFinder);
-            strategy = new NearestGoalStrategy(scene, pathFinder);
+            //strategy = new NearestGoalStrategy(scene, pathFinder);
             strategy.pathDecision();
+            long span = System.currentTimeMillis();
             while (scene.getAllAgents().size() > 5) {
                 scene.stepNext();
                 iteration += 1;
@@ -53,12 +56,12 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
 
 
     public void setUpScenes(){
-        File file = new File("C:\\Users\\Whatever\\Desktop\\CNU\\UnrealSocialForceSimulation\\SocialForceSimulation\\test\\org\\socialforce\\app\\impl\\test.s");
+        File file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/test/org/socialforce/app/impl/test.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFile(file);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        //parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5)),new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5)),new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5)),new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5)),new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5)),new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5)),new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5)),new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5)),new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5)), new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5))
+        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5)), new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5))));
         parameters.addLast(genParameter((new SVSR_SafetyRegion(new Box2D(24,2,4,1)))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(33,12,1,4))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(2,8,1,4))));
@@ -69,16 +72,6 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
                                              new Box2D(new Point2D(13,19), new Point2D(14.5,22))})));
         loader.readParameterSet(parameters);
         scenes = loader.readScene(this);
-    }
-
-    public SceneParameter genParameter(SceneValue... sceneValue){
-        SceneParameter parameter;
-        LinkedList<SceneValue> values = new LinkedList<>();
-        for(SceneValue value : sceneValue){
-            values.addLast(value);
-        }
-        parameter = new SimpleSceneParameter(values);
-        return parameter;
     }
 
 }

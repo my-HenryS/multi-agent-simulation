@@ -1,8 +1,6 @@
 package org.socialforce.drawer.impl;
 
 import org.socialforce.app.ProxyedGraphics2D;
-import org.socialforce.model.impl.BaseAgent;
-import org.socialforce.model.impl.SelfDrivingCar;
 import org.socialforce.scene.Scene;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
@@ -28,31 +26,43 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
     @Override
     public void draw(Scene pattern) {
         Iterable<InteractiveEntity> iterable = pattern.getAllEntitiesStream()::iterator;
-        AffineTransform transform = getTransform();
-        AffineTransform reverse = null;
+        double [] start = new double[2];
+        clip = pattern.getBounds();
+        clip.getReferencePoint().get(start);
+        //scaleRate = calcScaleRate(pattern.getBounds());
+        AffineTransform transform = getTransform(start);
+        /*AffineTransform reverse = null;
         try {
             reverse = transform.createInverse();
         } catch (NoninvertibleTransformException e) {
             e.printStackTrace();
         }
-        getDevice().transform(transform);
+/*/
         getDevice().setColor(Color.WHITE);
         double pt[] = new double[2];
         double sz[] = new double[2];
         clip.getStartPoint().get(pt);
         clip.getSize().get(sz);
-        getDevice().fill(new Rectangle2D.Double(pt[0],pt[1],sz[0],sz[1]));
+
+        getDevice().fill(new Rectangle2D.Double(0,0,ctrlWidth,ctrlHeight));
+        AffineTransform oldT = getDevice().getTransform();
+        getDevice().transform(transform);
+        getDevice().setColor(new Color(150,255,150));
+        getDevice().draw(new Rectangle2D.Double(pt[0],pt[1],sz[0],sz[1]));
+        getDevice().setColor(Color.WHITE);
         for (InteractiveEntity entity : iterable) {
             Drawer drawer = entity.getShape().getDrawer();
             if(drawer != null) {
                 drawer.setDevice(this.getDevice());
-                if(entity instanceof BaseAgent) ((AwtDrawer2D)drawer).setColor(Color.red);
-                if(entity instanceof SelfDrivingCar) ((AwtDrawer2D)drawer).setColor(Color.blue);
+ //               if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(26.0,2.5))) ((AwtDrawer2D)drawer).setColor(Color.red);
+ //               if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(33.5,14))) ((AwtDrawer2D)drawer).setColor(Color.green);
+ //               if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(14.0,21.5))) ((AwtDrawer2D)drawer).setColor(Color.blue);
                 drawer.draw(entity.getShape());
                 ((AwtDrawer2D)drawer).setColor(Color.black);
             }
         }
-        getDevice().transform(reverse);
+        //getDevice().transform(reverse);
+        getDevice().setTransform(oldT);
         // 2016/8/24  add draw scene.
     }
 
@@ -89,10 +99,22 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
     double ctrlWidth;
     double ctrlHeight;
 
+    public double getScaleRate() {
+        return scaleRate;
+    }
+
+    public void setScaleRate(double scaleRate) {
+        if(scaleRate > minScaleRate) {
+            this.scaleRate = scaleRate;
+        }
+    }
+
+    double scaleRate = 4;
+    double minScaleRate = 4;
     public SceneDrawer(Graphics2D graphics, double ctrlWidth, double ctrlHeight) {
         // TODO: 2016/8/27 add coordinate transform for graphics.
 
-        clip = new Box2D(0, 0, 250, 250);
+        clip = new Box2D(-10, -10, 50, 50);
         this.ctrlHeight = ctrlHeight;
         this.ctrlWidth = ctrlWidth;
 
@@ -111,24 +133,31 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         // 2016/8/24 set device for scene entities. done in installer.
     }
 
-    protected AffineTransform getTransform() {
+    public double calcScaleRate(Box bound) {
+        double sz[] = new double[2];
+        bound.getSize().get(sz);
+        return Math.max(minScaleRate, Math.min(ctrlWidth / sz[0],ctrlHeight / sz[1]));
+    }
+
+    protected AffineTransform getTransform(double[] center) {
         AffineTransform transform = new AffineTransform();
 //-50 -50 50 50
 //-10 -10 40 30
         double cp[] = new double[2];
-        double start[] = new double[2];
-        clip.getSize().get(cp);
-        clip.getStartPoint().get(start);
-        transform.scale(ctrlWidth / cp[0], ctrlHeight / cp[1]);
-        transform.translate(0, cp[1]);
-        transform.scale(1, -1);
-        transform.translate(-start[0],-start[1]);
+        //transform.scale(ctrlWidth / cp[0], ctrlHeight / cp[1]);
+        transform.translate(ctrlWidth / 2,ctrlHeight / 2);
+        transform.scale(scaleRate,scaleRate);
 
-        //transform.re
+        transform.scale(1, -1);
+        transform.translate(-center[0],-center[1]);
+
+        //transform.translate(-size[0] / 2,-size[1] / 2);
+
+
         return transform;
     }
 
-    protected Scene scene;
+    //protected Scene scene;
 
     protected int color;
 
