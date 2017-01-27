@@ -40,7 +40,7 @@ public class Scenery extends Entity {
 
     @Override
     public InteractiveEntity standardclone() {
-        return null;
+        return new Scenery(shape.clone());
     }
 
     public double speak(int current_time){

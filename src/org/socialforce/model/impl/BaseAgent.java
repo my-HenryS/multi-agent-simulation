@@ -111,7 +111,7 @@ public class BaseAgent extends Entity implements Agent {
      * 决定下一步，agent要走向的目标点。
      * 同时，agent也会被社会力驱动。
      * 最终的结果会被act() 方法使用。
-     * 如果当前的时间步长和该agent不同步，那么该agnet 会试着跟上
+     * 如果当前的时间步长和该agent不同步，那么该agent 会试着跟上
      * (或者忽略当agent的时间落后于真正的时间)  TODO?
      *
      * @param currSteps 当前的时间

@@ -18,6 +18,8 @@ import org.socialforce.strategy.impl.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import static org.socialforce.scene.SceneLoader.genParameter;
+
 /**
  * Created by sunjh1999 on 2017/1/20.
  */
@@ -53,8 +55,8 @@ public class ApplicationForMCM extends ApplicationForECTest implements SocialFor
                     SVSR_RandomAgentGenerator agentGenerator = new SVSR_RandomTimeAgentGenerator(a,new Box2D(75, 4.5  ,46.5,10), new Velocity2D(0,13));
                     agentGenerator.apply(scene);
                     if(shower!=null)shower.getDrawerInstaller().addDrawerSupport(scene);
-                    PathFinder pathFinder = new AStarPathFinder(scene, new Circle2D(new Point2D(0,0), 0.486/2));
-                    strategy = new NearestGoalStrategy(scene, pathFinder);
+                    PathFinder pathFinder = new AStarPathFinder(scene, new Circle2D(new Point2D(0,0), 0.486/2), 1);
+                    strategy = new DynamicNearestGoalStrategy(scene, pathFinder);
                     strategy.pathDecision();
                     System.out.println("flow now "+a);
                     while (iteration <= 50000) {
@@ -146,15 +148,6 @@ public class ApplicationForMCM extends ApplicationForECTest implements SocialFor
         scenes = loader.readScene(this);
     }
 
-    public SceneParameter genParameter(SceneValue... sceneValue){
-        SceneParameter parameter;
-        LinkedList<SceneValue> values = new LinkedList<>();
-        for(SceneValue value : sceneValue){
-            values.addLast(value);
-        }
-        parameter = new SimpleSceneParameter(values);
-        return parameter;
-    }
 
 }
 

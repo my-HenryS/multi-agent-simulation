@@ -39,7 +39,7 @@ public class SVSR_RandomTimeAgentGenerator extends SVSR_RandomAgentGenerator imp
                 double rand_y = agentGenerator.Area.getBounds().getStartPoint().getY() + rand.nextDouble() * (agentGenerator.Area.getBounds().getEndPoint().getY() - agentGenerator.Area.getBounds().getStartPoint().getY());
                 Point2D point = new Point2D(rand_x, rand_y);
                 Iterable<Agent> agents = scene.getAllAgents();
-                new_agent = agentGenerator.decorator.createAgent(point, agentGenerator.velocity.clone(), 0.2);
+                new_agent = agentGenerator.decorator.createAgent(point, agentGenerator.velocity.clone());
                 for (Agent agent : agents) {
                     if(new_agent.getShape().distanceTo(agent.getShape()) < 0){
                         is_able_flag = 1;
@@ -66,9 +66,7 @@ public class SVSR_RandomTimeAgentGenerator extends SVSR_RandomAgentGenerator imp
                     scene.addAgent(new_agent);
                     new_agent.setScene(scene);
                     cur_num += 1;
-                }
-                if(times >= gen_num*4) break;
-            }
+                }}
         }
 
         else throw new IllegalArgumentException("暂未实现非二维的生成区块");

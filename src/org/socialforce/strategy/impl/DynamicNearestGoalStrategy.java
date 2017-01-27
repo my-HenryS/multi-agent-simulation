@@ -15,6 +15,7 @@ import java.util.LinkedList;
 
 /**
  * Created by sunjh1999 on 2017/1/21.
+ * MCM专用strategy 因为涉及到了门的嵌套 先保留这个硬编码的嵌套 待实现之后删除或更改
  */
 public class DynamicNearestGoalStrategy implements DynamicStrategy {
     LinkedList<Point> goals = new LinkedList<>();

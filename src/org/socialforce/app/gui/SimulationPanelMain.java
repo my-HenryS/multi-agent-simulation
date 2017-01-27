@@ -4,6 +4,7 @@ import org.socialforce.app.ApplicationListener;
 import org.socialforce.app.Applications.ApplicationForCanteen;
 import org.socialforce.app.Applications.ApplicationForECStrategy;
 import org.socialforce.app.Applications.ApplicationForECTest;
+import org.socialforce.app.Applications.ApplicationForMCM;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.model.Agent;
 import org.socialforce.scene.Scene;
@@ -46,7 +47,7 @@ public class SimulationPanelMain implements ApplicationListener {
         try {
             JFrame frame = new JFrame("SimulationPanelMain");
             SimulationPanelMain mainPanel = new SimulationPanelMain();
-            SocialForceApplication application = new ApplicationForCanteen();//应用在这里！
+            SocialForceApplication application = new ApplicationForMCM();//应用在这里！
             application.setApplicationListener(mainPanel);
             frame.setContentPane(mainPanel.root);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -8,5 +8,4 @@ import org.socialforce.geom.Velocity;
  */
 public interface AgentDecorator {
     Agent createAgent(Point position, Velocity velocity);
-    Agent createAgent(Point position, Velocity velocity, double possibility);
 }

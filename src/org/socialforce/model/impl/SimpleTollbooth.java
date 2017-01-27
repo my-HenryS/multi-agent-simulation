@@ -37,12 +37,6 @@ public class SimpleTollbooth extends Entity {
     }
 
     public boolean isValid(BaseAgent agent){
-        if(agent instanceof SelfDrivingCar){
-            if(agent.getShape().directionTo(this.shape).dot(new Vector2D(0,1)) > 0 && agent.getShape().distanceTo(this.shape) < 0){
-                    agent.getModel().setExpectedSpeed(this.model.getExpectedSpeed());
-            }
-            return false;
-        }
         if(!agentDictionary.containsKey(agent)){
             if(agent.getShape().distanceTo(this.shape) < 0){
                 agentDictionary.put(agent, (int)(agent.currTimestamp + interval / agent.getModel().getTimePerStep()) );

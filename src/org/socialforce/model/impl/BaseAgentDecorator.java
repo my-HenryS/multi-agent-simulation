@@ -21,13 +21,4 @@ public class BaseAgentDecorator implements AgentDecorator {
         Agent agent = new BaseAgent(size, velocity);
         return agent;
     }
-
-    public Agent createAgent(Point position, Velocity velocity, double possibility) {
-        Agent agent;
-        Circle2D size = new Circle2D(position,AGENT_SIZE);
-        if(Math.random() <= possibility) agent = new BaseAgent(size, velocity);
-        else agent = new SelfDrivingCar(size, velocity);
-        return agent;
-    }
-
 }

@@ -7,6 +7,7 @@ import org.socialforce.model.InteractiveEntity;
  * Created by sunjh1999 on 2017/1/21.
  */
 public class ETC_Tollbooth extends SimpleTollbooth {
+    static double maxVelocity = 13;
     public ETC_Tollbooth(Shape shape, double interval) {
         super(shape, interval);
     }
@@ -17,11 +18,11 @@ public class ETC_Tollbooth extends SimpleTollbooth {
             BaseAgent agent = (BaseAgent) affectedEntity;
             if(!agentDictionary.containsKey(agent)){
                 agentDictionary.put(agent, (int)(agent.currTimestamp + interval / agent.getModel().getTimePerStep()) );
-                agent.getModel().setExpectedSpeed(13);
+                agent.getModel().setExpectedSpeed(maxVelocity);
                 return;
             }
             if(agentDictionary.get(agent) > agent.currTimestamp){
-                agent.getModel().setExpectedSpeed(13);
+                agent.getModel().setExpectedSpeed(maxVelocity);
             }
             else if(agentDictionary.get(agent) == agent.currTimestamp){
                 agent.getModel().setExpectedSpeed(this.model.getExpectedSpeed());
