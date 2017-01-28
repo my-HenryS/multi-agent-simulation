@@ -2,6 +2,7 @@ package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
 import org.socialforce.app.gui.SceneShower;
+import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
@@ -22,16 +23,13 @@ import static org.socialforce.scene.SceneLoader.genParameter;
 
 /**
  * Created by sunjh1999 on 2017/1/20.
+ * 暂时不完全可用 还需调整
  */
-public class ApplicationForMCM extends ApplicationForECTest implements SocialForceApplication {
-    SceneShower shower;
-    public void setShower(SceneShower shower){
-        this.shower = shower;
-    }
+public class ApplicationForMCM extends SimpleApplication implements SocialForceApplication {
+    DistanceShape template = new Circle2D(new Point2D(0,0), 2/2);
     public ApplicationForMCM(){
-
+        setUpScenes(0,0);
     }
-
     /**
      * start the application immediately.
      * TODO start和setUpstrategy重构，将strategy独立于scene
@@ -52,10 +50,9 @@ public class ApplicationForMCM extends ApplicationForECTest implements SocialFor
                     double volume = 0, scenery_num = 0;
                     double speed = 0;
                     int size = 0;
-                    SVSR_RandomAgentGenerator agentGenerator = new SVSR_RandomTimeAgentGenerator(a,new Box2D(75, 4.5  ,46.5,10), new Velocity2D(0,13));
+                    SVSR_RandomAgentGenerator agentGenerator = new SVSR_RandomTimeAgentGenerator(a,new Box2D(75,4.5,46.5,10), template, new Velocity2D(0,13));
                     agentGenerator.apply(scene);
-                    if(shower!=null)shower.getDrawerInstaller().addDrawerSupport(scene);
-                    PathFinder pathFinder = new AStarPathFinder(scene, new Circle2D(new Point2D(0,0), 0.486/2), 1);
+                    PathFinder pathFinder = new AStarPathFinder(scene, template);
                     strategy = new DynamicNearestGoalStrategy(scene, pathFinder);
                     strategy.pathDecision();
                     System.out.println("flow now "+a);
@@ -67,7 +64,6 @@ public class ApplicationForMCM extends ApplicationForECTest implements SocialFor
                         }
                         if(iteration % 250 == 0){
                             agentGenerator.apply(scene);
-                            if(shower!=null)shower.getDrawerInstaller().addDrawerSupport(scene);
                             strategy.pathDecision();
                         }
                         if(iteration % 1000 == 0){
@@ -97,7 +93,6 @@ public class ApplicationForMCM extends ApplicationForECTest implements SocialFor
         }
 
     }
-
 
     public void setUpScenes(double alpha, double beta){
         double width = 2.2, btm_length = 48, bottom = 5, top_length = 30;

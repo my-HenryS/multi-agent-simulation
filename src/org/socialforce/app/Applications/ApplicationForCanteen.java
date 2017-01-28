@@ -3,6 +3,7 @@ package org.socialforce.app.Applications;
 import org.socialforce.app.Interpreter;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.app.impl.SimpleInterpreter;
+import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
@@ -24,11 +25,10 @@ import static org.socialforce.scene.SceneLoader.genParameter;
 /**
  * Created by sunjh1999 on 2017/1/13.
  */
-public class ApplicationForCanteen extends ApplicationForECTest implements SocialForceApplication {
-
+public class ApplicationForCanteen extends SimpleApplication implements SocialForceApplication {
+    DistanceShape template;
 
     public ApplicationForCanteen(){
-
     }
 
     /**
@@ -50,7 +50,7 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
                 }
                 System.out.print("Population of "+total_num);
                 int iteration = 0;
-                PathFinder pathFinder = new AStarPathFinder(scene, new Circle2D(new Point2D(0,0),0.486/2));
+                PathFinder pathFinder = new AStarPathFinder(scene, template);
                 if(i<10){
                     System.out.print(" with ECStrategy, ");
                     strategy = new ECStrategy(scene, pathFinder);
@@ -75,7 +75,7 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
                     if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
                         ((DynamicStrategy) strategy).dynamicDecision();
                     }
-                    span = (System.currentTimeMillis() - start) > fps? 0: fps - (System.currentTimeMillis() - start);
+                    span = (System.currentTimeMillis() - start) >= fps? 0: fps - (System.currentTimeMillis() - start);
                     try {
                         Thread.sleep(span); //锁帧大法
                     } catch (InterruptedException e) {
@@ -88,14 +88,15 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
 
 
     public void setUpScenes(){
+        template = new Circle2D(new Point2D(0,0),0.486/2);
         //File file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/test/org/socialforce/app/impl/canteen2.s");
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("canteen2.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(150,new Box2D(0,0,25,18))));
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(155,new Box2D(0,18,25,3))));
+        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(150,new Box2D(0,0,25,18),template)));
+        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(155,new Box2D(0,18,25,3),template)));
         parameters.addLast(genParameter((new SVSR_SafetyRegion(new Box2D(-3,-0.5,1,4)))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(18.5,-3,4,1))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(30,17.5,1,4))));

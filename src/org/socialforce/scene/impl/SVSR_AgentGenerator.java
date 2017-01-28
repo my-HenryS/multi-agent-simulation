@@ -1,4 +1,5 @@
 package org.socialforce.scene.impl;
+import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Velocity;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneValue;
@@ -26,6 +27,7 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
         protected AgentDecorator decorator;
         protected SocialForceModel model;
         protected Velocity velocity;
+        protected DistanceShape shape;
         public AgentGenerator(double X_distance,double Y_distance,double Z_distance,Shape Area){
             this.X_distance = X_distance;
             this.Y_distance = Y_distance;
@@ -51,11 +53,12 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
     }
     private int priority;
     protected AgentGenerator agentGenerator;
-    public SVSR_AgentGenerator(double X_distance,double Y_distance,double Z_distance,Shape Area, Velocity velocity){
+    public SVSR_AgentGenerator(double X_distance, double Y_distance, double Z_distance, Shape Area, DistanceShape template, Velocity velocity){
         agentGenerator = new AgentGenerator(X_distance,Y_distance,Z_distance,Area);
         agentGenerator.setDecorator(new BaseAgentDecorator());
         agentGenerator.setModel(new SimpleSocialForceModel());
         agentGenerator.velocity = velocity;
+        agentGenerator.shape = template;
     }
     @Override
     public String getEntityName() {
@@ -83,7 +86,7 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
                 for (int j = 0; j < (agentGenerator.Area.getBounds().getEndPoint().getY() - agentGenerator.Area.getBounds().getStartPoint().getY()) / agentGenerator.Y_distance; j++) {
                     Point2D point = new Point2D(agentGenerator.Area.getBounds().getStartPoint().getX()+i*agentGenerator.X_distance,agentGenerator.Area.getBounds().getStartPoint().getY()+j*agentGenerator.Y_distance);
                     if(agentGenerator.Area.contains(point)){
-                        new_agent = agentGenerator.decorator.createAgent(point, agentGenerator.velocity.clone());
+                        new_agent = agentGenerator.decorator.createAgent(point, agentGenerator.velocity.clone(), agentGenerator.shape);
                         new_agent.setModel(agentGenerator.model.clone());
                         scene.addAgent(new_agent);
                         new_agent.setScene(scene);
