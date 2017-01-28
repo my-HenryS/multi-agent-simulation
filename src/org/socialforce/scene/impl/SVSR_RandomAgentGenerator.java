@@ -1,6 +1,7 @@
 package org.socialforce.scene.impl;
 
 import org.socialforce.drawer.impl.SolidCircle2DDrawer;
+import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Velocity;
 import org.socialforce.geom.impl.*;
 import org.socialforce.scene.Scene;
@@ -33,6 +34,7 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
         protected AgentDecorator decorator;
         protected SocialForceModel model;
         protected Velocity velocity;
+        protected DistanceShape shape;
 
         public AgentGenerator(int agent_num,Shape Area){
             this.agent_num = agent_num;
@@ -56,18 +58,20 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
     private int priority;
     protected AgentGenerator agentGenerator;
 
-    public SVSR_RandomAgentGenerator(int agent_num, Shape Area, Velocity velocity){
+    public SVSR_RandomAgentGenerator(int agent_num, Shape Area, DistanceShape template, Velocity velocity){
         agentGenerator = new AgentGenerator(agent_num,Area);
         agentGenerator.setDecorator(new BaseAgentDecorator());
         agentGenerator.setModel(new SimpleSocialForceModel());
         agentGenerator.velocity = velocity;
+        agentGenerator.shape = template;
     }
 
-    public SVSR_RandomAgentGenerator(int agent_num, Shape Area){
+    public SVSR_RandomAgentGenerator(int agent_num, Shape Area, DistanceShape template){
         agentGenerator = new AgentGenerator(agent_num,Area);
         agentGenerator.setDecorator(new BaseAgentDecorator());
         agentGenerator.setModel(new SimpleSocialForceModel());
         agentGenerator.velocity = new Velocity2D(0,0);
+        agentGenerator.shape = template;
     }
     @Override
     public String getEntityName() {
@@ -105,7 +109,7 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
                 double rand_y = agentGenerator.Area.getBounds().getStartPoint().getY() + rand.nextDouble() * (agentGenerator.Area.getBounds().getEndPoint().getY() - agentGenerator.Area.getBounds().getStartPoint().getY());
                 Point2D point = new Point2D(rand_x, rand_y);
                 Iterable<Agent> agents = scene.getAllAgents();
-                new_agent = agentGenerator.decorator.createAgent(point, agentGenerator.velocity.clone());
+                new_agent = agentGenerator.decorator.createAgent(point, agentGenerator.velocity.clone(), agentGenerator.shape);
                 for (Agent agent : agents) {
                     if(new_agent.getShape().distanceTo(agent.getShape()) < 0){
                         is_able_flag = 1;
