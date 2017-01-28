@@ -7,10 +7,7 @@ import org.socialforce.scene.Scene;
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseWheelEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
 /**
@@ -20,6 +17,7 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
 
 
     private final MouseWheelMoved mouseWheelMoved;
+    private DragMouseAdapter mouseAdapter;
 
     public ResizeListener getResizeListener() {
         return resizeListener;
@@ -37,6 +35,9 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
         this.addComponentListener(resizeListener);
         this.removeMouseWheelListener(mouseWheelMoved);
         this.addMouseWheelListener(mouseWheelMoved);
+
+        this.addMouseListener(mouseAdapter);
+        this.addMouseMotionListener(mouseAdapter);
     }
 
     /**
@@ -47,7 +48,7 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
         //this.setPreferredSize(new Dimension(800,800));
         resizeListener = new ResizeListener();
         this.setBackground(Color.white);
-
+        mouseAdapter = new DragMouseAdapter();
         mouseWheelMoved = new MouseWheelMoved();
     }
 
@@ -233,10 +234,10 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
                 sc.setScaleRate(sc.getScaleRate() * Math.pow(1.1,scaleCount));
             }
 //            boardPack(scene.getBounds().getSize(),sc.getScaleRate());
-            SceneBoard sct = SceneBoard.this;
+           /* SceneBoard sct = SceneBoard.this;
             sct.getParent().invalidate();
             sct.setPreferredSize(getPreferred(scene.getBounds().getSize(),sc.getScaleRate()));
-            sct.getParent().validate();
+            sct.getParent().validate();*/
             syncToDrawer(sc);
         }
     }
@@ -250,14 +251,14 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
         @Override
         public void componentResized(ComponentEvent e) {
             SceneDrawer sc = (SceneDrawer) scene.getDrawer();
-            Vector size = scene.getBounds().getSize();
+            /*Vector size = scene.getBounds().getSize();
             double scaleRate = sc.getScaleRate();
             //boardPack(size, scaleRate);
             SceneBoard.this.repaint();
             SceneBoard.this.getParent().doLayout();
             SceneBoard.this.validate();
 
-
+*/
             syncToDrawer(sc);
         }
     }
@@ -288,4 +289,54 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
     }
 
 
+    private class DragMouseAdapter extends MouseAdapter {
+        boolean dragging = false;
+
+        /**
+         * {@inheritDoc}
+         *
+         * @param e
+         */
+        @Override
+        public void mousePressed(MouseEvent e) {
+            super.mousePressed(e);
+            SceneDrawer sc = (SceneDrawer) SceneBoard.this.scene.getDrawer();
+            lastX = e.getX() - sc.getOffsetX();
+            lastY = e.getY() - sc.getOffsetY();
+
+            dragging = true;
+
+        }
+
+
+
+        /**
+         * {@inheritDoc}
+         *
+         * @param e
+         */
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            super.mouseReleased(e);
+            dragging = false;
+        }
+
+        double lastX = -1;
+        double lastY = -1;
+
+
+        /**
+         * {@inheritDoc}
+         *
+         * @param e
+         * @since 1.6
+         */
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            super.mouseDragged(e);
+            SceneDrawer sc = (SceneDrawer) SceneBoard.this.scene.getDrawer();
+            sc.setOffsetX(e.getX() - lastX);
+            sc.setOffsetY(e.getY() - lastY);
+        }
+    }
 }
