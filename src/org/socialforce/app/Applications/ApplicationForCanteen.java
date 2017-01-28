@@ -75,7 +75,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                     if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
                         ((DynamicStrategy) strategy).dynamicDecision();
                     }
-                    span = (System.currentTimeMillis() - start) > fps? 0: fps - (System.currentTimeMillis() - start);
+                    span = (System.currentTimeMillis() - start) >= fps? 0: fps - (System.currentTimeMillis() - start);
                     try {
                         Thread.sleep(span); //锁帧大法
                     } catch (InterruptedException e) {
