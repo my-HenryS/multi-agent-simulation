@@ -2,6 +2,7 @@ package org.socialforce.app.gui;
 
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.*;
+import org.socialforce.geom.impl.Box2D;
 import org.socialforce.scene.Scene;
 
 import javax.swing.*;
@@ -31,10 +32,16 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
 
     public void setScene(Scene scene) {
         this.scene = scene;
+        SceneDrawer drawer = (SceneDrawer) scene.getDrawer();
+        syncToDrawer(drawer);
+        drawer.setScaleRate(drawer.calcScaleRate(scene.getBounds()));
         this.removeComponentListener(resizeListener);
         this.addComponentListener(resizeListener);
         this.removeMouseWheelListener(mouseWheelMoved);
         this.addMouseWheelListener(mouseWheelMoved);
+
+        this.removeMouseListener(mouseAdapter);
+        this.removeMouseMotionListener(mouseAdapter);
 
         this.addMouseListener(mouseAdapter);
         this.addMouseMotionListener(mouseAdapter);
