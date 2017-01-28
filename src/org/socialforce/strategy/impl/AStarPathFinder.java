@@ -76,9 +76,6 @@ public class AStarPathFinder implements PathFinder {
             x = tempX;
             y = tempY;
             Point next = previous[(int)x][(int)y];
-            if(next == null){
-                next  =new Point2D(0,0);
-            }
             Point tobeReturn = next.clone().scaleBy(min_div).moveBy(delta_x, delta_y);
             return tobeReturn;
         }
