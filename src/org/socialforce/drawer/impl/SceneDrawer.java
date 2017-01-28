@@ -176,11 +176,31 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         transform.translate(-center[0],-center[1]);
 
 
-
         //transform.translate(-size[0] / 2,-size[1] / 2);
 
 
         return transform;
+    }
+
+    public double[] sceneToScreen(double ... src) {
+        double [] ct = new double[2];
+        clip.getReferencePoint().get(ct);
+        AffineTransform transform = getTransform(ct);
+        transform.transform(src,0,ct,0,1);
+        return ct;
+    }
+
+    public double[] screenToScene(double ... src) {
+        double [] ct = new double[2];
+        clip.getReferencePoint().get(ct);
+        AffineTransform transform = null;
+        try {
+            transform = getTransform(ct).createInverse();
+        } catch (NoninvertibleTransformException e) {
+            e.printStackTrace();
+        }
+        transform.transform(src,0,ct,0,1);
+        return ct;
     }
 
     //protected Scene scene;

@@ -1,7 +1,7 @@
 package org.socialforce.app.gui;
 
 import org.socialforce.drawer.impl.SceneDrawer;
-import org.socialforce.geom.Vector;
+import org.socialforce.geom.*;
 import org.socialforce.scene.Scene;
 
 import javax.swing.*;
@@ -228,11 +228,20 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
             int scaleCount = -e.getWheelRotation();
 
             SceneDrawer sc = (SceneDrawer) scene.getDrawer();
+            double[] origin = new double[]{e.getX(),e.getY()};
+            double[] before = sc.screenToScene(origin);
             synchronized (sc) {
                 //sc.setCtrlHeight(SceneBoard.this.getHeight());
                 //sc.setCtrlWidth(SceneBoard.this.getWidth());
                 sc.setScaleRate(sc.getScaleRate() * Math.pow(1.1,scaleCount));
             }
+            before = sc.sceneToScreen(before);
+            double[] after = origin;
+            after[0] -= before[0];
+            after[1] -= before[1];
+            //after = sc.sceneToScreen(after);
+            sc.setOffsetX(sc.getOffsetX() + after[0]);
+            sc.setOffsetY(sc.getOffsetY() + after[1]);
 //            boardPack(scene.getBounds().getSize(),sc.getScaleRate());
            /* SceneBoard sct = SceneBoard.this;
             sct.getParent().invalidate();
