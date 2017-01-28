@@ -47,7 +47,7 @@ public class SimulationPanelMain implements ApplicationListener {
         try {
             JFrame frame = new JFrame("SimulationPanelMain");
             SimulationPanelMain mainPanel = new SimulationPanelMain();
-            SocialForceApplication application = new ApplicationForMCM();//应用在这里！
+            SocialForceApplication application = new ApplicationForCanteen();//应用在这里！
             application.setApplicationListener(mainPanel);
             frame.setContentPane(mainPanel.root);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -147,10 +147,5 @@ public class SimulationPanelMain implements ApplicationListener {
         }
         scene.getDrawer().draw(scene);
         SimulationPanelMain.this.shower1.getBoard().repaint();//refresh();
-        try {
-            Thread.sleep(7);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }

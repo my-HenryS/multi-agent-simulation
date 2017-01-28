@@ -27,7 +27,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * TODO 性能优化 需结合scene重构
  */
 public class AStarPathFinder implements PathFinder {
-    private double min_div = 0.1;
+    private double min_div = 0.2;
     private double map[][];
     private double distance[][];
     private Point previous[][];
