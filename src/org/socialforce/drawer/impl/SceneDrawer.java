@@ -111,6 +111,26 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
 
     double scaleRate = 4;
     double minScaleRate = 4;
+
+    public double getOffsetX() {
+        return offsetX;
+    }
+
+    public void setOffsetX(double offsetX) {
+        this.offsetX = offsetX;
+    }
+
+    public double getOffsetY() {
+        return offsetY;
+    }
+
+    public void setOffsetY(double offsetY) {
+        this.offsetY = offsetY;
+    }
+
+    double offsetX;
+    double offsetY;
+
     public SceneDrawer(Graphics2D graphics, double ctrlWidth, double ctrlHeight) {
         // TODO: 2016/8/27 add coordinate transform for graphics.
 
@@ -145,16 +165,39 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
 //-10 -10 40 30
         double cp[] = new double[2];
         //transform.scale(ctrlWidth / cp[0], ctrlHeight / cp[1]);
+        transform.translate(offsetX,offsetY);
         transform.translate(ctrlWidth / 2,ctrlHeight / 2);
         transform.scale(scaleRate,scaleRate);
 
         transform.scale(1, -1);
         transform.translate(-center[0],-center[1]);
 
+
         //transform.translate(-size[0] / 2,-size[1] / 2);
 
 
         return transform;
+    }
+
+    public double[] sceneToScreen(double ... src) {
+        double [] ct = new double[2];
+        clip.getReferencePoint().get(ct);
+        AffineTransform transform = getTransform(ct);
+        transform.transform(src,0,ct,0,1);
+        return ct;
+    }
+
+    public double[] screenToScene(double ... src) {
+        double [] ct = new double[2];
+        clip.getReferencePoint().get(ct);
+        AffineTransform transform = null;
+        try {
+            transform = getTransform(ct).createInverse();
+        } catch (NoninvertibleTransformException e) {
+            e.printStackTrace();
+        }
+        transform.transform(src,0,ct,0,1);
+        return ct;
     }
 
     //protected Scene scene;
