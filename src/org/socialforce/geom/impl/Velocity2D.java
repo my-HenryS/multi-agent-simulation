@@ -6,7 +6,7 @@ import org.socialforce.geom.Velocity;
 /**
  * Created by Ledenel on 2016/8/16.
  */
-public class Velocity2D extends Vector2D implements Velocity {
+public class Velocity2D extends Vector2D implements Velocity, Vector {
     public Velocity2D(double x, double y) {
         super(x, y);
     }

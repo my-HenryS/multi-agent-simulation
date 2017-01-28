@@ -2,6 +2,7 @@ package org.socialforce.model.impl;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.scene.impl.SimpleScene;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
@@ -23,7 +24,7 @@ public class BaseAgentTest {
         initPoint = new Point2D(3,4);
         circle.moveTo(initPoint);
         circle.setRadius(5);
-        baseAgent = new BaseAgent(circle);
+        baseAgent = new BaseAgent(circle, new Velocity2D(0,0));
         baseAgent.view  = circle;
         baseAgent.setPath(new StraightPath(baseAgent.getShape().getReferencePoint(), new Point2D(4,4)));
         baseAgent.setScene(scene);

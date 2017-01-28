@@ -20,16 +20,16 @@ public class BodyForceTest {
     @Before
     public void setUp() throws Exception{
         initPoint = new Point2D(3,4);
-        initPoint2 = new Point2D(3,4.1);
+        initPoint2 = new Point2D(3,4);
         circle.moveTo(initPoint);
         circle.setRadius(0.243);
         circle2.moveTo(initPoint2);
         circle2.setRadius(0.243);
         circle3.moveTo(initPoint2);
         circle3.setRadius(0.243);
-        baseAgent = new BaseAgent(circle);
-        targetAgent = new BaseAgent(circle2);
-        targetAgent2 = new BaseAgent(circle3);
+        baseAgent = new BaseAgent(circle, new Velocity2D(0,0));
+        targetAgent = new BaseAgent(circle2, new Velocity2D(0,0));
+        targetAgent2 = new BaseAgent(circle3, new Velocity2D(0,0));
 
     }
     @Test

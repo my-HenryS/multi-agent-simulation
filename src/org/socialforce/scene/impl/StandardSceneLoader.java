@@ -39,7 +39,7 @@ public class StandardSceneLoader implements SceneLoader {
         Scene new_scene = scene.simpleclone();
         Wall[] new_walls = new Wall[walls.length];
         for(int i = 0; i < walls.length; i++){
-            new_walls[i] = walls[i].simpleclone();
+            new_walls[i] = walls[i].standardclone();
         }
         for (int i = 0;i < new_walls.length;i++) {
             new_walls[i].setName("wall" + i);

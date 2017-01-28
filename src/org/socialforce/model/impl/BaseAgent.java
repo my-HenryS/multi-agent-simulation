@@ -24,13 +24,14 @@ public class BaseAgent extends Entity implements Agent {
     Velocity deltaV;
     Vector deltaS;
     boolean escaped = false;
+    boolean stoped = false;
     DistanceShape shape;
 
-    public BaseAgent(DistanceShape shape) {
+    public BaseAgent(DistanceShape shape, Velocity velocity) {
         super(shape);
         this.shape = shape;
         this.currTimestamp = 0;
-        this.currVelocity = new Velocity2D(0, 0);
+        this.currVelocity = velocity;
         this.mass = 80;
         Circle2D circle = new Circle2D(shape.getReferencePoint(),2);
         this.view = circle;
@@ -110,7 +111,7 @@ public class BaseAgent extends Entity implements Agent {
      * 决定下一步，agent要走向的目标点。
      * 同时，agent也会被社会力驱动。
      * 最终的结果会被act() 方法使用。
-     * 如果当前的时间步长和该agent不同步，那么该agnet 会试着跟上
+     * 如果当前的时间步长和该agent不同步，那么该agent 会试着跟上
      * (或者忽略当agent的时间落后于真正的时间)  TODO?
      *
      * @param currSteps 当前的时间
@@ -176,12 +177,15 @@ public class BaseAgent extends Entity implements Agent {
     @Override
     public void act() {
         this.currTimestamp++;
-        this.currVelocity.add(deltaV);
-        velocities.addLast(currVelocity);
-        Point point = shape.getReferencePoint();
-        point.add(deltaS);
-        this.shape.moveTo(point);
-        this.view.moveTo(point);                      //改变视野
+        if(!stoped){
+            this.currVelocity.add(deltaV);
+            velocities.addLast(currVelocity);
+            Point point = shape.getReferencePoint();
+            point.add(deltaS);
+            this.shape.moveTo(point);
+            this.view.moveTo(point);                      //改变视野
+        }
+        stoped = false;
         deltaS = model.zeroVector();
         deltaV = model.zeroVelocity();
         pushed = model.zeroForce();
@@ -276,7 +280,7 @@ public class BaseAgent extends Entity implements Agent {
 
     @Override
     public BaseAgent standardclone() {
-        return new BaseAgent(shape.clone());
+        return new BaseAgent(shape.clone(), currVelocity.clone());
     }
 
 
@@ -293,5 +297,9 @@ public class BaseAgent extends Entity implements Agent {
         }
         aver /= interval;
         return aver;
+    }
+
+    public void stop(){
+        stoped = true;
     }
 }

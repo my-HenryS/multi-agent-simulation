@@ -111,7 +111,9 @@ public interface SocialForceModel {
      */
     double getExpectedSpeed();
 
+    void setExpectedSpeed(double speed);
+
     double getREACT_TIME();
 
-    double getTIME_PER_STEP();
+    SocialForceModel clone();
 }

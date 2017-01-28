@@ -126,5 +126,4 @@ public class ApplicationForECTest implements SocialForceApplication {
     public List<PathFinder> getAllPathFinders() {
         return null;
     }
-
 }

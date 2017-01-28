@@ -2,6 +2,7 @@ package org.socialforce.model.impl;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.scene.impl.SimpleScene;
 import org.socialforce.scene.impl.SVSR_AgentGenerator;
 import org.socialforce.container.AgentPool;
@@ -16,7 +17,7 @@ import org.socialforce.strategy.impl.StraightPath;
 public class ModelTestOverall {
 
     SimpleScene scene = new SimpleScene(new Box2D(new Point2D(0, 0), new Point2D(20, 20)));
-    SVSR_AgentGenerator SVSR_agentGenerator = new SVSR_AgentGenerator(1,1,1,new Box2D(new Point2D(1, 1), new Point2D(2, 2)));
+    SVSR_AgentGenerator SVSR_agentGenerator = new SVSR_AgentGenerator(1,1,1,new Box2D(new Point2D(1, 1), new Point2D(2, 2)), new Velocity2D(0,0));
 
     @Before
     public void setUp() throws Exception {

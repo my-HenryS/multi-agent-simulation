@@ -3,6 +3,7 @@ package org.socialforce.strategy.impl;
 import org.junit.Before;
 import org.junit.Test;
 import org.socialforce.app.Applications.ApplicationForECStrategy;
+import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.scene.ParameterPool;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
@@ -47,7 +48,7 @@ public class AStarPathFinderTest {
     @Test
     public void testMap() throws Exception {
         double[][]map=new double[][]{{0, 0, 0, 0, 0}, {0, 1, 0, 0, 0}, {0, 0, 0, 1, 0},{0, 0, 1, 1, 0}, {0, 0, 0, 0, 0}};
-        aStarPathFinder = new AStarPathFinder(map,  new BaseAgent(agent_shape) , new Point2D(3,3));
+        aStarPathFinder = new AStarPathFinder(map,  new BaseAgent(agent_shape, new Velocity2D(0,0)) , new Point2D(3,3));
         Path path = aStarPathFinder.plan_for(new Point2D(3,3));
         System.out.println(path.toString(new Point2D(1,1)));
     }
@@ -55,7 +56,7 @@ public class AStarPathFinderTest {
     @Test
     public void testSceneAfterMap() throws Exception {
         double[][]map=new double[][]{{0, 0, 0, 0, 0}, {0, 1, 0, 0, 0}, {0, 0, 0, 1, 0},{0, 0, 1, 1, 0}, {0, 0, 0, 0, 0}};
-        aStarPathFinder = new AStarPathFinder(map,  new BaseAgent(agent_shape) , new Point2D(3,3));
+        aStarPathFinder = new AStarPathFinder(map,  new BaseAgent(agent_shape, new Velocity2D(0,0)) , new Point2D(3,3));
         aStarPathFinder = new AStarPathFinder(scene, agent_shape);
         Path path = aStarPathFinder.plan_for(goal);
         System.out.println(path.toString(new Point2D(10,10)));

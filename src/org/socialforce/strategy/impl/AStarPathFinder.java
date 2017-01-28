@@ -1,5 +1,7 @@
 package org.socialforce.strategy.impl;
 
+import org.socialforce.model.impl.Scenery;
+import org.socialforce.model.impl.SimpleTollbooth;
 import org.socialforce.scene.Scene;
 import org.socialforce.container.EntityPool;
 import org.socialforce.geom.DistanceShape;
@@ -10,6 +12,7 @@ import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.scene.SceneValue;
 import org.socialforce.scene.impl.SVSR_SafetyRegion;
+import org.socialforce.scene.impl.SVSR_Scenery;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.model.impl.SafetyRegion;
@@ -24,16 +27,16 @@ import java.util.concurrent.LinkedBlockingQueue;
  * TODO 性能优化 需结合scene重构
  */
 public class AStarPathFinder implements PathFinder {
-    double min_div = 0.1;
+    private double min_div = 0.2;
     private double map[][];
-    double distance[][];
-    Point previous[][];
-    Shape agentShape;
-    Scene scene;
-    double delta_x = 0;        //偏移量x
-    double delta_y = 0;        //偏移量y
-    LinkedList<Maps> mapSet = new LinkedList<>();
-    LinkedList<Point> goals = new LinkedList<>();
+    private double distance[][];
+    private Point previous[][];
+    private Shape agentShape;
+    private Scene scene;
+    private double delta_x = 0;        //偏移量x
+    private double delta_y = 0;        //偏移量y
+    private LinkedList<Maps> mapSet = new LinkedList<>();
+    private LinkedList<Point> goals = new LinkedList<>();
 
     protected class Maps{
         private double map[][];
@@ -84,9 +87,9 @@ public class AStarPathFinder implements PathFinder {
             double y = (current.getY() - delta_y ) / min_div;
             double Distance = Double.POSITIVE_INFINITY;
             int tempX = 0, tempY = 0;
-            for(int i = (int)x-1; i<= x+1; i++){
-                for(int j = (int)y-1; j<= y+1; j++){
-                    if(map[i][j] == 0){
+            for(int i = (int)x; i<= x+1; i++){
+                for(int j = (int)y; j<= y+1; j++){
+                    if(available(i,j) && map[i][j] == 0){
                         if(new Point2D(i,j).distanceTo(new Point2D(x,y)) < Distance){
                             tempX = i; tempY = j;
                             Distance = new Point2D(i,j).distanceTo(new Point2D(x,y));
@@ -136,12 +139,21 @@ public class AStarPathFinder implements PathFinder {
         goals.forEach(this::maps_initiate);
     }
 
+    public AStarPathFinder(Scene scene, Shape templateShape, double min_div){
+        this.min_div = min_div;
+        this.scene = scene.standardclone();
+        this.agentShape = templateShape.clone();
+        scene_initiate();   //set standard scene and goals
+        goals.forEach(this::maps_initiate);
+    }
+
+
     private void scene_initiate(){
         scene_standardize();
         for(Iterator<SceneValue> iterator = scene.getValueSet().iterator(); iterator.hasNext();){
             SceneValue sceneValue = iterator.next();
-            if(sceneValue instanceof SVSR_SafetyRegion){
-                goals.addLast(goal_standardize(((SVSR_SafetyRegion)sceneValue).getValue().getShape().getReferencePoint().clone())) ;
+            if(sceneValue instanceof SVSR_SafetyRegion || sceneValue instanceof SVSR_Scenery){
+                goals.addLast(goal_standardize(((InteractiveEntity)sceneValue.getValue()).getShape().getReferencePoint().clone())) ;
             }
         }
     }
@@ -175,7 +187,7 @@ public class AStarPathFinder implements PathFinder {
                     for (InteractiveEntity entity : all_blocks) {
                         agentShape.moveTo(new Point2D(i*min_div, j*min_div));
                         //assert( == entity.getShape().getClass());
-                        if (!(entity instanceof SafetyRegion) && ((DistanceShape)agentShape).distanceTo(entity.getShape()) < 0) {
+                        if (!(entity instanceof SafetyRegion || entity instanceof SimpleTollbooth) && ((DistanceShape)agentShape).distanceTo(entity.getShape()) < 0) {
                             map[i][j] = 1;
                         }
                     }
@@ -225,7 +237,7 @@ public class AStarPathFinder implements PathFinder {
  */
 
     public Path plan_for(Point goal) {
-        Point destination = goal.clone();
+        Point destination;
         destination = goal_standardize(goal.clone());
         if(agentShape == null){
             throw new IllegalStateException("No agent applied");

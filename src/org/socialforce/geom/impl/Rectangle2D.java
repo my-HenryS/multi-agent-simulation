@@ -202,7 +202,7 @@ public class Rectangle2D implements Shape {
      */
     @Override
     public Shape clone() {
-        return new Rectangle2D(center,length,weidth,angle);
+        return new Rectangle2D((Point2D) center.clone(),length,weidth,angle);
     }
 
     /**

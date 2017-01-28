@@ -2,6 +2,7 @@ package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
 import org.socialforce.app.impl.SimpleInterpreter;
+import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
 import org.socialforce.geom.impl.Box2D;
@@ -61,7 +62,7 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
         interpreter.loadFile(file);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5)), new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5))));
+        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5))));
         parameters.addLast(genParameter((new SVSR_SafetyRegion(new Box2D(24,2,4,1)))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(33,12,1,4))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(2,8,1,4))));

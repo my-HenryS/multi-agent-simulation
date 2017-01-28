@@ -83,4 +83,8 @@ public class SceneShower {
 
     Scene scene;
 
+    public DrawerInstaller getDrawerInstaller(){
+        return drawerInstaller;
+    }
+
 }

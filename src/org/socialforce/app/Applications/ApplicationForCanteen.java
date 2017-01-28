@@ -6,6 +6,7 @@ import org.socialforce.app.impl.SimpleInterpreter;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
 import org.socialforce.strategy.DynamicStrategy;
@@ -68,10 +69,17 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
                 }
                 strategy.pathDecision();
                 while (scene.getAllAgents().size() > 5) {
+                    long start = System.currentTimeMillis(), span, fps = 12;
                     scene.stepNext();
                     iteration += 1;
                     if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
                         ((DynamicStrategy) strategy).dynamicDecision();
+                    }
+                    span = (System.currentTimeMillis() - start) > fps? 0: fps - (System.currentTimeMillis() - start);
+                    try {
+                        Thread.sleep(span); //锁帧大法
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -86,7 +94,7 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(150,new Box2D(0,0,25,18)), new SVSR_RandomAgentGenerator(250,new Box2D(0,0,25,18)), new SVSR_RandomAgentGenerator(350,new Box2D(0,0,25,18))));
+        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(150,new Box2D(0,0,25,18))));
         parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(155,new Box2D(0,18,25,3))));
         parameters.addLast(genParameter((new SVSR_SafetyRegion(new Box2D(-3,-0.5,1,4)))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(18.5,-3,4,1))));

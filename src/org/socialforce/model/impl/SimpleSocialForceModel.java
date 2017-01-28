@@ -1,5 +1,6 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.app.SocialForceApplication;
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Force2D;
@@ -191,7 +192,13 @@ public class SimpleSocialForceModel implements SocialForceModel {
         return EXPECTED_SPEED;
     }
 
+    public void setExpectedSpeed(double speed) {
+        this.EXPECTED_SPEED = speed;
+    }
+
     public double getREACT_TIME() {return REACT_TIME; }
 
-    public double getTIME_PER_STEP() {return TIME_PER_STEP; }
+    public SocialForceModel clone(){
+        return new SimpleSocialForceModel();
+    }
 }

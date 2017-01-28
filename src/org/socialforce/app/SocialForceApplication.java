@@ -1,5 +1,6 @@
 package org.socialforce.app;
 
+import org.socialforce.app.gui.SceneShower;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.ValueSet;
 import org.socialforce.strategy.PathFinder;
