@@ -2,6 +2,7 @@ package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
 import org.socialforce.app.impl.SimpleInterpreter;
+import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
@@ -22,10 +23,10 @@ import static org.socialforce.scene.SceneLoader.genParameter;
 /**
  * Created by Whatever on 2016/12/15.
  */
-public class ApplicationForECStrategy extends ApplicationForECTest implements SocialForceApplication{
+public class ApplicationForECStrategy extends SimpleApplication implements SocialForceApplication{
+    DistanceShape template;
 
     public ApplicationForECStrategy(){
-        setUpScenes();
     }
 
     /**
@@ -38,7 +39,7 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
             Scene scene = iterator.next();
             int iteration = 0;
-            PathFinder pathFinder = new AStarPathFinder(scene, new Circle2D(new Point2D(0,0),0.486/2));
+            PathFinder pathFinder = new AStarPathFinder(scene, template);
             strategy = new ECStrategy(scene, pathFinder);
             //strategy = new DynamicLifeBeltStrategy(scene, pathFinder);
             //strategy = new LifeBeltStrategy(scene, pathFinder);
@@ -55,14 +56,15 @@ public class ApplicationForECStrategy extends ApplicationForECTest implements So
         }
     }
 
-
+    @Override
     public void setUpScenes(){
+        template = new Circle2D(new Point2D(0,0),0.486/2);
         File file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/test/org/socialforce/app/impl/test.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFile(file);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5))));
+        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(405,new Box2D(4,4 ,27.5,15.5),template)));
         parameters.addLast(genParameter((new SVSR_SafetyRegion(new Box2D(24,2,4,1)))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(33,12,1,4))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(2,8,1,4))));

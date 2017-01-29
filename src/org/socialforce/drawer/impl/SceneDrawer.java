@@ -52,14 +52,17 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         getDevice().setColor(Color.WHITE);
         for (InteractiveEntity entity : iterable) {
             Drawer drawer = entity.getShape().getDrawer();
-            if(drawer != null) {
-                drawer.setDevice(this.getDevice());
- //               if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(26.0,2.5))) ((AwtDrawer2D)drawer).setColor(Color.red);
- //               if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(33.5,14))) ((AwtDrawer2D)drawer).setColor(Color.green);
- //               if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(14.0,21.5))) ((AwtDrawer2D)drawer).setColor(Color.blue);
-                drawer.draw(entity.getShape());
-                ((AwtDrawer2D)drawer).setColor(Color.black);
+            if(drawer == null){
+                installer.addDrawerSupport(entity.getShape());
+                drawer = entity.getShape().getDrawer();
             }
+            drawer.setDevice(this.getDevice());
+ //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(26.0,2.5))) ((AwtDrawer2D)drawer).setColor(Color.red);
+ //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(33.5,14))) ((AwtDrawer2D)drawer).setColor(Color.green);
+ //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(14.0,21.5))) ((AwtDrawer2D)drawer).setColor(Color.blue);
+            drawer.draw(entity.getShape());
+            ((AwtDrawer2D)drawer).setColor(Color.black);
+
         }
         //getDevice().transform(reverse);
         getDevice().setTransform(oldT);
