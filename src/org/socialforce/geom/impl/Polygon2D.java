@@ -28,6 +28,7 @@ public class Polygon2D implements Shape {
      */
     public Point2D[] sort(Point2D[] nods){
         Point2D[] sorted = new Point2D[nods.length];
+        edges = new Segment2D[nods.length];
         Point2D fuck = null;
         LinkedList<Point2D> Nods = new LinkedList<>();
         int order,org;
@@ -35,8 +36,8 @@ public class Polygon2D implements Shape {
         for (int i = 0; i<nods.length;i++ ){
             Nods.add(nods[i]);
         }
-        double flag = 0, direcflag;
-        Vector2D now = new Vector2D(0,1),direc,temp = new Vector2D(),temp1 = new Vector2D();
+        double flag = Double.NEGATIVE_INFINITY, direcflag;
+        Vector2D now = new Vector2D(0,1),direc,temp1 = new Vector2D(),temp2 = new Vector2D();
         Point2D point2D = (Point2D) getReferencePoint();
         while(true) {
             order = org - Nods.size();
@@ -44,20 +45,20 @@ public class Polygon2D implements Shape {
                 direc = (Vector2D) getReferencePoint().directionTo(nod);
                 if (direc.dot(now)> flag){
                     direcflag = direc.dot(now);
-                    temp = nod;
+                    temp1 = direc;
                     direc.spin(0.001);
                     if (direc.dot(now) > direcflag) {
                         flag = direc.dot(now);
                         fuck = nod;
-                        temp1 = temp;
+                        temp2 = temp1;
                     }
-                    else temp = temp1;
+                    else temp1 = temp2;
                     direc.spin(-0.001);
                 }
             }
-            flag = 0;
-            now = temp1;
-            Nods.remove(temp1);
+            flag = Double.NEGATIVE_INFINITY;
+            now = (Vector2D) getReferencePoint().directionTo(fuck);
+            Nods.remove(fuck);
             sorted[order] = fuck;
             if (Nods.size() == 0){break;}
         }

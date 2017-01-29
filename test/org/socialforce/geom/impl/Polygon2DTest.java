@@ -23,12 +23,14 @@ public class Polygon2DTest {
     @Test
     public void sortTest() throws Exception {
         Point2D[] sorted = testP.sort(nods);
-        System.out.println(sorted);
+        assertEquals(new Point2D(5,8),sorted[0]);
+        assertEquals(new Point2D(0,8),sorted[5]);
     }
 
     @Test
     public void contains() throws Exception {
-
+        assertTrue(testP.contains(new Point2D(3,4)));
+        assertFalse(testP.contains(new Point2D(3,-2)));
     }
 
     @Test
