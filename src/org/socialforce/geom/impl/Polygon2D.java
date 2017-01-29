@@ -17,6 +17,7 @@ import java.util.List;
 public class Polygon2D implements Shape {
     public Polygon2D(){}
     public Polygon2D(Point2D[] nods){
+        this.nods = nods;
         this.nods = sort(nods);
     }
     protected Point2D[] nods;
@@ -35,29 +36,30 @@ public class Polygon2D implements Shape {
             Nods.add(nods[i]);
         }
         double flag = 0, direcflag;
-        Vector2D now = new Vector2D(0,1),direc,temp = new Vector2D();
+        Vector2D now = new Vector2D(0,1),direc,temp = new Vector2D(),temp1 = new Vector2D();
         Point2D point2D = (Point2D) getReferencePoint();
-        while(nods.length != 0) {
-            order = org - nods.length;
+        while(true) {
+            order = org - Nods.size();
             for (Point2D nod : Nods) {
                 direc = (Vector2D) getReferencePoint().directionTo(nod);
                 if (direc.dot(now)> flag){
                     direcflag = direc.dot(now);
+                    temp = nod;
                     direc.spin(0.001);
                     if (direc.dot(now) > direcflag) {
                         flag = direc.dot(now);
-                        direc.spin(-0.001);
-                        temp = direc;
-                        direc.spin(0.001);
                         fuck = nod;
+                        temp1 = temp;
                     }
+                    else temp = temp1;
                     direc.spin(-0.001);
                 }
             }
             flag = 0;
-            now = temp;
-            Nods.remove(temp);
+            now = temp1;
+            Nods.remove(temp1);
             sorted[order] = fuck;
+            if (Nods.size() == 0){break;}
         }
         for (int i =0; i< sorted.length-1;i++){
             edges[i] = new Segment2D(sorted[i],sorted[i+1]);
