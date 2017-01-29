@@ -1,5 +1,6 @@
 package org.socialforce.model.impl;
 
+import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Velocity2D;
@@ -7,6 +8,7 @@ import org.socialforce.model.*;
 import org.socialforce.scene.Scene;
 import org.socialforce.strategy.Path;
 
+import java.io.*;
 import java.util.LinkedList;
 
 /**
@@ -285,7 +287,7 @@ public class BaseAgent extends Entity implements Agent {
 
 
     public String toString(){
-        return this.shape.toString();
+        return "Shape:" + this.shape.toString() + "\tVelocity:" + this.currVelocity.toString() + "\tForce:" + this.pushed.toString();
     }
 
     public double averageSpeed(int span){
