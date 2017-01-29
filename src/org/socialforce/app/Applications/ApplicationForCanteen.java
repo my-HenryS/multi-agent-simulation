@@ -91,7 +91,8 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
                     if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
                         ((DynamicStrategy) strategy).dynamicDecision();
                     }
-                    span = (System.currentTimeMillis() - start) > fps? 0: fps - (System.currentTimeMillis() - start);
+                    long l = System.currentTimeMillis() - start;
+                    span = l > fps? 0: fps - l;
                     try {
                         Thread.sleep(span); //锁帧大法
                     } catch (InterruptedException e) {
