@@ -2,7 +2,10 @@ package org.socialforce.app.Applications;
 
 import org.socialforce.app.Interpreter;
 import org.socialforce.app.SocialForceApplication;
+import org.socialforce.app.impl.SceneStepDataProvider;
+import org.socialforce.app.impl.SceneStepDumper;
 import org.socialforce.app.impl.SimpleInterpreter;
+import org.socialforce.app.impl.SingleFileOutputer;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
@@ -14,6 +17,7 @@ import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -41,6 +45,18 @@ public class ApplicationForCanteen extends ApplicationForECTest implements Socia
             setUpScenes();
             for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
                 Scene scene = iterator.next();
+                // TODO: 2017/1/29 Refactor dump setting code here.
+                SceneStepDataProvider rootProvider = new SceneStepDataProvider();
+                try {
+                    SceneStepDumper dumper = new SceneStepDumper(new SingleFileOutputer("testDump" +
+                            i +
+                            ".txt"));
+                    rootProvider.addListener(dumper);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                scene.setSceneListener(rootProvider);
+                // dump code end.
                 int total_num = 0;
                 for(Iterator<SceneValue> iter = scene.getValueSet().iterator(); iter.hasNext();){
                     SceneValue sceneValue = iter.next();

@@ -12,6 +12,9 @@ import java.util.List;
  * Created by Ledenel on 2017/1/29.
  */
 public class SceneStepDumper extends DataProcessor<Scene,String> {
+    public SceneStepDumper(DataListener<String>... outputs) {
+        super(outputs);
+    }
 
     @Override
     public String provide() {
