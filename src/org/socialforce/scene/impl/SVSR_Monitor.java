@@ -1,7 +1,7 @@
 package org.socialforce.scene.impl;
 
 import org.socialforce.geom.Shape;
-import org.socialforce.model.impl.Scenery;
+import org.socialforce.model.impl.Monitor;
 import org.socialforce.model.impl.SimpleSocialForceModel;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneValue;
@@ -9,10 +9,10 @@ import org.socialforce.scene.SceneValue;
 /**
  * Created by sunjh1999 on 2017/1/21.
  */
-public class SVSR_Scenery implements SceneValue<Scenery> {
+public class SVSR_Monitor implements SceneValue<Monitor> {
     protected String name;
-    protected Scenery scenery;
-    public SVSR_Scenery(Shape shape){this.scenery= new Scenery(shape);}
+    protected Monitor scenery;
+    public SVSR_Monitor(Shape shape){this.scenery= new Monitor(shape);}
     @Override
     public String getEntityName() {
         return name;
@@ -24,12 +24,12 @@ public class SVSR_Scenery implements SceneValue<Scenery> {
     }
 
     @Override
-    public Scenery getValue() {
+    public Monitor getValue() {
         return scenery;
     }
 
     @Override
-    public void setValue(Scenery value) {
+    public void setValue(Monitor value) {
         this.scenery = value;
     }
 
@@ -42,7 +42,7 @@ public class SVSR_Scenery implements SceneValue<Scenery> {
     }
 
     @Override
-    public int compareTo(SceneValue<Scenery> o) {
+    public int compareTo(SceneValue<Monitor> o) {
         return 0;
     }
 

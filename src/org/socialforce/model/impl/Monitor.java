@@ -5,17 +5,16 @@ import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.scene.Scene;
 
 import java.util.Iterator;
 
 /**
  * Created by sunjh1999 on 2017/1/21.
  */
-public class Scenery extends Entity {
+public class Monitor extends Entity {
     double volume = 0, active_time = 0, time_step = 0;
     LinkListAgentPool agents = new LinkListAgentPool();
-    public Scenery(Shape shape) {
+    public Monitor(Shape shape) {
         super(shape);
     }
 
@@ -40,7 +39,7 @@ public class Scenery extends Entity {
 
     @Override
     public InteractiveEntity standardclone() {
-        return new Scenery(shape.clone());
+        return new Monitor(shape.clone());
     }
 
     public double speak(int current_time){

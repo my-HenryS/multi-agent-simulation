@@ -1,9 +1,6 @@
 package org.socialforce.strategy.impl;
 
 import org.socialforce.model.Blockable;
-import org.socialforce.model.impl.Scenery;
-import org.socialforce.model.impl.SimpleTollbooth;
-import org.socialforce.model.impl.Wall;
 import org.socialforce.scene.Scene;
 import org.socialforce.container.EntityPool;
 import org.socialforce.geom.DistanceShape;
@@ -14,10 +11,9 @@ import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.scene.SceneValue;
 import org.socialforce.scene.impl.SVSR_SafetyRegion;
-import org.socialforce.scene.impl.SVSR_Scenery;
+import org.socialforce.scene.impl.SVSR_Monitor;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
-import org.socialforce.model.impl.SafetyRegion;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -154,7 +150,7 @@ public class AStarPathFinder implements PathFinder {
         scene_standardize();
         for(Iterator<SceneValue> iterator = scene.getValueSet().iterator(); iterator.hasNext();){
             SceneValue sceneValue = iterator.next();
-            if(sceneValue instanceof SVSR_SafetyRegion || sceneValue instanceof SVSR_Scenery){ //何为goal
+            if(sceneValue instanceof SVSR_SafetyRegion || sceneValue instanceof SVSR_Monitor){ //何为goal
                 goals.addLast(goal_standardize(((InteractiveEntity)sceneValue.getValue()).getShape().getReferencePoint().clone())) ;
             }
         }

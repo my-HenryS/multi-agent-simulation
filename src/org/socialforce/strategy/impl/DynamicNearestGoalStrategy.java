@@ -5,7 +5,7 @@ import org.socialforce.model.Agent;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneValue;
 import org.socialforce.scene.impl.SVSR_SafetyRegion;
-import org.socialforce.scene.impl.SVSR_Scenery;
+import org.socialforce.scene.impl.SVSR_Monitor;
 import org.socialforce.strategy.DynamicStrategy;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
@@ -70,8 +70,8 @@ public class DynamicNearestGoalStrategy implements DynamicStrategy {
             if(sceneValue instanceof SVSR_SafetyRegion){
                 goals.addLast(((SVSR_SafetyRegion)sceneValue).getValue().getShape().getReferencePoint());
             }
-            if(sceneValue instanceof SVSR_Scenery){
-                transits.addLast(((SVSR_Scenery)sceneValue).getValue().getShape().getReferencePoint());
+            if(sceneValue instanceof SVSR_Monitor){
+                transits.addLast(((SVSR_Monitor)sceneValue).getValue().getShape().getReferencePoint());
             }
         }
     }
