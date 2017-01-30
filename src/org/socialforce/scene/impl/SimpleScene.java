@@ -10,12 +10,15 @@ import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.Box;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.geom.impl.Sample2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneListener;
 import org.socialforce.scene.ValueSet;
 import org.socialforce.strategy.PathFinder;
+
+import java.util.ArrayList;
 
 /**
  * Created by Ledenel on 2016/8/22.
@@ -317,4 +320,28 @@ public class SimpleScene implements Scene {
         this.bounds = new Box2D(new Point2D(xmin-5,ymin-5),new Point2D(xmax+5,ymax+5));
     }
 
+
+    public ArrayList<SimpleReigion> sample(int sizeX, int sizeY){
+        double length,width;
+        SimpleReigion temp;
+        ArrayList<SimpleReigion> ret = null;
+        length = (bounds.getEndPoint().getX() - bounds.getStartPoint().getX())/sizeX;
+        width = (bounds.getEndPoint().getY() - bounds.getStartPoint().getY())/sizeY;
+        for (int i = 0; i< sizeX ; i++){
+            for (int j = 0;j<sizeY;j++){
+                temp = new SimpleReigion();
+                temp.setBounds(new Sample2D(i*length,j*width,length,width));
+                temp.readScene(this);
+                temp.setName("sample("+i+","+j+")");
+                ret.add(temp);
+            }
+        }
+        return ret;
+    }
+
+    public ArrayList<SimpleReigion> sample(){
+        int x = (int) (bounds.getEndPoint().getX() - bounds.getStartPoint().getX());
+        int y = (int) (bounds.getEndPoint().getY()-bounds.getStartPoint().getY());
+        return sample(x,y);
+    }
 }
