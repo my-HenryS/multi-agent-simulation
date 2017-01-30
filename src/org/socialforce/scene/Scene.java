@@ -1,6 +1,5 @@
 package org.socialforce.scene;
 
-import org.socialforce.app.SceneListener;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.container.AgentPool;
 import org.socialforce.container.EntityPool;

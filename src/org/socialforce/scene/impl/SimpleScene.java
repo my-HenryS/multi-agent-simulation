@@ -12,8 +12,8 @@ import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.impl.Entity;
 import org.socialforce.scene.Scene;
+import org.socialforce.scene.SceneListener;
 import org.socialforce.scene.ValueSet;
 import org.socialforce.strategy.PathFinder;
 
@@ -25,7 +25,7 @@ public class SimpleScene implements Scene {
     public SceneListener getSceneListener() {
         return sceneListener;
     }
-
+    @Override
     public void setSceneListener(SceneListener sceneListener) {
         this.sceneListener = sceneListener;
     }
@@ -82,6 +82,9 @@ public class SimpleScene implements Scene {
                 listener.onStep(this);
             }
         }
+        if(this.sceneListener != null) {
+            this.sceneListener.onStep(this);
+        }
     }
 
     public AgentEscapeListener getListener() {
@@ -96,6 +99,37 @@ public class SimpleScene implements Scene {
         this.allAgents = allAgents;
     }
 
+    /**
+     * Returns a string representation of the object. In general, the
+     * {@code toString} method returns a string that
+     * "textually represents" this object. The result should
+     * be a concise but informative representation that is easy for a
+     * person to read.
+     * It is recommended that all subclasses override this method.
+     * <p>
+     * The {@code toString} method for class {@code Object}
+     * returns a string consisting of the name of the class of which the
+     * object is an instance, the at-sign character `{@code @}', and
+     * the unsigned hexadecimal representation of the hash code of the
+     * object. In other words, this method returns a string equal to the
+     * value of:
+     * <blockquote>
+     * <pre>
+     * getClass().getName() + '@' + Integer.toHexString(hashCode())
+     * </pre></blockquote>
+     *
+     * @return a string representation of the object.
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("Scene With Step " + currentStep +":"+ System.lineSeparator());
+        for(Agent agent : allAgents) {
+            sb.append(agent.toString());
+            sb.append(System.lineSeparator());
+        }
+        sb.append("Scene End").append(System.lineSeparator());
+        return sb.toString();
+    }
 
     AgentPool allAgents;
     EntityPool statics;
