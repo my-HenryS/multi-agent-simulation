@@ -26,7 +26,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class AStarPathFinder implements PathFinder {
     private double min_div = 0.2;
-    private double map[][];
+    private int map[][];
     private double distance[][];
     private Point previous[][];
     private Shape agentShape;
@@ -37,7 +37,7 @@ public class AStarPathFinder implements PathFinder {
     private LinkedList<Point> goals = new LinkedList<>();
 
     protected class Maps{
-        private double map[][];
+        private int map[][];
         private double distance[][];
         private Point previous[][];
         private Point goal;
@@ -45,7 +45,7 @@ public class AStarPathFinder implements PathFinder {
         private double delta_y;
 
         public Maps(){}
-        public Maps(double map[][],double distance[][],Point previous[][],Point goal,double delta_x,double delta_y){
+        public Maps(int map[][],double distance[][],Point previous[][],Point goal,double delta_x,double delta_y){
             this.map = map;
             this.distance = distance;
             this.previous = previous;
@@ -103,7 +103,7 @@ public class AStarPathFinder implements PathFinder {
     /**
      * assign map directly
      */
-    public AStarPathFinder(double[][] new_map, Agent agent, Point ... goals){
+    public AStarPathFinder(int[][] new_map, Agent agent, Point ... goals){
         min_div = 1;
         this.map = new_map;
         for(Point goal : goals){
@@ -150,7 +150,7 @@ public class AStarPathFinder implements PathFinder {
         scene_standardize();
         for(Iterator<SceneValue> iterator = scene.getValueSet().iterator(); iterator.hasNext();){
             SceneValue sceneValue = iterator.next();
-            if(sceneValue instanceof SVSR_SafetyRegion || sceneValue instanceof SVSR_Monitor){ //何为goal
+            if(sceneValue instanceof SVSR_SafetyRegion){ //何为goal
                 goals.addLast(goal_standardize(((InteractiveEntity)sceneValue.getValue()).getShape().getReferencePoint().clone())) ;
             }
         }
@@ -177,7 +177,7 @@ public class AStarPathFinder implements PathFinder {
         if(map == null){
             double x_range = scene.getBounds().getEndPoint().getX() - scene.getBounds().getStartPoint().getX(),
                     y_range = scene.getBounds().getEndPoint().getY() - scene.getBounds().getStartPoint().getY();
-            map = new double[(int)(x_range / min_div)][(int) (y_range / min_div)];
+            map = new int[(int)(x_range / min_div)][(int) (y_range / min_div)];
             EntityPool all_blocks = scene.getStaticEntities();
             for (int i = 0; i < (int) (x_range / min_div); i++) {
                 for (int j = 0; j < (int) (y_range / min_div); j++) {
@@ -246,7 +246,7 @@ public class AStarPathFinder implements PathFinder {
         }
 
         for(Maps maps: mapSet){
-            if(maps.goal.equals(destination)){
+            if(maps.goal.epsilonEquals(destination, 1e-10)){
                 return new AStarPath(maps);
             }
         }
