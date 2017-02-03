@@ -5,8 +5,8 @@ import org.socialforce.app.SocialForceApplication;
 import org.socialforce.app.impl.SceneStepDataProvider;
 import org.socialforce.app.impl.SceneStepDumper;
 import org.socialforce.app.impl.SimpleInterpreter;
-import org.socialforce.geom.DistanceShape;
 import org.socialforce.app.impl.SingleFileOutputer;
+import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
@@ -33,6 +33,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
     DistanceShape template;
 
     public ApplicationForCanteen(){
+
     }
 
     /**
@@ -112,7 +113,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(150,new Box2D(0,0,25,18),template)));
+        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(300,new Box2D(0,0,25,18),template)));
         parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(155,new Box2D(0,18,25,3),template)));
         parameters.addLast(genParameter((new SVSR_SafetyRegion(new Box2D(-3,-0.5,1,4)))));
         parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(18.5,-3,4,1))));

@@ -1,7 +1,7 @@
 package org.socialforce.scene.impl;
 
 import org.socialforce.geom.Shape;
-import org.socialforce.model.impl.Scenery;
+import org.socialforce.model.impl.Monitor;
 import org.socialforce.model.impl.SimpleSocialForceModel;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneValue;
@@ -9,10 +9,10 @@ import org.socialforce.scene.SceneValue;
 /**
  * Created by sunjh1999 on 2017/1/21.
  */
-public class SVSR_Scenery implements SceneValue<Scenery> {
+public class SVSR_Monitor implements SceneValue<Monitor> {
     protected String name;
-    protected Scenery scenery;
-    public SVSR_Scenery(Shape shape){this.scenery= new Scenery(shape);}
+    protected Monitor monitor;
+    public SVSR_Monitor(Shape shape){this.monitor = new Monitor(shape);}
     @Override
     public String getEntityName() {
         return name;
@@ -24,25 +24,26 @@ public class SVSR_Scenery implements SceneValue<Scenery> {
     }
 
     @Override
-    public Scenery getValue() {
-        return scenery;
+    public Monitor getValue() {
+        return monitor;
     }
 
     @Override
-    public void setValue(Scenery value) {
-        this.scenery = value;
+    public void setValue(Monitor value) {
+        this.monitor = value;
     }
 
     @Override
     public void apply(Scene scene) {
-        scenery.setName("SimpleTollbooth");
-        scene.getStaticEntities().add(scenery);
-        scenery.setScene(scene);
-        scenery.setModel(new SimpleSocialForceModel());
+        monitor.setName("SimpleMonitor");
+        scene.getStaticEntities().add(monitor);
+        monitor.setScene(scene);
+        monitor.setModel(new SimpleSocialForceModel());
+        monitor.setTimePerStep(monitor.getModel().getTimePerStep());
     }
 
     @Override
-    public int compareTo(SceneValue<Scenery> o) {
+    public int compareTo(SceneValue<Monitor> o) {
         return 0;
     }
 
