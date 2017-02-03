@@ -1,6 +1,6 @@
 Scene:
     SimpleScene:
-        Box:-10,-10,150,100 point-offset;
+        Box:-10,-50,150,100 point-offset;
 
 Walls:
     Wall:
