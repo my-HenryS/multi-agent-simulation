@@ -77,6 +77,20 @@ public class ApplicationForMutidoor extends SimpleApplication implements SocialF
         parameters.addLast(genParameter(new SVSR_Exit(new Box2D[]{new Box2D(45-doorwidth/2,-2.2,doorwidth,-2),new Box2D(57-doorwidth/2,-2.2,doorwidth,-2),new Box2D(70-doorwidth,-2.2,doorwidth,-2)})));
         parameters.addLast(genParameter(new SVSR_Exit(new Box2D[]{new Box2D(75-doorwidth/2,-3,doorwidth,4),new Box2D(87-doorwidth/2,-3,doorwidth,4),new Box2D(100-doorwidth,-3,doorwidth,4)})));
         parameters.addLast(genParameter(new SVSR_Exit(new Box2D[]{new Box2D(5-doorwidth,-1,doorwidth*2,3)})));
+        for (int i = 0; i< 250;i++){
+            for (int j = 0; j< 25;j++){
+                parameters.addLast(genParameter(new SVSR_Monitor(new Circle2D(new Point2D(0.4*i,-0.4*j),0.2))));
+            }
+        }
+        for (int i = 0; i < 20;i++){
+            for (int j=0;j<250;j++) {
+                double temp = j*0.4;
+                if (temp<3.5||(temp>6.5&&temp<14.25)||(temp>15.75&&temp<26.25)||(temp>27.75&&temp<38.5)
+                        ||(temp<40&&temp>44.25)||(temp>45.75&&temp<56.25)||(temp>57.75&&temp<68.5)
+                        ||(temp<70&&temp>74.25)||(temp>75.75&&temp<86.25)||(temp>87.75&&temp<101)){continue;}
+                parameters.addLast(genParameter(new SVSR_Monitor(new Circle2D(new Point2D(temp, i * 0.4), 0.2))));
+            }
+        }
         //parameters.addLast(genParameter(new SVSR_Monitor(new Circle2D(new Point2D(10,0),0.2))));
         //parameters.addLast(genParameter(new SVSR_Monitor(new Circle2D(new Point2D(10,-1),0.2))));
         loader.readParameterSet(parameters);
