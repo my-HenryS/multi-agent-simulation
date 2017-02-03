@@ -66,10 +66,10 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                             for(Iterator<SceneValue> iter = scene.getValueSet().iterator(); iter.hasNext();){
                                 SceneValue value = iter.next();
                                 if(value instanceof SVSR_Monitor){
-                                    double [] speeds = ((SVSR_Monitor)value).getValue().say();
-                                    if(speeds!=null){
-                                        speed += speeds[0];
-                                        size += speeds[1];
+                                    double speeds = ((SVSR_Monitor)value).getValue().sayVelocity();
+                                    if(speeds!=0){
+                                        speed += speeds;
+                                        size += 1;
                                     }
                                 }
                             }

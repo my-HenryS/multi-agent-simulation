@@ -12,22 +12,28 @@ import java.util.Iterator;
  * Created by sunjh1999 on 2017/1/21.
  */
 public class Monitor extends Entity {
-    double volume = 0, active_time = 0, time_step = 0;
+    double volume = 0, velocity = 0,  timePerStep = 0;
+    int vNum = 0;
     LinkListAgentPool agents = new LinkListAgentPool();
     public Monitor(Shape shape) {
         super(shape);
     }
 
+    public void setTimePerStep(double timePerStep){
+        this.timePerStep = timePerStep;
+    }
+
     @Override
     public void affect(InteractiveEntity affectedEntity) {
-        if (affectedEntity instanceof Agent) {
-            if(active_time==0){
-                active_time = ((Agent)affectedEntity).getCurrentSteps();
-                time_step = ((Agent)affectedEntity).getModel().getTimePerStep();
-            }
-            if(!agents.contains(affectedEntity)){
-                agents.addLast((Agent)affectedEntity);
-                volume += 1;
+        if(affectedEntity instanceof Agent) {
+            if(((Agent)affectedEntity).getShape().intersects(shape)){
+                velocity += ((Agent) affectedEntity).getVelocity().length();
+                vNum += 1;
+                if(!agents.contains(affectedEntity)){   //流量计数不复用Agent
+                    agents.addLast((Agent)affectedEntity);
+                    volume += 1;
+                }
+
             }
         }
     }
@@ -42,20 +48,11 @@ public class Monitor extends Entity {
         return new Monitor(shape.clone());
     }
 
-    public double speak(int current_time){
-       return volume/((current_time-active_time) * time_step);
+    public double sayVolume(){
+       return volume/(scene.getCurrentSteps() * timePerStep);
     }
 
-    public double[] say(){
-        double [] speeds = new double [2];
-        for(Iterator<Agent> iter = scene.getAllAgents().iterator(); iter.hasNext();){
-            Agent agent = iter.next();
-            if(agent.getShape().distanceTo(shape) < 6 && agent.getShape().directionTo(shape).dot(new Vector2D(0,-1)) > 0){
-                speeds[0] += ((BaseAgent)agent).currVelocity.length();
-                speeds[1] += 1;
-            }
-        }
-        if(speeds[1] !=0) return speeds;
-        else return null;
+    public double sayVelocity(){
+        return vNum > 0 ? velocity/vNum : 0;
     }
 }

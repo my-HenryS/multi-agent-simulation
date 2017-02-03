@@ -11,8 +11,8 @@ import org.socialforce.scene.SceneValue;
  */
 public class SVSR_Monitor implements SceneValue<Monitor> {
     protected String name;
-    protected Monitor scenery;
-    public SVSR_Monitor(Shape shape){this.scenery= new Monitor(shape);}
+    protected Monitor monitor;
+    public SVSR_Monitor(Shape shape){this.monitor = new Monitor(shape);}
     @Override
     public String getEntityName() {
         return name;
@@ -25,20 +25,21 @@ public class SVSR_Monitor implements SceneValue<Monitor> {
 
     @Override
     public Monitor getValue() {
-        return scenery;
+        return monitor;
     }
 
     @Override
     public void setValue(Monitor value) {
-        this.scenery = value;
+        this.monitor = value;
     }
 
     @Override
     public void apply(Scene scene) {
-        scenery.setName("SimpleTollbooth");
-        scene.getStaticEntities().add(scenery);
-        scenery.setScene(scene);
-        scenery.setModel(new SimpleSocialForceModel());
+        monitor.setName("SimpleMonitor");
+        scene.getStaticEntities().add(monitor);
+        monitor.setScene(scene);
+        monitor.setModel(new SimpleSocialForceModel());
+        monitor.setTimePerStep(monitor.getModel().getTimePerStep());
     }
 
     @Override
