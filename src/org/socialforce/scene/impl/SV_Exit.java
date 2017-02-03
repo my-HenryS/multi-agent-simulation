@@ -14,12 +14,12 @@ import org.socialforce.model.impl.Wall;
  * 该场景变量以name作为场景中的实体名，
  * 以一个ClipperShape来规定出口的位置和大小。
  */
-public class SVSR_Exit implements SceneValue<ClipperShape[]> {
+public class SV_Exit implements SceneValue<ClipperShape[]> {
     protected ClipperShape[] exit;
     protected String name;
     protected SimpleSocialForceModel model = new SimpleSocialForceModel();
-    public SVSR_Exit(){}
-    public SVSR_Exit(ClipperShape[] exit){
+    public SV_Exit(){}
+    public SV_Exit(ClipperShape[] exit){
         this.exit = exit;
     }
 

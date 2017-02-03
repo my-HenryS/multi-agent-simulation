@@ -9,11 +9,11 @@ import org.socialforce.model.impl.SimpleSocialForceModel;
 /**
  * Created by Whatever on 2016/9/16.
  */
-public class SVSR_SafetyRegion implements SceneValue<SafetyRegion>{
+public class SV_SafetyRegion implements SceneValue<SafetyRegion>{
     protected SafetyRegion safetyRegion;
     protected String name;
-    public SVSR_SafetyRegion(){}
-    public SVSR_SafetyRegion(Shape shape){this.safetyRegion = new SafetyRegion(shape);}
+    public SV_SafetyRegion(){}
+    public SV_SafetyRegion(Shape shape){this.safetyRegion = new SafetyRegion(shape);}
     @Override
     public String getEntityName() {
         return name;

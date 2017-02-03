@@ -40,7 +40,7 @@ public class AStarPathFinderTest {
                         new Wall(new Box2D(new Point2D(5, 5), new Point2D(20, 6)))
                 });
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(6,1,8,1))));
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(6,1,8,1))));
         loader.readParameterSet(parameters);
         scene = loader.readScene(new ApplicationForECStrategy()).get(0);
     }

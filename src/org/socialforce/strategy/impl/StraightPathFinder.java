@@ -3,9 +3,8 @@ package org.socialforce.strategy.impl;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
-import org.socialforce.model.Agent;
 import org.socialforce.scene.SceneValue;
-import org.socialforce.scene.impl.SVSR_SafetyRegion;
+import org.socialforce.scene.impl.SV_SafetyRegion;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
 
@@ -23,8 +22,8 @@ public class StraightPathFinder implements PathFinder {
     public StraightPathFinder(Scene targetScene, Shape agentShape) {
         for(Iterator<SceneValue> iterator = scene.getValueSet().iterator(); iterator.hasNext();){
             SceneValue sceneValue = iterator.next();
-            if(sceneValue instanceof SVSR_SafetyRegion){
-                goals.addLast(((SVSR_SafetyRegion)sceneValue).getValue().getShape().getReferencePoint().clone()) ;
+            if(sceneValue instanceof SV_SafetyRegion){
+                goals.addLast(((SV_SafetyRegion)sceneValue).getValue().getShape().getReferencePoint().clone()) ;
             }
         }
         this.agentShape = agentShape.clone();

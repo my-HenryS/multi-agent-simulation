@@ -10,8 +10,7 @@ import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.scene.SceneValue;
-import org.socialforce.scene.impl.SVSR_SafetyRegion;
-import org.socialforce.scene.impl.SVSR_Monitor;
+import org.socialforce.scene.impl.SV_SafetyRegion;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
 
@@ -150,7 +149,7 @@ public class AStarPathFinder implements PathFinder {
         scene_standardize();
         for(Iterator<SceneValue> iterator = scene.getValueSet().iterator(); iterator.hasNext();){
             SceneValue sceneValue = iterator.next();
-            if(sceneValue instanceof SVSR_SafetyRegion){ //何为goal
+            if(sceneValue instanceof SV_SafetyRegion){ //何为goal
                 goals.addLast(goal_standardize(((InteractiveEntity)sceneValue.getValue()).getShape().getReferencePoint().clone())) ;
             }
         }

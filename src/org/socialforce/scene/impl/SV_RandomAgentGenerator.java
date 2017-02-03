@@ -1,6 +1,5 @@
 package org.socialforce.scene.impl;
 
-import org.socialforce.drawer.impl.SolidCircle2DDrawer;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Velocity;
 import org.socialforce.geom.impl.*;
@@ -16,13 +15,12 @@ import org.socialforce.model.impl.BaseAgentDecorator;
 import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.model.impl.SimpleSocialForceModel;
 
-import java.awt.*;
 import java.util.Random;
 
 /**
  * Created by sunjh1999 on 2016/12/10.
  */
-public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGenerator.AgentGenerator> {
+public class SV_RandomAgentGenerator implements SceneValue<SV_RandomAgentGenerator.AgentGenerator> {
 
     /**
      * 用于描述一个刷怪笼
@@ -58,7 +56,7 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
     private int priority;
     protected AgentGenerator agentGenerator;
 
-    public SVSR_RandomAgentGenerator(int agent_num, Shape Area, DistanceShape template, Velocity velocity){
+    public SV_RandomAgentGenerator(int agent_num, Shape Area, DistanceShape template, Velocity velocity){
         agentGenerator = new AgentGenerator(agent_num,Area);
         agentGenerator.setDecorator(new BaseAgentDecorator());
         agentGenerator.setModel(new SimpleSocialForceModel());
@@ -66,7 +64,7 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
         agentGenerator.shape = template;
     }
 
-    public SVSR_RandomAgentGenerator(int agent_num, Shape Area, DistanceShape template){
+    public SV_RandomAgentGenerator(int agent_num, Shape Area, DistanceShape template){
         agentGenerator = new AgentGenerator(agent_num,Area);
         agentGenerator.setDecorator(new BaseAgentDecorator());
         agentGenerator.setModel(new SimpleSocialForceModel());

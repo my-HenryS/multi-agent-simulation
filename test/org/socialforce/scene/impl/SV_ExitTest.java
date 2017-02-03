@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Whatever on 2016/9/17.
  */
-public class SVSR_ExitTest {
+public class SV_ExitTest {
     Scene scene;
     SceneLoader loader =  new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
             new Wall[]{
@@ -23,7 +23,7 @@ public class SVSR_ExitTest {
                     new Wall(new Box2D(new Point2D(25, 0), new Point2D(26, 16))),
                     new Wall(new Box2D(new Point2D(1, 0), new Point2D(25, 1)))
             });
-    SVSR_Exit exit = new SVSR_Exit();
+    SV_Exit exit = new SV_Exit();
     @Before
     public void Setup(){
         exit.setValue(new Box2D[]{new Box2D(-1,5,4,2)});

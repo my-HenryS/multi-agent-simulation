@@ -19,8 +19,8 @@ import java.util.Random;
 /**
  * Created by sunjh1999 on 2017/1/21.
  */
-public class SVSR_RandomTimeAgentGenerator extends SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGenerator.AgentGenerator> {
-    public SVSR_RandomTimeAgentGenerator(int agent_num, Shape Area, DistanceShape template, Velocity velocity) {
+public class SV_RandomTimeAgentGenerator extends SV_RandomAgentGenerator implements SceneValue<SV_RandomAgentGenerator.AgentGenerator> {
+    public SV_RandomTimeAgentGenerator(int agent_num, Shape Area, DistanceShape template, Velocity velocity) {
         super(agent_num, Area, template, velocity);
         agentGenerator.setNum(agent_num);
     }

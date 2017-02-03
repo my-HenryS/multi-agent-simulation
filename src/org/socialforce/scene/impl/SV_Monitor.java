@@ -9,10 +9,10 @@ import org.socialforce.scene.SceneValue;
 /**
  * Created by sunjh1999 on 2017/1/21.
  */
-public class SVSR_Monitor implements SceneValue<Monitor> {
+public class SV_Monitor implements SceneValue<Monitor> {
     protected String name;
     protected Monitor monitor;
-    public SVSR_Monitor(Shape shape){this.monitor = new Monitor(shape);}
+    public SV_Monitor(Shape shape){this.monitor = new Monitor(shape);}
     @Override
     public String getEntityName() {
         return name;

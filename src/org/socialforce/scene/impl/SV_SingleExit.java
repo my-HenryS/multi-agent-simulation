@@ -12,7 +12,7 @@ import org.socialforce.scene.SceneValue;
 /**
  * Created by sunjh1999 on 2017/1/17.
  */
-public class SVSR_SingleExit implements SceneValue<ClipperShape> {
+public class SV_SingleExit implements SceneValue<ClipperShape> {
     protected ClipperShape exit;
     protected String name;
     protected SimpleSocialForceModel model = new SimpleSocialForceModel();

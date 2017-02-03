@@ -16,7 +16,7 @@ import org.socialforce.model.impl.SimpleSocialForceModel;
 /**
  * Created by Whatever on 2016/9/16.
  */
-public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.AgentGenerator> {
+public class SV_AgentGenerator implements SceneValue<SV_AgentGenerator.AgentGenerator> {
     /**
      * 用于描述一个刷怪笼
      * 参数为XYZ方向的agent间距，生成人的范围还有在何种模型下生成人。
@@ -53,7 +53,7 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
     }
     private int priority;
     protected AgentGenerator agentGenerator;
-    public SVSR_AgentGenerator(double X_distance, double Y_distance, double Z_distance, Shape Area, DistanceShape template, Velocity velocity){
+    public SV_AgentGenerator(double X_distance, double Y_distance, double Z_distance, Shape Area, DistanceShape template, Velocity velocity){
         agentGenerator = new AgentGenerator(X_distance,Y_distance,Z_distance,Area);
         agentGenerator.setDecorator(new BaseAgentDecorator());
         agentGenerator.setModel(new SimpleSocialForceModel());
