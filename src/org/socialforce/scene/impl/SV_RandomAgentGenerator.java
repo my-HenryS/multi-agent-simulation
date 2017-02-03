@@ -3,14 +3,11 @@ package org.socialforce.scene.impl;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Velocity;
 import org.socialforce.geom.impl.*;
+import org.socialforce.model.*;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneValue;
 import org.socialforce.container.EntityPool;
 import org.socialforce.geom.Shape;
-import org.socialforce.model.Agent;
-import org.socialforce.model.AgentDecorator;
-import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.SocialForceModel;
 import org.socialforce.model.impl.BaseAgentDecorator;
 import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.model.impl.SimpleSocialForceModel;
@@ -117,7 +114,7 @@ public class SV_RandomAgentGenerator implements SceneValue<SV_RandomAgentGenerat
                 if(is_able_flag == 0){
                     EntityPool all_blocks = scene.getStaticEntities();
                     for (InteractiveEntity entity : all_blocks) {
-                        if (!(entity instanceof SafetyRegion) && new_agent.getShape().distanceTo(entity.getShape()) < 0){
+                        if ((entity instanceof Blockable) && new_agent.getShape().distanceTo(entity.getShape()) < 0){
                             is_able_flag = 1;
                             break;
                         }

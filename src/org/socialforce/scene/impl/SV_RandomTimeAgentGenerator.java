@@ -9,6 +9,7 @@ import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Semicircle2D;
 import org.socialforce.model.Agent;
+import org.socialforce.model.Blockable;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.scene.Scene;
@@ -50,7 +51,7 @@ public class SV_RandomTimeAgentGenerator extends SV_RandomAgentGenerator impleme
                 if(is_able_flag == 0){
                     EntityPool all_blocks = scene.getStaticEntities();
                     for (InteractiveEntity entity : all_blocks) {
-                        if (!(entity instanceof SafetyRegion) && new_agent.getShape().distanceTo(entity.getShape()) < 0){
+                        if ((entity instanceof Blockable) && new_agent.getShape().distanceTo(entity.getShape()) < 0){
                             is_able_flag = 1;
                             break;
                         }
