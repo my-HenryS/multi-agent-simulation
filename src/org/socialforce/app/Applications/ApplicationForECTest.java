@@ -48,7 +48,7 @@ public class ApplicationForECTest extends SimpleApplication implements SocialFor
             for(Iterator<SceneValue> iter = scene.getValueSet().iterator(); iter.hasNext();){
                 SceneValue value = iter.next();
                 if(value instanceof SVSR_Monitor){
-                    System.out.println(((Monitor)value.getValue()).sayVelocity());
+                    /*System.out.println(((Monitor)value.getValue()).sayVelocity());*/
                 }
             }
         }
