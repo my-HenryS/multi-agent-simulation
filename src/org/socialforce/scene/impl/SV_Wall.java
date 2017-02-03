@@ -9,7 +9,11 @@ import org.socialforce.scene.SceneValue;
 /**
  * Created by Administrator on 2017/2/3.
  */
-public class SV_Wall implements SceneValue<Shape> {
+public class SV_Wall implements SceneValue<Shape[]> {
+    public SV_Wall(Shape[] wallshape) {
+        this.wallshape = wallshape;
+    }
+
     @Override
     public String getEntityName() {
         return name;
@@ -22,28 +26,33 @@ public class SV_Wall implements SceneValue<Shape> {
     }
 
     @Override
-    public Shape getValue() {
+    public Shape[] getValue() {
         return wallshape;
     }
 
-    protected Shape wallshape;
+
     @Override
-    public void setValue(Shape value) {
+    public void setValue(Shape[] value) {
         wallshape = value;
     }
+
+    protected Shape[] wallshape;
 
 
     @Override
     public void apply(Scene scene) {
-        Wall temp = new Wall(wallshape);
-        temp.setModel(new SimpleSocialForceModel());
-        scene.getStaticEntities().add(temp);
+        for (Shape shape : wallshape) {
+            Wall temp = new Wall(shape);
+            temp.setModel(new SimpleSocialForceModel());
+            scene.getStaticEntities().add(temp);
+        }
     }
 
     @Override
-    public int compareTo(SceneValue<Shape> o) {
-        return 0;
+    public int compareTo(SceneValue<Shape[]> o) {
+        return priority - o.getPriority();
     }
+
 
     @Override
     public int getPriority() {

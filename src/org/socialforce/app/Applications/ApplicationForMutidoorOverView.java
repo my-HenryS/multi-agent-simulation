@@ -4,7 +4,6 @@ import org.socialforce.app.Interpreter;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.app.impl.SimpleInterpreter;
 import org.socialforce.geom.DistanceShape;
-import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
@@ -26,10 +25,10 @@ import static org.socialforce.scene.SceneLoader.genParameter;
 /**
  * Created by Administrator on 2017/2/3.
  */
-public class ApplicationForMutidoor extends SimpleApplication implements SocialForceApplication {
+public class ApplicationForMutidoorOverView extends SimpleApplication implements SocialForceApplication {
     DistanceShape template;
 
-    public ApplicationForMutidoor(){
+    public ApplicationForMutidoorOverView(){
     }
 
     /**
@@ -62,29 +61,37 @@ public class ApplicationForMutidoor extends SimpleApplication implements SocialF
     public void setUpScenes(){
         template = new Circle2D(new Point2D(0,0),0.486/2);
         double doorwidth = 1.5;
-        double samplewidth = 0.4;
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream("standard.s");
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("mutidoor.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-            parameters.addLast(genParameter(new SV_RandomAgentGenerator(100,new Box2D(0,0,10,-10),template)));
-            parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(0,10,10,1))));
-            for (int i = 0; i< 10/samplewidth;i++){
-                for (int j = 0; j < 20/samplewidth; j++){
-                    parameters.addLast(genParameter(new SV_Monitor(new Box2D(i*samplewidth,j*samplewidth-10,samplewidth,samplewidth))));
-                }
+        for(int i = 0;i<10;i++){
+            parameters.addLast(genParameter(new SV_RandomAgentGenerator(100,new Box2D(i*10,0,10,-10),template)));
+            parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(i*10,20,9,1))));
+        }
+        for (int i = 0;i<3;i++){
+            parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(i*30+15-doorwidth/2,-1,doorwidth,3),new Box2D(i*30+27-doorwidth/2,-1,doorwidth,3),new Box2D(i*30+40-doorwidth,-1,doorwidth,3)})));
+        }
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(45-doorwidth/2,-2.2,doorwidth,-2),new Box2D(57-doorwidth/2,-2.2,doorwidth,-2),new Box2D(70-doorwidth,-2.2,doorwidth,-2)})));
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(75-doorwidth/2,-3,doorwidth,4),new Box2D(87-doorwidth/2,-3,doorwidth,4),new Box2D(100-doorwidth,-3,doorwidth,4)})));
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-doorwidth,-1,doorwidth*2,3)})));
+        for (int i = 0; i< 250;i++){
+            for (int j = 0; j< 25;j++){
+                parameters.addLast(genParameter(new SV_Monitor(new Circle2D(new Point2D(0.4*i,-0.4*j),0.2))));
             }
-            parameters.addLast(genParameter(new SV_Wall(new Shape[]{new Box2D(0,0,5-doorwidth/2,1),new Box2D(5+doorwidth/2,0,5-doorwidth/2,1)})
-            ,new SV_Wall(new Shape[]{new Box2D(0,0,7-doorwidth/2,1),new Box2D(7+doorwidth/2,0,3-doorwidth/2,1)})
-            ,new SV_Wall(new Shape[]{new Box2D(0,0,10-doorwidth,1)})
-            ,new SV_Wall(new Shape[]{new Box2D(0,0,5-doorwidth/2,1),new Box2D(5+doorwidth/2,0,5-doorwidth/2,1),new Box2D(0,-3,5-doorwidth/2,-0.5),new Box2D(5+doorwidth/2,-3,5-doorwidth/2,-0.5)})
-            ,new SV_Wall(new Shape[]{new Box2D(0,0,7-doorwidth/2,1),new Box2D(7+doorwidth/2,0,3-doorwidth/2,1),new Box2D(0,-3,7-doorwidth/2,-0.5),new Box2D(7+doorwidth/2,-3,3-doorwidth/2,-0.5)})
-            ,new SV_Wall(new Shape[]{new Box2D(0,0,10-doorwidth,1),new Box2D(0,-3,10-doorwidth,-0.5)})
-            ,new SV_Wall(new Shape[]{new Box2D(0,-2,7-doorwidth/2,3),new Box2D(7+doorwidth/2,-2,3-doorwidth/2,3)})
-            ,new SV_Wall(new Shape[]{new Box2D(0,-2,5-doorwidth/2,3),new Box2D(5+doorwidth/2,-2,5-doorwidth/2,3)})
-            ,new SV_Wall(new Shape[]{new Box2D(0,-2,10-doorwidth,3)})
-            ,new SV_Wall(new Shape[]{new Box2D(0,0,5-doorwidth,1),new Box2D(5+doorwidth,0,5-doorwidth,1)})));
+        }
+        for (int i = 0; i < 20;i++){
+            for (int j=0;j<250;j++) {
+                double temp = j*0.4;
+                if (temp<3.5||(temp>6.5&&temp<14.25)||(temp>15.75&&temp<26.25)||(temp>27.75&&temp<38.5)
+                        ||(temp<40&&temp>44.25)||(temp>45.75&&temp<56.25)||(temp>57.75&&temp<68.5)
+                        ||(temp<70&&temp>74.25)||(temp>75.75&&temp<86.25)||(temp>87.75&&temp<101)){continue;}
+                parameters.addLast(genParameter(new SV_Monitor(new Circle2D(new Point2D(temp, i * 0.4), 0.2))));
+            }
+        }
+        //parameters.addLast(genParameter(new SV_Monitor(new Circle2D(new Point2D(10,0),0.2))));
+        //parameters.addLast(genParameter(new SV_Monitor(new Circle2D(new Point2D(10,-1),0.2))));
         loader.readParameterSet(parameters);
         scenes = loader.readScene(this);
     }
