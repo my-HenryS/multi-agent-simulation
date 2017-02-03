@@ -134,6 +134,15 @@ public class SimpleInterpreter implements Interpreter {
             token = token + pchar;
             return;
         }
+        if(pchar == '#'){
+            token = token + pchar;
+            pchar = string.charAt(f++);
+            while(pchar!='#'){
+                pchar = string.charAt(f++);
+            }
+            pchar = string.charAt(f++);
+            getsym();
+        }
         if(pchar == ';'){
             token = token + pchar;
             return;
