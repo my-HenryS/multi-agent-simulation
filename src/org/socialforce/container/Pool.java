@@ -2,6 +2,7 @@ package org.socialforce.container;
 
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Point;
+import org.socialforce.geom.Shape;
 import org.socialforce.model.InteractiveEntity;
 
 import java.util.Collection;
@@ -34,6 +35,12 @@ public interface Pool<T extends InteractiveEntity> extends Collection<T> {
      */
     Iterable<T> select(DistanceShape shape);
 
+    /**
+     * 选定包含其refpoint的实体
+     * @param shape
+     * @return refpoint被包含的实体
+     */
+    Iterable<T> selectContains(Shape shape);
     /**
      * 选择覆盖指定点的所有实体。
      * 在确认只会选中一个实体时，也可使用 {@link #selectTop(Point)} 或 {@link #selectBottom(Point)}。

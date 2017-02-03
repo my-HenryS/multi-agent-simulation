@@ -3,6 +3,7 @@ package org.socialforce.container.impl;
 import org.socialforce.container.Pool;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Point;
+import org.socialforce.geom.Shape;
 import org.socialforce.model.InteractiveEntity;
 import sun.nio.cs.StreamEncoder;
 
@@ -14,7 +15,7 @@ import java.util.LinkedList;
  */
 public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> implements Pool<T> {
     /**
-     * select a set of entity which is in she shape.
+     * 选中与shape相交的实体
      *
      * @param shape the shape to select
      * @return a set of selected entity.
@@ -22,6 +23,11 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
     @Override
     public Iterable<T> select(DistanceShape shape) {
         return new PoolShapeSelectIterable(shape);
+    }
+
+    @Override
+    public Iterable<T> selectContains(Shape shape){
+        return new PoolShapeSelectContainsIterable(shape);
     }
 
     /**
@@ -41,6 +47,10 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
 
     protected boolean shapeContains(T entity, DistanceShape shape) {
         return shape.intersects(entity.getShape());
+    }
+
+    protected boolean refpointContains(T entity, Shape shape){
+        return shape.contains(entity.getShape().getReferencePoint());
     }
 
      protected boolean nameEquals(T entity, String name) {
@@ -220,6 +230,20 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
                     .iterator();
         }
 
+    }
+
+    public class PoolShapeSelectContainsIterable implements Iterable<T>{
+        private Shape shape;
+
+        public PoolShapeSelectContainsIterable(Shape shape) {
+            this.shape = shape;
+        }
+
+        @Override
+        public Iterator<T> iterator() {
+            return LinkListPool.this.stream()
+                    .filter(entity -> refpointContains(entity, shape))
+                    .iterator();        }
     }
 
     public class PoolPointSelectIterale implements Iterable<T> {
