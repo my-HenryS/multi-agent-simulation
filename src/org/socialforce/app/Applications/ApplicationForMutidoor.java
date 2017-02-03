@@ -68,15 +68,15 @@ public class ApplicationForMutidoor extends SimpleApplication implements SocialF
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
         for(int i = 0;i<10;i++){
-            parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(100,new Box2D(i*10,-1,10,-9),template)));
-            parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(i*10,5,10,1))));
+            parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(100,new Box2D(i*10,0,10,-10),template)));
+            parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(i*10,20,9,1))));
         }
         for (int i = 0;i<3;i++){
-            //parameters.addLast(genParameter(new SVSR_Exit(new Box2D[]{new Box2D(i*30+15-doorwidth/2,-0.5,doorwidth,2),new Box2D(i*30+27-doorwidth/2,-0.5,doorwidth,2),new Box2D(i*30+40-doorwidth,-0.5,doorwidth,2)})));
+            parameters.addLast(genParameter(new SVSR_Exit(new Box2D[]{new Box2D(i*30+15-doorwidth/2,-1,doorwidth,3),new Box2D(i*30+27-doorwidth/2,-1,doorwidth,3),new Box2D(i*30+40-doorwidth,-1,doorwidth,3)})));
         }
-        //parameters.addLast(genParameter(new SVSR_Exit(new Box2D[]{new Box2D(45-doorwidth/2,-2.2,doorwidth,-2),new Box2D(57-doorwidth/2,-2.2,doorwidth,-2),new Box2D(70-doorwidth,-2.2,doorwidth,2)})));
-        //parameters.addLast(genParameter(new SVSR_Exit(new Box2D[]{new Box2D(75-doorwidth/2,-3,doorwidth,4),new Box2D(87-doorwidth/2,-3,doorwidth,4),new Box2D(100-doorwidth,-3,doorwidth,4)})));
-
+        parameters.addLast(genParameter(new SVSR_Exit(new Box2D[]{new Box2D(45-doorwidth/2,-2.2,doorwidth,-2),new Box2D(57-doorwidth/2,-2.2,doorwidth,-2),new Box2D(70-doorwidth,-2.2,doorwidth,-2)})));
+        parameters.addLast(genParameter(new SVSR_Exit(new Box2D[]{new Box2D(75-doorwidth/2,-3,doorwidth,4),new Box2D(87-doorwidth/2,-3,doorwidth,4),new Box2D(100-doorwidth,-3,doorwidth,4)})));
+        parameters.addLast(genParameter(new SVSR_Exit(new Box2D[]{new Box2D(5-doorwidth,-1,doorwidth*2,3)})));
         //parameters.addLast(genParameter(new SVSR_Monitor(new Circle2D(new Point2D(10,0),0.2))));
         //parameters.addLast(genParameter(new SVSR_Monitor(new Circle2D(new Point2D(10,-1),0.2))));
         loader.readParameterSet(parameters);

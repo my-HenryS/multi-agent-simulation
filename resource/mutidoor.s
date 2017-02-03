@@ -4,7 +4,7 @@ Scene:
 
 Walls:
     Wall:
-        Box:0,0,100,1;
+        Box:0,0,101,1;
     Wall:
         Box:0,-11,100,-10;
     Wall:
@@ -32,20 +32,13 @@ Walls:
 
 
     Wall:
-        Box:41,-3,9,-0.5 point-offset;
-    Wall:
-        Box:51,-3,9,-0.5 point-offset;
-    Wall:
-        Box:61,-3,9,-0.5 point-offset;
+        Box:41,-3,30,-0.5 point-offset;
 
 
 
     Wall:
-        Box:71,0,9,-2 point-offset;
-    Wall:
-        Box:81,0,9,-2 point-offset;
-    Wall:
-        Box:91,0,9,-2 point-offset;
+        Box:71,0,30,-2 point-offset;
+
 
 
 
