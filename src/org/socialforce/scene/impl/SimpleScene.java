@@ -17,20 +17,19 @@ import org.socialforce.scene.SceneListener;
 import org.socialforce.scene.ValueSet;
 import org.socialforce.strategy.PathFinder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Ledenel on 2016/8/22.
  */
 public class SimpleScene implements Scene {
     @Override
-    public SceneListener getSceneListener() {
-        return sceneListener;
-    }
-    @Override
-    public void setSceneListener(SceneListener sceneListener) {
-        this.sceneListener = sceneListener;
+    public void addSceneListener(SceneListener sceneListener) {
+        this.sceneListeners.add(sceneListener);
     }
 
-    SceneListener sceneListener;
+    List<SceneListener> sceneListeners = new ArrayList<>();
 
     /**
      *
@@ -82,8 +81,12 @@ public class SimpleScene implements Scene {
                 listener.onStep(this);
             }
         }
-        if(this.sceneListener != null) {
-            this.sceneListener.onStep(this);
+        updateStep();
+    }
+
+    protected void updateStep() {
+        for(SceneListener lis : sceneListeners){
+            lis.onStep(this);
         }
     }
 
