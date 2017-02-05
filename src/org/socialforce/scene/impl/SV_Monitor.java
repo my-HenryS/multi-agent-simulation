@@ -9,10 +9,10 @@ import org.socialforce.scene.SceneValue;
 /**
  * Created by sunjh1999 on 2017/1/21.
  */
-public class SV_Monitor implements SceneValue<Monitor> {
+public class SV_Monitor implements SceneValue<Shape> {
     protected String name;
-    protected Monitor monitor;
-    public SV_Monitor(Shape shape){this.monitor = new Monitor(shape);}
+    protected Shape shape;
+    public SV_Monitor(Shape shape){this.shape = shape;}
     @Override
     public String getEntityName() {
         return name;
@@ -24,17 +24,18 @@ public class SV_Monitor implements SceneValue<Monitor> {
     }
 
     @Override
-    public Monitor getValue() {
-        return monitor;
+    public Shape getValue() {
+        return shape;
     }
 
     @Override
-    public void setValue(Monitor value) {
-        this.monitor = value;
+    public void setValue(Shape value) {
+        this.shape = value;
     }
 
     @Override
     public void apply(Scene scene) {
+        Monitor monitor = new Monitor(shape);
         monitor.setName("SimpleMonitor");
         scene.getStaticEntities().add(monitor);
         monitor.setScene(scene);
@@ -43,7 +44,7 @@ public class SV_Monitor implements SceneValue<Monitor> {
     }
 
     @Override
-    public int compareTo(SceneValue<Monitor> o) {
+    public int compareTo(SceneValue<Shape> o) {
         return 0;
     }
 
@@ -54,6 +55,5 @@ public class SV_Monitor implements SceneValue<Monitor> {
 
     @Override
     public void setPriority(int priority) {
-
     }
 }

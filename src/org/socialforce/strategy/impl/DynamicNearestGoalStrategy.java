@@ -2,6 +2,9 @@ package org.socialforce.strategy.impl;
 
 import org.socialforce.geom.Point;
 import org.socialforce.model.Agent;
+import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.Monitor;
+import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneValue;
 import org.socialforce.scene.impl.SV_SafetyRegion;
@@ -65,14 +68,13 @@ public class DynamicNearestGoalStrategy implements DynamicStrategy {
 
 
     public void findGoals(){
-        for(Iterator<SceneValue> iterator = scene.getValueSet().iterator(); iterator.hasNext();){
-            SceneValue sceneValue = iterator.next();
-            if(sceneValue instanceof SV_SafetyRegion){
-                goals.addLast(((SV_SafetyRegion)sceneValue).getValue().getShape().getReferencePoint());
-            }
-            if(sceneValue instanceof SV_Monitor){
-                transits.addLast(((SV_Monitor)sceneValue).getValue().getShape().getReferencePoint());
-            }
+        for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(SafetyRegion.class).iterator(); iter.hasNext();){
+            SafetyRegion safetyRegion = (SafetyRegion)iter.next();
+            goals.addLast(safetyRegion.getShape().getReferencePoint());
+        }
+        for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
+            Monitor monitor = (Monitor) iter.next();
+            transits.addLast(monitor.getShape().getReferencePoint());
         }
     }
 }

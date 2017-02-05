@@ -3,7 +3,9 @@ package org.socialforce.app.Applications;
 import org.socialforce.app.*;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.*;
+import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.ETC_Tollbooth;
+import org.socialforce.model.impl.Monitor;
 import org.socialforce.model.impl.SimpleTollbooth;
 import org.socialforce.model.impl.Wall;
 import org.socialforce.scene.*;
@@ -63,14 +65,12 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                             strategy.pathDecision();
                         }
                         if(iteration % 1000 == 0){
-                            for(Iterator<SceneValue> iter = scene.getValueSet().iterator(); iter.hasNext();){
-                                SceneValue value = iter.next();
-                                if(value instanceof SV_Monitor){
-                                    double speeds = ((SV_Monitor)value).getValue().sayVelocity();
-                                    if(speeds!=0){
-                                        speed += speeds;
-                                        size += 1;
-                                    }
+                            for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
+                                Monitor monitor = (Monitor)iter.next();
+                                double speeds = monitor.sayVelocity();
+                                if(speeds!=0){
+                                    speed += speeds;
+                                    size += 1;
                                 }
                             }
                         }

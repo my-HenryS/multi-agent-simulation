@@ -29,10 +29,10 @@ public class Monitor extends Entity {
             if(((Agent)affectedEntity).getShape().intersects(shape)){
                 velocity += ((Agent) affectedEntity).getVelocity().length();
                 vNum += 1;
-                if(!agents.contains(affectedEntity)){   //流量计数不复用Agent
-                    agents.addLast((Agent)affectedEntity);
+                //if(!agents.contains(affectedEntity)){   //流量计数不复用Agent
+                    //agents.addLast((Agent)affectedEntity);
                     volume += 1;
-                }
+                //}
 
             }
         }

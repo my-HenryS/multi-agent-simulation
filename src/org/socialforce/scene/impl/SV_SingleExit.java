@@ -15,7 +15,6 @@ import org.socialforce.scene.SceneValue;
 public class SV_SingleExit implements SceneValue<ClipperShape> {
     protected ClipperShape exit;
     protected String name;
-    protected SimpleSocialForceModel model = new SimpleSocialForceModel();
 
     /**
      * 获取所关联的实体名称。
@@ -75,7 +74,7 @@ public class SV_SingleExit implements SceneValue<ClipperShape> {
             Shape[] boxes =  exit.clip(wallShape);
             for (int j=0;j<boxes.length;j++){
                 temp = new Wall(boxes[j]);
-                temp.setModel(model);
+                temp.setModel(new SimpleSocialForceModel());
                 scene.getStaticEntities().add(temp);
             }
             scene.getStaticEntities().remove(wall);

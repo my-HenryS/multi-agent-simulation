@@ -17,7 +17,6 @@ import org.socialforce.model.impl.Wall;
 public class SV_Exit implements SceneValue<ClipperShape[]> {
     protected ClipperShape[] exit;
     protected String name;
-    protected SimpleSocialForceModel model = new SimpleSocialForceModel();
     public SV_Exit(){}
     public SV_Exit(ClipperShape[] exit){
         this.exit = exit;
@@ -82,7 +81,7 @@ public class SV_Exit implements SceneValue<ClipperShape[]> {
                 Shape[] boxes =  exit[i].clip(wallShape);
                 for (int j=0;j<boxes.length;j++){
                     temp = new Wall(boxes[j]);
-                    temp.setModel(model);
+                    temp.setModel(new SimpleSocialForceModel());
                     scene.getStaticEntities().add(temp);
                 }
                 scene.getStaticEntities().remove(wall);

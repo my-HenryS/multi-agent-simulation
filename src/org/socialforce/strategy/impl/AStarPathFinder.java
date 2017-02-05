@@ -1,6 +1,8 @@
 package org.socialforce.strategy.impl;
 
 import org.socialforce.model.Blockable;
+import org.socialforce.model.impl.Monitor;
+import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.scene.Scene;
 import org.socialforce.container.EntityPool;
 import org.socialforce.geom.DistanceShape;
@@ -147,11 +149,9 @@ public class AStarPathFinder implements PathFinder {
 
     private void scene_initiate(){
         scene_standardize();
-        for(Iterator<SceneValue> iterator = scene.getValueSet().iterator(); iterator.hasNext();){
-            SceneValue sceneValue = iterator.next();
-            if(sceneValue instanceof SV_SafetyRegion){ //何为goal
-                goals.addLast(goal_standardize(((InteractiveEntity)sceneValue.getValue()).getShape().getReferencePoint().clone())) ;
-            }
+        for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(SafetyRegion.class).iterator(); iter.hasNext();){
+            SafetyRegion safetyRegion = (SafetyRegion)iter.next();
+            goals.addLast(safetyRegion.getShape().getReferencePoint().clone().scaleBy(1/min_div)) ;
         }
     }
 

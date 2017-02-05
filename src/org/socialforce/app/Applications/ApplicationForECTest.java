@@ -3,6 +3,8 @@ package org.socialforce.app.Applications;
 import org.socialforce.app.*;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.Circle2D;
+import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.Monitor;
 import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
 import org.socialforce.geom.impl.Box2D;
@@ -39,11 +41,9 @@ public class ApplicationForECTest extends SimpleApplication implements SocialFor
             while (!scene.getAllAgents().isEmpty()) {
                 scene.stepNext();
             }
-            for(Iterator<SceneValue> iter = scene.getValueSet().iterator(); iter.hasNext();){
-                SceneValue value = iter.next();
-                if(value instanceof SV_Monitor){
-                    /*System.out.println(((Monitor)value.getValue()).sayVelocity());*/
-                }
+            for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
+                Monitor monitor = (Monitor)iter.next();
+                System.out.println(monitor.sayVelocity());
             }
         }
     }

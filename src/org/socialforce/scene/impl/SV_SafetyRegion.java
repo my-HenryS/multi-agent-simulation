@@ -9,11 +9,11 @@ import org.socialforce.model.impl.SimpleSocialForceModel;
 /**
  * Created by Whatever on 2016/9/16.
  */
-public class SV_SafetyRegion implements SceneValue<SafetyRegion>{
-    protected SafetyRegion safetyRegion;
+public class SV_SafetyRegion implements SceneValue<Shape>{
+    protected Shape shape;
     protected String name;
     public SV_SafetyRegion(){}
-    public SV_SafetyRegion(Shape shape){this.safetyRegion = new SafetyRegion(shape);}
+    public SV_SafetyRegion(Shape shape){this.shape = shape;}
     @Override
     public String getEntityName() {
         return name;
@@ -25,17 +25,17 @@ public class SV_SafetyRegion implements SceneValue<SafetyRegion>{
     }
 
     @Override
-    public SafetyRegion getValue() {
-        return safetyRegion;
+    public Shape getValue() {
+        return shape;
     }
 
     @Override
-    public void setValue(SafetyRegion value) {
-        safetyRegion = value;
+    public void setValue(Shape value) {
+        this.shape = value;
     }
-
     @Override
     public void apply(Scene scene) {
+        SafetyRegion safetyRegion = new SafetyRegion(shape);
         safetyRegion.setName("SafetyRegion");
         scene.getStaticEntities().add(safetyRegion);
         safetyRegion.setScene(scene);
@@ -43,10 +43,9 @@ public class SV_SafetyRegion implements SceneValue<SafetyRegion>{
     }
 
     @Override
-    public int compareTo(SceneValue<SafetyRegion> o) {
+    public int compareTo(SceneValue<Shape> o) {
         return o.getPriority() - this.getPriority();
     }
-
     private int priority;
     @Override
     public int getPriority() {

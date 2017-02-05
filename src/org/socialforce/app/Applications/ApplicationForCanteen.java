@@ -10,6 +10,8 @@ import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.model.Agent;
+import org.socialforce.model.InteractiveEntity;
 import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
 import org.socialforce.strategy.DynamicStrategy;
@@ -55,11 +57,9 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 scene.setSceneListener(rootProvider);
                 // dump code end.
                 int total_num = 0;
-                for(Iterator<SceneValue> iter = scene.getValueSet().iterator(); iter.hasNext();){
-                    SceneValue sceneValue = iter.next();
-                    if(sceneValue instanceof SV_RandomAgentGenerator){
-                        total_num += ((SV_RandomAgentGenerator) sceneValue).get_Agentnum();
-                    }
+                for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Agent.class).iterator(); iter.hasNext();){
+                    Agent agent = (Agent) iter.next();
+                    total_num ++;
                 }
                 System.out.print("Population of "+total_num);
                 int iteration = 0;

@@ -41,6 +41,14 @@ public interface Pool<T extends InteractiveEntity> extends Collection<T> {
      * @return refpoint被包含的实体
      */
     Iterable<T> selectContains(Shape shape);
+
+    /**
+     * 选定某类的实现
+     * @param aClass
+     * @return 为aClass实现的实体
+     */
+    Iterable<T> selectClass(Class aClass);
+
     /**
      * 选择覆盖指定点的所有实体。
      * 在确认只会选中一个实体时，也可使用 {@link #selectTop(Point)} 或 {@link #selectBottom(Point)}。

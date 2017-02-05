@@ -179,29 +179,6 @@ public class SimpleScene implements Scene {
         return currentStep;
     }
 
-
-    PathFinder finder;
-    /**
-     * get the path finder for this scene.
-     *
-     * @return the path finder.
-     */
-    @Override
-    public PathFinder getPathFinder() {
-        return finder;
-    }
-
-    /**
-     * set a path finder for this scene.
-     *
-     * @param finder the path finder for this scene.
-     */
-    @Override
-    public void setPathFinder(PathFinder finder) {
-        this.finder = finder;
-    }
-
-
     AgentEscapeListener listener;
     /**
      * triggers while an agent is escaped.
@@ -253,22 +230,6 @@ public class SimpleScene implements Scene {
         }
     }
 
-    private ValueSet valueSet;
-
-    /**
-     * get the value have been set
-     * @return
-     * @see ValueSet
-     */
-    @Override
-    public ValueSet getValueSet() {
-        return valueSet;
-    }
-
-    public void setValueSet(ValueSet valueSet) {
-        this.valueSet = valueSet;
-    }
-
     public Scene simpleclone(){
         return new SimpleScene(bounds);
     }
@@ -276,7 +237,6 @@ public class SimpleScene implements Scene {
     public Scene standardclone() {
         SimpleScene newscene = new SimpleScene(bounds);
         newscene.setStaticEntities((EntityPool) this.getStaticEntities().clone());
-        newscene.setValueSet(valueSet);
         return newscene;
     }
 

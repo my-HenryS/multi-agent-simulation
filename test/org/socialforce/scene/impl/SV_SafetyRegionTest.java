@@ -28,7 +28,7 @@ public class SV_SafetyRegionTest {
     @Before
     public void SetUp(){
         scene = loader.staticScene();
-        safetyReigion.setValue(new SafetyRegion(new Box2D(-4,4,2,4)));
+        safetyReigion.setValue(new Box2D(-4,4,2,4));
     }
 
 
