@@ -119,10 +119,9 @@ public class SceneShower implements SceneListener {
      */
     @Override
     public void onStep(Scene scene) {
-        scene.getDrawer().draw(scene);
-        this.getBoard().repaint();//refresh();
         if(visibleCheckBox.isSelected()) {
-
+            scene.getDrawer().draw(scene);
+            this.getBoard().repaint();//refresh();
         }
     }
 }
