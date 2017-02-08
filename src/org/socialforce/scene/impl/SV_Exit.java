@@ -76,7 +76,7 @@ public class SV_Exit implements SceneValue<ClipperShape[]> {
             Wall temp;
             if (exit[i].getBounds().getStartPoint().getX() != exit[i].getBounds().getEndPoint().getX()
                     && exit[i].getBounds().getStartPoint().getY() != exit[i].getBounds().getEndPoint().getY()) {
-                wall = scene.getStaticEntities().selectTop(exit[i].getReferencePoint());
+                wall = scene.getStaticEntities().selectTopByClass(exit[i].getReferencePoint(), Wall.class);
                 Box2D wallShape = (Box2D) wall.getShape();
                 Shape[] boxes =  exit[i].clip(wallShape);
                 for (int j=0;j<boxes.length;j++){
