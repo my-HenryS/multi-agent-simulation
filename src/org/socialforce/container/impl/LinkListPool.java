@@ -34,6 +34,14 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
     @Override
     public Iterable<T> selectClass(Class aClass){ return new PoolClassIterable(aClass);}
 
+    @Override
+    public T selectTopByClass(Point point, Class aClass){
+            return this.stream()
+                    .filter(entity -> classEquals(entity, aClass) && pointContains(entity, point))
+                    .findFirst()
+                    .orElse(null);
+    }
+
     /**
      * 选择覆盖指定点的所有实体。
      * 在确认只会选中一个实体时，也可使用 {@link #selectTop(Point)} 或 {@link #selectBottom(Point)}。

@@ -49,6 +49,8 @@ public interface Pool<T extends InteractiveEntity> extends Collection<T> {
      */
     Iterable<T> selectClass(Class aClass);
 
+    T selectTopByClass(Point point, Class aClass);
+
     /**
      * 选择覆盖指定点的所有实体。
      * 在确认只会选中一个实体时，也可使用 {@link #selectTop(Point)} 或 {@link #selectBottom(Point)}。
