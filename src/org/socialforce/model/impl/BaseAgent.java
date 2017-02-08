@@ -3,6 +3,7 @@ package org.socialforce.model.impl;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Circle2D;
+import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.*;
 import org.socialforce.scene.Scene;
@@ -24,7 +25,7 @@ public class BaseAgent extends Entity implements Agent {
     DistanceShape view;
     Force pushed;
     Velocity deltaV;
-    Vector deltaS;
+    Vector deltaS, lastDeltaS = new Vector2D(0,0);
     boolean escaped = false;
     boolean stoped = false;
     DistanceShape shape;
@@ -188,6 +189,7 @@ public class BaseAgent extends Entity implements Agent {
             this.view.moveTo(point);                      //改变视野
         }
         stoped = false;
+        lastDeltaS = deltaV;
         deltaS = model.zeroVector();
         deltaV = model.zeroVelocity();
         pushed = model.zeroForce();
@@ -299,6 +301,10 @@ public class BaseAgent extends Entity implements Agent {
         }
         aver /= interval;
         return aver;
+    }
+
+    public double getLastAcc(){
+        return lastDeltaS.length();
     }
 
     public void stop(){

@@ -27,7 +27,7 @@ public class Monitor extends Entity {
     public void affect(InteractiveEntity affectedEntity) {
         if(affectedEntity instanceof Agent) {
             if(((Agent)affectedEntity).getShape().intersects(shape)){
-                velocity += ((Agent) affectedEntity).getVelocity().length();
+                velocity += ((BaseAgent) affectedEntity).getLastAcc()/model.getTimePerStep();
                 vNum += 1;
                 //if(!agents.contains(affectedEntity)){   //流量计数不复用Agent
                     //agents.addLast((Agent)affectedEntity);
