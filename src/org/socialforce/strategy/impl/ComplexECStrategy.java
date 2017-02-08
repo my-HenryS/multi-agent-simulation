@@ -26,9 +26,6 @@ public class ComplexECStrategy implements DynamicStrategy {
         graph.combine("D", "C");
         graph.combine("A", "D");
         setPaths("A");
-        for(Tree<String> path: paths){
-            System.out.println(path.toString());
-        }
     }
 
     @Override
@@ -198,9 +195,11 @@ public class ComplexECStrategy implements DynamicStrategy {
 
     }
 
-    public static void main(String[] args){
-        ComplexECStrategy complexECStrategy = new ComplexECStrategy();
+    public String toString(){
+        String output = "";
+        for(Tree<String> path: paths){
+            output += path.toString();
+        }
+        return output;
     }
-
-
 }
