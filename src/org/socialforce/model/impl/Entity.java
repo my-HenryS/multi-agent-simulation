@@ -1,9 +1,9 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.geom.ModelShape;
 import org.socialforce.scene.Scene;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
 import org.socialforce.model.SocialForceModel;
 
 /**
@@ -12,7 +12,7 @@ import org.socialforce.model.SocialForceModel;
  */
 public abstract class Entity implements InteractiveEntity {
     protected SocialForceModel model;
-    protected Shape shape;
+    protected ModelShape modelShape;
 
     @Override
     public Scene getScene() {
@@ -48,39 +48,38 @@ public abstract class Entity implements InteractiveEntity {
 
     /**
      *
-     * @param shape
+     * @param modelShape
      */
-    public Entity(Shape shape) {
-        this.shape = shape;
+    public Entity(ModelShape modelShape) {
+        this.modelShape = modelShape;
     }
 
     /**
      *
      * @param model
-     * @param shape
+     * @param modelShape
      */
-    public Entity(SocialForceModel model, Shape shape) {
+    public Entity(SocialForceModel model, ModelShape modelShape) {
         this.model = model;
-        this.shape = shape;
+        this.modelShape = modelShape;
     }
 
     /**
      * 设置一个实体的形状
      * 如线，矩形，圆等。
      */
-    public void setShape(Shape shape) {
-        this.shape = shape;
+    public void setModelShape(ModelShape modelShape) {
+        this.modelShape = modelShape;
     }
 
     /**
      * 获取一个实体的形状
      * 如线，矩形，圆等。
      *
-     * @return shape 实体的形状.
+     * @return modelShape 实体的形状.
      */
-    @Override
-    public Shape getShape() {
-        return shape;
+    public ModelShape getModelShape() {
+        return modelShape;
     }
 
     /**
@@ -105,11 +104,11 @@ public abstract class Entity implements InteractiveEntity {
 
     /**
      * 将该实体放置在一个特殊的点上。
-     * TODO the shape will {@code moveTo} that point.
+     * TODO the modelShape will {@code moveTo} that point.
      * @param point 目标点。
      */
     @Override
     public void placeOn(Point point) {
-        shape.moveTo(point);
+        modelShape.moveTo(point);
     }
 }

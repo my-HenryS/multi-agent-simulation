@@ -34,7 +34,7 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Interactiv
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
         return super.hasForce(source, target) && source instanceof Blockable &&
-        ((Agent) target).getView().intersects(source.getShape());
+        ((Agent) target).getView().intersects(source.getModelShape());
     }
 
     /**
@@ -46,8 +46,8 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Interactiv
     @Override
     public Force getForce(InteractiveEntity source, Agent target) {
         Force force = model.zeroForce();
-        force.add((target.getShape()).directionTo(source.getShape()));
-        double scale = A * Math.exp(- target.getShape().distanceTo(source.getShape()) / B);
+        force.add((target.getModelShape()).directionTo(source.getModelShape()));
+        double scale = A * Math.exp(- target.getModelShape().distanceTo(source.getModelShape()) / B);
         force.scale(scale / force.length());
         return force;
     }

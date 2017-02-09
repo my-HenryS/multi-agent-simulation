@@ -1,17 +1,14 @@
 package org.socialforce.geom.impl;
 
-import org.socialforce.geom.Box;
+import org.socialforce.geom.*;
 import org.socialforce.drawer.Drawer;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
-import org.socialforce.geom.Vector;
 
 /**这是一个二维的线段
  *
  * 有两个点定义.
  * Created by Whatever on 2016/8/10.
  */
-public class Segment2D implements Shape {
+public class Segment2D implements ModelShape,PrimitiveShape {
     //protected Point2D a, b;
     //protected double k1, b1, startX, endX;
     protected double x1, x2, y1, y2;
@@ -90,7 +87,7 @@ public class Segment2D implements Shape {
     }
 
     @Override
-    public double getDistance(Point point) {
+    public double getDistanceToPoint(Point point) {
         double x = point.getX(), y = point.getY();
         //equation: (x-x1)(y2-y1) - (x2-x1)(y-y1) = 0
         double dy12 = y2 - y1;
@@ -116,7 +113,7 @@ public class Segment2D implements Shape {
         return new Vector2D(-tx,-ty).length();
     }
 
-    public Vector getDirection(Point point){
+    public Vector getDirectionToPoint(Point point){
         double x = point.getX(), y = point.getY();
         //equation: (x-x1)(y2-y1) - (x2-x1)(y-y1) = 0
         double dy12 = y2 - y1;
@@ -217,6 +214,46 @@ public class Segment2D implements Shape {
     }
 
     @Override
+    public PrimitiveShape[] breakdown() {
+        return new PrimitiveShape[0];
+    }
+
+    @Override
+    public ModelShape abstractShape() {
+        return null;
+    }
+
+    @Override
+    public ModelShape[] minus(ModelShape clipper) {
+        return new ModelShape[0];
+    }
+
+    @Override
+    public ModelShape[] And(ModelShape other) {
+        return new ModelShape[0];
+    }
+
+    @Override
+    public ModelShape intersect(ModelShape other) {
+        return null;
+    }
+
+    @Override
+    public void Not() {
+
+    }
+
+    @Override
+    public Point getInsidePoint() {
+        return null;
+    }
+
+    @Override
+    public Point getOutsidePoint() {
+        return null;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj instanceof Segment2D) {
             Segment2D tg = (Segment2D) obj;
@@ -226,8 +263,8 @@ public class Segment2D implements Shape {
                 return Math.abs(x1 - tg.x2) < 1e-15 && Math.abs(y1 - tg.y2) < 1e-15 && Math.abs(x2 - tg.x1) < 1e-15 && Math.abs(y2 - tg.y1) < 1e-15;
             }
 /*if (getReferencePoint().equals(testLine.getReferencePoint()) &&
-                    a.distanceTo(testLine.getReferencePoint()) == a.distanceTo(getReferencePoint())
-                    && testLine.getDistance(a) == 0) {
+                    a.distanceToPoint(testLine.getReferencePoint()) == a.distanceToPoint(getReferencePoint())
+                    && testLine.getDistanceToPoint(a) == 0) {
                 return true;
             } else {
                 return false;
@@ -238,13 +275,13 @@ public class Segment2D implements Shape {
 /*
     public double distanceToSegment(Point2D point) {
         double distance, temp;
-        distance = getDistance(point);
-        temp = a.distanceTo(point);
-        if (b.distanceTo(point) < a.distanceTo(point)) {
-            temp = b.distanceTo(point);
+        distance = getDistanceToPoint(point);
+        temp = a.distanceToPoint(point);
+        if (b.distanceToPoint(point) < a.distanceToPoint(point)) {
+            temp = b.distanceToPoint(point);
         }
-        if (b.distanceTo(point) * b.distanceTo(point) - a.distanceTo(point) * a.distanceTo(point) + a.distanceTo(b) * a.distanceTo(b) < 0 ||
-                -b.distanceTo(point) * b.distanceTo(point) + a.distanceTo(point) * a.distanceTo(point) + a.distanceTo(b) * a.distanceTo(b) < 0) {
+        if (b.distanceToPoint(point) * b.distanceToPoint(point) - a.distanceToPoint(point) * a.distanceToPoint(point) + a.distanceToPoint(b) * a.distanceToPoint(b) < 0 ||
+                -b.distanceToPoint(point) * b.distanceToPoint(point) + a.distanceToPoint(point) * a.distanceToPoint(point) + a.distanceToPoint(b) * a.distanceToPoint(b) < 0) {
             distance = temp;
         }
         return distance;
@@ -316,5 +353,50 @@ public class Segment2D implements Shape {
         x2 = center.getX()+v2.values[0];
         y1 = center.getX()+v1.values[1];
         y2 = center.getX()+v2.values[1];
+    }
+
+
+
+
+
+    @Override
+    public boolean intersect(PrimitiveShape shape) {
+        if (shape instanceof Segment2D){
+            return ((Segment2D) shape).intersect(this);
+        }
+        if (shape instanceof Arc2D){
+
+        }
+        return false;
+    }
+
+    @Override
+    public Point intersectPoint(PrimitiveShape shape) {
+        return null;
+    }
+
+    @Override
+    public double distanceTo(PrimitiveShape shape) {
+        return 0;
+    }
+
+    @Override
+    public Vector directionTo(PrimitiveShape shape) {
+        return null;
+    }
+
+    @Override
+    public void rotate(Point point, double angel) {
+
+    }
+
+    @Override
+    public void relativeExpand(double scale) {
+
+    }
+
+    @Override
+    public void absoluteExpand(double value) {
+
     }
 }

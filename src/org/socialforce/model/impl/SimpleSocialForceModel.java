@@ -1,6 +1,5 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.app.SocialForceApplication;
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Force2D;
@@ -53,7 +52,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
      * @return circle2D 返回一个圆形区域。
      */
     @Override
-    public Shape getAgentView() {
+    public ModelShape getAgentView() {
         Circle2D circle2D = new Circle2D();
         circle2D.setRadius(AGENT_VIEW_RADIUS);
         return circle2D;
@@ -116,29 +115,29 @@ public class SimpleSocialForceModel implements SocialForceModel {
     /**
      * 根据具体的形状参数来创建静态物体。
      * 静态物体可以是墙，门，障碍物等。
-     * @param shape the static object's shape.
+     * @param modelShape the static object's modelShape.
      * @return 静态物体。
      */
     @Override
-    public InteractiveEntity createStatic(Shape shape) {
-        return reg(new Wall(shape));
+    public InteractiveEntity createStatic(ModelShape modelShape) {
+        return reg(new Wall(modelShape));
     }
 
     /**
      * 根据具体的形状，类型参数来创建静态物体。
      * 静态物体可以是墙，门，障碍物等。
-     * @param shape 静态物体的形状。
+     * @param modelShape 静态物体的形状。
      * @param type  静态物体的类型。
      * @return 静态物体。
      */
     @Override
-    public InteractiveEntity createStatic(Shape shape, int type) {
+    public InteractiveEntity createStatic(ModelShape modelShape, int type) {
         if (type == STATIC_TYPE_WALL) {
-            return reg(new Wall(shape));
+            return reg(new Wall(modelShape));
         } else if (type == STATIC_TYPE_GATE) {
-            return reg(new SafetyRegion(shape));
+            return reg(new SafetyRegion(modelShape));
         }
-        return reg(createStatic(shape));
+        return reg(createStatic(modelShape));
     }
 
     /**

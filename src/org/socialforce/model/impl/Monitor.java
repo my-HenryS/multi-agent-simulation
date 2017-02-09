@@ -1,12 +1,9 @@
 package org.socialforce.model.impl;
 
 import org.socialforce.container.impl.LinkListAgentPool;
-import org.socialforce.geom.Shape;
-import org.socialforce.geom.impl.Vector2D;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
-
-import java.util.Iterator;
 
 /**
  * Created by sunjh1999 on 2017/1/21.
@@ -15,8 +12,8 @@ public class Monitor extends Entity {
     double volume = 0, velocity = 0,  timePerStep = 0;
     int vNum = 0;
     LinkListAgentPool agents = new LinkListAgentPool();
-    public Monitor(Shape shape) {
-        super(shape);
+    public Monitor(ModelShape modelShape) {
+        super(modelShape);
     }
 
     public void setTimePerStep(double timePerStep){
@@ -26,7 +23,7 @@ public class Monitor extends Entity {
     @Override
     public void affect(InteractiveEntity affectedEntity) {
         if(affectedEntity instanceof Agent) {
-            if(((Agent)affectedEntity).getShape().intersects(shape)){
+            if(((Agent)affectedEntity).getModelShape().intersects(modelShape)){
                 velocity += ((Agent) affectedEntity).getVelocity().length();
                 vNum += 1;
                 if(!agents.contains(affectedEntity)){   //流量计数不复用Agent
@@ -45,7 +42,7 @@ public class Monitor extends Entity {
 
     @Override
     public InteractiveEntity standardclone() {
-        return new Monitor(shape.clone());
+        return new Monitor(modelShape.clone());
     }
 
     public double sayVolume(){

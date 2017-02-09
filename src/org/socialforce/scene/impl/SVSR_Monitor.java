@@ -1,6 +1,6 @@
 package org.socialforce.scene.impl;
 
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.model.impl.Monitor;
 import org.socialforce.model.impl.SimpleSocialForceModel;
 import org.socialforce.scene.Scene;
@@ -12,7 +12,7 @@ import org.socialforce.scene.SceneValue;
 public class SVSR_Monitor implements SceneValue<Monitor> {
     protected String name;
     protected Monitor monitor;
-    public SVSR_Monitor(Shape shape){this.monitor = new Monitor(shape);}
+    public SVSR_Monitor(ModelShape modelShape){this.monitor = new Monitor(modelShape);}
     @Override
     public String getEntityName() {
         return name;

@@ -38,8 +38,8 @@ public class StraightPath implements Path {
         double length = Double.POSITIVE_INFINITY;
         for(int i = 0; i < goals.length; i++) {
             Point point = goals[i];
-            if (current.distanceTo(point) < length) {
-                length = current.distanceTo(point);
+            if (current.distanceToPoint(point) < length) {
+                length = current.distanceToPoint(point);
                 index = i;
             }
         }
@@ -51,8 +51,8 @@ public class StraightPath implements Path {
         double length = Double.POSITIVE_INFINITY;
         for(int i = 0; i < goals.length; i++) {
             Point point = goals[i];
-            if (current.distanceTo(point) < length) {
-                length = current.distanceTo(point);
+            if (current.distanceToPoint(point) < length) {
+                length = current.distanceToPoint(point);
                 index = i;
             }
         }
@@ -70,7 +70,7 @@ public class StraightPath implements Path {
     public double length(Point current){
         double length = 0;
         for(int i = getNext(current); i<goals.length; i++){
-            length += goals[i].distanceTo(goals[i-1]);
+            length += goals[i].distanceToPoint(goals[i-1]);
         }
         return length;
     }

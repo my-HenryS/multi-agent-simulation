@@ -2,8 +2,8 @@ package org.socialforce.geom.impl;
 
 import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.Box;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
 import org.socialforce.geom.Vector;
 
 /**
@@ -12,7 +12,7 @@ import org.socialforce.geom.Vector;
  * 角度采用弧度制
  * Created by Whatever on 2016/10/31.
  */
-public class Rectangle2D implements Shape {
+public class Rectangle2D implements ModelShape {
     protected Point2D center;
     protected double length,weidth,angle;
 
@@ -55,7 +55,7 @@ public class Rectangle2D implements Shape {
     }
 
     /**
-     * 检查一个点是否属于 <code>Shape</code>.
+     * 检查一个点是否属于 <code>ModelShape</code>.
      * 实现方法是这样的，利用矢量图。以center为圆心，转成BOX2D，然后判断。
      * @param point 将被检查的点.
      * @return 如果该点是该形状上的一部分，就返回真，否则返回假.
@@ -67,13 +67,13 @@ public class Rectangle2D implements Shape {
         double temp = angle;
         boolean result = false;
         Vector2D distance = (Vector2D) center.directionTo(point);
-        distance.scale(Math.abs(center.distanceTo(point)));
+        distance.scale(Math.abs(center.distanceToPoint(point)));
         rectangle2D.spin(-temp);
         distance.spin(-temp);
         bound = rectangle2D.getBounds();
         Point2D point2D = new Point2D(center.getX()+distance.values[0],center.getY()+distance.values[1]);
         //result = bound.contains(new Point2D(center.getX()+distance.values[0],center.getY()+distance.values[1]));
-        if (bound.getDistance(point2D)<10e-7){
+        if (bound.getDistanceToPoint(point2D)<10e-7){
             result = true;
         }
         return result;
@@ -91,7 +91,7 @@ public class Rectangle2D implements Shape {
      * @return 该距离. 如果这个点到不了这个形状上的话，返回 Double.NaN .
      */
     @Override
-    public double getDistance(Point point) {
+    public double getDistanceToPoint(Point point) {
         Segment2D[] bounds;
         Point2D point1,point2,point3,point4;
         Vector distance = new Vector2D(0,0);
@@ -102,17 +102,17 @@ public class Rectangle2D implements Shape {
         point4 = new Point2D(center.getX()-length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
         bounds = new Segment2D[]{new Segment2D(point1,point2),new Segment2D(point2,point3),new Segment2D(point3,point4),new Segment2D(point4,point1)};
         for (int i = 0;i < bounds.length;i++){
-            temp = bounds[i].getDistance(point);
+            temp = bounds[i].getDistanceToPoint(point);
             if (temp<distanceN){
                 distanceN = temp;
-                distance = bounds[i].getDirection(point);
+                distance = bounds[i].getDirectionToPoint(point);
             }
         }
         if(contains(point)) distanceN = -distanceN;
         return distanceN;
     }
 
-    public Vector getDirection(Point point) {
+    public Vector getDirectionToPoint(Point point) {
         Segment2D[] bounds;
         Point2D point1,point2,point3,point4;
         Vector distance = new Vector2D(0,0);
@@ -123,10 +123,10 @@ public class Rectangle2D implements Shape {
         point4 = new Point2D(center.getX()-length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
         bounds = new Segment2D[]{new Segment2D(point1,point2),new Segment2D(point2,point3),new Segment2D(point3,point4),new Segment2D(point4,point1)};
         for (int i = 0;i < bounds.length;i++){
-            temp = bounds[i].getDistance(point);
+            temp = bounds[i].getDistanceToPoint(point);
             if (temp<distanceN){
                 distanceN = temp;
-                distance = bounds[i].getDirection(point);
+                distance = bounds[i].getDirectionToPoint(point);
             }
         }
         return distance;
@@ -201,7 +201,7 @@ public class Rectangle2D implements Shape {
      * @return 该形状的副本.
      */
     @Override
-    public Shape clone() {
+    public ModelShape clone() {
         return new Rectangle2D((Point2D) center.clone(),length,weidth,angle);
     }
 

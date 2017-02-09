@@ -2,14 +2,14 @@ package org.socialforce.geom.impl;
 
 import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.Box;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
 import org.socialforce.geom.Vector;
 
 /**
  * Created by sunjh1999 on 2016/11/12.
  */
-public class Semicircle2D implements Shape {
+public class Semicircle2D implements ModelShape {
     protected Drawer drawer;
     protected Rectangle2D bounding_box;
     protected Circle2D bounding_circle;
@@ -50,16 +50,16 @@ public class Semicircle2D implements Shape {
      * @return
      */
     @Override
-    public double getDistance(Point point) {
-        if(bounding_box.getDistance(point) > bounding_circle.getDistance(point))
-            return bounding_box.getDistance(point);
-        else return bounding_circle.getDistance(point);
+    public double getDistanceToPoint(Point point) {
+        if(bounding_box.getDistanceToPoint(point) > bounding_circle.getDistanceToPoint(point))
+            return bounding_box.getDistanceToPoint(point);
+        else return bounding_circle.getDistanceToPoint(point);
     }
 
-    public Vector getDirection(Point point){
-        if(bounding_box.getDistance(point) > bounding_circle.getDistance(point))
-            return bounding_box.getDirection(point);
-        else return bounding_circle.getDirection(point);
+    public Vector getDirectionToPoint(Point point){
+        if(bounding_box.getDistanceToPoint(point) > bounding_circle.getDistanceToPoint(point))
+            return bounding_box.getDirectionToPoint(point);
+        else return bounding_circle.getDirectionToPoint(point);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class Semicircle2D implements Shape {
     }
 
     @Override
-    public Shape clone() {
+    public ModelShape clone() {
         return new Semicircle2D(center, radius, angle);
     }
 }

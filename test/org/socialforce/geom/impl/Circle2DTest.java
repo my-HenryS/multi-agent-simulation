@@ -2,9 +2,6 @@ package org.socialforce.geom.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Segment2D;
-import org.socialforce.geom.impl.Point2D;
 
 import static org.junit.Assert.*;
 
@@ -31,9 +28,9 @@ public class Circle2DTest {
 
     @Test
     public void getDistance() throws Exception {
-        assertEquals(-4,circleTest.getDistance(b),0);
-        assertEquals(new Vector2D(1,0),circleTest.getDirection(new Point2D(9,4)));
-        assertEquals(4*Math.sqrt(2)-5,circleTest.getDistance(a),0.01);
+        assertEquals(-4,circleTest.getDistanceToPoint(b),0);
+        assertEquals(new Vector2D(1,0),circleTest.getDirectionToPoint(new Point2D(9,4)));
+        assertEquals(4*Math.sqrt(2)-5,circleTest.getDistanceToPoint(a),0.01);
     }
 
     @Test

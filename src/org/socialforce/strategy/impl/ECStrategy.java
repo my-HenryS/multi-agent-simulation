@@ -1,6 +1,5 @@
 package org.socialforce.strategy.impl;
 
-import org.socialforce.model.impl.BaseAgent;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.model.Agent;
@@ -35,7 +34,7 @@ public class ECStrategy implements DynamicStrategy {
                 int front_num = fronts(agent, goal);
                 //设置最优path
                 Path path = pathFinder.plan_for(goal);
-                double pathLength = path.length(agent.getShape().getReferencePoint());
+                double pathLength = path.length(agent.getModelShape().getReferencePoint());
                 double velocity = agent.getModel().getExpectedSpeed();
                 double t = pathLength / velocity + front_num / EC(Width.widthOf(goal), agent.getModel().getExpectedSpeed());
                 if(t < factor_t){
@@ -56,7 +55,7 @@ public class ECStrategy implements DynamicStrategy {
         int front_num = 0;
         for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
             Agent target_agent = (Agent) iter.next();
-            if(agent.getShape().getDistance(goal) > target_agent.getShape().getDistance(goal)){
+            if(agent.getModelShape().getDistanceToPoint(goal) > target_agent.getModelShape().getDistanceToPoint(goal)){
                 front_num += 1;
             }
         }

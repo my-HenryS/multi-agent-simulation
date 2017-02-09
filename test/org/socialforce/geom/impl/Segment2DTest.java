@@ -3,7 +3,7 @@ package org.socialforce.geom.impl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.ModelShape;
 
 import static org.junit.Assert.*;
 
@@ -31,12 +31,12 @@ public class Segment2DTest {
 
     @Test
     public void getDistance() throws Exception {
-        assertEquals(0,testline.getDistance(a),0);
-        assertEquals(2.0,testline.getDistance(b),0.001);
-        assertEquals(Math.sqrt(2),vecline.getDistance(new Point2D(1,3)),1e-7);
-        assertEquals(new Vector2D(0,-1),testline.getDirection(b));
-        assertEquals(new Vector2D(0,1),testline.getDirection(new Point2D(5,9)));
-        assertEquals(new Vector2D(-1,0),testline.getDirection(new Point2D(-2,2)));
+        assertEquals(0,testline.getDistanceToPoint(a),0);
+        assertEquals(2.0,testline.getDistanceToPoint(b),0.001);
+        assertEquals(Math.sqrt(2),vecline.getDistanceToPoint(new Point2D(1,3)),1e-7);
+        assertEquals(new Vector2D(0,-1),testline.getDirectionToPoint(b));
+        assertEquals(new Vector2D(0,1),testline.getDirectionToPoint(new Point2D(5,9)));
+        assertEquals(new Vector2D(-1,0),testline.getDirectionToPoint(new Point2D(-2,2)));
     }
 
     @Test
@@ -53,13 +53,13 @@ public class Segment2DTest {
     @Test
     public void moveTo() throws Exception {
         testline.moveTo(new Point2D(0,0));
-        assertEquals(0,testline.getDistance(b),0);
-        assertEquals(1.414,testline.getDistance(a),0.001);
+        assertEquals(0,testline.getDistanceToPoint(b),0);
+        assertEquals(1.414,testline.getDistanceToPoint(a),0.001);
     }
 
    @Test
     public void cloneTest() throws Exception {
-       Shape cloned = testline.clone();
+       ModelShape cloned = testline.clone();
        assertFalse(cloned == testline);
        assertEquals(testline,cloned);
 
@@ -75,8 +75,8 @@ public class Segment2DTest {
         Segment2D setX = new Segment2D() ,setY = new Segment2D();
         setX.setParallelX(10,5,2);
         setY.setParallelY(10,5,2);
-        assertEquals(8,setX.getDistance(new Point2D(0,2)),0);
-        assertEquals(10,setY.getDistance(new Point2D(0,2)),0);
+        assertEquals(8,setX.getDistanceToPoint(new Point2D(0,2)),0);
+        assertEquals(10,setY.getDistanceToPoint(new Point2D(0,2)),0);
     }
 
     @Test

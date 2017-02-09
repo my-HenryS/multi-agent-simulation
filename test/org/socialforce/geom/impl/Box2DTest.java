@@ -3,7 +3,7 @@ package org.socialforce.geom.impl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.ModelShape;
 
 import static org.junit.Assert.*;
 
@@ -32,24 +32,24 @@ public class Box2DTest {
 
     @Test
     public void getDistance() throws Exception {
-        assertEquals(-1,testBox.getDistance(a),0);
-        assertEquals(new Vector2D(1,0),testBox.getDirection(a));
-        assertEquals(5,testBox.getDistance(b),0);
-        assertEquals(new Vector2D(0.6,0.8),testBox.getDirection(b));
-        assertEquals(5,testBox.getDistance(c),0);
-        assertEquals(new Vector2D(-0.8,-0.6),testBox.getDirection(c));
-        assertEquals(5,testBox.getDistance(d),0);
-        assertEquals(new Vector2D(0,-1),testBox.getDirection(d));
+        assertEquals(-1,testBox.getDistanceToPoint(a),0);
+        assertEquals(new Vector2D(1,0),testBox.getDirectionToPoint(a));
+        assertEquals(5,testBox.getDistanceToPoint(b),0);
+        assertEquals(new Vector2D(0.6,0.8),testBox.getDirectionToPoint(b));
+        assertEquals(5,testBox.getDistanceToPoint(c),0);
+        assertEquals(new Vector2D(-0.8,-0.6),testBox.getDirectionToPoint(c));
+        assertEquals(5,testBox.getDistanceToPoint(d),0);
+        assertEquals(new Vector2D(0,-1),testBox.getDirectionToPoint(d));
         a = new Point2D(1,9);
-        assertEquals(5,testBox.getDistance(a),0);
+        assertEquals(5,testBox.getDistanceToPoint(a),0);
         a = new Point2D(-4,7);
-        assertEquals(5,testBox.getDistance(a),0);
+        assertEquals(5,testBox.getDistanceToPoint(a),0);
         a = new Point2D(-5,2);
-        assertEquals(5,testBox.getDistance(a),0);
+        assertEquals(5,testBox.getDistanceToPoint(a),0);
         a = new Point2D(6,-4);
-        assertEquals(5,testBox.getDistance(a),0);
+        assertEquals(5,testBox.getDistanceToPoint(a),0);
         a = new Point2D(8,2);
-        assertEquals(5,testBox.getDistance(a),0);
+        assertEquals(5,testBox.getDistanceToPoint(a),0);
     }
 
     @Test
@@ -82,12 +82,12 @@ public class Box2DTest {
         assertEquals(false,testBox.contains(a));
         assertEquals(true,testBox.contains(b));
         Point2D center = new Point2D(1.5,2);
-        assertNotEquals(0,testBox.getReferencePoint().distanceTo(center),0);
+        assertNotEquals(0,testBox.getReferencePoint().distanceToPoint(center),0);
     }
 
     @Test
     public void testClone() throws Exception {
-        Shape cloned = testBox.clone();
+        ModelShape cloned = testBox.clone();
         assertEquals(cloned,testBox);
         assertFalse(cloned == testBox);
 
@@ -137,7 +137,7 @@ public class Box2DTest {
     @Test
     public void ClipTest(){
         Box2D clipper = new Box2D(1,-1,1,10);
-        Shape[] boxes = clipper.clip(testBox);
+        ModelShape[] boxes = clipper.clip(testBox);
         assertEquals(boxes[0],new Box2D(0,0,1,4));
         assertEquals(boxes[1],new Box2D(2,0,1,4));
     }

@@ -17,7 +17,7 @@ public class BodyForce implements ForceRegulation{
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
         if ((source instanceof Agent && target instanceof Agent || source instanceof Wall && target instanceof Agent ) &&
-                ((Agent) target).getShape().intersects(source.getShape())){
+                ((Agent) target).getModelShape().intersects(source.getModelShape())){
             return true;
         }
         else
@@ -37,10 +37,10 @@ public class BodyForce implements ForceRegulation{
         tempVector = (Vector2D) ((Moveable)source).getVelocity().clone();}
         else tempVector = new Vector2D(0,0);
         tempVector.sub(((Agent)target).getVelocity());
-        n = (Vector2D) ((Circle2D)target.getShape()).directionTo(source.getShape());
+        n = (Vector2D) ((Circle2D)target.getModelShape()).directionTo(source.getModelShape());
         n.get(temp);
         t = new Vector2D(-temp[1],temp[0]);
-        distance = ((Circle2D)target.getShape()).distanceTo(source.getShape());
+        distance = ((Circle2D)target.getModelShape()).distanceTo(source.getModelShape());
         if (distance < 0){g = argumentX;}
         bodyForce =  k1*g*Math.abs(distance);
         slidingForce = k2*g*Math.abs(distance)*t.dot(tempVector);

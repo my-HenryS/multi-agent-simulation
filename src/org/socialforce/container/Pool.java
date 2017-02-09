@@ -1,12 +1,11 @@
 package org.socialforce.container;
 
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.DistanceModelShape;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
 import org.socialforce.model.InteractiveEntity;
 
 import java.util.Collection;
-import java.util.LinkedList;
 
 /**
  * 代表一个实体池，实体池能够像普通集合一样添加及删除实体。
@@ -25,22 +24,22 @@ import java.util.LinkedList;
 public interface Pool<T extends InteractiveEntity> extends Collection<T> {
     /**
      * 选择与指定形状相交的所有实体。
-     * 在确认只会选中一个实体时，也可使用 {@link #selectTop(DistanceShape)} 或 {@link #selectBottom(DistanceShape)}。
+     * 在确认只会选中一个实体时，也可使用 {@link #selectTop(DistanceModelShape)} 或 {@link #selectBottom(DistanceModelShape)}。
      *
      * @param shape 指定形状。
      * @return 一个只读的集合，包含了与指定形状相交的所有实体。
-     * @see #removeSelect(DistanceShape)
-     * @see #selectTop(DistanceShape)
-     * @see #selectBottom(DistanceShape)
+     * @see #removeSelect(DistanceModelShape)
+     * @see #selectTop(DistanceModelShape)
+     * @see #selectBottom(DistanceModelShape)
      */
-    Iterable<T> select(DistanceShape shape);
+    Iterable<T> select(DistanceModelShape shape);
 
     /**
      * 选定包含其refpoint的实体
-     * @param shape
+     * @param modelShape
      * @return refpoint被包含的实体
      */
-    Iterable<T> selectContains(Shape shape);
+    Iterable<T> selectContains(ModelShape modelShape);
     /**
      * 选择覆盖指定点的所有实体。
      * 在确认只会选中一个实体时，也可使用 {@link #selectTop(Point)} 或 {@link #selectBottom(Point)}。
@@ -64,11 +63,11 @@ public interface Pool<T extends InteractiveEntity> extends Collection<T> {
      *
      * @param shape 指定的形状。
      * @return 如果实体池中确实含有这样的对象，返回true；否则返回false。
-     * @see #select(DistanceShape)
-     * @see #selectTop(DistanceShape)
-     * @see #selectBottom(DistanceShape)
+     * @see #select(DistanceModelShape)
+     * @see #selectTop(DistanceModelShape)
+     * @see #selectBottom(DistanceModelShape)
      */
-    boolean removeSelect(DistanceShape shape);
+    boolean removeSelect(DistanceModelShape shape);
 
     /**
      * 移除覆盖指定点的所有实体。
@@ -85,7 +84,7 @@ public interface Pool<T extends InteractiveEntity> extends Collection<T> {
      * @param shape 指定的形状。
      * @return 所选择的实体。如果池中没有与指定形状相交的实体，返回null。
      */
-    T selectTop(DistanceShape shape);
+    T selectTop(DistanceModelShape shape);
 
 
     /**
@@ -104,7 +103,7 @@ public interface Pool<T extends InteractiveEntity> extends Collection<T> {
      * @param shape 指定的形状。
      * @return 所选择的实体。如果池中没有与指定形状相交的实体，返回null。
      */
-    T selectBottom(DistanceShape shape);
+    T selectBottom(DistanceModelShape shape);
 
     /**
      * 选择在池中被覆盖在最下边的，覆盖指定点的实体。

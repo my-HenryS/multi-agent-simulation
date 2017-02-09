@@ -1,12 +1,13 @@
 package org.socialforce.geom.impl;
 
 import org.socialforce.geom.Point;
+import org.socialforce.geom.PrimitiveShape;
 import org.socialforce.geom.Vector;
 
 /**
  * Created by Ledenel on 2016/8/8.
  */
-public class Point2D extends Vector2D implements Point {
+public class Point2D extends Vector2D implements Point, PrimitiveShape {
     /**
      * 获取点的X坐标.
      *
@@ -35,7 +36,7 @@ public class Point2D extends Vector2D implements Point {
      * @return 距离.
      */
     @Override
-    public double distanceTo(Point other) {
+    public double distanceToPoint(Point other) {
         double dx = this.getX() - other.getX();
         double dy = this.getY() - other.getY();
         return new Vector2D(-dx,-dy).length();
@@ -105,5 +106,65 @@ public class Point2D extends Vector2D implements Point {
 
     public String toString(){
         return "坐标为： ("+values[0]+"," +values[1]+")";
+    }
+
+
+
+
+
+
+    @Override
+    public boolean intersect(PrimitiveShape shape) {
+        return distanceTo(shape) == 0;
+    }
+
+    @Override
+    public Point[] intersectPoint(PrimitiveShape shape) {
+        if (intersect(shape)){
+            return new Point[]{this};
+        }
+        else return null;
+    }
+
+    @Override
+    public double distanceTo(PrimitiveShape shape) {
+        if (shape instanceof Segment2D){
+            return shape.distanceTo(this);
+        }
+        if (shape instanceof Point2D){
+            return this.distanceToPoint((Point) shape);
+        }
+        if (shape instanceof Arc2D){
+            
+        }
+        return 0;
+    }
+
+    @Override
+    public Vector directionTo(PrimitiveShape shape) {
+        return null;
+    }
+
+    @Override
+    public void rotate(Point point, double angel) {
+        Vector2D vector2D = (Vector2D) this.directionTo(point);
+        vector2D.scale(this.distanceToPoint(point));
+        vector2D.spin(angel);
+        this.moveTo(point.getX()+vector2D.getX(),point.getY()+vector2D.getY());
+    }
+
+    @Override
+    public void relativeExpand(double scale) {
+        //do nothing
+    }
+
+    @Override
+    public void absoluteExpand(double value) {
+        //do nothing
+    }
+
+    @Override
+    public Point getReferencePoint() {
+        return this;
     }
 }

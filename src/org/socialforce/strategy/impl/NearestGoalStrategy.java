@@ -3,17 +3,11 @@ package org.socialforce.strategy.impl;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.model.Agent;
-import org.socialforce.scene.SceneParameter;
-import org.socialforce.scene.SceneValue;
-import org.socialforce.scene.impl.SVSR_Exit;
-import org.socialforce.scene.impl.SVSR_SafetyRegion;
-import org.socialforce.scene.impl.SimpleSceneParameter;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.StaticStrategy;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 
 /**
  * Created by sunjh1999 on 2016/12/14.
@@ -40,7 +34,7 @@ public class NearestGoalStrategy implements StaticStrategy{
             for (Point goal : goals) {
                 //设置最优path
                 Path path = pathFinder.plan_for(goal);
-                double pathLength = path.length(agent.getShape().getReferencePoint());
+                double pathLength = path.length(agent.getModelShape().getReferencePoint());
                 if (pathLength < path_length) {
                     path_length = pathLength;
                     designed_path = path;

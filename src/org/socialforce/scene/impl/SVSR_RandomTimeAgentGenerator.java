@@ -1,8 +1,8 @@
 package org.socialforce.scene.impl;
 
 import org.socialforce.container.EntityPool;
-import org.socialforce.geom.DistanceShape;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.DistanceModelShape;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.geom.Velocity;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
@@ -20,7 +20,7 @@ import java.util.Random;
  * Created by sunjh1999 on 2017/1/21.
  */
 public class SVSR_RandomTimeAgentGenerator extends SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGenerator.AgentGenerator> {
-    public SVSR_RandomTimeAgentGenerator(int agent_num, Shape Area, DistanceShape template, Velocity velocity) {
+    public SVSR_RandomTimeAgentGenerator(int agent_num, ModelShape Area, DistanceModelShape template, Velocity velocity) {
         super(agent_num, Area, template, velocity);
         agentGenerator.setNum(agent_num);
     }
@@ -42,7 +42,7 @@ public class SVSR_RandomTimeAgentGenerator extends SVSR_RandomAgentGenerator imp
                 Iterable<Agent> agents = scene.getAllAgents();
                 new_agent = agentGenerator.decorator.createAgent(point, agentGenerator.velocity.clone(), agentGenerator.shape);
                 for (Agent agent : agents) {
-                    if(new_agent.getShape().distanceTo(agent.getShape()) < 0){
+                    if(new_agent.getModelShape().distanceTo(agent.getModelShape()) < 0){
                         is_able_flag = 1;
                         break;
                     }
@@ -50,7 +50,7 @@ public class SVSR_RandomTimeAgentGenerator extends SVSR_RandomAgentGenerator imp
                 if(is_able_flag == 0){
                     EntityPool all_blocks = scene.getStaticEntities();
                     for (InteractiveEntity entity : all_blocks) {
-                        if (!(entity instanceof SafetyRegion) && new_agent.getShape().distanceTo(entity.getShape()) < 0){
+                        if (!(entity instanceof SafetyRegion) && new_agent.getModelShape().distanceTo(entity.getModelShape()) < 0){
                             is_able_flag = 1;
                             break;
                         }

@@ -1,12 +1,10 @@
 package org.socialforce.model.impl;
 
 import org.socialforce.geom.Force;
-import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.Agent;
 import org.socialforce.model.ForceRegulation;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.Moveable;
 
 /**
  * Created by Whatever on 2016/10/23.
@@ -22,7 +20,7 @@ public class WallForce implements ForceRegulation {
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
         if (source instanceof Wall && target instanceof Agent &&
-                ((Agent) target).getView().hits(source.getShape().getBounds())){
+                ((Agent) target).getView().hits(source.getModelShape().getBounds())){
             return true;
         }
         else
@@ -39,11 +37,11 @@ public class WallForce implements ForceRegulation {
      */
     @Override
     public Force getForce(InteractiveEntity source, InteractiveEntity target) {
-        if (source.getShape().hits(target.getShape().getBounds())
-                && ((Box2D)source.getShape()).intersect(target.getShape().getBounds()).getReferencePoint() != null){
-            Point2D ForcePoint = (Point2D) ((Box2D)source.getShape()).intersect(target.getShape().getBounds()).getReferencePoint();
-            double x = ForcePoint.getX() - target.getShape().getReferencePoint().getX();
-            double y = ForcePoint.getY() - target.getShape().getReferencePoint().getY();
+        if (source.getModelShape().hits(target.getModelShape().getBounds())
+                && ((Box2D)source.getModelShape()).intersect(target.getModelShape().getBounds()).getReferencePoint() != null){
+            Point2D ForcePoint = (Point2D) ((Box2D)source.getModelShape()).intersect(target.getModelShape().getBounds()).getReferencePoint();
+            double x = ForcePoint.getX() - target.getModelShape().getReferencePoint().getX();
+            double y = ForcePoint.getY() - target.getModelShape().getReferencePoint().getY();
             Vector2D vector2D = new Vector2D(x,y);
             vector2D = (Vector2D) vector2D.getRefVector();
             vector2D.scale(-500);

@@ -31,7 +31,7 @@ public interface SocialForceModel {
      *
      * @return circle2D 返回一个圆形区域。
      */
-    Shape getAgentView();           //// TODO: 2016/11/21  model不应该控制agent的视野  
+    ModelShape getAgentView();           //// TODO: 2016/11/21  model不应该控制agent的视野
 
     /**
      * 计算源实体对目标实体的作用力。
@@ -62,19 +62,19 @@ public interface SocialForceModel {
     /**
      * 根据具体的形状参数来创建静态物体。
      * 静态物体可以是墙，门，障碍物等。
-     * @param shape the static object's shape.
+     * @param modelShape the static object's modelShape.
      * @return 静态物体。
      */
-    InteractiveEntity createStatic(Shape shape);
+    InteractiveEntity createStatic(ModelShape modelShape);
 
     /**
      * 根据具体的形状，类型参数来创建静态物体。
      * 静态物体可以是墙，门，障碍物等。
-     * @param shape 静态物体的形状。
+     * @param modelShape 静态物体的形状。
      * @param type  静态物体的类型。
      * @return 静态物体。
      */
-    InteractiveEntity createStatic(Shape shape, int type);
+    InteractiveEntity createStatic(ModelShape modelShape, int type);
 
     /**
      * 创建并返回零向量。

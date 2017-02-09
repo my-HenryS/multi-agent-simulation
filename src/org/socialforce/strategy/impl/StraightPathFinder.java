@@ -2,8 +2,7 @@ package org.socialforce.strategy.impl;
 
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
-import org.socialforce.model.Agent;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.scene.SceneValue;
 import org.socialforce.scene.impl.SVSR_SafetyRegion;
 import org.socialforce.strategy.Path;
@@ -17,17 +16,17 @@ import java.util.LinkedList;
  */
 public class StraightPathFinder implements PathFinder {
     LinkedList<Point> goals = new LinkedList<>();
-    Shape agentShape;
+    ModelShape agentModelShape;
     Scene scene;
 
-    public StraightPathFinder(Scene targetScene, Shape agentShape) {
+    public StraightPathFinder(Scene targetScene, ModelShape agentModelShape) {
         for(Iterator<SceneValue> iterator = scene.getValueSet().iterator(); iterator.hasNext();){
             SceneValue sceneValue = iterator.next();
             if(sceneValue instanceof SVSR_SafetyRegion){
-                goals.addLast(((SVSR_SafetyRegion)sceneValue).getValue().getShape().getReferencePoint().clone()) ;
+                goals.addLast(((SVSR_SafetyRegion)sceneValue).getValue().getModelShape().getReferencePoint().clone()) ;
             }
         }
-        this.agentShape = agentShape.clone();
+        this.agentModelShape = agentModelShape.clone();
         this.scene = targetScene;
 
     }

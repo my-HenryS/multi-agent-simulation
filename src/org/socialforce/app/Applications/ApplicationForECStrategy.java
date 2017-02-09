@@ -2,21 +2,18 @@ package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
 import org.socialforce.app.impl.SimpleInterpreter;
-import org.socialforce.geom.DistanceShape;
-import org.socialforce.geom.impl.Velocity2D;
+import org.socialforce.geom.DistanceModelShape;
 import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.impl.Wall;
 import org.socialforce.strategy.DynamicStrategy;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.*;
 
 import java.io.File;
 import java.util.Iterator;
-import java.util.LinkedList;
 
 import static org.socialforce.scene.SceneLoader.genParameter;
 
@@ -24,7 +21,7 @@ import static org.socialforce.scene.SceneLoader.genParameter;
  * Created by Whatever on 2016/12/15.
  */
 public class ApplicationForECStrategy extends SimpleApplication implements SocialForceApplication{
-    DistanceShape template;
+    DistanceModelShape template;
 
     public ApplicationForECStrategy(){
     }

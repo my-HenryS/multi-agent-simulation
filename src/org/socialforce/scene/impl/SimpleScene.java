@@ -285,7 +285,7 @@ public class SimpleScene implements Scene {
         double xmin = Double.POSITIVE_INFINITY,xmax = Double.NEGATIVE_INFINITY,ymin = Double.POSITIVE_INFINITY,ymax = Double.NEGATIVE_INFINITY;
         Box bound;
         for(Agent agent : allAgents){
-            bound = agent.getShape().getBounds();
+            bound = agent.getModelShape().getBounds();
             if (bound.getStartPoint().getX() < xmin){
                 xmin = bound.getStartPoint().getX();
             }
@@ -300,7 +300,7 @@ public class SimpleScene implements Scene {
             }
         }
         for (InteractiveEntity entity : statics){
-            bound = entity.getShape().getBounds();
+            bound = entity.getModelShape().getBounds();
             if (bound.getStartPoint().getX() < xmin){
                 xmin = bound.getStartPoint().getX();
             }

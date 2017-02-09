@@ -3,7 +3,7 @@ package org.socialforce.model;
 import org.socialforce.container.Pool;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.ModelShape;
 
 /**
  *表示场景中所有可以进行交互的实体。
@@ -45,7 +45,7 @@ public interface InteractiveEntity {
      *
      * @return 实体的形状.
      */
-    Shape getShape();
+    ModelShape getModelShape();
 
     /**
      * 获取实体的质量。
@@ -70,7 +70,7 @@ public interface InteractiveEntity {
 
     /**
      * 将该实体放置在一个特殊的点上。
-     * TODO the shape will {@code moveTo} that point.
+     * TODO the modelShape will {@code moveTo} that point.
      * @param point 目标点。
      */
     void placeOn(Point point);

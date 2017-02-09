@@ -2,7 +2,6 @@ package org.socialforce.model.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.scene.impl.SimpleScene;
@@ -31,7 +30,7 @@ public class ModelTestOverall {
     public void getAgent() throws Exception {
         AgentPool allAgents = scene.getAllAgents();
         for (Agent agent: allAgents){
-            agent.setPath(new StraightPath(agent.getShape().getReferencePoint(), new Point2D(4,4)));
+            agent.setPath(new StraightPath(agent.getModelShape().getReferencePoint(), new Point2D(4,4)));
             agent.setScene(scene);
         }
         scene.stepNext();

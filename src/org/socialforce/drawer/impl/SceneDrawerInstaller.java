@@ -27,7 +27,7 @@ public class SceneDrawerInstaller implements DrawerInstaller {
             Iterable<InteractiveEntity> iterable = scene.getAllEntitiesStream()::iterator;
             boolean succ = true;
             for(InteractiveEntity entity : iterable) {
-                succ = succ && sceneDrawer.installer.addDrawerSupport(entity.getShape());
+                succ = succ && sceneDrawer.installer.addDrawerSupport(entity.getModelShape());
             }
             return succ;
         }

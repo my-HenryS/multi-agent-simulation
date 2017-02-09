@@ -6,8 +6,6 @@ import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
 import org.socialforce.geom.Box;
 import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 
 import java.awt.*;
@@ -51,16 +49,16 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         getDevice().draw(new Rectangle2D.Double(pt[0],pt[1],sz[0],sz[1]));
         getDevice().setColor(Color.WHITE);
         for (InteractiveEntity entity : iterable) {
-            Drawer drawer = entity.getShape().getDrawer();
+            Drawer drawer = entity.getModelShape().getDrawer();
             if(drawer == null){
-                installer.addDrawerSupport(entity.getShape());
-                drawer = entity.getShape().getDrawer();
+                installer.addDrawerSupport(entity.getModelShape());
+                drawer = entity.getModelShape().getDrawer();
             }
             drawer.setDevice(this.getDevice());
  //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(26.0,2.5))) ((AwtDrawer2D)drawer).setColor(Color.red);
  //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(33.5,14))) ((AwtDrawer2D)drawer).setColor(Color.green);
  //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(14.0,21.5))) ((AwtDrawer2D)drawer).setColor(Color.blue);
-            drawer.draw(entity.getShape());
+            drawer.draw(entity.getModelShape());
             ((AwtDrawer2D)drawer).setColor(Color.black);
 
         }
@@ -149,7 +147,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
 
 //        Iterable<Agent> agents = scene.getAllAgents();
 //        for(Agent agent : agents) {
-//            //agent.getShape().setDrawer();
+//            //agent.getModelShape().setDrawer();
 //            // 2016/8/24 add factory method for drawer.
 //
 //        }

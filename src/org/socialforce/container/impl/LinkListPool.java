@@ -1,11 +1,10 @@
 package org.socialforce.container.impl;
 
 import org.socialforce.container.Pool;
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.DistanceModelShape;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.model.InteractiveEntity;
-import sun.nio.cs.StreamEncoder;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -17,17 +16,17 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
     /**
      * 选中与shape相交的实体
      *
-     * @param shape the shape to select
+     * @param shape the modelShape to select
      * @return a set of selected entity.
      */
     @Override
-    public Iterable<T> select(DistanceShape shape) {
+    public Iterable<T> select(DistanceModelShape shape) {
         return new PoolShapeSelectIterable(shape);
     }
 
     @Override
-    public Iterable<T> selectContains(Shape shape){
-        return new PoolShapeSelectContainsIterable(shape);
+    public Iterable<T> selectContains(ModelShape modelShape){
+        return new PoolShapeSelectContainsIterable(modelShape);
     }
 
     /**
@@ -45,12 +44,12 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
         return new PoolPointSelectIterale(point);
     }
 
-    protected boolean shapeContains(T entity, DistanceShape shape) {
-        return shape.intersects(entity.getShape());
+    protected boolean shapeContains(T entity, DistanceModelShape shape) {
+        return shape.intersects(entity.getModelShape());
     }
 
-    protected boolean refpointContains(T entity, Shape shape){
-        return shape.contains(entity.getShape().getReferencePoint());
+    protected boolean refpointContains(T entity, ModelShape modelShape){
+        return modelShape.contains(entity.getModelShape().getReferencePoint());
     }
 
      protected boolean nameEquals(T entity, String name) {
@@ -58,7 +57,7 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
      }
 
      protected boolean pointContains(T entity, Point point) {
-     return entity.getShape().contains(point);
+     return entity.getModelShape().contains(point);
      }
 
      /**
@@ -66,12 +65,12 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
      *
      * @param shape 指定的形状。
      * @return 如果实体池中确实含有这样的对象，返回true；否则返回false。
-     * @see #select(DistanceShape)
-     * @see #selectTop(DistanceShape)
-     * @see #selectBottom(DistanceShape)
+     * @see #select(DistanceModelShape)
+     * @see #selectTop(DistanceModelShape)
+     * @see #selectBottom(DistanceModelShape)
      */
     @Override
-    public boolean removeSelect(DistanceShape shape) {
+    public boolean removeSelect(DistanceModelShape shape) {
         return this.removeIf(entity -> shapeContains(entity, shape));
     }
 
@@ -94,7 +93,7 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
      * @return 所选择的实体。如果池中没有与指定形状相交的实体，返回null。
      */
     @Override
-    public T selectTop(DistanceShape shape) {
+    public T selectTop(DistanceModelShape shape) {
         return this.stream()
                 .filter(entity -> shapeContains(entity, shape))
                 .findFirst()
@@ -124,7 +123,7 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
      * @return 所选择的实体。如果池中没有与指定形状相交的实体，返回null。
      */
     @Override
-    public T selectBottom(DistanceShape shape) {
+    public T selectBottom(DistanceModelShape shape) {
         return this.stream()
                 .filter(entity -> shapeContains(entity, shape))
                 .findFirst()
@@ -212,11 +211,11 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
     }
 
     public class PoolShapeSelectIterable implements Iterable<T> {
-        public PoolShapeSelectIterable(DistanceShape shape) {
+        public PoolShapeSelectIterable(DistanceModelShape shape) {
             this.shape = shape;
         }
 
-        private DistanceShape shape;
+        private DistanceModelShape shape;
 
         /**
          * Returns an iterator over elements of type {@code T}.
@@ -233,16 +232,16 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
     }
 
     public class PoolShapeSelectContainsIterable implements Iterable<T>{
-        private Shape shape;
+        private ModelShape modelShape;
 
-        public PoolShapeSelectContainsIterable(Shape shape) {
-            this.shape = shape;
+        public PoolShapeSelectContainsIterable(ModelShape modelShape) {
+            this.modelShape = modelShape;
         }
 
         @Override
         public Iterator<T> iterator() {
             return LinkListPool.this.stream()
-                    .filter(entity -> refpointContains(entity, shape))
+                    .filter(entity -> refpointContains(entity, modelShape))
                     .iterator();        }
     }
 

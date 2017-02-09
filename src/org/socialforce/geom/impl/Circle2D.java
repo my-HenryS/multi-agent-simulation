@@ -9,7 +9,7 @@ import org.socialforce.geom.*;
  */
 
 
-public class Circle2D implements DistanceShape {
+public class Circle2D implements DistanceModelShape {
     /**
      * 半径:二维圆的半径.
      * @see Drawer
@@ -61,7 +61,7 @@ public class Circle2D implements DistanceShape {
      */
     @Override
     public boolean contains(Point point) {
-        return (point.distanceTo(center)<radius);
+        return (point.distanceToPoint(center)<radius);
     }
 
     /**
@@ -69,16 +69,16 @@ public class Circle2D implements DistanceShape {
      * @param point 将被检查的点.
      * @return 距离.
      * 如果点再圆内： return 0;
-     *  如果点再圆外： return point.distanceTo(center)-radius
+     *  如果点再圆外： return point.distanceToPoint(center)-radius
      */
     @Override
-    public double getDistance(Point point) {
+    public double getDistanceToPoint(Point point) {
         double distance;
-        distance = point.distanceTo(center) - radius;
+        distance = point.distanceToPoint(center) - radius;
         return distance;
     }
 
-    public Vector getDirection(Point point){
+    public Vector getDirectionToPoint(Point point){
         Vector2D vector2D = (Vector2D) center.directionTo(point);
         if(contains(point)) vector2D.scale(-1);
         return vector2D;
@@ -117,7 +117,7 @@ public class Circle2D implements DistanceShape {
      */
     @Override
     public boolean hits(Box hitbox) {
-        if (hitbox.getDistance(center) <= radius){
+        if (hitbox.getDistanceToPoint(center) <= radius){
             return true;}
         return false;
     }
@@ -154,13 +154,13 @@ public class Circle2D implements DistanceShape {
      * @return 距离
      */
     @Override
-    public double distanceTo(Shape other) {
-        double distance =  other.getDistance(this.center) - this.radius;
+    public double distanceTo(ModelShape other) {
+        double distance =  other.getDistanceToPoint(this.center) - this.radius;
         return distance;
     }
 
-    public Vector directionTo(Shape other){
-        Vector2D vector2D = (Vector2D) other.getDirection(center);
+    public Vector directionTo(ModelShape other){
+        Vector2D vector2D = (Vector2D) other.getDirectionToPoint(center);
         if(distanceTo(other)<-radius) vector2D.scale(-1);
         return vector2D;
     }
@@ -170,7 +170,7 @@ public class Circle2D implements DistanceShape {
 
 
     @Override
-    public boolean intersects(Shape other) {
+    public boolean intersects(ModelShape other) {
         return distanceTo(other) <= 0;
     }
 

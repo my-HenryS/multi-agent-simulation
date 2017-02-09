@@ -1,6 +1,6 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.model.Agent;
 import org.socialforce.model.Blockable;
 import org.socialforce.model.InteractiveEntity;
@@ -25,8 +25,8 @@ public class Wall extends Entity implements Blockable {
         }
     }
 
-    public Wall(Shape shape) {
-        super(shape);
+    public Wall(ModelShape modelShape) {
+        super(modelShape);
     }
 
     /**
@@ -41,6 +41,6 @@ public class Wall extends Entity implements Blockable {
 
     @Override
     public Wall standardclone() {
-        return new Wall(shape.clone());
+        return new Wall(modelShape.clone());
     }
 }

@@ -1,7 +1,7 @@
 package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.DistanceModelShape;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.impl.ETC_Tollbooth;
 import org.socialforce.model.impl.SimpleTollbooth;
@@ -21,7 +21,7 @@ import static org.socialforce.scene.SceneLoader.genParameter;
  * 暂时不完全可用 还需调整
  */
 public class ApplicationForMCM extends SimpleApplication implements SocialForceApplication {
-    DistanceShape template = new Circle2D(new Point2D(0,0), 2/2);
+    DistanceModelShape template = new Circle2D(new Point2D(0,0), 2/2);
     public ApplicationForMCM(){
         setUpScenes(0,0);
     }

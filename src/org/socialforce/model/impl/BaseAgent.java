@@ -1,6 +1,5 @@
 package org.socialforce.model.impl;
 
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Velocity2D;
@@ -8,7 +7,6 @@ import org.socialforce.model.*;
 import org.socialforce.scene.Scene;
 import org.socialforce.strategy.Path;
 
-import java.io.*;
 import java.util.LinkedList;
 
 /**
@@ -21,15 +19,15 @@ public class BaseAgent extends Entity implements Agent {
     Path path;
     double mass;
     int currTimestamp;
-    DistanceShape view;
+    DistanceModelShape view;
     Force pushed;
     Velocity deltaV;
     Vector deltaS;
     boolean escaped = false;
     boolean stoped = false;
-    DistanceShape shape;
+    DistanceModelShape shape;
 
-    public BaseAgent(DistanceShape shape, Velocity velocity) {
+    public BaseAgent(DistanceModelShape shape, Velocity velocity) {
         super(shape);
         this.shape = shape;
         this.currTimestamp = 0;
@@ -46,7 +44,7 @@ public class BaseAgent extends Entity implements Agent {
      * @return 实体的形状.
      */
     @Override
-    public DistanceShape getShape() {
+    public DistanceModelShape getModelShape() {
         return shape;
     }
 
@@ -87,11 +85,11 @@ public class BaseAgent extends Entity implements Agent {
      * 该agent只和位于该视域范围内的agent进行交互
      *
      * @return 一个表示该视域范围的形状
-     * @see Shape
+     * @see ModelShape
      */
     @Override
-    // FIXME: 2016/9/3 it should be DistanceShape to support pool selection.
-    public DistanceShape getView() {
+    // FIXME: 2016/9/3 it should be DistanceModelShape to support pool selection.
+    public DistanceModelShape getView() {
         return view;
     }
 
@@ -287,7 +285,7 @@ public class BaseAgent extends Entity implements Agent {
 
 
     public String toString(){
-        return "Shape:" + this.shape.toString() + "\tVelocity:" + this.currVelocity.toString() + "\tForce:" + this.pushed.toString();
+        return "ModelShape:" + this.shape.toString() + "\tVelocity:" + this.currVelocity.toString() + "\tForce:" + this.pushed.toString();
     }
 
     public double averageSpeed(int span){

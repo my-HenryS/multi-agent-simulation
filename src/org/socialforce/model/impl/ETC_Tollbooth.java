@@ -1,6 +1,6 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.model.InteractiveEntity;
 
 /**
@@ -8,8 +8,8 @@ import org.socialforce.model.InteractiveEntity;
  */
 public class ETC_Tollbooth extends SimpleTollbooth {
     static double maxVelocity = 13;
-    public ETC_Tollbooth(Shape shape, double interval) {
-        super(shape, interval);
+    public ETC_Tollbooth(ModelShape modelShape, double interval) {
+        super(modelShape, interval);
     }
 
     @Override

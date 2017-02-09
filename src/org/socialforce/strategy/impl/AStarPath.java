@@ -4,7 +4,6 @@ import org.socialforce.strategy.Path;
 import org.socialforce.geom.Point;
 
 import java.util.LinkedList;
-import java.util.Map;
 
 /**
  * 定义StraightPath类，其实现了接口Path的方法。
@@ -54,7 +53,7 @@ public class AStarPath implements Path {
         double length = 0;
         LinkedList<Point> path = predict(current);
         for(int i = 0; i < path.size() - 1; i++){
-            length += path.get(i).distanceTo(path.get(i+1));
+            length += path.get(i).distanceToPoint(path.get(i+1));
         }
         return length;
     }

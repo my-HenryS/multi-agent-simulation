@@ -3,11 +3,10 @@ package org.socialforce.app.Applications;
 import org.socialforce.app.Interpreter;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.app.impl.SimpleInterpreter;
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.DistanceModelShape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.impl.Wall;
 import org.socialforce.scene.ParameterPool;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
@@ -27,7 +26,7 @@ import static org.socialforce.scene.SceneLoader.genParameter;
  * Created by Administrator on 2017/2/3.
  */
 public class ApplicationForMutidoor extends SimpleApplication implements SocialForceApplication {
-    DistanceShape template;
+    DistanceModelShape template;
 
     public ApplicationForMutidoor(){
     }

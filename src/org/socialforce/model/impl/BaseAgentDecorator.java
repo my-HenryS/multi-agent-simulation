@@ -1,14 +1,10 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.DistanceModelShape;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Velocity;
-import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.AgentDecorator;
-import org.socialforce.model.SocialForceModel;
-
-import java.util.Random;
 
 
 /**
@@ -16,7 +12,7 @@ import java.util.Random;
  */
 public class BaseAgentDecorator implements AgentDecorator {
     @Override
-    public Agent createAgent(Point position, Velocity velocity, DistanceShape template) {
+    public Agent createAgent(Point position, Velocity velocity, DistanceModelShape template) {
         template = template.clone();
         template.moveTo(position);
         Agent agent = new BaseAgent(template, velocity);

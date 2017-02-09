@@ -39,7 +39,7 @@ public class DynamicNearestGoalStrategy implements DynamicStrategy {
                 if(agent.getPath().getGoal().equals(goals.get(0))){
                     continue;
                 }
-                if(agent.getPath().getGoal().distanceTo(agent.getShape().getReferencePoint()) < 0.3){
+                if(agent.getPath().getGoal().distanceToPoint(agent.getModelShape().getReferencePoint()) < 0.3){
                     agent.setPath(pathFinder.plan_for(goals.get(0)));
                     continue;
                 }
@@ -49,7 +49,7 @@ public class DynamicNearestGoalStrategy implements DynamicStrategy {
             for (Point goal : transits) {
                 //设置最优path
                 Path path = pathFinder.plan_for(goal);
-                double pathLength = path.length(agent.getShape().getReferencePoint());
+                double pathLength = path.length(agent.getModelShape().getReferencePoint());
                 if (pathLength < path_length) {
                     path_length = pathLength;
                     designed_path = path;
@@ -68,10 +68,10 @@ public class DynamicNearestGoalStrategy implements DynamicStrategy {
         for(Iterator<SceneValue> iterator = scene.getValueSet().iterator(); iterator.hasNext();){
             SceneValue sceneValue = iterator.next();
             if(sceneValue instanceof SVSR_SafetyRegion){
-                goals.addLast(((SVSR_SafetyRegion)sceneValue).getValue().getShape().getReferencePoint());
+                goals.addLast(((SVSR_SafetyRegion)sceneValue).getValue().getModelShape().getReferencePoint());
             }
             if(sceneValue instanceof SVSR_Monitor){
-                transits.addLast(((SVSR_Monitor)sceneValue).getValue().getShape().getReferencePoint());
+                transits.addLast(((SVSR_Monitor)sceneValue).getValue().getModelShape().getReferencePoint());
             }
         }
     }

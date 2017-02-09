@@ -1,7 +1,6 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.geom.Shape;
-import org.socialforce.geom.impl.Vector2D;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 
@@ -14,8 +13,8 @@ import java.util.Map;
 public class SimpleTollbooth extends Entity {
     Map<Agent, Integer> agentDictionary = new HashMap<>();
     double interval;
-    public SimpleTollbooth(Shape shape, double interval) {
-        super(shape);
+    public SimpleTollbooth(ModelShape modelShape, double interval) {
+        super(modelShape);
         this.interval = interval;
     }
 
@@ -33,12 +32,12 @@ public class SimpleTollbooth extends Entity {
 
     @Override
     public InteractiveEntity standardclone() {
-        return new SimpleTollbooth(shape.clone(), interval);
+        return new SimpleTollbooth(modelShape.clone(), interval);
     }
 
     public boolean isValid(BaseAgent agent){
         if(!agentDictionary.containsKey(agent)){
-            if(agent.getShape().distanceTo(this.shape) < 0){
+            if(agent.getModelShape().distanceTo(this.modelShape) < 0){
                 agentDictionary.put(agent, (int)(agent.currTimestamp + interval / agent.getModel().getTimePerStep()) );
                 return true;
             }

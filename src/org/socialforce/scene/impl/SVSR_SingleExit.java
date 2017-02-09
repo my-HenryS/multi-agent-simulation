@@ -1,7 +1,7 @@
 package org.socialforce.scene.impl;
 
-import org.socialforce.geom.ClipperShape;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.ClipperModelShape;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.SimpleSocialForceModel;
@@ -12,8 +12,8 @@ import org.socialforce.scene.SceneValue;
 /**
  * Created by sunjh1999 on 2017/1/17.
  */
-public class SVSR_SingleExit implements SceneValue<ClipperShape> {
-    protected ClipperShape exit;
+public class SVSR_SingleExit implements SceneValue<ClipperModelShape> {
+    protected ClipperModelShape exit;
     protected String name;
     protected SimpleSocialForceModel model = new SimpleSocialForceModel();
 
@@ -43,7 +43,7 @@ public class SVSR_SingleExit implements SceneValue<ClipperShape> {
      * @return 返回的具体值。
      */
     @Override
-    public ClipperShape getValue() {
+    public ClipperModelShape getValue() {
         return exit;
     }
 
@@ -53,7 +53,7 @@ public class SVSR_SingleExit implements SceneValue<ClipperShape> {
      * @param value 要设置的值。
      */
     @Override
-    public void setValue(ClipperShape value) {
+    public void setValue(ClipperModelShape value) {
         exit = value;
     }
 
@@ -71,8 +71,8 @@ public class SVSR_SingleExit implements SceneValue<ClipperShape> {
         if (exit.getBounds().getStartPoint().getX() != exit.getBounds().getEndPoint().getX()
                 && exit.getBounds().getStartPoint().getY() != exit.getBounds().getEndPoint().getY()) {
             wall = scene.getStaticEntities().selectTop(exit.getReferencePoint());
-            Box2D wallShape = (Box2D) wall.getShape();
-            Shape[] boxes =  exit.clip(wallShape);
+            Box2D wallShape = (Box2D) wall.getModelShape();
+            ModelShape[] boxes =  exit.clip(wallShape);
             for (int j=0;j<boxes.length;j++){
                 temp = new Wall(boxes[j]);
                 temp.setModel(model);
@@ -122,7 +122,7 @@ public class SVSR_SingleExit implements SceneValue<ClipperShape> {
      *                              from being compared to this object.
      */
     @Override
-    public int compareTo(SceneValue<ClipperShape> o) {
+    public int compareTo(SceneValue<ClipperModelShape> o) {
         return 0;
     }
 

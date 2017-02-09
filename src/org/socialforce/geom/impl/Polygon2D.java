@@ -3,18 +3,17 @@ package org.socialforce.geom.impl;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.Box;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.geom.Vector;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * 凸多边形
  * 以其顶点的数组描述
  * Created by Whatever on 2017/1/29.
  */
-public class Polygon2D implements Shape {
+public class Polygon2D implements ModelShape {
     public Polygon2D(){}
     public Polygon2D(Point2D[] nods){
         this.nods = nods;
@@ -100,7 +99,7 @@ public class Polygon2D implements Shape {
     }
 
     /**
-     * 检查一个点是否属于 <code>Shape</code>.
+     * 检查一个点是否属于 <code>ModelShape</code>.
      *
      * @param point 将被检查的点.
      * @return 如果该点是该形状上的一部分，就返回真，否则返回假.
@@ -132,11 +131,11 @@ public class Polygon2D implements Shape {
      * @return 该距离 .
      */
     @Override
-    public double getDistance(Point point) {
+    public double getDistanceToPoint(Point point) {
         double temp = 0;
         for (Segment2D edge : edges){
-            if (temp < edge.getDistance(point)){
-                temp = edge.getDistance(point);
+            if (temp < edge.getDistanceToPoint(point)){
+                temp = edge.getDistanceToPoint(point);
             }
         }
         return temp;
@@ -150,16 +149,16 @@ public class Polygon2D implements Shape {
      * @return 该距离矢量.
      */
     @Override
-    public Vector getDirection(Point point) {
+    public Vector getDirectionToPoint(Point point) {
         double temp = 0;
         Segment2D nearest = new Segment2D();
         for (Segment2D edge : edges){
-            if (temp < edge.getDistance(point)){
-                temp = edge.getDistance(point);
+            if (temp < edge.getDistanceToPoint(point)){
+                temp = edge.getDistanceToPoint(point);
                 nearest = edge;
             }
         }
-        return nearest.getDirection(point);
+        return nearest.getDirectionToPoint(point);
     }
 
     /**
@@ -247,7 +246,7 @@ public class Polygon2D implements Shape {
      * @return 该形状的副本.
      */
     @Override
-    public Shape clone() {
+    public ModelShape clone() {
         return new Polygon2D(nods);
     }
 }

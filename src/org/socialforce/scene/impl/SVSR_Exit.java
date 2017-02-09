@@ -1,9 +1,9 @@
 package org.socialforce.scene.impl;
 
+import org.socialforce.geom.ClipperModelShape;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneValue;
-import org.socialforce.geom.ClipperShape;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.SimpleSocialForceModel;
@@ -14,12 +14,12 @@ import org.socialforce.model.impl.Wall;
  * 该场景变量以name作为场景中的实体名，
  * 以一个ClipperShape来规定出口的位置和大小。
  */
-public class SVSR_Exit implements SceneValue<ClipperShape[]> {
-    protected ClipperShape[] exit;
+public class SVSR_Exit implements SceneValue<ClipperModelShape[]> {
+    protected ClipperModelShape[] exit;
     protected String name;
     protected SimpleSocialForceModel model = new SimpleSocialForceModel();
     public SVSR_Exit(){}
-    public SVSR_Exit(ClipperShape[] exit){
+    public SVSR_Exit(ClipperModelShape[] exit){
         this.exit = exit;
     }
 
@@ -49,7 +49,7 @@ public class SVSR_Exit implements SceneValue<ClipperShape[]> {
      * @return 返回的具体值。
      */
     @Override
-    public ClipperShape[] getValue() {
+    public ClipperModelShape[] getValue() {
         return exit;
     }
 
@@ -59,7 +59,7 @@ public class SVSR_Exit implements SceneValue<ClipperShape[]> {
      * @param value 要设置的值。
      */
     @Override
-    public void setValue(ClipperShape[] value) {
+    public void setValue(ClipperModelShape[] value) {
         exit = value;
     }
 
@@ -78,8 +78,8 @@ public class SVSR_Exit implements SceneValue<ClipperShape[]> {
             if (exit[i].getBounds().getStartPoint().getX() != exit[i].getBounds().getEndPoint().getX()
                     && exit[i].getBounds().getStartPoint().getY() != exit[i].getBounds().getEndPoint().getY()) {
                 wall = scene.getStaticEntities().selectTop(exit[i].getReferencePoint());
-                Box2D wallShape = (Box2D) wall.getShape();
-                Shape[] boxes =  exit[i].clip(wallShape);
+                Box2D wallShape = (Box2D) wall.getModelShape();
+                ModelShape[] boxes =  exit[i].clip(wallShape);
                 for (int j=0;j<boxes.length;j++){
                     temp = new Wall(boxes[j]);
                     temp.setModel(model);
@@ -92,7 +92,7 @@ public class SVSR_Exit implements SceneValue<ClipperShape[]> {
 
 
     @Override
-    public int compareTo(SceneValue<ClipperShape[]> o) {
+    public int compareTo(SceneValue<ClipperModelShape[]> o) {
         return 0;
     }
 

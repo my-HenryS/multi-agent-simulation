@@ -1,14 +1,14 @@
 package org.socialforce.drawer;
 
 
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.ModelShape;
 
 /**
  * a drawer can draw a specific pattern on a specific device.
  * the pattern's color can be adjusted.
  *
  * @author Ledenel
- * @see Shape
+ * @see ModelShape
  * @see Drawable
  * Created by Ledenel on 2016/7/31.
  */

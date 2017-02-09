@@ -1,6 +1,6 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.SocialForceModel;
@@ -10,8 +10,8 @@ import org.socialforce.model.SocialForceModel;
  *  * Created by Ledenel on 2016/8/14.
  */
 public class SafetyRegion extends Entity implements InteractiveEntity {
-    public SafetyRegion(Shape shape) {
-        super(shape);
+    public SafetyRegion(ModelShape modelShape) {
+        super(modelShape);
     }
 
     /**
@@ -26,7 +26,7 @@ public class SafetyRegion extends Entity implements InteractiveEntity {
         if(affectedEntity instanceof Agent) {
             Agent agent = (Agent)affectedEntity;
             //agent.push(model.calculate(this,agent));
-            if(shape.contains(agent.getShape().getReferencePoint())) {
+            if(modelShape.contains(agent.getModelShape().getReferencePoint())) {
                 //agent exited.
                 if(scene != null) {
                     scene.onAgentEscape(agent); // add valid scene.
@@ -66,6 +66,6 @@ public class SafetyRegion extends Entity implements InteractiveEntity {
 
     @Override
     public SafetyRegion standardclone() {
-        return new SafetyRegion(shape.clone());
+        return new SafetyRegion(modelShape.clone());
     }
 }

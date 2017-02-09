@@ -1,9 +1,9 @@
 package org.socialforce.scene.impl;
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.DistanceModelShape;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.geom.Velocity;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneValue;
-import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
@@ -23,12 +23,12 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
      */
     protected class AgentGenerator{
         protected double X_distance,Y_distance,Z_distance;
-        protected Shape Area;
+        protected ModelShape Area;
         protected AgentDecorator decorator;
         protected SocialForceModel model;
         protected Velocity velocity;
-        protected DistanceShape shape;
-        public AgentGenerator(double X_distance,double Y_distance,double Z_distance,Shape Area){
+        protected DistanceModelShape shape;
+        public AgentGenerator(double X_distance,double Y_distance,double Z_distance,ModelShape Area){
             this.X_distance = X_distance;
             this.Y_distance = Y_distance;
             this.Z_distance = Z_distance;
@@ -43,7 +43,7 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
         public double getZ_distance(){
             return Z_distance;
         }
-        public Shape getArea(){
+        public ModelShape getArea(){
             return Area;
         }
         public void setDecorator(AgentDecorator decorator){
@@ -53,7 +53,7 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
     }
     private int priority;
     protected AgentGenerator agentGenerator;
-    public SVSR_AgentGenerator(double X_distance, double Y_distance, double Z_distance, Shape Area, DistanceShape template, Velocity velocity){
+    public SVSR_AgentGenerator(double X_distance, double Y_distance, double Z_distance, ModelShape Area, DistanceModelShape template, Velocity velocity){
         agentGenerator = new AgentGenerator(X_distance,Y_distance,Z_distance,Area);
         agentGenerator.setDecorator(new BaseAgentDecorator());
         agentGenerator.setModel(new SimpleSocialForceModel());

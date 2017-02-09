@@ -1,13 +1,12 @@
 package org.socialforce.scene.impl;
 
-import org.socialforce.drawer.impl.SolidCircle2DDrawer;
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.DistanceModelShape;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.geom.Velocity;
 import org.socialforce.geom.impl.*;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneValue;
 import org.socialforce.container.EntityPool;
-import org.socialforce.geom.Shape;
 import org.socialforce.model.Agent;
 import org.socialforce.model.AgentDecorator;
 import org.socialforce.model.InteractiveEntity;
@@ -16,7 +15,6 @@ import org.socialforce.model.impl.BaseAgentDecorator;
 import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.model.impl.SimpleSocialForceModel;
 
-import java.awt.*;
 import java.util.Random;
 
 /**
@@ -30,13 +28,13 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
      */
     protected class AgentGenerator{
         protected int agent_num;
-        protected Shape Area;
+        protected ModelShape Area;
         protected AgentDecorator decorator;
         protected SocialForceModel model;
         protected Velocity velocity;
-        protected DistanceShape shape;
+        protected DistanceModelShape shape;
 
-        public AgentGenerator(int agent_num,Shape Area){
+        public AgentGenerator(int agent_num,ModelShape Area){
             this.agent_num = agent_num;
             this.Area = Area;
         }
@@ -44,7 +42,7 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
         public int getAgent_num(){
             return agent_num;
         }
-        public Shape getArea(){
+        public ModelShape getArea(){
             return Area;
         }
         public void setDecorator(AgentDecorator decorator){
@@ -58,7 +56,7 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
     private int priority;
     protected AgentGenerator agentGenerator;
 
-    public SVSR_RandomAgentGenerator(int agent_num, Shape Area, DistanceShape template, Velocity velocity){
+    public SVSR_RandomAgentGenerator(int agent_num, ModelShape Area, DistanceModelShape template, Velocity velocity){
         agentGenerator = new AgentGenerator(agent_num,Area);
         agentGenerator.setDecorator(new BaseAgentDecorator());
         agentGenerator.setModel(new SimpleSocialForceModel());
@@ -66,7 +64,7 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
         agentGenerator.shape = template;
     }
 
-    public SVSR_RandomAgentGenerator(int agent_num, Shape Area, DistanceShape template){
+    public SVSR_RandomAgentGenerator(int agent_num, ModelShape Area, DistanceModelShape template){
         agentGenerator = new AgentGenerator(agent_num,Area);
         agentGenerator.setDecorator(new BaseAgentDecorator());
         agentGenerator.setModel(new SimpleSocialForceModel());
@@ -111,7 +109,7 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
                 Iterable<Agent> agents = scene.getAllAgents();
                 new_agent = agentGenerator.decorator.createAgent(point, agentGenerator.velocity.clone(), agentGenerator.shape);
                 for (Agent agent : agents) {
-                    if(new_agent.getShape().distanceTo(agent.getShape()) < 0){
+                    if(new_agent.getModelShape().distanceTo(agent.getModelShape()) < 0){
                         is_able_flag = 1;
                         break;
                     }
@@ -119,7 +117,7 @@ public class SVSR_RandomAgentGenerator implements SceneValue<SVSR_RandomAgentGen
                 if(is_able_flag == 0){
                     EntityPool all_blocks = scene.getStaticEntities();
                     for (InteractiveEntity entity : all_blocks) {
-                        if (!(entity instanceof SafetyRegion) && new_agent.getShape().distanceTo(entity.getShape()) < 0){
+                        if (!(entity instanceof SafetyRegion) && new_agent.getModelShape().distanceTo(entity.getModelShape()) < 0){
                             is_able_flag = 1;
                             break;
                         }

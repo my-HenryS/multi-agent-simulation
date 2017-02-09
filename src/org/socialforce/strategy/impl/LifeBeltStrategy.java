@@ -3,15 +3,11 @@ package org.socialforce.strategy.impl;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.model.Agent;
-import org.socialforce.scene.SceneValue;
-import org.socialforce.scene.impl.SVSR_Exit;
-import org.socialforce.scene.impl.SVSR_SafetyRegion;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.StaticStrategy;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 
 /**
  * Created by sunjh1999 on 2016/12/23.
@@ -32,7 +28,7 @@ public class LifeBeltStrategy extends NearestGoalStrategy implements StaticStrat
                 int front_num = fronts(agent, goal);
                 //设置最优path
                 Path path = pathFinder.plan_for(goal);
-                double pathLength = path.length(agent.getShape().getReferencePoint());
+                double pathLength = path.length(agent.getModelShape().getReferencePoint());
                 double t =  factorT(pathLength, agent, front_num, goal);
                 if(t < factor_t){
                     factor_t = t;
@@ -47,7 +43,7 @@ public class LifeBeltStrategy extends NearestGoalStrategy implements StaticStrat
         int front_num = 0;
         for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
             Agent target_agent = (Agent) iter.next();
-            if(agent.getShape().getDistance(goal) > target_agent.getShape().getDistance(goal)){
+            if(agent.getModelShape().getDistanceToPoint(goal) > target_agent.getModelShape().getDistanceToPoint(goal)){
                 front_num += 1;
             }
         }

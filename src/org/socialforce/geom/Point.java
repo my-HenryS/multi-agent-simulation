@@ -25,7 +25,7 @@ public interface Point extends Vector {
      * @param other 需要计算距离的另一个点
      * @return 距离.
      */
-    double distanceTo(Point other);
+    double distanceToPoint(Point other);
 
     /**
      * 获取该点到另一个点的方向矢量.

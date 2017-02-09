@@ -16,7 +16,7 @@ public class SolidBox2DDrawer extends AwtDrawer2D<Box2D> {
     }
 
     /**
-     * render the shape on the @code {Graphics2D} with color built-in.
+     * render the modelShape on the @code {Graphics2D} with color built-in.
      *  @param g       the graphics
      * @param pattern
      */

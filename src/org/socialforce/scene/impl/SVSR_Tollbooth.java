@@ -1,5 +1,5 @@
 package org.socialforce.scene.impl;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.model.impl.SimpleSocialForceModel;
 import org.socialforce.model.impl.SimpleTollbooth;
 import org.socialforce.scene.Scene;
@@ -11,7 +11,7 @@ import org.socialforce.scene.SceneValue;
 public class SVSR_Tollbooth implements SceneValue<SimpleTollbooth> {
     protected SimpleTollbooth tollbooth;
     protected String name;
-    public SVSR_Tollbooth(Shape shape, double interval){this.tollbooth= new SimpleTollbooth(shape, interval);}
+    public SVSR_Tollbooth(ModelShape modelShape, double interval){this.tollbooth= new SimpleTollbooth(modelShape, interval);}
     public SVSR_Tollbooth(SimpleTollbooth tollbooth){
         this.tollbooth = tollbooth;
     }

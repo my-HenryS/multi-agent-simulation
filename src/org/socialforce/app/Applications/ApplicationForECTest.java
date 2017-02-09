@@ -1,10 +1,8 @@
 package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
-import org.socialforce.geom.DistanceShape;
-import org.socialforce.geom.Vector;
+import org.socialforce.geom.DistanceModelShape;
 import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.model.impl.Monitor;
 import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
 import org.socialforce.geom.impl.Box2D;
@@ -12,14 +10,10 @@ import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.impl.Wall;
 import org.socialforce.strategy.GoalStrategy;
 import org.socialforce.strategy.PathFinder;
-import org.socialforce.model.SocialForceModel;
 import org.socialforce.strategy.impl.AStarPathFinder;
-import org.socialforce.model.impl.SimpleSocialForceModel;
 import org.socialforce.strategy.impl.NearestGoalStrategy;
 
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 import static org.socialforce.scene.SceneLoader.genParameter;
 
@@ -27,7 +21,7 @@ import static org.socialforce.scene.SceneLoader.genParameter;
  * Created by Whatever on 2016/12/2.
  */
 public class ApplicationForECTest extends SimpleApplication implements SocialForceApplication {
-    DistanceShape template;
+    DistanceModelShape template;
 
     public ApplicationForECTest(){
     }

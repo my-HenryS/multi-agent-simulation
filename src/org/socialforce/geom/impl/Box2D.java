@@ -3,10 +3,8 @@ package org.socialforce.geom.impl;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Ledenel on 2016/8/8.
@@ -110,7 +108,7 @@ public class Box2D implements Box {
     }
 
     /**
-     * 检查点是否属于 <code>Shape</code>.
+     * 检查点是否属于 <code>ModelShape</code>.
      *
      * @param point 将被检查的点.
      * @return 如果点是该形状的一部分，就为真，否则为假.
@@ -132,7 +130,7 @@ public class Box2D implements Box {
      * @return 距离. 如果点不能到形状上话，返回 Double.NaN .
      */
     @Override
-    public double getDistance(Point point) {
+    public double getDistanceToPoint(Point point) {
         double dsx = point.getX() - xmin;
         double dsy = point.getY() - ymin;
         double dex = point.getX() - xmax;
@@ -144,7 +142,7 @@ public class Box2D implements Box {
             if (dsy > 0) {
                 if (dex > 0) {
                     if (dey > 0) {
-                        return point.distanceTo(new Point2D(xmax, ymax));
+                        return point.distanceToPoint(new Point2D(xmax, ymax));
                     } else { // dey <= 0
                         return Math.abs(dex);
                     }
@@ -153,7 +151,7 @@ public class Box2D implements Box {
                 }
             } else { // dsy <= 0
                 if (dex > 0) {
-                    return point.distanceTo(new Point2D(xmax, ymin));
+                    return point.distanceToPoint(new Point2D(xmax, ymin));
                 } else { // dex <= 0
                     return Math.abs(dsy);
                 }
@@ -161,18 +159,18 @@ public class Box2D implements Box {
         } else { // dsx <= 0
             if (dsy > 0) {
                 if (dey > 0) {
-                    return point.distanceTo(new Point2D(xmin, ymax));
+                    return point.distanceToPoint(new Point2D(xmin, ymax));
                 } else { // dey <= 0
                     return Math.abs(dsx);
                 }
             } else { // dsy <= 0
-                return point.distanceTo(new Point2D(xmin, ymin));
+                return point.distanceToPoint(new Point2D(xmin, ymin));
             }
         }
         //return Double.NaN;
     }
 
-    public Vector getDirection(Point point){
+    public Vector getDirectionToPoint(Point point){
         Vector vector,temp;
         Point2D a,b,c,d;
         a = new Point2D(getStartPoint().getX(),getStartPoint().getY());
@@ -185,10 +183,10 @@ public class Box2D implements Box {
         double dey = point.getY() - ymax;
         if (contains(point)) {
             double result = Math.min(Math.min(Math.abs(dsx),Math.abs(dsy)), Math.min(Math.abs(dex),Math.abs(dey)));
-            if(result == new Segment2D(a,b).getDistance(point)) return new Segment2D(a,b).getDirection(point);
-            if(result == new Segment2D(b,c).getDistance(point)) return new Segment2D(b,c).getDirection(point);
-            if(result == new Segment2D(c,d).getDistance(point)) return new Segment2D(c,d).getDirection(point);
-            if(result == new Segment2D(d,a).getDistance(point)) return new Segment2D(d,a).getDirection(point);
+            if(result == new Segment2D(a,b).getDistanceToPoint(point)) return new Segment2D(a,b).getDirectionToPoint(point);
+            if(result == new Segment2D(b,c).getDistanceToPoint(point)) return new Segment2D(b,c).getDirectionToPoint(point);
+            if(result == new Segment2D(c,d).getDistanceToPoint(point)) return new Segment2D(c,d).getDirectionToPoint(point);
+            if(result == new Segment2D(d,a).getDistanceToPoint(point)) return new Segment2D(d,a).getDirectionToPoint(point);
         }
         if (dsx > 0) {
             if (dsy > 0) {
@@ -317,7 +315,7 @@ public class Box2D implements Box {
      * @return 这个形状的副本.
      */
     @Override
-    public Shape clone() {
+    public ModelShape clone() {
         Box2D cloned = new Box2D();
         cloned.xmin = xmin;
         cloned.xmax = xmax;
@@ -415,10 +413,10 @@ public class Box2D implements Box {
      * @return
      */
     @Override
-    public Shape[] clip(ClippableShape shape) {
+    public ModelShape[] clip(ClippableModelShape shape) {
         Point[][] dictionary = new Point[2][2];
         if(shape instanceof Box2D){
-            Shape[] Boxes;
+            ModelShape[] Boxes;
             if (hits(shape.getBounds())){
                 if ((((Box2D) shape).getStartPoint().getX()<getStartPoint().getX()&&getEndPoint().getX()<((Box2D) shape).getEndPoint().getX())
                         ||(((Box2D) shape).getStartPoint().getX()>getStartPoint().getX()&&getEndPoint().getX()>((Box2D) shape).getEndPoint().getX())){
@@ -433,14 +431,14 @@ public class Box2D implements Box {
                             dictionary[1][0] = new Point2D(((Box2D) shape).getEndPoint().getX(),getStartPoint().getY());
                             dictionary[0][1] = new Point2D(((Box2D) shape).getStartPoint().getX(),getEndPoint().getY());
                         }
-                        Boxes = new Shape[]{new Box2D((dictionary)[0][0],dictionary[1][0]),new Box2D(dictionary[0][1],dictionary[1][1])};
+                        Boxes = new ModelShape[]{new Box2D((dictionary)[0][0],dictionary[1][0]),new Box2D(dictionary[0][1],dictionary[1][1])};
                         return Boxes;
                     }
                     else throw new IllegalArgumentException("目前阶段不支持以一般方式进行矩形切割，只支持十字形切割");
                 }
                 else throw new IllegalArgumentException("目前阶段不支持以一般方式进行矩形切割，只支持十字形切割");
             }
-            else return new Shape[]{shape};
+            else return new ModelShape[]{shape};
         }
         else throw new IllegalArgumentException("目前阶段不支持其它图形的切割，只支持两个矩形的切割");
     }

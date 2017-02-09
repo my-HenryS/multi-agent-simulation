@@ -1,8 +1,8 @@
 package org.socialforce.model;
 
+import org.socialforce.geom.DistanceModelShape;
 import org.socialforce.scene.Scene;
-import org.socialforce.geom.DistanceShape;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.ModelShape;
 import org.socialforce.geom.Vector;
 import org.socialforce.geom.Velocity;
 import org.socialforce.strategy.Path;
@@ -20,16 +20,15 @@ public interface Agent extends InteractiveEntity, Moveable, Blockable {
      *
      * @return 实体的形状.
      */
-    @Override
-    DistanceShape getShape();
+    DistanceModelShape getModelShape();
 
     /**
      * 获取一个agent的视域范围。
      * 该agent只和位于该视域范围内的agent进行交互
      * @return 一个表示该视域范围的形状
-     * @see Shape
+     * @see ModelShape
      */
-    DistanceShape getView();
+    DistanceModelShape getView();
     
     /**
      * 获取一个agent的期望速度。
