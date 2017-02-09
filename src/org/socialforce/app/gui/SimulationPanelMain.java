@@ -145,7 +145,5 @@ public class SimulationPanelMain implements ApplicationListener {
         if (scene.getDrawer() == null) {
             shower1.setScene(scene);
         }
-        scene.getDrawer().draw(scene);
-        SimulationPanelMain.this.shower1.getBoard().repaint();//refresh();
     }
 }
