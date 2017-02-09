@@ -27,7 +27,7 @@ public class Arc2D implements PrimitiveShape {
             return shape.distanceTo(this) == 0;
         }
         if (shape instanceof Arc2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         else throw new IllegalArgumentException("待补充的图元！");
     }
@@ -35,13 +35,13 @@ public class Arc2D implements PrimitiveShape {
     @Override
     public Point[] intersectPoint(PrimitiveShape shape) {
         if (shape instanceof Segment2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         if (shape instanceof Point2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         if (shape instanceof Arc2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         else throw new IllegalArgumentException("待补充的图元！");
     }
@@ -49,13 +49,13 @@ public class Arc2D implements PrimitiveShape {
     @Override
     public double distanceTo(PrimitiveShape shape) {
         if (shape instanceof Segment2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         if (shape instanceof Point2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         if (shape instanceof Arc2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         else throw new IllegalArgumentException("待补充的图元！");
     }
@@ -63,13 +63,13 @@ public class Arc2D implements PrimitiveShape {
     @Override
     public Vector directionTo(PrimitiveShape shape) {
         if (shape instanceof Segment2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         if (shape instanceof Point2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         if (shape instanceof Arc2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         else throw new IllegalArgumentException("待补充的图元！");
     }

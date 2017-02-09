@@ -372,21 +372,24 @@ public class Segment2D implements ModelShape,PrimitiveShape {
             return ((Segment2D) shape).intersect(this);
         }
         if (shape instanceof Arc2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
-        return false;
+        if (shape instanceof Point2D){
+            return contains((Point) shape);
+        }
+        else throw new IllegalArgumentException("待补充的图元！");
     }
 
     @Override
     public Point[] intersectPoint(PrimitiveShape shape) {
         if (shape instanceof Segment2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         if (shape instanceof Point2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         if (shape instanceof Arc2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         else throw new IllegalArgumentException("待补充的图元！");
     }
@@ -394,13 +397,13 @@ public class Segment2D implements ModelShape,PrimitiveShape {
     @Override
     public double distanceTo(PrimitiveShape shape) {
         if (shape instanceof Segment2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         if (shape instanceof Point2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         if (shape instanceof Arc2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         else throw new IllegalArgumentException("待补充的图元！");
     }
@@ -408,13 +411,13 @@ public class Segment2D implements ModelShape,PrimitiveShape {
     @Override
     public Vector directionTo(PrimitiveShape shape) {
         if (shape instanceof Segment2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         if (shape instanceof Point2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         if (shape instanceof Arc2D){
-
+            throw new IllegalArgumentException("还没完成因为我是智障");
         }
         else throw new IllegalArgumentException("待补充的图元！");
     }

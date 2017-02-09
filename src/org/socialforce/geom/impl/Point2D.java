@@ -138,7 +138,8 @@ public class Point2D extends Vector2D implements Point, PrimitiveShape {
             double temp = Double.NEGATIVE_INFINITY;
             Circle2D circle2D = ((Arc2D) shape).getCircle();
             Point2D[] point2DS = ((Arc2D) shape).getEndpoints();
-            if (temp > circle2D.getDistanceToPoint(this)){
+            Segment2D segment2D = new Segment2D(this, (Point2D) circle2D.getReferencePoint());
+            if (temp > circle2D.getDistanceToPoint(this) && segment2D.intersect(shape)){
                 temp = circle2D.getDistanceToPoint(this);
             }
             else if (temp > point2DS[0].distanceToPoint(this)){
@@ -167,7 +168,8 @@ public class Point2D extends Vector2D implements Point, PrimitiveShape {
             double temp = Double.NEGATIVE_INFINITY;
             Circle2D circle2D = ((Arc2D) shape).getCircle();
             Point2D[] point2DS = ((Arc2D) shape).getEndpoints();
-            if (temp > circle2D.getDistanceToPoint(this)){
+            Segment2D segment2D = new Segment2D(this, (Point2D) circle2D.getReferencePoint());
+            if (temp > circle2D.getDistanceToPoint(this) && segment2D.intersect(shape)){
                 temp = circle2D.getDistanceToPoint(this);
                 direction = (Vector2D) circle2D.getDirectionToPoint(this);
                 direction.scale(-1);
