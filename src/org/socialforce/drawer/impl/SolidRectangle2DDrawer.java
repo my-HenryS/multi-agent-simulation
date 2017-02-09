@@ -32,6 +32,7 @@ public class SolidRectangle2DDrawer extends AwtDrawer2D<Rectangle2D> {
             double y1 = point.getY() - length * Math.sin(angle);
             g.rotate(pattern.getAngle(), point.getX(), point.getY());
             g.draw(new java.awt.geom.Rectangle2D.Double(x1, y1, length, width));
+            g.setTransform(old);
             /*double length = pattern.getScale()[0], width = pattern.getScale()[1];
 
             float thick= (float) width;
