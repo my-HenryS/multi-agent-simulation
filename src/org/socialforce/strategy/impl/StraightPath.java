@@ -33,7 +33,7 @@ public class StraightPath implements Path {
      * @return 当前位置的目标点，该点为归还路径上的点。
      */
     @Override
-    public Point getCurrentGoal(Point current) {
+    public Point nextStep(Point current) {
         int index = 0;
         double length = Double.POSITIVE_INFINITY;
         for(int i = 0; i < goals.length; i++) {

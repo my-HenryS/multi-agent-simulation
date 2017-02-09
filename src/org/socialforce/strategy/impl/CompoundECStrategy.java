@@ -1,8 +1,13 @@
 package org.socialforce.strategy.impl;
 
+import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Segment2D;
+import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.Entity;
+import org.socialforce.scene.Scene;
 import org.socialforce.strategy.DynamicStrategy;
+import org.socialforce.strategy.PathFinder;
 
 import java.util.*;
 
@@ -10,22 +15,25 @@ import java.util.*;
  * Created by sunjh1999 on 2017/1/28.
  * BEST STRATEGY
  */
-public class ComplexECStrategy implements DynamicStrategy {
+public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
     LinkedList<Gate> gates = new LinkedList<>();
     int regionNum;
     LinkedList<Tree<String>> paths = new LinkedList<>();
     Graph<String> graph = new Graph<>();  //图的邻接表
 
-    public ComplexECStrategy(){
+    public CompoundECStrategy(Scene scene, PathFinder pathFinder){
+        super(scene, pathFinder);
         gates.addLast(new Gate(new Segment2D(new Point2D(1,1), new Point2D(2,2)), "A"));
-        gates.addLast(new Gate(new Segment2D(new Point2D(20,1), new Point2D(20,2)), "B"));
-        gates.addLast(new Gate(new Segment2D(new Point2D(20,1), new Point2D(20,2)), "C"));
-        gates.addLast(new Gate(new Segment2D(new Point2D(20,1), new Point2D(20,2)), "D"));
+        for(Gate gate:gates){
+            gate.setScene(scene);
+            scene.getStaticEntities().add(gate);
+        }
         graph.combine("A", "B");
         graph.combine("B", "C");
         graph.combine("D", "C");
         graph.combine("A", "D");
         setPaths("A");
+        setPaths("B");
     }
 
     @Override
@@ -65,12 +73,25 @@ public class ComplexECStrategy implements DynamicStrategy {
         paths.addLast(path);
     }
 
-    private class Gate{
-        Segment2D gate;
-        String name;
+    private class Gate extends Entity{
         public Gate(Segment2D segment, String name){
-            gate = segment;
-            this.name = name;
+            super(segment);
+            setName(name);
+        }
+
+        @Override
+        public void affect(InteractiveEntity affectedEntity) {
+
+        }
+
+        @Override
+        public double getMass() {
+            return 0;
+        }
+
+        @Override
+        public InteractiveEntity standardclone() {
+            return new Gate((Segment2D) shape.clone(), name);
         }
     }
 

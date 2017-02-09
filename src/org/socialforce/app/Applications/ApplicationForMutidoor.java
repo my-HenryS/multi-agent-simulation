@@ -54,7 +54,7 @@ public class ApplicationForMutidoor extends SimpleApplication implements SocialF
             for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                 Monitor m = (Monitor)iter.next();
                 Point p = m.getShape().getReferencePoint();
-                matrixV[(int)Math.rint((p.getY()+10)/samplewidth)][(int)Math.rint(p.getX()/samplewidth)] = m.sayVolume();
+                matrixV[(int)Math.rint((p.getY()+10)/samplewidth)][(int)Math.rint(p.getX()/samplewidth)] = m.sayVelocity();
             }
             for(double [] m1:matrixV){
                 for(double m:m1){
@@ -79,17 +79,14 @@ public class ApplicationForMutidoor extends SimpleApplication implements SocialF
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-            parameters.addLast(genParameter(new SV_RandomAgentGenerator(1,new Box2D(0,0,10,-10),template)));
+            parameters.addLast(genParameter(new SV_RandomAgentGenerator(100,new Box2D(0,0,10,-10),template)));
             parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(0,10,10,1))));
             for (int i = 0; i< 10/samplewidth;i++){
                 for (int j = 0; j < 20/samplewidth; j++){
                     parameters.addLast(genParameter(new SV_Monitor(new Circle2D(new Point2D(i*samplewidth,j*samplewidth-10),samplewidth/2))));
                 }
             }
-            parameters.addLast(genParameter(new SV_Wall(new Shape[]{new Box2D(0,0,5-doorwidth/2,1),new Box2D(5+doorwidth/2,0,5-doorwidth/2,1)})
-            ,new SV_Wall(new Shape[]{new Box2D(0,0,7-doorwidth/2,1),new Box2D(7+doorwidth/2,0,3-doorwidth/2,1)})
-            ,new SV_Wall(new Shape[]{new Box2D(0,0,10-doorwidth,1)})
-            ,new SV_Wall(new Shape[]{new Box2D(0,0,5-doorwidth/2,1),new Box2D(5+doorwidth/2,0,5-doorwidth/2,1),new Box2D(0,-3,5-doorwidth/2,-0.5),new Box2D(5+doorwidth/2,-3,5-doorwidth/2,-0.5)})
+            parameters.addLast(genParameter(new SV_Wall(new Shape[]{new Box2D(0,0,5-doorwidth/2,1),new Box2D(5+doorwidth/2,0,5-doorwidth/2,1),new Box2D(0,-3,5-doorwidth/2,-0.5),new Box2D(5+doorwidth/2,-3,5-doorwidth/2,-0.5)})
             ,new SV_Wall(new Shape[]{new Box2D(0,0,7-doorwidth/2,1),new Box2D(7+doorwidth/2,0,3-doorwidth/2,1),new Box2D(0,-3,7-doorwidth/2,-0.5),new Box2D(7+doorwidth/2,-3,3-doorwidth/2,-0.5)})
             ,new SV_Wall(new Shape[]{new Box2D(0,0,10-doorwidth,1),new Box2D(0,-3,10-doorwidth,-0.5)})
             ,new SV_Wall(new Shape[]{new Box2D(0,-2,7-doorwidth/2,3),new Box2D(7+doorwidth/2,-2,3-doorwidth/2,3)})

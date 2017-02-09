@@ -23,7 +23,7 @@ public interface Path {
      * @param current agent 所在的当前位置点。
      * @return 当前位置的目标点，该点为归还路径上的点。
      */
-    Point getCurrentGoal(Point current);
+    Point nextStep(Point current);
 
     /**
      * 计算路径长度

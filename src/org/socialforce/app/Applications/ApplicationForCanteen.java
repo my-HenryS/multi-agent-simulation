@@ -64,6 +64,8 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 System.out.print("Population of "+total_num);
                 int iteration = 0;
                 PathFinder pathFinder = new AStarPathFinder(scene, template);
+                strategy = new CompoundECStrategy(scene, pathFinder);
+                /*
                 if(i<10){
                     System.out.print(" with ECStrategy, ");
                     strategy = new ECStrategy(scene, pathFinder);
@@ -80,6 +82,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                     System.out.print(" with NRStrategy, ");
                     strategy = new NearestGoalStrategy(scene, pathFinder);
                 }
+                */
                 strategy.pathDecision();
                 while (scene.getAllAgents().size() > 5) {
                     long start = System.currentTimeMillis(), span, fps = 12;
