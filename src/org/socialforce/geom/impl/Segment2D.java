@@ -424,17 +424,35 @@ public class Segment2D implements ModelShape,PrimitiveShape {
 
     @Override
     public void rotate(Point point, double angel) {
-
+        Vector2D v1,v2;
+        v1 = new Vector2D(x1-point.getX(),y1-point.getY());
+        v2 = new Vector2D(x2-point.getX(),y2-point.getY());
+        v1.spin(angel);
+        v2.spin(angel);
+        x1 = point.getX()+v1.getX();
+        y1 = point.getY()+v1.getY();
+        x2 = point.getX()+v2.getX();
+        y2 = point.getY()+v2.getY();
     }
 
     @Override
     public void relativeExpand(double scale) {
-
+        absoluteExpand(scale*getLenth());
     }
 
     @Override
     public void absoluteExpand(double value) {
-
+        Point2D point2D = (Point2D) getReferencePoint();
+        double t1,t2,j1,j2;
+        double l = getLenth();
+        t1 = -(point2D.getX() - x1)*value/l;
+        t2 = -(point2D.getX() - x2)*value/l;
+        j1 = -(point2D.getY() - y1)*value/l;
+        j2 = -(point2D.getY() - y2)*value/l;
+        x1 = point2D.getX()+t1;
+        x2 = point2D.getX()+t2;
+        y1 = point2D.getY()+j1;
+        y2 = point2D.getY()+j2;
     }
 
     public Rectangle2D flatten(double width){
