@@ -29,22 +29,49 @@ public class Arc2D implements PrimitiveShape {
         if (shape instanceof Arc2D){
 
         }
-        return false;
+        else throw new IllegalArgumentException("待补充的图元！");
     }
 
     @Override
     public Point[] intersectPoint(PrimitiveShape shape) {
-        return null;
+        if (shape instanceof Segment2D){
+
+        }
+        if (shape instanceof Point2D){
+
+        }
+        if (shape instanceof Arc2D){
+
+        }
+        else throw new IllegalArgumentException("待补充的图元！");
     }
 
     @Override
     public double distanceTo(PrimitiveShape shape) {
-        return 0;
+        if (shape instanceof Segment2D){
+
+        }
+        if (shape instanceof Point2D){
+
+        }
+        if (shape instanceof Arc2D){
+
+        }
+        else throw new IllegalArgumentException("待补充的图元！");
     }
 
     @Override
     public Vector directionTo(PrimitiveShape shape) {
-        return null;
+        if (shape instanceof Segment2D){
+
+        }
+        if (shape instanceof Point2D){
+
+        }
+        if (shape instanceof Arc2D){
+
+        }
+        else throw new IllegalArgumentException("待补充的图元！");
     }
 
     @Override
