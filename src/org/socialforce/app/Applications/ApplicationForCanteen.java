@@ -54,7 +54,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                scene.setSceneListener(rootProvider);
+                scene.addSceneListener(rootProvider);
                 // dump code end.
                 int total_num = 0;
                 for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Agent.class).iterator(); iter.hasNext();){

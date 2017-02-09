@@ -91,7 +91,7 @@ public interface Scene extends Drawable {
     boolean isVisible();
     void setVisible(boolean visible);
     SceneListener getSceneListener();
-    void setSceneListener(SceneListener listener);
+   void addSceneListener(SceneListener listener);
     // TODO: 2016/9/14 add scene listener support.
 
     //只拷贝bounds
