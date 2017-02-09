@@ -44,9 +44,11 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         clip.getStartPoint().get(pt);
         clip.getSize().get(sz);
 
+
         getDevice().fill(new Rectangle2D.Double(0,0,ctrlWidth,ctrlHeight));
         AffineTransform oldT = getDevice().getTransform();
         getDevice().transform(transform);
+        getDevice().setStroke(new BasicStroke((float) (1 / getScaleRate())));
         getDevice().setColor(new Color(150,255,150));
         getDevice().draw(new Rectangle2D.Double(pt[0],pt[1],sz[0],sz[1]));
         getDevice().setColor(Color.WHITE);
