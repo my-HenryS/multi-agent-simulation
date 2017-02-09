@@ -42,7 +42,7 @@ public class Point2D extends Vector2D implements Point, PrimitiveShape {
         return new Vector2D(-dx,-dy).length();
     }
 
-    public Vector directionTo(Point other){
+    public Vector directionToPoint(Point other){
         double dx = this.getX() - other.getX();
         double dy = this.getY() - other.getY();
         return new Vector2D(-dx,-dy).getRefVector();
@@ -129,25 +129,65 @@ public class Point2D extends Vector2D implements Point, PrimitiveShape {
     @Override
     public double distanceTo(PrimitiveShape shape) {
         if (shape instanceof Segment2D){
-            return shape.distanceTo(this);
+            return ((Segment2D) shape).getDistanceToPoint(this);
         }
         if (shape instanceof Point2D){
             return this.distanceToPoint((Point) shape);
         }
         if (shape instanceof Arc2D){
-            
+            double temp = Double.NEGATIVE_INFINITY;
+            Circle2D circle2D = ((Arc2D) shape).getCircle();
+            Point2D[] point2DS = ((Arc2D) shape).getEndpoints();
+            if (temp > circle2D.getDistanceToPoint(this)){
+                temp = circle2D.getDistanceToPoint(this);
+            }
+            else if (temp > point2DS[0].distanceToPoint(this)){
+                temp = point2DS[0].distanceToPoint(this);
+            }
+            else if (temp > point2DS[1].distanceToPoint(this)){
+                temp = point2DS[1].distanceToPoint(this);
+            }
+            return temp;
         }
-        return 0;
+        else throw new IllegalArgumentException("待补充的图元！");
     }
 
     @Override
     public Vector directionTo(PrimitiveShape shape) {
-        return null;
+        Vector2D direction = new Vector2D();
+        if (shape instanceof Segment2D){
+            direction = (Vector2D) ((Segment2D) shape).getDirectionToPoint(this);
+            direction.scale(-1);
+            return direction;
+        }
+        if (shape instanceof Point2D){
+            return directionToPoint((Point2D) shape);
+        }
+        if (shape instanceof Arc2D){
+            double temp = Double.NEGATIVE_INFINITY;
+            Circle2D circle2D = ((Arc2D) shape).getCircle();
+            Point2D[] point2DS = ((Arc2D) shape).getEndpoints();
+            if (temp > circle2D.getDistanceToPoint(this)){
+                temp = circle2D.getDistanceToPoint(this);
+                direction = (Vector2D) circle2D.getDirectionToPoint(this);
+                direction.scale(-1);
+            }
+            else if (temp > point2DS[0].distanceToPoint(this)){
+                temp = point2DS[0].distanceToPoint(this);
+                direction = (Vector2D) directionToPoint(point2DS[0]);
+            }
+            else if (temp > point2DS[1].distanceToPoint(this)){
+                temp = point2DS[1].distanceToPoint(this);
+                direction = (Vector2D) directionToPoint(point2DS[1]);
+            }
+            return direction;
+        }
+        else throw new IllegalArgumentException("待补充的图元！");
     }
 
     @Override
     public void rotate(Point point, double angel) {
-        Vector2D vector2D = (Vector2D) this.directionTo(point);
+        Vector2D vector2D = (Vector2D) this.directionToPoint(point);
         vector2D.scale(this.distanceToPoint(point));
         vector2D.spin(angel);
         this.moveTo(point.getX()+vector2D.getX(),point.getY()+vector2D.getY());

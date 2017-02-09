@@ -150,6 +150,9 @@ public class Segment2D implements ModelShape,PrimitiveShape {
         return new Box2D(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2));
     }
 
+    public double getAngel(){
+        return Math.atan2((y2-y1),(x2-x1));
+    }
     @Override
     public boolean hits(Box hitbox) {
         boolean flag = false;
@@ -211,6 +214,10 @@ public class Segment2D implements ModelShape,PrimitiveShape {
         cloned.y2 = y2;
         //Segment2D lineClone = new Segment2D(a, b);
         return cloned;
+    }
+
+    public double getLenth(){
+        return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
     }
 
     @Override
@@ -371,7 +378,7 @@ public class Segment2D implements ModelShape,PrimitiveShape {
     }
 
     @Override
-    public Point intersectPoint(PrimitiveShape shape) {
+    public Point[] intersectPoint(PrimitiveShape shape) {
         return null;
     }
 
@@ -398,5 +405,9 @@ public class Segment2D implements ModelShape,PrimitiveShape {
     @Override
     public void absoluteExpand(double value) {
 
+    }
+
+    public Rectangle2D flatten(double width){
+        return new Rectangle2D((Point2D) getReferencePoint(),getLenth(),width,getAngel());
     }
 }

@@ -79,7 +79,7 @@ public class Circle2D implements DistanceModelShape {
     }
 
     public Vector getDirectionToPoint(Point point){
-        Vector2D vector2D = (Vector2D) center.directionTo(point);
+        Vector2D vector2D = (Vector2D) center.directionToPoint(point);
         if(contains(point)) vector2D.scale(-1);
         return vector2D;
     }
@@ -146,6 +146,46 @@ public class Circle2D implements DistanceModelShape {
         circle.moveTo(center.clone());
         circle.setRadius(radius);
         return circle;
+    }
+
+    @Override
+    public PrimitiveShape[] breakdown() {
+        return new PrimitiveShape[0];
+    }
+
+    @Override
+    public ModelShape abstractShape() {
+        return null;
+    }
+
+    @Override
+    public ModelShape[] minus(ModelShape clipper) {
+        return new ModelShape[0];
+    }
+
+    @Override
+    public ModelShape[] And(ModelShape other) {
+        return new ModelShape[0];
+    }
+
+    @Override
+    public ModelShape intersect(ModelShape other) {
+        return null;
+    }
+
+    @Override
+    public void Not() {
+
+    }
+
+    @Override
+    public Point getInsidePoint() {
+        return null;
+    }
+
+    @Override
+    public Point getOutsidePoint() {
+        return null;
     }
 
     /**

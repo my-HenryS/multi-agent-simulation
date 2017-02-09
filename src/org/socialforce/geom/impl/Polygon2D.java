@@ -1,10 +1,7 @@
 package org.socialforce.geom.impl;
 
 import org.socialforce.drawer.Drawer;
-import org.socialforce.geom.Box;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.ModelShape;
-import org.socialforce.geom.Vector;
+import org.socialforce.geom.*;
 
 import java.util.LinkedList;
 
@@ -41,7 +38,7 @@ public class Polygon2D implements ModelShape {
         while(true) {
             order = org - Nods.size();
             for (Point2D nod : Nods) {
-                direc = (Vector2D) getReferencePoint().directionTo(nod);
+                direc = (Vector2D) getReferencePoint().directionToPoint(nod);
                 if (direc.dot(now)> flag){
                     direcflag = direc.dot(now);
                     temp1 = direc;
@@ -56,7 +53,7 @@ public class Polygon2D implements ModelShape {
                 }
             }
             flag = Double.NEGATIVE_INFINITY;
-            now = (Vector2D) getReferencePoint().directionTo(fuck);
+            now = (Vector2D) getReferencePoint().directionToPoint(fuck);
             Nods.remove(fuck);
             sorted[order] = fuck;
             if (Nods.size() == 0){break;}
@@ -248,5 +245,45 @@ public class Polygon2D implements ModelShape {
     @Override
     public ModelShape clone() {
         return new Polygon2D(nods);
+    }
+
+    @Override
+    public PrimitiveShape[] breakdown() {
+        return new PrimitiveShape[0];
+    }
+
+    @Override
+    public ModelShape abstractShape() {
+        return null;
+    }
+
+    @Override
+    public ModelShape[] minus(ModelShape clipper) {
+        return new ModelShape[0];
+    }
+
+    @Override
+    public ModelShape[] And(ModelShape other) {
+        return new ModelShape[0];
+    }
+
+    @Override
+    public ModelShape intersect(ModelShape other) {
+        return null;
+    }
+
+    @Override
+    public void Not() {
+
+    }
+
+    @Override
+    public Point getInsidePoint() {
+        return null;
+    }
+
+    @Override
+    public Point getOutsidePoint() {
+        return null;
     }
 }

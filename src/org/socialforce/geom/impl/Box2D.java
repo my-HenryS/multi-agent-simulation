@@ -192,7 +192,7 @@ public class Box2D implements Box {
             if (dsy > 0) {
                 if (dex > 0) {
                     if (dey > 0) {
-                        vector = point.directionTo(new Point2D(xmax, ymax));
+                        vector = point.directionToPoint(new Point2D(xmax, ymax));
                         vector.scale(-1);
                         return vector;
                     } else { // dey <= 0
@@ -203,7 +203,7 @@ public class Box2D implements Box {
                 }
             } else { // dsy <= 0
                 if (dex > 0) {
-                    vector = point.directionTo(new Point2D(xmax, ymin));
+                    vector = point.directionToPoint(new Point2D(xmax, ymin));
                     vector.scale(-1);
                     return vector;
                 } else { // dex <= 0
@@ -213,14 +213,14 @@ public class Box2D implements Box {
         } else { // dsx <= 0
             if (dsy > 0) {
                 if (dey > 0) {
-                    vector = point.directionTo(new Point2D(xmin, ymax));
+                    vector = point.directionToPoint(new Point2D(xmin, ymax));
                     vector.scale(-1);
                     return vector;
                 } else { // dey <= 0
                     return new Vector2D(dsx,0).getRefVector();
                 }
             } else { // dsy <= 0
-                vector = point.directionTo(new Point2D(xmin, ymin));
+                vector = point.directionToPoint(new Point2D(xmin, ymin));
                 vector.scale(-1);
                 return vector;
             }
@@ -322,6 +322,46 @@ public class Box2D implements Box {
         cloned.ymin = ymin;
         cloned.ymax = ymax;
         return cloned;
+    }
+
+    @Override
+    public PrimitiveShape[] breakdown() {
+        return new PrimitiveShape[0];
+    }
+
+    @Override
+    public ModelShape abstractShape() {
+        return null;
+    }
+
+    @Override
+    public ModelShape[] minus(ModelShape clipper) {
+        return new ModelShape[0];
+    }
+
+    @Override
+    public ModelShape[] And(ModelShape other) {
+        return new ModelShape[0];
+    }
+
+    @Override
+    public ModelShape intersect(ModelShape other) {
+        return null;
+    }
+
+    @Override
+    public void Not() {
+
+    }
+
+    @Override
+    public Point getInsidePoint() {
+        return null;
+    }
+
+    @Override
+    public Point getOutsidePoint() {
+        return null;
     }
 
     /**

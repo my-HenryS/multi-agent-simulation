@@ -20,11 +20,20 @@ public class Arc2D implements PrimitiveShape {
 
     @Override
     public boolean intersect(PrimitiveShape shape) {
+        if (shape instanceof Segment2D){
+
+        }
+        if (shape instanceof Point2D){
+            return shape.distanceTo(this) == 0;
+        }
+        if (shape instanceof Arc2D){
+
+        }
         return false;
     }
 
     @Override
-    public Point intersectPoint(PrimitiveShape shape) {
+    public Point[] intersectPoint(PrimitiveShape shape) {
         return null;
     }
 
@@ -62,5 +71,21 @@ public class Arc2D implements PrimitiveShape {
     @Override
     public int dimension() {
         return 2;
+    }
+
+    public Circle2D getCircle(){
+        return new Circle2D(center,radius);
+    }
+
+    public Point2D[] getEndpoints(){
+        Point2D a,b;
+        double x1,x2,y1,y2;
+        x1 = radius*Math.cos(startangle);
+        x2 = radius*Math.cos(startangle+angle);
+        y1 = radius*Math.sin(startangle);
+        y2 = radius*Math.sin(startangle+angle);
+        a = (Point2D) center.moveBy(x1,y1);
+        b = (Point2D) center.moveBy(x2,y2);
+        return new Point2D[]{a,b};
     }
 }

@@ -1,10 +1,7 @@
 package org.socialforce.geom.impl;
 
 import org.socialforce.drawer.Drawer;
-import org.socialforce.geom.Box;
-import org.socialforce.geom.ModelShape;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.Vector;
+import org.socialforce.geom.*;
 
 /**
  * Created by sunjh1999 on 2016/11/12.
@@ -95,5 +92,45 @@ public class Semicircle2D implements ModelShape {
     @Override
     public ModelShape clone() {
         return new Semicircle2D(center, radius, angle);
+    }
+
+    @Override
+    public PrimitiveShape[] breakdown() {
+        return new PrimitiveShape[0];
+    }
+
+    @Override
+    public ModelShape abstractShape() {
+        return null;
+    }
+
+    @Override
+    public ModelShape[] minus(ModelShape clipper) {
+        return new ModelShape[0];
+    }
+
+    @Override
+    public ModelShape[] And(ModelShape other) {
+        return new ModelShape[0];
+    }
+
+    @Override
+    public ModelShape intersect(ModelShape other) {
+        return null;
+    }
+
+    @Override
+    public void Not() {
+
+    }
+
+    @Override
+    public Point getInsidePoint() {
+        return null;
+    }
+
+    @Override
+    public Point getOutsidePoint() {
+        return null;
     }
 }
