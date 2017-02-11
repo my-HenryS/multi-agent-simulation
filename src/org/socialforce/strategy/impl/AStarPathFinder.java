@@ -146,6 +146,11 @@ public class AStarPathFinder implements PathFinder {
         goals.forEach(this::maps_initiate);
     }
 
+    public void setScene(Scene scene, Point goal){
+        this.scene = scene.standardclone();
+        scene_initiate();   //set standard scene and goals
+        maps_initiate(goal.clone().moveBy(-delta_x, -delta_y).scaleBy(1/min_div));
+    }
 
     private void scene_initiate(){
         scene_standardize();

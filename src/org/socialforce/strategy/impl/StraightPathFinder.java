@@ -49,4 +49,9 @@ public class StraightPathFinder implements PathFinder {
         return points;
     }
 
+    public void setScene(Scene scene, Point goal){
+        this.scene = scene;
+        goals.addLast(goal);
+    }
+
 }

@@ -18,6 +18,7 @@ public interface Path {
      */
     Point getGoal();
 
+
     /**
      *在当前位置获取下一个目标点。
      * @param current agent 所在的当前位置点。

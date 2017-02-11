@@ -1,14 +1,17 @@
 package org.socialforce.strategy.impl;
 
 import org.socialforce.geom.Point;
+import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Segment2D;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.Entity;
+import org.socialforce.model.impl.Wall;
 import org.socialforce.scene.Scene;
 import org.socialforce.strategy.DynamicStrategy;
 import org.socialforce.strategy.PathFinder;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -20,20 +23,54 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
     int regionNum;
     LinkedList<Tree<String>> paths = new LinkedList<>();
     Graph<String> graph = new Graph<>();  //图的邻接表
+    Fields fields = new Fields();
 
     public CompoundECStrategy(Scene scene, PathFinder pathFinder){
         super(scene, pathFinder);
-        gates.addLast(new Gate(new Segment2D(new Point2D(1,1), new Point2D(2,2)), "A"));
+        gates.addLast(new Gate(new Segment2D(new Point2D(-0.5,1), new Point2D(-0.5,2)), "A"));
+        gates.addLast(new Gate(new Segment2D(new Point2D(3.5,1), new Point2D(3.5,2)), "B"));
+        gates.addLast(new Gate(new Segment2D(new Point2D(4,7), new Point2D(5,7)), "C"));
         for(Gate gate:gates){
             gate.setScene(scene);
+            gate.setShape(((Segment2D)gate.getShape()).flatten(1));
             scene.getStaticEntities().add(gate);
         }
         graph.combine("A", "B");
-        graph.combine("B", "C");
-        graph.combine("D", "C");
-        graph.combine("A", "D");
+        graph.combine("C", "B");
+        //graph.combine("D", "C");
+        //graph.combine("A", "D");
+        initMaps();
         setPaths("A");
         setPaths("B");
+    }
+
+    public void initMaps(){
+        for(Gate gate:gates){
+            for(String target:graph.find(gate.getName())){
+                Gate t = getGate(target);
+                Scene newScene = prepareScene(gate, t);
+                pathFinder.setScene(newScene, gate.getShape().getReferencePoint());
+                fields.addMap(((AStarPath)pathFinder.plan_for(gate.getShape().getReferencePoint())).map, gate.getName(), t.getName());
+
+            }
+        }
+
+    }
+
+    private Gate getGate(String name){
+        for(Gate gate:gates){
+            if(gate.getName().equals(name)) return gate;
+        }
+        return null;
+    }
+
+    private Scene prepareScene(Gate gate, Gate toAvoid){
+        Scene newScene = scene.standardclone();
+        for(String target:graph.find(gate.getName())){
+            Gate t = getGate(target);
+            if(t.getShape() instanceof Segment2D && !t.equals(toAvoid)) newScene.addStaticEntity(new Wall(((Segment2D)t.getShape()).flatten(0.6)));
+        }
+        return newScene;
     }
 
     @Override
@@ -74,10 +111,14 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
     }
 
     private class Gate extends Entity{
-        public Gate(Segment2D segment, String name){
-            super(segment);
+        boolean isExit = false;
+        public Gate(Shape shape, String name){
+            super(shape);
             setName(name);
+            if(shape instanceof Point) isExit = true;
         }
+
+        public boolean isExit(){ return isExit;}
 
         @Override
         public void affect(InteractiveEntity affectedEntity) {
@@ -91,7 +132,21 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
 
         @Override
         public InteractiveEntity standardclone() {
-            return new Gate((Segment2D) shape.clone(), name);
+            return new Gate(shape.clone(), name);
+        }
+    }
+
+    private class Fields{
+        private LinkedList<AStarPathFinder.Maps> mapSet = new LinkedList<>();
+        private LinkedList<String> startPoints, endPoints;
+        public Fields(){
+            startPoints = new LinkedList<>();
+            endPoints = new LinkedList<>();
+        }
+        public void addMap(AStarPathFinder.Maps map, String start, String end){
+            mapSet.addLast(map);
+            startPoints.addLast(start);
+            endPoints.addLast(end);
         }
     }
 

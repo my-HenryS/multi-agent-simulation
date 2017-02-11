@@ -317,4 +317,17 @@ public class Segment2D implements Shape {
         y1 = center.getX()+v1.values[1];
         y2 = center.getX()+v2.values[1];
     }
+
+    public Rectangle2D flatten(double width){
+        return new Rectangle2D((Point2D) getReferencePoint(),getLenth(),width,getAngel());
+    }
+
+    public double getLenth(){
+        return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+    }
+
+    public double getAngel(){
+        return Math.atan2((y2-y1),(x2-x1));
+    }
+
 }

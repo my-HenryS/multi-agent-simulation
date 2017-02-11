@@ -2,6 +2,7 @@ package org.socialforce.strategy;
 
 import org.socialforce.geom.Point;
 import org.socialforce.model.Agent;
+import org.socialforce.scene.Scene;
 
 /**
  *在场景中，agent 的路径搜索器，
@@ -22,5 +23,8 @@ public interface PathFinder {
      * 获取goals集合
      */
     Point[] getGoals();
+
+
+    void setScene(Scene scene, Point goal);
 
 }

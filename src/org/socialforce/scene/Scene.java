@@ -90,7 +90,6 @@ public interface Scene extends Drawable {
     void setApplication(SocialForceApplication application);
     boolean isVisible();
     void setVisible(boolean visible);
-    SceneListener getSceneListener();
    void addSceneListener(SceneListener listener);
     // TODO: 2016/9/14 add scene listener support.
 
