@@ -1,14 +1,17 @@
 package org.socialforce.app.gui;
 
-import org.socialforce.scene.Scene;
 import org.socialforce.drawer.DrawerInstaller;
+import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.drawer.impl.SceneDrawerInstaller;
+import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneListener;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 
 /**
@@ -23,12 +26,14 @@ public class SceneShower implements SceneListener {
     private JLabel remainPeopleLabel;
     private JLabel timeLabel;
     private JLabel trappedPeopleLabel;
+    private JLabel positionLabel;
     private String title;
 
     private DrawerInstaller drawerInstaller;
 
     /**
      * show the title of the scene
+     *
      * @param title
      */
     public SceneShower(String title) {
@@ -44,10 +49,26 @@ public class SceneShower implements SceneListener {
                 SceneShower.this.getBoard().setVisible(visibleCheckBox.isSelected());
             }
         });
+        showPanel.addMouseMotionListener(new MouseMotionAdapter() {
+            /**
+             * Invoked when the mouse button has been moved on a component
+             * (with no buttons no down).
+             *
+             * @param e
+             */
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                SceneDrawer sc = (SceneDrawer) SceneShower.this.scene.getDrawer();
+                double[] scr = sc.screenToScene(e.getX(), e.getY());
+                SceneShower.this.positionLabel.setText(String.format("(%.3f,%.3f)", scr[0], scr[1]));
+//                super.mouseMoved(e);
+            }
+        });
     }
 
     /**
      * //////??????
+     *
      * @return the root
      */
     public JPanel getRoot() {
@@ -88,7 +109,7 @@ public class SceneShower implements SceneListener {
         this.scene = scene;
         scene.addSceneListener(this);
         // FIXME: 2017/1/2 change this image to dynamic-sized(with components.) or using swing's own double-buffered system.
-        image = new BufferedImage(1920,1080, BufferedImage.TYPE_INT_ARGB);
+        image = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_ARGB);
         drawerInstaller = new SceneDrawerInstaller((Graphics2D) image.getGraphics(), image.getWidth(), image.getHeight());
         drawerInstaller.addDrawerSupport(scene);
         board.setImage(image);
@@ -98,7 +119,7 @@ public class SceneShower implements SceneListener {
 
     Scene scene;
 
-    public DrawerInstaller getDrawerInstaller(){
+    public DrawerInstaller getDrawerInstaller() {
         return drawerInstaller;
     }
 
@@ -119,7 +140,7 @@ public class SceneShower implements SceneListener {
      */
     @Override
     public void onStep(Scene scene) {
-        if(visibleCheckBox.isSelected()) {
+        if (visibleCheckBox.isSelected()) {
             scene.getDrawer().draw(scene);
             this.getBoard().repaint();//refresh();
         }
