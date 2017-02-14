@@ -40,8 +40,13 @@ public class StraightPathFinder implements PathFinder {
         return new StraightPath(goal);
     }
 
-    public Path plan_for(Point start, Point goal) {
-        return new StraightPath(start, goal);
+    public Path constraint_plan_for(Point goal, Point ... toBeContained) {
+        Point [] pathPoints = new Point[toBeContained.length+1];
+        for(int i = 0;i < toBeContained.length;i++){
+            pathPoints[i] = toBeContained[i];
+        }
+        pathPoints[-1] = goal;
+        return new StraightPath(pathPoints);
     }
 
     @Override
@@ -53,15 +58,13 @@ public class StraightPathFinder implements PathFinder {
         return points;
     }
 
-    public void setScene(Scene scene, Point goal){
+    public void addSituation(Scene scene, Point goal){
         this.scene = scene;
         goals.addLast(goal);
     }
 
-    public void setScene(Scene scene, Point start, Point goal){
-        this.scene = scene;
-        goals.addLast(start);
-        goals.addLast(goal);
+    public void clearCache(){
+        goals.clear();
     }
 
 }

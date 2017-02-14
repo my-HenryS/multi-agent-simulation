@@ -11,10 +11,8 @@ import org.socialforce.model.impl.Entity;
 import org.socialforce.model.impl.Wall;
 import org.socialforce.scene.Scene;
 import org.socialforce.strategy.DynamicStrategy;
-import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
 
-import java.io.File;
 import java.util.*;
 
 /**
@@ -33,6 +31,7 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
 
     public CompoundECStrategy(Scene scene, PathFinder pathFinder){
         super(scene, pathFinder);
+        pathFinder.clearCache();
         //gates.addLast(new Gate(new Segment2D(new Point2D(-0.5,0.5), new Point2D(-0.5,2.5)), "A"));
         gates.addLast(new Gate(new Segment2D(new Point2D(3.5,0.5), new Point2D(3.5,2.5)), "B"));
         gates.addLast(new Gate(new Segment2D(new Point2D(4,7), new Point2D(5,7)), "C"));
@@ -72,16 +71,15 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
                 gate.isExit();
             }
             Scene newScene = prepareScene(gate);
-            pathFinder.setScene(newScene, gate.getShape().getReferencePoint());
+            pathFinder.addSituation(newScene, gate.getShape().getReferencePoint());
             fields.addMap(((AStarPath)pathFinder.plan_for(gate.getShape().getReferencePoint())).map, gate.getName());
             for(String target:graph.find(gate.getName())){
                 Gate t = getGate(target);
                 newScene = prepareScene(gate,t);
-                pathFinder.setScene(newScene, t.getShape().getReferencePoint(), gate.getShape().getReferencePoint());
-                fields.addMap(((AStarPath)pathFinder.plan_for(t.getShape().getReferencePoint(),gate.getShape().getReferencePoint())).map, t.getName(), gate.getName());
+                pathFinder.addSituation(newScene, gate.getShape().getReferencePoint());
+                fields.addMap(((AStarPath)pathFinder.constraint_plan_for(gate.getShape().getReferencePoint(), t.getShape().getReferencePoint())).map, t.getName(), gate.getName());
             }
         }
-
     }
 
     private Gate getGate(String name){
@@ -93,13 +91,13 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
 
     private Scene prepareScene(Gate toAvoid){
         Scene newScene = scene.standardclone();
-        gates.stream().filter(t -> t.isExit() && !t.equals(toAvoid)).forEach(t -> newScene.getStaticEntities().add(new Wall(((Segment2D) t.getShape()).flatten(0.2))));
+        gates.stream().filter(t -> t.isExit() && !t.equals(toAvoid)).forEach(t -> newScene.getStaticEntities().add(new Wall(((Segment2D) t.getShape()).flatten(0.6))));
         return newScene;
     }
 
     private Scene prepareScene(Gate toAvoid1, Gate toAvoid2){
         Scene newScene = scene.standardclone();
-        gates.stream().filter(t -> t.isExit() && !t.equals(toAvoid1) && !t.equals(toAvoid2)).forEach(t -> newScene.getStaticEntities().add(new Wall(((Segment2D) t.getShape()).flatten(0.2))));
+        gates.stream().filter(t -> t.isExit() && !t.equals(toAvoid1) && !t.equals(toAvoid2)).forEach(t -> newScene.getStaticEntities().add(new Wall(((Segment2D) t.getShape()).flatten(0.6))));
         return newScene;
     }
 
