@@ -148,8 +148,8 @@ public class AStarPathFinder implements PathFinder {
     }* assign map with templateScene, agent and goal
      */
 
-    public AStarPathFinder(Scene templateScene, Shape templateShape){
-        this.templateScene = templateScene.standardclone();
+    public AStarPathFinder(Scene scene, Shape templateShape){
+        this.templateScene = scene.standardclone();
         this.agentShape = templateShape.clone();
         scene_initiate();   //set standard templateScene and goals
         map_initiate();
@@ -157,9 +157,9 @@ public class AStarPathFinder implements PathFinder {
         goals.forEach(this::astar);
     }
 
-    public AStarPathFinder(Scene templateScene, Shape templateShape, double min_div){
+    public AStarPathFinder(Scene scene, Shape templateShape, double min_div){
         this.min_div = min_div;
-        this.templateScene = templateScene.standardclone();
+        this.templateScene = scene.standardclone();
         this.agentShape = templateShape.clone();
         scene_initiate();   //set standard templateScene and goals
         map_initiate();
