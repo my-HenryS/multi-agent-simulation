@@ -7,11 +7,13 @@ import org.socialforce.app.impl.SceneStepDumper;
 import org.socialforce.app.impl.SimpleInterpreter;
 import org.socialforce.app.impl.SingleFileOutputer;
 import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.Monitor;
 import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
 import org.socialforce.strategy.DynamicStrategy;
@@ -101,6 +103,21 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                         e.printStackTrace();
                     }
                 }
+                /*
+                double samplewidth = 1;
+                double [][] matrixV = new double[(int)(21/samplewidth)][(int)(30/samplewidth)];
+                for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
+                    Monitor m = (Monitor)iter.next();
+                    Point p = m.getShape().getReferencePoint();
+                    matrixV[(int)Math.rint((p.getY())/samplewidth)][(int)Math.rint(p.getX()/samplewidth)] = m.sayVolume();
+                }
+                for(double [] m1:matrixV){
+                    for(double m:m1){
+                        System.out.print(String.format("%.1f", m)+"\t");
+                    }
+                    System.out.println();
+                }
+                */
                 System.out.println(iteration * 0.002);
             }
         }
@@ -115,8 +132,8 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(350,new Box2D(0,0,25,18),template)));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(160,new Box2D(0,18,25,3),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(355,new Box2D(0,0,25,18),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(155,new Box2D(0,18,25,3),template)));
         parameters.addLast(genParameter((new SV_SafetyRegion(new Box2D(-3,-0.5,1,4)))));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(18.5,-3,4,1))));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(30,17.5,1,4))));
@@ -126,6 +143,14 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 new Box2D(new Point2D(19.82,-2), new Point2D(21.18,1.8)),
                 new Box2D(new Point2D(24,18.82), new Point2D(26.2,20.18)),
                 new Box2D(new Point2D(27.5,18.82), new Point2D(29.5,20.18))})));
+        /*
+        double samplewidth = 1;
+        for (int i = 0; i< 30/samplewidth;i++){
+            for (int j = 0; j < 21/samplewidth; j++){
+               parameters.addLast(genParameter(new SV_Monitor(new Circle2D(new Point2D(i*samplewidth,j*samplewidth),samplewidth/2))));
+            }
+        }
+        */
         loader.readParameterSet(parameters);
         scenes = loader.readScene(this);
     }

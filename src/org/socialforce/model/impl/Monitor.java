@@ -29,10 +29,10 @@ public class Monitor extends Entity {
             if(((Agent)affectedEntity).getShape().intersects(shape)){
                 velocity += ((BaseAgent) affectedEntity).getLastAcc()/affectedEntity.getMass();
                 vNum += 1;
-                if(!agents.contains(affectedEntity)){   //流量计数不复用Agent
-                    agents.addLast((Agent)affectedEntity);
+                //if(!agents.contains(affectedEntity)){   //流量计数不复用Agent
+                    //agents.addLast((Agent)affectedEntity);
                     volume += 1;
-                }
+                //}
 
             }
         }
@@ -49,7 +49,7 @@ public class Monitor extends Entity {
     }
 
     public double sayVolume(){
-       return volume/(scene.getCurrentSteps() * timePerStep);
+       return volume/scene.getCurrentSteps();
     }
 
     public double sayVelocity(){

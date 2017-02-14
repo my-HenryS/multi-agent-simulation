@@ -38,6 +38,7 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
         gates.addLast(new Gate(new Circle2D(new Point2D(-3,1.5), 0.1), "D"));
         gates.addLast(new Gate(new Segment2D(new Point2D(19.5,2.7), new Point2D(21.5,2.7)), "E", 1.36));
         gates.addLast(new Gate(new Segment2D(new Point2D(19.5,-0.6), new Point2D(21.5,-0.6)), "I", 1.36));
+        gates.addLast(new Gate(new Segment2D(new Point2D(18,4), new Point2D(18.5,3)), "K", 1.12));
         gates.addLast(new Gate(new Segment2D(new Point2D(25.4,18.5), new Point2D(25.4,20.5)), "F", 1.36));
         gates.addLast(new Gate(new Segment2D(new Point2D(28.7,18.5), new Point2D(28.7,20.5)), "J", 1.36));
         gates.addLast(new Gate(new Circle2D(new Point2D(20.5,-2.5), 0.1), "G"));
@@ -46,18 +47,22 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
             gate.setScene(scene);
             scene.getStaticEntities().add(gate);
         }
-        graph.combine("A", "B");
+        graph.combine("A", "B");  //twins
         graph.combine("C", "B");
         graph.combine("C", "E");
         graph.combine("C", "F");
-        graph.combine("D", "A");
+        graph.combine("D", "A");  //toGoal
         graph.combine("E", "B");
         graph.combine("F", "B");
         graph.combine("E", "F");
-        graph.combine("E", "I");
-        graph.combine("G", "I");
-        graph.combine("F", "J");
-        graph.combine("H", "J");
+        graph.combine("K", "B");
+        graph.combine("K", "C");
+        graph.combine("K", "E");
+        graph.combine("K", "F");
+        graph.combine("E", "I");  //twins
+        graph.combine("G", "I");  //toGoal
+        graph.combine("F", "J");  //twins
+        graph.combine("H", "J");  //toGoal
         initMaps();
         setPaths("D");
         setPaths("G");
