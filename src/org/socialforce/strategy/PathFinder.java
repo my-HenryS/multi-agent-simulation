@@ -17,6 +17,8 @@ public interface PathFinder {
      * 获取Pathfinder根据goal生成的矢量场。
      * @return 搜索出的路径。
      */
+    Path plan_for(Point start, Point goal);
+
     Path plan_for(Point goal);
 
     /**
@@ -26,5 +28,7 @@ public interface PathFinder {
 
 
     void setScene(Scene scene, Point goal);
+
+    void setScene(Scene scene, Point start, Point goal);
 
 }
