@@ -32,28 +32,32 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
     public CompoundECStrategy(Scene scene, PathFinder pathFinder){
         super(scene, pathFinder);
         pathFinder.clearCache();
-        //gates.addLast(new Gate(new Segment2D(new Point2D(-0.5,0.5), new Point2D(-0.5,2.5)), "A"));
-        gates.addLast(new Gate(new Segment2D(new Point2D(3.5,0.5), new Point2D(3.5,2.5)), "B"));
-        gates.addLast(new Gate(new Segment2D(new Point2D(4,7), new Point2D(5,7)), "C"));
+        gates.addLast(new Gate(new Segment2D(new Point2D(-0.5,0.5), new Point2D(-0.5,2.5)), "A", 1.36));
+        gates.addLast(new Gate(new Segment2D(new Point2D(3.5,0.5), new Point2D(3.5,2.5)), "B", 1.36));
+        gates.addLast(new Gate(new Segment2D(new Point2D(4,7), new Point2D(5,7)), "C", 1));
         gates.addLast(new Gate(new Circle2D(new Point2D(-3,1.5), 0.1), "D"));
-        gates.addLast(new Gate(new Segment2D(new Point2D(19.5,2.7), new Point2D(21.5,2.7)), "E"));
-        gates.addLast(new Gate(new Segment2D(new Point2D(25.4,18.5), new Point2D(25.4,20.5)), "F"));
+        gates.addLast(new Gate(new Segment2D(new Point2D(19.5,2.7), new Point2D(21.5,2.7)), "E", 1.36));
+        gates.addLast(new Gate(new Segment2D(new Point2D(19.5,-0.6), new Point2D(21.5,-0.6)), "I", 1.36));
+        gates.addLast(new Gate(new Segment2D(new Point2D(25.4,18.5), new Point2D(25.4,20.5)), "F", 1.36));
+        gates.addLast(new Gate(new Segment2D(new Point2D(28.7,18.5), new Point2D(28.7,20.5)), "J", 1.36));
         gates.addLast(new Gate(new Circle2D(new Point2D(20.5,-2.5), 0.1), "G"));
         gates.addLast(new Gate(new Circle2D(new Point2D(30.5,19.5), 0.1), "H"));
         for(Gate gate:gates){
             gate.setScene(scene);
             scene.getStaticEntities().add(gate);
         }
-        //graph.combine("A", "B");
+        graph.combine("A", "B");
         graph.combine("C", "B");
         graph.combine("C", "E");
         graph.combine("C", "F");
+        graph.combine("D", "A");
         graph.combine("E", "B");
         graph.combine("F", "B");
         graph.combine("E", "F");
-        graph.combine("D", "B");
-        graph.combine("E", "G");
-        graph.combine("F", "H");
+        graph.combine("E", "I");
+        graph.combine("G", "I");
+        graph.combine("F", "J");
+        graph.combine("H", "J");
         initMaps();
         setPaths("D");
         setPaths("G");
@@ -129,12 +133,14 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
                     CompoundAStarPath new_path = new CompoundAStarPath();
                     Node<String> node = nodes.get(i), lastnode;
                     new_path.addMap(fields.findMap(node.getData()));
-                    new_t += front_num[gates.indexOf(getGate(node.getData()))]/EC(1.36, agent.getModel().getExpectedSpeed());
+                    Gate gate = getGate(node.getData());
+                    if(gate.isExit()) new_t += front_num[gates.indexOf(gate)]/EC(gate.getWidth(), agent.getModel().getExpectedSpeed());
                     while(!node.isRoot()){
                         lastnode = node;
                         node = node.getParent();
+                        gate = getGate(node.getData());
                         new_path.addMap(fields.findMap(lastnode.getData(), node.getData()));
-                        new_t += front_num[gates.indexOf(getGate(node.getData()))]/EC(1.36, agent.getModel().getExpectedSpeed());
+                        if(gate.isExit()) new_t += front_num[gates.indexOf(gate)]/EC(gate.getWidth(), agent.getModel().getExpectedSpeed());
                     }
                     new_t += new_path.length(agent.getShape().getReferencePoint()) / agent.getModel().getExpectedSpeed();
                     if(new_t < t){
@@ -175,9 +181,15 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
     }
 
     private class Gate extends Entity{
+        double width = 0;
         public Gate(Shape shape, String name){
             super(shape);
             setName(name);
+        }
+        public Gate(Shape shape, String name, double width){
+            super(shape);
+            setName(name);
+            this.width = width;
         }
 
         public boolean isExit(){ return shape instanceof Segment2D;}
@@ -194,8 +206,10 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
 
         @Override
         public InteractiveEntity standardclone() {
-            return new Gate(shape.clone(), name);
+            return new Gate(shape.clone(), name, width);
         }
+
+        public double getWidth(){ return width;}
     }
 
     private class Fields{

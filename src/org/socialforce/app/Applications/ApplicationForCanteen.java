@@ -45,6 +45,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
             for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
                 Scene scene = iterator.next();
                 // TODO: 2017/1/29 Refactor dump setting code here.
+                /*
                 SceneStepDataProvider rootProvider = new SceneStepDataProvider();
                 try {
                     SceneStepDumper dumper = new SceneStepDumper(new SingleFileOutputer("testDump" +
@@ -55,6 +56,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                     e.printStackTrace();
                 }
                 scene.addSceneListener(rootProvider);
+                */
                 // dump code end.
                 int total_num = 0;
                 for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Agent.class).iterator(); iter.hasNext();){
@@ -84,8 +86,8 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 }
                 */
                 strategy.pathDecision();
-                while (scene.getAllAgents().size() > 5) {
-                    long start = System.currentTimeMillis(), span, fps = 12;
+                while (scene.getAllAgents().size() > 10) {
+                    long start = System.currentTimeMillis(), span, fps = 2;
                     scene.stepNext();
                     iteration += 1;
                     if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
@@ -99,6 +101,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                         e.printStackTrace();
                     }
                 }
+                System.out.println(iteration * 0.002);
             }
         }
     }
@@ -112,8 +115,8 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(300,new Box2D(0,0,25,18),template)));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(155,new Box2D(0,18,25,3),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(350,new Box2D(0,0,25,18),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(160,new Box2D(0,18,25,3),template)));
         parameters.addLast(genParameter((new SV_SafetyRegion(new Box2D(-3,-0.5,1,4)))));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(18.5,-3,4,1))));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(30,17.5,1,4))));
