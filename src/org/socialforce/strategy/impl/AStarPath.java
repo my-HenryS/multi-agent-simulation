@@ -28,6 +28,14 @@ public class AStarPath implements Path {
         return map.getGoal();
     }
 
+    public Point getCurrentGoal(){ return map.getGoal();}
+
+    public LinkedList<Point> getGoals(){
+        LinkedList<Point> goals = new LinkedList<>();
+        goals.addLast(map.getGoal());
+        return goals;
+    }
+
     /**
      *在当前位置获取下一个目标点。
      *
