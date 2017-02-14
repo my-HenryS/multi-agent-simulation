@@ -12,19 +12,25 @@ import java.util.LinkedList;
 public class CompoundAStarPath implements Path {
     private LinkedList<AStarPathFinder.Maps> mapSet = new LinkedList<>();
     public LinkedList<Point> goalSet = new LinkedList<>();
-    public int currentGoal;
+    public int currentGoal = 0;
+
+    public CompoundAStarPath(){
+    }
 
     public CompoundAStarPath(AStarPathFinder.Maps map){
         mapSet.addLast(map);
         goalSet.addLast(map.getGoal());
-        currentGoal = 0;
     }
     public CompoundAStarPath(AStarPathFinder.Maps ... maps){
         for(AStarPathFinder.Maps map:maps){
             mapSet.addLast(map);
             goalSet.addLast(map.getGoal());
         }
-        currentGoal = 0;
+    }
+
+    public void addMap(AStarPathFinder.Maps map){
+        mapSet.addLast(map);
+        goalSet.addLast(map.getGoal());
     }
 
     @Override
@@ -32,12 +38,16 @@ public class CompoundAStarPath implements Path {
         return goalSet.getLast();
     }
 
+    public Point getCurrentGoal(){ return goalSet.get(currentGoal);}
+
+    public LinkedList<Point> getGoals(){ return goalSet; }
 
 
     @Override
     public Point nextStep(Point current) {
         Point nextPoint = mapSet.get(currentGoal).findNext(current);
-        if(nextPoint.distanceTo(goalSet.get(currentGoal)) < 0.2) currentGoal++;
+        if(nextPoint.distanceTo(goalSet.get(currentGoal)) <= 0.4 && currentGoal+1 != mapSet.size())
+            currentGoal++;
         return nextPoint;
     }
 
@@ -45,9 +55,9 @@ public class CompoundAStarPath implements Path {
     public double length(Point current) {
         double length = 0;
         int goalNo = 0;
-        for(AStarPathFinder.Maps map:mapSet){
-            length += map.getDistance(current);
-            current = goalSet.get(goalNo++);
+        for (AStarPathFinder.Maps map : mapSet) {
+                length += map.getDistance(current);
+                current = goalSet.get(goalNo++);
         }
         return length;
     }
