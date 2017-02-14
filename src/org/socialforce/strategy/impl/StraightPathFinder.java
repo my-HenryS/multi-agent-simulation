@@ -40,6 +40,10 @@ public class StraightPathFinder implements PathFinder {
         return new StraightPath(goal);
     }
 
+    public Path plan_for(Point start, Point goal) {
+        return new StraightPath(start, goal);
+    }
+
     @Override
     public Point[] getGoals() {
         Point [] points = new Point[goals.size()];
@@ -51,6 +55,12 @@ public class StraightPathFinder implements PathFinder {
 
     public void setScene(Scene scene, Point goal){
         this.scene = scene;
+        goals.addLast(goal);
+    }
+
+    public void setScene(Scene scene, Point start, Point goal){
+        this.scene = scene;
+        goals.addLast(start);
         goals.addLast(goal);
     }
 
