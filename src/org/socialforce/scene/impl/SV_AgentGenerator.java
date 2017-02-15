@@ -1,6 +1,8 @@
 package org.socialforce.scene.impl;
+import org.socialforce.container.EntityPool;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Velocity;
+import org.socialforce.model.*;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneValue;
 import org.socialforce.geom.Shape;
@@ -8,15 +10,12 @@ import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Semicircle2D;
-import org.socialforce.model.Agent;
-import org.socialforce.model.AgentDecorator;
-import org.socialforce.model.SocialForceModel;
 import org.socialforce.model.impl.BaseAgentDecorator;
 import org.socialforce.model.impl.SimpleSocialForceModel;
 /**
  * Created by Whatever on 2016/9/16.
  */
-public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.AgentGenerator> {
+public class SV_AgentGenerator implements SceneValue<SV_AgentGenerator.AgentGenerator> {
     /**
      * 用于描述一个刷怪笼
      * 参数为XYZ方向的agent间距，生成人的范围还有在何种模型下生成人。
@@ -53,7 +52,7 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
     }
     private int priority;
     protected AgentGenerator agentGenerator;
-    public SVSR_AgentGenerator(double X_distance, double Y_distance, double Z_distance, Shape Area, DistanceShape template, Velocity velocity){
+    public SV_AgentGenerator(double X_distance, double Y_distance, double Z_distance, Shape Area, DistanceShape template, Velocity velocity){
         agentGenerator = new AgentGenerator(X_distance,Y_distance,Z_distance,Area);
         agentGenerator.setDecorator(new BaseAgentDecorator());
         agentGenerator.setModel(new SimpleSocialForceModel());
@@ -84,9 +83,18 @@ public class SVSR_AgentGenerator implements SceneValue<SVSR_AgentGenerator.Agent
         if (agentGenerator.Area instanceof Box2D || agentGenerator.Area instanceof Semicircle2D || agentGenerator.Area instanceof Circle2D) {
             for (int i = 0; i < (agentGenerator.Area.getBounds().getEndPoint().getX() - agentGenerator.Area.getBounds().getStartPoint().getX()) / agentGenerator.X_distance; i++) {
                 for (int j = 0; j < (agentGenerator.Area.getBounds().getEndPoint().getY() - agentGenerator.Area.getBounds().getStartPoint().getY()) / agentGenerator.Y_distance; j++) {
+                    int is_able_flag = 0;
                     Point2D point = new Point2D(agentGenerator.Area.getBounds().getStartPoint().getX()+i*agentGenerator.X_distance,agentGenerator.Area.getBounds().getStartPoint().getY()+j*agentGenerator.Y_distance);
                     if(agentGenerator.Area.contains(point)){
                         new_agent = agentGenerator.decorator.createAgent(point, agentGenerator.velocity.clone(), agentGenerator.shape);
+                        EntityPool all_blocks = scene.getStaticEntities();
+                        for (InteractiveEntity entity : all_blocks) {
+                            if ((entity instanceof Blockable) && new_agent.getShape().distanceTo(entity.getShape()) < 0){
+                                is_able_flag = 1;
+                                break;
+                            }
+                        }
+                        if(is_able_flag == 1) continue;
                         new_agent.setModel(agentGenerator.model.clone());
                         scene.addAgent(new_agent);
                         new_agent.setScene(scene);

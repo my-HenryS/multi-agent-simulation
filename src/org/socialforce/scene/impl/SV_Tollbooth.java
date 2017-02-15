@@ -8,11 +8,11 @@ import org.socialforce.scene.SceneValue;
 /**
  * Created by sunjh1999 on 2017/1/20.
  */
-public class SVSR_Tollbooth implements SceneValue<SimpleTollbooth> {
+public class SV_Tollbooth implements SceneValue<SimpleTollbooth> {
     protected SimpleTollbooth tollbooth;
     protected String name;
-    public SVSR_Tollbooth(Shape shape, double interval){this.tollbooth= new SimpleTollbooth(shape, interval);}
-    public SVSR_Tollbooth(SimpleTollbooth tollbooth){
+    public SV_Tollbooth(Shape shape, double interval){this.tollbooth= new SimpleTollbooth(shape, interval);}
+    public SV_Tollbooth(SimpleTollbooth tollbooth){
         this.tollbooth = tollbooth;
     }
     @Override

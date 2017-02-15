@@ -5,6 +5,7 @@ import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
 import org.socialforce.model.InteractiveEntity;
+import org.socialforce.scene.impl.SV_Tollbooth;
 import sun.nio.cs.StreamEncoder;
 
 import java.util.Iterator;
@@ -28,6 +29,17 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
     @Override
     public Iterable<T> selectContains(Shape shape){
         return new PoolShapeSelectContainsIterable(shape);
+    }
+
+    @Override
+    public Iterable<T> selectClass(Class aClass){ return new PoolClassIterable(aClass);}
+
+    @Override
+    public T selectTopByClass(Point point, Class aClass){
+            return this.stream()
+                    .filter(entity -> classEquals(entity, aClass) && pointContains(entity, point))
+                    .findFirst()
+                    .orElse(null);
     }
 
     /**
@@ -60,6 +72,10 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
      protected boolean pointContains(T entity, Point point) {
      return entity.getShape().contains(point);
      }
+
+    protected boolean classEquals(T entity, Class aclass) {
+        return aclass.isInstance(entity);
+    }
 
      /**
      * 移除与指定形状相交的所有实体。
@@ -205,6 +221,28 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> imp
         public Iterator<T> iterator() {
             return LinkListPool.this.stream()
                     .filter(entity -> nameEquals(entity, name))
+                    .iterator();
+        }
+
+
+    }
+
+    public class PoolClassIterable implements Iterable<T> {
+        private Class aClass;
+
+        public PoolClassIterable(Class tClass) {
+            this.aClass = tClass;
+        }
+
+        /**
+         * Returns an iterator over elements of type {@code T}.
+         *
+         * @return an Iterator.
+         */
+        @Override
+        public Iterator<T> iterator() {
+            return LinkListPool.this.stream()
+                    .filter(entity -> classEquals(entity, aClass))
                     .iterator();
         }
 

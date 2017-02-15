@@ -46,6 +46,18 @@ public class LinkListPoolTest {
     }
 
     @Test
+    public void testClassEquals() throws Exception {
+        Iterable<InteractiveEntity> iterable = entities.selectClass(Wall.class);
+        int count = 0;
+        for (InteractiveEntity entity : iterable) {
+            count++;
+        }
+        System.out.println(count);
+    }
+
+
+
+    @Test
     public void testSelect() throws Exception {
         Iterable<InteractiveEntity> iterable = entities.select(new Point2D(0,0));
         int count = 0;

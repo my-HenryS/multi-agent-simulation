@@ -1,14 +1,13 @@
 package org.socialforce.model.impl;
 
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Circle2D;
+import org.socialforce.geom.impl.Force2D;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.*;
 import org.socialforce.scene.Scene;
 import org.socialforce.strategy.Path;
 
-import java.io.*;
 import java.util.LinkedList;
 
 /**
@@ -22,7 +21,7 @@ public class BaseAgent extends Entity implements Agent {
     double mass;
     int currTimestamp;
     DistanceShape view;
-    Force pushed;
+    Force pushed, lastpushed = new Force2D(0,0);
     Velocity deltaV;
     Vector deltaS;
     boolean escaped = false;
@@ -106,7 +105,8 @@ public class BaseAgent extends Entity implements Agent {
     @Override
     public Velocity expect() {
         Point point = this.shape.getReferencePoint();
-        return model.getAgentMotivation(point, path.getCurrentGoal(point));
+        if(path != null) return model.getAgentMotivation(point, path.nextStep(point));
+        else return new Velocity2D(0,0);
     }
 
     /**
@@ -188,6 +188,7 @@ public class BaseAgent extends Entity implements Agent {
             this.view.moveTo(point);                      //改变视野
         }
         stoped = false;
+        lastpushed = pushed;
         deltaS = model.zeroVector();
         deltaV = model.zeroVelocity();
         pushed = model.zeroForce();
@@ -299,6 +300,10 @@ public class BaseAgent extends Entity implements Agent {
         }
         aver /= interval;
         return aver;
+    }
+
+    public double getLastAcc(){
+        return lastpushed.length();
     }
 
     public void stop(){

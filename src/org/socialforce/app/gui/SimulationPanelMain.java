@@ -1,10 +1,7 @@
 package org.socialforce.app.gui;
 
 import org.socialforce.app.ApplicationListener;
-import org.socialforce.app.Applications.ApplicationForCanteen;
-import org.socialforce.app.Applications.ApplicationForECStrategy;
-import org.socialforce.app.Applications.ApplicationForECTest;
-import org.socialforce.app.Applications.ApplicationForMCM;
+import org.socialforce.app.Applications.*;
 import org.socialforce.app.SocialForceApplication;
 import org.socialforce.model.Agent;
 import org.socialforce.scene.Scene;

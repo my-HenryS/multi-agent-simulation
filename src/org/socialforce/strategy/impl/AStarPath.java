@@ -4,7 +4,6 @@ import org.socialforce.strategy.Path;
 import org.socialforce.geom.Point;
 
 import java.util.LinkedList;
-import java.util.Map;
 
 /**
  * 定义StraightPath类，其实现了接口Path的方法。
@@ -29,6 +28,14 @@ public class AStarPath implements Path {
         return map.getGoal();
     }
 
+    public Point getCurrentGoal(){ return map.getGoal();}
+
+    public LinkedList<Point> getGoals(){
+        LinkedList<Point> goals = new LinkedList<>();
+        goals.addLast(map.getGoal());
+        return goals;
+    }
+
     /**
      *在当前位置获取下一个目标点。
      *
@@ -36,7 +43,7 @@ public class AStarPath implements Path {
      * @return 当前位置的目标点，该点为归还路径上的点。
      */
     @Override
-    public Point getCurrentGoal(Point current) {
+    public Point nextStep(Point current) {
         return map.findNext(current);
     }
 
@@ -50,6 +57,7 @@ public class AStarPath implements Path {
     }
 
     //Old version of length
+    @Deprecated
     public double Length(Point current){
         double length = 0;
         LinkedList<Point> path = predict(current);
@@ -68,7 +76,7 @@ public class AStarPath implements Path {
         Point temp = current.clone();
         while(!temp.equals(getGoal())){
             path.addLast(temp);
-            temp = getCurrentGoal(temp);
+            temp = nextStep(temp);
         }
         path.addLast(temp);
         return path;

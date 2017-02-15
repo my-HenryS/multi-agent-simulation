@@ -3,6 +3,8 @@ package org.socialforce.strategy;
 import org.socialforce.geom.Point;
 import org.socialforce.model.Agent;
 
+import java.util.LinkedList;
+
 /**
  * 表示agent的路径。
  * 该接口的基本实现是获取一组目标点。
@@ -18,12 +20,15 @@ public interface Path {
      */
     Point getGoal();
 
+    Point getCurrentGoal();
+
+    LinkedList<Point> getGoals();
     /**
      *在当前位置获取下一个目标点。
      * @param current agent 所在的当前位置点。
      * @return 当前位置的目标点，该点为归还路径上的点。
      */
-    Point getCurrentGoal(Point current);
+    Point nextStep(Point current);
 
     /**
      * 计算路径长度

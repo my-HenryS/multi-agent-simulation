@@ -28,10 +28,10 @@ public class SolidRectangle2DDrawer extends AwtDrawer2D<Rectangle2D> {
             Point point = pattern.getReferencePoint();
             double length = pattern.getScale()[0], width = pattern.getScale()[1];
             double angle = pattern.getAngle();
-            double x1 = point.getX() - length * Math.cos(angle);
-            double y1 = point.getY() - length * Math.sin(angle);
+            double x1 = point.getX() - length / 2;
+            double y1 = point.getY() - width / 2;
             g.rotate(pattern.getAngle(), point.getX(), point.getY());
-            g.draw(new java.awt.geom.Rectangle2D.Double(x1, y1, length, width));
+            g.fill(new java.awt.geom.Rectangle2D.Double(x1, y1, length, width));
             g.setTransform(old);
             /*double length = pattern.getScale()[0], width = pattern.getScale()[1];
 
