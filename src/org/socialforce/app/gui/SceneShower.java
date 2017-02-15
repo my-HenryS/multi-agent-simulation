@@ -117,6 +117,7 @@ public class SceneShower implements SceneListener {
         drawerInstaller.addDrawerSupport(scene);
         board.setImage(image);
         board.setScene(scene);
+        totalPeopleLabel.setText("" + scene.getAllAgents().size());
         board.getResizeListener().componentResized(null);
     }
 
@@ -147,5 +148,8 @@ public class SceneShower implements SceneListener {
             scene.getDrawer().draw(scene);
             this.getBoard().repaint();//refresh();
         }
+        this.remainPeopleLabel.setText("" + scene.getAllAgents().size());
+        this.timeLabel.setText(String.format("%.3f", scene.getCurrentSteps() * scene.getApplication().getModel().getTimePerStep()));
+
     }
 }
