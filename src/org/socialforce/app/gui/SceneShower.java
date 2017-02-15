@@ -47,6 +47,7 @@ public class SceneShower implements SceneListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SceneShower.this.getBoard().setVisible(visibleCheckBox.isSelected());
+                SceneShower.this.positionLabel.setVisible(visibleCheckBox.isSelected());
             }
         });
         showPanel.addMouseMotionListener(new MouseMotionAdapter() {
@@ -58,9 +59,11 @@ public class SceneShower implements SceneListener {
              */
             @Override
             public void mouseMoved(MouseEvent e) {
-                SceneDrawer sc = (SceneDrawer) SceneShower.this.scene.getDrawer();
-                double[] scr = sc.screenToScene(e.getX(), e.getY());
-                SceneShower.this.positionLabel.setText(String.format("(%.3f,%.3f)", scr[0], scr[1]));
+                if (SceneShower.this.scene != null) {
+                    SceneDrawer sc = (SceneDrawer) SceneShower.this.scene.getDrawer();
+                    double[] scr = sc.screenToScene(e.getX(), e.getY());
+                    SceneShower.this.positionLabel.setText(String.format("(%.3f,%.3f)", scr[0], scr[1]));
+                }
 //                super.mouseMoved(e);
             }
         });
@@ -114,6 +117,7 @@ public class SceneShower implements SceneListener {
         drawerInstaller.addDrawerSupport(scene);
         board.setImage(image);
         board.setScene(scene);
+        totalPeopleLabel.setText("" + scene.getAllAgents().size());
         board.getResizeListener().componentResized(null);
     }
 
@@ -144,5 +148,8 @@ public class SceneShower implements SceneListener {
             scene.getDrawer().draw(scene);
             this.getBoard().repaint();//refresh();
         }
+        this.remainPeopleLabel.setText("" + scene.getAllAgents().size());
+        this.timeLabel.setText(String.format("%.3f", scene.getCurrentSteps() * scene.getApplication().getModel().getTimePerStep()));
+
     }
 }
