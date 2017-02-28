@@ -143,7 +143,7 @@ public class BaseAgent extends Entity implements Agent {
         } else {
             return null;
         }
-    }
+}
 
     /**
      * 决定下一步，agent要走向的目标点。

@@ -213,6 +213,14 @@ public class Rectangle2D implements Shape {
         this.angle = this.angle +angle;
     }
 
+    public void spin(Point point, double angle){
+        Vector2D vector2D = new Vector2D(center.getX()-point.getX(),center.getY()-point.getY());
+        this.angle = this.angle +angle;
+        vector2D.spin(angle);
+        center.moveTo(point.getX(),point.getY());
+        center.moveBy(vector2D.values[0],vector2D.values[0]);
+    }
+
     public double getAngle(){
         return angle;
     }
