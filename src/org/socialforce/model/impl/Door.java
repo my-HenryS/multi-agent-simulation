@@ -20,7 +20,9 @@ public class Door implements InteractiveEntity,Moveable {
     public Door(Rectangle2D rectangle2D, Point2D ankor, double[] anglerange) {
         this.rectangle2D = rectangle2D;
         this.ankor = ankor;
-        Anglerange = anglerange;
+        if(anglerange[0]<anglerange[1]){
+        Anglerange = anglerange;}
+        else Anglerange[0] = anglerange[1];Anglerange[1] = anglerange[0];
     }
 
     @Override
