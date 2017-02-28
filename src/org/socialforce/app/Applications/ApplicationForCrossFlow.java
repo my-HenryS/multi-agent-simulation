@@ -1,31 +1,34 @@
 package org.socialforce.app.Applications;
 
-import org.socialforce.app.*;
 import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
+import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.Monitor;
-import org.socialforce.scene.*;
-import org.socialforce.scene.impl.*;
-import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.impl.Wall;
+import org.socialforce.scene.ParameterPool;
+import org.socialforce.scene.Scene;
+import org.socialforce.scene.SceneLoader;
+import org.socialforce.scene.impl.*;
 import org.socialforce.strategy.GoalStrategy;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.AStarPathFinder;
+import org.socialforce.strategy.impl.FurthestGoalStrategy;
 import org.socialforce.strategy.impl.NearestGoalStrategy;
+import org.socialforce.strategy.impl.StraightPathFinder;
 
 import java.util.Iterator;
 
 import static org.socialforce.scene.SceneLoader.genParameter;
 
 /**
- * Created by Whatever on 2016/12/2.
+ * Created by sunjh1999 on 2017/2/26.
  */
-public class ApplicationForECTest extends SimpleApplication implements SocialForceApplication {
+public class ApplicationForCrossFlow extends SimpleApplication {
     DistanceShape template;
 
-    public ApplicationForECTest(){
+    public ApplicationForCrossFlow (){
     }
 
     /**
@@ -36,14 +39,10 @@ public class ApplicationForECTest extends SimpleApplication implements SocialFor
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
             Scene scene = iterator.next();
             PathFinder pathFinder = new AStarPathFinder(scene, template);
-            GoalStrategy strategy = new NearestGoalStrategy(scene, pathFinder);
+            GoalStrategy strategy = new FurthestGoalStrategy(scene, pathFinder);
             strategy.pathDecision();
             while (!scene.getAllAgents().isEmpty()) {
                 scene.stepNext();
-            }
-            for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
-                Monitor monitor = (Monitor)iter.next();
-                System.out.println(monitor.sayVelocity());
             }
         }
     }
@@ -57,12 +56,14 @@ public class ApplicationForECTest extends SimpleApplication implements SocialFor
         template = new Circle2D(new Point2D(0,0),0.486/2);
         SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
                 new Wall[]{
-                        new Wall(new Box2D(-10,0,60,1))
+                        new Wall(new Box2D(20,-3,1,15))
                 });
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(9,-2,2,5)})));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(200,new Box2D(3,-10,20,6),template)));
-        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(6,1,8,1))));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(40,new Box2D(3,1,3,5),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(20,new Box2D(33,1,3,5),template)));
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(19,3,3,3)})));
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(46,1,1,8))));
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(-6,1,1,8))));
         loader.readParameterSet(parameters);
         scenes = loader.readScene(this);
     }

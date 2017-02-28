@@ -49,7 +49,7 @@ public class ECStrategy implements DynamicStrategy {
             }
             agent.setPath(designed_path);
         }
-        System.out.println(goalchanges);
+        //System.out.println(goalchanges);
     }
 
     @Override
@@ -75,8 +75,8 @@ public class ECStrategy implements DynamicStrategy {
     }
 
     public static void main(String[] args) {
-        double []widths = new double[]{1};
-        double dV = 4, sigmaEC = 0;
+        double []widths = new double[]{0.75,1,1.5,1.75};
+        double dV = 3, sigmaEC = 0;
         for(double width:widths){
             sigmaEC += ECStrategy.EC(width,dV);
         }
