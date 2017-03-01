@@ -218,7 +218,7 @@ public class Rectangle2D implements Shape {
         this.angle = this.angle +angle;
         vector2D.spin(angle);
         center.moveTo(point.getX(),point.getY());
-        center.moveBy(vector2D.values[0],vector2D.values[0]);
+        center.moveBy(vector2D.values[0],vector2D.values[1]);
     }
 
     public double getAngle(){
