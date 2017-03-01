@@ -55,6 +55,7 @@ public class ApplicationForDoorTest extends SimpleApplication implements SocialF
     @Override
     public void setUpScenes(){
         template = new Circle2D(new Point2D(0,0),0.486/2);
+        double[] range = new double[]{0,Math.PI/2};
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("standard.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFrom(is);
@@ -63,7 +64,7 @@ public class ApplicationForDoorTest extends SimpleApplication implements SocialF
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(4,-2,2,5)})));
         parameters.addLast(genParameter(new SV_RandomAgentGenerator(100,new Box2D(0,0,10,-10),template)));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,4,8,1))));
-        parameters.addLast(genParameter(new SV_Door(new Rectangle2D(new Point2D(4.5,0.25),1,0.5,0),new Point2D(4,0),new double[]{0,Math.PI/2})));
+        parameters.addLast(genParameter(new SV_Door(new Rectangle2D(new Point2D(4.5,0.25),1,0.5,0),new Point2D(4,0),range)));
         loader.readParameterSet(parameters);
         scenes = loader.readScene(this);
     }

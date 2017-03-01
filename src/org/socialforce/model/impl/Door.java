@@ -4,10 +4,7 @@ import org.socialforce.geom.Force;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
 import org.socialforce.geom.Velocity;
-import org.socialforce.geom.impl.Force2D;
-import org.socialforce.geom.impl.Point2D;
-import org.socialforce.geom.impl.Rectangle2D;
-import org.socialforce.geom.impl.Velocity2D;
+import org.socialforce.geom.impl.*;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.Moveable;
@@ -22,9 +19,7 @@ public class Door implements InteractiveEntity,Moveable {
     public Door(Rectangle2D rectangle2D, Point2D ankor, double[] anglerange) {
         this.rectangle2D = rectangle2D;
         this.ankor = ankor;
-        if(anglerange[0]<anglerange[1]){
-        Anglerange = anglerange;}
-        else Anglerange[0] = anglerange[1];Anglerange[1] = anglerange[0];
+        this.Anglerange = anglerange;
     }
 
     @Override
@@ -152,8 +147,9 @@ public class Door implements InteractiveEntity,Moveable {
      */
     @Override
     public void push(Force force) {
-        if (force != new Force2D()){
-        pushed++;}
+        Force temp = force.clone();
+        temp.dot(new Vector2D(1,0));
+        pushed += (int) temp.length();
     }
     int pushed = 0;
 
@@ -178,9 +174,10 @@ public class Door implements InteractiveEntity,Moveable {
 
 
     public void act(){
-        if (rectangle2D.getAngle()>=Anglerange[0]&&rectangle2D.getAngle()<=Anglerange[1]){
+        double angle = rectangle2D.getAngle();
+        //System.out.println(Anglerange[0]+","+Anglerange[1]);
+        if (angle>=Anglerange[0]&&angle<=Anglerange[1]){
             rectangle2D.spin(ankor,model.getTimePerStep()*100*pushed/getMass());
-            System.out.println(pushed);
         }
         pushed = 0;
     }

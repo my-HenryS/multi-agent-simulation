@@ -70,21 +70,28 @@ public class SimpleScene implements Scene {
      */
     @Override
     public void stepNext() {
-        for(Agent agent : allAgents) {
-            agent.determineNext();
-        }
-        for (Agent agent : allAgents) {
-            agent.act();
-        }
-        allAgents.removeIf(Agent::isEscaped);
-
         Iterable<InteractiveEntity> Interac = statics.selectClass(Moveable.class);
         for (InteractiveEntity entity : Interac){
             if(entity instanceof Door){
                 ((Door) entity).determinNext();
+            }
+        }
+        for(Agent agent : allAgents) {
+            agent.determineNext();
+        }
+
+
+        for (InteractiveEntity entity : Interac){
+            if(entity instanceof Door){
                 ((Door) entity).act();
             }
         }
+        for (Agent agent : allAgents) {
+            agent.act();
+        }
+
+
+        allAgents.removeIf(Agent::isEscaped);
         currentStep++;
         if(this.getApplication() != null) {
             ApplicationListener listener = this.getApplication().getApplicationListener();// 2016/8/23 add step for all agent and statics.
