@@ -4,6 +4,7 @@ import org.socialforce.drawer.Drawable;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
 import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.BaseAgent;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -23,6 +24,7 @@ public class EntityDrawerInstaller implements DrawerInstaller {
     }
 
     public EntityDrawerInstaller(Graphics2D device) {
+        registerDrawer(new AgentDrawer(device), BaseAgent.class);
         registerDrawer(new EntityDrawer(device), InteractiveEntity.class);
 
     }

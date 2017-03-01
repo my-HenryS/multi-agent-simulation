@@ -1,5 +1,6 @@
 package org.socialforce.drawer.impl;
 
+import org.socialforce.drawer.Drawable;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
 import org.socialforce.geom.*;
@@ -10,7 +11,7 @@ import java.awt.*;
 /**
  * Created by Ledenel on 2017/3/1.
  */
-public class EntityDrawer extends AwtDrawer2D<InteractiveEntity>{
+public class EntityDrawer<EntityType extends InteractiveEntity> extends AwtDrawer2D<EntityType>{
     public EntityDrawer(Graphics2D device) {
         super(device);
         defaultShapeInstaller = new ShapeDrawer2DInstaller(device);
@@ -25,17 +26,23 @@ public class EntityDrawer extends AwtDrawer2D<InteractiveEntity>{
      * @param pattern
      */
     @Override
-    public void renderShape(Graphics2D g, InteractiveEntity pattern) {
+    public void renderShape(Graphics2D g, EntityType pattern) {
         org.socialforce.geom.Shape shape = pattern.getShape();
         Drawer drawer = shape.getDrawer();
         if(drawer != null){
-            drawer.draw(shape);
+            colorfulDraw(shape);
         }
         else {
             defaultShapeInstaller.addDrawerSupport(shape);
             if(shape.getDrawer() != null){
-                shape.getDrawer().draw(shape);
+                colorfulDraw(shape);
             }
         }
+    }
+
+    protected void colorfulDraw(Drawable shape) {
+        Drawer drawer = shape.getDrawer();
+        drawer.setColor(this.getColor());
+        drawer.draw(shape);
     }
 }
