@@ -201,7 +201,7 @@ public class Rectangle2D implements Shape {
      * @return 该形状的副本.
      */
     @Override
-    public Shape clone() {
+    public Rectangle2D clone() {
         return new Rectangle2D((Point2D) center.clone(),length,weidth,angle);
     }
 

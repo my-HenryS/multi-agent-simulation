@@ -6,6 +6,7 @@ import org.socialforce.geom.Shape;
 import org.socialforce.geom.Velocity;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Rectangle2D;
+import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.Moveable;
@@ -130,7 +131,7 @@ public class Door implements InteractiveEntity,Moveable {
 
     @Override
     public InteractiveEntity standardclone() {
-        return null;
+        return new Door(rectangle2D.clone(), ankor.clone(), Anglerange.clone());
     }
 
     /**
@@ -140,7 +141,7 @@ public class Door implements InteractiveEntity,Moveable {
      */
     @Override
     public Velocity getVelocity() {
-        return null;
+        return new Velocity2D(0,0);
     }
 
     /**
@@ -169,7 +170,8 @@ public class Door implements InteractiveEntity,Moveable {
 
     public void act(){
         if (rectangle2D.getAngle()>=Anglerange[0]&&rectangle2D.getAngle()<=Anglerange[1]){
-            rectangle2D.spin(ankor,model.getTimePerStep()*100/getMass());
+            rectangle2D.spin(ankor,model.getTimePerStep()*3000*pushed/getMass());
+            System.out.println(pushed);
         }
         pushed = 0;
     }

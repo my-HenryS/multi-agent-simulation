@@ -1,6 +1,8 @@
 package org.socialforce.scene.impl;
 
 import org.socialforce.geom.Shape;
+import org.socialforce.geom.impl.Point2D;
+import org.socialforce.geom.impl.Rectangle2D;
 import org.socialforce.model.impl.Door;
 import org.socialforce.model.impl.SimpleSocialForceModel;
 import org.socialforce.scene.Scene;
@@ -10,8 +12,13 @@ import org.socialforce.scene.SceneValue;
  * Created by Whatever on 2017/3/1.
  */
 public class SV_Door implements SceneValue<Door> {
-    public SV_Door(Door value) {
-        this.value = value;
+    private Rectangle2D rectangle;
+    private Point2D ankor;
+    private double[] anglerange;
+    public SV_Door(Rectangle2D rectangle2D, Point2D ankor, double[] anglerange) {
+        this.rectangle = rectangle2D;
+        this.ankor = ankor;
+        this.anglerange = anglerange.clone();
     }
 
     /**
@@ -65,6 +72,7 @@ public class SV_Door implements SceneValue<Door> {
      */
     @Override
     public void apply(Scene scene) {
+        value = new Door(rectangle, ankor, anglerange);
         value.setName("Door");
         scene.getStaticEntities().add(value);
         value.setScene(scene);
