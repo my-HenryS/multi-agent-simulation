@@ -35,6 +35,7 @@ public class EntityDrawerInstaller implements DrawerInstaller {
      * @param device
      */
     public EntityDrawerInstaller(Graphics2D device) {
+        registerDrawer(new TargetAgentMarkDrawer(device), BaseAgent.class);
         registerDrawer(new AgentDrawer(device), BaseAgent.class);
         registerDrawer(new EntityDrawer(device), InteractiveEntity.class);
 
