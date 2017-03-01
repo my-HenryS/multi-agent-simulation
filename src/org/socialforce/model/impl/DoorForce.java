@@ -23,7 +23,7 @@ public class DoorForce implements ForceRegulation{
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
         if (source instanceof Agent && target instanceof Door){
             if (((Agent) source).getShape().distanceTo(target.getShape())<0.1){
-            return true && source.getScene().getCurrentSteps() != 1;}
+            return true;}
             return false;
         }
         else

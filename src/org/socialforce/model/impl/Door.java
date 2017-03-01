@@ -4,6 +4,7 @@ import org.socialforce.geom.Force;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
 import org.socialforce.geom.Velocity;
+import org.socialforce.geom.impl.Force2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Rectangle2D;
 import org.socialforce.geom.impl.Velocity2D;
@@ -151,7 +152,8 @@ public class Door implements InteractiveEntity,Moveable {
      */
     @Override
     public void push(Force force) {
-        pushed++;
+        if (force != new Force2D()){
+        pushed++;}
     }
     int pushed = 0;
 
