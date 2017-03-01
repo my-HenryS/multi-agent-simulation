@@ -6,7 +6,8 @@ import org.socialforce.model.impl.BaseAgent;
 import java.awt.*;
 
 /**
- * Created by Ledenel on 2017/3/1.
+ * 一个绘制Agent的绘制器。可以通过Agent的状态自主改变颜色。
+ * 可以继承并扩展该绘制器实现更多功能（依据具体策略改变颜色，画出方向等）。
  */
 public class AgentDrawer extends EntityDrawer<BaseAgent> {
     public AgentDrawer(Graphics2D device) {

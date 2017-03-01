@@ -10,6 +10,8 @@ import java.awt.*;
 import java.util.LinkedList;
 
 /**
+ * 安装Entity的Drawer所用的安装器。
+ * 这个安装器可以依据已注册的Entity Class与注册的Drawer的对应，给对应的Entity安装正确的Drawer。
  * Created by Ledenel on 2017/3/1.
  */
 public class EntityDrawerInstaller implements DrawerInstaller {
@@ -23,6 +25,15 @@ public class EntityDrawerInstaller implements DrawerInstaller {
         }
     }
 
+    /**
+     * 用指定设备构造Drawer的安装器。
+     * 其注册顺序是有严格限制的，在指定对象安装时，安装器会寻找“第一个与该对象兼容的类或接口”并返回对应的drawer。
+     * 例如:
+     * 注册Agent的drawer1
+     * 注册Entity的drawer2
+     * 会使得所有的Agent安装Drawer1（即使他们是Entity），所有的Entity安装Drawer2。
+     * @param device
+     */
     public EntityDrawerInstaller(Graphics2D device) {
         registerDrawer(new AgentDrawer(device), BaseAgent.class);
         registerDrawer(new EntityDrawer(device), InteractiveEntity.class);
