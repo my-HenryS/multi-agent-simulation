@@ -22,13 +22,12 @@ public class StraightPathFinder implements PathFinder {
     Scene scene;
 
     public StraightPathFinder(Scene targetScene, Shape agentShape) {
+        this.agentShape = agentShape.clone();
+        this.scene = targetScene;
         for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(SafetyRegion.class).iterator(); iter.hasNext();){
             SafetyRegion safetyRegion = (SafetyRegion)iter.next();
             goals.addLast(safetyRegion.getShape().getReferencePoint().clone()) ;
         }
-        this.agentShape = agentShape.clone();
-        this.scene = targetScene;
-
     }
 
     /**
