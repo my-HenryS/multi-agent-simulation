@@ -2,6 +2,7 @@ package org.socialforce.scene.impl;
 
 import org.socialforce.geom.Shape;
 import org.socialforce.model.impl.Door;
+import org.socialforce.model.impl.SimpleSocialForceModel;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneValue;
 
@@ -9,6 +10,10 @@ import org.socialforce.scene.SceneValue;
  * Created by Whatever on 2017/3/1.
  */
 public class SV_Door implements SceneValue<Door> {
+    public SV_Door(Door value) {
+        this.value = value;
+    }
+
     /**
      * 获取所关联的实体名称。
      *
@@ -16,9 +21,10 @@ public class SV_Door implements SceneValue<Door> {
      */
     @Override
     public String getEntityName() {
-        return null;
+        return name;
     }
 
+    protected String name;
     /**
      * 设置获取所关联的实体名称。
      *
@@ -26,7 +32,7 @@ public class SV_Door implements SceneValue<Door> {
      */
     @Override
     public void setEntityName(String name) {
-
+        this.name = name;
     }
 
     /**
@@ -36,8 +42,10 @@ public class SV_Door implements SceneValue<Door> {
      */
     @Override
     public Door getValue() {
-        return null;
+        return value;
     }
+
+    protected Door value;
 
     /**
      * 设置改场景参数赋值的值。
@@ -46,7 +54,7 @@ public class SV_Door implements SceneValue<Door> {
      */
     @Override
     public void setValue(Door value) {
-
+        this.value = value;
     }
 
     /**
@@ -57,7 +65,10 @@ public class SV_Door implements SceneValue<Door> {
      */
     @Override
     public void apply(Scene scene) {
-
+        value.setName("Door");
+        scene.getStaticEntities().add(value);
+        value.setScene(scene);
+        value.setModel(new SimpleSocialForceModel());
     }
 
     /**

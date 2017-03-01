@@ -3,8 +3,8 @@ Scene:
         Box:-50,-50,100,100 point-offset;
 
 Walls:
-    #Wall:
-        Box:0,0,11,1;#
+    Wall:
+        Box:0,0,11,1;
     Wall:
         Box:,-1,-10,0,1;
     Wall:
