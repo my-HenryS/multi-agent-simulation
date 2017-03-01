@@ -53,17 +53,17 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         getDevice().draw(new Rectangle2D.Double(pt[0],pt[1],sz[0],sz[1]));
         getDevice().setColor(Color.WHITE);
         for (InteractiveEntity entity : iterable) {
-            Drawer drawer = entity.getShape().getDrawer();
-            if(drawer == null){
+            Drawer drawer = entity.getDrawer();
+            /*if(drawer == null){
                 installer.addDrawerSupport(entity.getShape());
                 drawer = entity.getShape().getDrawer();
-            }
-            drawer.setDevice(this.getDevice());
+            }*/
+            //drawer.setDevice(this.getDevice());
  //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(26.0,2.5))) ((AwtDrawer2D)drawer).setColor(Color.red);
  //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(33.5,14))) ((AwtDrawer2D)drawer).setColor(Color.green);
  //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(14.0,21.5))) ((AwtDrawer2D)drawer).setColor(Color.blue);
-            drawer.draw(entity.getShape());
-            ((AwtDrawer2D)drawer).setColor(Color.black);
+            drawer.draw(entity);
+            //((AwtDrawer2D)drawer).setColor(Color.black);
 
         }
         //getDevice().transform(reverse);
@@ -80,6 +80,8 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
     }
 
     Box clip;
+
+    protected EntityDrawerInstaller eInstaller;
 
     protected DrawerInstaller installer;
 
@@ -147,6 +149,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
 
         graphics2D = new ProxyedGraphics2D(graphics);
         installer = new ShapeDrawer2DInstaller(graphics);
+        eInstaller = new EntityDrawerInstaller(graphics);
        // scene.setDrawer(this);
 
 //        Iterable<Agent> agents = scene.getAllAgents();
