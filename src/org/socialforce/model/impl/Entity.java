@@ -17,6 +17,18 @@ public abstract class Entity implements InteractiveEntity {
     protected Shape shape;
 
     @Override
+    public Drawer getDrawer() {
+        return drawer;
+    }
+
+    @Override
+    public void setDrawer(Drawer drawer) {
+        this.drawer = drawer;
+    }
+
+    protected Drawer drawer;
+
+    @Override
     public Scene getScene() {
         return scene;
     }
