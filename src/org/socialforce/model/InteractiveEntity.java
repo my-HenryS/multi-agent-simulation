@@ -1,6 +1,7 @@
 package org.socialforce.model;
 
 import org.socialforce.container.Pool;
+import org.socialforce.drawer.Drawable;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
@@ -14,7 +15,7 @@ import org.socialforce.geom.Shape;
  * @see Pool
  * @see Agent
  */
-public interface InteractiveEntity {
+public interface InteractiveEntity extends Drawable{
     Scene getScene();
 
     void setScene(Scene scene);

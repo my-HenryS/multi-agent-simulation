@@ -1,5 +1,7 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.drawer.Drawer;
+import org.socialforce.drawer.impl.EntityDrawer;
 import org.socialforce.scene.Scene;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.geom.Point;
