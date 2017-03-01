@@ -1,5 +1,7 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.drawer.Drawer;
+import org.socialforce.drawer.impl.EntityDrawer;
 import org.socialforce.scene.Scene;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.geom.Point;
@@ -13,6 +15,18 @@ import org.socialforce.model.SocialForceModel;
 public abstract class Entity implements InteractiveEntity {
     protected SocialForceModel model;
     protected Shape shape;
+
+    @Override
+    public Drawer getDrawer() {
+        return drawer;
+    }
+
+    @Override
+    public void setDrawer(Drawer drawer) {
+        this.drawer = drawer;
+    }
+
+    protected Drawer drawer;
 
     @Override
     public Scene getScene() {
