@@ -268,6 +268,9 @@ public class BaseAgent extends Entity implements Agent {
             Agent agent = (Agent) affectedEntity;
             agent.push(model.calculate(this, affectedEntity));
         }
+        if(affectedEntity instanceof Door){
+            ((Door)affectedEntity).push(model.calculate(this,affectedEntity));
+        }
     }
 
     /**

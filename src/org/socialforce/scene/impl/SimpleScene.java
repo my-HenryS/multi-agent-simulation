@@ -81,6 +81,7 @@ public class SimpleScene implements Scene {
         Iterable<InteractiveEntity> Interac = statics.selectClass(Moveable.class);
         for (InteractiveEntity entity : Interac){
             if(entity instanceof Door){
+                ((Door) entity).determinNext();
                 ((Door) entity).act();
             }
         }

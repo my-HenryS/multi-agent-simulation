@@ -168,9 +168,16 @@ public class Door implements InteractiveEntity,Moveable {
     }
 
 
+    public void determinNext(){
+        for (Agent agent : scene.getAllAgents()) {
+            agent.affect(this);
+        }
+    }
+
+
     public void act(){
         if (rectangle2D.getAngle()>=Anglerange[0]&&rectangle2D.getAngle()<=Anglerange[1]){
-            rectangle2D.spin(ankor,model.getTimePerStep()*3000*pushed/getMass());
+            rectangle2D.spin(ankor,model.getTimePerStep()*100*pushed/getMass());
             System.out.println(pushed);
         }
         pushed = 0;
