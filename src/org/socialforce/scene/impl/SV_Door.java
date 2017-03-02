@@ -15,10 +15,12 @@ public class SV_Door implements SceneValue<Door> {
     private Rectangle2D rectangle;
     private Point2D ankor;
     private double[] anglerange;
-    public SV_Door(Rectangle2D rectangle2D, Point2D ankor, double[] anglerange) {
+    private int rotationFlag;
+    public SV_Door(Rectangle2D rectangle2D, Point2D ankor, double[] anglerange, int rotationFlag) {
         this.rectangle = rectangle2D;
         this.ankor = ankor;
         this.anglerange = anglerange.clone();
+        this.rotationFlag = rotationFlag;
     }
 
     /**
@@ -72,7 +74,7 @@ public class SV_Door implements SceneValue<Door> {
      */
     @Override
     public void apply(Scene scene) {
-        value = new Door(rectangle, ankor, anglerange);
+        value = new Door(rectangle, ankor, anglerange,rotationFlag);
         value.setName("Door");
         scene.getStaticEntities().add(value);
         value.setScene(scene);

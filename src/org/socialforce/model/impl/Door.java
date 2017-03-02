@@ -1,5 +1,6 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.Force;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
@@ -16,11 +17,14 @@ import org.socialforce.scene.Scene;
  */
 public class Door implements InteractiveEntity,Moveable {
 
-    public Door(Rectangle2D rectangle2D, Point2D ankor, double[] anglerange) {
+    public Door(Rectangle2D rectangle2D, Point2D ankor, double[] anglerange,int rotationFlag) {
         this.rectangle2D = rectangle2D;
         this.ankor = ankor;
         this.Anglerange = anglerange;
+        this.rotationFlag = rotationFlag;
     }
+
+    protected int rotationFlag;
 
     @Override
     public Scene getScene() {
@@ -127,7 +131,7 @@ public class Door implements InteractiveEntity,Moveable {
 
     @Override
     public InteractiveEntity standardclone() {
-        return new Door(rectangle2D.clone(), ankor.clone(), Anglerange.clone());
+        return new Door(rectangle2D.clone(), ankor.clone(), Anglerange.clone(),rotationFlag);
     }
 
     /**
@@ -177,8 +181,29 @@ public class Door implements InteractiveEntity,Moveable {
         double angle = rectangle2D.getAngle();
         //System.out.println(Anglerange[0]+","+Anglerange[1]);
         if (angle>=Anglerange[0]&&angle<=Anglerange[1]){
-            rectangle2D.spin(ankor,model.getTimePerStep()*100*pushed/getMass());
+            rectangle2D.spin(ankor,model.getTimePerStep()*100*pushed*rotationFlag/getMass());
         }
         pushed = 0;
+    }
+
+    /**
+     * set the drawer for the drawable.
+     *
+     * @param drawer the drawer.
+     */
+    @Override
+    public void setDrawer(Drawer drawer) {
+        this.drawer = drawer;
+    }
+
+    protected Drawer drawer;
+    /**
+     * get the current drawer the object is using.
+     *
+     * @return the drawer.
+     */
+    @Override
+    public Drawer getDrawer() {
+        return drawer;
     }
 }
