@@ -1,9 +1,8 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.geom.Force;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
-import org.socialforce.geom.Velocity;
+import org.socialforce.geom.*;
+import org.socialforce.geom.impl.Point2D;
+import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.Moveable;
 
@@ -55,6 +54,10 @@ public class Star_Planet extends Entity implements Moveable{
         return velocity;
     }
 
+    public void setVelocity(Velocity velocity){
+        this.velocity = velocity;
+    }
+
     protected Velocity velocity;
 
     /**
@@ -78,5 +81,15 @@ public class Star_Planet extends Entity implements Moveable{
     @Override
     public void push(Force force, Point startPoint) {
         push(force);
+    }
+
+    public void act(){
+        Point2D point2D = (Point2D) shape.getReferencePoint();
+        Velocity v= velocity.clone();
+        Vector vv = v.deltaDistance(model.getTimePerStep());
+        double[] cp = new double[2];
+        vv.get(cp);
+        point2D.moveBy(cp[0],cp[1]);
+        shape.moveTo(point2D);
     }
 }
