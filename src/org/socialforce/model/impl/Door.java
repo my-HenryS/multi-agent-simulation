@@ -17,7 +17,7 @@ import org.socialforce.scene.Scene;
  */
 public class Door extends Entity implements Moveable {
 
-    public Door(Rectangle2D rectangle2D, Point2D ankor, double[] anglerange) {
+    public Door(Rectangle2D rectangle2D, Point2D ankor, double[] anglerange,int rotationFlag) {
         super(rectangle2D);
         this.rectangle2D = rectangle2D;
         this.ankor = ankor;
