@@ -14,7 +14,8 @@ public class ApplicationLoader extends LinkedList<SocialForceApplication> implem
     private ApplicationListener listener;
 
     /**
-     * Constructs an empty list.
+     * 使用一个指定的ApplicationListener构造一个loader。
+     * 使用如下的预设场景办法。
      */
     public ApplicationLoader(ApplicationListener listener) {
         super();
