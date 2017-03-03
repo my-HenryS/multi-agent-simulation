@@ -37,6 +37,7 @@ public class SimulationPanelMain implements ApplicationListener {
                 };
                 worker.execute();
                 runButton.setEnabled(false);
+                loadButton.setEnabled(false);
                 //loader.current().start();
             }
         });
