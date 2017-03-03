@@ -330,5 +330,6 @@ public class Vector2D implements Vector {
     public String toString(){
         return "坐标为： ("+values[0]+"," +values[1]+")";
     }
-
+    public double getX(){return values[0];}
+    public double getY(){return values[1];}
 }

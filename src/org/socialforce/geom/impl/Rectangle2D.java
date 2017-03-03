@@ -201,7 +201,7 @@ public class Rectangle2D implements Shape {
      * @return 该形状的副本.
      */
     @Override
-    public Shape clone() {
+    public Rectangle2D clone() {
         return new Rectangle2D((Point2D) center.clone(),length,weidth,angle);
     }
 
@@ -211,6 +211,14 @@ public class Rectangle2D implements Shape {
      */
     public void spin(double angle){
         this.angle = this.angle +angle;
+    }
+
+    public void spin(Point point, double angle){
+        Vector2D vector2D = new Vector2D(center.getX()-point.getX(),center.getY()-point.getY());
+        this.angle = this.angle +angle;
+        vector2D.spin(angle);
+        center.moveTo(point.getX(),point.getY());
+        center.moveBy(vector2D.values[0],vector2D.values[1]);
     }
 
     public double getAngle(){

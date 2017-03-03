@@ -12,6 +12,9 @@ import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.Moveable;
+import org.socialforce.model.impl.Door;
+import org.socialforce.model.impl.Entity;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneListener;
 import org.socialforce.scene.ValueSet;
@@ -67,12 +70,27 @@ public class SimpleScene implements Scene {
      */
     @Override
     public void stepNext() {
+        Iterable<InteractiveEntity> Interac = statics.selectClass(Moveable.class);
+        for (InteractiveEntity entity : Interac){
+            if(entity instanceof Door){
+                ((Door) entity).determinNext();
+            }
+        }
         for(Agent agent : allAgents) {
             agent.determineNext();
+        }
+
+
+        for (InteractiveEntity entity : Interac){
+            if(entity instanceof Door){
+                ((Door) entity).act();
+            }
         }
         for (Agent agent : allAgents) {
             agent.act();
         }
+
+
         allAgents.removeIf(Agent::isEscaped);
         currentStep++;
         if(this.getApplication() != null) {

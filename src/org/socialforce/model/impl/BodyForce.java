@@ -16,7 +16,7 @@ import org.socialforce.model.*;
 public class BodyForce implements ForceRegulation{
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
-        if ((source instanceof Agent && target instanceof Agent || source instanceof Wall && target instanceof Agent ) &&
+        if ((source instanceof Agent && target instanceof Agent || source instanceof Wall && target instanceof Agent || source instanceof Door && target instanceof Agent ) &&
                 ((Agent) target).getShape().intersects(source.getShape())){
             return true;
         }
