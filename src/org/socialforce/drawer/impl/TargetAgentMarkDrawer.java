@@ -40,15 +40,26 @@ public class TargetAgentMarkDrawer extends AgentDrawer {
     public Color currentColor(BaseAgent agent) {
         Box size = agent.getScene().getBounds();
         org.socialforce.geom.Point goal = agent.getPath().getGoal();
+        return getColorFromPoint(size, goal);
+    }
+
+    protected Color getColorFromPoint(Box size, org.socialforce.geom.Point goal) {
         double [] sz = new double[2];
         size.getSize().get(sz);
-        int quantX = (int) (Math.abs(goal.getX() - size.getStartPoint().getX()) / sz[0] * 255);
-        int quantY = (int) (Math.abs(goal.getY() - size.getStartPoint().getY()) / sz[1] * 255);
+        double v = sz[0];
+        double x = goal.getX();
+        double xs = size.getStartPoint().getX();
+        int quantX = quant(v, x, xs);
+        int quantY = quant(sz[1], goal.getY(), size.getStartPoint().getY());
 
         double colorR = quantX * a[0] + quantY * b[0] + 255 * c[0];
         double colorG = quantX * a[1] + quantY * b[1] + 255 * c[1];
         double colorB = quantX * a[2] + quantY * b[2] + 255 * c[2];
 
         return new Color(limit(colorR), limit(colorG), limit(colorB));
+    }
+
+    protected int quant(double v, double x, double xs) {
+        return (int) (Math.abs(x - xs) / v * 255);
     }
 }

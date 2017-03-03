@@ -36,15 +36,15 @@ public class AgentDrawer extends EntityDrawer<BaseAgent> {
     public void renderShape(Graphics2D g, BaseAgent pattern) {
         color = currentColor(pattern);
         super.renderShape(g, pattern);
-        this.setColor(new Color(255-color.getRed(),255-color.getGreen(),255-color.getBlue()));
-        org.socialforce.geom.Point pt = pattern.getShape().getReferencePoint();
-        Vector target = pt.clone();
-        Vector scP = pattern.expect().clone();
-        scP.scale(0.07);
-        target.add(scP);
-        double [] targetp = new double[2];
-        target.get(targetp);
-        g.draw(new Line2D.Double(pt.getX(), pt.getY(), targetp[0], targetp[1]));
+//        this.setColor(new Color(255-color.getRed(),255-color.getGreen(),255-color.getBlue()));
+//        org.socialforce.geom.Point pt = pattern.getShape().getReferencePoint();
+//        Vector target = pt.clone();
+//        Vector scP = pattern.expect().clone();
+//        scP.scale(0.07);
+//        target.add(scP);
+//        double [] targetp = new double[2];
+//        target.get(targetp);
+//        g.draw(new Line2D.Double(pt.getX(), pt.getY(), targetp[0], targetp[1]));
 
     }
 }
