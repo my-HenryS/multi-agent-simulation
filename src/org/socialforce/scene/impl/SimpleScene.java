@@ -76,6 +76,9 @@ public class SimpleScene implements Scene {
             if(entity instanceof Door){
                 ((Door) entity).determinNext();
             }
+            if (entity instanceof Star_Planet){
+                ((Star_Planet) entity).determinNext();
+            }
         }
         for(Agent agent : allAgents) {
             agent.determineNext();

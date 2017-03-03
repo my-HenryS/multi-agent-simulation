@@ -83,6 +83,14 @@ public class Star_Planet extends Entity implements Moveable{
         push(force);
     }
 
+    public void determinNext(){
+        Iterable<InteractiveEntity> statics = scene.getStaticEntities();
+        for (InteractiveEntity entity : statics){
+            if (entity instanceof Star_Planet){
+                entity.affect(this);
+            }
+        }
+    }
     public void act(){
         Point2D point2D = (Point2D) shape.getReferencePoint();
         Velocity v= velocity.clone();

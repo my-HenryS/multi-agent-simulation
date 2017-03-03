@@ -127,7 +127,6 @@ public class BaseAgent extends Entity implements Agent {
             Iterable<InteractiveEntity> statics = scene.getStaticEntities().select(view);
             Iterable<Agent> neighbors = scene.getAllAgents().select(view);
             for (InteractiveEntity entity : statics) {
-
                 entity.affect(this);
             }
             for (Agent agent : neighbors) {
