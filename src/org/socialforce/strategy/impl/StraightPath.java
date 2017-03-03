@@ -80,7 +80,8 @@ public class StraightPath implements Path {
     public double length(Point current){
         double length = 0;
         for(int i = getNext(current); i<goals.length; i++){
-            length += goals[i].distanceTo(goals[i-1]);
+            length += goals[i].distanceTo(current);
+            current = goals[i];
         }
         return length;
     }

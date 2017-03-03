@@ -54,4 +54,10 @@ public interface SocialForceApplication {
     Scene findScene(ValueSet set);
 
     List<PathFinder> getAllPathFinders();
+
+    String getName();
+
+    void setName(String name);
+
+    void stop();
 }

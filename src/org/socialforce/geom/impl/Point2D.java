@@ -88,7 +88,7 @@ public class Point2D extends Vector2D implements Point {
      * @return the copied vector.
      */
     @Override
-    public Point clone() {
+    public Point2D clone() {
         Point2D point2D = new Point2D();
         this.get(point2D.values);
         return point2D;

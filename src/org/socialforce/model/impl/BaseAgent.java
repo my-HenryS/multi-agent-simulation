@@ -143,7 +143,7 @@ public class BaseAgent extends Entity implements Agent {
         } else {
             return null;
         }
-    }
+}
 
     /**
      * 决定下一步，agent要走向的目标点。
@@ -267,6 +267,9 @@ public class BaseAgent extends Entity implements Agent {
         if (affectedEntity instanceof Agent && !this.equals(affectedEntity)) {
             Agent agent = (Agent) affectedEntity;
             agent.push(model.calculate(this, affectedEntity));
+        }
+        if(affectedEntity instanceof Door){
+            ((Door)affectedEntity).push(model.calculate(this,affectedEntity));
         }
     }
 

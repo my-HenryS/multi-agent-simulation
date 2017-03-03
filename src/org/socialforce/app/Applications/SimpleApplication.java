@@ -18,6 +18,7 @@ import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.AStarPathFinder;
 import org.socialforce.strategy.impl.NearestGoalStrategy;
 
+import javax.naming.OperationNotSupportedException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,6 +34,22 @@ public abstract class SimpleApplication implements SocialForceApplication {
     protected ApplicationListener listener;
     protected SocialForceModel model = new SimpleSocialForceModel();
 
+    @Override
+    public void stop() {
+        throw new UnsupportedOperationException("不支持类型" + this.getClass() + "的应用停止。");
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    String name = this.getClass().getSimpleName();
 
 
     public SimpleApplication(){

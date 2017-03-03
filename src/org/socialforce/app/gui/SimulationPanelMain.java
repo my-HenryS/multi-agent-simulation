@@ -1,13 +1,16 @@
 package org.socialforce.app.gui;
 
 import org.socialforce.app.ApplicationListener;
-import org.socialforce.app.Applications.*;
+import org.socialforce.app.Applications.ApplicationLoader;
 import org.socialforce.app.SocialForceApplication;
+import org.socialforce.app.gui.util.ApplicationDisplayer;
 import org.socialforce.model.Agent;
 import org.socialforce.scene.Scene;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.stream.StreamSupport;
@@ -17,14 +20,41 @@ import java.util.stream.StreamSupport;
  */
 public class SimulationPanelMain implements ApplicationListener {
     public SimulationPanelMain() {
+        loader = new ApplicationLoader(this);
+        refreshName();
         runButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //super.mouseClicked(e);
                 String s = timePerStepTextField.getText();
-                application.getModel().setTimePerStep(Double.valueOf(s));
+                //application.getModel().setTimePerStep(Double.valueOf(s));
+                SwingWorker<Void, SocialForceApplication> worker = new SwingWorker<Void, SocialForceApplication>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        loader.current().start();
+                        return null;
+                    }
+                };
+                worker.execute();
+                runButton.setEnabled(false);
+                //loader.current().start();
             }
         });
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[] objects = loader.stream().map(app -> new ApplicationDisplayer(app)).toArray();
+                ApplicationDisplayer result = (ApplicationDisplayer) JOptionPane.showInputDialog(SimulationPanelMain.this.root,
+                        "select a preset:", "Please select an applicaiton", JOptionPane.INFORMATION_MESSAGE, null,
+                        objects, objects[0]);
+                loader.select(result.application);
+                refreshName();
+            }
+        });
+    }
+
+    protected void refreshName() {
+        currentScnenTextField.setText(loader.current().getName());
     }
 
     public static void main(String[] args) {
@@ -44,15 +74,16 @@ public class SimulationPanelMain implements ApplicationListener {
         try {
             JFrame frame = new JFrame("SimulationPanelMain");
             SimulationPanelMain mainPanel = new SimulationPanelMain();
-            SocialForceApplication application = new ApplicationForCanteen();//应用在这里！
-            application.setApplicationListener(mainPanel);
+            /*SocialForceApplication application = new ApplicationForDoorTest();//应用在这里！
+            application.setApplicationListener(mainPanel);*/
+            //mainPanel.setLoader(new ApplicationLoader(mainPanel));
             frame.setContentPane(mainPanel.root);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             //frame.setResizable(false);
             frame.pack();
             frame.setVisible(true);
-            mainPanel.setApplication(application);
-            application.start();
+
+            //application.start();
         } catch (HeadlessException e) {
             System.out.println("GUI Not Supported on this machine.");
         }
@@ -75,6 +106,17 @@ public class SimulationPanelMain implements ApplicationListener {
     private JTextArea logTextArea;
     private JTextField timePerStepTextField;
     private JLabel fpsLabel;
+    private JButton loadButton;
+
+    public ApplicationLoader getLoader() {
+        return loader;
+    }
+
+    public void setLoader(ApplicationLoader loader) {
+        this.loader = loader;
+    }
+
+    private ApplicationLoader loader;
 
     SceneShower shower1;
 
@@ -85,6 +127,7 @@ public class SimulationPanelMain implements ApplicationListener {
         scene2 = new SceneShower("Scene 2").getRoot();
         scene3 = new SceneShower("Scene 3").getRoot();
         scene4 = new SceneShower("Scene 4").getRoot();
+
     }
 
     public SocialForceApplication getApplication() {
