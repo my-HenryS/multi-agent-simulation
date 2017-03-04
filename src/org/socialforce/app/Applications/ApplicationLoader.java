@@ -22,6 +22,8 @@ public class ApplicationLoader extends LinkedList<SocialForceApplication> implem
         this.listener = listener;
         add(new ApplicationForCanteen());
         add(new ApplicationForDoorTest());
+        add(new ApplicationForCrossFlow());
+        add(new ApplicationForAstrophysics());
         selected = this.getFirst();
     }
 
