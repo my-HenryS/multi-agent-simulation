@@ -26,7 +26,7 @@ public class GravityRegulation implements ForceRegulation {
         return false;
     }
 
-    protected double G_constant = 80;
+    protected double G_constant = 0.1;
     /**
      * 获取源实体和目标实体之间的作用力。
      *
