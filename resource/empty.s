@@ -1,15 +1,15 @@
 Scene:
     SimpleScene:
-        Box:-50,-50,100,100 point-offset;
+        Box:-100,-100,200,200 point-offset;
 
 Walls:
     Wall:
-        Box:-50,-50,50,-49;
+        Box:-100,-100,100,-99;
     Wall:
-        Box:-50,-50,-49,50;
+        Box:-100,-100,-99,100;
     Wall:
-        Box:-50,49,50,50;
+        Box:-100,99,100,100;
     Wall:
-        Box:49,-50,50,50;
+        Box:99,-100,100,100;
 
 End;

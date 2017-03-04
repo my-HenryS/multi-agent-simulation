@@ -46,10 +46,10 @@ public class ApplicationForAstrophysics extends SimpleApplication {
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_Star(new Star_Planet(new Circle2D(new Point2D(0,0),10)),new Velocity2D(0,0))));
-        parameters.addLast(genParameter(new SV_Star(new Star_Planet(new Circle2D(new Point2D(20,0),2)),new Velocity2D(0,10))));
-        parameters.addLast(genParameter(new SV_Star(new Star_Planet(new Circle2D(new Point2D(30,0),2)),new Velocity2D(0,8))));
-        parameters.addLast(genParameter(new SV_Star(new Star_Planet(new Circle2D(new Point2D(40,0),2)),new Velocity2D(0,8))));
+        parameters.addLast(genParameter(new SV_Star(new Star_Planet(new Circle2D(new Point2D(0,0),12.6)),new Velocity2D(0,-4))));
+        parameters.addLast(genParameter(new SV_Star(new Star_Planet(new Circle2D(new Point2D(50,0),10)),new Velocity2D(0,8))));
+        //parameters.addLast(genParameter(new SV_Star(new Star_Planet(new Circle2D(new Point2D(70,0),1.5)),new Velocity2D(0,8))));
+        //parameters.addLast(genParameter(new SV_Star(new Star_Planet(new Circle2D(new Point2D(90,0),4)),new Velocity2D(0,6))));
         loader.readParameterSet(parameters);
         scenes = loader.readScene(this);
     }
