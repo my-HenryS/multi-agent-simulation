@@ -1,9 +1,11 @@
 package org.socialforce.drawer.impl;
 
+import org.socialforce.geom.*;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.BaseAgent;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
 
 /**
  * 一个绘制Agent的绘制器。可以通过Agent的状态自主改变颜色。
@@ -34,6 +36,15 @@ public class AgentDrawer extends EntityDrawer<BaseAgent> {
     public void renderShape(Graphics2D g, BaseAgent pattern) {
         color = currentColor(pattern);
         super.renderShape(g, pattern);
+//        this.setColor(new Color(255-color.getRed(),255-color.getGreen(),255-color.getBlue()));
+//        org.socialforce.geom.Point pt = pattern.getShape().getReferencePoint();
+//        Vector target = pt.clone();
+//        Vector scP = pattern.expect().clone();
+//        scP.scale(0.07);
+//        target.add(scP);
+//        double [] targetp = new double[2];
+//        target.get(targetp);
+//        g.draw(new Line2D.Double(pt.getX(), pt.getY(), targetp[0], targetp[1]));
 
     }
 }
