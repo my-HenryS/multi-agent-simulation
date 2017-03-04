@@ -37,7 +37,7 @@ public class Star_Planet extends Entity implements Moveable{
     @Override
     public double getMass() {
         double d = shape.getBounds().getSize().length();
-        return d*d*d;
+        return d*d*d*8;
     }
 
     @Override
