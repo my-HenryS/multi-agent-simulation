@@ -31,6 +31,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
         regulations.add(new BodyForce());
         //regulations.add(new WallForce());
         regulations.add(new DoorForce());
+        regulations.add(new GravityRegulation());
     }
 
     /**

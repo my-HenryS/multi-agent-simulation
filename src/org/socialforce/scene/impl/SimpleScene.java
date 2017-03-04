@@ -15,6 +15,7 @@ import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.Moveable;
 import org.socialforce.model.impl.Door;
 import org.socialforce.model.impl.Entity;
+import org.socialforce.model.impl.Star_Planet;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneListener;
 import org.socialforce.scene.ValueSet;
@@ -75,6 +76,9 @@ public class SimpleScene implements Scene {
             if(entity instanceof Door){
                 ((Door) entity).determinNext();
             }
+            if (entity instanceof Star_Planet){
+                ((Star_Planet) entity).determinNext();
+            }
         }
         for(Agent agent : allAgents) {
             agent.determineNext();
@@ -84,6 +88,9 @@ public class SimpleScene implements Scene {
         for (InteractiveEntity entity : Interac){
             if(entity instanceof Door){
                 ((Door) entity).act();
+            }
+            if (entity instanceof Star_Planet){
+                ((Star_Planet) entity).act();
             }
         }
         for (Agent agent : allAgents) {
