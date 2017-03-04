@@ -48,7 +48,7 @@ public class ApplicationForAstrophysics extends SimpleApplication {
         ParameterPool parameters = new SimpleParameterPool();
         parameters.addLast(genParameter(new SV_Star(new Star_Planet(new Circle2D(new Point2D(0,0),12.6)),new Velocity2D(0,-4))));
         parameters.addLast(genParameter(new SV_Star(new Star_Planet(new Circle2D(new Point2D(50,0),10)),new Velocity2D(0,8))));
-        parameters.addLast(genParameter(new SV_Star(new Star_Planet(new Circle2D(new Point2D(70,0),1.5)),new Velocity2D(0,15))));
+        parameters.addLast(genParameter(new SV_Star(new Star_Planet(new Circle2D(new Point2D(70,0),1.5)),new Velocity2D(0,17))));
         //parameters.addLast(genParameter(new SV_Star(new Star_Planet(new Circle2D(new Point2D(90,0),4)),new Velocity2D(0,6))));
         loader.readParameterSet(parameters);
         scenes = loader.readScene(this);
