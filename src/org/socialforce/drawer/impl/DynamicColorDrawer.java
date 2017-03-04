@@ -1,6 +1,7 @@
 package org.socialforce.drawer.impl;
 
 import org.socialforce.geom.*;
+import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.BaseAgent;
 
@@ -11,8 +12,8 @@ import java.awt.geom.Line2D;
  * 一个绘制Agent的绘制器。可以通过Agent的状态自主改变颜色。
  * 可以继承并扩展该绘制器实现更多功能（依据具体策略改变颜色，画出方向等）。
  */
-public class AgentDrawer extends EntityDrawer<BaseAgent> {
-    public AgentDrawer(Graphics2D device) {
+public class DynamicColorDrawer<T extends InteractiveEntity> extends EntityDrawer<T> {
+    public DynamicColorDrawer(Graphics2D device) {
         super(device);
     }
 
@@ -22,7 +23,7 @@ public class AgentDrawer extends EntityDrawer<BaseAgent> {
      * @param agent 要决定的agent的颜色。
      * @return
      */
-    public Color currentColor(BaseAgent agent) {
+    public Color currentColor(T agent) {
         return Color.BLACK;
     }
 
@@ -33,7 +34,7 @@ public class AgentDrawer extends EntityDrawer<BaseAgent> {
      * @param pattern
      */
     @Override
-    public void renderShape(Graphics2D g, BaseAgent pattern) {
+    public void renderShape(Graphics2D g, T pattern) {
         color = currentColor(pattern);
         super.renderShape(g, pattern);
 //        this.setColor(new Color(255-color.getRed(),255-color.getGreen(),255-color.getBlue()));

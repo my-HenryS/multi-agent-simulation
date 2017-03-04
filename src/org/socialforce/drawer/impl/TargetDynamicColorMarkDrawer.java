@@ -1,15 +1,15 @@
 package org.socialforce.drawer.impl;
 
 import org.socialforce.geom.*;
-import org.socialforce.model.impl.BaseAgent;
+import org.socialforce.model.Agent;
 
 import java.awt.*;
 
 /**
  * Created by Ledenel on 2017/3/1.
  */
-public class TargetAgentMarkDrawer extends AgentDrawer {
-    public TargetAgentMarkDrawer(Graphics2D device) {
+public class TargetDynamicColorMarkDrawer extends DynamicColorDrawer {
+    public TargetDynamicColorMarkDrawer(Graphics2D device) {
         super(device);
     }
 
@@ -36,8 +36,8 @@ public class TargetAgentMarkDrawer extends AgentDrawer {
      * @param agent 要决定的agent的颜色。
      * @return
      */
-    @Override
-    public Color currentColor(BaseAgent agent) {
+    // @Override
+    public Color currentColor(Agent agent) {
         Box size = agent.getScene().getBounds();
         org.socialforce.geom.Point goal = agent.getPath().getGoal();
         return getColorFromPoint(size, goal);
