@@ -26,7 +26,7 @@ public class GravityRegulation implements ForceRegulation {
         return false;
     }
 
-    protected double G_constant = 0.001;
+    protected double G_constant = 80;
     /**
      * 获取源实体和目标实体之间的作用力。
      *
@@ -44,7 +44,6 @@ public class GravityRegulation implements ForceRegulation {
         direction.scale(f);
         double[] values = new double[2];
         direction.get(values);
-        System.out.println(values[0]+","+values[1]);
         return new Force2D(-values[0],-values[1]);
     }
 }

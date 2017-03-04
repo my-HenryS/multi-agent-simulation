@@ -36,7 +36,7 @@ public class Star_Planet extends Entity implements Moveable{
      */
     @Override
     public double getMass() {
-        return shape.getBounds().getSize().length()*100;
+        return shape.getBounds().getSize().length();
     }
 
     @Override
@@ -86,7 +86,7 @@ public class Star_Planet extends Entity implements Moveable{
     public void determinNext(){
         Iterable<InteractiveEntity> statics = scene.getStaticEntities();
         for (InteractiveEntity entity : statics){
-            if (entity instanceof Star_Planet){
+            if (entity instanceof Star_Planet && !entity.equals(this)){
                 entity.affect(this);
             }
         }
