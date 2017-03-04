@@ -142,7 +142,38 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 new Box2D(new Point2D(19.82,2), new Point2D(21.18,3)),
                 new Box2D(new Point2D(19.82,-2), new Point2D(21.18,1.8)),
                 new Box2D(new Point2D(24,18.82), new Point2D(26.2,20.18)),
-                new Box2D(new Point2D(27.5,18.82), new Point2D(29.5,20.18))})));
+                new Box2D(new Point2D(27.5,18.82), new Point2D(29.5,20.18)),
+                })));
+
+        for (int i = 5;i<=15;i=i+2){
+            for (int j =4;j<=17;j++)
+            parameters.addLast(genParameter(new SV_Exit(new Box2D[]{
+                    new Box2D(new Point2D(i-0.1,j-0.1), new Point2D(i+1.1,j+0.1)),
+            })));
+        }
+
+        for (int i = 17;i<=19;i=i+2){
+            for (int j =5;j<=17;j++)
+                parameters.addLast(genParameter(new SV_Exit(new Box2D[]{
+                        new Box2D(new Point2D(i-0.1,j-0.1), new Point2D(i+1.1,j+0.1)),
+                })));
+        }
+
+        for (int i = 21;i<=21;i=i+2){
+            for (int j =9;j<=17;j++)
+                parameters.addLast(genParameter(new SV_Exit(new Box2D[]{
+                        new Box2D(new Point2D(i-0.1,j-0.1), new Point2D(i+1.1,j+0.1)),
+                })));
+        }
+
+
+        for (int i = 0;i<=1;i++){
+            for (int j =9;j<=17;j++)
+                parameters.addLast(genParameter(new SV_Exit(new Box2D[]{
+                        new Box2D(new Point2D(i*2.5-0.1,j-0.1), new Point2D(i*2.5+1.1,j+0.1)),
+                })));
+        }
+
         /*
         double samplewidth = 1;
         for (int i = 0; i< 30/samplewidth;i++){

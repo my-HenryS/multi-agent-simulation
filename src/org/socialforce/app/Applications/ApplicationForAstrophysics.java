@@ -34,7 +34,15 @@ public class ApplicationForAstrophysics extends SimpleApplication {
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext(); ) {
             Scene scene = iterator.next();
             while (scene.getCurrentSteps() < 1000000) {
+                long start = System.currentTimeMillis(), span, fps = 16;
                 scene.stepNext();
+                long l = System.currentTimeMillis() - start;
+                span = l > fps? 0: fps - l;
+                try {
+                    Thread.sleep(span); //锁帧大法
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
