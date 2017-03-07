@@ -14,7 +14,6 @@ import org.socialforce.model.impl.Monitor;
 import org.socialforce.scene.ParameterPool;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
-import org.socialforce.scene.SceneValue;
 import org.socialforce.scene.impl.*;
 import org.socialforce.strategy.GoalStrategy;
 import org.socialforce.strategy.PathFinder;
@@ -23,7 +22,6 @@ import org.socialforce.strategy.impl.NearestGoalStrategy;
 
 import java.io.InputStream;
 import java.util.Iterator;
-import java.util.Map;
 
 import static org.socialforce.scene.SceneLoader.genParameter;
 
@@ -74,7 +72,7 @@ public class ApplicationForMutidoor extends SimpleApplication implements SocialF
         template = new Circle2D(new Point2D(0,0),0.486/2);
         double doorwidth = 1.5;
         double samplewidth = 0.4;
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream("standard.s");
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("T1.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();

@@ -67,8 +67,8 @@ public class ApplicationForCrossFlow extends SimpleApplication {
                         new Wall(new Box2D(20,-3,1,15))
                 });
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(50,new Box2D(3,1,3,8),template)));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(60,new Box2D(33,1,3,8),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(20,new Box2D(3,1,3,8),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(50,new Box2D(33,1,3,8),template)));
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(19,3,3,3)})));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(46,1,1,8))));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(-6,1,1,8))));
