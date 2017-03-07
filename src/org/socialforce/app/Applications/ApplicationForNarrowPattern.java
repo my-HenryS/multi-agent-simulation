@@ -57,6 +57,8 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         setUpT1Scene();
         setUpT2Scene();
         setUpT3Scene();
+        setUpPassageScene();
+        setUpOtherScene();
     }
 
     protected void setUpT1Scene(){
@@ -91,6 +93,36 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
 
     protected void setUpT3Scene(){
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("T3.s");
+        Interpreter interpreter = new SimpleInterpreter();
+        interpreter.loadFrom(is);
+        SceneLoader loader = interpreter.setLoader();
+        ParameterPool parameters = new SimpleParameterPool();
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(4,-2,2,5)})));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(100,new Box2D(0,0,10,-10),template)));
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,4,8,1))));
+        loader.readParameterSet(parameters);
+        for (Scene s : loader.readScene(this)){
+            scenes.add(s);
+        }
+    }
+
+    protected void setUpPassageScene(){
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("passage.s");
+        Interpreter interpreter = new SimpleInterpreter();
+        interpreter.loadFrom(is);
+        SceneLoader loader = interpreter.setLoader();
+        ParameterPool parameters = new SimpleParameterPool();
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(4,-2,2,5)})));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(100,new Box2D(0,0,10,-10),template)));
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,4,8,1))));
+        loader.readParameterSet(parameters);
+        for (Scene s : loader.readScene(this)){
+            scenes.add(s);
+        }
+    }
+
+    protected void setUpOtherScene(){
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("void.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
