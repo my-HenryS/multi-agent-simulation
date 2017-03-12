@@ -1,3 +1,5 @@
+#描述了一个3*40的过道，位置是0,0到3，-40#
+
 Scene:
     SimpleScene:
         Box:-50,-50,100,100 point-offset;
