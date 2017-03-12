@@ -62,7 +62,6 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         setUpT2Scene();
         setUpPassageScene();
         setUpPassageScene2();
-        setUpOtherScene();
     }
 
 
@@ -164,7 +163,28 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
     }
 
 
+    /**
+     * 螺旋形走廊，连续拐角
+     */
+    protected void setUpT1Scene6(){
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("T1.s");
+        Interpreter interpreter = new SimpleInterpreter();
+        interpreter.loadFrom(is);
+        SceneLoader loader = interpreter.setLoader();
+        ParameterPool parameters = new SimpleParameterPool();
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(10-(DoorWidth+1),-0.5,(DoorWidth+1),2)})));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(200,new Box2D(0,0,10,-10),template)));
+        parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(9-(DoorWidth+1),0,1,-(9-DoorWidth)),new Box2D(new Point2D(DoorWidth+1,DoorWidth+1),new Point2D(8-DoorWidth,DoorWidth+2))})));
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
+        loader.readParameterSet(parameters);
+        for (Scene s : loader.readScene(this)){
+            scenes.add(s);
+        }
+    }
 
+    /**
+     * 类似食堂桌子的场景
+     */
     protected void setUpT2Scene(){
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("T2.s");
         Interpreter interpreter = new SimpleInterpreter();
@@ -184,49 +204,56 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         }
     }
 
+
+    /**
+     * 通道末端有三个房间
+     */
     protected void setUpPassageScene(){
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("passage.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(1.5-DoorWidth,-1,DoorWidth,5)})));
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(2-DoorWidth/2,-0.5,DoorWidth,2)})));
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(-1.5,-35-DoorWidth/2,2,DoorWidth)})));
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(3.5,-35-DoorWidth/2,2,DoorWidth)})));
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(2-DoorWidth/2,-41.5,DoorWidth,2)})));
         parameters.addLast(genParameter(new SV_RandomAgentGenerator(100,new Box2D(0,0,3,-40),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(200,new Box2D(-1,-30,-10,-10),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(200,new Box2D(5,-30,10,-10),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(200,new Box2D(-3,-41,10,-10),template)));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(0,6,4,1))));
+        parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(-1,-30,-10,1),new Box2D(-12,-30,1,-10),new Box2D(-1,-40,-10,-1)})));
+        parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(5,-30,10,1),new Box2D(15,-30,1,-10),new Box2D(5,-40,10,-1)})));
+        parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(-3,-41,-1,-10),new Box2D(-3,-52,11,1),new Box2D(7,-41,1,-10)})));
         loader.readParameterSet(parameters);
         for (Scene s : loader.readScene(this)){
             scenes.add(s);
         }
     }
 
+    /**
+     * 通道两侧有6个房间
+     */
     protected void setUpPassageScene2(){
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("passage.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(1.5-DoorWidth,-1,DoorWidth,5)})));
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(2-DoorWidth/2,-0.5,DoorWidth,2)})));
         parameters.addLast(genParameter(new SV_RandomAgentGenerator(100,new Box2D(0,0,3,-40),template)));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(0,6,4,1))));
+        parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(0,-5,-10,1),new Box2D(0,-15,-10,1),new Box2D(0,-25,-10,1),new Box2D(0,-35,-10,1)})));
+        parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(5,-5,10,1),new Box2D(5,-15,10,1),new Box2D(5,-25,10,1),new Box2D(5,-35,10,1)})));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(300,new Box2D(0,-5,-10,-30),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(300,new Box2D(5,-5,10,-30),template)));
+        parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(-11,0,1,-40),new Box2D(25,0,1,-40)})));
         loader.readParameterSet(parameters);
         for (Scene s : loader.readScene(this)){
             scenes.add(s);
         }
     }
 
-    protected void setUpOtherScene(){
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream("void.s");
-        Interpreter interpreter = new SimpleInterpreter();
-        interpreter.loadFrom(is);
-        SceneLoader loader = interpreter.setLoader();
-        ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(4,-2,2,5)})));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(100,new Box2D(0,0,10,-10),template)));
-        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,6,8,1))));
-        loader.readParameterSet(parameters);
-        for (Scene s : loader.readScene(this)){
-            scenes.add(s);
-        }
-    }
 }
 
