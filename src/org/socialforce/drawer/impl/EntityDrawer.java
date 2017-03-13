@@ -5,6 +5,7 @@ import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
 import org.socialforce.geom.*;
 import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.Monitor;
 
 import java.awt.*;
 

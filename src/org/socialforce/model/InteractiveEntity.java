@@ -31,14 +31,6 @@ public interface InteractiveEntity extends Drawable{
      * @param name
      */
     void setName(String name);
-    /**
-     * 当前this所影响的实体
-     * 例如，墙会影响agent(反作用，反推)
-     * @param affectedEntity 被影响的实体
-     * @see Agent
-     * @see SocialForceModel
-     */
-    void affect(InteractiveEntity affectedEntity);
 
     /**
      * 获取一个实体的形状
@@ -60,14 +52,14 @@ public interface InteractiveEntity extends Drawable{
      *
      * @return model 模型
      */
-    SocialForceModel getModel();
+    Model getModel();
 
     /**
      * 设置社会力模型。
      *
      * @param model 模型
      */
-    void setModel(SocialForceModel model);
+    void setModel(Model model);
 
     /**
      * 将该实体放置在一个特殊的点上。

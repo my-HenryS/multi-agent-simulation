@@ -1,21 +1,13 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.drawer.Drawer;
-import org.socialforce.geom.Force;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
-import org.socialforce.geom.Velocity;
+import org.socialforce.geom.*;
 import org.socialforce.geom.impl.*;
-import org.socialforce.model.Agent;
-import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.Moveable;
-import org.socialforce.model.SocialForceModel;
-import org.socialforce.scene.Scene;
+import org.socialforce.model.*;
 
 /**
  * Created by Whatever on 2017/3/1.
  */
-public class Door extends Entity implements Moveable {
+public class Door extends Entity implements Moveable, Influential {
 
     public Door(Rectangle2D rectangle2D, Point2D ankor, double[] anglerange,int rotationFlag) {
         super(rectangle2D);
@@ -27,29 +19,6 @@ public class Door extends Entity implements Moveable {
 
     protected int rotationFlag;
 
-    @Override
-    public Scene getScene() {
-        return scene;
-    }
-
-    protected Scene scene;
-    @Override
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
-
-    /**
-     * 获取实体的名称
-     *
-     * @return name 名称
-     */
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    protected String name;
-
     /**
      * 设置实体的名称
      *
@@ -60,16 +29,20 @@ public class Door extends Entity implements Moveable {
         this.name = name;
     }
 
+    @Override
+    public Shape getView() {
+        return this.getShape();
+    }
+
     /**
      * 当前this所影响的实体
      * 例如，墙会影响agent(反作用，反推)
+     * @param target
      */
     @Override
-    public void affect(InteractiveEntity affectedEntity) {
-        if (affectedEntity instanceof Agent) {
-            Agent agent = (Agent)affectedEntity;
-            agent.push(model.calculate(this,affectedEntity));
-        }
+    public void affect(Agent target) {
+        Agent agent = (Agent) target;
+        agent.push(model.interactionForce(this, target));
     }
 
     /**
@@ -104,18 +77,18 @@ public class Door extends Entity implements Moveable {
      * @return model 模型
      */
     @Override
-    public SocialForceModel getModel() {
+    public Model getModel() {
         return model;
     }
 
-    protected SocialForceModel model;
+    protected Model model;
     /**
      * 设置社会力模型。
      *
      * @param model 模型
      */
     @Override
-    public void setModel(SocialForceModel model) {
+    public void setModel(Model model) {
         this.model = model;
     }
 
@@ -171,13 +144,6 @@ public class Door extends Entity implements Moveable {
     }
 
 
-    public void determinNext(){
-        for (Agent agent : scene.getAllAgents()) {
-            agent.affect(this);
-        }
-    }
-
-
     public void act(){
         double angle = rectangle2D.getAngle();
         //System.out.println(Anglerange[0]+","+Anglerange[1]);
@@ -187,24 +153,4 @@ public class Door extends Entity implements Moveable {
         pushed = 0;
     }
 
-    /**
-     * set the drawer for the drawable.
-     *
-     * @param drawer the drawer.
-     */
-    @Override
-    public void setDrawer(Drawer drawer) {
-        this.drawer = drawer;
-    }
-
-    protected Drawer drawer;
-    /**
-     * get the current drawer the object is using.
-     *
-     * @return the drawer.
-     */
-    @Override
-    public Drawer getDrawer() {
-        return drawer;
-    }
 }

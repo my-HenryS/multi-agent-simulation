@@ -9,7 +9,7 @@ import org.socialforce.geom.*;
  */
 
 
-public class Circle2D implements DistanceShape {
+public class Circle2D implements DistanceShape, Expandable {
     /**
      * 半径:二维圆的半径.
      * @see Drawer
@@ -183,5 +183,11 @@ public class Circle2D implements DistanceShape {
 
     public String toString(){
         return "半径为:"+radius+", 圆心"+center.toString();
+    }
+
+    @Override
+    public Circle2D expandBy(double extent) {
+        radius += extent;
+        return this;
     }
 }

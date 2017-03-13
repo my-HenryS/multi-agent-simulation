@@ -1,19 +1,19 @@
 package org.socialforce.model.impl;
 
 import org.socialforce.drawer.Drawer;
-import org.socialforce.drawer.impl.EntityDrawer;
+import org.socialforce.model.Agent;
 import org.socialforce.scene.Scene;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
-import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.Model;
 
 /**
  * 定义了抽象类Entity，其实现了接口InteractiveEntity的方法。
  *  * Created by Ledenel on 2016/8/14.
  */
 public abstract class Entity implements InteractiveEntity {
-    protected SocialForceModel model;
+    protected Model model;
     protected Shape shape;
 
     @Override
@@ -73,7 +73,7 @@ public abstract class Entity implements InteractiveEntity {
      * @param model
      * @param shape
      */
-    public Entity(SocialForceModel model, Shape shape) {
+    public Entity(Model model, Shape shape) {
         this.model = model;
         this.shape = shape;
     }
@@ -103,7 +103,7 @@ public abstract class Entity implements InteractiveEntity {
      * @return model 模型
      */
     @Override
-    public SocialForceModel getModel() {
+    public Model getModel() {
         return model;
     }
 
@@ -113,7 +113,7 @@ public abstract class Entity implements InteractiveEntity {
      * @param model 模型
      */
     @Override
-    public void setModel(SocialForceModel model) {
+    public void setModel(Model model) {
         this.model = model;
     }
 
@@ -126,4 +126,5 @@ public abstract class Entity implements InteractiveEntity {
     public void placeOn(Point point) {
         shape.moveTo(point);
     }
+
 }

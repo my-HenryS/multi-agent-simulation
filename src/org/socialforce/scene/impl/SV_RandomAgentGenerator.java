@@ -9,7 +9,6 @@ import org.socialforce.scene.SceneValue;
 import org.socialforce.container.EntityPool;
 import org.socialforce.geom.Shape;
 import org.socialforce.model.impl.BaseAgentDecorator;
-import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.model.impl.SimpleSocialForceModel;
 
 import java.util.Random;
@@ -27,7 +26,7 @@ public class SV_RandomAgentGenerator implements SceneValue<SV_RandomAgentGenerat
         protected int agent_num;
         protected Shape Area;
         protected AgentDecorator decorator;
-        protected SocialForceModel model;
+        protected Model model;
         protected Velocity velocity;
         protected DistanceShape shape;
 
@@ -45,7 +44,7 @@ public class SV_RandomAgentGenerator implements SceneValue<SV_RandomAgentGenerat
         public void setDecorator(AgentDecorator decorator){
             this.decorator = decorator;
         }
-        public void setModel(SocialForceModel model){this.model = model;}
+        public void setModel(Model model){this.model = model;}
         public void setNum(int num){this.agent_num = num;}
     }
 

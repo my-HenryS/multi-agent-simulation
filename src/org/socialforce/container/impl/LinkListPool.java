@@ -5,8 +5,6 @@ import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.scene.impl.SV_Tollbooth;
-import sun.nio.cs.StreamEncoder;
 
 import java.util.Iterator;
 import java.util.LinkedList;

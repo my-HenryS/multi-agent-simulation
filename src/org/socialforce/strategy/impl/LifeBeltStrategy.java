@@ -1,5 +1,6 @@
 package org.socialforce.strategy.impl;
 
+import org.socialforce.model.impl.SimpleSocialForceModel;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.model.Agent;
@@ -51,6 +52,6 @@ public class LifeBeltStrategy extends NearestGoalStrategy implements StaticStrat
     }
 
     public double factorT(double pathLength, Agent agent, int front_num, Point goal){
-        return pathLength / agent.getModel().getExpectedSpeed() + front_num / Width.widthOf(goal);
+        return pathLength / ((SimpleSocialForceModel)agent.getModel()).getExpectedSpeed() + front_num / Width.widthOf(goal);
     }
 }

@@ -123,7 +123,7 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
      * is the size required to accommodate all of the cells in its list.
      * However, the value of <code>preferredScrollableViewportSize</code>
      * is the size required for <code>JList.getVisibleRowCount</code> rows.
-     * A component without any properties that would affect the viewport
+     * A component without any properties that would selfAffect the viewport
      * size should just return <code>getPreferredSize</code> here.
      *
      * @return the preferredSize of a <code>JViewport</code> whose view
