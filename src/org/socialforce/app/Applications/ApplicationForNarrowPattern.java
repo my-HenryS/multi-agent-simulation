@@ -22,6 +22,7 @@ import org.socialforce.strategy.impl.NearestGoalStrategy;
 
 import java.io.InputStream;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import static org.socialforce.scene.SceneLoader.genParameter;
 
@@ -53,8 +54,9 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
     @Override
     public void setUpScenes(){
         template = new Circle2D(new Point2D(0,0),0.486/2);
+        scenes = new LinkedList<>();
         DoorWidth = 1.36;
-        setUpT1Scene1();
+        //setUpT1Scene1();
         setUpT1Scene2();
         setUpT1Scene3();
         setUpT1Scene4();
@@ -132,7 +134,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(0,-0.5,10,2)})));
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(0.1,-0.5,10,2)})));
         parameters.addLast(genParameter(new SV_RandomAgentGenerator(200,new Box2D(0,0,10,-10),template)));
         parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(0,-4,5-DoorWidth/2,1),new Box2D(5+DoorWidth/2,-4,5-DoorWidth/2,1)}),new SV_Wall(new Box2D[]{new Box2D(0,-4,10-DoorWidth,1)})));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
