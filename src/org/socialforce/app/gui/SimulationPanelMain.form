@@ -140,6 +140,10 @@
                     <properties>
                       <model>
                         <item value="Plain Directions"/>
+                        <item value="A* Path"/>
+                        <item value="Compond A* Path"/>
+                        <item value="Life Belt"/>
+                        <item value="Dynamic Life Belt"/>
                       </model>
                     </properties>
                   </component>
@@ -344,8 +348,8 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <editable value="true"/>
-                      <text value="0.1"/>
+                      <editable value="false"/>
+                      <text value="0.002"/>
                     </properties>
                   </component>
                   <component id="cc443" class="javax.swing.JLabel">
