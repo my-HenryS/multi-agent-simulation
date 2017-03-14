@@ -2,13 +2,13 @@ package org.socialforce.model.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.internal.Classes;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.Agent;
+import org.socialforce.model.Influential;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.Model;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  * Created by sunjh1999 on 2016/10/14.
  */
 public class PsychologicalForceRegulationTest {
-    SocialForceModel model = new SimpleSocialForceModel() ;
+    Model model = new SimpleSocialForceModel() ;
     Class<InteractiveEntity> BaseAgent;
     BaseAgent a;
     Class<Agent> agent;
@@ -26,7 +26,7 @@ public class PsychologicalForceRegulationTest {
     PsychologicalForceRegulation p;
     @Before
     public void setUp() throws Exception {
-        p = new PsychologicalForceRegulation(InteractiveEntity.class,Agent.class,model);
+        p = new PsychologicalForceRegulation(Influential.class,Agent.class,model);
         initPoint = new Point2D(3,4);
         initPoint2 = new Point2D(3,4);    //TODO 修正上界方向问题
         circle.moveTo(initPoint);

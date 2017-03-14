@@ -1,10 +1,7 @@
 package org.socialforce.geom.impl;
 
-import org.socialforce.geom.Box;
+import org.socialforce.geom.*;
 import org.socialforce.drawer.Drawer;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
-import org.socialforce.geom.Vector;
 
 /**这是一个二维的线段
  *
@@ -330,4 +327,13 @@ public class Segment2D implements Shape {
         return Math.atan2((y2-y1),(x2-x1));
     }
 
+    @Override
+    public Shape expandBy(double extent) {
+        double angel = this.getAngel();
+        x1 -= extent*Math.cos(angel);
+        x2 += extent*Math.cos(angel);
+        y1 -= extent*Math.sin(angel);
+        y2 += extent*Math.sin(angel);
+        return this;
+    }
 }

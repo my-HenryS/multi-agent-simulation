@@ -1,28 +1,27 @@
 package org.socialforce.model.impl;
 
 import org.socialforce.geom.Shape;
-import org.socialforce.model.Agent;
-import org.socialforce.model.Blockable;
-import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.*;
 
 /**
  * Created by Ledenel on 2016/8/14.
  */
-public class Wall extends Entity implements Blockable {
+public class Wall extends Entity implements Blockable, Influential {
+    @Override
+    public Shape getView() {
+        return (this.getShape().clone()).expandBy(3);
+    }
+
     /**
      * 当前this所影响的实体
      * 例如，墙会影响agent(反作用，反推)
-     * @param affectedEntity 被影响的实体
+     * @param target 被影响的实体
      * @see Agent
-     * @see SocialForceModel
+     * @see Model
      */
-    @Override
-    public void affect(InteractiveEntity affectedEntity) {
-        if (affectedEntity instanceof Agent) {
-            Agent agent = (Agent)affectedEntity;
-            agent.push(model.calculate(this,affectedEntity));
-        }
+
+    public void affect(Agent target) {
+        target.push(model.interactionForce(this,target));
     }
 
     public Wall(Shape shape) {
@@ -42,5 +41,10 @@ public class Wall extends Entity implements Blockable {
     @Override
     public Wall standardclone() {
         return new Wall(shape.clone());
+    }
+
+    @Override
+    public Shape blockSize() {
+        return this.getShape().clone();
     }
 }

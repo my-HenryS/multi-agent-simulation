@@ -2,29 +2,27 @@ package org.socialforce.model.impl;
 
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.geom.impl.Velocity2D;
-import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.Moveable;
+import org.socialforce.model.Agent;
 
 /**
  * Created by Whatever on 2017/3/2.
  */
-public class Star_Planet extends Entity implements Moveable{
+public class Star_Planet extends BaseAgent implements Agent {
     /**
      * @param shape
      */
-    public Star_Planet(Shape shape) {
-        super(shape);
+    public Star_Planet(DistanceShape shape, Velocity velocity) {
+        super(shape,velocity);
     }
 
     /**
      * 当前this所影响的实体
      * 例如，墙会影响agent(反作用，反推)
+     * @param target
      */
-    @Override
-    public void affect(InteractiveEntity affectedEntity) {
-        if(affectedEntity instanceof Star_Planet){
-            ((Star_Planet)affectedEntity).push(model.calculate(this,affectedEntity));
+    public void affect(Agent target) {
+        if(target instanceof Star_Planet){
+            ((Star_Planet) target).push(model.interactionForce(this, target));
         }
     }
 
@@ -41,8 +39,8 @@ public class Star_Planet extends Entity implements Moveable{
     }
 
     @Override
-    public InteractiveEntity standardclone() {
-        return new Star_Planet(shape.clone());
+    public Star_Planet standardclone() {
+        return new Star_Planet(shape.clone(), velocity.clone());
     }
 
     /**
@@ -84,14 +82,6 @@ public class Star_Planet extends Entity implements Moveable{
         push(force);
     }
 
-    public void determinNext(){
-        Iterable<InteractiveEntity> statics = scene.getStaticEntities();
-        for (InteractiveEntity entity : statics){
-            if (entity instanceof Star_Planet && !entity.equals(this)){
-                entity.affect(this);
-            }
-        }
-    }
     public void act(){
         Point2D point2D = (Point2D) shape.getReferencePoint();
         Velocity v= velocity.clone();

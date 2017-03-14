@@ -89,7 +89,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 */
                 strategy.pathDecision();
                 while (scene.getAllAgents().size() > 10) {
-                    long start = System.currentTimeMillis(), span, fps = 16;
+                    long start = System.currentTimeMillis(), span, fps = 0;
                     scene.stepNext();
                     iteration += 1;
                     if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){

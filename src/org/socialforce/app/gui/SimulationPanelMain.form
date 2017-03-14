@@ -140,11 +140,10 @@
                     <properties>
                       <model>
                         <item value="Plain Directions"/>
-                        <item value="A* Path finder"/>
-                        <item value="Compund A* Path"/>
-                        <item value="Life Belt Strategy"/>
+                        <item value="A* Path"/>
+                        <item value="Compond A* Path"/>
+                        <item value="Life Belt"/>
                         <item value="Dynamic Life Belt"/>
-                        <item value="Others"/>
                       </model>
                     </properties>
                   </component>

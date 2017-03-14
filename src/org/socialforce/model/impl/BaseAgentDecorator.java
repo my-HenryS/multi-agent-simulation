@@ -3,12 +3,8 @@ package org.socialforce.model.impl;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Velocity;
-import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.AgentDecorator;
-import org.socialforce.model.SocialForceModel;
-
-import java.util.Random;
 
 
 /**

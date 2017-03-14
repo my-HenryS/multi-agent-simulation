@@ -1,5 +1,6 @@
 package org.socialforce.strategy.impl;
 
+import org.socialforce.app.SocialForceApplication;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Circle2D;
@@ -8,6 +9,7 @@ import org.socialforce.geom.impl.Segment2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.Entity;
+import org.socialforce.model.impl.SimpleSocialForceModel;
 import org.socialforce.model.impl.Wall;
 import org.socialforce.scene.Scene;
 import org.socialforce.strategy.DynamicStrategy;
@@ -139,15 +141,15 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
                     Node<String> node = nodes.get(i), lastnode;
                     new_path.addMap(fields.findMap(node.getData()));
                     Gate gate = getGate(node.getData());
-                    if(gate.isExit()) new_t += front_num[gates.indexOf(gate)]/EC(gate.getWidth(), agent.getModel().getExpectedSpeed());
+                    if(gate.isExit()) new_t += front_num[gates.indexOf(gate)]/EC(gate.getWidth(), ((SimpleSocialForceModel)agent.getModel()).getExpectedSpeed());
                     while(!node.isRoot()){
                         lastnode = node;
                         node = node.getParent();
                         gate = getGate(node.getData());
                         new_path.addMap(fields.findMap(lastnode.getData(), node.getData()));
-                        if(gate.isExit()) new_t += front_num[gates.indexOf(gate)]/EC(gate.getWidth(), agent.getModel().getExpectedSpeed());
+                        if(gate.isExit()) new_t += front_num[gates.indexOf(gate)]/EC(gate.getWidth(), ((SimpleSocialForceModel)agent.getModel()).getExpectedSpeed());
                     }
-                    new_t += new_path.length(agent.getShape().getReferencePoint()) / agent.getModel().getExpectedSpeed();
+                    new_t += new_path.length(agent.getShape().getReferencePoint()) / ((SimpleSocialForceModel)agent.getModel()).getExpectedSpeed();
                     if(new_t < t){
                         t = new_t;
                         designed_path = new_path;
@@ -198,11 +200,6 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
         }
 
         public boolean isExit(){ return shape instanceof Segment2D;}
-
-        @Override
-        public void affect(InteractiveEntity affectedEntity) {
-
-        }
 
         @Override
         public double getMass() {

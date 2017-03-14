@@ -2,7 +2,7 @@ package org.socialforce.model.impl;
 
 import org.socialforce.model.ForceRegulation;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.Model;
 
 /**
  * 定义了TypeMatchRegulation类，其实现了接口ForceRegulation的方法。
@@ -24,13 +24,13 @@ public abstract class TypeMatchRegulation<Source extends InteractiveEntity, Targ
      * @param targetClass
      * @param model
      */
-    public TypeMatchRegulation(Class<Source> sourceClass, Class<Target> targetClass, SocialForceModel model) {
+    public TypeMatchRegulation(Class<Source> sourceClass, Class<Target> targetClass, Model model) {
         this.sourceClass = sourceClass;
         this.targetClass = targetClass;
         this.model = model;
     }
 
-    protected SocialForceModel model;
+    protected Model model;
 
     /**
      * 判断两个agent之间是否有心理作用力。

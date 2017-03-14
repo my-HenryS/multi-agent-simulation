@@ -184,4 +184,10 @@ public class Circle2D implements DistanceShape {
     public String toString(){
         return "半径为:"+radius+", 圆心"+center.toString();
     }
+
+    @Override
+    public Circle2D expandBy(double extent) {
+        radius += extent;
+        return this;
+    }
 }

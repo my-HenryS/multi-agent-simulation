@@ -3,8 +3,9 @@ package org.socialforce.drawer.impl;
 import org.socialforce.drawer.Drawable;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
+import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.impl.BaseAgent;
+import org.socialforce.model.impl.Star_Planet;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -35,7 +36,8 @@ public class EntityDrawerInstaller implements DrawerInstaller {
      * @param device
      */
     public EntityDrawerInstaller(Graphics2D device) {
-        registerDrawer(new AgentDrawer(device), BaseAgent.class);
+        registerDrawer(new PositionDynamicColorMarkDrawer(device), Star_Planet.class);
+        registerDrawer(new DynamicColorDrawer<Agent>(device), Agent.class);
         registerDrawer(new EntityDrawer(device), InteractiveEntity.class);
 
     }

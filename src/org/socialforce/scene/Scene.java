@@ -24,7 +24,7 @@ import java.util.stream.Stream;
  */
 public interface Scene extends Drawable {
     /**
-     * calculate the next time step of the scene.
+     * interactionForce the next time step of the scene.
      * the time step will also forward 1 unit.
      */
     void stepNext();

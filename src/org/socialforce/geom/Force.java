@@ -1,13 +1,13 @@
 package org.socialforce.geom;
 
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.Model;
 
 /**
  * 代表相互作用的实体之间的力.
  * 该力将用社会力模型计算.
  * @see InteractiveEntity
- * @see SocialForceModel
+ * @see Model
  * @author Ledenel
  * Created by Ledenel on 2016/7/28.
  */

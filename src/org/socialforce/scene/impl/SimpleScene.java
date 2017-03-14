@@ -5,21 +5,17 @@ import org.socialforce.container.AgentPool;
 import org.socialforce.container.EntityPool;
 import org.socialforce.container.impl.LinkListAgentPool;
 import org.socialforce.container.impl.LinkListEntityPool;
+import org.socialforce.container.impl.LinkListPool;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.Box;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
+import org.socialforce.model.Influential;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.Moveable;
-import org.socialforce.model.impl.Door;
-import org.socialforce.model.impl.Entity;
-import org.socialforce.model.impl.Star_Planet;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneListener;
-import org.socialforce.scene.ValueSet;
-import org.socialforce.strategy.PathFinder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,31 +62,19 @@ public class SimpleScene implements Scene {
     }
 
     /**
-     * calculate the next time step of the scene.
+     * interactionForce the next time step of the scene.
      * the time step will also forward 1 unit.
      */
     @Override
     public void stepNext() {
-        Iterable<InteractiveEntity> Interac = statics.selectClass(Moveable.class);
-        for (InteractiveEntity entity : Interac){
-            if(entity instanceof Door){
-                ((Door) entity).determinNext();
-            }
-            if (entity instanceof Star_Planet){
-                ((Star_Planet) entity).determinNext();
-            }
-        }
-        for(Agent agent : allAgents) {
-            agent.determineNext();
-        }
-
-
-        for (InteractiveEntity entity : Interac){
-            if(entity instanceof Door){
-                ((Door) entity).act();
-            }
-            if (entity instanceof Star_Planet){
-                ((Star_Planet) entity).act();
+        LinkListPool<InteractiveEntity> entities = new LinkListPool<>();
+        entities.addAll(statics);
+        entities.addAll(allAgents);
+        Iterable<InteractiveEntity> captors = entities.selectClass(Influential.class);
+        for (InteractiveEntity captor : captors){
+            Iterable<Agent> affectableAgents = allAgents.select(((Influential) captor).getView());
+            for (Agent target:affectableAgents){
+                ((Influential) captor).affect(target);
             }
         }
         for (Agent agent : allAgents) {

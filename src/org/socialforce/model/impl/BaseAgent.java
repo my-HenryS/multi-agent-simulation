@@ -2,13 +2,9 @@ package org.socialforce.model.impl;
 
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Force2D;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.*;
-import org.socialforce.scene.Scene;
 import org.socialforce.strategy.Path;
-
-import java.util.LinkedList;
 
 /**
  * 定义BaseAgent类，其继承于父类Entity，并实现了接口Agent 的方法。
@@ -16,22 +12,16 @@ import java.util.LinkedList;
  */
 public class BaseAgent extends Entity implements Agent {
     Velocity currVelocity;
-    LinkedList<Velocity> velocities = new LinkedList<>();
     Path path;
     double mass;
-    int currTimestamp;
     DistanceShape view;
-    Force pushed, lastpushed = new Force2D(0,0);
-    Velocity deltaV;
-    Vector deltaS;
+    Force pushed;
     boolean escaped = false;
-    boolean stoped = false;
     DistanceShape shape;
 
     public BaseAgent(DistanceShape shape, Velocity velocity) {
         super(shape);
         this.shape = shape;
-        this.currTimestamp = 0;
         this.currVelocity = velocity;
         this.mass = 80;
         Circle2D circle = new Circle2D(shape.getReferencePoint(),2);
@@ -77,6 +67,7 @@ public class BaseAgent extends Entity implements Agent {
      * @param startPoint 力作用的位置。
      */
     @Override
+    @Deprecated
     public void push(Force force, Point startPoint) {
         push(force);
     }
@@ -95,101 +86,25 @@ public class BaseAgent extends Entity implements Agent {
     }
 
 
-    /**
-     * 获取一个agent的期望速度。
-     * 该agent的速度通常来说取决于其自身及其目标。
-     *
-     * @return 期望速度
-     * @see Velocity
-     */
-    @Override
-    public Velocity expect() {
-        Point point = this.shape.getReferencePoint();
-        if(path != null) return model.getAgentMotivation(point, path.nextStep(point));
-        else return new Velocity2D(0,0);
-    }
 
     /**
-     * 决定下一步，agent要走向的目标点。
-     * 同时，agent也会被社会力驱动。
-     * 最终的结果会被act() 方法使用。
-     * 如果当前的时间步长和该agent不同步，那么该agent 会试着跟上
-     * (或者忽略当agent的时间落后于真正的时间)  TODO?
-     *
-     * @param currSteps 当前的时间
-     * @return 代表要移动的距离和方向的向量。
-     */
-    @Override
-    public Vector determineNext(int currSteps) {
-        if (currSteps >= this.currTimestamp) {
-            this.pushed = model.getPower(this);
-            int dt = currSteps - this.currTimestamp + 1;
-            Iterable<InteractiveEntity> statics = scene.getStaticEntities().select(view);
-            Iterable<Agent> neighbors = scene.getAllAgents().select(view);
-            for (InteractiveEntity entity : statics) {
-                entity.affect(this);
-            }
-            for (Agent agent : neighbors) {
-                agent.affect(this);
-            }
-            Velocity temp_v = new Velocity2D(0,0);
-            deltaV = this.pushed.deltaVelocity(mass, dt * model.getTimePerStep());
-            temp_v.add(currVelocity);
-            temp_v.add(deltaV);
-            deltaS = temp_v.deltaDistance(dt * model.getTimePerStep());
-            this.currTimestamp = currSteps;
-            return deltaS;
-        } else {
-            return null;
-        }
-}
-
-    /**
-     * 决定下一步，agent要走向的目标点。
-     * 同时，agent也会被社会力驱动。
-     * 最终的结果会被act() 方法使用。
-     *
-     * @return 代表要移动的距离和方向的向量。
-     */
-    @Override
-    public Vector determineNext() {
-        return determineNext(currTimestamp);
-    }
-
-
-    /**
-     * 获取当前时刻，agent的timestep （TODO这里的这个timestep翻译成时刻？）
-     * timestep从0开始（仿真开始）
-     *
-     * @return 当前的timestep
-     */
-    @Override
-    public int getCurrentSteps() {
-        return currTimestamp;
-    }
-
-    /**
-     * 使用determineNext()方法计算出的结果。
-     * 该方法会将时间往前推进一步。
-     * 当act()成功执行，其还会将之前determineNext()方法计算出的结果清零。
-     * 当无法获得该agent通过determineNext()方法计算所得的结果时，不会有移动。
-     * 当agnet到达目标（或者逃出）时，不会有移动。
+     * 按照当前TimePerStep内受到的作用力的和移动Agent
+     * 当act()成功执行，其还会将当前受力。
+     * 当无法获得该agent被affect而计算所得的结果时，不会有移动。
+     * 当agent到达目标（或者逃出）时，不会有移动。
      */
     @Override
     public void act() {
-        this.currTimestamp++;
-        if(!stoped){
-            this.currVelocity.add(deltaV);
-            velocities.addLast(currVelocity);
-            Point point = shape.getReferencePoint();
-            point.add(deltaS);
-            this.shape.moveTo(point);
-            this.view.moveTo(point);                      //改变视野
-        }
-        stoped = false;
-        lastpushed = pushed;
-        deltaS = model.zeroVector();
-        deltaV = model.zeroVelocity();
+        Velocity next_v = new Velocity2D(0,0), deltaV = this.pushed.deltaVelocity(mass, model.getTimePerStep());
+        Vector deltaS;
+        next_v.add(currVelocity);
+        next_v.add(deltaV);
+        deltaS = next_v.deltaDistance(model.getTimePerStep());
+        this.currVelocity.add(deltaV);
+        Point point = shape.getReferencePoint();
+        point.add(deltaS);
+        this.shape.moveTo(point);
+        this.view.moveTo(point);                      //改变视野
         pushed = model.zeroForce();
     }
 
@@ -213,27 +128,17 @@ public class BaseAgent extends Entity implements Agent {
         this.path = path;
     }
 
-    protected Scene scene;
-
     /**
-     * 获取当前场景的具体内容
+     * 设置社会力模型，并依照模型维度初始化零向量。
      *
-     * @return 场景
+     * @param model 模型
      */
     @Override
-    public Scene getScene() {
-        return scene;
+    public void setModel(Model model) {
+        this.model = model;
+        this.pushed = model.zeroForce();
     }
 
-    /**
-     * 设置agent所处的场景
-     *
-     * @param scene 被设置的场景
-     */
-    @Override
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
 
     /**
      * 标明这个Agent已经逃离，稍后将被移除。
@@ -257,19 +162,27 @@ public class BaseAgent extends Entity implements Agent {
      * 当前this所影响的实体
      * 例如，墙会影响agent(反作用，反推)
      *
-     * @param affectedEntity 被影响的实体
+     * @param target 被影响的实体
      * @see Agent
-     * @see SocialForceModel
+     * @see Model
      */
     @Override
-    public void affect(InteractiveEntity affectedEntity) {
-        if (affectedEntity instanceof Agent && !this.equals(affectedEntity)) {
-            Agent agent = (Agent) affectedEntity;
-            agent.push(model.calculate(this, affectedEntity));
+    public void affect(Agent target) {
+        if (this.equals(target)) {
+            this.selfAffect();
         }
-        if(affectedEntity instanceof Door){
-            ((Door)affectedEntity).push(model.calculate(this,affectedEntity));
+        else {
+            target.push(model.interactionForce(this,target));
         }
+    }
+
+    /**
+     * BaseAgent以模型场力的形式影响自己
+     * @see Agent
+     * @see Model
+     */
+    public void selfAffect(){
+        this.pushed.add(model.fieldForce(this));
     }
 
     /**
@@ -293,22 +206,13 @@ public class BaseAgent extends Entity implements Agent {
         return "Shape:" + this.shape.toString() + "\tVelocity:" + this.currVelocity.toString() + "\tForce:" + this.pushed.toString();
     }
 
-    public double averageSpeed(int span){
-        double aver = 0;
-        int interval= (int)(span/this.getModel().getTimePerStep());
-        int baseline  =((velocities.size() - interval) >= 0)? velocities.size() - interval : 0;
-        for(int i =velocities.size()-1; i >= baseline; i--){
-            aver += velocities.get(i).length();
-        }
-        aver /= interval;
-        return aver;
+    /**
+     * 一个Blockable可阻挡的面积
+     * @return 代表可阻挡范围的Shape
+     */
+    @Override
+    public Shape blockSize() {
+        return this.getShape().clone();
     }
 
-    public double getLastAcc(){
-        return lastpushed.length();
-    }
-
-    public void stop(){
-        stoped = true;
-    }
 }

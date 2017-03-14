@@ -1,16 +1,15 @@
 package org.socialforce.app;
 
-import org.socialforce.app.gui.SceneShower;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.ValueSet;
 import org.socialforce.strategy.PathFinder;
-import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.Model;
 
 import java.util.List;
 
 /**
  * a social force simulation application with a set of scenes.
- * @see SocialForceModel
+ * @see Model
  * @see ApplicationListener
  * @author Ledenel
  * Created by Ledenel on 2016/8/3.
@@ -25,13 +24,13 @@ public interface SocialForceApplication {
      * get the social force model the application is using.
      * @return the model.
      */
-    SocialForceModel getModel();
+    Model getModel();
 
     /**
      * set the social force model for the application.
      * @param model the model to be set.
      */
-    void setModel(SocialForceModel model);
+    void setModel(Model model);
 
     /**
      * get all the scenes the applicaion is simulating.

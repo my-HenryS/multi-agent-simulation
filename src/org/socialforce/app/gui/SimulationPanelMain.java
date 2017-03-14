@@ -22,9 +22,9 @@ public class SimulationPanelMain implements ApplicationListener {
     public SimulationPanelMain() {
         loader = new ApplicationLoader(this);
         refreshName();
-        runButton.addMouseListener(new MouseAdapter() {
+        runButton.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 //super.mouseClicked(e);
                 String s = timePerStepTextField.getText();
                 //application.getModel().setTimePerStep(Double.valueOf(s));

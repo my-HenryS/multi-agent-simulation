@@ -1,10 +1,7 @@
 package org.socialforce.geom.impl;
 
 import org.socialforce.drawer.Drawer;
-import org.socialforce.geom.Box;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
-import org.socialforce.geom.Vector;
+import org.socialforce.geom.*;
 
 /**
  * Created by sunjh1999 on 2016/11/12.
@@ -95,5 +92,11 @@ public class Semicircle2D implements Shape {
     @Override
     public Shape clone() {
         return new Semicircle2D(center, radius, angle);
+    }
+
+    @Override
+    public Shape expandBy(double extent) {
+        radius += extent;
+        return this;
     }
 }
