@@ -1,8 +1,6 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.geom.Expandable;
 import org.socialforce.geom.Shape;
-import org.socialforce.geom.impl.Box2D;
 import org.socialforce.model.*;
 
 /**
@@ -11,7 +9,7 @@ import org.socialforce.model.*;
 public class Wall extends Entity implements Blockable, Influential {
     @Override
     public Shape getView() {
-        return ((Expandable)this.getShape().clone()).expandBy(3);
+        return (this.getShape().clone()).expandBy(3);
     }
 
     /**

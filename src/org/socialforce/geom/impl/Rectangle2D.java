@@ -1,10 +1,7 @@
 package org.socialforce.geom.impl;
 
 import org.socialforce.drawer.Drawer;
-import org.socialforce.geom.Box;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
-import org.socialforce.geom.Vector;
+import org.socialforce.geom.*;
 
 /**
  * 一个任意的二维矩形
@@ -12,7 +9,7 @@ import org.socialforce.geom.Vector;
  * 角度采用弧度制
  * Created by Whatever on 2016/10/31.
  */
-public class Rectangle2D implements Shape {
+public class Rectangle2D implements Shape{
     protected Point2D center;
     protected double length,weidth,angle;
 
@@ -251,5 +248,12 @@ public class Rectangle2D implements Shape {
         extremePoints[2] = new Point2D(center.getX()+length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
         extremePoints[3] = new Point2D(center.getX()-length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
         return extremePoints;
+    }
+
+    @Override
+    public Shape expandBy(double extent) {
+        length += 2*extent;
+        weidth += 2*extent;
+        return this;
     }
 }

@@ -9,7 +9,7 @@ import org.socialforce.geom.*;
  */
 
 
-public class Circle2D implements DistanceShape, Expandable {
+public class Circle2D implements DistanceShape {
     /**
      * 半径:二维圆的半径.
      * @see Drawer

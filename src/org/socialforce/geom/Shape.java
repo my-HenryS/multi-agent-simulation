@@ -81,4 +81,7 @@ public interface Shape extends Serializable, Cloneable, DimensionEntity, Drawabl
      * @return 该形状的副本.
      */
     Shape clone();
+
+
+    Shape expandBy(double extent);
 }
