@@ -39,7 +39,7 @@ public class ApplicationForDoorTest extends SimpleApplication implements SocialF
             strategy.pathDecision();
             while (!scene.getAllAgents().isEmpty()) {
                 long start = System.currentTimeMillis(), span, fps = 16;
-                scene.stepNext();
+                this.StepNext(scene);
                 long l = System.currentTimeMillis() - start;
                 span = l > fps? 0: fps - l;
                 try {

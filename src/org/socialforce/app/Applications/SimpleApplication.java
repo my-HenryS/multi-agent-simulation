@@ -20,6 +20,7 @@ public abstract class SimpleApplication implements SocialForceApplication {
     protected LinkedList<Scene> scenes;
     protected ApplicationListener listener;
     protected Model model = new SimpleSocialForceModel();
+    protected boolean Pause = false;
 
     @Override
     public void stop() {
@@ -106,4 +107,26 @@ public abstract class SimpleApplication implements SocialForceApplication {
     public List<PathFinder> getAllPathFinders() {
         return null;
     }
+
+
+    public void StepNext(Scene scene){
+        if (Pause == false){
+            scene.stepNext();
+        }
+        else;//do nothing
+    }
+
+    public void Pause(){
+        Pause = true;
+    }
+
+    public void Continue(){
+        Pause = false;
+    }
+
+    public void skip(Scene scene){
+        scene.getAllAgents().clear();
+    }
+
+
 }

@@ -53,7 +53,7 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                     System.out.println("flow now "+a);
                     while (iteration <= 50000) {
                         long start = System.currentTimeMillis(), span, fps = 12;
-                        scene.stepNext();
+                        this.StepNext(scene);
                         iteration += 1;
                         if(iteration % 60 ==0 && strategy instanceof DynamicStrategy){
                             ((DynamicStrategy) strategy).dynamicDecision();

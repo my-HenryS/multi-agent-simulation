@@ -30,6 +30,7 @@ import static org.socialforce.scene.SceneLoader.genParameter;
 public class ApplicationForNarrowPattern extends SimpleApplication implements SocialForceApplication {
     DistanceShape template;
     double DoorWidth;
+    int density;
     /**
      * start the application immediately.
      */
@@ -41,7 +42,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
             GoalStrategy strategy = new NearestGoalStrategy(scene, pathFinder);
             strategy.pathDecision();
             while (!scene.getAllAgents().isEmpty()) {
-                scene.stepNext();
+                this.StepNext(scene);
             }
         }
     }
@@ -54,7 +55,8 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         template = new Circle2D(new Point2D(0,0),0.486/2);
         scenes = new LinkedList<>();
         DoorWidth = 1.36;
-        setUpT1Scene1();
+        density = 10;
+        //setUpT1Scene1();
         setUpT1Scene2();
         setUpT1Scene3();
         setUpT1Scene4();
@@ -76,9 +78,9 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)}),new SV_Exit(new Box2D[]{new Box2D(10-DoorWidth,-0.5,DoorWidth,2)})));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(200,new Box2D(0,0,10,-10),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*10,new Box2D(0,0,10,-10),template)));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
-        parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
+        //parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
         loader.readParameterSet(parameters);
         for (Scene s : loader.readScene(this)){
             scenes.add(s);
@@ -95,7 +97,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth,-0.5,2*DoorWidth,2)})));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(50,new Box2D(0,0,10,-10),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*10,new Box2D(0,0,10,-10),template)));
         parameters.addLast(genParameter(new SV_Wall(new Shape[]{new Rectangle2D(new Point2D(3,3),1,3.5,Math.PI/6),new Rectangle2D(new Point2D(7,3),1,3.5,-Math.PI/6)}),new SV_Wall(new Shape[]{new Rectangle2D(new Point2D(3,2),1,3.5,Math.PI/6),new Rectangle2D(new Point2D(7,2),1,3.5,-Math.PI/6)}),new SV_Wall(new Shape[]{new Rectangle2D(new Point2D(3,3),1,3.5,-Math.PI/6),new Rectangle2D(new Point2D(7,3),1,3.5,Math.PI/6),new Box2D(5-DoorWidth,0,DoorWidth/2,1),new Box2D(5+DoorWidth,0,-DoorWidth/2,1)}),new SV_Wall(new Shape[]{new Box2D(5-DoorWidth,0,DoorWidth/2,1),new Box2D(5+DoorWidth,0,-DoorWidth/2,1),new Rectangle2D(new Point2D(3,3),1,5,Math.PI/4),new Rectangle2D(new Point2D(7,3),1,5,-Math.PI/4),new Rectangle2D(new Point2D(3,6),1,5,-Math.PI/4),new Rectangle2D(new Point2D(7,6),1,5,Math.PI/4)})));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
@@ -107,7 +109,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
     }
 
     /**
-     * 两层门
+     * 厚门，拐角
      */
     protected void setUpT1Scene3(){
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("T1.s");
@@ -115,13 +117,13 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2),new Box2D(5-DoorWidth/2,-4.5,DoorWidth,2),new Box2D(5-DoorWidth/2,0.5,DoorWidth,4)}),
-                new SV_Exit(new Box2D[]{new Box2D(10-DoorWidth,-0.5,DoorWidth,2),new Box2D(10-DoorWidth,-4.5,DoorWidth,2),new Box2D(10-DoorWidth,0.5,DoorWidth,4)})));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(200,new Box2D(0,0,10,-10),template)));
-        parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(0,-4,10,1)})));
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2),new Box2D(5-DoorWidth/2,0.05,DoorWidth,4)}),
+                new SV_Exit(new Box2D[]{new Box2D(10-DoorWidth,-0.5,DoorWidth,2),new Box2D(10-DoorWidth,0.05,DoorWidth,4)})));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*10,new Box2D(0,0,10,-10),template)));
+        parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(0,0.1,10,3)})));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
-        parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,-4,10,1))));
+        parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,4,10,1))));
         loader.readParameterSet(parameters);
         for (Scene s : loader.readScene(this)){
             scenes.add(s);
@@ -130,7 +132,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
 
 
     /**
-     * 厚门，拐角
+     * 两层门
      */
     protected void setUpT1Scene4(){
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("T1.s");
@@ -138,8 +140,9 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(0.1,-0.5,10,2)})));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(200,new Box2D(0,0,10,-10),template)));
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2),new Box2D(5-DoorWidth/2,-4.5,DoorWidth,2)}),
+                new SV_Exit(new Box2D[]{new Box2D(10-DoorWidth,-0.5,DoorWidth,2),new Box2D(10-DoorWidth,-4.5,DoorWidth,2)})));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*10,new Box2D(0,0,10,-10),template)));
         parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(0,-4,5-DoorWidth/2,5),new Box2D(5+DoorWidth/2,-4,5-DoorWidth/2,5)}),new SV_Wall(new Box2D[]{new Box2D(0,-4,10-DoorWidth,5)})));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
@@ -161,7 +164,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)})));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(200,new Box2D(0,0,10,-10),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*10,new Box2D(0,0,10,-10),template)));
         parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(4,-4,2,2)}),new SV_Wall(new Shape[]{new Circle2D(new Point2D(5,-3),1)})));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
@@ -182,7 +185,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(10-(DoorWidth+1),-0.5,(DoorWidth+1),2)})));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(200,new Box2D(0,0,10,-10),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*10,new Box2D(0,0,10,-10),template)));
         parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(9-(DoorWidth+1),0,1,-(9-DoorWidth)),new Box2D(new Point2D(DoorWidth+1,DoorWidth+1),new Point2D(8-DoorWidth,DoorWidth+2))})));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
@@ -201,7 +204,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(400,new Box2D(0,0,10,-20),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*20,new Box2D(0,0,10,-20),template)));
 
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)}),new SV_Exit(new Box2D[]{new Box2D(10-DoorWidth,-0.5,DoorWidth,2)})));
 
@@ -231,10 +234,10 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(-1.5,-35-DoorWidth/2,2,DoorWidth)})));
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(3.5,-35-DoorWidth/2,2,DoorWidth)})));
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(2-DoorWidth/2,-41.5,DoorWidth,2)})));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(100,new Box2D(0,0,3,-40),template)));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(200,new Box2D(-1,-30,-10,-10),template)));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(200,new Box2D(5,-30,10,-10),template)));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(200,new Box2D(-3,-41,10,-10),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*5,new Box2D(0,0,3,-40),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*10,new Box2D(-1,-30,-10,-10),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*10,new Box2D(5,-30,10,-10),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*10,new Box2D(-3,-41,10,-10),template)));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(0,6,4,1))));
         parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(-1,-30,-10,1),new Box2D(-12,-30,1,-10),new Box2D(-1,-40,-10,-1)})));
         parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(5,-30,10,1),new Box2D(15,-30,1,-10),new Box2D(5,-40,10,-1)})));
@@ -259,12 +262,12 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(2-DoorWidth/2,-0.5,DoorWidth,2)})));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(100,new Box2D(0,0,3,-40),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*5,new Box2D(0,0,3,-40),template)));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(0,6,4,1))));
         parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(0,-5,-10,1),new Box2D(0,-15,-10,1),new Box2D(0,-25,-10,1),new Box2D(0,-35,-10,1)})));
         parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(5,-5,10,1),new Box2D(5,-15,10,1),new Box2D(5,-25,10,1),new Box2D(5,-35,10,1)})));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(300,new Box2D(0,-5,-10,-30),template)));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(300,new Box2D(5,-5,10,-30),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*30,new Box2D(0,-5,-10,-30),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*30,new Box2D(5,-5,10,-30),template)));
         parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(-11,0,1,-40),new Box2D(25,0,1,-40)})));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,4,1))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,-5,1,-10))));

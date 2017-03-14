@@ -44,7 +44,7 @@ public class ApplicationForMutidoorOverView extends SimpleApplication implements
             GoalStrategy strategy = new NearestGoalStrategy(scene, pathFinder);
             strategy.pathDecision();
             while (!scene.getAllAgents().isEmpty()) {
-                scene.stepNext();
+                this.StepNext(scene);
             }
             for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                 Monitor monitor = (Monitor)iter.next();

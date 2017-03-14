@@ -44,7 +44,7 @@ public class ApplicationForECStrategy extends SimpleApplication implements Socia
             strategy.pathDecision();
             long span = System.currentTimeMillis();
             while (scene.getAllAgents().size() > 5) {
-                scene.stepNext();
+                this.StepNext(scene);
                 iteration += 1;
                 if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
                     ((DynamicStrategy) strategy).dynamicDecision();
