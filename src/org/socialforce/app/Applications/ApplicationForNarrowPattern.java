@@ -80,7 +80,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)}),new SV_Exit(new Box2D[]{new Box2D(10-DoorWidth,-0.5,DoorWidth,2)})));
         parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*10,new Box2D(0,0,10,-10),template)));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
-        //parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
+        parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
         loader.readParameterSet(parameters);
         for (Scene s : loader.readScene(this)){
             scenes.add(s);
