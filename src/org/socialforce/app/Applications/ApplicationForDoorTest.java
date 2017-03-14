@@ -8,10 +8,6 @@ import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Rectangle2D;
-import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.impl.Door;
-import org.socialforce.model.impl.Monitor;
-import org.socialforce.model.impl.Wall;
 import org.socialforce.scene.ParameterPool;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
@@ -63,7 +59,7 @@ public class ApplicationForDoorTest extends SimpleApplication implements SocialF
     @Override
     public void setUpScenes(){
         template = new Circle2D(new Point2D(0,0),0.486/2);
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream("standard.s");
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("T1.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
