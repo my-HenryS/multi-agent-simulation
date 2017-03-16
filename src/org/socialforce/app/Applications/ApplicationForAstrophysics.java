@@ -31,6 +31,7 @@ public class ApplicationForAstrophysics extends SimpleApplication {
      */
     @Override
     public void start() {
+        setUpScenes();
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext(); ) {
             Scene scene = iterator.next();
             while (scene.getCurrentSteps() < 1000000) {

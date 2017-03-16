@@ -36,6 +36,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
      */
     @Override
     public void start() {
+        setUpScenes();
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext(); ) {
             Scene scene = iterator.next();
             PathFinder pathFinder = new AStarPathFinder(scene, template);
@@ -56,7 +57,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         scenes = new LinkedList<>();
         DoorWidth = 1.36;
         density = 10;
-        //setUpT1Scene1();
+        setUpT1Scene1();
         setUpT1Scene2();
         setUpT1Scene3();
         setUpT1Scene4();

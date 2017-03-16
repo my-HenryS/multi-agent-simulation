@@ -41,7 +41,7 @@ public abstract class SimpleApplication implements SocialForceApplication {
 
 
     public SimpleApplication(){
-        setUpScenes();
+
     }
     /**
      * 需要根据parameter的map来生成一系列scene

@@ -28,14 +28,12 @@ import static org.socialforce.scene.SceneLoader.genParameter;
 public class ApplicationForCrossFlow extends SimpleApplication {
     DistanceShape template;
 
-    public ApplicationForCrossFlow (){
-    }
-
     /**
      * start the application immediately.
      */
     @Override
     public void start() {
+        setUpScenes();
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
             Scene scene = iterator.next();
             PathFinder pathFinder = new AStarPathFinder(scene, template);
