@@ -50,7 +50,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/resource/joone-engine.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/joone-engine.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
