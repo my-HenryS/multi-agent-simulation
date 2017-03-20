@@ -187,7 +187,7 @@ public class NeuralNetwork implements NeuralNetListener {
 
     public static void main(String[] args)
     {
-        NeuralNetwork xor = new NeuralNetwork();
-        xor.run();
+        NeuralNetwork nnet = new NeuralNetwork();
+        nnet.run();
     }
 }
