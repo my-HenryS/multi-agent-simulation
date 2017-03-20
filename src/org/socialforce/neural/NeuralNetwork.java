@@ -1,7 +1,15 @@
 package org.socialforce.neural;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
+import com.opencsv.CSVReader;
+import com.sun.tools.javac.util.ArrayUtils;
 import org.joone.engine.FullSynapse;
 import org.joone.engine.LinearLayer;
 import org.joone.engine.Monitor;
@@ -11,7 +19,6 @@ import org.joone.engine.SigmoidLayer;
 import org.joone.engine.learning.TeachingSynapse;
 import org.joone.io.MemoryInputSynapse;
 import org.joone.net.NeuralNet;
-import org.joone.samples.engine.xor.XOR;
 
 /**
  * Created by sunjh1999 on 2017/3/20.
@@ -20,17 +27,23 @@ import org.joone.samples.engine.xor.XOR;
 public class NeuralNetwork implements NeuralNetListener {
     private Monitor monitor;
     private NeuralNet nnet;
+    private String directory = "/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.csv";
+    private int labelIndexM = 2; //2以下
     private CountDownLatch latch = new CountDownLatch(1);
-    public static double XOR_INPUT[][] = { { 0.0, 0.0 }, { 1.0, 0.0 },
-            { 0.0, 1.0 }, { 1.0, 1.0 } };
+    public static double INPUT[][];
     private int epoch;
 
-    public static double XOR_IDEAL[][] = { { 0.0 }, { 1.0 }, { 1.0 }, { 0.0 } };
+    public static double LABEL[][];
 
 
     public NeuralNetwork()
     {
-        // Firts, creates the three Layers
+        try {
+            dataReader();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // First, creates the three Layers
         LinearLayer	input = new LinearLayer();
         SigmoidLayer	hidden = new SigmoidLayer();
         SigmoidLayer	output = new SigmoidLayer();
@@ -40,9 +53,9 @@ public class NeuralNetwork implements NeuralNetListener {
         output.setLayerName("output");
 
         // sets their dimensions
-        input.setRows(2);
-        hidden.setRows(3);
-        output.setRows(1);
+        input.setRows(24);
+        hidden.setRows(30);
+        output.setRows(2);
 
         // Now create the two Synapses
         FullSynapse synapse_IH = new FullSynapse();	/* input -> hidden conn. */
@@ -51,7 +64,7 @@ public class NeuralNetwork implements NeuralNetListener {
         synapse_IH.setName("IH");
         synapse_HO.setName("HO");
 
-        // Connect the input layer whit the hidden layer
+        // Connect the input layer with the hidden layer
         input.addOutputSynapse(synapse_IH);
         hidden.addInputSynapse(synapse_IH);
 
@@ -62,8 +75,8 @@ public class NeuralNetwork implements NeuralNetListener {
         MemoryInputSynapse  inputStream = new MemoryInputSynapse();
 
         // The first two columns contain the input values
-        inputStream.setInputArray(XOR_INPUT);
-        inputStream.setAdvancedColumnSelector("1,2");
+        inputStream.setInputArray(INPUT);
+        inputStream.setAdvancedColumnSelector("1-24");
 
         // set the input data
         input.addInputSynapse(inputStream);
@@ -75,8 +88,8 @@ public class NeuralNetwork implements NeuralNetListener {
 
 
         // The output values are on the third column of the file
-        samples.setInputArray(XOR_IDEAL);
-        samples.setAdvancedColumnSelector("1");
+        samples.setInputArray(LABEL);
+        samples.setAdvancedColumnSelector("1-2");
         trainer.setDesired(samples);
 
         // Connects the Teacher to the last layer of the net
@@ -122,7 +135,11 @@ public class NeuralNetwork implements NeuralNetListener {
 
     @Override
     public void errorChanged(NeuralNetEvent e) {
-        System.out.println("Epoch: " + epoch + " Error:" + this.monitor.getGlobalError() );
+        Monitor mon = (Monitor) e.getSource();
+        if (mon.getCurrentCicle() % 100 == 0)
+            System.out.println(" Epoch:  "
+                    + (mon.getTotCicles() - mon.getCurrentCicle()) + "  RMSE: "
+                    + mon.getGlobalError());
         epoch++;
 
     }
@@ -144,6 +161,30 @@ public class NeuralNetwork implements NeuralNetListener {
         // TODO Auto-generated method stub
 
     }
+
+    public void dataReader() throws IOException {
+        File file = new File(directory);
+        FileReader fReader = new FileReader(file);
+        CSVReader csvReader = new CSVReader(fReader);
+        List<String[]> sList = csvReader.readAll();
+        LinkedList<double[]> inputs = new LinkedList<>(), labels = new LinkedList<>();
+        for(String[] ss : sList){
+            double[] lTemp = new double[labelIndexM], iTemp = new double[ss.length-labelIndexM];
+            for(int i = 0 ; i < ss.length; i++){
+                if(i < labelIndexM) lTemp[i] = Double.parseDouble(ss[i]);
+                else iTemp[i-labelIndexM] = Double.parseDouble(ss[i]);
+            }
+            inputs.add(iTemp);
+            labels.add(lTemp);
+        }
+        INPUT = new double[inputs.size()][inputs.get(0).length];
+        LABEL = new double[labels.size()][labels.get(0).length];
+        for(int i = 0; i < inputs.size(); i++){
+            INPUT[i] = inputs.get(i);
+            LABEL[i] = labels.get(i);
+        }
+    }
+
     public static void main(String[] args)
     {
         NeuralNetwork xor = new NeuralNetwork();
