@@ -31,7 +31,8 @@ public class NeuralNetwork implements NeuralNetListener {
     private int labelIndexM = 2; //2以下
     private CountDownLatch latch = new CountDownLatch(1);
     public static double INPUT[][];
-    private int epoch;
+    private int epoch = 1000;
+    private int datasetNum = 500;
 
     public static double LABEL[][];
 
@@ -104,8 +105,8 @@ public class NeuralNetwork implements NeuralNetListener {
         nnet.addLayer(hidden, NeuralNet.HIDDEN_LAYER);
         nnet.addLayer(output, NeuralNet.OUTPUT_LAYER);
         this.monitor = nnet.getMonitor();
-        monitor.setTrainingPatterns(4);	// # of rows (patterns) contained in the input file
-        monitor.setTotCicles(5000);	// How many times the net must be trained on the input patterns
+        monitor.setTrainingPatterns(datasetNum);	// # of rows (patterns) contained in the input file
+        monitor.setTotCicles(epoch);	// How many times the net must be trained on the input patterns
         monitor.setLearningRate(0.7);
         monitor.setMomentum(0.3);
         monitor.setLearning(true);	// The net must be trained
