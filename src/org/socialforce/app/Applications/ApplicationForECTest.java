@@ -34,14 +34,14 @@ public class ApplicationForECTest extends SimpleApplication implements SocialFor
     @Override
     public void start() {
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
-            Scene scene = iterator.next();
-            PathFinder pathFinder = new AStarPathFinder(scene, template);
-            GoalStrategy strategy = new NearestGoalStrategy(scene, pathFinder);
+            currentScene = iterator.next();
+            PathFinder pathFinder = new AStarPathFinder(currentScene, template);
+            GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
-            while (!scene.getAllAgents().isEmpty()) {
-                this.StepNext(scene);
+            while (!currentScene.getAllAgents().isEmpty()) {
+                this.StepNext(currentScene);
             }
-            for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
+            for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                 Monitor monitor = (Monitor)iter.next();
                 System.out.println(monitor.sayVelocity());
             }

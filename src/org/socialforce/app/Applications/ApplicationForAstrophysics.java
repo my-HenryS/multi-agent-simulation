@@ -33,10 +33,10 @@ public class ApplicationForAstrophysics extends SimpleApplication {
     public void start() {
         setUpScenes();
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext(); ) {
-            Scene scene = iterator.next();
-            while (scene.getCurrentSteps() < 1000000) {
+            currentScene = iterator.next();
+            while (currentScene.getCurrentSteps() < 1000000) {
                 long start = System.currentTimeMillis(), span, fps = 16;
-                this.StepNext(scene);
+                this.StepNext(currentScene);
                 long l = System.currentTimeMillis() - start;
                 span = l > fps? 0: fps - l;
                 try {

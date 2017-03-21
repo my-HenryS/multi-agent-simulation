@@ -18,6 +18,7 @@ import java.util.List;
 public abstract class SimpleApplication implements SocialForceApplication {
     protected GoalStrategy strategy;
     protected LinkedList<Scene> scenes;
+    protected Scene currentScene;
     protected ApplicationListener listener;
     protected Model model = new SimpleSocialForceModel();
     protected boolean Pause = false;
@@ -126,8 +127,8 @@ public abstract class SimpleApplication implements SocialForceApplication {
         Pause = false;
     }
 
-    public void skip(Scene scene){
-        scene.getAllAgents().clear();
+    public void skip(){
+        currentScene.getAllAgents().clear();
     }
 
 

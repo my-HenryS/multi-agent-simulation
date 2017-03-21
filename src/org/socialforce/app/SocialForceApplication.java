@@ -58,6 +58,8 @@ public interface SocialForceApplication {
 
     void setName(String name);
 
+    void skip();
+
     void stop();
 
     void pause();

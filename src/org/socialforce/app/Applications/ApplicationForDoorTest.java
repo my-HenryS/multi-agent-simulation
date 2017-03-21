@@ -33,13 +33,13 @@ public class ApplicationForDoorTest extends SimpleApplication implements SocialF
     @Override
     public void start() {
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext(); ) {
-            Scene scene = iterator.next();
-            PathFinder pathFinder = new AStarPathFinder(scene, template);
-            GoalStrategy strategy = new NearestGoalStrategy(scene, pathFinder);
+            currentScene = iterator.next();
+            PathFinder pathFinder = new AStarPathFinder(currentScene, template);
+            GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
-            while (!scene.getAllAgents().isEmpty()) {
+            while (!currentScene.getAllAgents().isEmpty()) {
                 long start = System.currentTimeMillis(), span, fps = 16;
-                this.StepNext(scene);
+                this.StepNext(currentScene);
                 long l = System.currentTimeMillis() - start;
                 span = l > fps? 0: fps - l;
                 try {

@@ -40,30 +40,30 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                 setUpScenes(alpha[i],beta[i]);
                 System.out.println("Scene is "+alpha[i]+","+beta[i]);
                 for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
-                    Scene scene = iterator.next();
+                    currentScene = iterator.next();
                     int iteration = 0;
                     double volume = 0, scenery_num = 0;
                     double speed = 0;
                     int size = 0;
                     SV_RandomAgentGenerator agentGenerator = new SV_RandomTimeAgentGenerator(a,new Box2D(75,4.5,46.5,10), template, new Velocity2D(0,13));
-                    agentGenerator.apply(scene);
-                    PathFinder pathFinder = new AStarPathFinder(scene, template);
-                    strategy = new DynamicNearestGoalStrategy(scene, pathFinder);
+                    agentGenerator.apply(currentScene);
+                    PathFinder pathFinder = new AStarPathFinder(currentScene, template);
+                    strategy = new DynamicNearestGoalStrategy(currentScene, pathFinder);
                     strategy.pathDecision();
                     System.out.println("flow now "+a);
                     while (iteration <= 50000) {
                         long start = System.currentTimeMillis(), span, fps = 12;
-                        this.StepNext(scene);
+                        this.StepNext(currentScene);
                         iteration += 1;
                         if(iteration % 60 ==0 && strategy instanceof DynamicStrategy){
                             ((DynamicStrategy) strategy).dynamicDecision();
                         }
                         if(iteration % 250 == 0){
-                            agentGenerator.apply(scene);
+                            agentGenerator.apply(currentScene);
                             strategy.pathDecision();
                         }
                         if(iteration % 1000 == 0){
-                            for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
+                            for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                                 Monitor monitor = (Monitor)iter.next();
                                 double speeds = monitor.sayVelocity();
                                 if(speeds!=0){

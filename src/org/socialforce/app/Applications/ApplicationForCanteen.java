@@ -45,7 +45,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
         for(int i = 0; i < 40; i++){
             setUpScenes();
             for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
-                Scene scene = iterator.next();
+                currentScene = iterator.next();
                 // TODO: 2017/1/29 Refactor dump setting code here.
                 /*
                 SceneStepDataProvider rootProvider = new SceneStepDataProvider();
@@ -61,14 +61,14 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 */
                 // dump code end.
                 int total_num = 0;
-                for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Agent.class).iterator(); iter.hasNext();){
+                for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Agent.class).iterator(); iter.hasNext();){
                     Agent agent = (Agent) iter.next();
                     total_num ++;
                 }
                 System.out.print("Population of "+total_num);
                 int iteration = 0;
-                PathFinder pathFinder = new AStarPathFinder(scene, template);
-                strategy = new ECStrategy(scene, pathFinder);
+                PathFinder pathFinder = new AStarPathFinder(currentScene, template);
+                strategy = new ECStrategy(currentScene, pathFinder);
                 /*
                 if(i<10){
                     System.out.print(" with ECStrategy, ");
@@ -88,9 +88,9 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 }
                 */
                 strategy.pathDecision();
-                while (scene.getAllAgents().size() > 10) {
+                while (currentScene.getAllAgents().size() > 10) {
                     long start = System.currentTimeMillis(), span, fps = 0;
-                    this.StepNext(scene);
+                    this.StepNext(currentScene);
                     iteration += 1;
                     if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
                         ((DynamicStrategy) strategy).dynamicDecision();

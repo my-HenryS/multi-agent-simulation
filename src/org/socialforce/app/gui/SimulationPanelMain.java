@@ -72,6 +72,7 @@ public class SimulationPanelMain implements ApplicationListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO: 2017/3/21 在这里增加skip按钮点击的处理逻辑。
+                loader.current().skip();
             }
         });
     }

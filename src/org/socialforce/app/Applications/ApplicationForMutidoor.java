@@ -42,14 +42,14 @@ public class ApplicationForMutidoor extends SimpleApplication implements SocialF
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
             double samplewidth = 0.4;
             double [][] matrixV = new double[(int)(20/samplewidth)][(int)(10/samplewidth)];
-            Scene scene = iterator.next();
-            PathFinder pathFinder = new AStarPathFinder(scene, template);
-            GoalStrategy strategy = new NearestGoalStrategy(scene, pathFinder);
+            currentScene = iterator.next();
+            PathFinder pathFinder = new AStarPathFinder(currentScene, template);
+            GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
-            while (!scene.getAllAgents().isEmpty()) {
-                this.StepNext(scene);
+            while (!currentScene.getAllAgents().isEmpty()) {
+                this.StepNext(currentScene);
             }
-            for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
+            for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                 Monitor m = (Monitor)iter.next();
                 Point p = m.getShape().getReferencePoint();
                 matrixV[(int)Math.rint((p.getY()+10)/samplewidth)][(int)Math.rint(p.getX()/samplewidth)] = m.sayVelocity();

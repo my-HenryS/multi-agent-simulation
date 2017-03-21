@@ -34,17 +34,17 @@ public class ApplicationForECStrategy extends SimpleApplication implements Socia
     public void start() {
         System.out.println("Application starts!!");
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
-            Scene scene = iterator.next();
+            currentScene = iterator.next();
             int iteration = 0;
-            PathFinder pathFinder = new AStarPathFinder(scene, template);
-            strategy = new ECStrategy(scene, pathFinder);
+            PathFinder pathFinder = new AStarPathFinder(currentScene, template);
+            strategy = new ECStrategy(currentScene, pathFinder);
             //strategy = new DynamicLifeBeltStrategy(scene, pathFinder);
             //strategy = new LifeBeltStrategy(scene, pathFinder);
             //strategy = new NearestGoalStrategy(scene, pathFinder);
             strategy.pathDecision();
             long span = System.currentTimeMillis();
-            while (scene.getAllAgents().size() > 5) {
-                this.StepNext(scene);
+            while (currentScene.getAllAgents().size() > 5) {
+                this.StepNext(currentScene);
                 iteration += 1;
                 if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
                     ((DynamicStrategy) strategy).dynamicDecision();
