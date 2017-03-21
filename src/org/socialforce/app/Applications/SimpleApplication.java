@@ -116,11 +116,13 @@ public abstract class SimpleApplication implements SocialForceApplication {
         else;//do nothing
     }
 
-    public void Pause(){
+    @Override
+    public void pause(){
         Pause = true;
     }
 
-    public void Continue(){
+    @Override
+    public void resume(){
         Pause = false;
     }
 

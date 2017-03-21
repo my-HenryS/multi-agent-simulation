@@ -11,14 +11,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.stream.StreamSupport;
 
 /**
  * Created by Ledenel on 2016/8/23.
  */
 public class SimulationPanelMain implements ApplicationListener {
+    private boolean paused = false;
+
     public SimulationPanelMain() {
         loader = new ApplicationLoader(this);
         refreshName();
@@ -38,7 +38,10 @@ public class SimulationPanelMain implements ApplicationListener {
                 worker.execute();
                 runButton.setEnabled(false);
                 loadButton.setEnabled(false);
+                skipButton.setEnabled(true);
+                pauseButton.setEnabled(true);
                 //loader.current().start();
+
             }
         });
         loadButton.addActionListener(new ActionListener() {
@@ -50,6 +53,25 @@ public class SimulationPanelMain implements ApplicationListener {
                         objects, objects[0]);
                 loader.select(result.application);
                 refreshName();
+            }
+        });
+        pauseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(paused) {
+                    pauseButton.setText("Pause");
+                    loader.current().resume();
+                } else {
+                    pauseButton.setText("Resume");
+                    loader.current().pause();
+                }
+                paused = !paused;
+            }
+        });
+        skipButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO: 2017/3/21 在这里增加skip按钮点击的处理逻辑。
             }
         });
     }
@@ -97,7 +119,7 @@ public class SimulationPanelMain implements ApplicationListener {
     private JComboBox agentPathFindingComboBox;
     private JButton runButton;
     private JButton pauseButton;
-    private JButton stopButton;
+    private JButton skipButton;
     private JPanel sceneContainer;
     private JPanel scene1;
     private JPanel scene2;
