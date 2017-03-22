@@ -43,14 +43,20 @@ public class ApplicationForECStrategy extends SimpleApplication implements Socia
             //strategy = new NearestGoalStrategy(scene, pathFinder);
             strategy.pathDecision();
             long span = System.currentTimeMillis();
-            while (currentScene.getAllAgents().size() > 5) {
+            while (!toSkip()) {
                 this.StepNext(currentScene);
                 iteration += 1;
                 if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
                     ((DynamicStrategy) strategy).dynamicDecision();
                 }
             }
+            onStop();
         }
+    }
+
+    @Override
+    public boolean toSkip(){
+        return Skip || currentScene.getAllAgents().size() < 5;
     }
 
     @Override

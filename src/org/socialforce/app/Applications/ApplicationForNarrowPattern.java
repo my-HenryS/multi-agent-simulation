@@ -42,9 +42,10 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
             PathFinder pathFinder = new AStarPathFinder(currentScene, template);
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
-            while (!currentScene.getAllAgents().isEmpty()) {
+            while (!toSkip()) {
                 this.StepNext(currentScene);
             }
+            onStop();
         }
     }
 

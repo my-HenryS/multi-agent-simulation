@@ -65,4 +65,6 @@ public interface SocialForceApplication {
     void pause();
 
     void resume();
+
+    boolean toSkip();
 }

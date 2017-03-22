@@ -37,7 +37,7 @@ public class ApplicationForDoorTest extends SimpleApplication implements SocialF
             PathFinder pathFinder = new AStarPathFinder(currentScene, template);
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
-            while (!currentScene.getAllAgents().isEmpty()) {
+            while (!toSkip()) {
                 long start = System.currentTimeMillis(), span, fps = 16;
                 this.StepNext(currentScene);
                 long l = System.currentTimeMillis() - start;
@@ -48,6 +48,7 @@ public class ApplicationForDoorTest extends SimpleApplication implements SocialF
                     e.printStackTrace();
                 }
             }
+            onStop();
         }
     }
 

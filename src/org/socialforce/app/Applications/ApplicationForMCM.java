@@ -51,7 +51,7 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                     strategy = new DynamicNearestGoalStrategy(currentScene, pathFinder);
                     strategy.pathDecision();
                     System.out.println("flow now "+a);
-                    while (iteration <= 50000) {
+                    while (!toSkip()) {
                         long start = System.currentTimeMillis(), span, fps = 12;
                         this.StepNext(currentScene);
                         iteration += 1;
@@ -79,6 +79,7 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                             e.printStackTrace();
                         }
                     }
+                    onStop();
                     System.out.println("flow is "+speed/size);
 
                 }
@@ -92,6 +93,11 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
             }
         }
 
+    }
+
+    @Override
+    public boolean toSkip(){
+        return Skip || currentScene.getCurrentSteps() > 50000;
     }
 
     public void setUpScenes(double alpha, double beta){

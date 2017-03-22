@@ -62,7 +62,6 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 // dump code end.
                 int total_num = 0;
                 for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Agent.class).iterator(); iter.hasNext();){
-                    Agent agent = (Agent) iter.next();
                     total_num ++;
                 }
                 System.out.print("Population of "+total_num);
@@ -88,7 +87,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 }
                 */
                 strategy.pathDecision();
-                while (currentScene.getAllAgents().size() > 10) {
+                while (!toSkip()) {
                     long start = System.currentTimeMillis(), span, fps = 0;
                     this.StepNext(currentScene);
                     iteration += 1;
@@ -103,6 +102,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                         e.printStackTrace();
                     }
                 }
+                onStop();
                 /*
                 double samplewidth = 1;
                 double [][] matrixV = new double[(int)(21/samplewidth)][(int)(30/samplewidth)];
@@ -123,6 +123,11 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
         }
     }
 
+    @Override
+    public boolean toSkip(){
+        return Skip || currentScene.getAllAgents().size() < 10;
+    }
+
 
     public void setUpScenes(){
         template = new Circle2D(new Point2D(0,0),0.486/2);
@@ -132,7 +137,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(355,new Box2D(0,0,25,18),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(355,new Box2D(0,0,25,18),template),new SV_RandomAgentGenerator(155,new Box2D(0,0,25,18),template)));
         parameters.addLast(genParameter(new SV_RandomAgentGenerator(155,new Box2D(0,18,25,3),template)));
         parameters.addLast(genParameter((new SV_SafetyRegion(new Box2D(-3,-0.5,1,4)))));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(18.5,-3,4,1))));

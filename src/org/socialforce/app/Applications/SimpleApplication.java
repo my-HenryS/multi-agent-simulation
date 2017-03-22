@@ -21,7 +21,7 @@ public abstract class SimpleApplication implements SocialForceApplication {
     protected Scene currentScene;
     protected ApplicationListener listener;
     protected Model model = new SimpleSocialForceModel();
-    protected boolean Pause = false;
+    protected boolean Pause = false, Skip = false;
 
     @Override
     public void stop() {
@@ -128,8 +128,14 @@ public abstract class SimpleApplication implements SocialForceApplication {
     }
 
     public void skip(){
-        currentScene.getAllAgents().clear();
+        this.Skip = true;
     }
 
+    public boolean toSkip() {
+        return Skip || currentScene.getAllAgents().isEmpty();
+    }
+    public void onStop(){
+        Skip = false;
+    }
 
 }

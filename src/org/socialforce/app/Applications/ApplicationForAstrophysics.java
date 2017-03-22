@@ -34,7 +34,7 @@ public class ApplicationForAstrophysics extends SimpleApplication {
         setUpScenes();
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext(); ) {
             currentScene = iterator.next();
-            while (currentScene.getCurrentSteps() < 1000000) {
+            while (!toSkip()) {
                 long start = System.currentTimeMillis(), span, fps = 16;
                 this.StepNext(currentScene);
                 long l = System.currentTimeMillis() - start;
@@ -45,8 +45,15 @@ public class ApplicationForAstrophysics extends SimpleApplication {
                     e.printStackTrace();
                 }
             }
+            onStop();
         }
     }
+
+    @Override
+    public boolean toSkip() {
+        return Skip || currentScene.getCurrentSteps() > 1000000;
+    }
+
 
     @Override
     public void setUpScenes(){

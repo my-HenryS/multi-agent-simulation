@@ -38,9 +38,10 @@ public class ApplicationForECTest extends SimpleApplication implements SocialFor
             PathFinder pathFinder = new AStarPathFinder(currentScene, template);
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
-            while (!currentScene.getAllAgents().isEmpty()) {
+            while (!toSkip()) {
                 this.StepNext(currentScene);
             }
+            onStop();
             for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                 Monitor monitor = (Monitor)iter.next();
                 System.out.println(monitor.sayVelocity());
