@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import com.opencsv.CSVReader;
-import com.sun.tools.javac.util.ArrayUtils;
 import org.joone.engine.FullSynapse;
 import org.joone.engine.LinearLayer;
 import org.joone.engine.Monitor;
