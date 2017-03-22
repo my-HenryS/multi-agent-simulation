@@ -20,14 +20,15 @@ import org.joone.net.NeuralNetLoader;
 
 public class NeuralNetwork implements NeuralNetListener {
     private Monitor monitor;
+    private double []lMax ,lMin;
     private NeuralNet nnet;
     private String directory = "/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.csv";
     private int labelIndexM = 2; //2以下
     private CountDownLatch latch = new CountDownLatch(1);
-    public static double INPUT[][];
-    private int epoch = 1000;
+    public double INPUT[][];
+    private int epoch = 100;
 
-    public static double LABEL[][];
+    public double LABEL[][];
 
 
     public NeuralNetwork() {
@@ -39,30 +40,39 @@ public class NeuralNetwork implements NeuralNetListener {
         // First, creates the three Layers
         LinearLayer input = new LinearLayer();
         SigmoidLayer hidden = new SigmoidLayer();
-        SigmoidLayer output = new SigmoidLayer();
+        SigmoidLayer hidden2 = new SigmoidLayer();
+        LinearLayer output = new LinearLayer();
 
         input.setLayerName("input");
         hidden.setLayerName("hidden");
+        hidden2.setLayerName("hidden2");
         output.setLayerName("output");
 
         // sets their dimensions
         input.setRows(24);
-        hidden.setRows(30);
+        hidden.setRows(50);
+        hidden2.setRows(50);
         output.setRows(2);
 
         // Now create the two Synapses
         FullSynapse synapse_IH = new FullSynapse();	/* input -> hidden conn. */
+        FullSynapse synapse_H2H = new FullSynapse();	/* hidden -> hidden2 conn. */
         FullSynapse synapse_HO = new FullSynapse();	/* hidden -> output conn. */
 
         synapse_IH.setName("IH");
+        synapse_H2H.setName("H2H");
         synapse_HO.setName("HO");
 
         // Connect the input layer with the hidden layer
         input.addOutputSynapse(synapse_IH);
         hidden.addInputSynapse(synapse_IH);
 
+        // Connect the input layer with the hidden layer
+        hidden.addOutputSynapse(synapse_H2H);
+        hidden2.addInputSynapse(synapse_H2H);
+
         // Connect the hidden layer whit the output layer
-        hidden.addOutputSynapse(synapse_HO);
+        hidden2.addOutputSynapse(synapse_HO);
         output.addInputSynapse(synapse_HO);
 
         MemoryInputSynapse inputStream = new MemoryInputSynapse();
@@ -95,6 +105,7 @@ public class NeuralNetwork implements NeuralNetListener {
          */
         nnet.addLayer(input, NeuralNet.INPUT_LAYER);
         nnet.addLayer(hidden, NeuralNet.HIDDEN_LAYER);
+        nnet.addLayer(hidden2, NeuralNet.HIDDEN_LAYER);
         nnet.addLayer(output, NeuralNet.OUTPUT_LAYER);
         nnet.setTeacher(trainer);
         this.monitor = nnet.getMonitor();
@@ -165,7 +176,7 @@ public class NeuralNetwork implements NeuralNetListener {
     @Override
     public void errorChanged(NeuralNetEvent e) {
         Monitor mon = (Monitor) e.getSource();
-        if (mon.getCurrentCicle() % 100 == 0)
+        if (mon.getCurrentCicle() % 10 == 0)
             System.out.println(" Epoch:  "
                     + (mon.getTotCicles() - mon.getCurrentCicle()) + "  RMSE: "
                     + mon.getGlobalError());
@@ -228,10 +239,14 @@ public class NeuralNetwork implements NeuralNetListener {
         this.run();
     }
 
+    public void normalization(double[] array){
+
+    }
+
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         NeuralNetwork nnetk = new NeuralNetwork();
         nnetk.run();
-        nnetk.test(new double[][]{{0.526536924504,-0.0178187734801,-6.46338811627,2.28964794955,0,0,0,0,0,0,-0.570212614014,-0.179770518124,-3.03431187421,0.703318829586,0,0,0,0,0,0,2.89354698032,3.88645301968,-1.59506195269,0.221139444695}});
+        nnetk.test(new double[][]{{-5.48568662497,0.368072423242,-1.15305957342,-2.2200270851,-3.99950165719,-2.6872426879,-2.67215503655,-2.43634687987,-3.30022162401,-0.382701016846,2.69671829985,-0.549114942655,-0.111772639531,0.240353709496,2.66967515741,-0.0544246411023,0.0375075389298,0.292966535875,2.82034452305,-0.177125021867,1.50550098949,5.27449901051,1.3407996673,-0.0224406887729}});
        // nnetk.saveNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
        // nnetk.restoreNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
 
