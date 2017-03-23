@@ -154,8 +154,32 @@ public class DatasetGenerator {
           String resultStr = output_print.substring(0,output_print.length()-1) + "\n";
           return resultStr;
     }
-    public static void main(String[] args) throws IOException {
-        DatasetGenerator dataSet = new DatasetGenerator();
+    public ArrayList<Double> outputData(int x, int y){
+        ArrayList<coordinates> outputs = new ArrayList<>();
+        ArrayList<coordinates> neigb = nearNeighbor(x, y);
+        outputs.add(velocity.get(x).get(y+1));
+        for(coordinates n : neigb){
+            outputs.add(deltaDistance(x, y, (int)n.X(), (int)n.Y()));
+        }
+        while(outputs.size() < 6){
+            outputs.add(new coordinates(0, 0));
+        }
+        for(coordinates n : neigb){
+            outputs.add(deltaVelocity(x, y, (int)n.X(), (int)n.Y()));
+        }
+        while(outputs.size() < 11){
+            outputs.add(new coordinates(0, 0));
+        }
+        outputs.add(new coordinates(height - matrix.get(x).get(y).Y(),matrix.get(x).get(y).Y()));
+        outputs.add(velocity.get(x).get(y));
+        ArrayList<Double> outList = new ArrayList<>();
+        for(coordinates out : outputs){
+            outList.add(out.X());
+            outList.add(out.Y());
+        }
+        return outList;
+    }
+    public void toFile(DatasetGenerator dataSet) throws IOException{
         dataSet.calcVelocity();
         File output_file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset-4.csv");
         FileWriter fw=new FileWriter(output_file);
@@ -168,5 +192,29 @@ public class DatasetGenerator {
             }
         }
         bf.close();
+    }
+    public double[][] toNetwork(DatasetGenerator dataSet){
+        double data[][];
+        dataSet.calcVelocity();
+        ArrayList<ArrayList<Double>> DATAList = new ArrayList<>();
+        for(int i = 0 ; i < dataSet.matrix.size() ; i++){
+            for(int j = 0 ; j < dataSet.matrix.get(i).size() ; j++){
+                if(dataSet.available(i, j)){
+                    ArrayList<Double> temp = outputData(i,j);
+                    DATAList.add(temp);
+                }
+            }
+        }
+        data = new double[DATAList.size()][DATAList.get(0).size()];
+        for(int i = 0 ; i < DATAList.size() ; i++){
+            for(int j = 0 ; j < DATAList.get(i).size() ; j++){
+                data[i][j] = DATAList.get(i).get(j);
+            }
+        }
+        return data;
+    }
+    public static void main(String[] args) throws IOException {
+        DatasetGenerator dataSet = new DatasetGenerator();
+        dataSet.toFile(dataSet);
     }
 }
