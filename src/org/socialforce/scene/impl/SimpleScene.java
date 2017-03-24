@@ -83,7 +83,6 @@ public class SimpleScene implements Scene {
             ((Moveable)movable).act();
         }
 
-
         allAgents.removeIf(Agent::isEscaped);
         currentStep++;
         if(this.getApplication() != null) {

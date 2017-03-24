@@ -13,19 +13,13 @@ import org.socialforce.model.*;
  * Created by Whatever on 2016/8/26.
  *
  */
-public class BodyForce implements ForceRegulation{
-    @Override
-    public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
-        if ((source instanceof Agent && target instanceof Agent || source instanceof Wall && target instanceof Agent || source instanceof Door && target instanceof Agent ) &&
-                ((Agent) target).getShape().intersects(source.getShape())){
-            return true;
-        }
-        else
-        return false;
+public class BodyForce extends TypeMatchRegulation<Blockable, Agent>{
+    public BodyForce(Class<Blockable> blockableClass, Class<Agent> agentClass, Model model) {
+        super(blockableClass, agentClass, model);
     }
 
     @Override
-    public Force getForce(InteractiveEntity source, InteractiveEntity target) {
+    public Force getForce(Blockable source, Agent target) {
         double k1,k2,g,bodyForce,slidingForce,distance,argumentX;
         Vector2D t,n,tempVector;
         k1 = 1.2 * 100000;
@@ -34,13 +28,15 @@ public class BodyForce implements ForceRegulation{
         argumentX = 1;
         double temp[] = new double[2];
         if (source instanceof Moveable){
-        tempVector = (Vector2D) ((Moveable)source).getVelocity().clone();}
-        else tempVector = new Vector2D(0,0);
-        tempVector.sub(((Agent)target).getVelocity());
-        n = (Vector2D) ((Circle2D)target.getShape()).directionTo(source.getShape());
+            tempVector = (Vector2D)((Moveable)source).getVelocity().clone();
+        }
+        else
+            tempVector = new Vector2D(0,0);
+        tempVector.sub(target.getVelocity());
+        n = (Vector2D) target.getShape().directionTo(source.getShape());
         n.get(temp);
         t = new Vector2D(-temp[1],temp[0]);
-        distance = ((Circle2D)target.getShape()).distanceTo(source.getShape());
+        distance = (target.getShape().distanceTo(source.getShape()));
         if (distance < 0){g = argumentX;}
         bodyForce =  k1*g*Math.abs(distance);
         slidingForce = k2*g*Math.abs(distance)*t.dot(tempVector);

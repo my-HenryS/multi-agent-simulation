@@ -25,6 +25,7 @@ public class ApplicationLoader extends LinkedList<SocialForceApplication> implem
         add(new ApplicationForCrossFlow());
         add(new ApplicationForAstrophysics());
         add(new ApplicationForNarrowPattern());
+        add(new ApplicationForECStrategy());
         selected = this.getFirst();
     }
 

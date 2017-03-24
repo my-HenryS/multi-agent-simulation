@@ -182,7 +182,7 @@ public class BaseAgent extends Entity implements Agent {
      * @see Model
      */
     public void selfAffect(){
-        this.pushed.add(model.fieldForce(this));
+        this.push(model.fieldForce(this));
     }
 
     /**
