@@ -32,6 +32,7 @@ public class ApplicationForDoorTest extends SimpleApplication implements SocialF
      */
     @Override
     public void start() {
+        setUpScenes();
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext(); ) {
             currentScene = iterator.next();
             PathFinder pathFinder = new AStarPathFinder(currentScene, template);

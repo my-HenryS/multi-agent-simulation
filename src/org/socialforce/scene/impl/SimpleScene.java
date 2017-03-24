@@ -14,6 +14,7 @@ import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.Influential;
 import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.Moveable;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneListener;
 
@@ -77,8 +78,9 @@ public class SimpleScene implements Scene {
                 ((Influential) captor).affect(target);
             }
         }
-        for (Agent agent : allAgents) {
-            agent.act();
+        Iterable<InteractiveEntity> movables = entities.selectClass(Moveable.class);
+        for (InteractiveEntity movable : movables) {
+            ((Moveable)movable).act();
         }
 
 

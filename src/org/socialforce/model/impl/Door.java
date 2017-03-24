@@ -41,8 +41,8 @@ public class Door extends Entity implements Moveable, Influential {
      */
     @Override
     public void affect(Agent target) {
-        Agent agent = (Agent) target;
-        agent.push(model.interactionForce(this, target));
+        target.push(model.interactionForce(this, target));
+        this.push(model.interactionForce(target, this));
     }
 
     /**
@@ -148,7 +148,7 @@ public class Door extends Entity implements Moveable, Influential {
         double angle = rectangle2D.getAngle();
         //System.out.println(Anglerange[0]+","+Anglerange[1]);
         if (angle>=Anglerange[0]&&angle<=Anglerange[1]){
-            rectangle2D.spin(ankor,model.getTimePerStep()*100*pushed*rotationFlag/getMass());
+            rectangle2D.spin(ankor,model.getTimePerStep()*200*pushed*rotationFlag/getMass());
         }
         pushed = 0;
     }

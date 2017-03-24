@@ -37,7 +37,7 @@ public class EntityDrawerInstaller implements DrawerInstaller {
      */
     public EntityDrawerInstaller(Graphics2D device) {
         registerDrawer(new PositionDynamicColorMarkDrawer(device), Star_Planet.class);
-        registerDrawer(new DynamicColorDrawer<Agent>(device), Agent.class);
+        registerDrawer(new HardDynamicColorMarkDrawer(device), Agent.class);
         registerDrawer(new EntityDrawer(device), InteractiveEntity.class);
 
     }
