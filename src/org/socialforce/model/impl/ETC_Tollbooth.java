@@ -26,7 +26,7 @@ public class ETC_Tollbooth extends Entity implements Influential {
 
     @Override
     public InteractiveEntity standardclone() {
-        return new ETC_Tollbooth(shape, interval);
+        return new ETC_Tollbooth(shape.clone(), interval);
     }
 
     @Override
