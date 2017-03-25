@@ -36,6 +36,11 @@ public interface PathFinder {
     void addSituation(Scene scene, Point goal);
 
     /**
+     * 加入新的goal生成新的路径
+     */
+    void addSituation(Point goal);
+
+    /**
      * 清除缓存
      */
     void clearCache();

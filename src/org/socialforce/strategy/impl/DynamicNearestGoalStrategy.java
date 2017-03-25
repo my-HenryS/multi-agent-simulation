@@ -28,8 +28,8 @@ public class DynamicNearestGoalStrategy implements DynamicStrategy {
 
     public DynamicNearestGoalStrategy(Scene scene, PathFinder pathFinder){
         this.scene = scene;
-        findGoals();
         this.pathFinder = pathFinder;
+        findGoals();
     }
 
 
@@ -75,6 +75,7 @@ public class DynamicNearestGoalStrategy implements DynamicStrategy {
         for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
             Monitor monitor = (Monitor) iter.next();
             transits.addLast(monitor.getShape().getReferencePoint());
+            pathFinder.addSituation(transits.getLast());
         }
     }
 }

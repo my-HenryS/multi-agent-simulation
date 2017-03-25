@@ -152,4 +152,6 @@ public class SceneShower implements SceneListener {
         this.timeLabel.setText(String.format("%.3f", scene.getCurrentSteps() * scene.getApplication().getModel().getTimePerStep()));
 
     }
+
+
 }

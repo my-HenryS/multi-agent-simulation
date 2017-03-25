@@ -181,6 +181,11 @@ public class AStarPathFinder implements PathFinder {
         astar(goals.getLast());
     }
 
+    public void addSituation(Point goal){
+        goals.addLast(point_generate(goal.clone()));
+        astar(goals.getLast());
+    }
+
     private void scene_initiate(){
         delta_x = templateScene.getBounds().getStartPoint().getX();
         delta_y = templateScene.getBounds().getStartPoint().getY();

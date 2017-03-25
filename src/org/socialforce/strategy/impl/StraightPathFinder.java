@@ -62,6 +62,10 @@ public class StraightPathFinder implements PathFinder {
         goals.addLast(goal);
     }
 
+    public void addSituation(Point goal){
+        goals.addLast(goal);
+    }
+
     public void clearCache(){
         goals.clear();
     }

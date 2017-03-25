@@ -117,7 +117,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
     }
 
     double scaleRate = 4;
-    double minScaleRate = 4;
+    double minScaleRate = 2;
 
     public double getOffsetX() {
         return offsetX;
