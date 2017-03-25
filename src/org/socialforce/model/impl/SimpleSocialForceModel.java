@@ -85,6 +85,10 @@ public class SimpleSocialForceModel implements Model {
         return EXPECTED_SPEED;
     }
 
+    public void setExpectedSpeed(double Expect) {
+        EXPECTED_SPEED = Expect;
+    }
+
     /**
      * 生成模型的场力--即驱动力。
      *

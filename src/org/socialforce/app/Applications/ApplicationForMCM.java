@@ -4,6 +4,7 @@ import org.socialforce.app.*;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.ETC_Tollbooth;
 import org.socialforce.model.impl.Monitor;
 import org.socialforce.model.impl.Wall;
 import org.socialforce.scene.*;
@@ -138,7 +139,7 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                 });
         ParameterPool parameters = new SimpleParameterPool();
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(xC,top - 1,17,1))));
-        //parameters.addLast(genParameter(new SV_Tollbooth( new ETC_Tollbooth(new Box2D(75,bottom+btm_length/2,29,1), 0.5) )));
+        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(75,bottom+btm_length/2,29,1), 0.5)));
         //parameters.addLast(genParameter(new SV_Tollbooth( new SimpleTollbooth(new Box2D(104,bottom+btm_length/2,12,1), 4) )));
         //parameters.addLast(genParameter(new SV_Tollbooth( new SimpleTollbooth(new Box2D(115.7,bottom+btm_length/2,6,1), 10) )));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+1.75,top-top_length,0.4,0.4))));
