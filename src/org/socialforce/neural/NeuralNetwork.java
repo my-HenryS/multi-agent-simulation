@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import com.opencsv.CSVReader;
-import com.sun.tools.javac.util.ArrayUtils;
 import org.joone.engine.*;
 import org.joone.engine.learning.TeachingSynapse;
 import org.joone.io.MemoryInputSynapse;
