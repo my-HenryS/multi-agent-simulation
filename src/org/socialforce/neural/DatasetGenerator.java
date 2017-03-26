@@ -11,6 +11,7 @@ public class DatasetGenerator {
     private double height = 6.78;
     private ArrayList<LinkedList<coordinates>> matrix;
     private ArrayList<ArrayList<coordinates>> velocity;
+    LinkedList<double[]> outputs = new LinkedList<>();
     private class coordinates {
         private double a;
         private double b;
@@ -25,11 +26,17 @@ public class DatasetGenerator {
             return b;
         }
     }
-    public DatasetGenerator(){
+    private coordinates subCord(coordinates a, coordinates b){
+        return new coordinates(a.X()-b.X(),a.Y()-b.Y());
+    }
+    public DatasetGenerator(){}
+    public void readFile(String directory){
         try{
             matrix = new ArrayList<LinkedList<coordinates>>();
             velocity = new ArrayList<ArrayList<coordinates>>();
-            csv2matrix("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/result4.csv");
+            csv2matrix(directory);
+            calcVelocity();
+            genOutput();
         }
         catch (Exception e){
             e.printStackTrace();
@@ -128,93 +135,61 @@ public class DatasetGenerator {
         coordinates resulttuple = new coordinates(d2.X() - d1.X(), d2.Y() - d1.Y());
         return resulttuple;
     }
-    public String output(int x, int y){
-          ArrayList<coordinates> outputs = new ArrayList<>();
-          String output_print = new String();
-          ArrayList<coordinates> neigb = nearNeighbor(x, y);
-          outputs.add(velocity.get(x).get(y+1));
-          for(coordinates n : neigb){
-              outputs.add(deltaDistance(x, y, (int)n.X(), (int)n.Y()));
-          }
-          while(outputs.size() < 6){
-              outputs.add(new coordinates(0, 0));
-          }
-          for(coordinates n : neigb){
-              outputs.add(deltaVelocity(x, y, (int)n.X(), (int)n.Y()));
-          }
-          while(outputs.size() < 11){
-              outputs.add(new coordinates(0, 0));
-          }
-          outputs.add(new coordinates(height - matrix.get(x).get(y).Y(),matrix.get(x).get(y).Y()));
-          outputs.add(velocity.get(x).get(y));
-          for(coordinates out : outputs){
-              output_print += String.valueOf(out.X()) + ",";
-              output_print += String.valueOf(out.Y()) + ",";
-          }
-          String resultStr = output_print.substring(0,output_print.length()-1) + "\n";
-          return resultStr;
-    }
-    public ArrayList<Double> outputData(int x, int y){
-        ArrayList<coordinates> outputs = new ArrayList<>();
-        ArrayList<coordinates> neigb = nearNeighbor(x, y);
-        outputs.add(velocity.get(x).get(y+1));
-        for(coordinates n : neigb){
-            outputs.add(deltaDistance(x, y, (int)n.X(), (int)n.Y()));
-        }
-        while(outputs.size() < 6){
-            outputs.add(new coordinates(0, 0));
-        }
-        for(coordinates n : neigb){
-            outputs.add(deltaVelocity(x, y, (int)n.X(), (int)n.Y()));
-        }
-        while(outputs.size() < 11){
-            outputs.add(new coordinates(0, 0));
-        }
-        outputs.add(new coordinates(height - matrix.get(x).get(y).Y(),matrix.get(x).get(y).Y()));
-        outputs.add(velocity.get(x).get(y));
-        ArrayList<Double> outList = new ArrayList<>();
-        for(coordinates out : outputs){
-            outList.add(out.X());
-            outList.add(out.Y());
-        }
-        return outList;
-    }
-    public void toFile(DatasetGenerator dataSet) throws IOException{
-        dataSet.calcVelocity();
-        File output_file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset-4.csv");
-        FileWriter fw=new FileWriter(output_file);
-        BufferedWriter bf=new BufferedWriter(fw);
-        for(int i = 0 ; i < dataSet.matrix.size() ; i++){
-            for(int j = 0 ; j < dataSet.matrix.get(i).size() ; j++){
-                if(dataSet.available(i, j)){
-                    bf.write(dataSet.output(i, j));
+    public void genOutput() {
+        for(int i = 0 ; i < matrix.size() ; i++){
+            for(int j = 0 ; j < matrix.get(i).size() ; j++){
+                if(available(i, j)){
+                    LinkedList<coordinates> temp = new LinkedList<>();
+                    ArrayList<coordinates> neigb = nearNeighbor(i, j);
+                    temp.add(subCord(velocity.get(i).get(j + 1), velocity.get(i).get(j)));
+                    for (coordinates n : neigb) {
+                        temp.add(deltaDistance(i, j, (int) n.X(), (int) n.Y()));
+                    }
+                    while (temp.size() < 6) {
+                        temp.add(new coordinates(0, 0));
+                    }
+                      /*
+                      for(coordinates n : neigb){
+                          temp.add(deltaVelocity(i, j, (int)n.X(), (int)n.Y()));
+                      }
+                      while(outputs.size() < 11){
+                          temp.add(new coordinates(0, 0));
+                      }
+                      */
+                    temp.add(new coordinates(height - matrix.get(i).get(j).Y(), matrix.get(i).get(j).Y()));
+                    temp.add(velocity.get(i).get(j));
+                    double [] tempA = new double[temp.size()*2];
+                    int tA = 0;
+                    for(coordinates t:temp){
+                        tempA[tA++] = t.X();
+                        tempA[tA++] = t.Y();
+                    }
+                    outputs.add(tempA);
                 }
             }
+        }
+    }
+
+    public void toFile(String outDirect) throws IOException{
+        File output_file = new File(outDirect);
+        FileWriter fw=new FileWriter(output_file);
+        BufferedWriter bf=new BufferedWriter(fw);
+        for(double [] output:outputs){
+            String s = "";
+            for(double element:output){
+                s += String.valueOf(element)+",";
+            }
+            bf.write(s.substring(0,s.length()-1)+"\n");
         }
         bf.close();
     }
-    public double[][] toNetwork(DatasetGenerator dataSet){
-        double data[][];
-        dataSet.calcVelocity();
-        ArrayList<ArrayList<Double>> DATAList = new ArrayList<>();
-        for(int i = 0 ; i < dataSet.matrix.size() ; i++){
-            for(int j = 0 ; j < dataSet.matrix.get(i).size() ; j++){
-                if(dataSet.available(i, j)){
-                    ArrayList<Double> temp = outputData(i,j);
-                    DATAList.add(temp);
-                }
-            }
-        }
-        data = new double[DATAList.size()][DATAList.get(0).size()];
-        for(int i = 0 ; i < DATAList.size() ; i++){
-            for(int j = 0 ; j < DATAList.get(i).size() ; j++){
-                data[i][j] = DATAList.get(i).get(j);
-            }
-        }
-        return data;
-    }
+
     public static void main(String[] args) throws IOException {
         DatasetGenerator dataSet = new DatasetGenerator();
-        dataSet.toFile(dataSet);
+        String baseDirect = "/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/anylogicdata/";
+        for(int i = 1; i <=12 ;i++){
+            dataSet.readFile(baseDirect+"result"+String.valueOf(i)+".csv");
+        }
+        dataSet.toFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.csv");
     }
 }

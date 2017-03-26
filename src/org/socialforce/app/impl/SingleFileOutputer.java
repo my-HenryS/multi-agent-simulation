@@ -90,7 +90,6 @@ public class SingleFileOutputer implements DataListener<String> {
      * ignored.
      *
      * @throws Throwable the {@code Exception} raised by this method
-     * @jls 12.6 Finalization of Class Instances
      * @see WeakReference
      * @see PhantomReference
      */

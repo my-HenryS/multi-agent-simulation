@@ -14,20 +14,21 @@ import java.util.List;
  */
 public class SimpleSocialForceModel implements Model {
     double TIME_PER_STEP = 0.002;
-    double EXPECTED_SPEED = 6;
+    double EXPECTED_SPEED = 3;
     double REACT_TIME = 0.5;
 
-
+    long psyT = 0, bodyT = 0, flT = 0;
+    int psyN = 0, bodyN = 0, flN = 0;
 
     protected List<ForceRegulation> regulations;
 
     public SimpleSocialForceModel() {
         regulations = new LinkedList<>();
-        regulations.add(new PsychologicalForceRegulation(Influential.class, Agent.class, this));
-        regulations.add(new BodyForce());
+        regulations.add(new PsychologicalForceRegulation(Blockable.class, Agent.class, this));
+        regulations.add(new BodyForce(Blockable.class, Agent.class, this));
         //regulations.add(new WallForce());
-        regulations.add(new DoorForce());
-        regulations.add(new GravityRegulation());
+        regulations.add(new DoorForce(Agent.class, Door.class, this));
+        regulations.add(new GravityRegulation(Star_Planet.class, Star_Planet.class, this));
     }
 
     /**
@@ -40,10 +41,21 @@ public class SimpleSocialForceModel implements Model {
     @Override
     public Force interactionForce(InteractiveEntity source, InteractiveEntity target) {
 //        return zeroForce(); // added calculation implements.
+        long startT = System.currentTimeMillis();
         Force force = this.zeroForce();
         for (ForceRegulation regulation : regulations) {
             if (regulation.hasForce(source, target)) {
                 force.add(regulation.getForce(source, target));
+            }
+            long span = System.currentTimeMillis() - startT;
+            startT = System.currentTimeMillis();
+            if(regulation instanceof PsychologicalForceRegulation){
+                psyT += span;
+                psyN += 1;
+            }
+            else if(regulation instanceof BodyForce){
+                bodyT += span;
+                bodyN += 1;
             }
         }
         return force;
@@ -71,6 +83,10 @@ public class SimpleSocialForceModel implements Model {
 
     public double getExpectedSpeed() {
         return EXPECTED_SPEED;
+    }
+
+    public void setExpectedSpeed(double Expect) {
+        EXPECTED_SPEED = Expect;
     }
 
     /**

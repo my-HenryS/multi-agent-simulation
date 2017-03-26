@@ -69,7 +69,7 @@ public class SV_SingleExit implements SceneValue<ClipperShape> {
         Wall temp;
         if (exit.getBounds().getStartPoint().getX() != exit.getBounds().getEndPoint().getX()
                 && exit.getBounds().getStartPoint().getY() != exit.getBounds().getEndPoint().getY()) {
-            wall = scene.getStaticEntities().selectTop(exit.getReferencePoint());
+            wall = scene.getStaticEntities().selectTopByClass(exit.getReferencePoint(), Wall.class);
             Box2D wallShape = (Box2D) wall.getShape();
             Shape[] boxes =  exit.clip(wallShape);
             for (int j=0;j<boxes.length;j++){

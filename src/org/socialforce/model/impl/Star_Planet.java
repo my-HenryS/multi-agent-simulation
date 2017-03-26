@@ -1,8 +1,10 @@
 package org.socialforce.model.impl;
 
 import org.socialforce.geom.*;
+import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
+import org.socialforce.model.Model;
 
 /**
  * Created by Whatever on 2017/3/2.
@@ -13,6 +15,7 @@ public class Star_Planet extends BaseAgent implements Agent {
      */
     public Star_Planet(DistanceShape shape, Velocity velocity) {
         super(shape,velocity);
+        this.view = new Circle2D(shape.getReferencePoint(),100);
     }
 
     /**
@@ -20,12 +23,24 @@ public class Star_Planet extends BaseAgent implements Agent {
      * 例如，墙会影响agent(反作用，反推)
      * @param target
      */
+    @Override
     public void affect(Agent target) {
-        if(target instanceof Star_Planet){
-            ((Star_Planet) target).push(model.interactionForce(this, target));
+        if (this.equals(target)) {
+            this.selfAffect();
         }
+        else
+            target.push(model.interactionForce(this, target));
     }
 
+    /**
+     * Planet不影响自己
+     * @see Agent
+     * @see Model
+     */
+    @Override
+    public void selfAffect(){
+
+    }
     /**
      * 获取实体的质量。
      * 通常质量位于形状的参考点上（或者是位于质心上）TODO
@@ -40,7 +55,7 @@ public class Star_Planet extends BaseAgent implements Agent {
 
     @Override
     public Star_Planet standardclone() {
-        return new Star_Planet(shape.clone(), velocity.clone());
+        return new Star_Planet(shape.clone(), currVelocity.clone());
     }
 
     /**
@@ -50,14 +65,13 @@ public class Star_Planet extends BaseAgent implements Agent {
      */
     @Override
     public Velocity getVelocity() {
-        return velocity;
+        return currVelocity;
     }
 
     public void setVelocity(Velocity velocity){
-        this.velocity = velocity;
+        this.currVelocity = velocity;
     }
 
-    protected Velocity velocity;
 
     /**
      * 将实体以一定大小的力推向目标点。
@@ -67,7 +81,7 @@ public class Star_Planet extends BaseAgent implements Agent {
     @Override
     public void push(Force force) {
         Velocity dv = force.deltaVelocity(getMass(),getModel().getTimePerStep());
-        velocity.add(dv);
+        currVelocity.add(dv);
     }
 
     /**
@@ -82,13 +96,19 @@ public class Star_Planet extends BaseAgent implements Agent {
         push(force);
     }
 
+    @Override
+    public DistanceShape getView(){
+        return view;
+    }
+
     public void act(){
         Point2D point2D = (Point2D) shape.getReferencePoint();
-        Velocity v= velocity.clone();
+        Velocity v= currVelocity.clone();
         Vector vv = v.deltaDistance(model.getTimePerStep());
         double[] cp = new double[2];
         vv.get(cp);
         point2D.moveBy(cp[0],cp[1]);
         shape.moveTo(point2D);
+        this.view.moveTo(point2D);
     }
 }

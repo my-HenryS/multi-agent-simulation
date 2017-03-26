@@ -54,10 +54,10 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         getDevice().setColor(Color.WHITE);
         for (InteractiveEntity entity : iterable) {
             Drawer drawer = entity.getDrawer();
-            /*if(drawer == null){
-                installer.addDrawerSupport(entity.getShape());
-                drawer = entity.getShape().getDrawer();
-            }*/
+            if(drawer == null){
+                eInstaller.addDrawerSupport(entity);
+                drawer = entity.getDrawer();
+            }
             //drawer.setDevice(this.getDevice());
  //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(26.0,2.5))) ((AwtDrawer2D)drawer).setColor(Color.red);
  //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(33.5,14))) ((AwtDrawer2D)drawer).setColor(Color.green);
@@ -117,7 +117,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
     }
 
     double scaleRate = 4;
-    double minScaleRate = 4;
+    double minScaleRate = 2;
 
     public double getOffsetX() {
         return offsetX;

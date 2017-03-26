@@ -8,8 +8,7 @@ import org.socialforce.model.*;
  * Created by Ledenel on 2016/8/19.
  */
 
-public class PsychologicalForceRegulation extends TypeMatchRegulation<Influential, Agent> {
-
+public class PsychologicalForceRegulation extends TypeMatchRegulation<Blockable, Agent> {
     public static final double A = 3000;
     public static final double B = 0.08;
 
@@ -19,21 +18,11 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Influentia
      * @param agentClass
      * @param agentClass2
      * @param model
-     * return force
      */
-    public PsychologicalForceRegulation(Class<Influential> agentClass, Class<Agent> agentClass2, Model model) {
+    public PsychologicalForceRegulation(Class<Blockable> agentClass, Class<Agent> agentClass2, Model model) {
         super(agentClass, agentClass2, model);
     }
 
-    /**
-     * 判断Captor和Agent是否有心理作用力。
-     * @param source
-     * @param target
-     * @return tree  如果两个agent之间是有心理作用力则返回真。
-     */
-    public boolean hasForce(Influential source, Agent target) {
-        return super.hasForce(source, target) && source instanceof Blockable && target.getShape().intersects(source.getView());
-    }
 
     /**
      *获取源实体和目标实体之间的作用力。
@@ -42,7 +31,7 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Influentia
      * @return force
      */
     @Override
-    public Force getForce(Influential source, Agent target) {
+    public Force getForce(Blockable source, Agent target) {
         Force force = model.zeroForce();
         force.add((target.getShape()).directionTo(source.getShape()));
         double scale = A * Math.exp(- target.getShape().distanceTo(source.getShape()) / B);

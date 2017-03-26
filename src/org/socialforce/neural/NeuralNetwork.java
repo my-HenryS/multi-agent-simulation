@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import com.opencsv.CSVReader;
-import com.sun.tools.javac.util.ArrayUtils;
 import org.joone.engine.*;
 import org.joone.engine.learning.TeachingSynapse;
 import org.joone.io.MemoryInputSynapse;
@@ -26,12 +25,14 @@ public class NeuralNetwork implements NeuralNetListener {
     private int labelIndexM = 2; //2以下
     private CountDownLatch latch = new CountDownLatch(1);
     public double INPUT[][];
-    private int epoch = 100;
+    private int epoch = 500;
 
     public double LABEL[][];
 
 
-    public NeuralNetwork() {
+    public NeuralNetwork() {}
+
+    public void buildUp(){
         try {
             dataReader(directory);
         } catch (IOException e) {
@@ -49,9 +50,9 @@ public class NeuralNetwork implements NeuralNetListener {
         output.setLayerName("output");
 
         // sets their dimensions
-        input.setRows(24);
-        hidden.setRows(50);
-        hidden2.setRows(50);
+        input.setRows(14);
+        hidden.setRows(60);
+        hidden2.setRows(30);
         output.setRows(2);
 
         // Now create the two Synapses
@@ -79,7 +80,7 @@ public class NeuralNetwork implements NeuralNetListener {
 
         // The first two columns contain the input values
         inputStream.setInputArray(INPUT);
-        inputStream.setAdvancedColumnSelector("1-24");
+        inputStream.setAdvancedColumnSelector("1-14");
 
         // set the input data
         input.addInputSynapse(inputStream);
@@ -138,7 +139,7 @@ public class NeuralNetwork implements NeuralNetListener {
             Layer input = nnet.getInputLayer();
             input.removeAllInputs();
             MemoryInputSynapse memInp = new MemoryInputSynapse();
-            memInp.setAdvancedColumnSelector("1-24");
+            memInp.setAdvancedColumnSelector("1-14");
             input.addInputSynapse(memInp);
             memInp.setInputArray(inputArray);
             Layer output = nnet.getOutputLayer();
@@ -245,10 +246,9 @@ public class NeuralNetwork implements NeuralNetListener {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         NeuralNetwork nnetk = new NeuralNetwork();
+        nnetk.buildUp();
         nnetk.run();
-        nnetk.test(new double[][]{{-5.48568662497,0.368072423242,-1.15305957342,-2.2200270851,-3.99950165719,-2.6872426879,-2.67215503655,-2.43634687987,-3.30022162401,-0.382701016846,2.69671829985,-0.549114942655,-0.111772639531,0.240353709496,2.66967515741,-0.0544246411023,0.0375075389298,0.292966535875,2.82034452305,-0.177125021867,1.50550098949,5.27449901051,1.3407996673,-0.0224406887729}});
-       // nnetk.saveNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
-       // nnetk.restoreNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
-
+        nnetk.saveNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
+        nnetk.test(new double[][]{{-0.3108226803562246,0.22107764747239367,-0.48333767228268965,-0.5527790883579144,0.5351123506918398,0.5933331529028574,-0.6666853026309356,-0.507126171105496,-1.268743031896033,0.347820494504417,3.0054071870387182,3.774592812961282,-1.3841486398461154,-0.530412676604409}});
     }
 }

@@ -32,6 +32,7 @@ public class ApplicationForECStrategy extends SimpleApplication implements Socia
      */
     @Override
     public void start() {
+        setUpScenes();
         System.out.println("Application starts!!");
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
             currentScene = iterator.next();

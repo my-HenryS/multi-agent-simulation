@@ -4,6 +4,7 @@ import org.socialforce.app.*;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.ETC_Tollbooth;
 import org.socialforce.model.impl.Monitor;
 import org.socialforce.model.impl.Wall;
 import org.socialforce.scene.*;
@@ -23,7 +24,7 @@ import static org.socialforce.scene.SceneLoader.genParameter;
 public class ApplicationForMCM extends SimpleApplication implements SocialForceApplication {
     DistanceShape template = new Circle2D(new Point2D(0,0), 2/2);
     public ApplicationForMCM(){
-        setUpScenes(0,0);
+
     }
     /**
      * start the application immediately.
@@ -33,8 +34,8 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
     public void start() {
         System.out.println("Application starts!!");
         int flag = 0;
-        int []alpha = {100};
-        int []beta =  {70};
+        int []alpha = {80};
+        int []beta =  {80};
         for(int i = 0; i < 1;i++){
             for(int a = 3; a<=12; a+= 1){
                 setUpScenes(alpha[i],beta[i]);
@@ -45,9 +46,9 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                     double volume = 0, scenery_num = 0;
                     double speed = 0;
                     int size = 0;
-                    SV_RandomAgentGenerator agentGenerator = new SV_RandomTimeAgentGenerator(a,new Box2D(75,4.5,46.5,10), template, new Velocity2D(0,13));
+                    SV_RandomAgentGenerator agentGenerator = new SV_RandomTimeAgentGenerator(a,new Box2D(75,6,46.5,10), template, new Velocity2D(0,13));
                     agentGenerator.apply(currentScene);
-                    PathFinder pathFinder = new AStarPathFinder(currentScene, template);
+                    PathFinder pathFinder = new AStarPathFinder(currentScene, template, 2);
                     strategy = new DynamicNearestGoalStrategy(currentScene, pathFinder);
                     strategy.pathDecision();
                     System.out.println("flow now "+a);
@@ -138,9 +139,9 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                 });
         ParameterPool parameters = new SimpleParameterPool();
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(xC,top - 1,17,1))));
-        //parameters.addLast(genParameter(new SV_Tollbooth( new ETC_Tollbooth(new Box2D(75,bottom+btm_length/2,29,1), 0.5) )));
-        //parameters.addLast(genParameter(new SV_Tollbooth( new SimpleTollbooth(new Box2D(104,bottom+btm_length/2,12,1), 4) )));
-        //parameters.addLast(genParameter(new SV_Tollbooth( new SimpleTollbooth(new Box2D(115.7,bottom+btm_length/2,6,1), 10) )));
+        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(75,bottom+btm_length/2,29,1), 0.5)));
+        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(104,bottom+btm_length/2,12,1), 4) ));
+        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(115.7,bottom+btm_length/2,6,1), 10) ));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+1.75,top-top_length,0.4,0.4))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+5.55,top-top_length,0.4,0.4))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+9.3,top-top_length,0.4,0.4))));

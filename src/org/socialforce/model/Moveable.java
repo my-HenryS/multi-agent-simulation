@@ -11,7 +11,7 @@ import org.socialforce.geom.Velocity;
  * @see Agent
  * Created by Ledenel on 2016/7/30.
  */
-public interface Moveable {
+public interface Moveable extends InteractiveEntity {
 
     /**
      * 使用determineNext()方法计算出的结果。

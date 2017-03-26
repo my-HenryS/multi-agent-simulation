@@ -5,10 +5,7 @@ import org.junit.Test;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Velocity2D;
-import org.socialforce.model.Agent;
-import org.socialforce.model.Influential;
-import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.Model;
+import org.socialforce.model.*;
 
 import static org.junit.Assert.*;
 
@@ -26,7 +23,7 @@ public class PsychologicalForceRegulationTest {
     PsychologicalForceRegulation p;
     @Before
     public void setUp() throws Exception {
-        p = new PsychologicalForceRegulation(Influential.class,Agent.class,model);
+        p = new PsychologicalForceRegulation(Blockable.class,Agent.class, model);
         initPoint = new Point2D(3,4);
         initPoint2 = new Point2D(3,4);    //TODO 修正上界方向问题
         circle.moveTo(initPoint);

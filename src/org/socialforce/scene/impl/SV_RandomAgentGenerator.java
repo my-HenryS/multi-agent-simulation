@@ -110,6 +110,7 @@ public class SV_RandomAgentGenerator implements SceneValue<SV_RandomAgentGenerat
                         break;
                     }
                 }
+
                 if(is_able_flag == 0){
                     EntityPool all_blocks = scene.getStaticEntities();
                     for (InteractiveEntity entity : all_blocks) {
