@@ -31,8 +31,7 @@ public class EntityDrawer<EntityType extends InteractiveEntity> extends AwtDrawe
         org.socialforce.geom.Shape shape = pattern.getShape();
         Drawer drawer = shape.getDrawer();
         if(drawer != null){
-            if(!(pattern instanceof Monitor))
-                colorfulDraw(shape);
+            colorfulDraw(shape);
         }
         else {
             defaultShapeInstaller.addDrawerSupport(shape);
