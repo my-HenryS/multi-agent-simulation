@@ -62,7 +62,7 @@ public class SV_Star implements SceneValue<Star_Planet> {
      */
     @Override
     public void apply(Scene scene) {
-        planet = new Star_Planet(shape, velocity);
+        planet = new Star_Planet(shape.clone(), velocity.clone());
         planet.setName("Star");
         scene.addAgent(planet);
         planet.setScene(scene);

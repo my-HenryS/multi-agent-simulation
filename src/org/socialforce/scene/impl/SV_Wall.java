@@ -42,7 +42,7 @@ public class SV_Wall implements SceneValue<Shape[]> {
     @Override
     public void apply(Scene scene) {
         for (Shape shape : wallshape) {
-            Wall temp = new Wall(shape);
+            Wall temp = new Wall(shape.clone());
             temp.setModel(new SimpleSocialForceModel());
             scene.getStaticEntities().add(temp);
         }

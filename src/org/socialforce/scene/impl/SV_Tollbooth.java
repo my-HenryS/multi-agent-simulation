@@ -39,7 +39,7 @@ public class SV_Tollbooth implements SceneValue<Shape> {
 
     @Override
     public void apply(Scene scene) {
-        ETC_Tollbooth tollbooth = new ETC_Tollbooth(shape, interval);
+        ETC_Tollbooth tollbooth = new ETC_Tollbooth(shape.clone(), interval);
         scene.getStaticEntities().add(tollbooth);
         tollbooth.setScene(scene);
         tollbooth.setModel(new SimpleSocialForceModel());
