@@ -27,6 +27,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
         formater.setGroupingSize(0);
         formater.setRoundingMode(RoundingMode.FLOOR);
     }
+
     public void readFile(String directory){
         try{
             matrix = new ArrayList<LinkedList<Coordinates>>();
@@ -38,6 +39,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
             e.printStackTrace();
         }
     }
+
     public void csv2matrix(String directory)throws IOException {
         String axis[];
         LinkedList<Coordinates> tempR = new LinkedList<Coordinates>();
@@ -60,6 +62,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
             matrix.add(tempR);
         }
     }
+
     public void calcVelocity(){
         for(LinkedList<Coordinates> tempR : matrix){
             ArrayList<Coordinates> tempV = new ArrayList<>();
@@ -75,6 +78,11 @@ public abstract class ForceGenerator implements DataSetGenerator {
             velocity.add(tempV);
         }
     }
+
+    public boolean available(int i, int j){
+        return matrix.get(i).get(j) != null && !velocity.get(i).get(j).isZero() && j+1 < velocity.get(i).size() && !velocity.get(i).get(j+1).isZero() ;
+    }
+
     public void toFile(String outDirect){
         File output_file = new File(outDirect);
         FileWriter fw= null;
@@ -95,6 +103,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
             e.printStackTrace();
         }
     }
+
     public double[][] toMatrix() {
         double[][] matrix = new double[outputs.size()][outputs.get(0).length];
         for(int i = 0; i < outputs.size(); i++){

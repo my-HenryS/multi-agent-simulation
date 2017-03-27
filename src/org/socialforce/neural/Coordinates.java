@@ -16,4 +16,6 @@ public class Coordinates {
     public double Y(){
         return b;
     }
+
+    public boolean isZero(){ return a == 0 && b == 0; }
 }

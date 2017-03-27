@@ -55,7 +55,7 @@ public class WallForceGenerator extends ForceGenerator{
         dY = pathFinder.get_deltay();
     }
 
-    public int[][] getSurrounding(Coordinates c){
+    public double[] getSurrounding(Coordinates c){
         int x = (int)((c.X() - dX)/min_div), y = (int)((c.Y() - dY)/min_div);  //计算坐标c在map中的坐标
         int range = (int)(this.range / min_div);   //计算map中的真实范围
         //计算影响范围
@@ -63,11 +63,11 @@ public class WallForceGenerator extends ForceGenerator{
         int rightbound = x + range <=  map.length -1 ? x + range : map.length - 1;
         int upbound = y + range <= map[0].length -1 ? y + range : map[0].length - 1;
         int btmbound = y - range >= 0 ? y - range : 0;
-        int[][] surroundings = new int[rightbound - leftbound + 1][upbound - btmbound + 1];
+        double[] surroundings = new double[(rightbound - leftbound + 1)*(upbound - btmbound + 1)];
 
         for(int i = leftbound; i <= rightbound; i++){
             for(int j = btmbound; j <= upbound; j++){
-                surroundings[i - leftbound][j - btmbound] = map[i][j];
+                surroundings[(i - leftbound)*(upbound - btmbound + 1) + (j - btmbound)] = map[i][j];
             }
         }
         return surroundings;
@@ -76,6 +76,14 @@ public class WallForceGenerator extends ForceGenerator{
     @Override
     public void genOutput() {
         setMap();
+        for (int i = 0 ; i < matrix.size() ; i++) {
+            for (int j = 0; j < matrix.get(i).size(); j++) {
+                if (available(i, j)) {
+                    double[] surroundings = getSurrounding(matrix.get(i).get(j));
+                    outputs.add(surroundings);
+                }
+            }
+        }
 
     }
 }

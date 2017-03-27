@@ -11,10 +11,6 @@ public class PsyForceGenerator extends ForceGenerator{
     private double height = 6.78;  //场景宽
 
 
-    public boolean available(int i, int j){
-        return (matrix.get(i).get(j) != null && velocity.get(i).get(j).X() != 0 && velocity.get(i).get(j).Y() != 0 && velocity.get(i).get(j+1).X() != 0 && velocity.get(i).get(j+1).Y() != 0 && j+1 < velocity.get(i).size());
-    }
-
     /*
     此处x,y为人在matrix中的坐标 而非位置坐标 TODO 待重构
      */

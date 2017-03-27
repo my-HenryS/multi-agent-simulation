@@ -19,8 +19,8 @@ public class WallForceGeneratorTest {
     }
 
     @Test
-    public void setMap() throws Exception {
-
+    public void genOutput() throws Exception {
+        generator.genOutput();
     }
 
 }
