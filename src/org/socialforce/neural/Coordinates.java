@@ -3,10 +3,10 @@ package org.socialforce.neural;
 /**
  * Created by micha on 2017/3/27.
  */
-public class coordinates {
+public class Coordinates {
     private double a;
     private double b;
-    public coordinates(double aIn, double bIn) {
+    public Coordinates(double aIn, double bIn) {
         a = aIn;
         b = bIn;
     }
