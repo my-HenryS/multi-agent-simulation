@@ -1,4 +1,4 @@
-package org.socialforce.neural;
+package org.socialforce.neural.impl;
 
 import java.io.*;
 import java.util.LinkedList;

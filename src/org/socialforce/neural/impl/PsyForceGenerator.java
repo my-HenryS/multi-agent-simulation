@@ -1,17 +1,15 @@
-package org.socialforce.neural;
+package org.socialforce.neural.impl;
+
+import org.socialforce.neural.Coordinates;
+import org.socialforce.neural.DataSetGenerator;
 
 import java.io.*;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.*;
 
-public class PsyForceGenerator extends ForceGenerator {
+public class PsyForceGenerator extends ForceGenerator{
     private int nearN = 5; //周围人数
     private double height = 6.78;  //场景宽
 
-    public PsyForceGenerator(){
-        super();
-    }
 
     public boolean available(int i, int j){
         return (matrix.get(i).get(j) != null && velocity.get(i).get(j).X() != 0 && velocity.get(i).get(j).Y() != 0 && velocity.get(i).get(j+1).X() != 0 && velocity.get(i).get(j+1).Y() != 0 && j+1 < velocity.get(i).size());
@@ -111,7 +109,7 @@ public class PsyForceGenerator extends ForceGenerator {
     }
 
     public static void main(String[] args) throws IOException {
-        PsyForceGenerator dataSet = new PsyForceGenerator();
+        DataSetGenerator dataSet = new PsyForceGenerator();
         String baseDirect = "/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/anylogicdata/";
         for(int i = 1; i <=12 ;i++){
             dataSet.readFile(baseDirect+"result"+String.valueOf(i)+".csv");

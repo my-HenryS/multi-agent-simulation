@@ -11,6 +11,11 @@ public interface DataSetGenerator {
     void readFile(String directory);
 
     /**
+     * 生成输出
+     */
+    void genOutput();
+
+    /**
      * 指定输出结果的文件
      * @param directory
      */

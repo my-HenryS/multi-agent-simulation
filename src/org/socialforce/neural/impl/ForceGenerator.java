@@ -1,6 +1,8 @@
-package org.socialforce.neural;
+package org.socialforce.neural.impl;
 
 import com.opencsv.CSVReader;
+import org.socialforce.neural.Coordinates;
+import org.socialforce.neural.DataSetGenerator;
 
 import java.io.*;
 import java.math.RoundingMode;
@@ -12,7 +14,7 @@ import java.util.List;
 /**
  * Created by micha on 2017/3/27.
  */
-public abstract class ForceGenerator implements DataSetGenerator{
+public abstract class ForceGenerator implements DataSetGenerator {
     protected double timestep = 0.5;  //步长、决定：位置差-速度关系、速度差-加速度关系
     protected int intercept = 4; //小数位数保留
     DecimalFormat formater = new DecimalFormat();
