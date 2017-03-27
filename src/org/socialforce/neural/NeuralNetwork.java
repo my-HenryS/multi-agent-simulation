@@ -237,7 +237,6 @@ public class NeuralNetwork implements NeuralNetListener {
         NeuralNetLoader loader = new NeuralNetLoader(fileName);
         nnet = loader.getNeuralNet();
         nnet.getMonitor().addNeuralNetListener(this);
-        this.run();
     }
 
     public void normalization(double[] array){
@@ -246,9 +245,10 @@ public class NeuralNetwork implements NeuralNetListener {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         NeuralNetwork nnetk = new NeuralNetwork();
-        nnetk.buildUp();
-        nnetk.run();
-        nnetk.saveNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
-        nnetk.test(new double[][]{{-0.3108226803562246,0.22107764747239367,-0.48333767228268965,-0.5527790883579144,0.5351123506918398,0.5933331529028574,-0.6666853026309356,-0.507126171105496,-1.268743031896033,0.347820494504417,3.0054071870387182,3.774592812961282,-1.3841486398461154,-0.530412676604409}});
+        //nnetk.buildUp();
+        //nnetk.run();
+        //nnetk.saveNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
+        nnetk.restoreNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
+        nnetk.test(new double[][]{{-0.32,0.0303,-0.1995,-0.6013,-0.9429,0.4964,-0.9341,-0.5288,1.1617,0.5186,2.7596,4.0203,1.2076,0.0493}});
     }
 }
