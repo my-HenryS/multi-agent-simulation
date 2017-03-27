@@ -147,7 +147,10 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+9.3,top-top_length,0.4,0.4))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+13.2,top-top_length,0.4,0.4))));
         loader.readParameterSet(parameters);
-        scenes = loader.readScene(this);
+        scenes = loader.readScene();
+        for(Scene scene:scenes){
+            scene.setApplication(this);
+        }
     }
 
 

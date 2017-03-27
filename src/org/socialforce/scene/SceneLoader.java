@@ -15,7 +15,7 @@ import java.util.LinkedList;
 public interface SceneLoader {
     void setSource(InputStream stream);
     void setSource(File file);
-    LinkedList<Scene> readScene(SocialForceApplication application);
+    LinkedList<Scene> readScene();
     ParameterPool readParameterSet(ParameterPool parameterSet);
     ParameterPool readValueSet(ValueSet valueSet);
     Scene staticScene();

@@ -333,11 +333,30 @@ public class AStarPathFinder implements PathFinder {
         this.delta_y = y;
     }
 
+    public double get_deltax(){
+        return delta_x;
+    }
+
+    public double get_deltay(){
+        return delta_y;
+    }
+
+    public double get_minDiv(){
+        return min_div;
+    }
+
     public Point[] getGoals(){
         Point [] points = new Point[goals.size()];
         for(int i = 0; i < points.length; i++){
             points[i] = goals.get(i).clone().scaleBy(min_div).moveBy(delta_x, delta_y);;
         }
         return points;
+    }
+
+    /**
+     * 获取场景地图
+     */
+    public int[][] getMap(){
+        return map;
     }
 }

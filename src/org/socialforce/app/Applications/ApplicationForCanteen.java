@@ -188,7 +188,10 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
         }
         */
         loader.readParameterSet(parameters);
-        scenes = loader.readScene(this);
+        scenes = loader.readScene();
+        for(Scene scene:scenes){
+            scene.setApplication(this);
+        }
     }
 
 
