@@ -50,7 +50,7 @@ public class SV_AgentGenerator implements SceneValue<SV_AgentGenerator.AgentGene
         }
         public void setModel(Model model){this.model = model;}
     }
-    private int priority;
+    private int priority = -1;
     protected AgentGenerator agentGenerator;
     public SV_AgentGenerator(double X_distance, double Y_distance, double Z_distance, Shape Area, DistanceShape template, Velocity velocity){
         agentGenerator = new AgentGenerator(X_distance,Y_distance,Z_distance,Area);

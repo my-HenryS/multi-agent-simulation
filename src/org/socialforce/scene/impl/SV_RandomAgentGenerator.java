@@ -49,7 +49,7 @@ public class SV_RandomAgentGenerator implements SceneValue<SV_RandomAgentGenerat
     }
 
 
-    private int priority;
+    private int priority = -1;
     protected AgentGenerator agentGenerator;
 
     public SV_RandomAgentGenerator(int agent_num, Shape Area, DistanceShape template, Velocity velocity){

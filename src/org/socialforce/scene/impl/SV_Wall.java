@@ -59,7 +59,7 @@ public class SV_Wall implements SceneValue<Shape[]> {
         return priority;
     }
 
-    protected int priority;
+    protected int priority = 3;
     @Override
     public void setPriority(int priority) {
         this.priority = priority;
