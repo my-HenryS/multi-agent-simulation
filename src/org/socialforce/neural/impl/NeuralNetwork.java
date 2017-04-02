@@ -21,11 +21,11 @@ public class NeuralNetwork implements NeuralNetListener {
     private Monitor monitor;
     private double []lMax ,lMin;
     private NeuralNet nnet;
-    private String directory = "/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.csv";
+    private String directory = "/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/Scene5Set2.csv";
     private int labelIndexM = 2; //2以下
     private CountDownLatch latch = new CountDownLatch(1);
     public double INPUT[][];
-    private int epoch = 500;
+    private int epoch = 1000;
 
     public double LABEL[][];
 
@@ -50,7 +50,7 @@ public class NeuralNetwork implements NeuralNetListener {
         output.setLayerName("output");
 
         // sets their dimensions
-        input.setRows(14);
+        input.setRows(13);
         hidden.setRows(60);
         hidden2.setRows(30);
         output.setRows(2);
@@ -80,7 +80,7 @@ public class NeuralNetwork implements NeuralNetListener {
 
         // The first two columns contain the input values
         inputStream.setInputArray(INPUT);
-        inputStream.setAdvancedColumnSelector("1-14");
+        inputStream.setAdvancedColumnSelector("1-13");
 
         // set the input data
         input.addInputSynapse(inputStream);
@@ -110,7 +110,7 @@ public class NeuralNetwork implements NeuralNetListener {
         nnet.addLayer(output, NeuralNet.OUTPUT_LAYER);
         nnet.setTeacher(trainer);
         this.monitor = nnet.getMonitor();
-        monitor.setTrainingPatterns(INPUT.length);    // # of rows (patterns) contained in the input file
+        monitor.setTrainingPatterns(2000);    // # of rows (patterns) contained in the input file
         monitor.setTotCicles(epoch);    // How many times the net must be trained on the input patterns
         monitor.setLearningRate(0.7);
         monitor.setMomentum(0.3);
@@ -139,7 +139,7 @@ public class NeuralNetwork implements NeuralNetListener {
             Layer input = nnet.getInputLayer();
             input.removeAllInputs();
             MemoryInputSynapse memInp = new MemoryInputSynapse();
-            memInp.setAdvancedColumnSelector("1-14");
+            memInp.setAdvancedColumnSelector("1-13");
             input.addInputSynapse(memInp);
             memInp.setInputArray(inputArray);
             Layer output = nnet.getOutputLayer();
@@ -249,6 +249,6 @@ public class NeuralNetwork implements NeuralNetListener {
         //nnetk.run();
         //nnetk.saveNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
         nnetk.restoreNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
-        nnetk.test(new double[][]{{-0.32,0.0303,-0.1995,-0.6013,-0.9429,0.4964,-0.9341,-0.5288,1.1617,0.5186,2.7596,4.0203,1.2076,0.0493}});
+        nnetk.test(new double[][]{{0.3944,0.2323,0.2513,-0.1553,3,0,3,3,3,3,0,6,3}});
     }
 }

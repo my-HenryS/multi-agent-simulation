@@ -13,6 +13,7 @@ import org.socialforce.scene.ParameterPool;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
 import org.socialforce.scene.impl.*;
+import org.socialforce.strategy.Path;
 import org.socialforce.strategy.impl.AStarPathFinder;
 
 import java.io.InputStream;
@@ -25,10 +26,21 @@ import static org.socialforce.scene.SceneLoader.genParameter;
  */
 public class WallForceGenerator extends ForceGenerator{
     DistanceShape template = new Circle2D(new Point2D(0,0),0.486/2);
+    AStarPathFinder pathFinder;
     LinkedList<Scene>scenes = new LinkedList<>();
     int[][] map;
     double min_div, dX, dY;
-    int range = 2; //前后左右各2m
+    double range = 0.5; //前后左右各2m
+    Path path; //A星场
+
+    public WallForceGenerator(double timestep, int intercept, double min_div) {
+        super(timestep, intercept);
+        this.min_div = min_div;
+    }
+
+    public Coordinates calAcc(Coordinates a, Coordinates b){
+        return new Coordinates((a.X()-b.X())/timestep,(a.Y()-b.Y())/timestep);
+    }
 
     /**
      * 门前有柱子
@@ -46,11 +58,12 @@ public class WallForceGenerator extends ForceGenerator{
         parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*10,new Box2D(0,-10,10,5),template)));
         parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(4,-4,2,2)}),new SV_Wall(new Shape[]{new Circle2D(new Point2D(5,-3),1)})));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
         loader.readParameterSet(parameters);
         scenes.addAll(loader.readScene());
-        AStarPathFinder pathFinder = new AStarPathFinder(scenes.get(0),new Circle2D(new Point2D(0,0),0.001));
+        pathFinder = new AStarPathFinder(scenes.get(0),new Circle2D(new Point2D(0,0),0.001),min_div);
+        path = pathFinder.plan_for(new Point2D(5,10.5));
         map = pathFinder.getMap();
-        min_div = pathFinder.get_minDiv();
         dX = pathFinder.get_deltax();
         dY = pathFinder.get_deltay();
     }

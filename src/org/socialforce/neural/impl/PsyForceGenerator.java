@@ -10,6 +10,10 @@ public class PsyForceGenerator extends ForceGenerator{
     private int nearN = 5; //周围人数
     private double height = 6.78;  //场景宽
 
+    public PsyForceGenerator(double timestep, int intercept) {
+        super(timestep, intercept);
+    }
+
 
     /*
     此处x,y为人在matrix中的坐标 而非位置坐标 TODO 待重构
@@ -68,6 +72,7 @@ public class PsyForceGenerator extends ForceGenerator{
         Coordinates resulttuple = new Coordinates(d2.X() - d1.X(), d2.Y() - d1.Y());
         return resulttuple;
     }
+
     public void genOutput() {
         for(int i = 0 ; i < matrix.size() ; i++){
             for(int j = 0 ; j < matrix.get(i).size() ; j++){
@@ -105,10 +110,10 @@ public class PsyForceGenerator extends ForceGenerator{
     }
 
     public static void main(String[] args) throws IOException {
-        DataSetGenerator dataSet = new PsyForceGenerator();
+        DataSetGenerator dataSet = new PsyForceGenerator(0.5,4);
         String baseDirect = "/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/anylogicdata/";
         for(int i = 1; i <=12 ;i++){
-            dataSet.readFile(baseDirect+"result"+String.valueOf(i)+".csv");
+            dataSet.readFile(baseDirect+"result"+String.valueOf(i)+".csv", 1);
         }
         dataSet.genOutput();
         dataSet.toFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.csv");

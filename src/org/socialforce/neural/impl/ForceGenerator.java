@@ -15,24 +15,23 @@ import java.util.List;
  * Created by micha on 2017/3/27.
  */
 public abstract class ForceGenerator implements DataSetGenerator {
-    protected double timestep = 0.5;  //步长、决定：位置差-速度关系、速度差-加速度关系
-    protected int intercept = 4; //小数位数保留
+    protected double timestep;  //步长、决定：位置差-速度关系、速度差-加速度关系
     DecimalFormat formater = new DecimalFormat();
-    protected ArrayList<LinkedList<Coordinates>> matrix;
-    protected ArrayList<ArrayList<Coordinates>> velocity;
+    protected ArrayList<LinkedList<Coordinates>> matrix = new ArrayList<LinkedList<Coordinates>>();
+    protected ArrayList<ArrayList<Coordinates>> velocity = new ArrayList<ArrayList<Coordinates>>();
     LinkedList<double[]> outputs = new LinkedList<>();
 
-    public ForceGenerator(){
+
+    public ForceGenerator(double timestep, int intercept){
+        this.timestep = timestep;
         formater.setMaximumFractionDigits(intercept);
         formater.setGroupingSize(0);
         formater.setRoundingMode(RoundingMode.FLOOR);
     }
 
-    public void readFile(String directory){
+    public void readFile(String directory, int timeInterval){
         try{
-            matrix = new ArrayList<LinkedList<Coordinates>>();
-            velocity = new ArrayList<ArrayList<Coordinates>>();
-            csv2matrix(directory);
+            csv2matrix(directory, timeInterval);
             calcVelocity();
         }
         catch (Exception e){
@@ -40,7 +39,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
         }
     }
 
-    public void csv2matrix(String directory)throws IOException {
+    public void csv2matrix(String directory, int timeInterval)throws IOException {
         String axis[];
         LinkedList<Coordinates> tempR = new LinkedList<Coordinates>();
         File file = new File(directory);
@@ -50,6 +49,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
         for(String[] line : lines){
             tempR = new LinkedList<>();
             for(int i = 0 ; i < line.length ; i++){
+                if(i % timeInterval != 0) continue;
                 if(line[i] != null && line[i].length() > 0){
                     String templine = line[i].substring(1,line[i].length()-1);
                     axis = templine.split(",");
@@ -91,6 +91,31 @@ public abstract class ForceGenerator implements DataSetGenerator {
             fw = new FileWriter(output_file);
             BufferedWriter bf=new BufferedWriter(fw);
             for(double [] output:outputs){
+                String s = "";
+                for(double element:output){
+                    s += String.valueOf(formater.format(element))+",";
+                }
+                bf.write(s.substring(0,s.length()-1)+"\n");
+            }
+            bf.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void toFile(String outDirect, int interval){
+        File output_file = new File(outDirect);
+        FileWriter fw= null;
+        int count = 0;
+        try {
+
+            fw = new FileWriter(output_file);
+            BufferedWriter bf=new BufferedWriter(fw);
+            for(double [] output:outputs){
+                count ++;
+                if(count % interval != 0)
+                    continue;
                 String s = "";
                 for(double element:output){
                     s += String.valueOf(formater.format(element))+",";
