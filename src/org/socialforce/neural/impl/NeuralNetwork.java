@@ -25,7 +25,8 @@ public class NeuralNetwork implements NeuralNetListener {
     private int labelIndexM = 2; //2以下
     private CountDownLatch latch = new CountDownLatch(1);
     public double INPUT[][];
-    private int epoch = 1000;
+    private int epoch = 500;
+    int inputNum = 5229;
 
     public double LABEL[][];
 
@@ -110,7 +111,7 @@ public class NeuralNetwork implements NeuralNetListener {
         nnet.addLayer(output, NeuralNet.OUTPUT_LAYER);
         nnet.setTeacher(trainer);
         this.monitor = nnet.getMonitor();
-        monitor.setTrainingPatterns(2000);    // # of rows (patterns) contained in the input file
+        monitor.setTrainingPatterns(inputNum);    // # of rows (patterns) contained in the input file
         monitor.setTotCicles(epoch);    // How many times the net must be trained on the input patterns
         monitor.setLearningRate(0.7);
         monitor.setMomentum(0.3);
@@ -249,6 +250,8 @@ public class NeuralNetwork implements NeuralNetListener {
         //nnetk.run();
         //nnetk.saveNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
         nnetk.restoreNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
-        nnetk.test(new double[][]{{0.3944,0.2323,0.2513,-0.1553,3,0,3,3,3,3,0,6,3}});
+        nnetk.test(new double[][]{{
+                1,0,0.0,0,0,0,0,0,0,0,0,3,0
+        }});
     }
 }

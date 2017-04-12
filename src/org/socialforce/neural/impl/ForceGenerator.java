@@ -30,6 +30,8 @@ public abstract class ForceGenerator implements DataSetGenerator {
     }
 
     public void readFile(String directory, int timeInterval){
+        matrix = new ArrayList<LinkedList<Coordinates>>();
+        velocity = new ArrayList<ArrayList<Coordinates>>();
         try{
             csv2matrix(directory, timeInterval);
             calcVelocity();
@@ -138,5 +140,11 @@ public abstract class ForceGenerator implements DataSetGenerator {
             }
         }
         return matrix;
+    }
+
+    public void addOutput(double[] output, int times){
+        for(; times > 0; times --){
+            outputs.add(output);
+        }
     }
 }

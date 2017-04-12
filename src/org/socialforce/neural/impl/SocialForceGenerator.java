@@ -4,6 +4,7 @@ import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.impl.PsychologicalForceRegulation;
 import org.socialforce.neural.Coordinates;
+import org.socialforce.scene.Scene;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.impl.AStarPath;
 
@@ -16,7 +17,7 @@ import java.util.LinkedList;
 public class SocialForceGenerator extends WallForceGenerator{
     LinkedList<double[][]> W = new LinkedList<>(); //权值矩阵
     double p = 3; //行人的影响系数
-    double w = 4; //墙的影响系数
+    double w = 1; //墙的影响系数
     double expectV = 6; //期望速度
 
     public SocialForceGenerator(double timestep, int intercept, double min_div) {
@@ -48,7 +49,8 @@ public class SocialForceGenerator extends WallForceGenerator{
 
     private Coordinates getNext(Coordinates c){
         Point nextStep = path.nextStep(new Point2D(c.X(),c.Y()));
-        return new Coordinates(nextStep.getX() - c.X(), nextStep.getY() - c.Y());
+        nextStep.moveBy(-c.X(), -c.Y()).scaleBy(1/nextStep.length());
+        return new Coordinates(nextStep.getX(), nextStep.getY());
     }
 
     /**
@@ -70,12 +72,13 @@ public class SocialForceGenerator extends WallForceGenerator{
                     surroundings[(i - (x - range))*(range * 2 + 1) + (j - (y - range))] = map[i][j];
             }
         }
+        surroundings[surroundings.length/2] -= p; //抛去行人本身
         return surroundings;
     }
 
     @Override
-    public void genOutput() {
-        setMap();
+    public void genOutput(Scene scene) {
+        setMap(scene);
         genW();
         for (int i = 0 ; i < matrix.size() ; i++) {
             for (int j = 0; j < matrix.get(i).size(); j++) {

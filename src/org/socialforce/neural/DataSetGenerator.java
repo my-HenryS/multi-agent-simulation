@@ -11,11 +11,6 @@ public interface DataSetGenerator {
     void readFile(String directory, int timeInterval);
 
     /**
-     * 生成输出
-     */
-    void genOutput();
-
-    /**
      * 指定输出结果的文件
      * @param directory
      */
@@ -31,4 +26,11 @@ public interface DataSetGenerator {
      * 按矩阵输出
      */
     double[][] toMatrix();
+
+    /**
+     * 增加输出
+     * @param output 输出值
+     * @param times 重复采样次数
+     */
+    void addOutput(double[] output, int times);
 }

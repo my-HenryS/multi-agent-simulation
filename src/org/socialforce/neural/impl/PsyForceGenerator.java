@@ -110,7 +110,7 @@ public class PsyForceGenerator extends ForceGenerator{
     }
 
     public static void main(String[] args) throws IOException {
-        DataSetGenerator dataSet = new PsyForceGenerator(0.5,4);
+        PsyForceGenerator dataSet = new PsyForceGenerator(0.5,4);
         String baseDirect = "/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/anylogicdata/";
         for(int i = 1; i <=12 ;i++){
             dataSet.readFile(baseDirect+"result"+String.valueOf(i)+".csv", 1);
