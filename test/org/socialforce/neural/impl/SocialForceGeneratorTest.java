@@ -48,6 +48,21 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
         scene = loader.readScene().getFirst();
     }
 
+    public void setMap3(){
+        SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
+                new Wall[]{
+                        new Wall(new Box2D(0, 0, 1, 16)),
+                        new Wall(new Box2D(0, 16, 16, 1)),
+                        new Wall(new Box2D(15, 17, 1, 12)),
+                        new Wall(new Box2D(5, -5, 1, 17)),
+                        new Wall(new Box2D(6, 11, 15, 1)),
+                        new Wall(new Box2D(20, 12, 1, 17)),
+                });
+        ParameterPool parameters = new SimpleParameterPool();
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(18, 32, 0.1, 0.1))));
+        loader.readParameterSet(parameters);
+        scene = loader.readScene().getFirst();
+    }
     @Test
     public void genOutput() throws Exception {
         generator.readFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/Scene5Box2.csv", 5);
