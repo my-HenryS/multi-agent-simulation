@@ -1,5 +1,6 @@
 package org.socialforce.app.gui;
 
+import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 import org.socialforce.app.ApplicationListener;
 import org.socialforce.app.Applications.ApplicationLoader;
 import org.socialforce.app.SocialForceApplication;
@@ -82,18 +83,10 @@ public class SimulationPanelMain implements ApplicationListener {
     }
 
     public static void main(String[] args) {
+
         try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (ClassNotFoundException e) {
-            //  e.printStackTrace();
-        } catch (InstantiationException e) {
-            //  e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            //  e.printStackTrace();
-        } catch (UnsupportedLookAndFeelException e) {
-            //  e.printStackTrace();
-        } finally {
-            //UIManager.look
+            BeautyEyeLNFHelper.launchBeautyEyeLNF();
+        } catch (Exception e) {
         }
         try {
             JFrame frame = new JFrame("SimulationPanelMain");
