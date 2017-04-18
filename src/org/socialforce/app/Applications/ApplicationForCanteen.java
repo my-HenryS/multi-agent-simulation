@@ -88,18 +88,10 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 */
                 strategy.pathDecision();
                 while (!toSkip()) {
-                    long start = System.currentTimeMillis(), span, fps = 0;
                     this.StepNext(currentScene);
                     iteration += 1;
                     if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
                         ((DynamicStrategy) strategy).dynamicDecision();
-                    }
-                    long l = System.currentTimeMillis() - start;
-                    span = l > fps? 0: fps - l;
-                    try {
-                        Thread.sleep(span); //锁帧大法
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
                 }
                 onStop();

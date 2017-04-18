@@ -39,15 +39,7 @@ public class ApplicationForDoorTest extends SimpleApplication implements SocialF
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
             while (!toSkip()) {
-                long start = System.currentTimeMillis(), span, fps = 16;
                 this.StepNext(currentScene);
-                long l = System.currentTimeMillis() - start;
-                span = l > fps? 0: fps - l;
-                try {
-                    Thread.sleep(span); //锁帧大法
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
             onStop();
         }

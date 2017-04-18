@@ -43,7 +43,6 @@ public class ApplicationForECStrategy extends SimpleApplication implements Socia
             //strategy = new LifeBeltStrategy(scene, pathFinder);
             //strategy = new NearestGoalStrategy(scene, pathFinder);
             strategy.pathDecision();
-            long span = System.currentTimeMillis();
             while (!toSkip()) {
                 this.StepNext(currentScene);
                 iteration += 1;
