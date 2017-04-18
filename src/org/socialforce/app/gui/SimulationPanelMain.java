@@ -19,7 +19,7 @@ import java.util.stream.StreamSupport;
  */
 public class SimulationPanelMain implements ApplicationListener {
     private boolean paused = false;
-
+    public static JFrame frame;
     public SimulationPanelMain() {
         loader = new ApplicationLoader(this);
         refreshName();
@@ -83,18 +83,19 @@ public class SimulationPanelMain implements ApplicationListener {
     }
 
     public static void main(String[] args) {
-
         try {
             BeautyEyeLNFHelper.launchBeautyEyeLNF();
         } catch (Exception e) {
         }
         try {
-            JFrame frame = new JFrame("SimulationPanelMain");
-            SimulationPanelMain mainPanel = new SimulationPanelMain();
+            //JFrame frame = new JFrame("SimulationPanelMain");
+            frame = new JFrame("AM");
+            //SimulationPanelMain mainPanel = new SimulationPanelMain();
+            ApplicationMain mainPanel = new ApplicationMain();
             /*SocialForceApplication application = new ApplicationForDoorTest();//应用在这里！
             application.setApplicationListener(mainPanel);*/
             //mainPanel.setLoader(new ApplicationLoader(mainPanel));
-            frame.setContentPane(mainPanel.root);
+            frame.setContentPane(mainPanel.demoP);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             //frame.setResizable(false);
             frame.pack();
@@ -107,7 +108,7 @@ public class SimulationPanelMain implements ApplicationListener {
 
     }
 
-    private JPanel root;
+    public JPanel root;//private
     private JTextField currentScnenTextField;
     private JButton importFromFileButton;
     private JComboBox agentPathFindingComboBox;
