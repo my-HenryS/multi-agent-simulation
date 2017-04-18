@@ -7,19 +7,23 @@ import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneListener;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
+import java.util.*;
 
 /**
  * Created by Ledenel on 2016/8/23.
  */
 public class SceneShower implements SceneListener {
     private JCheckBox visibleCheckBox;
-    private JPanel showPanel;
+    private JPanel showPanel1;
+    private JPanel showPanel2;
+    private JTabbedPane tabbedPane;
     private JPanel root;
     private JButton changeButton;
     private JLabel totalPeopleLabel;
@@ -27,9 +31,28 @@ public class SceneShower implements SceneListener {
     private JLabel timeLabel;
     private JLabel trappedPeopleLabel;
     private JLabel positionLabel;
+    private JPanel showPanel3;
     private String title;
 
     private DrawerInstaller drawerInstaller;
+
+    private boolean drawable = false;
+
+    private Timer timer = new Timer(16, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            if(visibleCheckBox.isSelected() && scene.getAllAgents().size() != 0) scene.getDrawer().draw(scene);
+        }
+    });
+
+    private Timer repaintTimer = new Timer(3, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(visibleCheckBox.isSelected()) getBoard().repaint();
+        }
+    });
+
 
     /**
      * show the title of the scene
@@ -50,7 +73,7 @@ public class SceneShower implements SceneListener {
                 SceneShower.this.positionLabel.setVisible(visibleCheckBox.isSelected());
             }
         });
-        showPanel.addMouseMotionListener(new MouseMotionAdapter() {
+        showPanel1.addMouseMotionListener(new MouseMotionAdapter() {
             /**
              * Invoked when the mouse button has been moved on a component
              * (with no buttons no down).
@@ -62,7 +85,7 @@ public class SceneShower implements SceneListener {
                 if (SceneShower.this.scene != null) {
                     SceneDrawer sc = (SceneDrawer) SceneShower.this.scene.getDrawer();
                     double[] scr = sc.screenToScene(e.getX(), e.getY());
-                    SceneShower.this.positionLabel.setText(String.format("(%.3f,%.3f)", scr[0], scr[1]));
+                    SceneShower.this.positionLabel.setText(String.format("当前坐标：(%.3f,%.3f)", scr[0], scr[1]));
                 }
 //                super.mouseMoved(e);
             }
@@ -99,7 +122,7 @@ public class SceneShower implements SceneListener {
         //root.setBorder(BorderFactory.createTitledBorder(title));
         // TODO: place custom component creation code here
         board = new SceneBoard();
-        showPanel = board;
+        showPanel1 = board;
     }
 
     BufferedImage image;
@@ -119,6 +142,8 @@ public class SceneShower implements SceneListener {
         board.setScene(scene);
         totalPeopleLabel.setText("" + scene.getAllAgents().size());
         board.getResizeListener().componentResized(null);
+        timer.restart();
+        repaintTimer.restart();
     }
 
     Scene scene;
@@ -144,10 +169,6 @@ public class SceneShower implements SceneListener {
      */
     @Override
     public void onStep(Scene scene) {
-        if (visibleCheckBox.isSelected()) {
-            scene.getDrawer().draw(scene);
-            this.getBoard().repaint();//refresh();
-        }
         this.remainPeopleLabel.setText("" + scene.getAllAgents().size());
         this.timeLabel.setText(String.format("%.3f", scene.getCurrentSteps() * scene.getApplication().getModel().getTimePerStep()));
 

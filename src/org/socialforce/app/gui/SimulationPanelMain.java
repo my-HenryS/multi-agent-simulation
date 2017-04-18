@@ -39,6 +39,8 @@ public class SimulationPanelMain implements ApplicationListener {
                 worker.execute();
                 runButton.setEnabled(false);
                 loadButton.setEnabled(false);
+                timePerStepTextField.setEnabled(false);
+                agentPathFindingComboBox.setEnabled(false);
                 skipButton.setEnabled(true);
                 pauseButton.setEnabled(true);
                 //loader.current().start();
@@ -86,6 +88,7 @@ public class SimulationPanelMain implements ApplicationListener {
 
         try {
             BeautyEyeLNFHelper.launchBeautyEyeLNF();
+            UIManager.put("RootPane.setupButtonVisible",false);
         } catch (Exception e) {
         }
         try {
@@ -141,9 +144,6 @@ public class SimulationPanelMain implements ApplicationListener {
         // TODO: place custom component creation code here
         shower1 = new SceneShower("Scene 1");
         scene1 = shower1.getRoot();
-        scene2 = new SceneShower("Scene 2").getRoot();
-        scene3 = new SceneShower("Scene 3").getRoot();
-        scene4 = new SceneShower("Scene 4").getRoot();
 
     }
 
