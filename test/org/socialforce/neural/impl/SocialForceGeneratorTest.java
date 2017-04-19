@@ -29,7 +29,7 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
 
     @Before
     public void setUp() throws Exception {
-        generator = new SocialForceGenerator(0.5,4,0.5); //timestep intercept min-div
+        generator = new SocialForceGenerator(0.5,4,1); //timestep intercept min-div
         setMap();
     }
 
@@ -63,6 +63,19 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
         loader.readParameterSet(parameters);
         scene = loader.readScene().getFirst();
     }
+
+    public void setMap4(){
+        SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
+                new Wall[]{
+                        new Wall(new Box2D(0, 0, 8, -0.1)),
+                        new Wall(new Box2D(0, 6.78, 8, 0.1))
+                });
+        ParameterPool parameters = new SimpleParameterPool();
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(12, 3.39, 0.1, 0.1))));
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(-2, 3.39, 0.1, 0.1))));
+        loader.readParameterSet(parameters);
+        scene = loader.readScene().getFirst();
+    }
     @Test
     public void genOutput() throws Exception {
         generator.readFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/Scene5Box2.csv", 5);
@@ -70,7 +83,12 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
         setMap2();
         generator.readFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/curve4.csv", 5);
         generator.genOutput(scene);
-        generator.toFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/MultiSet.csv", 2);
+        setMap4();
+        generator.readFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/result1.csv", 1);
+        generator.genOutput(scene);
+        generator.readFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/anylogicdata/result2.csv", 1);
+        generator.genOutput(scene);
+        generator.toFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/MultiSet.csv", 1);
     }
 
 }

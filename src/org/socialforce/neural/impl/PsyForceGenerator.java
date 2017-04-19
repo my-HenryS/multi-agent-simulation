@@ -1,7 +1,7 @@
 package org.socialforce.neural.impl;
 
-import org.socialforce.neural.Coordinates;
-import org.socialforce.neural.DataSetGenerator;
+import org.socialforce.geom.impl.Point2D;
+import org.socialforce.geom.impl.Vector2D;
 
 import java.io.*;
 import java.util.*;
@@ -10,6 +10,7 @@ public class PsyForceGenerator extends ForceGenerator{
     private int nearN = 5; //周围人数
     private double height = 6.78;  //场景宽
 
+    @Deprecated
     public PsyForceGenerator(double timestep, int intercept) {
         super(timestep, intercept);
     }
@@ -17,15 +18,15 @@ public class PsyForceGenerator extends ForceGenerator{
 
     /*
     此处x,y为人在matrix中的坐标 而非位置坐标 TODO 待重构
-     */
-    public double calcDis(Coordinates x, Coordinates y){
-        Coordinates v1 = matrix.get((int)x.X()).get((int)x.Y());
-        Coordinates v2 = matrix.get((int)y.X()).get((int)y.Y());
-        return Math.sqrt(Math.pow((v1.X() - v2.X()),2) + Math.pow((v1.Y() - v2.Y()),2));
+
+    public double calcDis(Point2D x, Point2D y){
+        Point2D v1 = matrix.get((int)x.getX()).get((int)x.getY());
+        Point2D v2 = matrix.get((int)y.getX()).get((int)y.getY());
+        return Math.sqrt(Math.pow((v1.getX() - v2.getX()),2) + Math.pow((v1.getY() - v2.getY()),2));
     }
 
-    public Coordinates calAcc(Coordinates a, Coordinates b){
-        return new Coordinates((a.X()-b.X())/timestep,(a.Y()-b.Y())/timestep);
+    public Vector2D calAcc(Vector2D a, Vector2D b){
+        return new Vector2D((a.getX()-b.getX())/timestep,(a.getY()-b.getY())/timestep);
     }
 
     public ArrayList<Coordinates> nearNeighbor(int x, int y){
@@ -86,14 +87,14 @@ public class PsyForceGenerator extends ForceGenerator{
                     while (temp.size() < 6) {
                         temp.add(new Coordinates(0, 0));
                     }
-                    /*
+
                     for(Coordinates n : neigb){
                         temp.add(deltaVelocity(i, j, (int)n.X(), (int)n.Y()));
                     }
                     while(temp.size() < 11){
                         temp.add(new Coordinates(0, 0));
                     }
-                    */
+
 
                     temp.add(new Coordinates(height - matrix.get(i).get(j).Y(), matrix.get(i).get(j).Y()));
                     temp.add(velocity.get(i).get(j));
@@ -109,6 +110,9 @@ public class PsyForceGenerator extends ForceGenerator{
         }
     }
 
+
+
+
     public static void main(String[] args) throws IOException {
         PsyForceGenerator dataSet = new PsyForceGenerator(0.5,4);
         String baseDirect = "/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/anylogicdata/";
@@ -118,4 +122,6 @@ public class PsyForceGenerator extends ForceGenerator{
         dataSet.genOutput();
         dataSet.toFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.csv");
     }
+
+    */
 }

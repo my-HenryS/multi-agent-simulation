@@ -21,12 +21,12 @@ public class NeuralNetwork implements NeuralNetListener {
     private Monitor monitor;
     private double []lMax ,lMin;
     private NeuralNet nnet;
-    private String directory = "/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/Scene5Set2.csv";
-    private int labelIndexM = 2; //2以下
+    private String directory = "/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/MultiSet.csv";
+    private int labelIndexM = 2; //2以下为标签
     private CountDownLatch latch = new CountDownLatch(1);
     public double INPUT[][];
     private int epoch = 500;
-    int inputNum = 5229;
+    int inputNum = 10000;
 
     public double LABEL[][];
 
@@ -51,9 +51,9 @@ public class NeuralNetwork implements NeuralNetListener {
         output.setLayerName("output");
 
         // sets their dimensions
-        input.setRows(13);
-        hidden.setRows(60);
-        hidden2.setRows(30);
+        input.setRows(12);
+        hidden.setRows(40);
+        hidden2.setRows(10);
         output.setRows(2);
 
         // Now create the two Synapses
@@ -81,7 +81,7 @@ public class NeuralNetwork implements NeuralNetListener {
 
         // The first two columns contain the input values
         inputStream.setInputArray(INPUT);
-        inputStream.setAdvancedColumnSelector("1-13");
+        inputStream.setAdvancedColumnSelector("1-12");
 
         // set the input data
         input.addInputSynapse(inputStream);
@@ -140,7 +140,7 @@ public class NeuralNetwork implements NeuralNetListener {
             Layer input = nnet.getInputLayer();
             input.removeAllInputs();
             MemoryInputSynapse memInp = new MemoryInputSynapse();
-            memInp.setAdvancedColumnSelector("1-13");
+            memInp.setAdvancedColumnSelector("1-12");
             input.addInputSynapse(memInp);
             memInp.setInputArray(inputArray);
             Layer output = nnet.getOutputLayer();
@@ -246,12 +246,12 @@ public class NeuralNetwork implements NeuralNetListener {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         NeuralNetwork nnetk = new NeuralNetwork();
-        //nnetk.buildUp();
-        //nnetk.run();
-        //nnetk.saveNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
+        nnetk.buildUp();
+        nnetk.run();
+        nnetk.saveNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
         nnetk.restoreNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
         nnetk.test(new double[][]{{
-                1,0,0.0,0,0,0,0,0,0,0,0,3,0
+                1,0,1,0,0,3,0,0,9,0,0,3
         }});
     }
 }

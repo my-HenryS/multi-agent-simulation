@@ -1,30 +1,14 @@
 package org.socialforce.neural.impl;
 
-import org.socialforce.app.Interpreter;
-import org.socialforce.app.impl.SimpleInterpreter;
-import org.socialforce.container.EntityPool;
-import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
-import org.socialforce.geom.impl.Box2D;
+import org.socialforce.geom.Vector;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.InteractiveEntity;
+import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.model.impl.SafetyRegion;
-import org.socialforce.neural.Coordinates;
-import org.socialforce.neural.DataSetGenerator;
-import org.socialforce.scene.ParameterPool;
 import org.socialforce.scene.Scene;
-import org.socialforce.scene.SceneLoader;
-import org.socialforce.scene.impl.*;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.impl.AStarPathFinder;
-
-import java.io.InputStream;
-import java.util.Iterator;
-import java.util.LinkedList;
-
-import static org.socialforce.scene.SceneLoader.genParameter;
 
 /**
  * Created by sunjh1999 on 2017/3/27.
@@ -34,7 +18,7 @@ public class WallForceGenerator extends ForceGenerator{
     Scene scene; //场景
     int[][] map;
     double min_div, dX, dY;
-    double range = 0.5; //前后左右各2m
+    double range = 1; //前后左右各2m
     Path path; //A星场
 
     public WallForceGenerator(double timestep, int intercept, double min_div) {
@@ -42,8 +26,8 @@ public class WallForceGenerator extends ForceGenerator{
         this.min_div = min_div;
     }
 
-    public Coordinates calAcc(Coordinates a, Coordinates b){
-        return new Coordinates((a.X()-b.X())/timestep,(a.Y()-b.Y())/timestep);
+    public Vector2D calAcc(Vector2D a, Vector2D b){
+        return new Vector2D((a.getX()-b.getX())/timestep,(a.getY()-b.getY())/timestep);
     }
 
     /**
@@ -58,8 +42,8 @@ public class WallForceGenerator extends ForceGenerator{
         dY = pathFinder.get_deltay();
     }
 
-    public double[] getSurrounding(Coordinates c){
-        int x = (int)((c.X() - dX)/min_div), y = (int)((c.Y() - dY)/min_div);  //计算坐标c在map中的坐标
+    public double[] getSurrounding(Point2D c){
+        int x = (int)((c.getX() - dX)/min_div), y = (int)((c.getY() - dY)/min_div);  //计算坐标c在map中的坐标
         int range = (int)(this.range / min_div);   //计算map中的真实范围
         //计算影响范围
         int leftbound = x - range >= 0 ? x - range : 0;

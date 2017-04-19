@@ -4,7 +4,6 @@ import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.*;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * 凸多边形
@@ -43,14 +42,14 @@ public class Polygon2D implements Shape{
                 if (direc.dot(now)> flag){
                     direcflag = direc.dot(now);
                     temp1 = direc;
-                    direc.spin(0.001);
+                    direc.rotate(0.001);
                     if (direc.dot(now) > direcflag) {
                         flag = direc.dot(now);
                         fuck = nod;
                         temp2 = temp1;
                     }
                     else temp1 = temp2;
-                    direc.spin(-0.001);
+                    direc.rotate(-0.001);
                 }
             }
             flag = Double.NEGATIVE_INFINITY;

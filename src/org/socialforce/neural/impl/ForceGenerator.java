@@ -1,7 +1,10 @@
 package org.socialforce.neural.impl;
 
 import com.opencsv.CSVReader;
-import org.socialforce.neural.Coordinates;
+import org.socialforce.geom.Point;
+import org.socialforce.geom.Vector;
+import org.socialforce.geom.impl.Point2D;
+import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.neural.DataSetGenerator;
 
 import java.io.*;
@@ -17,8 +20,8 @@ import java.util.List;
 public abstract class ForceGenerator implements DataSetGenerator {
     protected double timestep;  //步长、决定：位置差-速度关系、速度差-加速度关系
     DecimalFormat formater = new DecimalFormat();
-    protected ArrayList<LinkedList<Coordinates>> matrix = new ArrayList<LinkedList<Coordinates>>();
-    protected ArrayList<ArrayList<Coordinates>> velocity = new ArrayList<ArrayList<Coordinates>>();
+    protected ArrayList<LinkedList<Point2D>> matrix;
+    protected ArrayList<ArrayList<Vector2D>> velocity;
     LinkedList<double[]> outputs = new LinkedList<>();
 
 
@@ -30,8 +33,8 @@ public abstract class ForceGenerator implements DataSetGenerator {
     }
 
     public void readFile(String directory, int timeInterval){
-        matrix = new ArrayList<LinkedList<Coordinates>>();
-        velocity = new ArrayList<ArrayList<Coordinates>>();
+        matrix =  new ArrayList<>();
+        velocity = new ArrayList<>();
         try{
             csv2matrix(directory, timeInterval);
             calcVelocity();
@@ -43,7 +46,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
 
     public void csv2matrix(String directory, int timeInterval)throws IOException {
         String axis[];
-        LinkedList<Coordinates> tempR = new LinkedList<Coordinates>();
+        LinkedList<Point2D> tempR;
         File file = new File(directory);
         FileReader fReader = new FileReader(file);
         CSVReader csvReader = new CSVReader(fReader);
@@ -55,7 +58,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
                 if(line[i] != null && line[i].length() > 0){
                     String templine = line[i].substring(1,line[i].length()-1);
                     axis = templine.split(",");
-                    tempR.add(new Coordinates(Double.parseDouble(axis[0])/10,Double.parseDouble(axis[1])/10));
+                    tempR.add(new Point2D(Double.parseDouble(axis[0])/10,Double.parseDouble(axis[1])/10));
                 }
                 else{
                     tempR.add(null);
@@ -66,23 +69,31 @@ public abstract class ForceGenerator implements DataSetGenerator {
     }
 
     public void calcVelocity(){
-        for(LinkedList<Coordinates> tempR : matrix){
-            ArrayList<Coordinates> tempV = new ArrayList<>();
-            for(Coordinates tempT : tempR){
+        for(LinkedList<Point2D> tempR : matrix){
+            ArrayList<Vector2D> tempV = new ArrayList<>();
+            for(Point2D tempT : tempR){
                 if(tempT != null && tempR.indexOf(tempT)>=1 && tempR.get(tempR.indexOf(tempT)-1)!=null){
-                    Coordinates preT = tempR.get(tempR.indexOf(tempT)-1);
-                    tempV.add(new Coordinates((tempT.X()-preT.X())/timestep,(tempT.Y()-preT.Y())/timestep));
+                    Point2D preT = tempR.get(tempR.indexOf(tempT)-1);
+                    tempV.add(new Vector2D((tempT.getX()-preT.getX())/timestep,(tempT.getY()-preT.getY())/timestep));
                 }
                 else{
-                    tempV.add(new Coordinates(0,0));
+                    tempV.add(null);
                 }
             }
             velocity.add(tempV);
         }
     }
 
+    /**
+     * 判断i人在j时刻是否可以作为训练集
+     * 即：
+     *     当前时刻和下一时刻可以计算速度
+     * @param i
+     * @param j
+     * @return
+     */
     public boolean available(int i, int j){
-        return matrix.get(i).get(j) != null && !velocity.get(i).get(j).isZero() && j+1 < velocity.get(i).size() && !velocity.get(i).get(j+1).isZero() ;
+        return matrix.get(i).get(j) != null /*这项可以不填*/ && velocity.get(i).get(j) != null && j+1 < velocity.get(i).size() && velocity.get(i).get(j+1) != null;
     }
 
     public void toFile(String outDirect){
