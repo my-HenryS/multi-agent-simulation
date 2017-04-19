@@ -22,7 +22,7 @@ public class ApplicationMain{
             public void actionPerformed(ActionEvent e) {
                 try {
 
-                    JFrame frameS = new JFrame("SimulationPanelMain");
+                    JFrame frameS = new JFrame("Epimetheus");
                     SimulationPanelMain mainPanel = new SimulationPanelMain();
                     mainPanel.frame.dispose();
                     /*SocialForceApplication application = new ApplicationForDoorTest();//应用在这里！

@@ -41,7 +41,7 @@ public class ApplicationForDoorTest extends SimpleApplication implements SocialF
             while (!toSkip()) {
                 this.StepNext(currentScene);
             }
-            onStop();
+            if(onStop()) return;
         }
     }
 

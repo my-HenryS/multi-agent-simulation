@@ -49,7 +49,7 @@ public class ApplicationForMutidoor extends SimpleApplication implements SocialF
             while (!toSkip()) {
                 this.StepNext(currentScene);
             }
-            onStop();
+            if(onStop()) return;
             for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                 Monitor m = (Monitor)iter.next();
                 Point p = m.getShape().getReferencePoint();

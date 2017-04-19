@@ -94,7 +94,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                         ((DynamicStrategy) strategy).dynamicDecision();
                     }
                 }
-                onStop();
+                if(onStop()) return;
                 /*
                 double samplewidth = 1;
                 double [][] matrixV = new double[(int)(21/samplewidth)][(int)(30/samplewidth)];

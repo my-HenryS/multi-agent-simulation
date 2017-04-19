@@ -37,7 +37,7 @@ public class ApplicationForAstrophysics extends SimpleApplication {
             while (!toSkip()) {
                 this.StepNext(currentScene);
             }
-            onStop();
+            if(onStop()) return;
         }
     }
 

@@ -45,7 +45,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
             while (!toSkip()) {
                 this.StepNext(currentScene);
             }
-            onStop();
+            if(onStop()) return;
         }
     }
 

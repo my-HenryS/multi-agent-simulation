@@ -19,6 +19,7 @@ import java.util.stream.StreamSupport;
  */
 public class SimulationPanelMain implements ApplicationListener {
     private boolean paused = false;
+    private boolean running = false;
     public static JFrame frame;
 
 
@@ -36,21 +37,44 @@ public class SimulationPanelMain implements ApplicationListener {
                     @Override
                     protected Void doInBackground() throws Exception {
                         loader.current().start();
-                        runButton.setEnabled(true);
+                        //场景运行完毕后
+                        running = false;
+                        runButton.setText("Run");
                         loadButton.setEnabled(true);
                         skipButton.setEnabled(false);
                         pauseButton.setEnabled(false);
+                        timePerStepTextField.setEnabled(true);
+                        agentPathFindingComboBox.setEnabled(true);
                         return null;
                     }
                 };
-                worker.execute();
-                runButton.setEnabled(false);
-                loadButton.setEnabled(false);
-                timePerStepTextField.setEnabled(false);
-                agentPathFindingComboBox.setEnabled(false);
-                skipButton.setEnabled(true);
-                pauseButton.setEnabled(true);
-                //loader.current().start();
+                if(running == false){
+                    running = true;
+                    worker.execute();
+                    runButton.setText("Terminate");
+                    loadButton.setEnabled(false);
+                    timePerStepTextField.setEnabled(false);
+                    agentPathFindingComboBox.setEnabled(false);
+                    skipButton.setEnabled(true);
+                    pauseButton.setEnabled(true);
+                }
+
+                else{
+                    running = false;
+                    if(paused) {
+                        pauseButton.setText("Pause");
+                        loader.current().resume();
+                        paused = !paused;
+                    }
+                    loader.current().terminate();
+                    runButton.setText("Run");
+                    loadButton.setEnabled(true);
+                    skipButton.setEnabled(false);
+                    pauseButton.setEnabled(false);
+                    timePerStepTextField.setEnabled(true);
+                    agentPathFindingComboBox.setEnabled(true);
+                }
+
 
             }
         });
@@ -82,6 +106,11 @@ public class SimulationPanelMain implements ApplicationListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO: 2017/3/21 在这里增加skip按钮点击的处理逻辑。
+                if(paused) {
+                    pauseButton.setText("Pause");
+                    loader.current().resume();
+                    paused = !paused;
+                }
                 loader.current().skip();
             }
         });
@@ -99,7 +128,7 @@ public class SimulationPanelMain implements ApplicationListener {
         }
         try {
             //JFrame frame = new JFrame("SimulationPanelMain");
-            frame = new JFrame("AM");
+            frame = new JFrame("Epimetheus");
             //SimulationPanelMain mainPanel = new SimulationPanelMain();
             ApplicationMain mainPanel = new ApplicationMain();
             /*SocialForceApplication application = new ApplicationForDoorTest();//应用在这里！

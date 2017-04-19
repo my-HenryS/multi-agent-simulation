@@ -46,7 +46,7 @@ public class ApplicationForMutidoorOverView extends SimpleApplication implements
             while (!toSkip()) {
                 this.StepNext(currentScene);
             }
-            onStop();
+            if(onStop()) return;
             for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                 Monitor monitor = (Monitor)iter.next();
                 System.out.println(monitor.sayVelocity());

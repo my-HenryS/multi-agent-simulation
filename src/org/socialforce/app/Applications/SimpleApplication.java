@@ -135,11 +135,22 @@ public abstract class SimpleApplication implements SocialForceApplication {
         return Skip || currentScene.getAllAgents().isEmpty();
     }
 
+    boolean terminate = false;
+
+    public void terminate(){
+        skip();
+        terminate = true;
+    }
+
     /**
      * 在scene运行结束时调用
+     * @return 是否结束application
      */
-    public void onStop(){
+    public boolean onStop() {
+        boolean tempT = terminate;
         Skip = false;
+        terminate = false;
+        return tempT;
     }
 
 }

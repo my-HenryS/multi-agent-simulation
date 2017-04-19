@@ -73,7 +73,7 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                             }
                         }
                     }
-                    onStop();
+                    if(onStop()) return;
                     System.out.println("flow is "+speed/size);
 
                 }

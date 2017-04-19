@@ -50,7 +50,7 @@ public class ApplicationForECStrategy extends SimpleApplication implements Socia
                     ((DynamicStrategy) strategy).dynamicDecision();
                 }
             }
-            onStop();
+            if(onStop()) return;
         }
     }
 
