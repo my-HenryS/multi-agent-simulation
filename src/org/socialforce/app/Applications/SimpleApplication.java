@@ -134,6 +134,10 @@ public abstract class SimpleApplication implements SocialForceApplication {
     public boolean toSkip() {
         return Skip || currentScene.getAllAgents().isEmpty();
     }
+
+    /**
+     * 在scene运行结束时调用
+     */
     public void onStop(){
         Skip = false;
     }

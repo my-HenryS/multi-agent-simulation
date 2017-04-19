@@ -20,6 +20,9 @@ import java.util.stream.StreamSupport;
 public class SimulationPanelMain implements ApplicationListener {
     private boolean paused = false;
     public static JFrame frame;
+
+
+
     public SimulationPanelMain() {
         loader = new ApplicationLoader(this);
         refreshName();
@@ -33,6 +36,10 @@ public class SimulationPanelMain implements ApplicationListener {
                     @Override
                     protected Void doInBackground() throws Exception {
                         loader.current().start();
+                        runButton.setEnabled(true);
+                        loadButton.setEnabled(true);
+                        skipButton.setEnabled(false);
+                        pauseButton.setEnabled(false);
                         return null;
                     }
                 };

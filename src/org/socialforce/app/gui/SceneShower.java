@@ -36,8 +36,6 @@ public class SceneShower implements SceneListener {
 
     private DrawerInstaller drawerInstaller;
 
-    private boolean drawable = false;
-
     private Timer timer = new Timer(16, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {

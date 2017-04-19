@@ -5,7 +5,9 @@
     <constraints>
       <xy x="20" y="20" width="1008" height="608"/>
     </constraints>
-    <properties/>
+    <properties>
+      <preferredSize width="768" height="434"/>
+    </properties>
     <border type="none"/>
     <children>
       <component id="27779" class="javax.swing.JButton" binding="editModeButton" default-binding="true">
@@ -25,7 +27,7 @@
           <font size="36" style="3"/>
           <horizontalAlignment value="0"/>
           <horizontalTextPosition value="11"/>
-          <text value="DEMO"/>
+          <text value="Epimetheus"/>
         </properties>
       </component>
       <component id="525e4" class="javax.swing.JButton" binding="simulationModeButton" default-binding="true">
