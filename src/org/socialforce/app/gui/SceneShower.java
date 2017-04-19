@@ -41,8 +41,8 @@ public class SceneShower implements SceneListener {
     private Timer timer = new Timer(16, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-
-            if(visibleCheckBox.isSelected() && scene.getAllAgents().size() != 0) scene.getDrawer().draw(scene);
+            if(visibleCheckBox.isSelected() && scene.getDrawer() != null && scene.getAllAgents().size() != 0)
+                scene.getDrawer().draw(scene);
         }
     });
 
