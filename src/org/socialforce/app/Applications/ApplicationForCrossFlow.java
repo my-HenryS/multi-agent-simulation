@@ -39,8 +39,8 @@ public class ApplicationForCrossFlow extends SimpleApplication {
             while (!toSkip()) {
                 this.StepNext(currentScene);
             }
+            onStop();
         }
-        onStop();
     }
 
     /**
