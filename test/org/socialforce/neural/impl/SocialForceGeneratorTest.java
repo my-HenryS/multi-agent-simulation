@@ -86,7 +86,7 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
         setMap4();
         generator.readFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/result1.csv", 1);
         generator.genOutput(scene);
-        generator.readFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/anylogicdata/result2.csv", 1);
+        generator.readFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/result2.csv", 1);
         generator.genOutput(scene);
         generator.toFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/MultiSet.csv", 1);
     }
