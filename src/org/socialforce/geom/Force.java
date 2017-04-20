@@ -1,5 +1,7 @@
 package org.socialforce.geom;
 
+import org.socialforce.geom.impl.Force2D;
+import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.Model;
 
@@ -26,4 +28,13 @@ public interface Force extends Vector {
      * @return 这个力的副本.
      */
     Force clone();
+
+    /**
+     * 获取参考的向量
+     * 与原向量同向但是长度为1.
+     * 零向量没有参考向量
+     * @return 参考向量，即单位向量
+     */
+    @Override
+    Force2D getRefVector();
 }

@@ -23,7 +23,7 @@ public class BodyForceTest {
     @Before
     public void setUp() throws Exception{
         initPoint = new Point2D(3,4);
-        initPoint2 = new Point2D(3,4);
+        initPoint2 = new Point2D(3,4.1);
         circle.moveTo(initPoint);
         circle.setRadius(0.243);
         circle2.moveTo(initPoint2);

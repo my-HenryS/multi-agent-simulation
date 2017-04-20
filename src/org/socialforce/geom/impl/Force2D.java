@@ -43,4 +43,16 @@ public class Force2D extends Vector2D implements Force {
         force.values[1] = values[1];
         return force;
     }
+
+    @Override
+    public Force2D getRefVector(){
+        Force2D ref;
+        if (values[0] == 0 && values[1] == 0){
+            return new Force2D(0,0);
+        }
+        else
+            ref = new Force2D(values[0],values[1]);
+        ref.scale(1/ref.length());
+        return ref;
+    }
 }
