@@ -85,7 +85,7 @@ public class SimpleScene implements Scene {
         if(drawer != null){
             while (drawer.isDrawing){
                 try {
-                    Thread.sleep(1);
+                    Thread.sleep(0);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

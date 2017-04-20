@@ -5,6 +5,7 @@ import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.drawer.impl.SceneDrawerInstaller;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneListener;
+import org.tc33.jheatchart.HeatChart;
 
 import javax.swing.*;
 import javax.swing.Timer;
@@ -29,7 +30,7 @@ public class SceneShower implements SceneListener {
     private JLabel totalPeopleLabel;
     private JLabel remainPeopleLabel;
     private JLabel timeLabel;
-    private JLabel trappedPeopleLabel;
+    private JLabel avgVLabel;
     private JLabel positionLabel;
     private JPanel showPanel3;
     private String title;
@@ -44,10 +45,23 @@ public class SceneShower implements SceneListener {
         }
     });
 
-    private Timer repaintTimer = new Timer(3, new ActionListener() {
+    private Timer repaintTimer = new Timer(16, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(visibleCheckBox.isSelected()) getBoard().repaint();
+            if(visibleCheckBox.isSelected()){
+                getBoard().repaint();
+                double[][] data = new double[100][100];
+
+                HeatChart map = new HeatChart(data);
+
+                map.setTitle("This is my heat chart title");
+                map.setXAxisLabel("X Axis");
+                map.setYAxisLabel("Y Axis");
+
+                chartPanel.setImage(toBufferedImage(map.getChartImage()));
+
+                chartPanel.repaint();
+            }
         }
     });
 
@@ -82,8 +96,10 @@ public class SceneShower implements SceneListener {
             public void mouseMoved(MouseEvent e) {
                 if (SceneShower.this.scene != null) {
                     SceneDrawer sc = (SceneDrawer) SceneShower.this.scene.getDrawer();
-                    double[] scr = sc.screenToScene(e.getX(), e.getY());
-                    SceneShower.this.positionLabel.setText(String.format("当前坐标：(%.3f,%.3f)", scr[0], scr[1]));
+                    if(sc != null) {
+                        double[] scr = sc.screenToScene(e.getX(), e.getY());
+                        SceneShower.this.positionLabel.setText(String.format("Mouse Position：(%.3f,%.3f)", scr[0], scr[1]));
+                    }
                 }
 //                super.mouseMoved(e);
             }
@@ -102,6 +118,7 @@ public class SceneShower implements SceneListener {
     }
 
     private SceneBoard board;
+    private SceneBoard chartPanel;
 
     public SceneBoard getBoard() {
         return board;
@@ -121,6 +138,9 @@ public class SceneShower implements SceneListener {
         // TODO: place custom component creation code here
         board = new SceneBoard();
         showPanel1 = board;
+        chartPanel = new SceneBoard();
+        showPanel2 = chartPanel;
+
     }
 
     BufferedImage image;
@@ -169,7 +189,58 @@ public class SceneShower implements SceneListener {
     public void onStep(Scene scene) {
         this.remainPeopleLabel.setText("" + scene.getAllAgents().size());
         this.timeLabel.setText(String.format("%.3f", scene.getCurrentSteps() * scene.getApplication().getModel().getTimePerStep()));
+        this.avgVLabel.setText(String.format("%.3f", scene.getAllAgents().stream().mapToDouble(value -> value.getVelocity().length()).average().getAsDouble()));
+    }
 
+    public static BufferedImage toBufferedImage(Image image) {
+        if (image instanceof BufferedImage) {
+            return (BufferedImage)image;
+        }
+
+        // This code ensures that all the pixels in the image are loaded
+        image = new ImageIcon(image).getImage();
+
+        // Determine if the image has transparent pixels; for this method's
+        // implementation, see e661 Determining If an Image Has Transparent Pixels
+        //boolean hasAlpha = hasAlpha(image);
+
+        // Create a buffered image with a format that's compatible with the screen
+        BufferedImage bimage = null;
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        try {
+            // Determine the type of transparency of the new buffered image
+            int transparency = Transparency.OPAQUE;
+           /* if (hasAlpha) {
+             transparency = Transparency.BITMASK;
+             }*/
+
+            // Create the buffered image
+            GraphicsDevice gs = ge.getDefaultScreenDevice();
+            GraphicsConfiguration gc = gs.getDefaultConfiguration();
+            bimage = gc.createCompatibleImage(
+                    image.getWidth(null), image.getHeight(null), transparency);
+        } catch (HeadlessException e) {
+            // The system does not have a screen
+        }
+
+        if (bimage == null) {
+            // Create a buffered image using the default color model
+            int type = BufferedImage.TYPE_INT_RGB;
+            //int type = BufferedImage.TYPE_3BYTE_BGR;//by wang
+            /*if (hasAlpha) {
+             type = BufferedImage.TYPE_INT_ARGB;
+             }*/
+            bimage = new BufferedImage(image.getWidth(null), image.getHeight(null), type);
+        }
+
+        // Copy image to buffered image
+        Graphics g = bimage.createGraphics();
+
+        // Paint the image onto the buffered image
+        g.drawImage(image, 0, 0, null);
+        g.dispose();
+
+        return bimage;
     }
 
 

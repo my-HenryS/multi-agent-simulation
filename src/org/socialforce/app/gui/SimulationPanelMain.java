@@ -9,6 +9,8 @@ import org.socialforce.model.Agent;
 import org.socialforce.scene.Scene;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -114,6 +116,14 @@ public class SimulationPanelMain implements ApplicationListener {
                 loader.current().skip();
             }
         });
+        slider1.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int maxDelay = 10;
+                int delay =  (int)(maxDelay * (1 - (double)slider1.getValue() / 100));
+                loader.current().setMinStepForward(delay);
+            }
+        });
     }
 
     protected void refreshName() {
@@ -159,11 +169,10 @@ public class SimulationPanelMain implements ApplicationListener {
     private JPanel scene2;
     private JPanel scene3;
     private JPanel scene4;
-    private JLabel timeUsedLabel;
     private JTextArea logTextArea;
     private JTextField timePerStepTextField;
-    private JLabel fpsLabel;
     private JButton loadButton;
+    private JSlider slider1;
 
     public ApplicationLoader getLoader() {
         return loader;

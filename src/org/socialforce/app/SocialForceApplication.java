@@ -86,4 +86,10 @@ public interface SocialForceApplication {
      * @return
      */
     boolean toSkip();
+
+    /**
+     * 定义运行一步的最小时间
+     * @param stepForward
+     */
+    void setMinStepForward(int stepForward);
 }

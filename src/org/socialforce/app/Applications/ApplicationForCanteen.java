@@ -95,10 +95,10 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                     }
                 }
                 if(onStop()) return;
-                /*
+
                 double samplewidth = 1;
                 double [][] matrixV = new double[(int)(21/samplewidth)][(int)(30/samplewidth)];
-                for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
+                for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                     Monitor m = (Monitor)iter.next();
                     Point p = m.getShape().getReferencePoint();
                     matrixV[(int)Math.rint((p.getY())/samplewidth)][(int)Math.rint(p.getX()/samplewidth)] = m.sayVolume();
@@ -109,7 +109,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                     }
                     System.out.println();
                 }
-                */
+
                 System.out.println(iteration * 0.002);
             }
         }
