@@ -18,6 +18,7 @@ public class BaseAgent extends Entity implements Agent {
     Force pushed;
     boolean escaped = false;
     DistanceShape shape;
+    private static final double forceUpbound = 4450;
 
     public BaseAgent(DistanceShape shape, Velocity velocity) {
         super(shape);
@@ -95,6 +96,8 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public void act() {
+        this.pushed = pushed.getRefVector();
+        pushed.scale(forceUpbound);
         Velocity next_v = new Velocity2D(0,0), deltaV = this.pushed.deltaVelocity(mass, model.getTimePerStep());
         Vector deltaS;
         next_v.add(currVelocity);
