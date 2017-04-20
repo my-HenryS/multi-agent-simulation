@@ -307,8 +307,8 @@ public class SimpleScene implements Scene {
         this.yMin = bounds.getStartPoint().getY();
         this.xMax = bounds.getEndPoint().getX();
         this.yMax = bounds.getEndPoint().getY();
-        HeatMap = new double[(int)X+1][(int)Y+1];
-        aggrHeatMap = new double[(int)X+1][(int)Y+1];
+        HeatMap = new double[(int)Y+1][(int)X+1];
+        aggrHeatMap = new double[(int)Y+1][(int)X+1];
     }
 
     public double[][] HeatMap, aggrHeatMap;
@@ -318,11 +318,11 @@ public class SimpleScene implements Scene {
     private void saveHeatmap(){
         for(Agent agent: allAgents){
             Point position = agent.getShape().getReferencePoint();
-            aggrHeatMap[(int)(position.getX() - xMin)][(int)(position.getY() - yMin)] += 1;
+            aggrHeatMap[(int)(position.getY() - yMin)][(int)(position.getX() - xMin)] += 1;
         }
         for(int i = 0; i < aggrHeatMap.length; i++){
             for(int j = 0; j < aggrHeatMap[i].length; j++){
-                HeatMap[i][j] = aggrHeatMap[i][j] / currentStep;
+                HeatMap[i][j] = aggrHeatMap[aggrHeatMap.length - i - 1][j] / currentStep;
             }
         }
     }

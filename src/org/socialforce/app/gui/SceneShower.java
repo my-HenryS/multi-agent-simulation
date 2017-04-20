@@ -50,6 +50,7 @@ public class SceneShower implements SceneListener {
         public void actionPerformed(ActionEvent e) {
             if(visibleCheckBox.isSelected()){
                 getBoard().repaint();
+
                 double[][] data = scene.getHeatMap();
 
                 HeatChart map = new HeatChart(data);
@@ -64,6 +65,7 @@ public class SceneShower implements SceneListener {
                 chartPanel.loadPhoto(map.getChartImage());
 
                 chartPanel.repaint();
+
             }
         }
     });
@@ -190,6 +192,7 @@ public class SceneShower implements SceneListener {
      */
     @Override
     public void onStep(Scene scene) {
+        if(scene.getAllAgents().isEmpty()) return;
         this.remainPeopleLabel.setText("" + scene.getAllAgents().size());
         this.timeLabel.setText(String.format("%.3f", scene.getCurrentSteps() * scene.getApplication().getModel().getTimePerStep()));
         this.avgVLabel.setText(String.format("%.3f", scene.getAllAgents().stream().mapToDouble(value -> value.getVelocity().length()).average().getAsDouble()));
