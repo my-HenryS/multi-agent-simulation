@@ -50,15 +50,18 @@ public class SceneShower implements SceneListener {
         public void actionPerformed(ActionEvent e) {
             if(visibleCheckBox.isSelected()){
                 getBoard().repaint();
-                double[][] data = new double[100][100];
+                double[][] data = scene.getHeatMap();
 
                 HeatChart map = new HeatChart(data);
-
-                map.setTitle("This is my heat chart title");
+                map.setCellSize(new Dimension(10,10));
+                map.setTitle("HeatMap");
                 map.setXAxisLabel("X Axis");
                 map.setYAxisLabel("Y Axis");
-
-                chartPanel.setImage(toBufferedImage(map.getChartImage()));
+                map.setShowXAxisValues(false);
+                map.setShowYAxisValues(false);
+                map.setHighValueColour(Color.ORANGE);
+                map.setLowValueColour(Color.BLUE);
+                chartPanel.loadPhoto(map.getChartImage());
 
                 chartPanel.repaint();
             }
@@ -118,7 +121,7 @@ public class SceneShower implements SceneListener {
     }
 
     private SceneBoard board;
-    private SceneBoard chartPanel;
+    private ImagePanel chartPanel;
 
     public SceneBoard getBoard() {
         return board;
@@ -138,7 +141,7 @@ public class SceneShower implements SceneListener {
         // TODO: place custom component creation code here
         board = new SceneBoard();
         showPanel1 = board;
-        chartPanel = new SceneBoard();
+        chartPanel = new ImagePanel();
         showPanel2 = chartPanel;
 
     }

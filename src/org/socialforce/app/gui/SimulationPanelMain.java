@@ -119,7 +119,7 @@ public class SimulationPanelMain implements ApplicationListener {
         slider1.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                int maxDelay = 10;
+                int maxDelay = 20;
                 int delay =  (int)(maxDelay * (1 - (double)slider1.getValue() / 100));
                 loader.current().setMinStepForward(delay);
             }

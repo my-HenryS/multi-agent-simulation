@@ -9,6 +9,7 @@ import org.socialforce.container.impl.LinkListPool;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.Box;
+import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
@@ -44,12 +45,15 @@ public class SimpleScene implements Scene {
     }
 
     public SimpleScene(Box bounds) {
+        //设置scene的范围
         this.bounds = bounds;
         this.statics = new LinkListEntityPool();
         this.allAgents = new LinkListAgentPool();
     }
 
     protected Box bounds;
+    protected double X, Y;
+    protected double xMin, xMax, yMin, yMax;
     protected SceneDrawer drawer;
 
     /**
@@ -99,6 +103,7 @@ public class SimpleScene implements Scene {
                 listener.onStep(this);
             }
         }
+        saveHeatmap();
         updateStep();
     }
 
@@ -296,6 +301,31 @@ public class SimpleScene implements Scene {
             }
         }
         this.bounds = new Box2D(new Point2D(xmin-5,ymin-5),new Point2D(xmax+5,ymax+5));
+        this.X = bounds.getEndPoint().getX() - bounds.getStartPoint().getX();
+        this.Y = bounds.getEndPoint().getY() - bounds.getStartPoint().getY();
+        this.xMin = bounds.getStartPoint().getX();
+        this.yMin = bounds.getStartPoint().getY();
+        this.xMax = bounds.getEndPoint().getX();
+        this.yMax = bounds.getEndPoint().getY();
+        HeatMap = new double[(int)X+1][(int)Y+1];
+        aggrHeatMap = new double[(int)X+1][(int)Y+1];
     }
+
+    public double[][] HeatMap, aggrHeatMap;
+
+    public double[][] getHeatMap(){ return HeatMap; }
+
+    private void saveHeatmap(){
+        for(Agent agent: allAgents){
+            Point position = agent.getShape().getReferencePoint();
+            aggrHeatMap[(int)(position.getX() - xMin)][(int)(position.getY() - yMin)] += 1;
+        }
+        for(int i = 0; i < aggrHeatMap.length; i++){
+            for(int j = 0; j < aggrHeatMap[i].length; j++){
+                HeatMap[i][j] = aggrHeatMap[i][j] / currentStep;
+            }
+        }
+    }
+
 
 }
