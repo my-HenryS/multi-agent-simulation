@@ -40,7 +40,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
             e.printStackTrace();
         }
 /*/
-        getDevice().setColor(Color.WHITE);
+        getDevice().setColor(new Color(70,70,70));
         double pt[] = new double[2];
         double sz[] = new double[2];
         clip.getStartPoint().get(pt);
