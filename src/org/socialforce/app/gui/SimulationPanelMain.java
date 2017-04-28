@@ -22,6 +22,7 @@ import java.util.stream.StreamSupport;
 public class SimulationPanelMain implements ApplicationListener {
     private boolean paused = false;
     private boolean running = false;
+    int maxDelay = 40;
     public static JFrame frame;
 
 
@@ -59,6 +60,9 @@ public class SimulationPanelMain implements ApplicationListener {
                     agentPathFindingComboBox.setEnabled(false);
                     skipButton.setEnabled(true);
                     pauseButton.setEnabled(true);
+                    /*设定延时*/
+                    int delay =  (int)(maxDelay * (1 - (double)slider1.getValue() / 100));
+                    loader.current().setMinStepForward(delay);
                 }
 
                 else{
@@ -119,7 +123,6 @@ public class SimulationPanelMain implements ApplicationListener {
         slider1.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                int maxDelay = 40;
                 int delay =  (int)(maxDelay * (1 - (double)slider1.getValue() / 100));
                 loader.current().setMinStepForward(delay);
             }
