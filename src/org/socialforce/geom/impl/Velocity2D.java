@@ -41,4 +41,13 @@ public class Velocity2D extends Vector2D implements Velocity, Vector {
         cloned.values[1] = values[1];
         return cloned;
     }
+
+    /**
+     * 返回
+     * @return
+     */
+    @Override
+    public String toString(){
+        return "速度为：（"+ String.format("%.3f",values[0]) +","+ String.format("%.3f",values[1]) +")";
+    }
 }

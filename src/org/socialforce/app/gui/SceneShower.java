@@ -9,11 +9,10 @@ import org.tc33.jheatchart.HeatChart;
 
 import javax.swing.*;
 import javax.swing.Timer;
+import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.dnd.MouseDragGestureRecognizer;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
 
@@ -34,6 +33,12 @@ public class SceneShower implements SceneListener {
     private JLabel positionLabel;
     private JPanel showPanel3;
     private String title;
+
+    private JTextArea textArea;
+
+    protected void setLog(JTextArea area){
+        textArea = area;
+    }
 
     private DrawerInstaller drawerInstaller;
 
@@ -107,6 +112,13 @@ public class SceneShower implements SceneListener {
                     }
                 }
 //                super.mouseMoved(e);
+            }
+        });
+
+        board.addMouseMotionListener(new MouseInputAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                textArea.append("GOOD");
             }
         });
     }
