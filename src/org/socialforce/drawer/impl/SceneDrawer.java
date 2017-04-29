@@ -19,14 +19,12 @@ import java.awt.geom.Rectangle2D;
  * Created by Ledenel on 2016/8/24.
  */
 public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
-    public boolean isDrawing = false;
     /**
      * draw the pattern on the specific device.
      * @param pattern
      */
     @Override
     public void draw(Scene pattern) {
-        isDrawing = true;
         Iterable<InteractiveEntity> iterable = pattern.getAllEntitiesStream()::iterator;
         double [] start = new double[2];
         clip = pattern.getBounds();
@@ -71,7 +69,6 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         //getDevice().transform(reverse);
         getDevice().setTransform(oldT);
         // 2016/8/24  add draw scene.
-        isDrawing = false;
     }
 
     public Box getClip() {
