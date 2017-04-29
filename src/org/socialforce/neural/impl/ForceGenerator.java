@@ -23,6 +23,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
     protected ArrayList<LinkedList<Point2D>> matrix;
     protected ArrayList<ArrayList<Vector2D>> velocity;
     LinkedList<double[]> outputs = new LinkedList<>();
+    private String superPath = System.getProperty("user.dir")+"/resource/";
 
 
     public ForceGenerator(double timestep, int intercept){
@@ -36,7 +37,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
         matrix =  new ArrayList<>();
         velocity = new ArrayList<>();
         try{
-            csv2matrix(directory, timeInterval);
+            csv2matrix(superPath + directory, timeInterval);
             calcVelocity();
         }
         catch (Exception e){

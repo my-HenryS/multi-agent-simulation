@@ -49,9 +49,9 @@ public class WallForceGeneratorTest {
 
     @Test
     public void genOutput() throws Exception {
-        generator.readFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/model3Box.csv" ,1 );
+        generator.readFile("model3Box.csv" ,1 );
         generator.genOutput(scene);
-        generator.toFile("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/model3BoxSet2.csv");
+        generator.toFile("model3BoxSet2.csv");
     }
 
 }

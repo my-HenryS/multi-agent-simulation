@@ -228,14 +228,15 @@ public class NeuralNetwork implements NeuralNetListener {
     }
 
     public void saveNeuralNet(String fileName) throws IOException {
-        FileOutputStream stream = new FileOutputStream(fileName);
+        File file=new File(this.getClass().getClassLoader().getResource("").getPath(),fileName);
+        FileOutputStream stream = new FileOutputStream(file);
         ObjectOutputStream out = new ObjectOutputStream(stream);
         out.writeObject(nnet);
         out.close();
     }
 
     public void restoreNeuralNet(String fileName) throws IOException, ClassNotFoundException {
-        NeuralNetLoader loader = new NeuralNetLoader(fileName);
+        NeuralNetLoader loader = new NeuralNetLoader(this.getClass().getClassLoader().getResource("").getPath() + fileName);
         nnet = loader.getNeuralNet();
         nnet.getMonitor().addNeuralNetListener(this);
     }
@@ -248,8 +249,8 @@ public class NeuralNetwork implements NeuralNetListener {
         NeuralNetwork nnetk = new NeuralNetwork();
         nnetk.buildUp();
         nnetk.run();
-        nnetk.saveNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
-        nnetk.restoreNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
+        nnetk.saveNeuralNet("trainset4.net");
+        nnetk.restoreNeuralNet("trainset4.net");
         nnetk.test(new double[][]{{
                 1,0,1,0,0,3,0,0,9,0,0,3
         }});
