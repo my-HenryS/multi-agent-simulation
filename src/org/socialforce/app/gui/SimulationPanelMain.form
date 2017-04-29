@@ -130,7 +130,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Path finding strategy:"/>
+                      <text value="Exit Finding Strategy"/>
                     </properties>
                   </component>
                   <component id="ec13c" class="javax.swing.JComboBox" binding="agentPathFindingComboBox">
@@ -295,7 +295,7 @@
                     </constraints>
                     <properties>
                       <editable value="false"/>
-                      <text value="0.002"/>
+                      <text value="0.008"/>
                     </properties>
                   </component>
                   <component id="cc443" class="javax.swing.JLabel">

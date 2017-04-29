@@ -39,7 +39,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         setUpScenes();
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext(); ) {
             currentScene = iterator.next();
-            PathFinder pathFinder = new AStarPathFinder(currentScene, template);
+            PathFinder pathFinder = new AStarPathFinder(currentScene, template , 0.1);
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
             while (!toSkip()) {
