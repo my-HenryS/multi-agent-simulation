@@ -1,8 +1,17 @@
 package org.socialforce.app.gui;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.time.*;
 import org.socialforce.drawer.DrawerInstaller;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.drawer.impl.SceneDrawerInstaller;
+import org.socialforce.geom.*;
+import org.socialforce.geom.Box;
+import org.socialforce.geom.impl.Box2D;
+import org.socialforce.model.Agent;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneListener;
 import org.tc33.jheatchart.HeatChart;
@@ -45,8 +54,11 @@ public class SceneShower implements SceneListener {
     private Timer timer = new Timer(16, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(visibleCheckBox.isSelected() && scene.getDrawer() != null && scene.getAllAgents().size() != 0)
+            if(visibleCheckBox.isSelected() && scene.getDrawer() != null && scene.getAllAgents().size() != 0) {
                 scene.getDrawer().draw(scene);
+                chartPanel.loadPhoto(heatMapListener.getImage());
+                chartPanel2.loadPhoto(dynamicsListener.getImage());
+            }
         }
     });
 
@@ -55,22 +67,8 @@ public class SceneShower implements SceneListener {
         public void actionPerformed(ActionEvent e) {
             if(visibleCheckBox.isSelected()){
                 getBoard().repaint();
-
-                double[][] data = scene.getHeatMap();
-
-                HeatChart map = new HeatChart(data);
-                map.setCellSize(new Dimension(10,10));
-                map.setTitle("HeatMap");
-                map.setXAxisLabel("X Axis");
-                map.setYAxisLabel("Y Axis");
-                map.setShowXAxisValues(false);
-                map.setShowYAxisValues(false);
-                map.setHighValueColour(Color.ORANGE);
-                map.setLowValueColour(Color.BLUE);
-                chartPanel.loadPhoto(map.getChartImage());
-
                 chartPanel.repaint();
-
+                chartPanel2.repaint();
             }
         }
     });
@@ -92,6 +90,8 @@ public class SceneShower implements SceneListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SceneShower.this.getBoard().setVisible(visibleCheckBox.isSelected());
+                chartPanel.setVisible(visibleCheckBox.isSelected());
+                chartPanel2.setVisible(visibleCheckBox.isSelected());
                 SceneShower.this.positionLabel.setVisible(visibleCheckBox.isSelected());
             }
         });
@@ -135,7 +135,7 @@ public class SceneShower implements SceneListener {
     }
 
     private SceneBoard board;
-    private ImagePanel chartPanel;
+    private ImagePanel chartPanel, chartPanel2;
 
     public SceneBoard getBoard() {
         return board;
@@ -157,6 +157,8 @@ public class SceneShower implements SceneListener {
         showPanel1 = board;
         chartPanel = new ImagePanel();
         showPanel2 = chartPanel;
+        chartPanel2 = new ImagePanel();
+        showPanel3 = chartPanel2;
 
     }
 
@@ -165,6 +167,9 @@ public class SceneShower implements SceneListener {
     public Scene getScene() {
         return scene;
     }
+
+    HeatMapListener heatMapListener;
+    DynamicsListener dynamicsListener;
 
     public void setScene(Scene scene) {
         this.scene = scene;
@@ -178,6 +183,10 @@ public class SceneShower implements SceneListener {
         totalPeopleLabel.setText("" + scene.getAllAgents().size());
         board.getResizeListener().componentResized(null);
         timer.restart();
+        heatMapListener = new HeatMapListener();
+        scene.addSceneListener(heatMapListener);
+        dynamicsListener = new DynamicsListener();
+        scene.addSceneListener(dynamicsListener);
         repaintTimer.restart();
     }
 
@@ -193,7 +202,7 @@ public class SceneShower implements SceneListener {
      * @param scene 触发的场景。
      */
     @Override
-    public void onLoaded(Scene scene) {
+    public void onAdded(Scene scene) {
 
     }
 
@@ -261,5 +270,86 @@ public class SceneShower implements SceneListener {
         return bimage;
     }
 
+    private class HeatMapListener implements SceneListener{
+        double X,Y;
+        double xMin, yMin, xMax, yMax;
+        @Override
+        public void onAdded(Scene scene) {
+            Box bounds = scene.getBounds();
+            this.X = bounds.getEndPoint().getX() - bounds.getStartPoint().getX();
+            this.Y = bounds.getEndPoint().getY() - bounds.getStartPoint().getY();
+            this.xMin = bounds.getStartPoint().getX();
+            this.yMin = bounds.getStartPoint().getY();
+            this.xMax = bounds.getEndPoint().getX();
+            this.yMax = bounds.getEndPoint().getY();
+            HeatMap = new double[(int)Y+1][(int)X+1];
+            aggrHeatMap = new double[(int)Y+1][(int)X+1];
+
+        }
+        public double[][] HeatMap, aggrHeatMap;
+
+        public double[][] getHeatMap(){ return HeatMap; }
+
+        public Image getImage(){
+            HeatChart map = new HeatChart(getHeatMap());
+            map.setCellSize(new Dimension(10,10));
+            map.setTitle("HeatMap");
+            map.setXAxisLabel("X Axis");
+            map.setYAxisLabel("Y Axis");
+            map.setShowXAxisValues(false);
+            map.setShowYAxisValues(false);
+            map.setHighValueColour(Color.ORANGE);
+            map.setLowValueColour(Color.BLUE);
+            return map.getChartImage();
+        }
+
+        @Override
+        public void onStep(Scene scene) {
+            for(Agent agent: scene.getAllAgents()){
+                org.socialforce.geom.Point position = agent.getShape().getReferencePoint();
+                aggrHeatMap[(int)(position.getY() - yMin)][(int)(position.getX() - xMin)] += 1;
+            }
+            for(int i = 0; i < aggrHeatMap.length; i++){
+                for(int j = 0; j < aggrHeatMap[i].length; j++){
+                    HeatMap[i][j] = aggrHeatMap[aggrHeatMap.length - i - 1][j] / scene.getCurrentSteps();
+                }
+            }
+        }
+
+    }
+
+    private class DynamicsListener implements SceneListener{
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        String series1 = "平均时间";
+        Integer timeCount = 0, dataCount = 0;
+        int interval = 10;
+        @Override
+        public void onAdded(Scene scene) {
+
+        }
+
+        public Image getImage(){
+            JFreeChart chart = ChartFactory.createLineChart("场景平均速度变化", "时间", "平均速度", dataset,
+                    PlotOrientation.VERTICAL,
+                    true, true, true
+            );
+            chart.getCategoryPlot().getDomainAxis().setTickLabelsVisible(false);
+            return chart.createBufferedImage(660,550);
+        }
+
+        @Override
+        public void onStep(Scene scene) {
+            if(scene.getAllAgents().isEmpty() || timeCount++ % interval != 0) return;
+            dataset.addValue(
+                    Double.parseDouble(
+                            String.format("%.3f",
+                                    scene.getAllAgents().stream().mapToDouble(value -> value.getVelocity().length()).average().getAsDouble()
+                            )
+                    ),
+                    series1,
+                    dataCount++
+            );
+        }
+    }
 
 }
