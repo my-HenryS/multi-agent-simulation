@@ -225,7 +225,7 @@ public class AStarPathFinder implements PathFinder {
                 for (InteractiveEntity entity : all_blocks) {
                     agentShape.moveTo(new Point2D(i*min_div, j*min_div));
                     //assert( == entity.getShape().getClass());
-                    if ((entity instanceof Blockable) && ((DistanceShape)agentShape).distanceTo(entity.getShape()) < 0) {
+                    if ((entity instanceof Blockable) && ((DistanceShape)agentShape).distanceTo(entity.getShape()) < min_div/2) {
                         map[i][j] = 1;
                         break;
                     }
