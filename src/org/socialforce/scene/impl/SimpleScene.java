@@ -29,6 +29,7 @@ public class SimpleScene implements Scene {
     @Override
     public void addSceneListener(SceneListener sceneListener) {
         this.sceneListeners.add(sceneListener);
+        sceneListener.onAdded(this);
     }
 
     List<SceneListener> sceneListeners = new ArrayList<>();
@@ -52,8 +53,6 @@ public class SimpleScene implements Scene {
     }
 
     protected Box bounds;
-    protected double X, Y;
-    protected double xMin, xMax, yMin, yMax;
     protected SceneDrawer drawer;
 
     /**
@@ -94,7 +93,6 @@ public class SimpleScene implements Scene {
                 listener.onStep(this);
             }
         }
-        saveHeatmap();
         updateStep();
     }
 
@@ -292,31 +290,8 @@ public class SimpleScene implements Scene {
             }
         }
         this.bounds = new Box2D(new Point2D(xmin-5,ymin-5),new Point2D(xmax+5,ymax+5));
-        this.X = bounds.getEndPoint().getX() - bounds.getStartPoint().getX();
-        this.Y = bounds.getEndPoint().getY() - bounds.getStartPoint().getY();
-        this.xMin = bounds.getStartPoint().getX();
-        this.yMin = bounds.getStartPoint().getY();
-        this.xMax = bounds.getEndPoint().getX();
-        this.yMax = bounds.getEndPoint().getY();
-        HeatMap = new double[(int)Y+1][(int)X+1];
-        aggrHeatMap = new double[(int)Y+1][(int)X+1];
     }
 
-    public double[][] HeatMap, aggrHeatMap;
-
-    public double[][] getHeatMap(){ return HeatMap; }
-
-    private void saveHeatmap(){
-        for(Agent agent: allAgents){
-            Point position = agent.getShape().getReferencePoint();
-            aggrHeatMap[(int)(position.getY() - yMin)][(int)(position.getX() - xMin)] += 1;
-        }
-        for(int i = 0; i < aggrHeatMap.length; i++){
-            for(int j = 0; j < aggrHeatMap[i].length; j++){
-                HeatMap[i][j] = aggrHeatMap[aggrHeatMap.length - i - 1][j] / currentStep;
-            }
-        }
-    }
 
 
 }

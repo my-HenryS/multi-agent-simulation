@@ -100,5 +100,4 @@ public interface Scene extends Drawable {
     Scene standardclone();
     void pack();
 
-    double[][] getHeatMap();
 }
