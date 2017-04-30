@@ -324,6 +324,7 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
                 textArea.append(select.toString() + "\n");
                 textArea.append("  "+select.getVelocity().toString() + "\n");
                 textArea.append("  加"+select.getAcceleration().toString() + "\n");
+                textArea.append("  期望位置"+select.getPath().nextStep(select.getShape().getReferencePoint())+ "\n");
             } catch (NoSuchElementException ex) {
 
             }

@@ -4,14 +4,14 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.time.*;
 import org.socialforce.drawer.DrawerInstaller;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.drawer.impl.SceneDrawerInstaller;
-import org.socialforce.geom.*;
 import org.socialforce.geom.Box;
-import org.socialforce.geom.impl.Box2D;
+import org.socialforce.geom.impl.Tuple2D;
 import org.socialforce.model.Agent;
+import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneListener;
 import org.tc33.jheatchart.HeatChart;
@@ -20,10 +20,11 @@ import javax.swing.*;
 import javax.swing.Timer;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
-import java.awt.dnd.MouseDragGestureRecognizer;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by Ledenel on 2016/8/23.
@@ -41,6 +42,7 @@ public class SceneShower implements SceneListener {
     private JLabel avgVLabel;
     private JLabel positionLabel;
     private JPanel showPanel3;
+    private JComboBox comboBox1;
     private String title;
 
     private JTextArea textArea;
@@ -57,7 +59,10 @@ public class SceneShower implements SceneListener {
             if(visibleCheckBox.isSelected() && scene.getDrawer() != null && scene.getAllAgents().size() != 0) {
                 scene.getDrawer().draw(scene);
                 chartPanel.loadPhoto(heatMapListener.getImage());
-                chartPanel2.loadPhoto(dynamicsListener.getImage());
+                if(comboBox1.getSelectedIndex() == 0)
+                    chartPanel2.loadPhoto(avgVListener.getImage());
+                else
+                    chartPanel2.loadPhoto(ecListener.getImage());
             }
         }
     });
@@ -156,8 +161,10 @@ public class SceneShower implements SceneListener {
         board = new SceneBoard();
         showPanel1 = board;
         chartPanel = new ImagePanel();
+        chartPanel.setOrigin(20,20);
         showPanel2 = chartPanel;
         chartPanel2 = new ImagePanel();
+        chartPanel2.setOrigin(0,20);
         showPanel3 = chartPanel2;
 
     }
@@ -169,7 +176,8 @@ public class SceneShower implements SceneListener {
     }
 
     HeatMapListener heatMapListener;
-    DynamicsListener dynamicsListener;
+    AvgVelocityListener avgVListener;
+    ExitCapacityListener ecListener;
 
     public void setScene(Scene scene) {
         this.scene = scene;
@@ -185,8 +193,10 @@ public class SceneShower implements SceneListener {
         timer.restart();
         heatMapListener = new HeatMapListener();
         scene.addSceneListener(heatMapListener);
-        dynamicsListener = new DynamicsListener();
-        scene.addSceneListener(dynamicsListener);
+        avgVListener = new AvgVelocityListener();
+        scene.addSceneListener(avgVListener);
+        ecListener = new ExitCapacityListener();
+        scene.addSceneListener(ecListener);
         repaintTimer.restart();
     }
 
@@ -217,57 +227,6 @@ public class SceneShower implements SceneListener {
         this.remainPeopleLabel.setText("" + scene.getAllAgents().size());
         this.timeLabel.setText(String.format("%.3f", scene.getCurrentSteps() * scene.getApplication().getModel().getTimePerStep()));
         this.avgVLabel.setText(String.format("%.3f", scene.getAllAgents().stream().mapToDouble(value -> value.getVelocity().length()).average().getAsDouble()));
-    }
-
-    public static BufferedImage toBufferedImage(Image image) {
-        if (image instanceof BufferedImage) {
-            return (BufferedImage)image;
-        }
-
-        // This code ensures that all the pixels in the image are loaded
-        image = new ImageIcon(image).getImage();
-
-        // Determine if the image has transparent pixels; for this method's
-        // implementation, see e661 Determining If an Image Has Transparent Pixels
-        //boolean hasAlpha = hasAlpha(image);
-
-        // Create a buffered image with a format that's compatible with the screen
-        BufferedImage bimage = null;
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        try {
-            // Determine the type of transparency of the new buffered image
-            int transparency = Transparency.OPAQUE;
-           /* if (hasAlpha) {
-             transparency = Transparency.BITMASK;
-             }*/
-
-            // Create the buffered image
-            GraphicsDevice gs = ge.getDefaultScreenDevice();
-            GraphicsConfiguration gc = gs.getDefaultConfiguration();
-            bimage = gc.createCompatibleImage(
-                    image.getWidth(null), image.getHeight(null), transparency);
-        } catch (HeadlessException e) {
-            // The system does not have a screen
-        }
-
-        if (bimage == null) {
-            // Create a buffered image using the default color model
-            int type = BufferedImage.TYPE_INT_RGB;
-            //int type = BufferedImage.TYPE_3BYTE_BGR;//by wang
-            /*if (hasAlpha) {
-             type = BufferedImage.TYPE_INT_ARGB;
-             }*/
-            bimage = new BufferedImage(image.getWidth(null), image.getHeight(null), type);
-        }
-
-        // Copy image to buffered image
-        Graphics g = bimage.createGraphics();
-
-        // Paint the image onto the buffered image
-        g.drawImage(image, 0, 0, null);
-        g.dispose();
-
-        return bimage;
     }
 
     private class HeatMapListener implements SceneListener{
@@ -318,37 +277,103 @@ public class SceneShower implements SceneListener {
 
     }
 
-    private class DynamicsListener implements SceneListener{
+    private abstract class DynamicsListener implements SceneListener{
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        String series1 = "平均时间";
-        Integer timeCount = 0, dataCount = 0;
-        int interval = 10;
-        @Override
-        public void onAdded(Scene scene) {
+        LinkedBlockingQueue<Tuple2D<Double, String>> series = new LinkedBlockingQueue<>();   //储存新进入的数据缓存
+        String [] labels;   //所有序列的labels
+        Integer timeCount = 0, dataCount = 0;  //时间数，数据数
+        int interval = 10;  //间隔0.08秒采样
+        int maxDataPerSeries = 100;  //每序列最多数据 （8秒）
+        String title = "", xAxis = "", yAxis = "";
 
-        }
-
+        //Consumer
         public Image getImage(){
-            JFreeChart chart = ChartFactory.createLineChart("场景平均速度变化", "时间", "平均速度", dataset,
+            for(Tuple2D<Double, String> data: series){
+                dataset.addValue(data.getFirst(), data.getSecond(), dataCount);
+            }
+            dataCount ++;
+            series.clear();
+            while(dataset.getColumnCount() >= maxDataPerSeries){
+                dataset.removeColumn(0);    //当超过8秒的数据时，删除前面的数据
+            }
+            JFreeChart chart = ChartFactory.createLineChart(title, xAxis, yAxis, dataset,
                     PlotOrientation.VERTICAL,
                     true, true, true
             );
             chart.getCategoryPlot().getDomainAxis().setTickLabelsVisible(false);
-            return chart.createBufferedImage(660,550);
+            chart.getCategoryPlot().getDomainAxis().setTickMarksVisible(false);
+            //chart.getCategoryPlot().getRangeAxis().setRange(0,); 设定y轴坐标上下限
+            Image image = chart.createBufferedImage(660,500);
+            return image;
         }
 
+    }
+
+    private class AvgVelocityListener extends DynamicsListener{
+
+        /**
+         * 初始化绘图坐标，序列标签等
+         * @param scene 触发的场景。
+         */
+
+        @Override
+        public void onAdded(Scene scene) {
+            title = "最近8秒行人平均速度变化";
+            xAxis = "时间";
+            yAxis = "平均速度";
+            labels = new String[]{"所有行人"};
+        }
+
+        //Producer
         @Override
         public void onStep(Scene scene) {
             if(scene.getAllAgents().isEmpty() || timeCount++ % interval != 0) return;
-            dataset.addValue(
-                    Double.parseDouble(
-                            String.format("%.3f",
+            series.add(
+                    new Tuple2D<>(
+                            Double.parseDouble(String.format("%.3f",
                                     scene.getAllAgents().stream().mapToDouble(value -> value.getVelocity().length()).average().getAsDouble()
-                            )
-                    ),
-                    series1,
-                    dataCount++
+                            )),
+                            labels[0]
+                    )
             );
+        }
+    }
+
+    private class ExitCapacityListener extends DynamicsListener{
+
+        /**
+         * 初始化绘图坐标，序列标签等
+         * @param scene 触发的场景。
+         */
+
+        @Override
+        public void onAdded(Scene scene) {
+            interval = 40;  //间隔0.32秒采样
+            maxDataPerSeries = 200;  //每序列最多数据 （64秒）
+            title = "各出口逃生速率变化";
+            xAxis = "时间";
+            yAxis = "行人平均逃生速率";
+            int labelNum = 0;
+            for(InteractiveEntity sR : scene.getStaticEntities().selectClass(SafetyRegion.class)){
+                labelNum++;   //计算sR个数
+            }
+            labels = new String[labelNum];
+            String baseLabel = "出口";
+            for(int i = 0; i < labelNum; i++){
+                labels[i] = baseLabel + String.valueOf(i);
+            }
+        }
+
+        //Producer
+        @Override
+        public void onStep(Scene scene) {
+            if(scene.getAllAgents().isEmpty() || timeCount++ % interval != 0) return;  //TODO 在SafetyRegion中维护行人驶出队列
+            int i = 0;
+            for(InteractiveEntity sR : scene.getStaticEntities().selectClass(SafetyRegion.class)){
+                series.add(
+                        new Tuple2D<>((double)((SafetyRegion) sR).getLastSecondEscapedAgents(), labels[i++])
+                );
+            }
         }
     }
 

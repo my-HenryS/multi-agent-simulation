@@ -10,6 +10,7 @@ import java.awt.*;
  */
 class ImagePanel extends JPanel {
     private Image image;
+    private int x = 0 ,y = 0;
 
     //初始化时，加载的图片1.jpg
     public ImagePanel()
@@ -33,7 +34,12 @@ class ImagePanel extends JPanel {
         int imageHeight=image.getHeight(this);
 
 //将图片画在左上角
-        g.drawImage(image, 0, 0, null);
+        g.drawImage(image, x, y, null);
 
+    }
+
+    public void setOrigin(int x, int y){
+        this.x = x;
+        this.y = y;
     }
 }
