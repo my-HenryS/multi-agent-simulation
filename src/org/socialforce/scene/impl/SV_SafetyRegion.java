@@ -38,6 +38,7 @@ public class SV_SafetyRegion implements SceneValue<Shape>{
         SafetyRegion safetyRegion = new SafetyRegion(shape.clone());
         safetyRegion.setName("SafetyRegion");
         scene.getStaticEntities().add(safetyRegion);
+        scene.addSceneListener(safetyRegion);
         safetyRegion.setScene(scene);
         safetyRegion.setModel(new SimpleSocialForceModel());
     }
