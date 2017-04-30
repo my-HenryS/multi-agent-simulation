@@ -40,7 +40,7 @@ public class SceneStepDataProvider implements DataProvider<Scene>, SceneListener
      * @param scene 触发的场景。
      */
     @Override
-    public void onLoaded(Scene scene) {
+    public void onAdded(Scene scene) {
         this.scene = scene;
     }
 

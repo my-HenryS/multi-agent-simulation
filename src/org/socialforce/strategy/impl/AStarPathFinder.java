@@ -23,7 +23,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * TODO 性能优化 需结合scene重构
  */
 public class AStarPathFinder implements PathFinder {
-    private double min_div = 0.2;
+    private double min_div = 0.1;
     private int map[][];
     private double distance[][];
     private Point previous[][];
@@ -225,7 +225,7 @@ public class AStarPathFinder implements PathFinder {
                 for (InteractiveEntity entity : all_blocks) {
                     agentShape.moveTo(new Point2D(i*min_div, j*min_div));
                     //assert( == entity.getShape().getClass());
-                    if ((entity instanceof Blockable) && ((DistanceShape)agentShape).distanceTo(entity.getShape()) < 0) {
+                    if ((entity instanceof Blockable) && ((DistanceShape)agentShape).distanceTo(entity.getShape()) < min_div/2) {
                         map[i][j] = 1;
                         break;
                     }
@@ -333,11 +333,30 @@ public class AStarPathFinder implements PathFinder {
         this.delta_y = y;
     }
 
+    public double get_deltax(){
+        return delta_x;
+    }
+
+    public double get_deltay(){
+        return delta_y;
+    }
+
+    public double get_minDiv(){
+        return min_div;
+    }
+
     public Point[] getGoals(){
         Point [] points = new Point[goals.size()];
         for(int i = 0; i < points.length; i++){
             points[i] = goals.get(i).clone().scaleBy(min_div).moveBy(delta_x, delta_y);;
         }
         return points;
+    }
+
+    /**
+     * 获取场景地图
+     */
+    public int[][] getMap(){
+        return map;
     }
 }

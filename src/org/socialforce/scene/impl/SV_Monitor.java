@@ -35,7 +35,7 @@ public class SV_Monitor implements SceneValue<Shape> {
 
     @Override
     public void apply(Scene scene) {
-        Monitor monitor = new Monitor(shape);
+        Monitor monitor = new Monitor(shape.clone());
         monitor.setName("SimpleMonitor");
         scene.getStaticEntities().add(monitor);
         monitor.setScene(scene);

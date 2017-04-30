@@ -39,17 +39,9 @@ public class ApplicationForDoorTest extends SimpleApplication implements SocialF
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
             while (!toSkip()) {
-                long start = System.currentTimeMillis(), span, fps = 16;
                 this.StepNext(currentScene);
-                long l = System.currentTimeMillis() - start;
-                span = l > fps? 0: fps - l;
-                try {
-                    Thread.sleep(span); //锁帧大法
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
-            onStop();
+            if(onStop()) return;
         }
     }
 
@@ -72,7 +64,10 @@ public class ApplicationForDoorTest extends SimpleApplication implements SocialF
         parameters.addLast(genParameter(new SV_Door(new Rectangle2D(new Point2D(4.5,0.25),1,0.5,0),new Point2D(4,0),new double[]{0,Math.PI/2},1)));
         parameters.addLast(genParameter(new SV_Door(new Rectangle2D(new Point2D(5.5,0.25),1,0.5,0),new Point2D(6,0),new double[]{-Math.PI/2,0},-1)));
         loader.readParameterSet(parameters);
-        scenes = loader.readScene(this);
+        scenes = loader.readScene();
+        for(Scene scene:scenes){
+            scene.setApplication(this);
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package org.socialforce.model;
 
 import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.Velocity;
 import org.socialforce.strategy.Path;
 
 /**
@@ -48,4 +49,9 @@ public interface Agent extends Influential, Moveable, Blockable {
      */
     void selfAffect();
 
+    /**
+     * 获取加速度
+     */
+
+    Velocity getAcceleration();
 }

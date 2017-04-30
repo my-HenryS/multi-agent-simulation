@@ -41,7 +41,7 @@ public class ApplicationForECTest extends SimpleApplication implements SocialFor
             while (!toSkip()) {
                 this.StepNext(currentScene);
             }
-            onStop();
+            if(onStop()) return;
             for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                 Monitor monitor = (Monitor)iter.next();
                 System.out.println(monitor.sayVelocity());
@@ -65,7 +65,10 @@ public class ApplicationForECTest extends SimpleApplication implements SocialFor
         parameters.addLast(genParameter(new SV_RandomAgentGenerator(200,new Box2D(3,-10,20,6),template)));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(6,1,8,1))));
         loader.readParameterSet(parameters);
-        scenes = loader.readScene(this);
+        scenes = loader.readScene();
+        for(Scene scene:scenes){
+            scene.setApplication(this);
+        }
     }
 
 }

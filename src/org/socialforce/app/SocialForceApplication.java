@@ -58,13 +58,38 @@ public interface SocialForceApplication {
 
     void setName(String name);
 
+    /**
+     * 跳过当前场景
+     */
     void skip();
 
+    @Deprecated
     void stop();
 
+    /**
+     * 暂停当前场景
+     */
     void pause();
 
+    /**
+     * 恢复当前场景
+     */
     void resume();
 
+    /**
+     * 结束所有场景
+     */
+    void terminate();
+
+    /**
+     * 定义场景在何种场景下自动结束
+     * @return
+     */
     boolean toSkip();
+
+    /**
+     * 定义运行一步的最小时间
+     * @param stepForward
+     */
+    void setMinStepForward(int stepForward);
 }

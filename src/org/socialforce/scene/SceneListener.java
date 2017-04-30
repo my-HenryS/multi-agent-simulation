@@ -5,10 +5,10 @@ package org.socialforce.scene;
  */
 public interface SceneListener {
     /**
-     * 场景全部加载完毕时触发的事件。
+     * Listener添加进Scene后时触发的事件。
      * @param scene 触发的场景。
      */
-    void onLoaded(Scene scene);
+    void onAdded(Scene scene);
 
     /**
      * 场景进行一步时触发的事件。

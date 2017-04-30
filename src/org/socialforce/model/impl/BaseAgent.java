@@ -11,13 +11,14 @@ import org.socialforce.strategy.Path;
  * Created by Ledenel on 2016/8/15.
  */
 public class BaseAgent extends Entity implements Agent {
-    Velocity currVelocity;
+    Velocity currVelocity, currAcceleration = new Velocity2D(0,0);
     Path path;
     double mass;
     DistanceShape view;
     Force pushed;
     boolean escaped = false;
     DistanceShape shape;
+    private static final double forceUpbound = 2450;
 
     public BaseAgent(DistanceShape shape, Velocity velocity) {
         super(shape);
@@ -95,7 +96,13 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public void act() {
+        if(pushed.length() > forceUpbound){
+            this.pushed = pushed.getRefVector();
+            pushed.scale(forceUpbound);
+        }
         Velocity next_v = new Velocity2D(0,0), deltaV = this.pushed.deltaVelocity(mass, model.getTimePerStep());
+        currAcceleration = deltaV.clone();
+        currAcceleration.scale(1/model.getTimePerStep());
         Vector deltaS;
         next_v.add(currVelocity);
         next_v.add(deltaV);
@@ -183,6 +190,11 @@ public class BaseAgent extends Entity implements Agent {
      */
     public void selfAffect(){
         this.push(model.fieldForce(this));
+    }
+
+    @Override
+    public Velocity getAcceleration() {
+        return currAcceleration;
     }
 
     /**

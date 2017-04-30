@@ -45,7 +45,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
             while (!toSkip()) {
                 this.StepNext(currentScene);
             }
-            onStop();
+            if(onStop()) return;
         }
     }
 
@@ -67,6 +67,9 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         setUpT2Scene();
         setUpPassageScene();
         setUpPassageScene2();
+        for(Scene scene:scenes){
+            scene.setApplication(this);
+        }
     }
 
 
@@ -84,7 +87,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
         loader.readParameterSet(parameters);
-        for (Scene s : loader.readScene(this)){
+        for (Scene s : loader.readScene()){
             scenes.add(s);
         }
     }
@@ -105,7 +108,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,3,10,1))));
         loader.readParameterSet(parameters);
-        for (Scene s : loader.readScene(this)){
+        for (Scene s : loader.readScene()){
             scenes.add(s);
         }
     }
@@ -127,7 +130,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,4,10,1))));
         loader.readParameterSet(parameters);
-        for (Scene s : loader.readScene(this)){
+        for (Scene s : loader.readScene()){
             scenes.add(s);
         }
     }
@@ -150,7 +153,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,-4,10,1))));
         loader.readParameterSet(parameters);
-        for (Scene s : loader.readScene(this)){
+        for (Scene s : loader.readScene()){
             scenes.add(s);
         }
     }
@@ -171,7 +174,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
         loader.readParameterSet(parameters);
-        for (Scene s : loader.readScene(this)){
+        for (Scene s : loader.readScene()){
             scenes.add(s);
         }
     }
@@ -192,7 +195,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
         loader.readParameterSet(parameters);
-        for (Scene s : loader.readScene(this)){
+        for (Scene s : loader.readScene()){
             scenes.add(s);
         }
     }
@@ -217,7 +220,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
 
         loader.readParameterSet(parameters);
-        for (Scene s : loader.readScene(this)){
+        for (Scene s : loader.readScene()){
             scenes.add(s);
         }
     }
@@ -249,7 +252,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(-1.5,-35-DoorWidth/2,2,DoorWidth))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(3.5,-35-DoorWidth/2,2,DoorWidth))));
         loader.readParameterSet(parameters);
-        for (Scene s : loader.readScene(this)){
+        for (Scene s : loader.readScene()){
             scenes.add(s);
         }
     }
@@ -276,7 +279,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements So
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,-15,1,-10))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,-25,1,-10))));
         loader.readParameterSet(parameters);
-        for (Scene s : loader.readScene(this)){
+        for (Scene s : loader.readScene()){
             scenes.add(s);
         }
     }

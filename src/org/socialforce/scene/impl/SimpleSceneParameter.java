@@ -13,22 +13,15 @@ import java.util.LinkedList;
 public class SimpleSceneParameter implements SceneParameter {
 
     public SimpleSceneParameter(){}
-    public SimpleSceneParameter(int priority){
-        this.priority = priority;
-    }
 
     public SimpleSceneParameter(LinkedList<SceneValue> values){
         if(isValid(values)){
-            for (SceneValue value : values){
-                value.setPriority(this.priority);
-            }
             this.values = values;
         }
     }
 
     protected String name;
     protected Class parameterclass = null;
-    protected int priority = 0;
     @Override
     public String getName() {
         return name;
@@ -47,7 +40,6 @@ public class SimpleSceneParameter implements SceneParameter {
     protected LinkedList<SceneValue> values = new LinkedList<>();
     public void addValue(SceneValue value){
         if (isValid(value)){
-            value.setPriority(this.priority);
             values.addLast(value);
         }
         else ;//TODO 可能需要一个warning或者什么的，不确定

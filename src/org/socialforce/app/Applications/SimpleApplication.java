@@ -22,6 +22,7 @@ public abstract class SimpleApplication implements SocialForceApplication {
     protected ApplicationListener listener;
     protected Model model = new SimpleSocialForceModel();
     protected boolean Pause = false, Skip = false;
+    protected int minStepForward = 0;
 
     @Override
     public void stop() {
@@ -112,9 +113,21 @@ public abstract class SimpleApplication implements SocialForceApplication {
 
     public void StepNext(Scene scene){
         if (Pause == false){
+            long startT = System.currentTimeMillis();
             scene.stepNext();
+            long span = System.currentTimeMillis() - startT;
+            long sleepT = (span < minStepForward) ? minStepForward - span : 0;
+            try {
+                Thread.sleep(sleepT);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         else;//do nothing
+    }
+
+    public void setMinStepForward(int stepForward){
+        this.minStepForward = stepForward;
     }
 
     @Override
@@ -134,8 +147,23 @@ public abstract class SimpleApplication implements SocialForceApplication {
     public boolean toSkip() {
         return Skip || currentScene.getAllAgents().isEmpty();
     }
-    public void onStop(){
+
+    boolean terminate = false;
+
+    public void terminate(){
+        skip();
+        terminate = true;
+    }
+
+    /**
+     * 在scene运行结束时调用
+     * @return 是否结束application
+     */
+    public boolean onStop() {
+        boolean tempT = terminate;
         Skip = false;
+        terminate = false;
+        return tempT;
     }
 
 }

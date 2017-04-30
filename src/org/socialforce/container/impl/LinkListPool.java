@@ -8,11 +8,12 @@ import org.socialforce.model.InteractiveEntity;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * Created by Ledenel on 2016/8/21.
  */
-public class LinkListPool<T extends InteractiveEntity> extends LinkedList<T> implements Pool<T> {
+public class LinkListPool<T extends InteractiveEntity> extends LinkedBlockingDeque<T> implements Pool<T> {
     /**
      * 选中与shape相交的实体
      *

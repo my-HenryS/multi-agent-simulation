@@ -49,7 +49,7 @@ public class ApplicationForMutidoor extends SimpleApplication implements SocialF
             while (!toSkip()) {
                 this.StepNext(currentScene);
             }
-            onStop();
+            if(onStop()) return;
             for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                 Monitor m = (Monitor)iter.next();
                 Point p = m.getShape().getReferencePoint();
@@ -93,7 +93,10 @@ public class ApplicationForMutidoor extends SimpleApplication implements SocialF
             ,new SV_Wall(new Shape[]{new Box2D(0,-2,10-doorwidth,3)})
             ,new SV_Wall(new Shape[]{new Box2D(0,0,5-doorwidth,1),new Box2D(5+doorwidth,0,5-doorwidth,1)})));
         loader.readParameterSet(parameters);
-        scenes = loader.readScene(this);
+        scenes = loader.readScene();
+        for(Scene scene:scenes){
+            scene.setApplication(this);
+        }
     }
 
 }

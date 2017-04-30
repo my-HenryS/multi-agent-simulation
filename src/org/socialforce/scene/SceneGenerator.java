@@ -13,9 +13,7 @@ public interface SceneGenerator {
             for (Iterator<SceneValue> iterator = values.iterator(); iterator.hasNext(); ) {
                 SceneValue sceneValue = iterator.next();
                 int priority = sceneValue.getPriority();
-                if (sceneValue == null ) {
-                    break;
-                } else if ( priority > i -1 && priority <= i){
+                if ( priority > i -1 && priority <= i){
                     sceneValue.apply(scene);
                 }
             }

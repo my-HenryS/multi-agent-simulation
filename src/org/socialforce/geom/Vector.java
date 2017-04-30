@@ -1,5 +1,7 @@
 package org.socialforce.geom;
 
+import org.socialforce.geom.impl.Vector2D;
+
 import java.io.Serializable;
 
 /**
@@ -96,6 +98,14 @@ public interface Vector extends Cloneable, Serializable, DimensionEntity {
      * @param arrayToCopy 复制的数组.
      */
     void get(double[] arrayToCopy);
+
+    /**
+     * 获取参考的向量
+     * 与原向量同向但是长度为1.
+     * 零向量没有参考向量
+     * @return 参考向量，即单位向量
+     */
+    Vector2D getRefVector();
 
     /**
      * 将此向量的值给另外一个向量.

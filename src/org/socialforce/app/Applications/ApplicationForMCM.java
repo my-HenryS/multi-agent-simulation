@@ -53,7 +53,6 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                     strategy.pathDecision();
                     System.out.println("flow now "+a);
                     while (!toSkip()) {
-                        long start = System.currentTimeMillis(), span, fps = 12;
                         this.StepNext(currentScene);
                         iteration += 1;
                         if(iteration % 60 ==0 && strategy instanceof DynamicStrategy){
@@ -73,14 +72,8 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                                 }
                             }
                         }
-                        span = (System.currentTimeMillis() - start) >= fps? 0: fps - (System.currentTimeMillis() - start);
-                        try {
-                            Thread.sleep(span); //锁帧大法
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
                     }
-                    onStop();
+                    if(onStop()) return;
                     System.out.println("flow is "+speed/size);
 
                 }
@@ -147,7 +140,10 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+9.3,top-top_length,0.4,0.4))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+13.2,top-top_length,0.4,0.4))));
         loader.readParameterSet(parameters);
-        scenes = loader.readScene(this);
+        scenes = loader.readScene();
+        for(Scene scene:scenes){
+            scene.setApplication(this);
+        }
     }
 
 

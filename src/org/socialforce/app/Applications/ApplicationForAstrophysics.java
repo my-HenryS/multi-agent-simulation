@@ -35,17 +35,9 @@ public class ApplicationForAstrophysics extends SimpleApplication {
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext(); ) {
             currentScene = iterator.next();
             while (!toSkip()) {
-                long start = System.currentTimeMillis(), span, fps = 16;
                 this.StepNext(currentScene);
-                long l = System.currentTimeMillis() - start;
-                span = l > fps? 0: fps - l;
-                try {
-                    Thread.sleep(span); //锁帧大法
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
-            onStop();
+            if(onStop()) return;
         }
     }
 
@@ -67,6 +59,9 @@ public class ApplicationForAstrophysics extends SimpleApplication {
         parameters.addLast(genParameter(new SV_Star(new Circle2D(new Point2D(70,0),0.75),new Velocity2D(0,17))));
         parameters.addLast(genParameter(new SV_Star(new Circle2D(new Point2D(90,0),4),new Velocity2D(0,6))));
         loader.readParameterSet(parameters);
-        scenes = loader.readScene(this);
+        scenes = loader.readScene();
+        for(Scene scene:scenes){
+            scene.setApplication(this);
+        }
     }
 }

@@ -9,6 +9,7 @@ import org.socialforce.container.impl.LinkListPool;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.Box;
+import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
@@ -28,6 +29,7 @@ public class SimpleScene implements Scene {
     @Override
     public void addSceneListener(SceneListener sceneListener) {
         this.sceneListeners.add(sceneListener);
+        sceneListener.onAdded(this);
     }
 
     List<SceneListener> sceneListeners = new ArrayList<>();
@@ -44,6 +46,7 @@ public class SimpleScene implements Scene {
     }
 
     public SimpleScene(Box bounds) {
+        //设置scene的范围
         this.bounds = bounds;
         this.statics = new LinkListEntityPool();
         this.allAgents = new LinkListAgentPool();
@@ -82,7 +85,6 @@ public class SimpleScene implements Scene {
         for (InteractiveEntity movable : movables) {
             ((Moveable)movable).act();
         }
-
         allAgents.removeIf(Agent::isEscaped);
         currentStep++;
         if(this.getApplication() != null) {
@@ -289,5 +291,7 @@ public class SimpleScene implements Scene {
         }
         this.bounds = new Box2D(new Point2D(xmin-5,ymin-5),new Point2D(xmax+5,ymax+5));
     }
+
+
 
 }

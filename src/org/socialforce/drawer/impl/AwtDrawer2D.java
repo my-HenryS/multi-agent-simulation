@@ -55,7 +55,7 @@ public abstract class AwtDrawer2D<DrawableType extends Drawable> implements Draw
     }
 
 
-    protected Color color = Color.black;
+    protected Color color = Color.gray;
 
     //protected Rectangle2D bound = new Rectangle2D.Double();
 

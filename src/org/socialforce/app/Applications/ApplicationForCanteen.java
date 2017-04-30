@@ -66,7 +66,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 }
                 System.out.print("Population of "+total_num);
                 int iteration = 0;
-                PathFinder pathFinder = new AStarPathFinder(currentScene, template);
+                PathFinder pathFinder = new AStarPathFinder(currentScene, template, 0.2);
                 strategy = new ECStrategy(currentScene, pathFinder);
                 /*
                 if(i<10){
@@ -88,36 +88,14 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 */
                 strategy.pathDecision();
                 while (!toSkip()) {
-                    long start = System.currentTimeMillis(), span, fps = 0;
                     this.StepNext(currentScene);
                     iteration += 1;
                     if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
                         ((DynamicStrategy) strategy).dynamicDecision();
                     }
-                    long l = System.currentTimeMillis() - start;
-                    span = l > fps? 0: fps - l;
-                    try {
-                        Thread.sleep(span); //锁帧大法
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
-                onStop();
-                /*
-                double samplewidth = 1;
-                double [][] matrixV = new double[(int)(21/samplewidth)][(int)(30/samplewidth)];
-                for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
-                    Monitor m = (Monitor)iter.next();
-                    Point p = m.getShape().getReferencePoint();
-                    matrixV[(int)Math.rint((p.getY())/samplewidth)][(int)Math.rint(p.getX()/samplewidth)] = m.sayVolume();
-                }
-                for(double [] m1:matrixV){
-                    for(double m:m1){
-                        System.out.print(String.format("%.1f", m)+"\t");
-                    }
-                    System.out.println();
-                }
-                */
+                if(onStop()) return;
+
                 System.out.println(iteration * 0.002);
             }
         }
@@ -188,7 +166,10 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
         }
         */
         loader.readParameterSet(parameters);
-        scenes = loader.readScene(this);
+        scenes = loader.readScene();
+        for(Scene scene:scenes){
+            scene.setApplication(this);
+        }
     }
 
 

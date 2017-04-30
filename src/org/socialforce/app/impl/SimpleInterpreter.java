@@ -14,6 +14,7 @@ import org.socialforce.scene.impl.StandardSceneLoader;
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedList;
 
 /**
  * Created by sunjh1999 on 2017/1/15.
@@ -181,7 +182,7 @@ public class SimpleInterpreter implements Interpreter {
     }
 
     public Wall[] wall(){
-        LinkListPool<Wall> wallpool = new LinkListPool<>();
+        LinkedList<Wall> wallpool = new LinkedList<>();
         Wall [] walls;
         if(!token.equals("Walls")) return null;
         getsym();

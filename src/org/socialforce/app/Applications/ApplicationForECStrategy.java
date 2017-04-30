@@ -43,7 +43,6 @@ public class ApplicationForECStrategy extends SimpleApplication implements Socia
             //strategy = new LifeBeltStrategy(scene, pathFinder);
             //strategy = new NearestGoalStrategy(scene, pathFinder);
             strategy.pathDecision();
-            long span = System.currentTimeMillis();
             while (!toSkip()) {
                 this.StepNext(currentScene);
                 iteration += 1;
@@ -51,7 +50,7 @@ public class ApplicationForECStrategy extends SimpleApplication implements Socia
                     ((DynamicStrategy) strategy).dynamicDecision();
                 }
             }
-            onStop();
+            if(onStop()) return;
         }
     }
 
@@ -78,7 +77,10 @@ public class ApplicationForECStrategy extends SimpleApplication implements Socia
                                              new Box2D(new Point2D(2,9.5), new Point2D(5,10.25)),
                                              new Box2D(new Point2D(13,19), new Point2D(14.5,22))})));
         loader.readParameterSet(parameters);
-        scenes = loader.readScene(this);
+        scenes = loader.readScene();
+        for(Scene scene:scenes){
+            scene.setApplication(this);
+        }
     }
 
 }

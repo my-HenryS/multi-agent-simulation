@@ -307,8 +307,8 @@ public class Segment2D implements Shape {
         Vector2D v1,v2;
         v1 = new Vector2D(x1-center.getX(),y1 - center.getY());
         v2 = new Vector2D(x2-center.getX(),y2 - center.getY());
-        v1.spin(angle);
-        v2.spin(angle);
+        v1.rotate(angle);
+        v2.rotate(angle);
         x1 = center.getX()+v1.values[0];
         x2 = center.getX()+v2.values[0];
         y1 = center.getX()+v1.values[1];

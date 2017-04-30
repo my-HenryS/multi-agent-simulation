@@ -1,4 +1,4 @@
-package org.socialforce.neural;
+package org.socialforce.neural.impl;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -21,11 +21,12 @@ public class NeuralNetwork implements NeuralNetListener {
     private Monitor monitor;
     private double []lMax ,lMin;
     private NeuralNet nnet;
-    private String directory = "/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.csv";
-    private int labelIndexM = 2; //2以下
+    private String directory = "/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/MultiSet.csv";
+    private int labelIndexM = 2; //2以下为标签
     private CountDownLatch latch = new CountDownLatch(1);
     public double INPUT[][];
     private int epoch = 500;
+    int inputNum = 10000;
 
     public double LABEL[][];
 
@@ -50,9 +51,9 @@ public class NeuralNetwork implements NeuralNetListener {
         output.setLayerName("output");
 
         // sets their dimensions
-        input.setRows(14);
-        hidden.setRows(60);
-        hidden2.setRows(30);
+        input.setRows(12);
+        hidden.setRows(40);
+        hidden2.setRows(10);
         output.setRows(2);
 
         // Now create the two Synapses
@@ -80,7 +81,7 @@ public class NeuralNetwork implements NeuralNetListener {
 
         // The first two columns contain the input values
         inputStream.setInputArray(INPUT);
-        inputStream.setAdvancedColumnSelector("1-14");
+        inputStream.setAdvancedColumnSelector("1-12");
 
         // set the input data
         input.addInputSynapse(inputStream);
@@ -110,7 +111,7 @@ public class NeuralNetwork implements NeuralNetListener {
         nnet.addLayer(output, NeuralNet.OUTPUT_LAYER);
         nnet.setTeacher(trainer);
         this.monitor = nnet.getMonitor();
-        monitor.setTrainingPatterns(INPUT.length);    // # of rows (patterns) contained in the input file
+        monitor.setTrainingPatterns(inputNum);    // # of rows (patterns) contained in the input file
         monitor.setTotCicles(epoch);    // How many times the net must be trained on the input patterns
         monitor.setLearningRate(0.7);
         monitor.setMomentum(0.3);
@@ -139,7 +140,7 @@ public class NeuralNetwork implements NeuralNetListener {
             Layer input = nnet.getInputLayer();
             input.removeAllInputs();
             MemoryInputSynapse memInp = new MemoryInputSynapse();
-            memInp.setAdvancedColumnSelector("1-14");
+            memInp.setAdvancedColumnSelector("1-12");
             input.addInputSynapse(memInp);
             memInp.setInputArray(inputArray);
             Layer output = nnet.getOutputLayer();
@@ -227,17 +228,17 @@ public class NeuralNetwork implements NeuralNetListener {
     }
 
     public void saveNeuralNet(String fileName) throws IOException {
-        FileOutputStream stream = new FileOutputStream(fileName);
+        File file=new File(this.getClass().getClassLoader().getResource("").getPath(),fileName);
+        FileOutputStream stream = new FileOutputStream(file);
         ObjectOutputStream out = new ObjectOutputStream(stream);
         out.writeObject(nnet);
         out.close();
     }
 
     public void restoreNeuralNet(String fileName) throws IOException, ClassNotFoundException {
-        NeuralNetLoader loader = new NeuralNetLoader(fileName);
+        NeuralNetLoader loader = new NeuralNetLoader(this.getClass().getClassLoader().getResource("").getPath() + fileName);
         nnet = loader.getNeuralNet();
         nnet.getMonitor().addNeuralNetListener(this);
-        this.run();
     }
 
     public void normalization(double[] array){
@@ -248,7 +249,10 @@ public class NeuralNetwork implements NeuralNetListener {
         NeuralNetwork nnetk = new NeuralNetwork();
         nnetk.buildUp();
         nnetk.run();
-        nnetk.saveNeuralNet("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/trainset4.net");
-        nnetk.test(new double[][]{{-0.3108226803562246,0.22107764747239367,-0.48333767228268965,-0.5527790883579144,0.5351123506918398,0.5933331529028574,-0.6666853026309356,-0.507126171105496,-1.268743031896033,0.347820494504417,3.0054071870387182,3.774592812961282,-1.3841486398461154,-0.530412676604409}});
+        nnetk.saveNeuralNet("trainset4.net");
+        nnetk.restoreNeuralNet("trainset4.net");
+        nnetk.test(new double[][]{{
+                1,0,1,0,0,3,0,0,9,0,0,3
+        }});
     }
 }

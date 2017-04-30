@@ -37,18 +37,10 @@ public class ApplicationForCrossFlow extends SimpleApplication {
             GoalStrategy strategy = new FurthestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
             while (!toSkip()) {
-                long start = System.currentTimeMillis(), span, fps = 16;
                 this.StepNext(currentScene);
-                long l = System.currentTimeMillis() - start;
-                span = l > fps? 0: fps - l;
-                try {
-                    Thread.sleep(span); //锁帧大法
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
+            if(onStop()) return;
         }
-        onStop();
     }
 
     /**
@@ -68,6 +60,9 @@ public class ApplicationForCrossFlow extends SimpleApplication {
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(46,1,1,8))));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(-6,1,1,8))));
         loader.readParameterSet(parameters);
-        scenes = loader.readScene(this);
+        scenes = loader.readScene();
+        for(Scene scene:scenes){
+            scene.setApplication(this);
+        }
     }
 }

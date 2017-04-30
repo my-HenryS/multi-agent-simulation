@@ -66,7 +66,7 @@ public class Rectangle2D implements Shape{
         Vector2D distance = (Vector2D) center.directionTo(point);
         distance.scale(Math.abs(center.distanceTo(point)));
         rectangle2D.spin(-temp);
-        distance.spin(-temp);
+        distance.rotate(-temp);
         bound = rectangle2D.getBounds();
         Point2D point2D = new Point2D(center.getX()+distance.values[0],center.getY()+distance.values[1]);
         //result = bound.contains(new Point2D(center.getX()+distance.values[0],center.getY()+distance.values[1]));
@@ -213,7 +213,7 @@ public class Rectangle2D implements Shape{
     public void spin(Point point, double angle){
         Vector2D vector2D = new Vector2D(center.getX()-point.getX(),center.getY()-point.getY());
         this.angle = this.angle +angle;
-        vector2D.spin(angle);
+        vector2D.rotate(angle);
         center.moveTo(point.getX(),point.getY());
         center.moveBy(vector2D.values[0],vector2D.values[1]);
     }

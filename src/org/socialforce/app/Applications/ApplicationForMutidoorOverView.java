@@ -46,7 +46,7 @@ public class ApplicationForMutidoorOverView extends SimpleApplication implements
             while (!toSkip()) {
                 this.StepNext(currentScene);
             }
-            onStop();
+            if(onStop()) return;
             for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                 Monitor monitor = (Monitor)iter.next();
                 System.out.println(monitor.sayVelocity());
@@ -94,7 +94,10 @@ public class ApplicationForMutidoorOverView extends SimpleApplication implements
         //parameters.addLast(genParameter(new SV_Monitor(new Circle2D(new Point2D(10,0),0.2))));
         //parameters.addLast(genParameter(new SV_Monitor(new Circle2D(new Point2D(10,-1),0.2))));
         loader.readParameterSet(parameters);
-        scenes = loader.readScene(this);
+        scenes = loader.readScene();
+        for(Scene scene:scenes){
+            scene.setApplication(this);
+        }
     }
 
 }
