@@ -66,7 +66,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 }
                 System.out.print("Population of "+total_num);
                 int iteration = 0;
-                PathFinder pathFinder = new AStarPathFinder(currentScene, template);
+                PathFinder pathFinder = new AStarPathFinder(currentScene, template, 0.2);
                 strategy = new ECStrategy(currentScene, pathFinder);
                 /*
                 if(i<10){
