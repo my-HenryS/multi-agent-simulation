@@ -57,23 +57,21 @@ public class SceneShower implements SceneListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(visibleCheckBox.isSelected() && scene.getDrawer() != null && scene.getAllAgents().size() != 0) {
-                scene.getDrawer().draw(scene);
-                chartPanel.loadPhoto(heatMapListener.getImage());
-                if(comboBox1.getSelectedIndex() == 0)
-                    chartPanel2.loadPhoto(avgVListener.getImage());
-                else
-                    chartPanel2.loadPhoto(ecListener.getImage());
-            }
-        }
-    });
-
-    private Timer repaintTimer = new Timer(16, new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if(visibleCheckBox.isSelected()){
-                getBoard().repaint();
-                chartPanel.repaint();
-                chartPanel2.repaint();
+                if(tabbedPane.getSelectedIndex() == 0){
+                    scene.getDrawer().draw(scene);
+                    getBoard().repaint();
+                }
+                else if(tabbedPane.getSelectedIndex() == 1) {
+                    chartPanel.loadPhoto(heatMapListener.getImage());
+                    chartPanel.repaint();
+                }
+                else{
+                    if (comboBox1.getSelectedIndex() == 0)
+                        chartPanel2.loadPhoto(avgVListener.getImage());
+                    else
+                        chartPanel2.loadPhoto(ecListener.getImage());
+                    chartPanel2.repaint();
+                }
             }
         }
     });
@@ -197,7 +195,7 @@ public class SceneShower implements SceneListener {
         scene.addSceneListener(avgVListener);
         ecListener = new ExitCapacityListener();
         scene.addSceneListener(ecListener);
-        repaintTimer.restart();
+        //repaintTimer.restart();
     }
 
     Scene scene;
@@ -288,10 +286,15 @@ public class SceneShower implements SceneListener {
 
         //Consumer
         public Image getImage(){
+            int temp = 0;
             for(Tuple2D<Double, String> data: series){
                 dataset.addValue(data.getFirst(), data.getSecond(), dataCount);
+                temp++;
+                if(temp % labels.length == 0){
+                    temp = 0;
+                    dataCount++;
+                }
             }
-            dataCount ++;
             series.clear();
             while(dataset.getColumnCount() >= maxDataPerSeries){
                 dataset.removeColumn(0);    //当超过8秒的数据时，删除前面的数据
@@ -367,7 +370,7 @@ public class SceneShower implements SceneListener {
         //Producer
         @Override
         public void onStep(Scene scene) {
-            if(scene.getAllAgents().isEmpty() || timeCount++ % interval != 0) return;  //TODO 在SafetyRegion中维护行人驶出队列
+            if(scene.getAllAgents().isEmpty() || timeCount++ % interval != 0) return;
             int i = 0;
             for(InteractiveEntity sR : scene.getStaticEntities().selectClass(SafetyRegion.class)){
                 series.add(
