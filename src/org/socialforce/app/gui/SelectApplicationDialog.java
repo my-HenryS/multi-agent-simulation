@@ -1,7 +1,6 @@
 package org.socialforce.app.gui;
 
 import org.socialforce.app.Applications.ApplicationLoader;
-import org.socialforce.app.SocialForceApplication;
 
 import javax.swing.*;
 import java.awt.*;

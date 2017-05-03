@@ -484,7 +484,7 @@ public class ProxyedGraphics2D extends Graphics2D {
      * Hint categories include controls for rendering quality and overall
      * time/quality trade-off in the rendering process.  Refer to the
      * <code>RenderingHints</code> class for definitions of some common
-     * keys and values.
+     * keys and parameters.
      * @param hintKey the key of the hint to be set.
      * @param hintValue the value indicating preferences for the specified
      * hint category.
@@ -501,10 +501,10 @@ public class ProxyedGraphics2D extends Graphics2D {
      * Hint categories include controls for rendering quality and overall
      * time/quality trade-off in the rendering process.  Refer to the
      * <code>RenderingHints</code> class for definitions of some common
-     * keys and values.
+     * keys and parameters.
      * @param hintKey the key corresponding to the hint to get.
      * @return an object representing the value for the specified hint key.
-     * Some of the keys and their associated values are defined in the
+     * Some of the keys and their associated parameters are defined in the
      * <code>RenderingHints</code> class.
      * @see RenderingHints
      * @see #setRenderingHint(RenderingHints.Key, Object)
@@ -515,15 +515,15 @@ public class ProxyedGraphics2D extends Graphics2D {
     }
 
     /**
-     * Replaces the values of all preferences for the rendering
+     * Replaces the parameters of all preferences for the rendering
      * algorithms with the specified <code>hints</code>.
-     * The existing values for all rendering hints are discarded and
-     * the new set of known hints and values are initialized from the
+     * The existing parameters for all rendering hints are discarded and
+     * the new set of known hints and parameters are initialized from the
      * specified {@link Map} object.
      * Hint categories include controls for rendering quality and
      * overall time/quality trade-off in the rendering process.
      * Refer to the <code>RenderingHints</code> class for definitions of
-     * some common keys and values.
+     * some common keys and parameters.
      * @param hints the rendering hints to be set
      * @see #getRenderingHints
      * @see RenderingHints
@@ -534,16 +534,16 @@ public class ProxyedGraphics2D extends Graphics2D {
     }
 
     /**
-     * Sets the values of an arbitrary number of preferences for the
+     * Sets the parameters of an arbitrary number of preferences for the
      * rendering algorithms.
-     * Only values for the rendering hints that are present in the
+     * Only parameters for the rendering hints that are present in the
      * specified <code>Map</code> object are modified.
      * All other preferences not present in the specified
      * object are left unmodified.
      * Hint categories include controls for rendering quality and
      * overall time/quality trade-off in the rendering process.
      * Refer to the <code>RenderingHints</code> class for definitions of
-     * some common keys and values.
+     * some common keys and parameters.
      * @param hints the rendering hints to be set
      * @see RenderingHints
      */
@@ -559,7 +559,7 @@ public class ProxyedGraphics2D extends Graphics2D {
      * Returns all of the hint key/value pairs that were ever specified in
      * one operation.  Refer to the
      * <code>RenderingHints</code> class for definitions of some common
-     * keys and values.
+     * keys and parameters.
      * @return a reference to an instance of <code>RenderingHints</code>
      * that contains the current preferences.
      * @see RenderingHints
@@ -986,7 +986,7 @@ public class ProxyedGraphics2D extends Graphics2D {
      * <p>
      * Pixels that are of colors other than those two colors are changed
      * in an unpredictable but reversible manner; if the same figure is
-     * drawn twice, then all pixels are restored to their original values.
+     * drawn twice, then all pixels are restored to their original parameters.
      * @param     c1 the XOR alternation color
      */
     @Override
@@ -1955,7 +1955,7 @@ public class ProxyedGraphics2D extends Graphics2D {
      * cleared using <code>setClip(null)</code>, this method returns the
      * specified <code>Rectangle</code>.
      * @param  r    the rectangle where the current clipping area is
-     *              copied to.  Any current values in this rectangle are
+     *              copied to.  Any current parameters in this rectangle are
      *              overwritten.
      * @return the bounding rectangle of the current clipping area.
      */

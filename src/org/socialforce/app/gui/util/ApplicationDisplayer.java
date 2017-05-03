@@ -1,24 +1,24 @@
 package org.socialforce.app.gui.util;
 
-import org.socialforce.app.SocialForceApplication;
+import org.socialforce.app.Application;
 
 /**
  * Created by Ledenel on 2017/3/3.
  */
 public class ApplicationDisplayer {
-    public SocialForceApplication getApplication() {
+    public Application getApplication() {
         return application;
     }
 
-    public void setApplication(SocialForceApplication application) {
+    public void setApplication(Application application) {
         this.application = application;
     }
 
-    public ApplicationDisplayer(SocialForceApplication application) {
+    public ApplicationDisplayer(Application application) {
         this.application = application;
     }
 
-    public SocialForceApplication application;
+    public Application application;
 
     @Override
     public String toString() {

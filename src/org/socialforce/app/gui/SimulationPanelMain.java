@@ -1,9 +1,9 @@
 package org.socialforce.app.gui;
 
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
+import org.socialforce.app.Application;
 import org.socialforce.app.ApplicationListener;
 import org.socialforce.app.Applications.ApplicationLoader;
-import org.socialforce.app.SocialForceApplication;
 import org.socialforce.app.gui.util.ApplicationDisplayer;
 import org.socialforce.model.Agent;
 import org.socialforce.scene.Scene;
@@ -36,7 +36,7 @@ public class SimulationPanelMain implements ApplicationListener {
                 //super.mouseClicked(e);
                 String s = timePerStepTextField.getText();
                 //application.getModel().setTimePerStep(Double.valueOf(s));
-                SwingWorker<Void, SocialForceApplication> worker = new SwingWorker<Void, SocialForceApplication>() {
+                SwingWorker<Void, Application> worker = new SwingWorker<Void, Application>() {
                     @Override
                     protected Void doInBackground() throws Exception {
                         loader.current().start();
@@ -91,7 +91,8 @@ public class SimulationPanelMain implements ApplicationListener {
                 ApplicationDisplayer result = (ApplicationDisplayer) JOptionPane.showInputDialog(SimulationPanelMain.this.root,
                         "select a preset:", "Please select an applicaiton", JOptionPane.INFORMATION_MESSAGE, null,
                         objects, objects[0]);
-                loader.select(result.application);
+                if(result != null)
+                    loader.select(result.application);
                 refreshName();
             }
         });
@@ -145,7 +146,7 @@ public class SimulationPanelMain implements ApplicationListener {
             frame = new JFrame("Epimetheus");
             //SimulationPanelMain mainPanel = new SimulationPanelMain();
             ApplicationMain mainPanel = new ApplicationMain();
-            /*SocialForceApplication application = new ApplicationForDoorTest();//应用在这里！
+            /*Application application = new ApplicationForDoorTest();//应用在这里！
             application.setApplicationListener(mainPanel);*/
             //mainPanel.setLoader(new ApplicationLoader(mainPanel));
             frame.setContentPane(mainPanel.demoP);
@@ -197,11 +198,11 @@ public class SimulationPanelMain implements ApplicationListener {
 
     }
 
-    public SocialForceApplication getApplication() {
+    public Application getApplication() {
         return application;
     }
 
-    public void setApplication(SocialForceApplication application) {
+    public void setApplication(Application application) {
         this.application = application;
 
         // TODO: here, panel only find a default scene and show it.
@@ -211,7 +212,7 @@ public class SimulationPanelMain implements ApplicationListener {
         shower1.setScene(def);
     }
 
-    SocialForceApplication application;
+    Application application;
 
     /**
      * triggered while a agent is escaped.
@@ -245,12 +246,12 @@ public class SimulationPanelMain implements ApplicationListener {
     /**
      * triggered while a scene is step-forwarded.
      *
-     * @param scene the scene steped-forwarded.
+     * @param application the application steped-forwarded.
      */
     @Override
-    public void onStep(Scene scene) {
-        if (scene.getDrawer() == null) {
-            shower1.setScene(scene);
+    public void onStep(Application application) {
+        if (application.getCurrentScene().getDrawer() == null) {
+            shower1.setScene(application.getCurrentScene());
         }
     }
 }

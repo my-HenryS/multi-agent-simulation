@@ -25,7 +25,7 @@ public class ApplicationMain{
                     JFrame frameS = new JFrame("Epimetheus");
                     SimulationPanelMain mainPanel = new SimulationPanelMain();
                     mainPanel.frame.dispose();
-                    /*SocialForceApplication application = new ApplicationForDoorTest();//应用在这里！
+                    /*Application application = new ApplicationForDoorTest();//应用在这里！
                      application.setApplicationListener(mainPanel);*/
                     //mainPanel.setLoader(new ApplicationLoader(mainPanel));
                     frameS.setContentPane(mainPanel.root);
