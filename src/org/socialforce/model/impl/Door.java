@@ -3,6 +3,7 @@ package org.socialforce.model.impl;
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.*;
+import org.socialforce.scene.Scene;
 
 /**
  * Created by Whatever on 2017/3/1.
@@ -104,7 +105,7 @@ public class Door extends Entity implements Moveable, Influential {
     }
 
     @Override
-    public InteractiveEntity standardclone() {
+    public Door clone() {
         return new Door(rectangle2D.clone(), ankor.clone(), Anglerange.clone(),rotationFlag);
     }
 
@@ -153,4 +154,12 @@ public class Door extends Entity implements Moveable, Influential {
         pushed = 0;
     }
 
+    @Override
+    public boolean onAdded(Scene scene) {
+        return true;
+    }
+
+    @Override
+    public void onStep(Scene scene) {
+    }
 }

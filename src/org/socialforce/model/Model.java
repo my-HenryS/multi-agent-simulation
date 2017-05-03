@@ -1,7 +1,7 @@
 package org.socialforce.model;
 
 import org.socialforce.scene.Scene;
-import org.socialforce.app.SocialForceApplication;
+import org.socialforce.app.Application;
 import org.socialforce.geom.*;
 
 /**
@@ -12,7 +12,7 @@ import org.socialforce.geom.*;
  * the unit of these constraints and forces are standard units.
  *
  * @author Ledenel
- * @see SocialForceApplication
+ * @see Application
  * @see Scene
  * Created by Ledenel on 2016/7/30.
  */

@@ -12,7 +12,7 @@ import java.util.List;
 /**定义SimpleSocialForceModel类，其实现了接口SocialForceModel的方法
  * Created by Ledenel on 2016/8/17.
  */
-public class SimpleSocialForceModel implements Model {
+public class SimpleForceModel implements Model {
     double TIME_PER_STEP = 0.008;
     double EXPECTED_SPEED = 3;
     double REACT_TIME = 0.5;
@@ -22,13 +22,17 @@ public class SimpleSocialForceModel implements Model {
 
     protected List<ForceRegulation> regulations;
 
-    public SimpleSocialForceModel() {
+    public SimpleForceModel() {
         regulations = new LinkedList<>();
         regulations.add(new PsychologicalForceRegulation(Blockable.class, Agent.class, this));
         regulations.add(new BodyForce(Blockable.class, Agent.class, this));
-        //regulations.add(new WallForce());
         regulations.add(new DoorForce(Agent.class, Door.class, this));
         regulations.add(new GravityRegulation(Star_Planet.class, Star_Planet.class, this));
+    }
+
+    public SimpleForceModel(double timePerStep){
+        this();
+        TIME_PER_STEP = timePerStep;
     }
 
     /**
@@ -118,6 +122,6 @@ public class SimpleSocialForceModel implements Model {
     }
 
     public Model clone(){
-        return new SimpleSocialForceModel();
+        return new SimpleForceModel();
     }
 }

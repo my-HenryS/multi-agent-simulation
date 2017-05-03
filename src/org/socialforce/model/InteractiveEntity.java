@@ -5,6 +5,7 @@ import org.socialforce.drawer.Drawable;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
+import org.socialforce.scene.SceneListener;
 
 /**
  *表示场景中所有可以进行交互的实体。
@@ -15,7 +16,7 @@ import org.socialforce.geom.Shape;
  * @see Pool
  * @see Agent
  */
-public interface InteractiveEntity extends Drawable{
+public interface InteractiveEntity extends Drawable, SceneListener{
     Scene getScene();
 
     void setScene(Scene scene);
@@ -68,7 +69,7 @@ public interface InteractiveEntity extends Drawable{
      */
     void placeOn(Point point);
 
-    InteractiveEntity standardclone();
+    InteractiveEntity clone();
 
 }
 

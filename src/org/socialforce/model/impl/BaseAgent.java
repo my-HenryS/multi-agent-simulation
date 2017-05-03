@@ -4,7 +4,10 @@ import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.*;
+import org.socialforce.scene.Scene;
 import org.socialforce.strategy.Path;
+
+import java.util.Iterator;
 
 /**
  * 定义BaseAgent类，其继承于父类Entity，并实现了接口Agent 的方法。
@@ -18,7 +21,7 @@ public class BaseAgent extends Entity implements Agent {
     Force pushed;
     boolean escaped = false;
     DistanceShape shape;
-    private static final double forceUpbound = 2450;
+    protected double forceUpbound;
 
     public BaseAgent(DistanceShape shape, Velocity velocity) {
         super(shape);
@@ -27,6 +30,7 @@ public class BaseAgent extends Entity implements Agent {
         this.mass = 80;
         Circle2D circle = new Circle2D(shape.getReferencePoint(),2);
         this.view = circle;
+        this.forceUpbound = 2450;
     }
 
     /**
@@ -209,7 +213,7 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     @Override
-    public BaseAgent standardclone() {
+    public BaseAgent clone() {
         return new BaseAgent(shape.clone(), currVelocity.clone());
     }
 
@@ -227,4 +231,24 @@ public class BaseAgent extends Entity implements Agent {
         return this.getShape().clone();
     }
 
+    /**
+     * Agent加入scene会判断是否与场景中现有entity重叠
+     * @param scene 触发的场景。
+     * @return 返回是否加入成功
+     */
+    @Override
+    public boolean onAdded(Scene scene) {
+        for(Iterator<InteractiveEntity> iterator = scene.getAllEntitiesStream().iterator();iterator.hasNext();){
+            InteractiveEntity entity = iterator.next();
+            if(shape.intersects(entity.getShape())){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void onStep(Scene scene) {
+
+    }
 }
