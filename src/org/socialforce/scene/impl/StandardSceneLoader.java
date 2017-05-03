@@ -1,7 +1,6 @@
 package org.socialforce.scene.impl;
 
-import org.socialforce.app.*;
-import org.socialforce.model.impl.SimpleSocialForceModel;
+import org.socialforce.model.Model;
 import org.socialforce.model.impl.Wall;
 import org.socialforce.scene.*;
 
@@ -19,11 +18,18 @@ public class StandardSceneLoader implements SceneLoader {
     protected ParameterPool parameterSet;
     protected Wall[] walls = new Wall[]{};
     Scene scene;
+    Model model;
     public StandardSceneLoader(Scene scene, Wall[] walls){
         this.scene = scene;
         this.walls = walls;
         this.parameterSet = new SimpleParameterPool();
     }
+
+    public StandardSceneLoader setModel(Model model){
+        this.model = model;
+        return this;
+    }
+
     @Override
     public void setSource(InputStream stream) {
 
@@ -34,17 +40,15 @@ public class StandardSceneLoader implements SceneLoader {
 
     }
 
-    public Scene staticScene() {
-        Scene new_scene = scene.simpleclone();
+    private Scene staticScene(Model model) {
+        Scene new_scene = scene.cloneWithBounds();
         Wall[] new_walls = new Wall[walls.length];
         for(int i = 0; i < walls.length; i++){
-            new_walls[i] = walls[i].standardclone();
+            new_walls[i] = walls[i].clone();
         }
         for (int i = 0;i < new_walls.length;i++) {
             new_walls[i].setName("wall" + i);
-            new_scene.getStaticEntities().add(new_walls[i]);
-            new_walls[i].setScene(new_scene);
-            new_walls[i].setModel(new SimpleSocialForceModel());
+            EntityDecorator.place(new_walls[i], new_scene, model);
         }
         return new_scene;
     }
@@ -61,11 +65,14 @@ public class StandardSceneLoader implements SceneLoader {
         //遍历 -- 全组合问题
         for(int i = 0; i < total_num; i++){
             ValueSet values = new SimpleValueSet();
+            Model newModel = model.clone();
             for (Iterator<SceneParameter> iterator = parameterSet.iterator(); iterator.hasNext();){
                 SimpleSceneParameter parameter = (SimpleSceneParameter) iterator.next();
-                values.add(parameter.getParameter().get(i%parameter.getParameter().size()));   //根据相对周长的偏移量计算当前应添加的SceneValue
+                SceneValue value = parameter.getParameter().get(i%parameter.getParameter().size());   //根据相对周长的偏移量计算当前应添加的SceneValue
+                if(value instanceof EntityGenerator) ((EntityGenerator) value).setModel(newModel);
+                values.add(value);
             }
-            Scene scene = staticScene();
+            Scene scene = staticScene(newModel);
             scene = generate(scene,values);
             scene.pack();
             scenes.addLast(scene);
