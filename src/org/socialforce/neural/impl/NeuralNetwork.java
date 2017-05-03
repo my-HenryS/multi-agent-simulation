@@ -79,7 +79,7 @@ public class NeuralNetwork implements NeuralNetListener {
 
         MemoryInputSynapse inputStream = new MemoryInputSynapse();
 
-        // The first two columns contain the input values
+        // The first two columns contain the input parameters
         inputStream.setInputArray(INPUT);
         inputStream.setAdvancedColumnSelector("1-12");
 
@@ -92,7 +92,7 @@ public class NeuralNetwork implements NeuralNetListener {
         MemoryInputSynapse samples = new MemoryInputSynapse();
 
 
-        // The output values are on the third column of the file
+        // The output parameters are on the third column of the file
         samples.setInputArray(LABEL);
         samples.setAdvancedColumnSelector("1-2");
         trainer.setDesired(samples);

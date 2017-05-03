@@ -9,6 +9,7 @@ import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.model.impl.Wall;
 import org.socialforce.neural.DataSetGenerator;
 import org.socialforce.scene.ParameterPool;
@@ -19,7 +20,6 @@ import org.socialforce.scene.impl.*;
 import java.io.InputStream;
 
 import static org.junit.Assert.*;
-import static org.socialforce.scene.SceneLoader.genParameter;
 
 /**
  * Created by sunjh1999 on 2017/4/1.
@@ -42,8 +42,10 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
                         new Wall(new Box2D(4,-8,1,16)), //防止A*从外面走
                         new Wall(new Box2D(5,7,8,1)),
                 });
-        ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(15,9.25,0.1,0.1))));
+        SimpleParameterPool parameters = new SimpleParameterPool();
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new SafetyRegion(new Box2D(15,9.25,0.1,0.1)))
+        );
         loader.readParameterSet(parameters);
         scene = loader.readScene().getFirst();
     }
@@ -58,8 +60,10 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
                         new Wall(new Box2D(6, 11, 15, 1)),
                         new Wall(new Box2D(20, 12, 1, 17)),
                 });
-        ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(18, 32, 0.1, 0.1))));
+        SimpleParameterPool parameters = new SimpleParameterPool();
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new SafetyRegion(new Box2D(18, 32, 0.1, 0.1)))
+        );
         loader.readParameterSet(parameters);
         scene = loader.readScene().getFirst();
     }
@@ -70,9 +74,11 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
                         new Wall(new Box2D(0, 0, 8, -0.1)),
                         new Wall(new Box2D(0, 6.78, 8, 0.1))
                 });
-        ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(12, 3.39, 0.1, 0.1))));
-        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(-2, 3.39, 0.1, 0.1))));
+        SimpleParameterPool parameters = new SimpleParameterPool();
+        parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
+                .addValue(new SafetyRegion(new Box2D(12, 3.39, 0.1, 0.1)))
+                .addValue(new SafetyRegion(new Box2D(-2, 3.39, 0.1, 0.1)))
+        );
         loader.readParameterSet(parameters);
         scene = loader.readScene().getFirst();
     }

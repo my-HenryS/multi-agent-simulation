@@ -29,7 +29,7 @@ public class SquareRoomLoaderTest {
     }
     @Test
     public void readScene() throws Exception {
-        Scene scene = loader.staticScene();
+        Scene scene = loader.readScene().getFirst();
         assertEquals(SimpleScene.class,scene.getClass());
         InteractiveEntity entity = scene.getStaticEntities().selectTop(new Circle2D(new Point2D(0,0),100));
         //assertEquals("wall3",entity.getName());//TODO 这行跑不通，返回的是wall0.以及select(DistanceShape)不是选择相交的而是选择包含的，文档已改。
@@ -41,7 +41,7 @@ public class SquareRoomLoaderTest {
 
     @Test
     public void getShapeTest() throws Exception{
-        Scene scene = loader.staticScene();
+        Scene scene = loader.readScene().getFirst();
         InteractiveEntity entity = scene.getStaticEntities().selectBottom(new Circle2D(new Point2D(0,0),100));
         assertEquals(entity.getShape(),new  Box2D(new Point2D(0, 0), new Point2D(1, 16)));
     }

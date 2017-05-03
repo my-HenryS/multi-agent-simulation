@@ -5,8 +5,6 @@ import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
-import org.socialforce.scene.SceneValue;
-import org.socialforce.scene.impl.SV_SafetyRegion;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
 

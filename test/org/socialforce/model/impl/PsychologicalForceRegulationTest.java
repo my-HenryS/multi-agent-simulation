@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  * Created by sunjh1999 on 2016/10/14.
  */
 public class PsychologicalForceRegulationTest {
-    Model model = new SimpleSocialForceModel() ;
+    Model model = new SimpleForceModel() ;
     Class<InteractiveEntity> BaseAgent;
     BaseAgent a;
     Class<Agent> agent;
