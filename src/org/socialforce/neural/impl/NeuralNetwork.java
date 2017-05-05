@@ -21,7 +21,7 @@ public class NeuralNetwork implements NeuralNetListener {
     private Monitor monitor;
     private double []lMax ,lMin;
     private NeuralNet nnet;
-    private String directory = "/Users/sunjh1999/IdeaProjects/SocialForceSimulation/resource/MultiSet.csv";
+    private String directory = "MultiSet.csv";
     private int labelIndexM = 2; //2以下为标签
     private CountDownLatch latch = new CountDownLatch(1);
     public double INPUT[][];
