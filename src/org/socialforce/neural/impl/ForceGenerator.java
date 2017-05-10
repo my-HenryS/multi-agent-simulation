@@ -22,7 +22,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
     DecimalFormat formater = new DecimalFormat();
     protected ArrayList<LinkedList<Point2D>> matrix;
     protected ArrayList<ArrayList<Vector2D>> velocity;
-    LinkedList<double[]> outputs = new LinkedList<>();
+    LinkedList<Double[]> outputs = new LinkedList<>();
     private String superPath = System.getProperty("user.dir")+"/resource/";
 
 
@@ -104,7 +104,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
 
             fw = new FileWriter(output_file);
             BufferedWriter bf=new BufferedWriter(fw);
-            for(double [] output:outputs){
+            for(Double [] output:outputs){
                 String s = "";
                 for(double element:output){
                     s += String.valueOf(formater.format(element))+",";
@@ -119,14 +119,14 @@ public abstract class ForceGenerator implements DataSetGenerator {
     }
 
     public void toFile(String outDirect, int interval){
-        File output_file = new File(outDirect);
+        File output_file = new File(superPath+outDirect);
         FileWriter fw= null;
         int count = 0;
         try {
 
             fw = new FileWriter(output_file);
             BufferedWriter bf=new BufferedWriter(fw);
-            for(double [] output:outputs){
+            for(Double [] output:outputs){
                 count ++;
                 if(count % interval != 0)
                     continue;
@@ -146,17 +146,11 @@ public abstract class ForceGenerator implements DataSetGenerator {
     public double[][] toMatrix() {
         double[][] matrix = new double[outputs.size()][outputs.get(0).length];
         for(int i = 0; i < outputs.size(); i++){
-            double[] output = outputs.get(i);
+            Double[] output = outputs.get(i);
             for(int j = 0; j < output.length; j++){
                 matrix[i][j] = Double.parseDouble(formater.format(output[j]));
             }
         }
         return matrix;
-    }
-
-    public void addOutput(double[] output, int times){
-        for(; times > 0; times --){
-            outputs.add(output);
-        }
     }
 }

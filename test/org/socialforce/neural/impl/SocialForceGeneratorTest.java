@@ -85,17 +85,19 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
     }
     @Test
     public void genOutput() throws Exception {
-        generator.readFile("Scene5Box2.csv", 5);
+        generator.readFile("/input/Scene5Box1.csv", 5);
         generator.genOutput(scene);
         setMap2();
-        generator.readFile("curve4.csv", 5);
-        generator.genOutput(scene);
+        for(int i = 1; i <= 6; i++){
+            generator.readFile("/input/bend"+i+".csv", 5);
+            generator.genOutput(scene);
+        }
         setMap4();
         generator.readFile("result1.csv", 1);
         generator.genOutput(scene);
         generator.readFile("result2.csv", 1);
         generator.genOutput(scene);
-        generator.toFile("MultiSet.csv", 1);
+        generator.toFile("/output/MultiSet.csv", 1);
     }
 
 }

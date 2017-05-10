@@ -21,12 +21,13 @@ public class NeuralNetwork implements NeuralNetListener {
     private Monitor monitor;
     private double []lMax ,lMin;
     private NeuralNet nnet;
-    private String directory = "MultiSet.csv";
+    private String directory = "output/MultiSet.csv";
     private int labelIndexM = 2; //2以下为标签
     private CountDownLatch latch = new CountDownLatch(1);
     public double INPUT[][];
     private int epoch = 500;
-    int inputNum = 10000;
+    int inputNum = 7000;
+    private String superPath = System.getProperty("user.dir")+"/resource/";
 
     public double LABEL[][];
 
@@ -35,7 +36,7 @@ public class NeuralNetwork implements NeuralNetListener {
 
     public void buildUp(){
         try {
-            dataReader(directory);
+            dataReader(superPath+directory);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,7 +52,7 @@ public class NeuralNetwork implements NeuralNetListener {
         output.setLayerName("output");
 
         // sets their dimensions
-        input.setRows(12);
+        input.setRows(11);
         hidden.setRows(40);
         hidden2.setRows(10);
         output.setRows(2);
@@ -79,9 +80,9 @@ public class NeuralNetwork implements NeuralNetListener {
 
         MemoryInputSynapse inputStream = new MemoryInputSynapse();
 
-        // The first two columns contain the input parameters
+        // The first 11 columns contain the input parameters
         inputStream.setInputArray(INPUT);
-        inputStream.setAdvancedColumnSelector("1-12");
+        inputStream.setAdvancedColumnSelector("1-11");
 
         // set the input data
         input.addInputSynapse(inputStream);
@@ -140,7 +141,7 @@ public class NeuralNetwork implements NeuralNetListener {
             Layer input = nnet.getInputLayer();
             input.removeAllInputs();
             MemoryInputSynapse memInp = new MemoryInputSynapse();
-            memInp.setAdvancedColumnSelector("1-12");
+            memInp.setAdvancedColumnSelector("1-11");
             input.addInputSynapse(memInp);
             memInp.setInputArray(inputArray);
             Layer output = nnet.getOutputLayer();
