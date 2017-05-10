@@ -39,7 +39,7 @@ public class ApplicationForCanteen extends SimpleApplication implements Applicat
     @Override
     public void start() {
         System.out.println("Application starts!!");
-        for(int i = 0; i < 40; i++){
+        for(int i = 0; i < 20; i++){
             setUpScenes();
             for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
                 currentScene = iterator.next();
