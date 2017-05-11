@@ -248,9 +248,9 @@ public class NeuralNetwork implements NeuralNetListener {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         NeuralNetwork nnetk = new NeuralNetwork();
-        //nnetk.buildUp();
-        //nnetk.run();
-        //nnetk.saveNeuralNet("trainset4.net");
+        nnetk.buildUp();
+        nnetk.run();
+        nnetk.saveNeuralNet("trainset4.net");
         nnetk.restoreNeuralNet("trainset4.net");
         nnetk.test(new double[][]{{
                 1,0.5, 0,0,0,0,0,0,0,0,0

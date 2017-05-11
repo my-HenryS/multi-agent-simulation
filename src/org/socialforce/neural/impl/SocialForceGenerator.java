@@ -1,14 +1,10 @@
 package org.socialforce.neural.impl;
 
-import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.scene.Scene;
 
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.Random;
 
 /**
  * Created by sunjh1999 on 2017/3/31.
@@ -94,19 +90,19 @@ public class SocialForceGenerator extends WallForceGenerator{
                     nextStep.rotate(angle);
                     thisVelocity.rotate(angle);
 
-                    boolean flag = false;
+                    /* 旋转输入矩阵 */
+                    long rotateNum = Math.round(angle/(Math.PI/4));
+                    for(;rotateNum > 0;rotateNum--){
+                        rotateMatrix(surroundings);
+                    }
+
                     /* 翻转 */
                     if(nextStep.getY() < 0){
                         nextStep = new Vector2D(nextStep.getX(),-nextStep.getY());
                         acc = new Vector2D(acc.getX(), -acc.getY());
-                        flag = true;
+                        upSideDownAMatrix(surroundings);
                     }
 
-                    /* 旋转（翻转）输入矩阵 */
-                    long rotateNum = Math.round(angle/(Math.PI/4));
-                    for(;rotateNum > 0;rotateNum--){
-                        rotateSurroundings(surroundings, flag);
-                    }
                     LinkedList<Double>tempA = new LinkedList<>();
                     tempA.add(acc.getX()); //加速度x轴
                     tempA.add(acc.getY()); //加速度y轴
@@ -125,12 +121,21 @@ public class SocialForceGenerator extends WallForceGenerator{
     /**
      * 逆时针旋转一次W矩阵
      * @param surroundings
-     * @param rotationFlag  是否翻转矩阵
      */
-    private void rotateSurroundings(double[] surroundings, boolean rotationFlag){
-        int[] nextV;
-        if(!rotationFlag) nextV = new int[]{1,2,5,0,4,8,3,6,7};
-        else nextV = new int[]{3,6,7,0,4,8,1,2,5};
+    private void rotateMatrix(double[] surroundings){
+        int[] nextV = new int[]{1,2,5,0,4,8,3,6,7};
+        double[] temp = surroundings.clone();
+        for(int i = 0; i < 9; i++){
+            surroundings[i] = temp[nextV[i]];
+        }
+    }
+
+    /**
+     * 翻转一次W矩阵
+     * @param surroundings
+     */
+    private void upSideDownAMatrix(double[] surroundings){
+        int[] nextV = new int[]{6,7,8,3,4,5,0,1,2};
         double[] temp = surroundings.clone();
         for(int i = 0; i < 9; i++){
             surroundings[i] = temp[nextV[i]];
