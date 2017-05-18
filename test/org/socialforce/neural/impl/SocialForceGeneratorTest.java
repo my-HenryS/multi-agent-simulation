@@ -30,7 +30,7 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
 
     @Before
     public void setUp() throws Exception {
-        generator = new SocialForceGenerator(0.5,4,1); //timestep intercept min-div
+        generator = new SocialForceGenerator(0.5,4,0.3); //timestep intercept min-div
         setMap();
     }
 
@@ -87,16 +87,18 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
     public void genOutput() throws Exception {
         generator.readFile("/input/Scene5Box1.csv", 5);
         generator.genOutput(scene);
-        setMap2();
-        for(int i = 1; i <= 6; i++){
-            generator.readFile("/input/bend"+i+".csv", 5);
-            generator.genOutput(scene);
-        }
-        setMap4();
-        generator.readFile("result1.csv", 1);
+        generator.readFile("/input/Scene5Box2.csv", 5);
         generator.genOutput(scene);
-        generator.readFile("result2.csv", 1);
-        generator.genOutput(scene);
+        //setMap2();
+        //for(int i = 1; i <= 6; i++){
+            //generator.readFile("/input/bend"+i+".csv", 5);
+            //generator.genOutput(scene);
+        //}
+        //setMap4();
+        //generator.readFile("result1.csv", 1);
+        //generator.genOutput(scene);
+        //generator.readFile("result2.csv", 1);
+        //generator.genOutput(scene);
         generator.toFile("/output/MultiSet.csv", 1);
     }
 

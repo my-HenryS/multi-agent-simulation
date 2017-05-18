@@ -26,7 +26,7 @@ public class NeuralNetwork implements NeuralNetListener {
     private CountDownLatch latch = new CountDownLatch(1);
     public double INPUT[][];
     private int epoch = 500;
-    int inputNum = 7000;
+    int inputNum = 6000;
     private String superPath = System.getProperty("user.dir")+"/resource/";
 
     public double LABEL[][];

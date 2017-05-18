@@ -11,12 +11,14 @@ import java.util.LinkedList;
  */
 public class SocialForceGenerator extends WallForceGenerator{
     LinkedList<double[][]> W; //权值矩阵
-    double p = 3; //行人的影响系数
-    double w = 1; //墙的影响系数
+    double p = 0.3; //行人的影响系数
+    double w = 0.1; //墙的影响系数
     double expectV = 6; //期望速度
+    double range;
 
     public SocialForceGenerator(double timestep, int intercept, double min_div) {
         super(timestep, intercept, min_div);
+        this.range = min_div;
     }
 
     /**

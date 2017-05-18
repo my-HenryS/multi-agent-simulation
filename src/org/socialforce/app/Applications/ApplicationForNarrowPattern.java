@@ -2,6 +2,7 @@ package org.socialforce.app.Applications;
 
 import org.socialforce.app.Interpreter;
 import org.socialforce.app.Application;
+import org.socialforce.app.impl.AgentStepCSVWriter;
 import org.socialforce.app.impl.SimpleInterpreter;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.*;
@@ -33,13 +34,16 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
     public void start() {
         setUpScenes();
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext(); ) {
+            AgentStepCSVWriter csvWriter = new AgentStepCSVWriter();
             currentScene = iterator.next();
+            currentScene.addSceneListener(csvWriter);
             PathFinder pathFinder = new AStarPathFinder(currentScene, template.getShape());
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
             while (!toSkip()) {
                 this.StepNext(currentScene);
             }
+            csvWriter.writeCSV("output/agent.csv");
             if(onStop()) return;
         }
     }
@@ -53,8 +57,8 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
         scenes = new LinkedList<>();
         DoorWidth = 1.36;
         density = 10;
-        setUpT1Scene1();
-        setUpT1Scene2();
+        //setUpT1Scene1();
+        //setUpT1Scene2();
         setUpT1Scene3();
         setUpT1Scene4();
         setUpT1Scene5();
@@ -228,7 +232,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(density*10,new Box2D(0,-10,10,5)).setValue(template)
+                new RandomEntityGenerator2D(30,new Box2D(0,-10,10,5)).setValue(template)
         );
 
         loader.readParameterSet(parameters);

@@ -18,6 +18,7 @@ import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.*;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Iterator;
 
 
@@ -66,9 +67,9 @@ public class ApplicationForECStrategy extends SimpleApplication implements Appli
     @Override
     public void setUpScenes(){
         template = new Circle2D(new Point2D(0,0),0.486/2);
-        File file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/test/org/socialforce/app/impl/test.s");
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("test.s");
         Interpreter interpreter = new SimpleInterpreter();
-        interpreter.loadFile(file);
+        interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         loader.setModel(new SimpleForceModel());
         SimpleParameterPool parameters = new SimpleParameterPool();
