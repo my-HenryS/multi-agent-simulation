@@ -38,15 +38,7 @@ public class DynamicNearestGoalStrategy implements DynamicStrategy {
         Agent agent;
         for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
             agent = (Agent) iter.next();
-            if(agent.getPath() != null){
-                if(agent.getPath().getGoal().equals(goals.get(0))){
-                    continue;
-                }
-                if(agent.getPath().getGoal().distanceTo(agent.getShape().getReferencePoint()) < 0.3){
-                    agent.setPath(pathFinder.plan_for(goals.get(0)));
-                    continue;
-                }
-            }
+            if(agent.getPath()!=null) continue;
             Path designed_path = null;
             double path_length = Double.POSITIVE_INFINITY;
             for (Point goal : transits) {
@@ -62,8 +54,21 @@ public class DynamicNearestGoalStrategy implements DynamicStrategy {
         }
     }
 
-    public void dynamicDecision(){
-        pathDecision();
+    public void dynamicDecision() {
+        Agent agent;
+        for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
+            agent = (Agent) iter.next();
+            if(agent.getPath() != null){
+                Point goal = agent.getPath().getGoal();
+                if(agent.getPath() instanceof StraightPath){
+                    continue;
+                }
+                if(goal.distanceTo(agent.getShape().getReferencePoint()) < 3){
+                    agent.setPath(new StraightPath(goal.clone().moveBy(0,200)));
+                    continue;
+                }
+            }
+        }
     }
 
 

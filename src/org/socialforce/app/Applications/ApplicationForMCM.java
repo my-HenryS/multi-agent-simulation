@@ -34,10 +34,10 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
     public void start() {
         System.out.println("Application starts!!");
         int flag = 0;
-        int []alpha = {80};
-        int []beta =  {80};
+        int []alpha = {75};
+        int []beta =  {75};
         for(int i = 0; i < 1;i++){
-            for(int a = 3; a<=12; a+= 1){
+            for(int a = 5; a<=12; a+= 1){
                 setUpScenes(alpha[i],beta[i]);
                 System.out.println("Scene is "+alpha[i]+","+beta[i]);
                 for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
@@ -48,7 +48,7 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                     int size = 0;
                     SV_RandomAgentGenerator agentGenerator = new SV_RandomTimeAgentGenerator(a,new Box2D(75,6,46.5,10), template, new Velocity2D(0,13));
                     agentGenerator.apply(currentScene);
-                    PathFinder pathFinder = new AStarPathFinder(currentScene, template, 2);
+                    PathFinder pathFinder = new AStarPathFinder(currentScene, template, 0.5);
                     strategy = new DynamicNearestGoalStrategy(currentScene, pathFinder);
                     strategy.pathDecision();
                     System.out.println("flow now "+a);

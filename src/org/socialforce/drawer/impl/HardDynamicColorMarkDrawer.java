@@ -15,6 +15,7 @@ public class HardDynamicColorMarkDrawer extends DynamicColorDrawer<Agent> {
 
     @Override
     public Color currentColor(Agent agent) {
+        if(agent.getPath() == null) return Color.yellow;
         if(agent.getPath().getGoal().equals(new Point2D(26.0,2.5))) return Color.red;
         if(agent.getPath().getGoal().equals(new Point2D(33.5,14))) return Color.green;
         if(agent.getPath().getGoal().equals(new Point2D(14.0,21.5))) return Color.CYAN;

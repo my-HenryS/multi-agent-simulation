@@ -18,14 +18,14 @@ public class BaseAgent extends Entity implements Agent {
     Force pushed;
     boolean escaped = false;
     DistanceShape shape;
-    private static final double forceUpbound = 2450;
+    private static final double forceUpbound = Double.POSITIVE_INFINITY;
 
     public BaseAgent(DistanceShape shape, Velocity velocity) {
         super(shape);
         this.shape = shape;
         this.currVelocity = velocity;
-        this.mass = 80;
-        Circle2D circle = new Circle2D(shape.getReferencePoint(),2);
+        this.mass = 1000;
+        Circle2D circle = new Circle2D(shape.getReferencePoint(),4);
         this.view = circle;
     }
 
