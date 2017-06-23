@@ -17,6 +17,7 @@ import java.util.LinkedList;
  */
 public class BaseAgent extends Entity implements Agent {
     Velocity currVelocity;
+    double omega;
     LinkedList<Velocity> velocities = new LinkedList<>();
     Path path;
     double mass;
@@ -185,6 +186,7 @@ public class BaseAgent extends Entity implements Agent {
             Point point = shape.getReferencePoint();
             point.add(deltaS);
             this.shape.moveTo(point);
+            //this.Shape.spin(angle); 旋转角度
             this.view.moveTo(point);                      //改变视野
         }
         stoped = false;

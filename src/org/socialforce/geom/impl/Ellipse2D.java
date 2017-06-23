@@ -7,7 +7,7 @@ import org.socialforce.geom.*;
 /**
  * Created by Administrator on 2017/5/10 0010.
  */
-public class Ellipse2D implements DistanceShape {
+public class Ellipse2D implements MoveableShape {
     private double a;
     private double b;
     public Point center;
@@ -299,6 +299,24 @@ public class Ellipse2D implements DistanceShape {
     @Override
     public Ellipse2D clone() {
         return new Ellipse2D(a,b,center.clone(),angle);
+    }
+
+    /**
+     *
+     * @return 椭圆的转动惯量
+     */
+    @Override
+    public double getJ(Point axis) {
+        return 0;
+    }
+
+    /**
+     * 逆时针旋转某个角度
+     * @param angle 旋转的角度，为弧度制
+     */
+    @Override
+    public void spin(double angle){
+        this.angle = this.angle+angle;
     }
 
 

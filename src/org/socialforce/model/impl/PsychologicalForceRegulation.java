@@ -1,5 +1,6 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.geom.Affection;
 import org.socialforce.geom.Force;
 import org.socialforce.model.*;
 
@@ -44,7 +45,7 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Interactiv
      * @return force
      */
     @Override
-    public Force getForce(InteractiveEntity source, Agent target) {
+    public Affection getForce(InteractiveEntity source, Agent target) {
         Force force = model.zeroForce();
         force.add((target.getShape()).directionTo(source.getShape()));
         double scale = A * Math.exp(- target.getShape().distanceTo(source.getShape()) / B);

@@ -29,6 +29,7 @@ public class SimpleSocialForceModel implements SocialForceModel {
         regulations = new LinkedList<>();
         regulations.add(new PsychologicalForceRegulation(InteractiveEntity.class, Agent.class, this));
         regulations.add(new BodyForce());
+        regulations.add(new SpinForceRegulation());
         //regulations.add(new WallForce());
     }
 
@@ -72,7 +73,12 @@ public class SimpleSocialForceModel implements SocialForceModel {
         Force force = this.zeroForce();
         for (ForceRegulation regulation : regulations) {
             if (regulation.hasForce(source, target)) {
-                force.add(regulation.getForce(source, target));
+                if (regulation.getForce(source, target) instanceof Force){
+                force.add((Vector) regulation.getForce(source, target));
+                }
+                if (regulation.getForce(source, target) instanceof Moment){
+                    //FIXME gansmd
+                }
             }
         }
         return force;

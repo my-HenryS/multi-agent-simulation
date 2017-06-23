@@ -7,10 +7,7 @@ import org.socialforce.app.impl.SceneStepDumper;
 import org.socialforce.app.impl.SimpleInterpreter;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.app.impl.SingleFileOutputer;
-import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Point2D;
-import org.socialforce.geom.impl.Velocity2D;
+import org.socialforce.geom.impl.*;
 import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
 import org.socialforce.strategy.DynamicStrategy;
@@ -106,6 +103,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
 
     public void setUpScenes(){
         template = new Circle2D(new Point2D(0,0),0.486/2);
+        //template = new Ellipse2D(0.68,0.40,new Point2D(0,0),0);
         //File file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/test/org/socialforce/app/impl/canteen2.s");
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("canteen2.s");
         Interpreter interpreter = new SimpleInterpreter();

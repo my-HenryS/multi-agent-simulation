@@ -1,5 +1,7 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.geom.Affection;
+import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.Force;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Force2D;
@@ -25,7 +27,7 @@ public class BodyForce implements ForceRegulation{
     }
 
     @Override
-    public Force getForce(InteractiveEntity source, InteractiveEntity target) {
+    public Affection getForce(InteractiveEntity source, InteractiveEntity target) {
         double k1,k2,g,bodyForce,slidingForce,distance,argumentX;
         Vector2D t,n,tempVector;
         k1 = 1.2 * 100000;
@@ -37,10 +39,10 @@ public class BodyForce implements ForceRegulation{
         tempVector = (Vector2D) ((Moveable)source).getVelocity().clone();}
         else tempVector = new Vector2D(0,0);
         tempVector.sub(((Agent)target).getVelocity());
-        n = (Vector2D) ((Circle2D)target.getShape()).directionTo(source.getShape());
+        n = (Vector2D) ((DistanceShape)target.getShape()).directionTo(source.getShape());
         n.get(temp);
         t = new Vector2D(-temp[1],temp[0]);
-        distance = ((Circle2D)target.getShape()).distanceTo(source.getShape());
+        distance = ((DistanceShape)target.getShape()).distanceTo(source.getShape());
         if (distance < 0){g = argumentX;}
         bodyForce =  k1*g*Math.abs(distance);
         slidingForce = k2*g*Math.abs(distance)*t.dot(tempVector);
