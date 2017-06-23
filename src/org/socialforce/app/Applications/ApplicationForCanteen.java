@@ -103,7 +103,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
 
     public void setUpScenes(){
         template = new Circle2D(new Point2D(0,0),0.486/2);
-        //template = new Ellipse2D(0.68,0.40,new Point2D(0,0),0);
+        //template = new Ellipse2D(0.50,0.30,new Point2D(0,0),0);
         //File file = new File("/Users/sunjh1999/IdeaProjects/SocialForceSimulation/test/org/socialforce/app/impl/canteen2.s");
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("canteen2.s");
         Interpreter interpreter = new SimpleInterpreter();
