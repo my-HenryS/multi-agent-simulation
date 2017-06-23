@@ -81,4 +81,15 @@ public interface Shape extends Serializable, Cloneable, DimensionEntity, Drawabl
      * @return 该形状的副本.
      */
     Shape clone();
+
+    static Point getPoint(Shape shape, Point point){
+        double dist = shape.getDistance(point);
+        Vector direct = shape.getDirection(point);
+        double [] cords = new double[2];
+        direct.scale(dist);
+        direct.get(cords);
+        return point.clone().moveBy(-cords[0], -cords[1]);
+    }
 }
+
+

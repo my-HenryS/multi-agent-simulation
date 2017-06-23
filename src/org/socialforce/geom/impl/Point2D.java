@@ -106,4 +106,47 @@ public class Point2D extends Vector2D implements Point {
     public String toString(){
         return "坐标为： ("+values[0]+"," +values[1]+")";
     }
+
+    /**
+     * 已知三个点，求构成的角度
+     * @param p
+     * @param q
+     * @return
+     */
+    public double getAngle(Point p, Point q) {
+        double side1 = this.distanceTo(p);
+        double side2 = this.distanceTo(q);
+        double bottomSide = p.distanceTo(q);
+        double cosAngle = (side1 * side1 + side2 * side2 - bottomSide * bottomSide) / (2 * side1 * side2); //余弦定理
+        if (Math.abs(cosAngle) < 1.0e-10)
+            cosAngle = 0;
+        double angle = Math.acos(cosAngle);
+        return angle;
+    }
+
+    /**
+     * 以center为原点，angle为绕X轴正方向逆时针转过的角度，建立新的坐标系
+     * @param center
+     * @param angle
+     * @return
+     */
+    public Point coordinateTransfer(Point center, double angle){
+        double xTransfer = (this.getX()-center.getX())*Math.cos(angle)+(this.getY()-center.getY())*Math.sin(angle);
+        double yTransfer = (-1)*(this.getX()-center.getX())*Math.sin(angle)+(this.getY()-center.getY())*Math.cos(angle);
+        Point q = new Point2D(xTransfer, yTransfer);
+        return q;
+    }
+
+    /**
+     * 恢复为原点坐标系下的坐标
+     * @param center
+     * @param angle
+     * @return
+     */
+    public Point inverseCoordinateTransfer(Point center, double angle){
+        double xInverseTransfer = this.getX()*Math.cos(angle)-this.getY()*Math.sin(angle)+center.getX();
+        double yInverseTransfer = this.getX()*Math.sin(angle)+this.getY()*Math.cos(angle)+center.getY();
+        Point q = new Point2D(xInverseTransfer, yInverseTransfer);
+        return q;
+    }
 }

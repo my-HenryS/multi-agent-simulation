@@ -32,4 +32,6 @@ public interface DistanceShape extends Shape {
      * @return 该形状的副本.
      */
     DistanceShape clone();
+
+
 }

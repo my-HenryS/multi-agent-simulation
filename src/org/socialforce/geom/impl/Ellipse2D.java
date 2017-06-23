@@ -1,0 +1,305 @@
+package org.socialforce.geom.impl;
+
+import org.socialforce.drawer.Drawer;
+import org.socialforce.geom.*;
+
+
+/**
+ * Created by Administrator on 2017/5/10 0010.
+ */
+public class Ellipse2D implements DistanceShape {
+    private double a;
+    private double b;
+    public Point center;
+    private double angle;  //椭圆长轴与X轴正方向的夹角（逆时针为正）
+    protected Drawer drawer;
+
+    public Ellipse2D(){}
+
+    public Ellipse2D(double a, double b, Point center, double angle){
+        this.a = a;
+        this.b = b;
+        this.center = center;
+        this.angle = angle;
+    }
+
+    /**
+     * 获取绘制器
+     * @return 绘制器
+     */
+    @Override
+    public Drawer getDrawer() {
+        return drawer;
+    }
+
+    /**
+     * 设置绘制器
+     * @param drawer the drawer.
+     */
+    @Override
+    public void setDrawer(Drawer drawer) {
+        this.drawer = drawer;
+    }
+
+    /**
+     * 获取维度实体的维度
+     * @return 维度值
+     */
+    @Override
+    public int dimension() {
+        return 2;
+    }
+
+    /**
+     * 获取椭圆的参考点
+     * @return 椭圆中心
+     */
+    @Override
+    public Point getReferencePoint() {
+        return center;
+    }
+
+    /**
+     * 移动椭圆中心到指定位置
+     * @param location 指定的位置
+     */
+    @Override
+    public void moveTo(Point location) {
+        center = location.clone();
+    }
+
+    /**
+     * 判断点是否位于椭圆外部
+     * @param point 将被检查的点
+     * @return 判断结果
+     */
+    @Override
+    public boolean contains(Point point) {
+        Point P = point.coordinateTransfer(center,angle);
+        Point2D O = new Point2D(0,0);
+        double actualDistance = P.distanceTo(O);  //椭圆外一点到中心的距离
+        Point2D A1 = new Point2D(1*a,0);
+        double sampleAngle = O.getAngle(P,A1);
+        double sampleDistance = Math.sqrt((a*Math.cos(sampleAngle))*(a*Math.cos(sampleAngle))+(b*Math.sin(sampleAngle))*(b*Math.sin(sampleAngle)));  //椭圆上一点到中心的距离
+        return (actualDistance <= sampleDistance);
+    }
+
+    /**
+     * 给定椭圆外一点，找到椭圆上与此点距离最近的一点
+     * @param point 将被检查的点
+     * @return 最近的一点
+     */
+    public Point getPoint(Point point) {
+        Point P = point.coordinateTransfer(center, angle);
+        Point2D Q = new Point2D();
+        double x = P.getX();
+        double y = P.getY();
+        double startAngle;    //初始采样点的角度（都是从长轴的端点开始）
+        double sampleAngle;   //初始采样的角度步长
+        if(Math.abs(x) < 1.0e-10){
+            if(y > 0){
+                Q.moveTo(0,1*b);
+                return Q.inverseCoordinateTransfer(center,angle);
+            }
+            else{
+                Q.moveTo(0,(-1)*b);
+                return Q.inverseCoordinateTransfer(center,angle);
+            }
+        }
+        else if(x > 0){
+            if(Math.abs(y) < 1.0e-10){
+                Q.moveTo(1*a,0);
+                return Q.inverseCoordinateTransfer(center,angle);
+            }
+            else if(y > 0){
+                startAngle = 0;
+                sampleAngle = 10*(Math.PI)/180;
+            }
+            else{
+                startAngle = 0;
+                sampleAngle = (-10)*(Math.PI)/180;
+            }
+        }
+        else{
+            if(Math.abs(y) < 1.0e-10){
+                Q.moveTo((-1)*a,0);
+                return Q.inverseCoordinateTransfer(center,angle);
+            }
+            else if(y > 0){
+                startAngle = Math.PI;
+                sampleAngle = (-10)*(Math.PI)/180;
+            }
+            else{
+                startAngle = Math.PI;
+                sampleAngle = 10*(Math.PI)/180;
+            }
+        }
+        double differDistance = 1.0e-2;         //误差精度
+        double distancePQ,minAngle;             //最短距离
+        Point2D tempPoint = new Point2D();      //采样点
+        double tempDistance,tempAngle=startAngle;
+        while (true){
+            minAngle = tempAngle;
+            Q.moveTo(a*Math.cos(minAngle),b*Math.sin(minAngle));
+            distancePQ = P.distanceTo(Q);
+            tempAngle = minAngle+sampleAngle;
+            tempPoint.moveTo(a*Math.cos(tempAngle),b*Math.sin(tempAngle));
+            tempDistance = P.distanceTo(tempPoint);
+            if (Math.abs(tempDistance-distancePQ) < differDistance){
+                return Q.inverseCoordinateTransfer(center,angle);
+            }
+            if (tempDistance > distancePQ){
+                tempAngle = tempAngle-sampleAngle;
+                sampleAngle = sampleAngle/2;
+            }
+        }
+    }
+
+    /**
+     * 椭圆外一点至椭圆的最短距离
+     * @param point 将被检查的点
+     * @return 距离
+     */
+    @Override
+    public double getDistance(Point point) {
+        Point p = this.getPoint(point);
+        double distance = point.distanceTo(p);
+        return distance;
+    }
+
+    /**
+     * 获取该点到椭圆上与此点距离最近点的方向矢量
+     * @param point 将被检查的点
+     * @return 单位矢量
+     */
+    @Override
+    public Vector getDirection(Point point) {
+        Point p = this.getPoint(point);
+        Vector vector = p.directionTo(point);
+        return vector;
+    }
+
+    /**
+     * 分别获得椭圆与其它图形距离最近的点
+     * 存储到一个2*2的数组(第一行是其它图形上的点，第二行是本椭圆上的点)
+     * @param other 另一个形状
+     * @return 存储最近两点的数组
+     */
+
+    public double[][] closePoint(Shape other){
+        Point Point_1 = Shape.getPoint(other,center);  //图形other上的采样点
+        Point Point_2 = this.getPoint(Point_1);        //本椭圆上的采样点
+        double distance = Point_1.distanceTo(Point_2);
+        double differDistance = 1.0e-2;  //误差精度
+        Point tempPoint;
+        double tempDistance;
+        while(true) {
+            tempPoint = Shape.getPoint(other,Point_2);
+            tempDistance = tempPoint.distanceTo(Point_2);
+            if ((tempDistance > distance) || (Math.abs(tempDistance - distance) < differDistance))
+                break;
+            Point_1 = tempPoint;
+            distance = tempDistance;
+            tempPoint = this.getPoint(Point_1);
+            tempDistance = tempPoint.distanceTo(Point_1);
+            if ((tempDistance > distance) || (Math.abs(tempDistance - distance) < differDistance))
+                break;
+            Point_2 = tempPoint;
+            distance = tempDistance;
+        }
+        double nearPoint[][] = {{Point_1.getX(),Point_1.getY()},{Point_2.getX(),Point_2.getY()}};
+        return nearPoint;
+    }
+
+    /**
+     * 椭圆与其他图形之间的最短距离
+     * @param other 另一个形状
+     * @return 距离
+     */
+    @Override
+    public double distanceTo(Shape other) {
+        double nearPoint[][] = this.closePoint(other);
+        Point2D Point_1 = new Point2D(nearPoint[0][0],nearPoint[0][1]);  //图形other上的采样点
+        Point2D Point_2 = new Point2D(nearPoint[1][0],nearPoint[1][1]);  //本椭圆上的采样点
+        double distance = Point_1.distanceTo(Point_2);
+        return distance;
+    }
+
+    /**
+     * 椭圆与其它图形距离最近的点构成的方向向量
+     * @param other 另一个形状
+     * @return 单位矢量
+     */
+    @Override
+    public Vector directionTo(Shape other) {
+        double nearPoint[][] = this.closePoint(other);
+        Point2D Point_1 = new Point2D(nearPoint[0][0],nearPoint[0][1]);  //图形other上的采样点
+        Point2D Point_2 = new Point2D(nearPoint[1][0],nearPoint[1][1]);  //本椭圆上的采样点
+        Vector vector = Point_2.directionTo(Point_1);
+        return vector;
+    }
+
+    /**
+     * 获取box的边界
+     * @return 椭圆的外切矩形
+     */
+    @Override
+    public Box getBounds() {
+        double halfWidth,halfHeight;
+        if(Math.abs(angle%(Math.PI)) < 1.0e-10){
+            halfWidth = a;
+            halfHeight = b;
+        }
+        else if(Math.abs((angle%(Math.PI))-((Math.PI)/2)) < 1.0e-10){
+            halfWidth = b;
+            halfHeight = a;
+        }
+        else{
+            double k = (-1)*Math.tan(angle);  //椭圆坐标系中，上下切线的斜率
+            halfHeight = Math.sqrt((a*a*k*k+b*b)/(k*k+1));
+            halfWidth = Math.sqrt(a*a+b*b-halfHeight*halfHeight);
+        }
+        return new Box2D(getReferencePoint().getX()-halfWidth,getReferencePoint().getY()-halfHeight,2*halfWidth,2*halfHeight);
+    }
+
+    /**
+     * 判断是否是碰撞到box
+     * @param hitbox 将要被检查的box
+     * @return 判断结果
+     */
+    @Override
+    public boolean hits(Box hitbox) {
+        double nearPoint[][] = this.closePoint(hitbox);
+        Point2D point = new Point2D(nearPoint[0][0],nearPoint[0][1]);  //hitbox上距离椭圆最近的点
+        if(this.contains(point))
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * 判断该形状是否与另一个形状严格相交
+     * @param other 另一个形状
+     * @return 判断结果
+     */
+    @Override
+    public boolean intersects(Shape other) {
+        double nearPoint[][] = this.closePoint(other);
+        Point2D point = new Point2D(nearPoint[0][0],nearPoint[0][1]);  //图形other上距离椭圆最近的点
+        if(this.contains(point))
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * 创建并返回圆的副本
+     * @return 椭圆的副本
+     */
+    @Override
+    public Ellipse2D clone() {
+        return new Ellipse2D(a,b,center.clone(),angle);
+    }
+
+
+}

@@ -24,6 +24,7 @@ public class Rectangle2D implements Shape {
         this.weidth = weidth;
         this.angle = angle;
     }
+
     /**
      * set the drawer for the drawable.
      *
