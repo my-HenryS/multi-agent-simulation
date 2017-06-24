@@ -48,22 +48,22 @@ public class ApplicationForCrossFlow extends SimpleApplication {
         SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
                 new Wall[]{
                         new Wall(new Box2D(20,-3,1,15))
-                }).setModel(new SimpleForceModel());
+                }).setModel(new NeuralForceModel());
 
         SimpleParameterPool parameters = new SimpleParameterPool();
 
-        parameters.addValuesAsParameter(new RandomEntityGenerator2D(24,new Box2D(3,1,3,8))
-                .setValue(new BaseAgent(template, new Velocity2D(0,0)))
-                                        ,new RandomEntityGenerator2D(40,new Box2D(3,1,5,8))
-                .setValue(new BaseAgent(template, new Velocity2D(0,0)))
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(30,new Box2D(3,1,3,8))
+                .setValue(new BaseAgent(template, new Velocity2D(3,0)))
+                                        ,new RandomEntityGenerator2D(1,new Box2D(3,1,5,8))
+                .setValue(new BaseAgent(template, new Velocity2D(3,0)))
         );
 
-        parameters.addValuesAsParameter(new RandomEntityGenerator2D(35,new Box2D(33,1,3,8))
-                .setValue(new BaseAgent(template, new Velocity2D(0,0)))
-        );
+        //parameters.addValuesAsParameter(new RandomEntityGenerator2D(1,new Box2D(33,1,3,8))
+                //.setValue(new BaseAgent(template, new Velocity2D(-3,0)))
+        //);
 
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
-                .addValue(new Exit(new Box2D(19,3,3,3)))
+                .addValue(new Exit(new Box2D(19,3,3,1)))
                 .addValue(new SafetyRegion(new Box2D(46,1,1,8)))
                 .addValue(new SafetyRegion(new Box2D(-6,1,1,8)))
         );

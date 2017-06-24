@@ -192,8 +192,9 @@ public class BaseAgent extends Entity implements Agent {
      * @see Agent
      * @see Model
      */
-    public void selfAffect(){
-        this.push(model.fieldForce(this));
+    public void selfAffect()
+    {
+        // this.push(model.fieldForce(this)); 目前交由scene管理场力
     }
 
     @Override
@@ -250,5 +251,9 @@ public class BaseAgent extends Entity implements Agent {
     @Override
     public void onStep(Scene scene) {
 
+    }
+
+    public void setCurrVelocity(Velocity2D velocity){
+        this.currVelocity = velocity;
     }
 }

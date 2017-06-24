@@ -76,6 +76,7 @@ public class SimpleScene implements Scene {
         entities.addAll(statics);
         entities.addAll(allAgents);
         Iterable<InteractiveEntity> captors = entities.selectClass(Influential.class);
+        model.fieldForce(allAgents);
         for (InteractiveEntity captor : captors){
             Iterable<Agent> affectableAgents = allAgents.select(((Influential) captor).getView());
             for (Agent target:affectableAgents){

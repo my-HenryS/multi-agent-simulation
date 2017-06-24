@@ -1,11 +1,13 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.container.Pool;
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Force2D;
 import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.*;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -96,24 +98,26 @@ public class SimpleForceModel implements Model {
     /**
      * 生成模型的场力--即驱动力。
      *
-     * @param source  产生作用力的实体。
+     * @param sources  获有作用力的实体们。
      * @return the force. 返回力的大小，其单位是牛。
      */
-    public Force fieldForce(InteractiveEntity source) {
-        if (!(source instanceof Agent)) {
-            return zeroForce();
+    public void fieldForce(Pool sources) {
+        for(Object source : sources){
+            if (!(source instanceof Agent)) {
+                return;
+            }
+            Agent agent = (Agent) source;
+            Velocity expected = this.zeroVelocity();
+            Force force = this.zeroForce();
+            Point current = agent.getShape().getReferencePoint(), goal = agent.getPath().nextStep(current);
+            expected.sub(current);
+            expected.add(goal);
+            expected.scale(EXPECTED_SPEED / expected.length());
+            force.add(expected);
+            force.sub(agent.getVelocity());
+            force.scale(agent.getMass() / REACT_TIME);
+            agent.push(force);
         }
-        Agent agent = (Agent) source;
-        Velocity expected = this.zeroVelocity();
-        Force force = this.zeroForce();
-        Point current = agent.getShape().getReferencePoint(), goal = agent.getPath().nextStep(current);
-        expected.sub(current);
-        expected.add(goal);
-        expected.scale(EXPECTED_SPEED / expected.length());
-        force.add(expected);
-        force.sub(agent.getVelocity());
-        force.scale(agent.getMass() / REACT_TIME);
-        return force;
     }
 
     private <T extends InteractiveEntity> T reg(T entity) {

@@ -84,11 +84,10 @@ public class SocialForceGenerator extends WallForceGenerator{
                     Point2D prePoint = matrix.get(i).get(j);
                     double[] surroundings = getSurrounding(prePoint, j);
                     Vector2D nextStep = getNext(prePoint), acc = calAcc(velocity.get(i).get(j + 1), velocity.get(i).get(j));
-                    Vector2D thisVelocity = this.velocity.get(i).get(j);
-
+                    Vector2D thisVelocity = this.velocity.get(i).get(j).clone(), nextVelocity = this.velocity.get(i).get(j + 1).clone();
                     /* 获取旋转角并旋转所有输入输出向量 */
                     double angle = Vector2D.getRotateAngle(new Vector2D(1,0), thisVelocity);
-                    acc.rotate(angle);
+                    nextVelocity.rotate(angle);
                     nextStep.rotate(angle);
                     thisVelocity.rotate(angle);
 
@@ -101,13 +100,13 @@ public class SocialForceGenerator extends WallForceGenerator{
                     /* 翻转 */
                     if(nextStep.getY() < 0){
                         nextStep = new Vector2D(nextStep.getX(),-nextStep.getY());
-                        acc = new Vector2D(acc.getX(), -acc.getY());
+                        nextVelocity = new Vector2D(nextVelocity.getX(), -nextVelocity.getY());
                         upSideDownAMatrix(surroundings);
                     }
 
                     LinkedList<Double>tempA = new LinkedList<>();
-                    tempA.add(acc.getX()); //加速度x轴
-                    tempA.add(acc.getY()); //加速度y轴
+                    tempA.add(nextVelocity.getX()); //加速度x轴
+                    tempA.add(nextVelocity.getY()); //加速度y轴
                     tempA.add(Vector2D.getRotateAngle(nextStep, new Vector2D(1,0)));  //A*方向和速度夹角
                     tempA.add(thisVelocity.getX());   //速度大小 （已旋转至x正向）
                     //tempA[5] = thisVelocity.getY();  旋转之后恒为0

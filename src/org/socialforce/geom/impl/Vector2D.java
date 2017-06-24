@@ -285,7 +285,7 @@ public class Vector2D implements Vector {
      * @return 这个向量的副本.
      */
     @Override
-    public Vector clone() {
+    public Vector2D clone() {
         Vector2D vec = new Vector2D();
         System.arraycopy(values,0,vec.values,0,values.length);
         return vec;
