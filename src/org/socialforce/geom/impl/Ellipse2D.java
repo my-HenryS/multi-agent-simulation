@@ -8,9 +8,22 @@ import org.socialforce.geom.*;
  * Created by Administrator on 2017/5/10 0010.
  */
 public class Ellipse2D implements DistanceShape {
+    public double getA() {
+        return a;
+    }
+
+    public double getB() {
+        return b;
+    }
+
     private double a;
     private double b;
     public Point center;
+
+    public double getAngle() {
+        return angle;
+    }
+
     private double angle;  //椭圆长轴与X轴正方向的夹角（逆时针为正）
     protected Drawer drawer;
 
