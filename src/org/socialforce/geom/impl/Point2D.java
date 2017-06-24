@@ -49,21 +49,21 @@ public class Point2D extends Vector2D implements Point {
 
 
     @Override
-    public Point moveTo(double x, double y) {
+    public Point2D moveTo(double x, double y) {
         this.values[0] = x;
         this.values[1] = y;
         return this;
     }
 
     @Override
-    public Point moveBy(double x, double y) {
+    public Point2D moveBy(double x, double y) {
         this.values[0] += x;
         this.values[1] += y;
         return this;
     }
 
     @Override
-    public Point scaleBy(double s) {
+    public Point2D scaleBy(double s) {
         this.values[0] *= s;
         this.values[1] *= s;
         return this;
@@ -88,7 +88,7 @@ public class Point2D extends Vector2D implements Point {
      * @return the copied vector.
      */
     @Override
-    public Point clone() {
+    public Point2D clone() {
         Point2D point2D = new Point2D();
         this.get(point2D.values);
         return point2D;

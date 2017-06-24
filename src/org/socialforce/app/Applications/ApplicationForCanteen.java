@@ -5,24 +5,24 @@ import org.socialforce.app.SocialForceApplication;
 import org.socialforce.app.impl.SceneStepDataProvider;
 import org.socialforce.app.impl.SceneStepDumper;
 import org.socialforce.app.impl.SimpleInterpreter;
-import org.socialforce.geom.DistanceShape;
 import org.socialforce.app.impl.SingleFileOutputer;
+import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.geom.impl.Velocity2D;
+import org.socialforce.model.Agent;
+import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.Monitor;
 import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
 import org.socialforce.strategy.DynamicStrategy;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.ResourceBundle;
 
 import static org.socialforce.scene.SceneLoader.genParameter;
 
@@ -33,6 +33,7 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
     DistanceShape template;
 
     public ApplicationForCanteen(){
+
     }
 
     /**
@@ -44,8 +45,9 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
         for(int i = 0; i < 40; i++){
             setUpScenes();
             for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
-                Scene scene = iterator.next();
+                currentScene = iterator.next();
                 // TODO: 2017/1/29 Refactor dump setting code here.
+                /*
                 SceneStepDataProvider rootProvider = new SceneStepDataProvider();
                 try {
                     SceneStepDumper dumper = new SceneStepDumper(new SingleFileOutputer("testDump" +
@@ -55,18 +57,18 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                scene.setSceneListener(rootProvider);
+                scene.addSceneListener(rootProvider);
+                */
                 // dump code end.
                 int total_num = 0;
-                for(Iterator<SceneValue> iter = scene.getValueSet().iterator(); iter.hasNext();){
-                    SceneValue sceneValue = iter.next();
-                    if(sceneValue instanceof SVSR_RandomAgentGenerator){
-                        total_num += ((SVSR_RandomAgentGenerator) sceneValue).get_Agentnum();
-                    }
+                for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Agent.class).iterator(); iter.hasNext();){
+                    total_num ++;
                 }
                 System.out.print("Population of "+total_num);
                 int iteration = 0;
-                PathFinder pathFinder = new AStarPathFinder(scene, template);
+                PathFinder pathFinder = new AStarPathFinder(currentScene, template, 0.2);
+                strategy = new ECStrategy(currentScene, pathFinder);
+                /*
                 if(i<10){
                     System.out.print(" with ECStrategy, ");
                     strategy = new ECStrategy(scene, pathFinder);
@@ -83,24 +85,25 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
                     System.out.print(" with NRStrategy, ");
                     strategy = new NearestGoalStrategy(scene, pathFinder);
                 }
+                */
                 strategy.pathDecision();
-                while (scene.getAllAgents().size() > 5) {
-                    long start = System.currentTimeMillis(), span, fps = 12;
-                    scene.stepNext();
+                while (!toSkip()) {
+                    this.StepNext(currentScene);
                     iteration += 1;
                     if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
                         ((DynamicStrategy) strategy).dynamicDecision();
                     }
-                    long l = System.currentTimeMillis() - start;
-                    span = l > fps? 0: fps - l;
-                    try {
-                        Thread.sleep(span); //锁帧大法
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
+                if(onStop()) return;
+
+                System.out.println(iteration * 0.002);
             }
         }
+    }
+
+    @Override
+    public boolean toSkip(){
+        return Skip || currentScene.getAllAgents().size() < 10;
     }
 
 
@@ -112,19 +115,61 @@ public class ApplicationForCanteen extends SimpleApplication implements SocialFo
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(150,new Box2D(0,0,25,18),template)));
-        parameters.addLast(genParameter(new SVSR_RandomAgentGenerator(155,new Box2D(0,18,25,3),template)));
-        parameters.addLast(genParameter((new SVSR_SafetyRegion(new Box2D(-3,-0.5,1,4)))));
-        parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(18.5,-3,4,1))));
-        parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(30,17.5,1,4))));
-        parameters.addLast(genParameter(new SVSR_Exit(new Box2D[]{new Box2D(new Point2D(-2,0.75), new Point2D(1.8,2.18)),
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(355,new Box2D(0,0,25,18),template),new SV_RandomAgentGenerator(155,new Box2D(0,0,25,18),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(155,new Box2D(0,18,25,3),template)));
+        parameters.addLast(genParameter((new SV_SafetyRegion(new Box2D(-3,-0.5,1,4)))));
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(18.5,-3,4,1))));
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(30,17.5,1,4))));
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(new Point2D(-2,0.75), new Point2D(1.8,2.18)),
                 new Box2D(new Point2D(3,0.82), new Point2D(4,2.18)),
                 new Box2D(new Point2D(19.82,2), new Point2D(21.18,3)),
                 new Box2D(new Point2D(19.82,-2), new Point2D(21.18,1.8)),
                 new Box2D(new Point2D(24,18.82), new Point2D(26.2,20.18)),
-                new Box2D(new Point2D(27.5,18.82), new Point2D(29.5,20.18))})));
+                new Box2D(new Point2D(27.5,18.82), new Point2D(29.5,20.18)),
+                })));
+
+        for (int i = 5;i<=15;i=i+2){
+            for (int j =4;j<=17;j++)
+            parameters.addLast(genParameter(new SV_Exit(new Box2D[]{
+                    new Box2D(new Point2D(i-0.1,j-0.1), new Point2D(i+1.1,j+0.1)),
+            })));
+        }
+
+        for (int i = 17;i<=19;i=i+2){
+            for (int j =5;j<=17;j++)
+                parameters.addLast(genParameter(new SV_Exit(new Box2D[]{
+                        new Box2D(new Point2D(i-0.1,j-0.1), new Point2D(i+1.1,j+0.1)),
+                })));
+        }
+
+        for (int i = 21;i<=21;i=i+2){
+            for (int j =9;j<=17;j++)
+                parameters.addLast(genParameter(new SV_Exit(new Box2D[]{
+                        new Box2D(new Point2D(i-0.1,j-0.1), new Point2D(i+1.1,j+0.1)),
+                })));
+        }
+
+
+        for (int i = 0;i<=1;i++){
+            for (int j =9;j<=17;j++)
+                parameters.addLast(genParameter(new SV_Exit(new Box2D[]{
+                        new Box2D(new Point2D(i*2.5-0.1,j-0.1), new Point2D(i*2.5+1.1,j+0.1)),
+                })));
+        }
+
+        /*
+        double samplewidth = 1;
+        for (int i = 0; i< 30/samplewidth;i++){
+            for (int j = 0; j < 21/samplewidth; j++){
+               parameters.addLast(genParameter(new SV_Monitor(new Circle2D(new Point2D(i*samplewidth,j*samplewidth),samplewidth/2))));
+            }
+        }
+        */
         loader.readParameterSet(parameters);
-        scenes = loader.readScene(this);
+        scenes = loader.readScene();
+        for(Scene scene:scenes){
+            scene.setApplication(this);
+        }
     }
 
 

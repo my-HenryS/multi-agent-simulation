@@ -1,6 +1,7 @@
 package org.socialforce.model;
 
 import org.socialforce.container.Pool;
+import org.socialforce.drawer.Drawable;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
@@ -14,7 +15,7 @@ import org.socialforce.geom.Shape;
  * @see Pool
  * @see Agent
  */
-public interface InteractiveEntity {
+public interface InteractiveEntity extends Drawable{
     Scene getScene();
 
     void setScene(Scene scene);
@@ -30,14 +31,6 @@ public interface InteractiveEntity {
      * @param name
      */
     void setName(String name);
-    /**
-     * 当前this所影响的实体
-     * 例如，墙会影响agent(反作用，反推)
-     * @param affectedEntity 被影响的实体
-     * @see Agent
-     * @see SocialForceModel
-     */
-    void affect(InteractiveEntity affectedEntity);
 
     /**
      * 获取一个实体的形状
@@ -59,14 +52,14 @@ public interface InteractiveEntity {
      *
      * @return model 模型
      */
-    SocialForceModel getModel();
+    Model getModel();
 
     /**
      * 设置社会力模型。
      *
      * @param model 模型
      */
-    void setModel(SocialForceModel model);
+    void setModel(Model model);
 
     /**
      * 将该实体放置在一个特殊的点上。

@@ -2,27 +2,15 @@ package org.socialforce.app.Applications;
 
 import org.socialforce.app.ApplicationListener;
 import org.socialforce.app.SocialForceApplication;
-import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.Model;
 import org.socialforce.model.impl.SimpleSocialForceModel;
-import org.socialforce.model.impl.Wall;
-import org.socialforce.scene.ParameterPool;
 import org.socialforce.scene.Scene;
-import org.socialforce.scene.SceneLoader;
 import org.socialforce.scene.ValueSet;
-import org.socialforce.scene.impl.*;
 import org.socialforce.strategy.GoalStrategy;
 import org.socialforce.strategy.PathFinder;
-import org.socialforce.strategy.impl.AStarPathFinder;
-import org.socialforce.strategy.impl.NearestGoalStrategy;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.socialforce.scene.SceneLoader.genParameter;
 
 /**
  * Created by Whatever on 2016/12/2.
@@ -30,13 +18,32 @@ import static org.socialforce.scene.SceneLoader.genParameter;
 public abstract class SimpleApplication implements SocialForceApplication {
     protected GoalStrategy strategy;
     protected LinkedList<Scene> scenes;
+    protected Scene currentScene;
     protected ApplicationListener listener;
-    protected SocialForceModel model = new SimpleSocialForceModel();
+    protected Model model = new SimpleSocialForceModel();
+    protected boolean Pause = false, Skip = false;
+    protected int minStepForward = 0;
 
+    @Override
+    public void stop() {
+        throw new UnsupportedOperationException("不支持类型" + this.getClass() + "的应用停止。");
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    String name = this.getClass().getSimpleName();
 
 
     public SimpleApplication(){
-        setUpScenes();
+
     }
     /**
      * 需要根据parameter的map来生成一系列scene
@@ -51,7 +58,7 @@ public abstract class SimpleApplication implements SocialForceApplication {
      * @return the model.
      */
     @Override
-    public SocialForceModel getModel() {
+    public Model getModel() {
         return model;
     }
     /**
@@ -60,7 +67,7 @@ public abstract class SimpleApplication implements SocialForceApplication {
      * @param model the model to be set.
      */
     @Override
-    public void setModel(SocialForceModel model) {
+    public void setModel(Model model) {
         this.model = model;
     }
 
@@ -102,4 +109,61 @@ public abstract class SimpleApplication implements SocialForceApplication {
     public List<PathFinder> getAllPathFinders() {
         return null;
     }
+
+
+    public void StepNext(Scene scene){
+        if (Pause == false){
+            long startT = System.currentTimeMillis();
+            scene.stepNext();
+            long span = System.currentTimeMillis() - startT;
+            long sleepT = (span < minStepForward) ? minStepForward - span : 0;
+            try {
+                Thread.sleep(sleepT);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        else;//do nothing
+    }
+
+    public void setMinStepForward(int stepForward){
+        this.minStepForward = stepForward;
+    }
+
+    @Override
+    public void pause(){
+        Pause = true;
+    }
+
+    @Override
+    public void resume(){
+        Pause = false;
+    }
+
+    public void skip(){
+        this.Skip = true;
+    }
+
+    public boolean toSkip() {
+        return Skip || currentScene.getAllAgents().isEmpty();
+    }
+
+    boolean terminate = false;
+
+    public void terminate(){
+        skip();
+        terminate = true;
+    }
+
+    /**
+     * 在scene运行结束时调用
+     * @return 是否结束application
+     */
+    public boolean onStop() {
+        boolean tempT = terminate;
+        Skip = false;
+        terminate = false;
+        return tempT;
+    }
+
 }

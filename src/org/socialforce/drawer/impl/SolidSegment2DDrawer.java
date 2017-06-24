@@ -23,6 +23,8 @@ public class SolidSegment2DDrawer extends AwtDrawer2D<Segment2D> {
     @Override
     public void renderShape(Graphics2D g, Segment2D pattern) {
         Point2D[] pts = pattern.getExtrimePoint();
+        float thick= 0.1f;
+        g.setStroke(new BasicStroke(thick, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_ROUND));
         g.draw(new Line2D.Double(pts[0].getX(),pts[0].getY(),pts[1].getX(),pts[1].getY()));
     }
 }

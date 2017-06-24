@@ -1,6 +1,7 @@
 package org.socialforce.strategy.impl;
 
 import org.socialforce.model.impl.BaseAgent;
+import org.socialforce.model.impl.SimpleSocialForceModel;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.model.Agent;
@@ -27,6 +28,7 @@ public class ECStrategy implements DynamicStrategy {
     @Override
     public void pathDecision(){
         Agent agent;
+        int goalchanges = 0;
         for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
             agent = (Agent) iter.next();
             Path designed_path = null;
@@ -36,15 +38,19 @@ public class ECStrategy implements DynamicStrategy {
                 //设置最优path
                 Path path = pathFinder.plan_for(goal);
                 double pathLength = path.length(agent.getShape().getReferencePoint());
-                double velocity = agent.getModel().getExpectedSpeed();
-                double t = pathLength / velocity + front_num / EC(Width.widthOf(goal), agent.getModel().getExpectedSpeed());
+                double velocity = ((SimpleSocialForceModel)agent.getModel()).getExpectedSpeed();
+                double t = pathLength / velocity + front_num / EC(Width.widthOf(goal), ((SimpleSocialForceModel)agent.getModel()).getExpectedSpeed());
                 if(t < factor_t){
                     factor_t = t;
                     designed_path = path;
                 }
             }
+            if(agent.getPath()!=null){
+                if(!agent.getPath().getGoal().equals(designed_path.getGoal())) goalchanges += 1;
+            }
             agent.setPath(designed_path);
         }
+        //System.out.println(goalchanges);
     }
 
     @Override
@@ -63,9 +69,18 @@ public class ECStrategy implements DynamicStrategy {
         return front_num;
     }
 
-    public double EC(double width, double velocity){
+    public static double EC(double width, double velocity){
         double a0 = 8.515, b1 = 0.4852, k0 = 0.3712, b0 = 0.1291;
         double ec=a0*(1-Math.exp(-k0*velocity+b0))*(width-b1);
         return ec<0? 0.01:ec;
+    }
+
+    public static void main(String[] args) {
+        double []widths = new double[]{0.75,1,1.5,1.75};
+        double dV = 3, sigmaEC = 0;
+        for(double width:widths){
+            sigmaEC += ECStrategy.EC(width,dV);
+        }
+        System.out.println(sigmaEC);
     }
 }

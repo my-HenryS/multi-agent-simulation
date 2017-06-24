@@ -3,6 +3,8 @@ package org.socialforce.strategy.impl;
 import org.socialforce.strategy.Path;
 import org.socialforce.geom.Point;
 
+import java.util.LinkedList;
+
 /**
  * 定义StraightPath类，其实现了接口Path的方法。
  * Created by Ledenel on 2016/8/14.
@@ -26,6 +28,14 @@ public class StraightPath implements Path {
         return goals[goals.length-1];
     }
 
+    public Point getCurrentGoal(){ return goals[goals.length-1]; }
+
+    public LinkedList<Point> getGoals() {
+        LinkedList<Point> Goals = new LinkedList<>();
+        Goals.addLast(goals[goals.length-1]);
+        return Goals;
+    }
+
     /**
      *在当前位置获取下一个目标点。
      *
@@ -33,7 +43,7 @@ public class StraightPath implements Path {
      * @return 当前位置的目标点，该点为归还路径上的点。
      */
     @Override
-    public Point getCurrentGoal(Point current) {
+    public Point nextStep(Point current) {
         int index = 0;
         double length = Double.POSITIVE_INFINITY;
         for(int i = 0; i < goals.length; i++) {
@@ -70,7 +80,8 @@ public class StraightPath implements Path {
     public double length(Point current){
         double length = 0;
         for(int i = getNext(current); i<goals.length; i++){
-            length += goals[i].distanceTo(goals[i-1]);
+            length += goals[i].distanceTo(current);
+            current = goals[i];
         }
         return length;
     }

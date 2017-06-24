@@ -1,38 +1,41 @@
 package org.socialforce.model.impl;
 
 import org.socialforce.geom.Shape;
-import org.socialforce.model.Agent;
-import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.*;
+import org.socialforce.scene.Scene;
+import org.socialforce.scene.SceneListener;
+
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 定义Gate类，其继承于父类Entity， 并实现了接口InteractiveEntity 的方法
  *  * Created by Ledenel on 2016/8/14.
  */
-public class SafetyRegion extends Entity implements InteractiveEntity {
+public class SafetyRegion extends Entity implements Influential, SceneListener {
+    LinkedBlockingQueue<Integer> agentEscaping = new LinkedBlockingQueue<>();
+    int agentEscapeThisStep = 0;
     public SafetyRegion(Shape shape) {
         super(shape);
     }
 
     /**
      * 当前this所影响的实体
-     * 例如，墙会影响agent(反作用，反推)
-     * @param affectedEntity 被影响的实体
+     * 例如，墙会影响agent(反9作用，反推)
+     * @param target 被影响的实体
      * @see Agent
-     * @see SocialForceModel
+     * @see Model
      */
-    @Override
-    public void affect(InteractiveEntity affectedEntity) {
-        if(affectedEntity instanceof Agent) {
-            Agent agent = (Agent)affectedEntity;
-            //agent.push(model.calculate(this,agent));
+    public void affect(Agent target) {
+            Agent agent = (Agent) target;
+            //agent.push(model.interactionForce(this,agent));
             if(shape.contains(agent.getShape().getReferencePoint())) {
                 //agent exited.
                 if(scene != null) {
                     scene.onAgentEscape(agent); // add valid scene.
+                    agentEscapeThisStep ++;
                 }
             }
-        }
+
     }
 
     /*
@@ -67,5 +70,29 @@ public class SafetyRegion extends Entity implements InteractiveEntity {
     @Override
     public SafetyRegion standardclone() {
         return new SafetyRegion(shape.clone());
+    }
+
+    @Override
+    public Shape getView() {
+        return this.getShape();
+    }
+
+    public int getLastSecondEscapedAgents(){
+        return agentEscaping.stream().mapToInt(num -> num).sum();
+    }
+
+    //TODO 将SceneValue的Apply迁移至此
+    @Override
+    public void onAdded(Scene scene) {
+
+    }
+
+    @Override
+    public void onStep(Scene scene) {
+        agentEscaping.offer(agentEscapeThisStep);
+        if(agentEscaping.size() > 1/model.getTimePerStep()){
+            agentEscaping.poll();
+        }
+        agentEscapeThisStep = 0;
     }
 }

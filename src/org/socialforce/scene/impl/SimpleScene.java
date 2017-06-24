@@ -5,32 +5,34 @@ import org.socialforce.container.AgentPool;
 import org.socialforce.container.EntityPool;
 import org.socialforce.container.impl.LinkListAgentPool;
 import org.socialforce.container.impl.LinkListEntityPool;
+import org.socialforce.container.impl.LinkListPool;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.Box;
+import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
+import org.socialforce.model.Influential;
 import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.Moveable;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneListener;
-import org.socialforce.scene.ValueSet;
-import org.socialforce.strategy.PathFinder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ledenel on 2016/8/22.
  */
 public class SimpleScene implements Scene {
     @Override
-    public SceneListener getSceneListener() {
-        return sceneListener;
-    }
-    @Override
-    public void setSceneListener(SceneListener sceneListener) {
-        this.sceneListener = sceneListener;
+    public void addSceneListener(SceneListener sceneListener) {
+        this.sceneListeners.add(sceneListener);
+        sceneListener.onAdded(this);
     }
 
-    SceneListener sceneListener;
+    List<SceneListener> sceneListeners = new ArrayList<>();
 
     /**
      *
@@ -44,6 +46,7 @@ public class SimpleScene implements Scene {
     }
 
     public SimpleScene(Box bounds) {
+        //设置scene的范围
         this.bounds = bounds;
         this.statics = new LinkListEntityPool();
         this.allAgents = new LinkListAgentPool();
@@ -63,16 +66,24 @@ public class SimpleScene implements Scene {
     }
 
     /**
-     * calculate the next time step of the scene.
+     * interactionForce the next time step of the scene.
      * the time step will also forward 1 unit.
      */
     @Override
     public void stepNext() {
-        for(Agent agent : allAgents) {
-            agent.determineNext();
+        LinkListPool<InteractiveEntity> entities = new LinkListPool<>();
+        entities.addAll(statics);
+        entities.addAll(allAgents);
+        Iterable<InteractiveEntity> captors = entities.selectClass(Influential.class);
+        for (InteractiveEntity captor : captors){
+            Iterable<Agent> affectableAgents = allAgents.select(((Influential) captor).getView());
+            for (Agent target:affectableAgents){
+                ((Influential) captor).affect(target);
+            }
         }
-        for (Agent agent : allAgents) {
-            agent.act();
+        Iterable<InteractiveEntity> movables = entities.selectClass(Moveable.class);
+        for (InteractiveEntity movable : movables) {
+            ((Moveable)movable).act();
         }
         allAgents.removeIf(Agent::isEscaped);
         currentStep++;
@@ -82,8 +93,12 @@ public class SimpleScene implements Scene {
                 listener.onStep(this);
             }
         }
-        if(this.sceneListener != null) {
-            this.sceneListener.onStep(this);
+        updateStep();
+    }
+
+    protected void updateStep() {
+        for(SceneListener lis : sceneListeners){
+            lis.onStep(this);
         }
     }
 
@@ -179,29 +194,6 @@ public class SimpleScene implements Scene {
         return currentStep;
     }
 
-
-    PathFinder finder;
-    /**
-     * get the path finder for this scene.
-     *
-     * @return the path finder.
-     */
-    @Override
-    public PathFinder getPathFinder() {
-        return finder;
-    }
-
-    /**
-     * set a path finder for this scene.
-     *
-     * @param finder the path finder for this scene.
-     */
-    @Override
-    public void setPathFinder(PathFinder finder) {
-        this.finder = finder;
-    }
-
-
     AgentEscapeListener listener;
     /**
      * triggers while an agent is escaped.
@@ -253,22 +245,6 @@ public class SimpleScene implements Scene {
         }
     }
 
-    private ValueSet valueSet;
-
-    /**
-     * get the value have been set
-     * @return
-     * @see ValueSet
-     */
-    @Override
-    public ValueSet getValueSet() {
-        return valueSet;
-    }
-
-    public void setValueSet(ValueSet valueSet) {
-        this.valueSet = valueSet;
-    }
-
     public Scene simpleclone(){
         return new SimpleScene(bounds);
     }
@@ -276,7 +252,6 @@ public class SimpleScene implements Scene {
     public Scene standardclone() {
         SimpleScene newscene = new SimpleScene(bounds);
         newscene.setStaticEntities((EntityPool) this.getStaticEntities().clone());
-        newscene.setValueSet(valueSet);
         return newscene;
     }
 
@@ -316,5 +291,7 @@ public class SimpleScene implements Scene {
         }
         this.bounds = new Box2D(new Point2D(xmin-5,ymin-5),new Point2D(xmax+5,ymax+5));
     }
+
+
 
 }

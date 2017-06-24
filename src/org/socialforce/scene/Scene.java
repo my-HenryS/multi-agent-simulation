@@ -24,7 +24,7 @@ import java.util.stream.Stream;
  */
 public interface Scene extends Drawable {
     /**
-     * calculate the next time step of the scene.
+     * interactionForce the next time step of the scene.
      * the time step will also forward 1 unit.
      */
     void stepNext();
@@ -80,19 +80,6 @@ public interface Scene extends Drawable {
      * @return the current step.
      */
     int getCurrentSteps();
-
-    /**
-     * get the path finder for this scene.
-     * @return the path finder.
-     */
-    PathFinder getPathFinder();
-
-    /**
-     * set a path finder for this scene.
-     * @param finder the path finder for this scene.
-     */
-    void setPathFinder(PathFinder finder);
-
     /**
      * triggers while an agent is escaped.
      * @param agent the escaped agent.
@@ -103,10 +90,7 @@ public interface Scene extends Drawable {
     void setApplication(SocialForceApplication application);
     boolean isVisible();
     void setVisible(boolean visible);
-    ValueSet getValueSet();
-    void setValueSet(ValueSet valueSet);
-    SceneListener getSceneListener();
-    void setSceneListener(SceneListener listener);
+   void addSceneListener(SceneListener listener);
     // TODO: 2016/9/14 add scene listener support.
 
     //只拷贝bounds
@@ -115,4 +99,5 @@ public interface Scene extends Drawable {
     //拷贝bounds和
     Scene standardclone();
     void pack();
+
 }

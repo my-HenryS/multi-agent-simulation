@@ -38,30 +38,32 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
             e.printStackTrace();
         }
 /*/
-        getDevice().setColor(Color.WHITE);
+        getDevice().setColor(new Color(70,70,70));
         double pt[] = new double[2];
         double sz[] = new double[2];
         clip.getStartPoint().get(pt);
         clip.getSize().get(sz);
 
+
         getDevice().fill(new Rectangle2D.Double(0,0,ctrlWidth,ctrlHeight));
         AffineTransform oldT = getDevice().getTransform();
         getDevice().transform(transform);
+        getDevice().setStroke(new BasicStroke((float) (1 / getScaleRate())));
         getDevice().setColor(new Color(150,255,150));
         getDevice().draw(new Rectangle2D.Double(pt[0],pt[1],sz[0],sz[1]));
         getDevice().setColor(Color.WHITE);
         for (InteractiveEntity entity : iterable) {
-            Drawer drawer = entity.getShape().getDrawer();
+            Drawer drawer = entity.getDrawer();
             if(drawer == null){
-                installer.addDrawerSupport(entity.getShape());
-                drawer = entity.getShape().getDrawer();
+                eInstaller.addDrawerSupport(entity);
+                drawer = entity.getDrawer();
             }
-            drawer.setDevice(this.getDevice());
+            //drawer.setDevice(this.getDevice());
  //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(26.0,2.5))) ((AwtDrawer2D)drawer).setColor(Color.red);
  //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(33.5,14))) ((AwtDrawer2D)drawer).setColor(Color.green);
  //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(14.0,21.5))) ((AwtDrawer2D)drawer).setColor(Color.blue);
-            drawer.draw(entity.getShape());
-            ((AwtDrawer2D)drawer).setColor(Color.black);
+            drawer.draw(entity);
+            //((AwtDrawer2D)drawer).setColor(Color.black);
 
         }
         //getDevice().transform(reverse);
@@ -78,6 +80,8 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
     }
 
     Box clip;
+
+    protected EntityDrawerInstaller eInstaller;
 
     protected DrawerInstaller installer;
 
@@ -113,7 +117,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
     }
 
     double scaleRate = 4;
-    double minScaleRate = 4;
+    double minScaleRate = 2;
 
     public double getOffsetX() {
         return offsetX;
@@ -145,6 +149,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
 
         graphics2D = new ProxyedGraphics2D(graphics);
         installer = new ShapeDrawer2DInstaller(graphics);
+        eInstaller = new EntityDrawerInstaller(graphics);
        // scene.setDrawer(this);
 
 //        Iterable<Agent> agents = scene.getAllAgents();

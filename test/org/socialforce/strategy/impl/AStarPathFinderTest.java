@@ -40,14 +40,14 @@ public class AStarPathFinderTest {
                         new Wall(new Box2D(new Point2D(5, 5), new Point2D(20, 6)))
                 });
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(6,1,8,1))));
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(6,1,8,1))));
         loader.readParameterSet(parameters);
-        scene = loader.readScene(new ApplicationForECStrategy()).get(0);
+        scene = loader.readScene().get(0);
     }
 
     @Test
     public void testMap() throws Exception {
-        double[][]map=new double[][]{{0, 0, 0, 0, 0}, {0, 1, 0, 0, 0}, {0, 0, 0, 1, 0},{0, 0, 1, 1, 0}, {0, 0, 0, 0, 0}};
+        int[][]map=new int[][]{{0, 0, 0, 0, 0}, {0, 1, 0, 0, 0}, {0, 0, 0, 1, 0},{0, 0, 1, 1, 0}, {0, 0, 0, 0, 0}};
         aStarPathFinder = new AStarPathFinder(map,  new BaseAgent(agent_shape, new Velocity2D(0,0)) , new Point2D(3,3));
         Path path = aStarPathFinder.plan_for(new Point2D(3,3));
         System.out.println(path.toString(new Point2D(1,1)));
@@ -55,7 +55,7 @@ public class AStarPathFinderTest {
 
     @Test
     public void testSceneAfterMap() throws Exception {
-        double[][]map=new double[][]{{0, 0, 0, 0, 0}, {0, 1, 0, 0, 0}, {0, 0, 0, 1, 0},{0, 0, 1, 1, 0}, {0, 0, 0, 0, 0}};
+        int[][]map=new int[][]{{0, 0, 0, 0, 0}, {0, 1, 0, 0, 0}, {0, 0, 0, 1, 0},{0, 0, 1, 1, 0}, {0, 0, 0, 0, 0}};
         aStarPathFinder = new AStarPathFinder(map,  new BaseAgent(agent_shape, new Velocity2D(0,0)) , new Point2D(3,3));
         aStarPathFinder = new AStarPathFinder(scene, agent_shape);
         Path path = aStarPathFinder.plan_for(goal);

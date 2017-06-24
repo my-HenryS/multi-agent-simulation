@@ -1,13 +1,10 @@
 package org.socialforce.drawer.impl;
 
-import org.socialforce.geom.*;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Rectangle2D;
-import org.socialforce.geom.impl.Segment2D;
 
 import java.awt.*;
-import java.awt.geom.Line2D;
+import java.awt.geom.AffineTransform;
 
 /**
  * Created by sunjh1999 on 2017/1/20.
@@ -27,16 +24,23 @@ public class SolidRectangle2DDrawer extends AwtDrawer2D<Rectangle2D> {
     @Override
     public void renderShape(Graphics2D g, Rectangle2D pattern) {
         if (g != null && pattern != null) {
-            double length = pattern.getScale()[0], weidth = pattern.getScale()[1];
+            AffineTransform old = g.getTransform();
+            Point point = pattern.getReferencePoint();
+            double length = pattern.getScale()[0], width = pattern.getScale()[1];
             double angle = pattern.getAngle();
-            float thick= (float) weidth;
+            double x1 = point.getX() - length / 2;
+            double y1 = point.getY() - width / 2;
+            g.rotate(pattern.getAngle(), point.getX(), point.getY());
+            g.fill(new java.awt.geom.Rectangle2D.Double(x1, y1, length, width));
+            g.setTransform(old);
+            /*double length = pattern.getScale()[0], width = pattern.getScale()[1];
+
+            float thick= (float) width;
             g.setStroke(new BasicStroke(thick, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_ROUND));
-            Point center = pattern.getReferencePoint();
-            double x1 = center.getX()-length*Math.cos(angle)/2;
-            double y1 = center.getY()-length*Math.sin(angle)/2;
-            double x2 = center.getX()+length*Math.cos(angle)/2;
-            double y2 = center.getY()+length*Math.sin(angle)/2;
-            g.draw(new Line2D.Double(x1,y1,x2,y2));
+
+            double x2 = point.getX()+length*Math.cos(angle)/2;
+            double y2 = point.getY()+length*Math.sin(angle)/2;
+            g.draw(new Line2D.Double(x1,y1,x2,y2));*/
         }
     }
 }

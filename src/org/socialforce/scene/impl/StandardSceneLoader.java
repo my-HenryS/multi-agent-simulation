@@ -17,7 +17,6 @@ import static org.socialforce.scene.SceneGenerator.generate;
  */
 public class StandardSceneLoader implements SceneLoader {
     protected ParameterPool parameterSet;
-    protected SocialForceApplication application;
     protected Wall[] walls = new Wall[]{};
     Scene scene;
     public StandardSceneLoader(Scene scene, Wall[] walls){
@@ -51,7 +50,7 @@ public class StandardSceneLoader implements SceneLoader {
     }
 
     @Override
-    public LinkedList<Scene> readScene(SocialForceApplication application) {
+    public LinkedList<Scene> readScene() {
         LinkedList<Scene> scenes = new LinkedList<>();
         int total_num = 1;
         //计算所有可能情况
@@ -68,8 +67,6 @@ public class StandardSceneLoader implements SceneLoader {
             }
             Scene scene = staticScene();
             scene = generate(scene,values);
-            scene.setApplication(application);
-            scene.setValueSet(values);
             scene.pack();
             scenes.addLast(scene);
         }

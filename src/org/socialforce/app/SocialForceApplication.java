@@ -1,16 +1,15 @@
 package org.socialforce.app;
 
-import org.socialforce.app.gui.SceneShower;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.ValueSet;
 import org.socialforce.strategy.PathFinder;
-import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.Model;
 
 import java.util.List;
 
 /**
  * a social force simulation application with a set of scenes.
- * @see SocialForceModel
+ * @see Model
  * @see ApplicationListener
  * @author Ledenel
  * Created by Ledenel on 2016/8/3.
@@ -25,13 +24,13 @@ public interface SocialForceApplication {
      * get the social force model the application is using.
      * @return the model.
      */
-    SocialForceModel getModel();
+    Model getModel();
 
     /**
      * set the social force model for the application.
      * @param model the model to be set.
      */
-    void setModel(SocialForceModel model);
+    void setModel(Model model);
 
     /**
      * get all the scenes the applicaion is simulating.
@@ -54,4 +53,43 @@ public interface SocialForceApplication {
     Scene findScene(ValueSet set);
 
     List<PathFinder> getAllPathFinders();
+
+    String getName();
+
+    void setName(String name);
+
+    /**
+     * 跳过当前场景
+     */
+    void skip();
+
+    @Deprecated
+    void stop();
+
+    /**
+     * 暂停当前场景
+     */
+    void pause();
+
+    /**
+     * 恢复当前场景
+     */
+    void resume();
+
+    /**
+     * 结束所有场景
+     */
+    void terminate();
+
+    /**
+     * 定义场景在何种场景下自动结束
+     * @return
+     */
+    boolean toSkip();
+
+    /**
+     * 定义运行一步的最小时间
+     * @param stepForward
+     */
+    void setMinStepForward(int stepForward);
 }

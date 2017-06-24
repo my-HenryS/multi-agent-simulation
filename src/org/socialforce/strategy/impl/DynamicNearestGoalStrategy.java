@@ -2,10 +2,13 @@ package org.socialforce.strategy.impl;
 
 import org.socialforce.geom.Point;
 import org.socialforce.model.Agent;
+import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.Monitor;
+import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneValue;
-import org.socialforce.scene.impl.SVSR_SafetyRegion;
-import org.socialforce.scene.impl.SVSR_Scenery;
+import org.socialforce.scene.impl.SV_SafetyRegion;
+import org.socialforce.scene.impl.SV_Monitor;
 import org.socialforce.strategy.DynamicStrategy;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
@@ -25,8 +28,8 @@ public class DynamicNearestGoalStrategy implements DynamicStrategy {
 
     public DynamicNearestGoalStrategy(Scene scene, PathFinder pathFinder){
         this.scene = scene;
-        findGoals();
         this.pathFinder = pathFinder;
+        findGoals();
     }
 
 
@@ -65,14 +68,14 @@ public class DynamicNearestGoalStrategy implements DynamicStrategy {
 
 
     public void findGoals(){
-        for(Iterator<SceneValue> iterator = scene.getValueSet().iterator(); iterator.hasNext();){
-            SceneValue sceneValue = iterator.next();
-            if(sceneValue instanceof SVSR_SafetyRegion){
-                goals.addLast(((SVSR_SafetyRegion)sceneValue).getValue().getShape().getReferencePoint());
-            }
-            if(sceneValue instanceof SVSR_Scenery){
-                transits.addLast(((SVSR_Scenery)sceneValue).getValue().getShape().getReferencePoint());
-            }
+        for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(SafetyRegion.class).iterator(); iter.hasNext();){
+            SafetyRegion safetyRegion = (SafetyRegion)iter.next();
+            goals.addLast(safetyRegion.getShape().getReferencePoint());
+        }
+        for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
+            Monitor monitor = (Monitor) iter.next();
+            transits.addLast(monitor.getShape().getReferencePoint());
+            pathFinder.addSituation(transits.getLast());
         }
     }
 }

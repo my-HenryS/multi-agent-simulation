@@ -2,6 +2,7 @@ package org.socialforce.model;
 
 import org.socialforce.geom.Force;
 import org.socialforce.geom.Point;
+import org.socialforce.geom.Vector;
 import org.socialforce.geom.Velocity;
 
 /**
@@ -10,7 +11,17 @@ import org.socialforce.geom.Velocity;
  * @see Agent
  * Created by Ledenel on 2016/7/30.
  */
-public interface Moveable {
+public interface Moveable extends InteractiveEntity {
+
+    /**
+     * 使用determineNext()方法计算出的结果。
+     * 该方法会将时间往前推进一步。
+     * 当act()成功执行，其还会将之前determineNext()方法计算出的结果清零。
+     * 当无法获得该agent通过determineNext()方法计算所得的结果时，不会有移动。
+     * 当agent到达目标（或者逃出）时，不会有移动。
+     */
+    void act();
+
     /**
      * 获取移动实体的速度。.
      *

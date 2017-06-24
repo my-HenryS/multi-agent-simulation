@@ -82,6 +82,9 @@ public interface Shape extends Serializable, Cloneable, DimensionEntity, Drawabl
      */
     Shape clone();
 
+
+    Shape expandBy(double extent);
+
     static Point getPoint(Shape shape, Point point){
         double dist = shape.getDistance(point);
         Vector direct = shape.getDirection(point);

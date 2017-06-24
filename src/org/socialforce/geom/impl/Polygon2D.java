@@ -1,20 +1,16 @@
 package org.socialforce.geom.impl;
 
 import org.socialforce.drawer.Drawer;
-import org.socialforce.geom.Box;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
-import org.socialforce.geom.Vector;
+import org.socialforce.geom.*;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * 凸多边形
  * 以其顶点的数组描述
  * Created by Whatever on 2017/1/29.
  */
-public class Polygon2D implements Shape {
+public class Polygon2D implements Shape{
     public Polygon2D(){}
     public Polygon2D(Point2D[] nods){
         this.nods = nods;
@@ -46,14 +42,14 @@ public class Polygon2D implements Shape {
                 if (direc.dot(now)> flag){
                     direcflag = direc.dot(now);
                     temp1 = direc;
-                    direc.spin(0.001);
+                    direc.rotate(0.001);
                     if (direc.dot(now) > direcflag) {
                         flag = direc.dot(now);
                         fuck = nod;
                         temp2 = temp1;
                     }
                     else temp1 = temp2;
-                    direc.spin(-0.001);
+                    direc.rotate(-0.001);
                 }
             }
             flag = Double.NEGATIVE_INFINITY;
@@ -249,5 +245,19 @@ public class Polygon2D implements Shape {
     @Override
     public Shape clone() {
         return new Polygon2D(nods);
+    }
+
+    @Override
+    public Shape expandBy(double extent) {
+        Point2D center = (Point2D) this.getReferencePoint().clone();
+        Vector2D vector = new Vector2D();
+        double[] temp = new double[2];
+        for (Point2D nod : nods){
+            vector = (Vector2D) center.directionTo(nod);
+            vector.scale(extent);
+            vector.get(temp);
+            nod.moveBy(temp[0],temp[1]);
+        }
+        return this;
     }
 }

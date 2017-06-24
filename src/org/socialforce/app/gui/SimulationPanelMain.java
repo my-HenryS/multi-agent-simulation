@@ -1,83 +1,192 @@
 package org.socialforce.app.gui;
 
+import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 import org.socialforce.app.ApplicationListener;
-import org.socialforce.app.Applications.ApplicationForCanteen;
-import org.socialforce.app.Applications.ApplicationForECStrategy;
-import org.socialforce.app.Applications.ApplicationForECTest;
-import org.socialforce.app.Applications.ApplicationForMCM;
+import org.socialforce.app.Applications.ApplicationLoader;
 import org.socialforce.app.SocialForceApplication;
+import org.socialforce.app.gui.util.ApplicationDisplayer;
 import org.socialforce.model.Agent;
 import org.socialforce.scene.Scene;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.stream.StreamSupport;
 
 /**
  * Created by Ledenel on 2016/8/23.
  */
 public class SimulationPanelMain implements ApplicationListener {
+    private boolean paused = false;
+    private boolean running = false;
+    int maxDelay = 40;
+    public static JFrame frame;
+
+
+
     public SimulationPanelMain() {
-        runButton.addMouseListener(new MouseAdapter() {
+        loader = new ApplicationLoader(this);
+        refreshName();
+        runButton.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 //super.mouseClicked(e);
                 String s = timePerStepTextField.getText();
-                application.getModel().setTimePerStep(Double.valueOf(s));
+                //application.getModel().setTimePerStep(Double.valueOf(s));
+                SwingWorker<Void, SocialForceApplication> worker = new SwingWorker<Void, SocialForceApplication>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        loader.current().start();
+                        //场景运行完毕后
+                        running = false;
+                        runButton.setText("Run");
+                        loadButton.setEnabled(true);
+                        skipButton.setEnabled(false);
+                        pauseButton.setEnabled(false);
+                        timePerStepTextField.setEnabled(true);
+                        agentPathFindingComboBox.setEnabled(true);
+                        return null;
+                    }
+                };
+                if(running == false){
+                    running = true;
+                    worker.execute();
+                    runButton.setText("Terminate");
+                    loadButton.setEnabled(false);
+                    timePerStepTextField.setEnabled(false);
+                    agentPathFindingComboBox.setEnabled(false);
+                    skipButton.setEnabled(true);
+                    pauseButton.setEnabled(true);
+                    /*设定延时*/
+                    int delay =  (int)(maxDelay * (1 - (double)slider1.getValue() / 100));
+                    loader.current().setMinStepForward(delay);
+                }
+
+                else{
+                    running = false;
+                    if(paused) {
+                        pauseButton.setText("Pause");
+                        loader.current().resume();
+                        paused = !paused;
+                    }
+                    loader.current().terminate();
+                    runButton.setText("Run");
+                    loadButton.setEnabled(true);
+                    skipButton.setEnabled(false);
+                    pauseButton.setEnabled(false);
+                    timePerStepTextField.setEnabled(true);
+                    agentPathFindingComboBox.setEnabled(true);
+                }
+
+
             }
         });
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[] objects = loader.stream().map(app -> new ApplicationDisplayer(app)).toArray();
+                ApplicationDisplayer result = (ApplicationDisplayer) JOptionPane.showInputDialog(SimulationPanelMain.this.root,
+                        "select a preset:", "Please select an applicaiton", JOptionPane.INFORMATION_MESSAGE, null,
+                        objects, objects[0]);
+                loader.select(result.application);
+                refreshName();
+            }
+        });
+        pauseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(paused) {
+                    pauseButton.setText("Pause");
+                    loader.current().resume();
+                } else {
+                    pauseButton.setText("Resume");
+                    loader.current().pause();
+                }
+                paused = !paused;
+            }
+        });
+        skipButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO: 2017/3/21 在这里增加skip按钮点击的处理逻辑。
+                if(paused) {
+                    pauseButton.setText("Pause");
+                    loader.current().resume();
+                    paused = !paused;
+                }
+                loader.current().skip();
+            }
+        });
+        slider1.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int delay =  (int)(maxDelay * (1 - (double)slider1.getValue() / 100));
+                loader.current().setMinStepForward(delay);
+            }
+        });
+        shower1.getBoard().setTextArea(logTextArea);
+    }
+
+    protected void refreshName() {
+        currentScnenTextField.setText(loader.current().getName());
     }
 
     public static void main(String[] args) {
         try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (ClassNotFoundException e) {
-            //  e.printStackTrace();
-        } catch (InstantiationException e) {
-            //  e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            //  e.printStackTrace();
-        } catch (UnsupportedLookAndFeelException e) {
-            //  e.printStackTrace();
-        } finally {
-            //UIManager.look
+            BeautyEyeLNFHelper.launchBeautyEyeLNF();
+            UIManager.put("RootPane.setupButtonVisible",false);
+        } catch (Exception e) {
         }
         try {
-            JFrame frame = new JFrame("SimulationPanelMain");
-            SimulationPanelMain mainPanel = new SimulationPanelMain();
-            SocialForceApplication application = new ApplicationForCanteen();//应用在这里！
-            application.setApplicationListener(mainPanel);
-            frame.setContentPane(mainPanel.root);
+            //JFrame frame = new JFrame("SimulationPanelMain");
+            frame = new JFrame("Epimetheus");
+            //SimulationPanelMain mainPanel = new SimulationPanelMain();
+            ApplicationMain mainPanel = new ApplicationMain();
+            /*SocialForceApplication application = new ApplicationForDoorTest();//应用在这里！
+            application.setApplicationListener(mainPanel);*/
+            //mainPanel.setLoader(new ApplicationLoader(mainPanel));
+            frame.setContentPane(mainPanel.demoP);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             //frame.setResizable(false);
             frame.pack();
             frame.setVisible(true);
-            mainPanel.setApplication(application);
-            application.start();
+
+            //application.start();
         } catch (HeadlessException e) {
             System.out.println("GUI Not Supported on this machine.");
         }
 
     }
 
-    private JPanel root;
+    public JPanel root;//private
     private JTextField currentScnenTextField;
     private JButton importFromFileButton;
     private JComboBox agentPathFindingComboBox;
     private JButton runButton;
     private JButton pauseButton;
-    private JButton stopButton;
+    private JButton skipButton;
     private JPanel sceneContainer;
     private JPanel scene1;
     private JPanel scene2;
     private JPanel scene3;
     private JPanel scene4;
-    private JLabel timeUsedLabel;
     private JTextArea logTextArea;
     private JTextField timePerStepTextField;
-    private JLabel fpsLabel;
+    private JButton loadButton;
+    private JSlider slider1;
+
+    public ApplicationLoader getLoader() {
+        return loader;
+    }
+
+    public void setLoader(ApplicationLoader loader) {
+        this.loader = loader;
+    }
+
+    private ApplicationLoader loader;
 
     SceneShower shower1;
 
@@ -85,9 +194,7 @@ public class SimulationPanelMain implements ApplicationListener {
         // TODO: place custom component creation code here
         shower1 = new SceneShower("Scene 1");
         scene1 = shower1.getRoot();
-        scene2 = new SceneShower("Scene 2").getRoot();
-        scene3 = new SceneShower("Scene 3").getRoot();
-        scene4 = new SceneShower("Scene 4").getRoot();
+
     }
 
     public SocialForceApplication getApplication() {
@@ -145,7 +252,5 @@ public class SimulationPanelMain implements ApplicationListener {
         if (scene.getDrawer() == null) {
             shower1.setScene(scene);
         }
-        scene.getDrawer().draw(scene);
-        SimulationPanelMain.this.shower1.getBoard().repaint();//refresh();
     }
 }

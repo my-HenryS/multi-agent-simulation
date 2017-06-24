@@ -1,11 +1,12 @@
 package org.socialforce.strategy.impl;
 
+import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Shape;
-import org.socialforce.model.Agent;
 import org.socialforce.scene.SceneValue;
-import org.socialforce.scene.impl.SVSR_SafetyRegion;
+import org.socialforce.scene.impl.SV_SafetyRegion;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
 
@@ -21,15 +22,12 @@ public class StraightPathFinder implements PathFinder {
     Scene scene;
 
     public StraightPathFinder(Scene targetScene, Shape agentShape) {
-        for(Iterator<SceneValue> iterator = scene.getValueSet().iterator(); iterator.hasNext();){
-            SceneValue sceneValue = iterator.next();
-            if(sceneValue instanceof SVSR_SafetyRegion){
-                goals.addLast(((SVSR_SafetyRegion)sceneValue).getValue().getShape().getReferencePoint().clone()) ;
-            }
-        }
         this.agentShape = agentShape.clone();
         this.scene = targetScene;
-
+        for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(SafetyRegion.class).iterator(); iter.hasNext();){
+            SafetyRegion safetyRegion = (SafetyRegion)iter.next();
+            goals.addLast(safetyRegion.getShape().getReferencePoint().clone()) ;
+        }
     }
 
     /**
@@ -41,6 +39,15 @@ public class StraightPathFinder implements PathFinder {
         return new StraightPath(goal);
     }
 
+    public Path constraint_plan_for(Point goal, Point ... toBeContained) {
+        Point [] pathPoints = new Point[toBeContained.length+1];
+        for(int i = 0;i < toBeContained.length;i++){
+            pathPoints[i] = toBeContained[i];
+        }
+        pathPoints[-1] = goal;
+        return new StraightPath(pathPoints);
+    }
+
     @Override
     public Point[] getGoals() {
         Point [] points = new Point[goals.size()];
@@ -48,6 +55,19 @@ public class StraightPathFinder implements PathFinder {
             points[i] = goals.get(i);
         }
         return points;
+    }
+
+    public void addSituation(Scene scene, Point goal){
+        this.scene = scene;
+        goals.addLast(goal);
+    }
+
+    public void addSituation(Point goal){
+        goals.addLast(goal);
+    }
+
+    public void clearCache(){
+        goals.clear();
     }
 
 }

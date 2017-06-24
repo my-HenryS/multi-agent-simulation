@@ -1,9 +1,7 @@
 package org.socialforce.strategy.impl;
 
 import org.socialforce.model.Blockable;
-import org.socialforce.model.impl.Scenery;
-import org.socialforce.model.impl.SimpleTollbooth;
-import org.socialforce.model.impl.Wall;
+import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.scene.Scene;
 import org.socialforce.container.EntityPool;
 import org.socialforce.geom.DistanceShape;
@@ -12,12 +10,8 @@ import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.scene.SceneValue;
-import org.socialforce.scene.impl.SVSR_SafetyRegion;
-import org.socialforce.scene.impl.SVSR_Scenery;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
-import org.socialforce.model.impl.SafetyRegion;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -29,19 +23,19 @@ import java.util.concurrent.LinkedBlockingQueue;
  * TODO 性能优化 需结合scene重构
  */
 public class AStarPathFinder implements PathFinder {
-    private double min_div = 0.2;
-    private double map[][];
+    private double min_div = 0.1;
+    private int map[][];
     private double distance[][];
     private Point previous[][];
     private Shape agentShape;
-    private Scene scene;
+    private Scene templateScene;
     private double delta_x = 0;        //偏移量x
     private double delta_y = 0;        //偏移量y
     private LinkedList<Maps> mapSet = new LinkedList<>();
     private LinkedList<Point> goals = new LinkedList<>();
 
     protected class Maps{
-        private double map[][];
+        private int map[][];
         private double distance[][];
         private Point previous[][];
         private Point goal;
@@ -49,7 +43,7 @@ public class AStarPathFinder implements PathFinder {
         private double delta_y;
 
         public Maps(){}
-        public Maps(double map[][],double distance[][],Point previous[][],Point goal,double delta_x,double delta_y){
+        public Maps(int map[][],double distance[][],Point previous[][],Point goal,double delta_x,double delta_y){
             this.map = map;
             this.distance = distance;
             this.previous = previous;
@@ -62,17 +56,22 @@ public class AStarPathFinder implements PathFinder {
             double x = (start_point.getX() - delta_x ) / min_div;
             double y = (start_point.getY() - delta_y ) / min_div;
             double distance = Double.POSITIVE_INFINITY;
-            int tempX = 0, tempY = 0;
-            for(int i = (int)x-1; i<= x+2; i++){
-                for(int j = (int)y-1; j<= y+2; j++){
-                    if(available(i,j) && map[i][j] == 0){
-                        if(new Point2D(i,j).distanceTo(new Point2D(x,y)) < distance){
-                            tempX = i; tempY = j;
-                            distance = new Point2D(i,j).distanceTo(new Point2D(x,y));
+            int tempX = 0, tempY = 0, available = 0, offset = 0;
+            while(available == 0){
+                for(int i = (int)x-offset; i<= x+offset+1; i++){
+                    for(int j = (int)y-offset; j<= y+offset+1; j++){
+                        if(available(i,j) && previous[i][j] != null){
+                            if(new Point2D(i,j).distanceTo(new Point2D(x,y)) < distance){
+                                tempX = i; tempY = j;
+                                distance = new Point2D(i,j).distanceTo(new Point2D(x,y));
+                                available = 1;
+                            }
                         }
                     }
                 }
+                offset++;
             }
+
             x = tempX;
             y = tempY;
             Point next = previous[(int)x][(int)y];
@@ -88,26 +87,41 @@ public class AStarPathFinder implements PathFinder {
             double x = (current.getX() - delta_x ) / min_div;
             double y = (current.getY() - delta_y ) / min_div;
             double Distance = Double.POSITIVE_INFINITY;
-            int tempX = 0, tempY = 0;
-            for(int i = (int)x; i<= x+1; i++){
-                for(int j = (int)y; j<= y+1; j++){
-                    if(available(i,j) && map[i][j] == 0){
-                        if(new Point2D(i,j).distanceTo(new Point2D(x,y)) < Distance){
-                            tempX = i; tempY = j;
-                            Distance = new Point2D(i,j).distanceTo(new Point2D(x,y));
+            int tempX = 0, tempY = 0, available = 0, offset = 0;
+            while(available == 0){
+                for(int i = (int)x-offset; i<= x+offset+1; i++){
+                    for(int j = (int)y-offset; j<= y+offset+1; j++){
+                        if(available(i,j) && previous[i][j] != null){
+                            if(new Point2D(i,j).distanceTo(goal) < Distance){
+                                tempX = i; tempY = j;
+                                Distance = new Point2D(i,j).distanceTo(goal);
+                                available = 1;
+                            }
                         }
                     }
                 }
+                offset++;
             }
             x = tempX;
             y = tempY;
             return distance[(int)x][(int)y]*min_div;
         }
+
+        public boolean hasPrevious(Point start_point){
+            double x = (start_point.getX() - delta_x ) / min_div;
+            double y = (start_point.getY() - delta_y ) / min_div;
+            for(double i = x; i<=x+1; i++){
+                for(double j = y; j<=y+1; j++){
+                    if(available((int)i,(int)j) && previous[(int)i][(int)j] != null) return true;
+                }
+            }
+            return false;
+        }
     }
     /**
      * assign map directly
      */
-    public AStarPathFinder(double[][] new_map, Agent agent, Point ... goals){
+    public AStarPathFinder(int[][] new_map, Agent agent, Point ... goals){
         min_div = 1;
         this.map = new_map;
         for(Point goal : goals){
@@ -115,7 +129,7 @@ public class AStarPathFinder implements PathFinder {
         }
         this.agentShape = agent.getShape().clone();
         for(Point goal: goals){
-            maps_initiate(goal);
+            astar(goal);
         }
     }
 
@@ -124,78 +138,104 @@ public class AStarPathFinder implements PathFinder {
     public AStarPathFinder(Scene targetScene, Agent agent){
         this.goal = goal.clone();
         this.agentShape = agent.getShape().clone();
-        this.scene = targetScene.standardclone();
+        this.templateScene = targetScene.standardclone();
         scene_standardize();
-        goal_standardize();
+        point_generate();
         start_point_standardize();
         maps_initiate();
         Maps new_maps = new Maps(map,distance,previous,goal);
         mapSet.offer(new_maps);
-    }* assign map with scene, agent and goal
+    }* assign map with templateScene, agent and goal
      */
 
     public AStarPathFinder(Scene scene, Shape templateShape){
-        this.scene = scene.standardclone();
+        this.templateScene = scene.standardclone();
         this.agentShape = templateShape.clone();
-        scene_initiate();   //set standard scene and goals
-        goals.forEach(this::maps_initiate);
+        scene_initiate();   //set standard templateScene and goals
+        map_initiate();
+        map_generate(templateScene);
+        goals.forEach(this::astar);
     }
 
     public AStarPathFinder(Scene scene, Shape templateShape, double min_div){
         this.min_div = min_div;
-        this.scene = scene.standardclone();
+        this.templateScene = scene.standardclone();
         this.agentShape = templateShape.clone();
-        scene_initiate();   //set standard scene and goals
-        goals.forEach(this::maps_initiate);
+        scene_initiate();   //set standard templateScene and goals
+        map_initiate();
+        map_generate(templateScene);
+        goals.forEach(this::astar);
     }
 
+    public void clearCache(){
+        mapSet.clear();
+        goals.clear();
+    }
+
+    public void addSituation(Scene scene, Point goal){
+        assert(scene.getBounds().equals(templateScene.getBounds()));
+        Scene newScene = scene.standardclone();
+        scene_generate(newScene);
+        map_generate(newScene);
+        goals.addLast(point_generate(goal.clone()));
+        astar(goals.getLast());
+    }
+
+    public void addSituation(Point goal){
+        goals.addLast(point_generate(goal.clone()));
+        astar(goals.getLast());
+    }
 
     private void scene_initiate(){
-        scene_standardize();
-        for(Iterator<SceneValue> iterator = scene.getValueSet().iterator(); iterator.hasNext();){
-            SceneValue sceneValue = iterator.next();
-            if(sceneValue instanceof SVSR_SafetyRegion || sceneValue instanceof SVSR_Scenery){ //何为goal
-                goals.addLast(goal_standardize(((InteractiveEntity)sceneValue.getValue()).getShape().getReferencePoint().clone())) ;
-            }
+        delta_x = templateScene.getBounds().getStartPoint().getX();
+        delta_y = templateScene.getBounds().getStartPoint().getY();
+        for(Iterator<InteractiveEntity> iter = templateScene.getStaticEntities().selectClass(SafetyRegion.class).iterator(); iter.hasNext();){
+            SafetyRegion safetyRegion = (SafetyRegion)iter.next();
+            goals.addLast(point_generate(safetyRegion.getShape().getReferencePoint().clone()));
         }
+        scene_generate(templateScene);
     }
 
-    private void scene_standardize() {
-        delta_x = scene.getBounds().getStartPoint().getX();
-        delta_y = scene.getBounds().getStartPoint().getY();
+    private void scene_generate(Scene scene) {
         EntityPool all_blocks = scene.getStaticEntities();
         for (InteractiveEntity entity : all_blocks) {
             entity.getShape().moveTo(entity.getShape().getReferencePoint().moveBy(-delta_x, -delta_y));
         }
     }
 
-    private Point goal_standardize(Point goal){
-        goal.moveBy(-delta_x, -delta_y).scaleBy(1/min_div);
-        return goal;
+    private Point point_generate(Point point){
+        point.moveBy(-delta_x, -delta_y).scaleBy(1/min_div);
+        return point;
     }
 
-    private void maps_initiate(Point goal) {
+    private void map_initiate(){
         if(agentShape == null){
             throw new IllegalStateException("No template shape applied");
         }
-        if(map == null){
-            double x_range = scene.getBounds().getEndPoint().getX() - scene.getBounds().getStartPoint().getX(),
-                    y_range = scene.getBounds().getEndPoint().getY() - scene.getBounds().getStartPoint().getY();
-            map = new double[(int)(x_range / min_div)][(int) (y_range / min_div)];
-            EntityPool all_blocks = scene.getStaticEntities();
-            for (int i = 0; i < (int) (x_range / min_div); i++) {
-                for (int j = 0; j < (int) (y_range / min_div); j++) {
-                    map[i][j] = 0;
-                    for (InteractiveEntity entity : all_blocks) {
-                        agentShape.moveTo(new Point2D(i*min_div, j*min_div));
-                        //assert( == entity.getShape().getClass());
-                        if ((entity instanceof Blockable) && ((DistanceShape)agentShape).distanceTo(entity.getShape()) < 0) {
-                            map[i][j] = 1;
-                        }
+        double x_range = templateScene.getBounds().getEndPoint().getX() - templateScene.getBounds().getStartPoint().getX(),
+                y_range = templateScene.getBounds().getEndPoint().getY() - templateScene.getBounds().getStartPoint().getY();
+        map = new int[(int)(x_range / min_div)][(int) (y_range / min_div)];
+    }
+
+    private void map_generate(Scene scene){
+        EntityPool all_blocks = scene.getStaticEntities();
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                map[i][j] = 0;
+                for (InteractiveEntity entity : all_blocks) {
+                    agentShape.moveTo(new Point2D(i*min_div, j*min_div));
+                    //assert( == entity.getShape().getClass());
+                    if ((entity instanceof Blockable) && ((DistanceShape)agentShape).distanceTo(entity.getShape()) < min_div/2) {
+                        map[i][j] = 1;
+                        break;
                     }
                 }
             }
         }
+
+    }
+
+    private void astar(Point goal) {
         distance = new double[map.length][map[0].length];
         previous = new Point[map.length][map[0].length];
         LinkedBlockingQueue<Point> points = new LinkedBlockingQueue<Point>();
@@ -206,9 +246,11 @@ public class AStarPathFinder implements PathFinder {
             points = get_surroundings(goal, curr_point ,points);
             curr_point = points.poll();
         }
-        Maps new_maps = new Maps(map,distance,previous,goal,delta_x,delta_y);
+        Maps new_maps = new Maps(map.clone(),distance,previous,goal,delta_x,delta_y);
         mapSet.offer(new_maps);
     }
+
+
 
     private LinkedBlockingQueue<Point> get_surroundings(Point start, Point center, LinkedBlockingQueue<Point> point_set){
         int x = (int)center.getX();
@@ -240,7 +282,7 @@ public class AStarPathFinder implements PathFinder {
 
     public Path plan_for(Point goal) {
         Point destination;
-        destination = goal_standardize(goal.clone());
+        destination = point_generate(goal.clone());
         if(agentShape == null){
             throw new IllegalStateException("No agent applied");
         }
@@ -250,8 +292,34 @@ public class AStarPathFinder implements PathFinder {
         }
 
         for(Maps maps: mapSet){
-            if(maps.goal.equals(destination)){
+            if(maps.goal.epsilonEquals(destination, 1e-10)){
                 return new AStarPath(maps);
+            }
+        }
+        return null;
+    }
+
+    public Path constraint_plan_for(Point goal, Point ... toBeContained) {
+        Point destination;
+        destination = point_generate(goal.clone());
+        if(agentShape == null){
+            throw new IllegalStateException("No agent applied");
+        }
+
+        if(mapSet == null){
+            throw new IllegalStateException("No maps initiated");
+        }
+
+        for(Maps maps: mapSet){
+            if(maps.goal.epsilonEquals(destination, 1e-10)){
+                boolean succ = true;
+                for(Point contain:toBeContained){
+                    if(!maps.hasPrevious(contain)){
+                        succ = false;
+                        break;
+                    }
+                }
+                if(succ) return new AStarPath(maps);
             }
         }
         return null;
@@ -265,11 +333,30 @@ public class AStarPathFinder implements PathFinder {
         this.delta_y = y;
     }
 
+    public double get_deltax(){
+        return delta_x;
+    }
+
+    public double get_deltay(){
+        return delta_y;
+    }
+
+    public double get_minDiv(){
+        return min_div;
+    }
+
     public Point[] getGoals(){
         Point [] points = new Point[goals.size()];
         for(int i = 0; i < points.length; i++){
             points[i] = goals.get(i).clone().scaleBy(min_div).moveBy(delta_x, delta_y);;
         }
         return points;
+    }
+
+    /**
+     * 获取场景地图
+     */
+    public int[][] getMap(){
+        return map;
     }
 }

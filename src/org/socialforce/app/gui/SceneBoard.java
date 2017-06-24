@@ -3,6 +3,8 @@ package org.socialforce.app.gui;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Box2D;
+import org.socialforce.geom.impl.Point2D;
+import org.socialforce.model.Agent;
 import org.socialforce.scene.Scene;
 
 import javax.swing.*;
@@ -10,6 +12,7 @@ import javax.swing.plaf.ComponentUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.util.NoSuchElementException;
 
 /**
  * Created by Ledenel on 2016/10/23.
@@ -19,6 +22,7 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
 
     private final MouseWheelMoved mouseWheelMoved;
     private DragMouseAdapter mouseAdapter;
+    private JTextArea textArea;
 
     public ResizeListener getResizeListener() {
         return resizeListener;
@@ -47,6 +51,9 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
         this.addMouseMotionListener(mouseAdapter);
     }
 
+    protected void setTextArea(JTextArea textArea){
+        this.textArea = textArea;
+    }
     /**
      * Creates a new <code>JPanel</code> with a double buffer
      * and a flow layout.
@@ -123,7 +130,7 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
      * is the size required to accommodate all of the cells in its list.
      * However, the value of <code>preferredScrollableViewportSize</code>
      * is the size required for <code>JList.getVisibleRowCount</code> rows.
-     * A component without any properties that would affect the viewport
+     * A component without any properties that would selfAffect the viewport
      * size should just return <code>getPreferredSize</code> here.
      *
      * @return the preferredSize of a <code>JViewport</code> whose view
@@ -308,6 +315,21 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
     private class DragMouseAdapter extends MouseAdapter {
         boolean dragging = false;
 
+        @Override
+        public void mouseClicked(MouseEvent e){
+            SceneDrawer sc = (SceneDrawer) SceneBoard.this.scene.getDrawer();
+            double[] point = sc.screenToScene(e.getX(), e.getY());
+            try {
+                Agent select = scene.getAllAgents().stream().filter(agent -> agent.getShape().contains(new Point2D(point[0], point[1]))).findFirst().get();
+                textArea.append(select.toString() + "\n");
+                textArea.append("  "+select.getVelocity().toString() + "\n");
+                textArea.append("  加"+select.getAcceleration().toString() + "\n");
+                textArea.append("  期望位置"+select.getPath().nextStep(select.getShape().getReferencePoint())+ "\n");
+            } catch (NoSuchElementException ex) {
+
+            }
+        }
+
         /**
          * {@inheritDoc}
          *
@@ -319,7 +341,6 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
             SceneDrawer sc = (SceneDrawer) SceneBoard.this.scene.getDrawer();
             lastX = e.getX() - sc.getOffsetX();
             lastY = e.getY() - sc.getOffsetY();
-
             dragging = true;
 
         }

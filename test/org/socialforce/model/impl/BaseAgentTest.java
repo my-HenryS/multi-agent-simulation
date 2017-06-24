@@ -7,7 +7,7 @@ import org.socialforce.scene.impl.SimpleScene;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.Model;
 import org.socialforce.strategy.impl.StraightPath;
 
 /**
@@ -18,7 +18,7 @@ public class BaseAgentTest {
     Circle2D circle = new Circle2D();
     Point2D initPoint;
     SimpleScene scene = new SimpleScene(new Box2D(new Point2D(0, 0), new Point2D(20, 20)));
-    SocialForceModel model = new SimpleSocialForceModel();
+    Model model = new SimpleSocialForceModel();
     @Before
     public void setUp() throws Exception {
         initPoint = new Point2D(3,4);
@@ -35,10 +35,6 @@ public class BaseAgentTest {
         
     }
 
-    @Test
-    public void determineNext() throws Exception {
-        baseAgent.determineNext();
-        System.out.println(baseAgent.toString());
-    }
+
 
 }

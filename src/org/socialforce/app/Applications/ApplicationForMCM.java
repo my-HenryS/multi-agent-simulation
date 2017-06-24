@@ -1,14 +1,11 @@
 package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
-import org.socialforce.app.gui.SceneShower;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.*;
-import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.ETC_Tollbooth;
-import org.socialforce.model.impl.Scenery;
-import org.socialforce.model.impl.SimpleTollbooth;
+import org.socialforce.model.impl.Monitor;
 import org.socialforce.model.impl.Wall;
 import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
@@ -17,7 +14,6 @@ import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.*;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 
 import static org.socialforce.scene.SceneLoader.genParameter;
 
@@ -28,7 +24,7 @@ import static org.socialforce.scene.SceneLoader.genParameter;
 public class ApplicationForMCM extends SimpleApplication implements SocialForceApplication {
     DistanceShape template = new Circle2D(new Point2D(0,0), 2/2);
     public ApplicationForMCM(){
-        setUpScenes(0,0);
+
     }
     /**
      * start the application immediately.
@@ -38,47 +34,46 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
     public void start() {
         System.out.println("Application starts!!");
         int flag = 0;
-        int []alpha = {100};
-        int []beta =  {70};
+        int []alpha = {80};
+        int []beta =  {80};
         for(int i = 0; i < 1;i++){
-            for(int a = 5; a<=12; a+= 1){
+            for(int a = 3; a<=12; a+= 1){
                 setUpScenes(alpha[i],beta[i]);
                 System.out.println("Scene is "+alpha[i]+","+beta[i]);
                 for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
-                    Scene scene = iterator.next();
+                    currentScene = iterator.next();
                     int iteration = 0;
                     double volume = 0, scenery_num = 0;
                     double speed = 0;
                     int size = 0;
-                    SVSR_RandomAgentGenerator agentGenerator = new SVSR_RandomTimeAgentGenerator(a,new Box2D(75,4.5,46.5,10), template, new Velocity2D(0,13));
-                    agentGenerator.apply(scene);
-                    PathFinder pathFinder = new AStarPathFinder(scene, template);
-                    strategy = new DynamicNearestGoalStrategy(scene, pathFinder);
+                    SV_RandomAgentGenerator agentGenerator = new SV_RandomTimeAgentGenerator(a,new Box2D(75,6,46.5,10), template, new Velocity2D(0,13));
+                    agentGenerator.apply(currentScene);
+                    PathFinder pathFinder = new AStarPathFinder(currentScene, template, 2);
+                    strategy = new DynamicNearestGoalStrategy(currentScene, pathFinder);
                     strategy.pathDecision();
                     System.out.println("flow now "+a);
-                    while (iteration <= 50000) {
-                        scene.stepNext();
+                    while (!toSkip()) {
+                        this.StepNext(currentScene);
                         iteration += 1;
                         if(iteration % 60 ==0 && strategy instanceof DynamicStrategy){
                             ((DynamicStrategy) strategy).dynamicDecision();
                         }
                         if(iteration % 250 == 0){
-                            agentGenerator.apply(scene);
+                            agentGenerator.apply(currentScene);
                             strategy.pathDecision();
                         }
                         if(iteration % 1000 == 0){
-                            for(Iterator<SceneValue> iter = scene.getValueSet().iterator(); iter.hasNext();){
-                                SceneValue value = iter.next();
-                                if(value instanceof SVSR_Scenery){
-                                    double [] speeds = ((SVSR_Scenery)value).getValue().say();
-                                    if(speeds!=null){
-                                        speed += speeds[0];
-                                        size += speeds[1];
-                                    }
+                            for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
+                                Monitor monitor = (Monitor)iter.next();
+                                double speeds = monitor.sayVelocity();
+                                if(speeds!=0){
+                                    speed += speeds;
+                                    size += 1;
                                 }
                             }
                         }
                     }
+                    if(onStop()) return;
                     System.out.println("flow is "+speed/size);
 
                 }
@@ -92,6 +87,11 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
             }
         }
 
+    }
+
+    @Override
+    public boolean toSkip(){
+        return Skip || currentScene.getCurrentSteps() > 50000;
     }
 
     public void setUpScenes(double alpha, double beta){
@@ -131,16 +131,19 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                         new Wall(new Box2D(121.5,bottom,3,btm_length)),  //右
                 });
         ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SVSR_SafetyRegion(new Box2D(xC,top - 1,17,1))));
-        parameters.addLast(genParameter(new SVSR_Tollbooth( new ETC_Tollbooth(new Box2D(75,bottom+btm_length/2,29,1), 0.5) )));
-        parameters.addLast(genParameter(new SVSR_Tollbooth( new SimpleTollbooth(new Box2D(104,bottom+btm_length/2,12,1), 4) )));
-        parameters.addLast(genParameter(new SVSR_Tollbooth( new SimpleTollbooth(new Box2D(115.7,bottom+btm_length/2,6,1), 10) )));
-        parameters.addLast(genParameter(new SVSR_Scenery(new Box2D(xC+1.75,top-top_length,0.4,0.4))));
-        parameters.addLast(genParameter(new SVSR_Scenery(new Box2D(xC+5.55,top-top_length,0.4,0.4))));
-        parameters.addLast(genParameter(new SVSR_Scenery(new Box2D(xC+9.3,top-top_length,0.4,0.4))));
-        parameters.addLast(genParameter(new SVSR_Scenery(new Box2D(xC+13.2,top-top_length,0.4,0.4))));
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(xC,top - 1,17,1))));
+        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(75,bottom+btm_length/2,29,1), 0.5)));
+        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(104,bottom+btm_length/2,12,1), 4) ));
+        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(115.7,bottom+btm_length/2,6,1), 10) ));
+        parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+1.75,top-top_length,0.4,0.4))));
+        parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+5.55,top-top_length,0.4,0.4))));
+        parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+9.3,top-top_length,0.4,0.4))));
+        parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+13.2,top-top_length,0.4,0.4))));
         loader.readParameterSet(parameters);
-        scenes = loader.readScene(this);
+        scenes = loader.readScene();
+        for(Scene scene:scenes){
+            scene.setApplication(this);
+        }
     }
 
 

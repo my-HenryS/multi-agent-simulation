@@ -5,6 +5,9 @@ import org.junit.Test;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Velocity2D;
+import org.socialforce.model.Agent;
+import org.socialforce.model.Blockable;
+import org.socialforce.model.Moveable;
 import org.socialforce.model.impl.BodyForce;
 
 import static org.junit.Assert.*;
@@ -16,11 +19,11 @@ public class BodyForceTest {
     BaseAgent baseAgent, targetAgent, targetAgent2;
     Circle2D circle = new Circle2D(), circle2 = new Circle2D(), circle3 = new Circle2D();
     Point2D initPoint, initPoint2;
-    BodyForce bodyForce = new BodyForce();
+    BodyForce bodyForce = new BodyForce(Blockable.class, Agent.class, new SimpleSocialForceModel());
     @Before
     public void setUp() throws Exception{
         initPoint = new Point2D(3,4);
-        initPoint2 = new Point2D(3,4);
+        initPoint2 = new Point2D(3,4.1);
         circle.moveTo(initPoint);
         circle.setRadius(0.243);
         circle2.moveTo(initPoint2);

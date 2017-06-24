@@ -13,6 +13,7 @@ import java.util.Collections;
  * Created by Ledenel on 2016/8/27.
  */
 public class SceneDrawerInstaller implements DrawerInstaller {
+
     /**
      * creates and set a proper drawer for a drawable.
      *
@@ -27,7 +28,7 @@ public class SceneDrawerInstaller implements DrawerInstaller {
             Iterable<InteractiveEntity> iterable = scene.getAllEntitiesStream()::iterator;
             boolean succ = true;
             for(InteractiveEntity entity : iterable) {
-                succ = succ && sceneDrawer.installer.addDrawerSupport(entity.getShape());
+                succ = succ && sceneDrawer.eInstaller.addDrawerSupport(entity);
             }
             return succ;
         }
