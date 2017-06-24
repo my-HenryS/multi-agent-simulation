@@ -21,7 +21,7 @@ public class SolidEllipse2DDrawer extends AwtDrawer2D<Ellipse2D> {
         AffineTransform rotated = new AffineTransform();
         rotated.rotate(pattern.getAngle(), center.getX(), center.getY());
         g.transform(rotated);
-        g.draw(new java.awt.geom.Ellipse2D.Double(
+        g.fill(new java.awt.geom.Ellipse2D.Double(
                 center.getX() - pattern.getA(),
                 center.getY() - pattern.getB(),
                 pattern.getA() * 2,

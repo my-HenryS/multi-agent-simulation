@@ -21,6 +21,7 @@ public class ApplicationLoader extends LinkedList<SocialForceApplication> implem
         super();
         this.listener = listener;
         add(new ApplicationForCanteen());
+        add(new ApplicationEllipseForNarrowPattern());
         add(new ApplicationForDoorTest());
         add(new ApplicationForCrossFlow());
         add(new ApplicationForAstrophysics());

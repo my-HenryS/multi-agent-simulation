@@ -314,5 +314,12 @@ public class Ellipse2D implements DistanceShape {
         return new Ellipse2D(a,b,center.clone(),angle);
     }
 
+    @Override
+    public Shape expandBy(double extent) {
+        this.a += extent;
+        this.b += extent;
+        return this;
+    }
+
 
 }
