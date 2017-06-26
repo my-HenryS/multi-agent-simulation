@@ -5,7 +5,7 @@ package org.socialforce.geom;
  */
 public interface MoveableShape extends DistanceShape {
     //double getMass();
-    double getJ(Point axis);
+    double getInertia(double m);
     //Velocity getVelocity();
     //jiaosudu
 
