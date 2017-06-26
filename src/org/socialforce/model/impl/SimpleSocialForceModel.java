@@ -2,6 +2,7 @@ package org.socialforce.model.impl;
 
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Force2D;
+import org.socialforce.geom.impl.Moment2D;
 import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.*;
@@ -29,6 +30,7 @@ public class SimpleSocialForceModel implements Model {
         //regulations.add(new WallForce());
         regulations.add(new DoorForce(Agent.class, Door.class, this));
         regulations.add(new GravityRegulation(Star_Planet.class, Star_Planet.class, this));
+        regulations.add(new SpinForceRegulation());
     }
 
     /**
@@ -47,9 +49,6 @@ public class SimpleSocialForceModel implements Model {
             if (regulation.hasForce(source, target)) {
                 if (regulation.getForce(source, target) instanceof Force){
                 force.add((Vector) regulation.getForce(source, target));}
-                if (regulation.getForce(source, target) instanceof Moment){
-
-                }
             }
             long span = System.currentTimeMillis() - startT;
             startT = System.currentTimeMillis();
@@ -66,6 +65,17 @@ public class SimpleSocialForceModel implements Model {
     }
 
     @Override
+    public Moment interactionMoment(InteractiveEntity source, InteractiveEntity target) {
+        Moment moment = this.zeroMoment();
+        for (ForceRegulation regulation : regulations) {
+                if (regulation.getForce(source, target) instanceof Moment){
+                    moment.add((Moment) regulation.getForce(source, target));
+                }
+            }
+        return moment;
+    }
+
+    @Override
     public Vector zeroVector() {
         return new Vector2D(0,0);
     }
@@ -79,6 +89,8 @@ public class SimpleSocialForceModel implements Model {
     public Force zeroForce() {
         return new Force2D(0,0);
     }
+
+    public Moment zeroMoment(){return new Moment2D(0);}
 
     @Override
     public double getTimePerStep() {

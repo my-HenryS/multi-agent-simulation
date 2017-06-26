@@ -35,6 +35,7 @@ public interface Model{
      */
     Force interactionForce(InteractiveEntity source, InteractiveEntity target);
 
+    Moment interactionMoment(InteractiveEntity source, InteractiveEntity target);
     /**
      * 创建并返回零向量。
      *

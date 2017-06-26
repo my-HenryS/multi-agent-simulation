@@ -194,7 +194,18 @@ public class BaseAgent extends Entity implements Agent {
         }
         else {
             target.push(model.interactionForce(this,target));
+            target.rotate(model.interactionMoment(this,target));
         }
+    }
+
+    @Override
+    public Palstance getPalstance() {
+        return currPal;
+    }
+
+    @Override
+    public void rotate(Moment moment){
+        this.spined.add(moment);
     }
 
     /**
@@ -213,7 +224,7 @@ public class BaseAgent extends Entity implements Agent {
         face.rotate(0.01);
         temp1 = face.dot(currVelocity);
         if (temp1 < temp){size = size*-1;}
-        spined = new Moment2D(100*size);
+        spined.add(new Moment2D(100*size));
         }
     }
 
