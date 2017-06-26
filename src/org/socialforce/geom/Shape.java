@@ -93,6 +93,7 @@ public interface Shape extends Serializable, Cloneable, DimensionEntity, Drawabl
         direct.get(cords);
         return point.clone().moveBy(-cords[0], -cords[1]);
     }
+
 }
 
 

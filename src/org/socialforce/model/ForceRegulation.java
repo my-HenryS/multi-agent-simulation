@@ -1,5 +1,6 @@
 package org.socialforce.model;
 
+import org.socialforce.geom.Affection;
 import org.socialforce.geom.Force;
 
 /**
@@ -22,5 +23,5 @@ public interface ForceRegulation<Source extends InteractiveEntity,Target extends
      * @param target
      * @return force
      */
-    Force getForce(Source source, Target target);
+    Affection getForce(Source source, Target target);
 }

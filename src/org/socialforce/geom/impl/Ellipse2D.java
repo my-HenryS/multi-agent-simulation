@@ -7,23 +7,10 @@ import org.socialforce.geom.*;
 /**
  * Created by Administrator on 2017/5/10 0010.
  */
-public class Ellipse2D implements DistanceShape {
-    public double getA() {
-        return a;
-    }
-
-    public double getB() {
-        return b;
-    }
-
+public class Ellipse2D implements MoveableShape {
     private double a;
     private double b;
     public Point center;
-
-    public double getAngle() {
-        return angle;
-    }
-
     private double angle;  //椭圆长轴与X轴正方向的夹角（逆时针为正）
     protected Drawer drawer;
 
@@ -82,9 +69,9 @@ public class Ellipse2D implements DistanceShape {
     }
 
     /**
-     * 判断点是否位于椭圆外部
+     * 判断点是否位于椭圆内部
      * @param point 将被检查的点
-     * @return 判断结果
+     * @return 位于椭圆内部则返回true
      */
     @Override
     public boolean contains(Point point) {
@@ -94,11 +81,14 @@ public class Ellipse2D implements DistanceShape {
         Point2D A1 = new Point2D(1*a,0);
         double sampleAngle = O.getAngle(P,A1);
         double sampleDistance = Math.sqrt((a*Math.cos(sampleAngle))*(a*Math.cos(sampleAngle))+(b*Math.sin(sampleAngle))*(b*Math.sin(sampleAngle)));  //椭圆上一点到中心的距离
-        return (actualDistance <= sampleDistance);
+        if(actualDistance <= sampleDistance)
+            return true;
+        else
+            return false;
     }
 
     /**
-     * 给定椭圆外一点，找到椭圆上与此点距离最近的一点
+     * 给定平面上一点，找到椭圆上与此点距离最近的一点
      * @param point 将被检查的点
      * @return 最近的一点
      */
@@ -169,7 +159,7 @@ public class Ellipse2D implements DistanceShape {
     }
 
     /**
-     * 椭圆外一点至椭圆的最短距离
+     * 平面上一点至椭圆的最短距离
      * @param point 将被检查的点
      * @return 距离
      */
@@ -177,6 +167,8 @@ public class Ellipse2D implements DistanceShape {
     public double getDistance(Point point) {
         Point p = this.getPoint(point);
         double distance = point.distanceTo(p);
+        if(this.contains(point))
+            distance = (-1)*distance;
         return distance;
     }
 
@@ -235,6 +227,8 @@ public class Ellipse2D implements DistanceShape {
         Point2D Point_1 = new Point2D(nearPoint[0][0],nearPoint[0][1]);  //图形other上的采样点
         Point2D Point_2 = new Point2D(nearPoint[1][0],nearPoint[1][1]);  //本椭圆上的采样点
         double distance = Point_1.distanceTo(Point_2);
+        if(this.contains(Point_1))
+            distance = (-1)*distance;
         return distance;
     }
 
@@ -278,7 +272,7 @@ public class Ellipse2D implements DistanceShape {
     /**
      * 判断是否是碰撞到box
      * @param hitbox 将要被检查的box
-     * @return 判断结果
+     * @return 碰撞到box返回true
      */
     @Override
     public boolean hits(Box hitbox) {
@@ -293,7 +287,7 @@ public class Ellipse2D implements DistanceShape {
     /**
      * 判断该形状是否与另一个形状严格相交
      * @param other 另一个形状
-     * @return 判断结果
+     * @return 相交返回true
      */
     @Override
     public boolean intersects(Shape other) {
@@ -314,11 +308,22 @@ public class Ellipse2D implements DistanceShape {
         return new Ellipse2D(a,b,center.clone(),angle);
     }
 
+    /**
+     *获得椭圆的转动惯量
+     * @return 转动惯量
+     */
     @Override
-    public Shape expandBy(double extent) {
-        this.a += extent;
-        this.b += extent;
-        return this;
+    public double getInertia(double m) {
+        return (m*(a*a+b*b)/4);
+    }
+
+    /**
+     * 逆时针旋转某个角度
+     * @param angle 旋转的角度，为弧度制
+     */
+    @Override
+    public void spin(double angle){
+        this.angle = this.angle+angle;
     }
 
 
