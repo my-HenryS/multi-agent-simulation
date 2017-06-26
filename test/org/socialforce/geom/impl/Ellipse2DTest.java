@@ -10,13 +10,14 @@ import static org.junit.Assert.*;
  */
 public class Ellipse2DTest {
 
-    Ellipse2D ellipseTest;
+    Ellipse2D ellipseTest,test1,test2;
     Point2D center,p,q,m;
 
     @Before
     public void setUp() throws Exception {
         center = new Point2D(0.5,0.5);
         ellipseTest = new Ellipse2D(0.68,0.40,center,5*(Math.PI)/4);
+        test1 = new Ellipse2D(1,1,new Point2D(0,0),0);
         p = new Point2D(0.5,1);
         q = new Point2D(-0.5,0.5);   //一般的椭圆外一点
         m = new Point2D(1.0,0);      //短轴延长线上的点

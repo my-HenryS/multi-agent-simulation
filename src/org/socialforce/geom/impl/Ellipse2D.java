@@ -14,11 +14,27 @@ public class Ellipse2D implements MoveableShape {
     private double angle;  //椭圆长轴与X轴正方向的夹角（逆时针为正）
     protected Drawer drawer;
 
+    public double getA(){
+        return a;
+    }
+
+    public double getB(){
+        return b;
+    }
+
+    public double getAngle(){
+        return angle;
+    }
+
     public Ellipse2D(){}
 
     public Ellipse2D(double a, double b, Point center, double angle){
+        if (a>=b){
         this.a = a;
-        this.b = b;
+        this.b = b;}
+        else {
+            this.a =b;
+        this.b =a;}
         this.center = center;
         this.angle = angle;
     }
@@ -75,7 +91,7 @@ public class Ellipse2D implements MoveableShape {
      */
     @Override
     public boolean contains(Point point) {
-        Point P = point.coordinateTransfer(center,angle);
+        Point P = point.clone().coordinateTransfer(center,angle);
         Point2D O = new Point2D(0,0);
         double actualDistance = P.distanceTo(O);  //椭圆外一点到中心的距离
         Point2D A1 = new Point2D(1*a,0);
@@ -93,7 +109,7 @@ public class Ellipse2D implements MoveableShape {
      * @return 最近的一点
      */
     public Point getPoint(Point point) {
-        Point P = point.coordinateTransfer(center, angle);
+        Point P = point.clone().coordinateTransfer(center, angle);
         Point2D Q = new Point2D();
         double x = P.getX();
         double y = P.getY();
@@ -181,6 +197,8 @@ public class Ellipse2D implements MoveableShape {
     public Vector getDirection(Point point) {
         Point p = this.getPoint(point);
         Vector vector = p.directionTo(point);
+        if(this.contains(point))
+            vector.scale(-1);
         return vector;
     }
 
@@ -227,7 +245,7 @@ public class Ellipse2D implements MoveableShape {
         Point2D Point_1 = new Point2D(nearPoint[0][0],nearPoint[0][1]);  //图形other上的采样点
         Point2D Point_2 = new Point2D(nearPoint[1][0],nearPoint[1][1]);  //本椭圆上的采样点
         double distance = Point_1.distanceTo(Point_2);
-        if(this.contains(Point_1))
+        if(this.intersects(other))
             distance = (-1)*distance;
         return distance;
     }
@@ -242,7 +260,9 @@ public class Ellipse2D implements MoveableShape {
         double nearPoint[][] = this.closePoint(other);
         Point2D Point_1 = new Point2D(nearPoint[0][0],nearPoint[0][1]);  //图形other上的采样点
         Point2D Point_2 = new Point2D(nearPoint[1][0],nearPoint[1][1]);  //本椭圆上的采样点
-        Vector vector = Point_2.directionTo(Point_1);
+        Vector vector = Point_1.directionTo(Point_2);
+        if(this.intersects(other))
+            vector.scale(-1);
         return vector;
     }
 
@@ -291,6 +311,8 @@ public class Ellipse2D implements MoveableShape {
      */
     @Override
     public boolean intersects(Shape other) {
+        if (this.contains(other.getReferencePoint())||(other.contains(this.getReferencePoint())))
+            return true;
         double nearPoint[][] = this.closePoint(other);
         Point2D point = new Point2D(nearPoint[0][0],nearPoint[0][1]);  //图形other上距离椭圆最近的点
         if(this.contains(point))
@@ -306,6 +328,11 @@ public class Ellipse2D implements MoveableShape {
     @Override
     public Ellipse2D clone() {
         return new Ellipse2D(a,b,center.clone(),angle);
+    }
+
+    @Override
+    public Shape expandBy(double extent) {
+        return null;
     }
 
     /**

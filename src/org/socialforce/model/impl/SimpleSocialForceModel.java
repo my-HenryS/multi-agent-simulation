@@ -45,7 +45,11 @@ public class SimpleSocialForceModel implements Model {
         Force force = this.zeroForce();
         for (ForceRegulation regulation : regulations) {
             if (regulation.hasForce(source, target)) {
-                force.add(regulation.getForce(source, target));
+                if (regulation.getForce(source, target) instanceof Force){
+                force.add((Vector) regulation.getForce(source, target));}
+                if (regulation.getForce(source, target) instanceof Moment){
+
+                }
             }
             long span = System.currentTimeMillis() - startT;
             startT = System.currentTimeMillis();
