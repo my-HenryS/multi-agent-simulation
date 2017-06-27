@@ -1,5 +1,6 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.geom.Moment;
 import org.socialforce.geom.Shape;
 import org.socialforce.model.*;
 
@@ -22,6 +23,8 @@ public class Wall extends Entity implements Blockable, Influential {
 
     public void affect(Agent target) {
         target.push(model.interactionForce(this,target));
+        Moment temp = model.interactionMoment(this,target);
+        target.rotate(model.interactionMoment(this,target));
     }
 
     public Wall(Shape shape) {

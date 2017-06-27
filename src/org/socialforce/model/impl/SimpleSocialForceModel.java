@@ -30,7 +30,8 @@ public class SimpleSocialForceModel implements Model {
         //regulations.add(new WallForce());
         regulations.add(new DoorForce(Agent.class, Door.class, this));
         regulations.add(new GravityRegulation(Star_Planet.class, Star_Planet.class, this));
-        regulations.add(new SpinForceRegulation());
+        regulations.add(new SpinBodyForceRegulation(this));
+        regulations.add(new SpinPsyForceRegulation(this));
     }
 
     /**
@@ -68,9 +69,11 @@ public class SimpleSocialForceModel implements Model {
     public Moment interactionMoment(InteractiveEntity source, InteractiveEntity target) {
         Moment moment = this.zeroMoment();
         for (ForceRegulation regulation : regulations) {
-                if (regulation.getForce(source, target) instanceof Moment){
+            if (regulation.hasForce(source,target)) {
+                if (regulation.getForce(source, target) instanceof Moment) {
                     moment.add((Moment) regulation.getForce(source, target));
                 }
+            }
             }
         return moment;
     }
