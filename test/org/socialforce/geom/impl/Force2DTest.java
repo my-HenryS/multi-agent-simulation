@@ -11,12 +11,16 @@ import static org.junit.Assert.*;
 public class Force2DTest {
     Force2D testForce;
     double time,mass;
+    Point2D p1,p2,o;
 
     @Before
     public void setUp(){
         testForce = new Force2D(3,5);
         time = 2;
         mass = 5;
+        o = new Point2D(0,0);
+        p1 = new Point2D(2,0);
+        p2 = new Point2D(3,5);
     }
 
     @Test
@@ -30,4 +34,9 @@ public class Force2DTest {
         assertFalse(testForce == testForce.clone());
     }
 
+    @Test
+    public void CalculateMoment() throws Exception{
+        assertEquals(new Moment2D(0),testForce.CalculateMoment(p2,o));
+        assertEquals(new Moment2D(10),testForce.CalculateMoment(p1,o));
+    }
 }

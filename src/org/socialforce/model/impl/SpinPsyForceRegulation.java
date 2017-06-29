@@ -16,10 +16,8 @@ import org.socialforce.model.InteractiveEntity;
  */
 public class SpinPsyForceRegulation implements ForceRegulation {
     public SpinPsyForceRegulation(SimpleSocialForceModel model){
-        this.model = model;
-        PsychologicalForceRegulation p = new PsychologicalForceRegulation(Blockable.class, Agent.class,model);
+        p = new PsychologicalForceRegulation(Blockable.class, Agent.class,model);
     }
-    private SimpleSocialForceModel model;
     private PsychologicalForceRegulation p;
     /**
      * 判断源实体和目标实体之间是否有作用力。

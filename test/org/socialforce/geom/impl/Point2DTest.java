@@ -73,4 +73,8 @@ public class Point2DTest {
         assertEquals(0,a.getY(),1e-7);
     }
 
+    @Test
+    public void DirectionTo() throws Exception{
+        assertEquals(new Vector2D(0.6,0.8),x.directionTo(y));
+    }
 }

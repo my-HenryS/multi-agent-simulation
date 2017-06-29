@@ -62,5 +62,7 @@ public interface Model{
      */
     double getTimePerStep();
 
+    Moment zeroMoment();
+
     Model clone();
 }

@@ -43,23 +43,12 @@ public class SimpleSocialForceModel implements Model {
      */
     @Override
     public Force interactionForce(InteractiveEntity source, InteractiveEntity target) {
-//        return zeroForce(); // added calculation implements.
-        long startT = System.currentTimeMillis();
         Force force = this.zeroForce();
         for (ForceRegulation regulation : regulations) {
             if (regulation.hasForce(source, target)) {
-                if (regulation.getForce(source, target) instanceof Force){
-                force.add((Vector) regulation.getForce(source, target));}
-            }
-            long span = System.currentTimeMillis() - startT;
-            startT = System.currentTimeMillis();
-            if(regulation instanceof PsychologicalForceRegulation){
-                psyT += span;
-                psyN += 1;
-            }
-            else if(regulation instanceof BodyForce){
-                bodyT += span;
-                bodyN += 1;
+                Affection temp = regulation.getForce(source, target);
+                if (temp instanceof Force){
+                force.add((Vector) temp);}
             }
         }
         return force;
@@ -70,8 +59,9 @@ public class SimpleSocialForceModel implements Model {
         Moment moment = this.zeroMoment();
         for (ForceRegulation regulation : regulations) {
             if (regulation.hasForce(source,target)) {
-                if (regulation.getForce(source, target) instanceof Moment) {
-                    moment.add((Moment) regulation.getForce(source, target));
+                Affection temp = regulation.getForce(source, target);
+                if (temp instanceof Moment) {
+                    moment.add((Moment) temp);
                 }
             }
             }
@@ -93,6 +83,7 @@ public class SimpleSocialForceModel implements Model {
         return new Force2D(0,0);
     }
 
+    @Override
     public Moment zeroMoment(){return new Moment2D(0);}
 
     @Override

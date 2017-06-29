@@ -16,7 +16,7 @@ public class BaseAgent extends Entity implements Agent {
     double mass,intertia;
     DistanceShape view;
     Force pushed;
-    Moment spined = new Moment2D(0);
+    Moment spined;
     boolean escaped = false;
     DistanceShape shape;
     private static final double forceUpbound = 2450;
@@ -158,6 +158,7 @@ public class BaseAgent extends Entity implements Agent {
     public void setModel(Model model) {
         this.model = model;
         this.pushed = model.zeroForce();
+        this.spined = model.zeroMoment();
     }
 
 

@@ -16,10 +16,9 @@ import org.socialforce.model.InteractiveEntity;
  */
 public class SpinBodyForceRegulation implements ForceRegulation {
     public SpinBodyForceRegulation(SimpleSocialForceModel model){
-        this.model = model;
+        forceRegulation = new BodyForce(Blockable.class,Agent.class,model);
     }
-    private SimpleSocialForceModel model;
-    private ForceRegulation forceRegulation = new BodyForce(Blockable.class,Agent.class,model);
+    private ForceRegulation forceRegulation;
 
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
