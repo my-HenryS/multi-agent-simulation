@@ -20,13 +20,14 @@ public class BaseAgent extends Entity implements Agent {
     boolean escaped = false;
     DistanceShape shape;
     private static final double forceUpbound = 2450;
+    private static final double momentUpbound = 80;
 
     public BaseAgent(DistanceShape shape, Velocity velocity) {
         super(shape);
         this.shape = shape;
         this.currVelocity = velocity;
         this.mass = 80;
-        this.intertia = 50;
+        this.intertia = 20;
         Circle2D circle = new Circle2D(shape.getReferencePoint(),2);
         this.view = circle;
     }
@@ -116,6 +117,9 @@ public class BaseAgent extends Entity implements Agent {
         this.view.moveTo(point);                      //改变视野
         pushed = model.zeroForce();
         if (shape instanceof Ellipse2D){
+            if (((Moment2D)spined).getM()> momentUpbound){
+                spined.scale(momentUpbound/((Moment2D) spined).getM());
+            }
             Palstance next_Omega = new Palstance2D(0),deltaP = this.spined.deltaPalstance(intertia,model.getTimePerStep());
             currAccPal = deltaP.clone();
             currAccPal.scale(1/model.getTimePerStep());
@@ -218,14 +222,14 @@ public class BaseAgent extends Entity implements Agent {
         this.push(model.fieldForce(this));
         if (shape instanceof Ellipse2D){
         double angle = ((Ellipse2D)shape).getAngle();
-        Vector2D face = new Vector2D(Math.sin(angle),Math.cos(angle));
+        Vector2D face = new Vector2D(-Math.sin(angle),Math.cos(angle));
         double size = face.getRotateAngle(face, (Vector2D) currVelocity);
         double temp,temp1;
         temp = face.dot(currVelocity);
         face.rotate(0.01);
         temp1 = face.dot(currVelocity);
         if (temp1 < temp){size = size*-1;}
-        spined.add(new Moment2D(100*size));
+        spined.add(new Moment2D(200*size));
         }
     }
 

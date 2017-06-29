@@ -56,15 +56,15 @@ public class ApplicationEllipseForNarrowPattern extends SimpleApplication implem
         scenes = new LinkedList<>();
         DoorWidth = 1.36;
         density = 10;
-        setUpT1Scene1();
-        setUpT1Scene2();
-        setUpT1Scene3();
-        setUpT1Scene4();
+        //setUpT1Scene1();
+        //setUpT1Scene2();
+        //setUpT1Scene3();
+        //setUpT1Scene4();
         setUpT1Scene5();
-        setUpT1Scene6();
-        setUpT2Scene();
-        setUpPassageScene();
-        setUpPassageScene2();
+        //setUpT1Scene6();
+        //setUpT2Scene();
+        //setUpPassageScene();
+        //setUpPassageScene2();
         for(Scene scene:scenes){
             scene.setApplication(this);
         }
@@ -167,7 +167,7 @@ public class ApplicationEllipseForNarrowPattern extends SimpleApplication implem
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)})));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density*10,new Box2D(0,-10,10,5),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(density,new Box2D(0,-10,10,5),template)));
         parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(4,-4,2,2)}),new SV_Wall(new Shape[]{new Circle2D(new Point2D(5,-3),1)})));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
