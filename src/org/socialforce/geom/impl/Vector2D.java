@@ -344,7 +344,7 @@ public class Vector2D implements Vector {
         double angle = Math.acos(getDot(vrR, vbR));
         double cross = vbR.getX() * vrR.getY() - vrR.getX() * vbR.getY();
         if(cross < 0){
-            angle = Math.PI * 2 - angle;
+            angle = - angle;
         }
         return angle;
     }

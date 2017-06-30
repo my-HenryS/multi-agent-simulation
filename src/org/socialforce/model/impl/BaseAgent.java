@@ -223,13 +223,8 @@ public class BaseAgent extends Entity implements Agent {
         if (shape instanceof Ellipse2D){
         double angle = ((Ellipse2D)shape).getAngle();
         Vector2D face = new Vector2D(-Math.sin(angle),Math.cos(angle));
-        double size = face.getRotateAngle(face, (Vector2D) currVelocity);
-        double temp,temp1;
-        temp = face.dot(currVelocity);
-        face.rotate(0.01);
-        temp1 = face.dot(currVelocity);
-        if (temp1 < temp){size = size*-1;}
-        spined.add(new Moment2D(200*size));
+        double size = face.getRotateAngle((Vector2D) currVelocity, face);
+        spined.add(new Moment2D(size*1000));
         }
     }
 
