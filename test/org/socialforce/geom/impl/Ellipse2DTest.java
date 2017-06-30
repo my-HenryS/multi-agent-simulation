@@ -61,18 +61,18 @@ public class Ellipse2DTest {
         assertEquals(0.4806,ellipseTest.distanceTo(new Box2D(1.5,0,0.5,0.5)),0.01);  //最近是Box的顶点
         assertEquals(1.2639,ellipseTest.distanceTo(new Rectangle2D(new Point2D(4,1*(Math.sqrt(3))),2*(Math.sqrt(3)),2,(Math.PI)/6)),0.01);
         assertEquals(0.4679,ellipseTest.distanceTo(new Circle2D(new Point2D(-1,0.5),0.5)),0.01);    //椭圆与圆相离（最短距离）
-        assertEquals(-0.1156,ellipseTest.distanceTo(new Circle2D(new Point2D(1.1,0),0.5)),0.01);     //椭圆与圆相交（交集部分的最长距离）
+        assertEquals(-0.1156,ellipseTest.distanceTo(new Circle2D(new Point2D(1.1,0),0.5)),0.03);     //椭圆与圆相交（交集部分的最长距离）
         assertEquals(0.8842,ellipseTest.distanceTo(new Ellipse2D(0.68,0.40,new Point2D(2.5,0.5),3*(Math.PI)/4)),0.01);  //椭圆相离
         assertEquals(-0.1058,ellipseTest.distanceTo(new Ellipse2D(0.68,0.40,new Point2D(1.5,0.5),3*(Math.PI)/4)),0.01);  //椭圆相交
     }
 
     @Test
     public void directionTo() throws Exception {
-        assertEquals(new Vector2D(1.0,0),ellipseTest.directionTo(new Segment2D(new Point2D(2.0,0),new Point2D(2.0,2.0))));
+        assertEquals(new Vector2D(-1.0,0),ellipseTest.directionTo(new Segment2D(new Point2D(2.0,0),new Point2D(2.0,2.0))));
         assertEquals(new Vector2D((-1)*Math.sqrt(0.5),1*Math.sqrt(0.5)),ellipseTest.directionTo(new Circle2D(m,0.5)));
         double value[] = new double[2];
         ellipseTest.directionTo(new Ellipse2D(0.68,0.40,new Point2D(2.5,0.5),3*(Math.PI)/4)).get(value);  //椭圆相离
-        assertEquals(1,value[0],1.0e-7);
+        assertEquals(-1,value[0],1.0e-7);
         assertEquals(0,value[1],1.0e-7);
         ellipseTest.directionTo(new Ellipse2D(0.68,0.40,new Point2D(1.5,0.5),3*(Math.PI)/4)).get(value);  //椭圆相交
         assertEquals(-1,value[0],1.0e-7);

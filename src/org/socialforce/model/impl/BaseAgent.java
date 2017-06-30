@@ -21,6 +21,7 @@ public class BaseAgent extends Entity implements Agent {
     DistanceShape shape;
     private static final double forceUpbound = 2450;
     private static final double momentUpbound = 80;
+    private static final double PalUpbound = 1;
 
     public BaseAgent(DistanceShape shape, Velocity velocity) {
         super(shape);
@@ -126,6 +127,9 @@ public class BaseAgent extends Entity implements Agent {
             double deltaAngle;
             next_Omega.add(currPal);
             next_Omega.add(currAccPal);
+            if (((Palstance2D)next_Omega).getOmega()>PalUpbound){
+                next_Omega.scale(PalUpbound/((Palstance2D) next_Omega).getOmega());
+            }
             deltaAngle = next_Omega.deltaAngle(model.getTimePerStep());
             this.currPal.add(deltaP);
             ((Ellipse2D) shape).spin(deltaAngle);
