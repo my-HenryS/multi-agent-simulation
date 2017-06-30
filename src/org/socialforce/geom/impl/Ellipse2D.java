@@ -234,7 +234,7 @@ public class Ellipse2D implements MoveableShape {
                 Box2D partBox = new Box2D((xmin + i * dx), ymin, dx, dy);
                 tempPoint_2 = this.getPoint(partBox.getReferencePoint());
                 if (partBox.contains(tempPoint_2)) {
-                    Point_1 = Shape.getPoint(other, Point_2);
+                    tempPoint_1 = Shape.getPoint(partBox, Point_2);
                     tempDistance = Point_1.distanceTo(Point_2);
                 }
                 if (tempDistance < distance) {
