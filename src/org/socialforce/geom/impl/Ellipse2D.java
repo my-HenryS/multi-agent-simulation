@@ -291,13 +291,18 @@ public class Ellipse2D implements MoveableShape {
      */
     @Override
     public Vector directionTo(Shape other) {
-        double nearPoint[][] = this.closePoint(other);
+        /*double nearPoint[][] = this.closePoint(other);
         Point2D Point_1 = new Point2D(nearPoint[0][0],nearPoint[0][1]);  //图形other上的点
         Point2D Point_2 = new Point2D(nearPoint[1][0],nearPoint[1][1]);  //本椭圆上的点
         Vector vector = Point_1.directionTo(Point_2);
         if(this.intersects(other))
             vector.scale(-1);
-        return vector;
+        return vector;*/
+
+        Vector2D vector2D = (Vector2D) other.getDirection(center);
+        if(other.contains(center)) vector2D.scale(-1);
+        return vector2D;
+
     }
 
     /**
