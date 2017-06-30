@@ -317,7 +317,7 @@ public class Box2D implements Box {
      * @return 这个形状的副本.
      */
     @Override
-    public Shape clone() {
+    public Box2D clone() {
         Box2D cloned = new Box2D();
         cloned.xmin = xmin;
         cloned.xmax = xmax;
@@ -457,4 +457,8 @@ public class Box2D implements Box {
     public String toString(){
         return "左下右上坐标为： ("+xmin+"," +ymin+")，("+xmax+ ","+ymax+ ")";
     }
+
+    public double getWidth(){return xmax - xmin;}
+
+    public double getHeight(){return ymax - ymin;}
 }

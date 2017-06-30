@@ -2,6 +2,7 @@ package org.socialforce.model.impl;
 
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Circle2D;
+import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.*;
 import org.socialforce.strategy.Path;
@@ -18,6 +19,7 @@ public class BaseAgent extends Entity implements Agent {
     Force pushed;
     boolean escaped = false;
     DistanceShape shape;
+    boolean stoped = false;
     private static final double forceUpbound = Double.POSITIVE_INFINITY;
 
     public BaseAgent(DistanceShape shape, Velocity velocity) {
@@ -25,7 +27,7 @@ public class BaseAgent extends Entity implements Agent {
         this.shape = shape;
         this.currVelocity = velocity;
         this.mass = 1000;
-        Circle2D circle = new Circle2D(shape.getReferencePoint(),4);
+        Circle2D circle = new Circle2D(shape.getReferencePoint(),15);
         this.view = circle;
     }
 
@@ -96,6 +98,11 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public void act() {
+        if(stoped){
+            pushed = model.zeroForce();
+            stoped = false;
+            return;
+        }
         if(pushed.length() > forceUpbound){
             this.pushed = pushed.getRefVector();
             pushed.scale(forceUpbound);
@@ -108,6 +115,9 @@ public class BaseAgent extends Entity implements Agent {
         next_v.add(deltaV);
         deltaS = next_v.deltaDistance(model.getTimePerStep());
         this.currVelocity.add(deltaV);
+        if(currVelocity.dot(new Vector2D(0,1)) < 0){
+            currVelocity = new Velocity2D(currVelocity.dot(new Vector2D(1,0)),0);
+        }
         Point point = shape.getReferencePoint();
         point.add(deltaS);
         this.shape.moveTo(point);
@@ -225,6 +235,10 @@ public class BaseAgent extends Entity implements Agent {
     @Override
     public Shape blockSize() {
         return this.getShape().clone();
+    }
+
+    public void stopWhatEver(){
+        stoped = true;
     }
 
 }

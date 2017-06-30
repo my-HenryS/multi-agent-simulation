@@ -46,4 +46,6 @@ public interface Box extends Shape,ClippableShape,ClipperShape{
      */
     Box intersect(Box other);
 
+    Box clone();
+
 }

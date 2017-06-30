@@ -9,8 +9,8 @@ import org.socialforce.model.*;
  */
 
 public class PsychologicalForceRegulation extends TypeMatchRegulation<Blockable, Agent> {
-    public static final double A = 400000;
-    public static final double B = 0.1;
+    public static final double A = 800000;
+    public static final double B = 0.4;
 
     /**
      *TODO regulate 是翻译成调节还是控制，还是计算的意思？

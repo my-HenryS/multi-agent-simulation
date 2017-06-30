@@ -14,8 +14,8 @@ import java.util.List;
  */
 public class SimpleSocialForceModel implements Model {
     double TIME_PER_STEP = 0.008;
-    double EXPECTED_SPEED = 13;
-    double REACT_TIME = 1;
+    double EXPECTED_SPEED = 30;
+    double REACT_TIME = 0.4;
 
     long psyT = 0, bodyT = 0, flT = 0;
     int psyN = 0, bodyN = 0, flN = 0;

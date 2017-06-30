@@ -12,10 +12,11 @@ import org.socialforce.scene.SceneValue;
  */
 public class SV_Tollbooth implements SceneValue<Shape> {
     protected Shape shape;
-    protected double interval;
-    public SV_Tollbooth(Shape shape, double interval){
+    protected double interval, maxSpeed;
+    public SV_Tollbooth(Shape shape, double interval, double maxSpeed){
         this.shape = shape;
         this.interval = interval;
+        this.maxSpeed = maxSpeed;
     }
     @Override
     public String getEntityName() {
@@ -39,7 +40,7 @@ public class SV_Tollbooth implements SceneValue<Shape> {
 
     @Override
     public void apply(Scene scene) {
-        ETC_Tollbooth tollbooth = new ETC_Tollbooth(shape.clone(), interval);
+        ETC_Tollbooth tollbooth = new ETC_Tollbooth(shape.clone(), interval, maxSpeed);
         scene.getStaticEntities().add(tollbooth);
         tollbooth.setScene(scene);
         tollbooth.setModel(new SimpleSocialForceModel());

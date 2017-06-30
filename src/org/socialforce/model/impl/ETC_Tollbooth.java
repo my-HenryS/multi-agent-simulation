@@ -1,6 +1,7 @@
 package org.socialforce.model.impl;
 
 import org.socialforce.geom.Shape;
+import org.socialforce.geom.impl.Box2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.Influential;
 import org.socialforce.model.InteractiveEntity;
@@ -13,10 +14,13 @@ import java.util.Map;
  */
 public class ETC_Tollbooth extends Entity implements Influential {
     Map<Agent, Integer> agentDictionary = new HashMap<>();
-    double interval;
-    public ETC_Tollbooth(Shape shape, double interval) {
+    double interval, maxSpeed;
+    boolean stopAgent;
+    public ETC_Tollbooth(Shape shape, double interval, double maxAllowedSpeed) {
         super(shape);
         this.interval = interval;
+        this.maxSpeed = maxAllowedSpeed;
+        stopAgent = maxSpeed <= 3;
     }
 
     @Override
@@ -26,12 +30,13 @@ public class ETC_Tollbooth extends Entity implements Influential {
 
     @Override
     public InteractiveEntity standardclone() {
-        return new ETC_Tollbooth(shape.clone(), interval);
+        return new ETC_Tollbooth(shape.clone(), interval, maxSpeed);
     }
 
     @Override
     public Shape getView() {
-        return this.shape;
+        Box2D shape = (Box2D)(this.shape);
+        return new Box2D(shape.getXmin(),shape.getYmin() - 20,shape.getWidth(),shape.getHeight() + 40);
     }
 
     @Override
@@ -39,13 +44,15 @@ public class ETC_Tollbooth extends Entity implements Influential {
         BaseAgent agent = (BaseAgent) target;
         if(!agentDictionary.containsKey(agent)){
             agentDictionary.put(agent, (int)(scene.getCurrentSteps() + interval / agent.getModel().getTimePerStep()) );
-            ((SimpleSocialForceModel)agent.getModel()).setExpectedSpeed(13);
+            ((SimpleSocialForceModel)agent.getModel()).setExpectedSpeed(maxSpeed);
             return;
         }
         if(agentDictionary.get(agent) > scene.getCurrentSteps()){
-            ((SimpleSocialForceModel)agent.getModel()).setExpectedSpeed(13);
+            ((SimpleSocialForceModel)agent.getModel()).setExpectedSpeed(maxSpeed);
+            if(stopAgent && agent.getShape().intersects(shape)) agent.stopWhatEver();
+
         }
-        else if(agentDictionary.get(agent) == scene.getCurrentSteps()){
+        else if(agentDictionary.get(agent) <= scene.getCurrentSteps()){
             ((SimpleSocialForceModel)agent.getModel()).setExpectedSpeed(((SimpleSocialForceModel)this.model).getExpectedSpeed());
         }
     }

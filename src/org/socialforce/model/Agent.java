@@ -54,4 +54,6 @@ public interface Agent extends Influential, Moveable, Blockable {
      */
 
     Velocity getAcceleration();
+
+    void stopWhatEver();
 }
