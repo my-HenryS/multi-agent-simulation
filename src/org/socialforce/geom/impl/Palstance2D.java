@@ -33,6 +33,7 @@ public class Palstance2D implements Palstance {
         omega = omega*rate;
     }
 
+    @Override
     public double getOmega(){
         return omega;
     }
