@@ -55,7 +55,7 @@ public class ApplicationEllipseForNarrowPattern extends SimpleApplication implem
         template = new Ellipse2D(0.486/2,0.2/2,new Point2D(0,0),Math.PI/4);
         scenes = new LinkedList<>();
         DoorWidth = 1.36;
-        density = 30;
+        density = 1;
         //setUpT1Scene1();
         //setUpT1Scene2();
         //setUpT1Scene3();

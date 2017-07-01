@@ -212,61 +212,40 @@ public class Ellipse2D implements MoveableShape {
      */
 
     public double[][] closePoint(Shape other) {
-        Point Point_1 = new Point2D();
-        Point Point_2 = new Point2D();
-        double distance;
-        double tempDistance;
-        if (other instanceof Box2D) {
-            Point startPoint = ((Box2D) other).getStartPoint();
-            Point endPoint = ((Box2D) other).getEndPoint();
-            double xmin = startPoint.getX();
-            double ymin = startPoint.getY();
-            double xmax = endPoint.getX();
-            double ymax = endPoint.getY();
-            int num = 4;
-            double dx = (xmax - xmin) / num;
-            double dy = (ymax - ymin);
-            Point tempPoint_1 = new Point2D();
-            Point tempPoint_2 = new Point2D();
-            distance = Double.POSITIVE_INFINITY;
-            tempDistance = 0;
-            for (int i = 0; i < num; i++) {
-                Box2D partBox = new Box2D((xmin + i * dx), ymin, dx, dy);
-                tempPoint_2 = this.getPoint(partBox.getReferencePoint());
-                if (partBox.contains(tempPoint_2)) {
-                    tempPoint_1 = Shape.getPoint(partBox, Point_2);
-                    tempDistance = Point_1.distanceTo(Point_2);
+        Point Point_2 = this.getPoint(other.getReferencePoint());     //本椭圆上的点
+        double distance = other.getDistance(Point_2);                 //椭圆上的采样点到other的最短距离
+        double minAngle = (new Point2D(0,0)).getAngle(Point_2.coordinateTransfer(center,angle),new Point2D(1*a,0));
+        double tempDistance = other.getDistance(new Point2D(a*Math.cos(minAngle+0.01),b*Math.sin(minAngle+0.01)).inverseCoordinateTransfer(center,angle));
+        double sampleAngle;     //初始采样的角度步长
+        if(tempDistance<distance)
+            sampleAngle = 5*(Math.PI)/180;
+        else
+            sampleAngle = (-5)*(Math.PI)/180;
+        double differDistance = 1.0e-2;          //误差精度
+        double tempAngle = minAngle;             //采样角度
+        Point tempPoint = new Point2D();         //采样点（椭圆坐标系下）
+        while (true){
+            tempAngle = tempAngle+sampleAngle;
+            tempPoint.moveTo(a*Math.cos(tempAngle),b*Math.sin(tempAngle));
+            tempDistance = other.getDistance(tempPoint.inverseCoordinateTransfer(center,angle));
+            if(tempDistance <= distance){
+                if(Math.abs(tempDistance-distance) < differDistance){
+                    Point_2.moveTo(tempPoint.inverseCoordinateTransfer(center,angle).getX(),tempPoint.inverseCoordinateTransfer(center,angle).getY());
+                    break;
                 }
-                if (tempDistance < distance) {
-                    Point_1.moveTo(tempPoint_1.getX(), tempPoint_1.getY());
-                    Point_2.moveTo(tempPoint_2.getX(), tempPoint_2.getY());
-                }
-            }
-        }
-            Point_1 = Shape.getPoint(other, center);        //图形other上的采样点
-            Point_2 = this.getPoint(Point_1);               //本椭圆上的采样点
-            if ((!(this.contains(Point_1))) && (!(other.contains(Point_2)))) {
-                distance = Point_1.distanceTo(Point_2);
-                double differDistance = 1.0e-2;  //误差精度
-                Point tempPoint;
-                while (true) {
-                    tempPoint = Shape.getPoint(other, Point_2);
-                    tempDistance = tempPoint.distanceTo(Point_2);
-                    if ((tempDistance > distance) || (Math.abs(tempDistance - distance) < differDistance))
-                        break;
-                    Point_1 = tempPoint;
-                    distance = tempDistance;
-                    tempPoint = this.getPoint(Point_1);
-                    tempDistance = tempPoint.distanceTo(Point_1);
-                    if ((tempDistance > distance) || (Math.abs(tempDistance - distance) < differDistance))
-                        break;
-                    Point_2 = tempPoint;
+                else{
                     distance = tempDistance;
                 }
             }
-            double nearPoint[][] = {{Point_1.getX(), Point_1.getY()}, {Point_2.getX(), Point_2.getY()}};
-            return nearPoint;
+            else{
+                tempAngle = tempAngle-sampleAngle;
+                sampleAngle = sampleAngle/2;
+            }
         }
+        Point Point_1 = Shape.getPoint(other, Point_2);              //图形other上的点
+        double nearPoint[][] = {{Point_1.getX(), Point_1.getY()}, {Point_2.getX(), Point_2.getY()}};
+        return nearPoint;
+    }
 
     /**
      * 椭圆与其他图形之间的最短距离
@@ -330,8 +309,11 @@ public class Ellipse2D implements MoveableShape {
      */
     @Override
     public boolean hits(Box hitbox) {
-        Point Point_1 = Shape.getPoint(hitbox,center);               //hitbox上的点
-        Point Point_2 = this.getPoint(hitbox.getReferencePoint());   //本椭圆上的点
+        if((this.contains(hitbox.getReferencePoint()))||(hitbox.contains(center)))
+            return true;
+        double closePoint[][] = this.closePoint(hitbox);
+        Point2D Point_1 = new Point2D(closePoint[0][0],closePoint[0][1]);     //hitbox上的点
+        Point2D Point_2 = new Point2D(closePoint[1][0],closePoint[1][1]);    //本椭圆上的点
         if((this.contains(Point_1))||(hitbox.contains(Point_2)))
             return true;
         else
@@ -345,8 +327,11 @@ public class Ellipse2D implements MoveableShape {
      */
     @Override
     public boolean intersects(Shape other) {
-        Point Point_1 = Shape.getPoint(other,center);                //图形other上的点
-        Point Point_2 = this.getPoint(other.getReferencePoint());    //本椭圆上的点
+        if((this.contains(other.getReferencePoint()))||(other.contains(center)))
+            return true;
+        double closePoint[][] = this.closePoint(other);
+        Point2D Point_1 = new Point2D(closePoint[0][0],closePoint[0][1]);     //图形other上的点
+        Point2D Point_2 = new Point2D(closePoint[1][0],closePoint[1][1]);     //本椭圆上的点
         if((this.contains(Point_1))||(other.contains(Point_2)))
             return true;
         else
