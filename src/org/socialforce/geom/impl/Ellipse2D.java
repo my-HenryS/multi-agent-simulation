@@ -94,9 +94,9 @@ public class Ellipse2D implements MoveableShape {
 
 
     /**
-     * 将极坐标转化为平面坐标
+     * 椭圆上的点，将极坐标转化为平面坐标
      * @param angle 椭圆上的点对应的逆时针转过的角度
-     * @return
+     * @return 平面坐标点
      */
     public Point coordinateChange(double angle){
         Point2D point = new Point2D();
@@ -126,7 +126,7 @@ public class Ellipse2D implements MoveableShape {
     public boolean contains(Point point) {
         Point P = point.clone().coordinateTransfer(center, angle);
         Point2D O = new Point2D(0, 0);
-        double actualDistance = P.distanceTo(O);                                  //椭圆外一点到中心的距离
+        double actualDistance = P.distanceTo(O);                                  //平面上一点到中心的距离
         double sampleAngle = O.getAngle(P, new Point2D(1 * a, 0));
         double sampleDistance = this.coordinateChange(sampleAngle).distanceTo(O); //椭圆上一点到中心的距离
         if (actualDistance <= sampleDistance)
@@ -269,7 +269,66 @@ public class Ellipse2D implements MoveableShape {
         Point Point_1 = Shape.getPoint(other, Point_2);              //图形other上的点
         double nearPoint[][] = {{Point_1.getX(), Point_1.getY()}, {Point_2.getX(), Point_2.getY()}};
         return nearPoint;
+
+
+
+        /*Point Point_1 = Shape.getPoint(other, center);   //图形shape上的采样点
+        Point Point_2 = this.getPoint(Point_1);          //本椭圆上的采样点
+        double distance = Point_1.distanceTo(Point_2);
+        double differDistance = 1.0e-2;  //误差精度
+        Point tempPoint = new Point2D();
+        double tempDistance;
+        if(!(this.intersects(other))){
+            while(true){
+                tempPoint = Shape.getPoint(other, Point_2);
+                tempDistance = tempPoint.distanceTo(tempPoint);
+                if ((tempDistance > distance) || (Math.abs(tempDistance-distance) < differDistance))
+                    break;
+                Point_1 = tempPoint;
+                distance = tempDistance;
+
+                tempPoint = this.getPoint(Point_1);
+                tempDistance = tempPoint.distanceTo(tempPoint);
+                if ((tempDistance > distance) || (Math.abs(tempDistance-distance) < differDistance))
+                    break;
+                Point_2 = tempPoint;
+                distance = tempDistance;
+            }
+        }
+        if(other instanceof Box){
+            Point startPoint = ((Box2D) other).getStartPoint();
+            Point endPoint = ((Box2D) other).getEndPoint();
+            double xMin = startPoint.getX();
+            double yMin = startPoint.getY();
+            double xMax = endPoint.getX();
+            double yMax = endPoint.getY();
+            int xNum = 3;
+            int yNum = 3;
+            double dx = (xMax - xMin) / xNum;
+            double dy = (yMax - yMin) / yNum;
+            tempDistance = 0;
+            distance = 0;
+            for (int i = 0; i < xNum; i++) {
+                for (int j = 0; j < yNum; j++) {
+                    Box2D partBox = new Box2D(xMin + i * dx, yMin + j * dy, dx, dy);
+                    Point_2 = this.getPoint(partBox.getReferencePoint());
+                    if(partBox.contains(Point_2)) {
+                        tempPoint = Shape.getPoint(partBox, Point_2);
+                        tempDistance = tempPoint.distanceTo(Point_2);
+                    }
+                    if(tempDistance > distance){
+                        Point_1.moveTo(tempPoint.getX(),tempPoint.getY());
+                        distance = tempDistance;
+                    }
+                }
+            }
+        }
+        double nearPoint[][] = {{Point_1.getX(), Point_1.getY()}, {Point_2.getX(), Point_2.getY()}};
+        return nearPoint;*/
+
     }
+
+
 
 
 
@@ -340,6 +399,11 @@ public class Ellipse2D implements MoveableShape {
      */
     @Override
     public boolean hits(Box hitbox) {
+        /*if(this.distanceTo(hitbox)<0)
+            return true;
+        return false;*/
+
+
         if((this.contains(hitbox.getReferencePoint()))||(hitbox.contains(center)))
             return true;
         double closePoint[][] = this.closePoint(hitbox);
@@ -349,6 +413,34 @@ public class Ellipse2D implements MoveableShape {
             return true;
         else
             return false;
+
+
+        /*Point Point_1 = Shape.getPoint(hitbox,center);               //hitbox上的点
+        Point Point_2 = this.getPoint(hitbox.getReferencePoint());     //本椭圆上的点
+        if(this.contains(Point_1)||hitbox.contains(Point_2))
+            return true;
+        else{
+            Point startPoint = hitbox.getStartPoint();
+            Point endPoint = hitbox.getEndPoint();
+            double xMin = startPoint.getX();
+            double yMin = startPoint.getY();
+            double xMax = endPoint.getX();
+            double yMax = endPoint.getY();
+            int xNum = 3;
+            int yNum = 3;
+            double dx = (xMax-xMin)/xNum;
+            double dy = (yMax-yMin)/yNum;
+            for(int i = 0; i<xNum; i++){
+                for(int j = 0; j<yNum; j++){
+                    Box2D partBox = new Box2D(xMin+i*dx,yMin+j*dy,dx,dy);
+                    Point_2 = this.getPoint(partBox.getReferencePoint())
+                    if(partBox.contains(Point_2))
+                        return true;
+                }
+            }
+            return false;
+        }*/
+
     }
 
     /**
@@ -358,6 +450,11 @@ public class Ellipse2D implements MoveableShape {
      */
     @Override
     public boolean intersects(Shape other) {
+        /*if(this.distanceTo(other)<0)
+            return true;
+        return false;*/
+
+
         if((this.contains(other.getReferencePoint()))||(other.contains(center)))
             return true;
         double closePoint[][] = this.closePoint(other);
@@ -367,6 +464,36 @@ public class Ellipse2D implements MoveableShape {
             return true;
         else
             return false;
+
+        /*Point Point_1 = Shape.getPoint(other,center);               //图形other上的点
+        Point Point_2 = this.getPoint(other.getReferencePoint());     //本椭圆上的点
+        if(this.contains(Point_1)||other.contains(Point_2))
+            return true;
+        else{
+            if(other instanceof Box){
+                Point startPoint = ((Box2D) other).getStartPoint();
+                Point endPoint = ((Box2D) other).getEndPoint();
+                double xMin = startPoint.getX();
+                double yMin = startPoint.getY();
+                double xMax = endPoint.getX();
+                double yMax = endPoint.getY();
+                int xNum = 3;
+                int yNum = 3;
+                double dx = (xMax - xMin) / xNum;
+                double dy = (yMax - yMin) / yNum;
+                for (int i = 0; i < xNum; i++) {
+                    for (int j = 0; j < yNum; j++) {
+                        Box2D partBox = new Box2D(xMin + i * dx, yMin + j * dy, dx, dy);
+                        Point_2 = this.getPoint(partBox.getReferencePoint())
+                        if(partBox.contains(Point_2))
+                            return true;
+                    }
+                }
+                return false;
+            }
+        }
+        return false;*/
+
     }
 
     /**
