@@ -4,11 +4,6 @@ package org.socialforce.geom;
  * Created by Administrator on 2017/6/23 0023.
  */
 public interface MoveableShape extends DistanceShape {
-    //double getMass();
-    double getInertia(double m);
-    //Velocity getVelocity();
-    //jiaosudu
-
     /**
      * 逆时针旋转某个角度
      * @param angle 旋转的角度，为弧度制

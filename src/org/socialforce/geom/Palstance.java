@@ -8,4 +8,5 @@ public interface Palstance {
     Palstance clone();
     void add(Palstance other);
     void scale(double rate);
+    double getOmega();
 }

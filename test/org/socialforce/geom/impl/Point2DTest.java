@@ -57,11 +57,13 @@ public class Point2DTest {
 
     @Test
     public void coordinateTransfer() throws Exception {
-        Point2D a = new Point2D(0,0);
+        Point2D a = new Point2D(2,7);
         Point2D c = new Point2D(1,1);
         Point A = a.coordinateTransfer(c,(Math.PI)/4);
-        assertEquals((-1)*Math.sqrt(2),A.getX(),1e-7);
-        assertEquals(0,A.getY(),1e-7);
+        Point B = A.inverseCoordinateTransfer(c,(Math.PI)/4);
+        System.out.print(B);
+        //assertEquals((-1)*Math.sqrt(2),A.getX(),1e-7);
+        //assertEquals(0,A.getY(),1e-7);
     }
 
     @Test
