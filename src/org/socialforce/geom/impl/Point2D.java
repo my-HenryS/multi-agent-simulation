@@ -110,7 +110,7 @@ public class Point2D extends Vector2D implements Point {
     /**
      * 已知三个点，求构成的角度
      * @param p
-     * @param q
+     * @param q 基准点：(正值，0)
      * @return
      */
     public double getAngle(Point p, Point q) {
@@ -118,9 +118,13 @@ public class Point2D extends Vector2D implements Point {
         double side2 = this.distanceTo(q);
         double bottomSide = p.distanceTo(q);
         double cosAngle = (side1 * side1 + side2 * side2 - bottomSide * bottomSide) / (2 * side1 * side2); //余弦定理
-        if (Math.abs(cosAngle) < 1.0e-10)
-            cosAngle = 0;
-        double angle = Math.acos(cosAngle);
+        //if (Math.abs(cosAngle) < 1.0e-10)
+            //cosAngle = 0;
+        double angle;
+        if(p.getY() > 0)
+            angle = Math.acos(cosAngle);
+        else
+            angle = (-1)*Math.acos(cosAngle);
         return angle;
     }
 
