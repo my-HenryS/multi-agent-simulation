@@ -213,18 +213,24 @@ public class Ellipse2D implements MoveableShape {
         Point Point_1 = Shape.getPoint(other,center);  //图形other上的采样点
         Point Point_2 = this.getPoint(Point_1);        //本椭圆上的采样点
         double distance = Point_1.distanceTo(Point_2);
+        if(this.contains(Point_1)||other.contains(Point_2))
+            distance = distance*(-1);
         double differDistance = 1.0e-2;  //误差精度
         Point tempPoint;
         double tempDistance;
         while(true) {
             tempPoint = Shape.getPoint(other,Point_2);
             tempDistance = tempPoint.distanceTo(Point_2);
+            if(this.contains(Point_1)||other.contains(Point_2))
+                tempDistance = tempDistance*(-1);
             if ((tempDistance > distance) || (Math.abs(tempDistance - distance) < differDistance))
                 break;
             Point_1 = tempPoint;
             distance = tempDistance;
             tempPoint = this.getPoint(Point_1);
             tempDistance = tempPoint.distanceTo(Point_1);
+            if(this.contains(Point_1)||other.contains(Point_2))
+                tempDistance = tempDistance*(-1);
             if ((tempDistance > distance) || (Math.abs(tempDistance - distance) < differDistance))
                 break;
             Point_2 = tempPoint;
@@ -245,7 +251,7 @@ public class Ellipse2D implements MoveableShape {
         Point2D Point_1 = new Point2D(nearPoint[0][0],nearPoint[0][1]);  //图形other上的采样点
         Point2D Point_2 = new Point2D(nearPoint[1][0],nearPoint[1][1]);  //本椭圆上的采样点
         double distance = Point_1.distanceTo(Point_2);
-        if(this.intersects(other))
+        if(other.contains(Point_2)||this.contains(Point_1))
             distance = (-1)*distance;
         return distance;
     }
@@ -261,7 +267,7 @@ public class Ellipse2D implements MoveableShape {
         Point2D Point_1 = new Point2D(nearPoint[0][0],nearPoint[0][1]);  //图形other上的采样点
         Point2D Point_2 = new Point2D(nearPoint[1][0],nearPoint[1][1]);  //本椭圆上的采样点
         Vector vector = Point_1.directionTo(Point_2);
-        if(this.intersects(other))
+        if(other.contains(center)||this.contains(other.getReferencePoint()))
             vector.scale(-1);
         return vector;
     }

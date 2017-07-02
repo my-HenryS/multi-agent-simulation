@@ -22,7 +22,7 @@ public class SpinBodyForceRegulation implements ForceRegulation {
 
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
-        return forceRegulation.hasForce(source,target) && target.getShape() instanceof Ellipse2D;
+        return forceRegulation.hasForce(source,target) && ((Agent)target).getShape().distanceTo(source.getShape()) >=0 && target.getShape() instanceof Ellipse2D;
     }
 
     @Override

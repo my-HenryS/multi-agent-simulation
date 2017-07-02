@@ -167,7 +167,7 @@ public class ApplicationEllipseForNarrowPattern extends SimpleApplication implem
         SceneLoader loader = interpreter.setLoader();
         ParameterPool parameters = new SimpleParameterPool();
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)})));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(1,new Box2D(0,-10,10,5),template)));
+        parameters.addLast(genParameter(new SV_RandomAgentGenerator(20,new Box2D(0,-10,10,5),template)));
         parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(4,-4,2,2)}),new SV_Wall(new Shape[]{new Circle2D(new Point2D(5,-3),1)})));
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(0,0,10,1))));
