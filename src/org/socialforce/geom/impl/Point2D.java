@@ -109,11 +109,13 @@ public class Point2D extends Vector2D implements Point {
 
     /**
      * 已知三个点，求构成的角度
-     * @param p
+     * @param p 逆时针旋转点
      * @param q 基准点：(正值，0)
      * @return
      */
     public double getAngle(Point p, Point q) {
+        if((p.getX()==this.getX())||(p.getY()==this.getY()))
+            return 0;
         double side1 = this.distanceTo(p);
         double side2 = this.distanceTo(q);
         double bottomSide = p.distanceTo(q);
@@ -153,4 +155,5 @@ public class Point2D extends Vector2D implements Point {
         Point q = new Point2D(xInverseTransfer, yInverseTransfer);
         return q;
     }
+
 }

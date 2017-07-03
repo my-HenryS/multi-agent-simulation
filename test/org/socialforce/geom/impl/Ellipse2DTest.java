@@ -16,12 +16,12 @@ public class Ellipse2DTest {
     @Before
     public void setUp() throws Exception {
         center = new Point2D(0.5,0.5);
-        ellipseTest = new Ellipse2D(0.68,0.40,center,(Math.PI)/4);
-        test1 = new Ellipse2D(1,0.5,new Point2D(0.5,0.5),3*(Math.PI)/4);
-        p = new Point2D(0.4,0.6);
-        q = new Point2D(0,0);   //一般的椭圆外一点
+        ellipseTest = new Ellipse2D(0.68,0.40,center,5*(Math.PI)/4);
+        test1 = new Ellipse2D(1,0.5,new Point2D(0,0),0);
+        p = new Point2D(0.5,0.6);
+        q = new Point2D(1.5,0.5);      //一般的椭圆外一点
         m = new Point2D(1.0,0);      //短轴延长线上的点
-        testPoint = new Point2D(0,0);
+        testPoint = new Point2D(0.44735,0.44735);
     }
 
     @Test
@@ -40,14 +40,16 @@ public class Ellipse2DTest {
     @Test
     public void contains() throws Exception {
         //assertEquals(true,ellipseTest.contains(p));
-        //assertEquals(false,ellipseTest.contains(m));
+        //assertEquals(false,ellipseTest.contains(q));
         assertEquals(false,test1.contains(testPoint));
+        //System.out.print(testPoint.getX()*testPoint.getX()+testPoint.getY()*testPoint.getY()/0.5/0.5);
     }
 
     @Test
     public void getDistance() throws Exception {
         assertEquals(0.3071,ellipseTest.getDistance(m),0.01);
-        assertEquals(0.4806,ellipseTest.getDistance(p),0.01);
+        assertEquals(0.4806,ellipseTest.getDistance(q),0.01);
+        System.out.print(test1.getDistance(testPoint));
     }
 
     @Test

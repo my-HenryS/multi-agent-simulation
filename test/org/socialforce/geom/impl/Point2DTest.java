@@ -51,28 +51,39 @@ public class Point2DTest {
         Point2D a = new Point2D(0,0);
         Point2D b = new Point2D(1,0);
         Point2D c = new Point2D(1,1);
-        assertEquals((Math.PI)/4,a.getAngle(b,c),1e-7);
-        assertEquals((Math.PI)/2,b.getAngle(a,c),1e-7);
+        assertEquals((Math.PI)/4,a.getAngle(c,b),1e-7);
     }
 
     @Test
     public void coordinateTransfer() throws Exception {
-        Point2D a = new Point2D(2,7);
+        Point2D a = new Point2D(0,0);
         Point2D c = new Point2D(1,1);
         Point A = a.coordinateTransfer(c,(Math.PI)/4);
-        Point B = A.inverseCoordinateTransfer(c,(Math.PI)/4);
-        System.out.print(B);
-        //assertEquals((-1)*Math.sqrt(2),A.getX(),1e-7);
-        //assertEquals(0,A.getY(),1e-7);
+        assertEquals((-1)*Math.sqrt(2),A.getX(),1e-7);
+        assertEquals(0,A.getY(),1e-7);
+
+        Point2D test = new Point2D(0,0);
+        Point2D center = new Point2D(1,1);
+        Point result = test.coordinateTransfer(center,7*(Math.PI)/4);
+        assertEquals(0,result.getX(),1e-7);
+        assertEquals((-1)*Math.sqrt(2),result.getY(),1e-7);
+
+
     }
 
     @Test
     public void inverseCoordinateTransfer() throws Exception {
-        Point2D A = new Point2D((-1)*Math.sqrt(2),0);
+        Point2D A = new Point2D(1*Math.sqrt(2),0);
         Point2D c = new Point2D(1,1);
-        Point a = A.inverseCoordinateTransfer(c,(Math.PI)/4);
+        Point a = A.inverseCoordinateTransfer(c,5*(Math.PI)/4);
         assertEquals(0,a.getX(),1e-7);
         assertEquals(0,a.getY(),1e-7);
+
+        Point2D test = new Point2D(0,Math.sqrt(2));
+        Point2D center = new Point2D(1,1);
+        Point result = test.inverseCoordinateTransfer(center,3*(Math.PI)/4);
+        assertEquals(0,result.getX(),1e-7);
+        assertEquals(0,result.getY(),1e-7);
     }
 
     @Test
