@@ -7,7 +7,6 @@ import org.socialforce.geom.Shape;
 import org.socialforce.model.InteractiveEntity;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingDeque;
 
 /**
@@ -199,7 +198,7 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedBlockingDeq
     public LinkListPool clone(){
         LinkListPool<InteractiveEntity> newpool = new LinkListPool();
         for(InteractiveEntity t: this){
-            newpool.addLast(t.standardclone());
+            newpool.addLast(t.clone());
         }
         return newpool;
     }

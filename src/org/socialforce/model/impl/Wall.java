@@ -3,6 +3,7 @@ package org.socialforce.model.impl;
 import org.socialforce.geom.Moment;
 import org.socialforce.geom.Shape;
 import org.socialforce.model.*;
+import org.socialforce.scene.Scene;
 
 /**
  * Created by Ledenel on 2016/8/14.
@@ -41,12 +42,22 @@ public class Wall extends Entity implements Blockable, Influential {
     }
 
     @Override
-    public Wall standardclone() {
+    public Wall clone() {
         return new Wall(shape.clone());
     }
 
     @Override
     public Shape blockSize() {
         return this.getShape().clone();
+    }
+
+    @Override
+    public boolean onAdded(Scene scene) {
+        return true;
+    }
+
+    @Override
+    public void onStep(Scene scene) {
+
     }
 }

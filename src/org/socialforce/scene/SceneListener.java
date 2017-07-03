@@ -8,10 +8,10 @@ public interface SceneListener {
      * Listener添加进Scene后时触发的事件。
      * @param scene 触发的场景。
      */
-    void onAdded(Scene scene);
+    boolean onAdded(Scene scene);
 
     /**
-     * 场景进行一步时触发的事件。
+     * 场景进行完一步时触发的事件。
      * @param scene 触发的场景。
      */
     void onStep(Scene scene);

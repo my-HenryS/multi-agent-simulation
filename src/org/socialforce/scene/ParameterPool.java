@@ -12,7 +12,7 @@ public interface ParameterPool {
 
     boolean contains(SceneParameter value);
 
-    SceneParameter addLast(SceneParameter value);
+    ParameterPool addLast(SceneParameter value);
 
     SceneParameter get(int index);
 

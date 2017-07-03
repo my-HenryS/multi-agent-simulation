@@ -1,9 +1,9 @@
 package org.socialforce.app.Applications;
 
+import org.socialforce.app.Application;
 import org.socialforce.app.ApplicationListener;
-import org.socialforce.app.SocialForceApplication;
 import org.socialforce.model.Model;
-import org.socialforce.model.impl.SimpleSocialForceModel;
+import org.socialforce.model.impl.SimpleForceModel;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.ValueSet;
 import org.socialforce.strategy.GoalStrategy;
@@ -15,12 +15,11 @@ import java.util.List;
 /**
  * Created by Whatever on 2016/12/2.
  */
-public abstract class SimpleApplication implements SocialForceApplication {
+public abstract class SimpleApplication implements Application {
     protected GoalStrategy strategy;
     protected LinkedList<Scene> scenes;
     protected Scene currentScene;
     protected ApplicationListener listener;
-    protected Model model = new SimpleSocialForceModel();
     protected boolean Pause = false, Skip = false;
     protected int minStepForward = 0;
 
@@ -50,25 +49,6 @@ public abstract class SimpleApplication implements SocialForceApplication {
      */
     public void setUpScenes(){
         scenes = new LinkedList<>();
-    }
-
-    /**
-     * get the social force model the application is using.
-     *
-     * @return the model.
-     */
-    @Override
-    public Model getModel() {
-        return model;
-    }
-    /**
-     * set the social force model for the application.
-     *
-     * @param model the model to be set.
-     */
-    @Override
-    public void setModel(Model model) {
-        this.model = model;
     }
 
     /**
@@ -112,7 +92,7 @@ public abstract class SimpleApplication implements SocialForceApplication {
 
 
     public void StepNext(Scene scene){
-        if (Pause == false){
+        if (!Pause){
             long startT = System.currentTimeMillis();
             scene.stepNext();
             long span = System.currentTimeMillis() - startT;
@@ -121,6 +101,10 @@ public abstract class SimpleApplication implements SocialForceApplication {
                 Thread.sleep(sleepT);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+            ApplicationListener listener = this.getApplicationListener();// 2016/8/23 add step for all agent and statics.
+            if (listener != null) {
+                listener.onStep(this);
             }
         }
         else;//do nothing
@@ -164,6 +148,10 @@ public abstract class SimpleApplication implements SocialForceApplication {
         Skip = false;
         terminate = false;
         return tempT;
+    }
+
+    public Scene getCurrentScene(){
+        return currentScene;
     }
 
 }

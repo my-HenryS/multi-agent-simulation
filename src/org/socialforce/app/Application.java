@@ -14,23 +14,11 @@ import java.util.List;
  * @author Ledenel
  * Created by Ledenel on 2016/8/3.
  */
-public interface SocialForceApplication {
+public interface Application {
     /**
      * start the application immediately.
      */
     void start();
-
-    /**
-     * get the social force model the application is using.
-     * @return the model.
-     */
-    Model getModel();
-
-    /**
-     * set the social force model for the application.
-     * @param model the model to be set.
-     */
-    void setModel(Model model);
 
     /**
      * get all the scenes the applicaion is simulating.
@@ -57,6 +45,11 @@ public interface SocialForceApplication {
     String getName();
 
     void setName(String name);
+
+    /**
+     * 返回当前运行的场景
+     */
+    Scene getCurrentScene();
 
     /**
      * 跳过当前场景

@@ -10,7 +10,7 @@ public class LinkListEntityPool extends LinkListPool<InteractiveEntity> implemen
     public LinkListEntityPool clone(){
         LinkListEntityPool newpool = new LinkListEntityPool();
         for(InteractiveEntity t: this){
-            newpool.addLast(t.standardclone());
+            newpool.addLast(t.clone());
         }
         return newpool;
     }

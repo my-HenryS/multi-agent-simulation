@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.socialforce.app.Applications.ApplicationForECStrategy;
 import org.socialforce.geom.impl.Velocity2D;
+import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.scene.ParameterPool;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
@@ -15,8 +16,6 @@ import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.impl.BaseAgent;
 import org.socialforce.model.impl.Wall;
 import org.socialforce.strategy.Path;
-
-import static org.socialforce.scene.SceneLoader.genParameter;
 
 /**
  * Created by sunjh1999 on 2016/10/23.
@@ -39,8 +38,10 @@ public class AStarPathFinderTest {
                         new Wall(new Box2D(new Point2D(1, 0), new Point2D(25, 1))),
                         new Wall(new Box2D(new Point2D(5, 5), new Point2D(20, 6)))
                 });
-        ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(6,1,8,1))));
+        SimpleParameterPool parameters = new SimpleParameterPool();
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new SafetyRegion(new Box2D(6,1,8,1)))
+        );
         loader.readParameterSet(parameters);
         scene = loader.readScene().get(0);
     }

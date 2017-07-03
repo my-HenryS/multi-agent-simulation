@@ -18,7 +18,7 @@ public class BaseAgentTest {
     Circle2D circle = new Circle2D();
     Point2D initPoint;
     SimpleScene scene = new SimpleScene(new Box2D(new Point2D(0, 0), new Point2D(20, 20)));
-    Model model = new SimpleSocialForceModel();
+    Model model = new SimpleForceModel();
     @Before
     public void setUp() throws Exception {
         initPoint = new Point2D(3,4);

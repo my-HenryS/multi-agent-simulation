@@ -21,6 +21,27 @@
     <option name="OPEN_IN_BROWSER" value="true" />
     <option name="OPTION_INCLUDE_LIBS" value="false" />
   </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/../dl4j-examples/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/../dl4j-examples/arbiter-examples/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/datavec-examples/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/dl4j-cuda-specific-examples/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/dl4j-examples/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/dl4j-spark-examples/dl4j-spark/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/dl4j-spark-examples/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/nd4j-examples/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/rl4j-examples/pom.xml" />
+      </set>
+    </option>
+  </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />

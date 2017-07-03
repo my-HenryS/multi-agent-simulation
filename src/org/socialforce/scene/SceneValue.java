@@ -2,40 +2,13 @@ package org.socialforce.scene;
 
 
 /**
- * 代表一个场景参数的具体赋值。
- * 场景参数值的主要作用是存储一个特定类型的参数的赋值，
+ * 代表一个场景中的某一种赋值。
+ * 赋值可以是：某一类实体的具体摆放情况，某种模型和实体的对应关系等
  * 并且将这个赋值应用于场景。
  *
  * @param <T> 内部表示值的类型。
  */
 public interface SceneValue<T> extends Comparable<SceneValue<T>> {
-    /**
-     * 获取所关联的实体名称。
-     *
-     * @return 场景中的实体名称。
-     */
-    String getEntityName();
-
-    /**
-     * 设置获取所关联的实体名称。
-     *
-     * @param name 要设置的实体名称。
-     */
-    void setEntityName(String name);
-
-    /**
-     * 获得该场景参数赋值的值。
-     *
-     * @return 返回的具体值。
-     */
-    T getValue();
-
-    /**
-     * 设置改场景参数赋值的值。
-     *
-     * @param value 要设置的值。
-     */
-    void setValue(T value);
 
     /**
      * 将该赋值运用于特定场景。
@@ -88,5 +61,5 @@ public interface SceneValue<T> extends Comparable<SceneValue<T>> {
 
     int getPriority();
 
-    void setPriority(int priority);
+    SceneValue<T> setPriority(int priority);
 }

@@ -9,13 +9,9 @@ import org.socialforce.container.impl.LinkListPool;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.Box;
-import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.Agent;
-import org.socialforce.model.Influential;
-import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.Moveable;
+import org.socialforce.model.*;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneListener;
 
@@ -27,9 +23,14 @@ import java.util.List;
  */
 public class SimpleScene implements Scene {
     @Override
-    public void addSceneListener(SceneListener sceneListener) {
+    public boolean addSceneListener(SceneListener sceneListener) {
         this.sceneListeners.add(sceneListener);
-        sceneListener.onAdded(this);
+        return sceneListener.onAdded(this);
+    }
+
+    @Override
+    public boolean removeSceneListener(SceneListener sceneListener) {
+        return this.sceneListeners.remove(sceneListener);
     }
 
     List<SceneListener> sceneListeners = new ArrayList<>();
@@ -75,6 +76,7 @@ public class SimpleScene implements Scene {
         entities.addAll(statics);
         entities.addAll(allAgents);
         Iterable<InteractiveEntity> captors = entities.selectClass(Influential.class);
+        model.fieldForce(allAgents);
         for (InteractiveEntity captor : captors){
             Iterable<Agent> affectableAgents = allAgents.select(((Influential) captor).getView());
             for (Agent target:affectableAgents){
@@ -87,12 +89,6 @@ public class SimpleScene implements Scene {
         }
         allAgents.removeIf(Agent::isEscaped);
         currentStep++;
-        if(this.getApplication() != null) {
-            ApplicationListener listener = this.getApplication().getApplicationListener();// 2016/8/23 add step for all agent and statics.
-            if (listener != null) {
-                listener.onStep(this);
-            }
-        }
         updateStep();
     }
 
@@ -208,14 +204,14 @@ public class SimpleScene implements Scene {
         agent.escape();
     }
 
-    SocialForceApplication application;
+    Application application;
     @Override
-    public SocialForceApplication getApplication() {
+    public Application getApplication() {
         return application;
     }
 
     @Override
-    public void setApplication(SocialForceApplication application) {
+    public void setApplication(Application application) {
         this.application = application;
     }
 
@@ -245,11 +241,11 @@ public class SimpleScene implements Scene {
         }
     }
 
-    public Scene simpleclone(){
+    public Scene cloneWithBounds(){
         return new SimpleScene(bounds);
     }
 
-    public Scene standardclone() {
+    public Scene cloneWithStatics() {
         SimpleScene newscene = new SimpleScene(bounds);
         newscene.setStaticEntities((EntityPool) this.getStaticEntities().clone());
         return newscene;
@@ -290,6 +286,16 @@ public class SimpleScene implements Scene {
             }
         }
         this.bounds = new Box2D(new Point2D(xmin-5,ymin-5),new Point2D(xmax+5,ymax+5));
+    }
+
+    Model model;
+    public Scene setModel(Model model){
+        this.model = model;
+        return this;
+    }
+
+    public Model getModel(){
+        return model;
     }
 
 

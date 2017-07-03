@@ -39,7 +39,7 @@ public class Force2D extends Vector2D implements Force {
      * @return 向量的副本.
      */
     @Override
-    public Force clone() {
+    public Force2D clone() {
         Force2D force = new Force2D();
         force.values[0] = values[0];
         force.values[1] = values[1];

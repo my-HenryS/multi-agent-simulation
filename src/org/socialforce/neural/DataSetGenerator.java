@@ -27,10 +27,4 @@ public interface DataSetGenerator {
      */
     double[][] toMatrix();
 
-    /**
-     * 增加输出
-     * @param output 输出值
-     * @param times 重复采样次数
-     */
-    void addOutput(double[] output, int times);
 }

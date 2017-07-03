@@ -36,7 +36,7 @@ Velocity2D extends Vector2D implements Velocity, Vector {
      * @return 向量的副本.
      */
     @Override
-    public Velocity clone() {
+    public Velocity2D clone() {
         Velocity2D cloned = new Velocity2D();
         cloned.values[0] = values[0];
         cloned.values[1] = values[1];

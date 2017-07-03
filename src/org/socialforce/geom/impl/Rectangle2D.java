@@ -70,7 +70,7 @@ public class Rectangle2D implements Shape{
         distance.rotate(-temp);
         bound = rectangle2D.getBounds();
         Point2D point2D = new Point2D(center.getX()+distance.values[0],center.getY()+distance.values[1]);
-        //result = bound.contains(new Point2D(center.getX()+distance.values[0],center.getY()+distance.values[1]));
+        //result = bound.contains(new Point2D(center.getX()+distance.parameters[0],center.getY()+distance.parameters[1]));
         if (bound.getDistance(point2D)<10e-7){
             result = true;
         }

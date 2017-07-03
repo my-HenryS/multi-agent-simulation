@@ -4,9 +4,7 @@ import org.socialforce.app.*;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.impl.ETC_Tollbooth;
-import org.socialforce.model.impl.Monitor;
-import org.socialforce.model.impl.Wall;
+import org.socialforce.model.impl.*;
 import org.socialforce.scene.*;
 import org.socialforce.scene.impl.*;
 import org.socialforce.strategy.DynamicStrategy;
@@ -15,13 +13,11 @@ import org.socialforce.strategy.impl.*;
 
 import java.util.Iterator;
 
-import static org.socialforce.scene.SceneLoader.genParameter;
-
 /**
  * Created by sunjh1999 on 2017/1/20.
  * 暂时不完全可用 还需调整
  */
-public class ApplicationForMCM extends SimpleApplication implements SocialForceApplication {
+public class ApplicationForMCM extends SimpleApplication implements Application {
     DistanceShape template = new Circle2D(new Point2D(0,0), 2/2);
     public ApplicationForMCM(){
 
@@ -46,7 +42,8 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                     double volume = 0, scenery_num = 0;
                     double speed = 0;
                     int size = 0;
-                    SV_RandomAgentGenerator agentGenerator = new SV_RandomTimeAgentGenerator(a,new Box2D(75,6,46.5,10), template, new Velocity2D(0,13));
+                    RandomTimeEntityGenerator2D agentGenerator = new RandomTimeEntityGenerator2D(a,new Box2D(75,6,46.5,10))
+                                                     .setValue(new BaseAgent(template, new Velocity2D(0,13)));
                     agentGenerator.apply(currentScene);
                     PathFinder pathFinder = new AStarPathFinder(currentScene, template, 2);
                     strategy = new DynamicNearestGoalStrategy(currentScene, pathFinder);
@@ -129,16 +126,21 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                         new Wall(new Box2D(110,bottom,width,btm_length)),
                         new Wall(new Box2D(115.7,bottom,width,btm_length)),
                         new Wall(new Box2D(121.5,bottom,3,btm_length)),  //右
-                });
-        ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(xC,top - 1,17,1))));
-        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(75,bottom+btm_length/2,29,1), 0.5)));
-        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(104,bottom+btm_length/2,12,1), 4) ));
-        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(115.7,bottom+btm_length/2,6,1), 10) ));
-        parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+1.75,top-top_length,0.4,0.4))));
-        parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+5.55,top-top_length,0.4,0.4))));
-        parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+9.3,top-top_length,0.4,0.4))));
-        parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+13.2,top-top_length,0.4,0.4))));
+                }).setModel(new SimpleForceModel());
+        SimpleParameterPool parameters = new SimpleParameterPool();
+
+        parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
+                .addValue(new SafetyRegion(new Box2D(xC,top - 1,17,1)))
+                .addValue(new ETC_Tollbooth(new Box2D(75,bottom+btm_length/2,29,1), 0.5))
+                .addValue(new ETC_Tollbooth(new Box2D(104,bottom+btm_length/2,12,1), 4))
+                .addValue(new ETC_Tollbooth(new Box2D(115.7,bottom+btm_length/2,6,1), 10))
+                .addValue(new Monitor(new Box2D(xC+1.75,top-top_length,0.4,0.4)))
+                .addValue(new Monitor(new Box2D(xC+5.55,top-top_length,0.4,0.4)))
+                .addValue(new Monitor(new Box2D(xC+9.3,top-top_length,0.4,0.4)))
+                .addValue(new Monitor(new Box2D(xC+13.2,top-top_length,0.4,0.4)))
+
+        );
+
         loader.readParameterSet(parameters);
         scenes = loader.readScene();
         for(Scene scene:scenes){

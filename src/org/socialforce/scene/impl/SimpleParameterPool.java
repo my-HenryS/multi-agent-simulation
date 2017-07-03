@@ -1,7 +1,9 @@
 package org.socialforce.scene.impl;
 
+import org.socialforce.model.InteractiveEntity;
 import org.socialforce.scene.ParameterPool;
 import org.socialforce.scene.SceneParameter;
+import org.socialforce.scene.SceneValue;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -10,40 +12,45 @@ import java.util.LinkedList;
  * Created by sunjh1999 on 2017/1/14.
  */
 public class SimpleParameterPool implements ParameterPool {
-    protected LinkedList<SceneParameter> values = new LinkedList<>();
+    protected LinkedList<SceneParameter> parameters = new LinkedList<>();
 
     public int size() {
-        return values.size();
+        return parameters.size();
     }
 
     public boolean isEmpty() {
-        return values.isEmpty();
+        return parameters.isEmpty();
     }
 
     public boolean contains(SceneParameter value) {
-        return values.contains(value);
+        return parameters.contains(value);
     }
 
-    public SceneParameter addLast(SceneParameter value) {
-        values.addLast(value);
-        return value;
+    public SimpleParameterPool addLast(SceneParameter value) {
+        parameters.addLast(value);
+        return this;
+    }
+
+    public SimpleParameterPool addValuesAsParameter(SceneValue ... values){
+        parameters.add(SceneParameter.genParameter(values));
+        return this;
     }
 
     public SceneParameter get(int index) {
-        return values.get(index);
+        return parameters.get(index);
     }
 
     public SceneParameter remove(SceneParameter value) {
-        if(values.remove(value)) return value;
+        if(parameters.remove(value)) return value;
         else return null;
     }
 
     public int indexOf(SceneParameter value){
-        return values.indexOf(value);
+        return parameters.indexOf(value);
     }
 
     public Iterator<SceneParameter> iterator(){
-        return values.iterator();
+        return parameters.iterator();
     }
 
 

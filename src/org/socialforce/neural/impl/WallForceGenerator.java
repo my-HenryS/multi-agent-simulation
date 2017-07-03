@@ -6,9 +6,12 @@ import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.model.impl.SafetyRegion;
+import org.socialforce.neural.DataSetGenerator;
 import org.socialforce.scene.Scene;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.impl.AStarPathFinder;
+
+import java.util.LinkedList;
 
 /**
  * Created by sunjh1999 on 2017/3/27.
@@ -65,8 +68,12 @@ public class WallForceGenerator extends ForceGenerator{
         for (int i = 0 ; i < matrix.size() ; i++) {
             for (int j = 0; j < matrix.get(i).size(); j++) {
                 if (available(i, j)) {
+                    LinkedList<Double> tempA = new LinkedList<>();
                     double[] surroundings = getSurrounding(matrix.get(i).get(j));
-                    outputs.add(surroundings);
+                    for(int t = 0; t < surroundings.length; t++){
+                        tempA.add(surroundings[t]);
+                    }
+                    outputs.add(tempA.toArray(new Double[tempA.size()]));
                 }
             }
         }
