@@ -47,7 +47,7 @@ public class SpinPsyForceRegulation implements ForceRegulation {
         Force2D f = new Force2D(0,0);
         f.add(p.getForce((Blockable) interactiveEntity,(Agent) interactiveEntity2));
         Moment2D moment2D = (Moment2D) f.CalculateMoment(p2,e2.getReferencePoint());
-        System.out.println(moment2D.getM());
+
         return moment2D;
     }
 }

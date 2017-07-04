@@ -29,6 +29,7 @@ public class ApplicationLoader extends LinkedList<SocialForceApplication> implem
         add(new ApplicationForECStrategy());
         add(new ApplicationForECTest());
         add(new ApplicationForMCM());
+        add(new ApplicationForRotateForce());
         selected = this.getFirst();
     }
 
