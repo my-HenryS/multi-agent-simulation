@@ -45,11 +45,13 @@ public class ApplicationForRotateForce extends SimpleApplication{
 
     @Override
     public void setUpScenes(){
-        template = new Ellipse2D(0.486/2,0.2/2,new Point2D(0,0),0);
+        template = new Ellipse2D(0.486/2,0.3/2,new Point2D(0,0),0);
         scenes = new LinkedList<>();
         DoorWidth = 1.36;
-        Scene scene = new SimpleScene(new Box2D(-50,-50,100,10));
+        setUpscene1();
+    }
 
+    private void setUpscene1(){
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("T1.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFrom(is);
@@ -63,9 +65,6 @@ public class ApplicationForRotateForce extends SimpleApplication{
         for (Scene s : loader.readScene()){
             scenes.add(s);
         }
-
-
-        scenes.add(scene);
     }
 }
 
