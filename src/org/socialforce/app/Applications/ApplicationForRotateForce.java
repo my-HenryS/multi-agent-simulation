@@ -66,5 +66,53 @@ public class ApplicationForRotateForce extends SimpleApplication{
             scenes.add(s);
         }
     }
+    private void setUpscene2()
+    {
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("T1.s");
+        Interpreter interpreter = new SimpleInterpreter();
+        interpreter.loadFrom(is);
+        SceneLoader loader = interpreter.setLoader();
+        ParameterPool parameters = new SimpleParameterPool();
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)}),new SV_Exit(new Box2D[]{new Box2D(10-DoorWidth,-0.5,DoorWidth,2)})));
+        parameters.addLast(genParameter(new SV_ExactAgentGenerator(new Ellipse2D(0.243,0.15,new Point2D(5,-5),90),new Velocity2D(0,0),new Palstance2D(0))));
+        parameters.addLast(genParameter(new SV_ExactAgentGenerator(new Ellipse2D(0.243,0.15,new Point2D(5.3,-5),90),new Velocity2D(0,0),new Palstance2D(0))));
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
+        loader.readParameterSet(parameters);
+        for (Scene s : loader.readScene()){
+            scenes.add(s);
+        }
+    }
+    private void setUpscene3()
+    {
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("T1.s");
+        Interpreter interpreter = new SimpleInterpreter();
+        interpreter.loadFrom(is);
+        SceneLoader loader = interpreter.setLoader();
+        ParameterPool parameters = new SimpleParameterPool();
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)}),new SV_Exit(new Box2D[]{new Box2D(10-DoorWidth,-0.5,DoorWidth,2)})));
+        parameters.addLast(genParameter(new SV_ExactAgentGenerator(new Ellipse2D(0.243,0.15,new Point2D(5,-6),45),new Velocity2D(0,0),new Palstance2D(0))));
+        parameters.addLast(genParameter(new SV_ExactAgentGenerator(new Ellipse2D(0.243,0.15,new Point2D(5.361,-6),45),new Velocity2D(0,0),new Palstance2D(0))));
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
+        loader.readParameterSet(parameters);
+        for (Scene s : loader.readScene()){
+            scenes.add(s);
+        }
+    }
+    private void setUpscene4()
+    {
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("T1.s");
+        Interpreter interpreter = new SimpleInterpreter();
+        interpreter.loadFrom(is);
+        SceneLoader loader = interpreter.setLoader();
+        ParameterPool parameters = new SimpleParameterPool();
+        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)}),new SV_Exit(new Box2D[]{new Box2D(10-DoorWidth,-0.5,DoorWidth,2)})));
+        parameters.addLast(genParameter(new SV_ExactAgentGenerator(new Ellipse2D(0.243,0.15,new Point2D(5,-6),135),new Velocity2D(0,0),new Palstance2D(0))));
+        parameters.addLast(genParameter(new SV_ExactAgentGenerator(new Ellipse2D(0.243,0.15,new Point2D(5.361,-6),135),new Velocity2D(0,0),new Palstance2D(0))));
+        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
+        loader.readParameterSet(parameters);
+        for (Scene s : loader.readScene()){
+            scenes.add(s);
+        }
+    }
 }
 
