@@ -6,10 +6,7 @@ import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 import org.socialforce.container.Pool;
-import org.socialforce.geom.Force;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.Vector;
-import org.socialforce.geom.Velocity;
+import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Force2D;
 import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.geom.impl.Velocity2D;
@@ -83,6 +80,11 @@ public class NeuralForceModel implements Model{
     }
 
     @Override
+    public Moment interactionMoment(InteractiveEntity source, InteractiveEntity target) {
+        return null;
+    }
+
+    @Override
     public Vector zeroVector() {
         return new Vector2D(0,0);
     }
@@ -100,6 +102,11 @@ public class NeuralForceModel implements Model{
     @Override
     public double getTimePerStep() {
         return timePerStep;
+    }
+
+    @Override
+    public Moment zeroMoment() {
+        return null;
     }
 
     @Override

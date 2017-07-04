@@ -20,7 +20,7 @@ public class ApplicationLoader extends LinkedList<Application> implements Collec
         super();
         this.listener = listener;
         add(new ApplicationForCanteen());
-        add(new ApplicationEllipseForNarrowPattern());
+        add(new ApplicationForEllipse());
         add(new ApplicationForDoorTest());
         add(new ApplicationForCrossFlow());
         add(new ApplicationForAstrophysics());

@@ -15,7 +15,7 @@ import org.socialforce.model.InteractiveEntity;
  * Created by Administrator on 2017/6/26 0026.
  */
 public class SpinBodyForceRegulation implements ForceRegulation {
-    public SpinBodyForceRegulation(SimpleSocialForceModel model){
+    public SpinBodyForceRegulation(SimpleForceModel model){
         forceRegulation = new BodyForce(Blockable.class,Agent.class,model);
     }
     private ForceRegulation forceRegulation;
@@ -33,7 +33,6 @@ public class SpinBodyForceRegulation implements ForceRegulation {
         double[][] temp = e2.closePoint(e1);
         Point2D p2 = new Point2D(temp[1][0],temp[1][1]);
         Moment2D moment2D = (Moment2D) force2D.CalculateMoment(p2,e2.getReferencePoint());
-        moment2D.scale(0.1);
         return moment2D;
     }
 }

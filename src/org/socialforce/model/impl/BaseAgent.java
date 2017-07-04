@@ -22,8 +22,8 @@ public class BaseAgent extends Entity implements Agent {
     Moment spined;
     boolean escaped = false;
     DistanceShape shape;
-    private static final double forceUpbound = 2450;
-    private static final double momentUpbound = 80;
+    protected static double forceUpbound = 2450;
+    private static double momentUpbound = 80;
 
     public BaseAgent(DistanceShape shape, Velocity velocity) {
         super(shape);
@@ -222,7 +222,6 @@ public class BaseAgent extends Entity implements Agent {
      * @see Model
      */
     public void selfAffect(){
-        this.push(model.fieldForce(this));
         if (shape instanceof Ellipse2D){
         double angle = ((Ellipse2D)shape).getAngle();
         Vector2D face = new Vector2D(-Math.sin(angle),Math.cos(angle));
