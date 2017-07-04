@@ -208,6 +208,13 @@ public class BaseAgent extends Entity implements Agent {
         return currPal;
     }
 
+    public void setCurrPal(Palstance pal){
+        currPal = pal;
+    }
+
+
+
+
     @Override
     public void rotate(Moment moment){
         this.spined.add(moment);
