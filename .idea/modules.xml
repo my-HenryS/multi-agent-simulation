@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SocialForceSimulation.iml" filepath="$PROJECT_DIR$/SocialForceSimulation.iml" />
-      <module fileurl="file://$PROJECT_DIR$/dl4j-examples/dl4j-examples.iml" filepath="$PROJECT_DIR$/dl4j-examples/dl4j-examples.iml" />
     </modules>
   </component>
 </project>
