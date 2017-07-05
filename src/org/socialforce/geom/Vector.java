@@ -143,4 +143,5 @@ public interface Vector extends Cloneable, Serializable, DimensionEntity {
      * @return 这个向量的副本.
      */
     Vector clone();
+
 }

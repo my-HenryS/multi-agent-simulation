@@ -37,4 +37,8 @@ public class Palstance2D implements Palstance {
     public double getOmega(){
         return omega;
     }
+
+    public void setOmega(double omega){
+        this.omega = omega;
+    }
 }

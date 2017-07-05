@@ -42,8 +42,9 @@ public class SpinPsyForceRegulation implements ForceRegulation {
     public Affection getForce(InteractiveEntity interactiveEntity, InteractiveEntity interactiveEntity2) {
         Ellipse2D e2= (Ellipse2D) interactiveEntity2.getShape();
         Shape e1 = interactiveEntity.getShape();
-        double[][] temp = e2.closePoint(e1);
-        Point2D p2 = new Point2D(temp[1][0],temp[1][1]);
+        //double[][] temp = e2.closePoint(e1);
+        //Point2D p2 = new Point2D(temp[1][0],temp[1][1]);
+        Point2D p2 = (Point2D)e2.ForcePoint(e1);
         Force2D f = new Force2D(0,0);
         f.add(p.getForce((Blockable) interactiveEntity,(Agent) interactiveEntity2));
         Moment2D moment2D = (Moment2D) f.CalculateMoment(p2,e2.getReferencePoint());

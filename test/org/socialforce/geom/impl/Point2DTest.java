@@ -51,7 +51,7 @@ public class Point2DTest {
         Point2D a = new Point2D(0,0);
         Point2D b = new Point2D(1,0);
         Point2D c = new Point2D(1,1);
-        assertEquals((Math.PI)/4,a.getAngle(c,b),1e-7);
+        assertEquals((Math.PI)/4,c.getAngle(),1e-7);
     }
 
     @Test

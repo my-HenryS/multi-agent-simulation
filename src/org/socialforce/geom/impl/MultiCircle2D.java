@@ -1,21 +1,19 @@
 package org.socialforce.geom.impl;
-
-import org.jfree.layout.CenterLayout;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.*;
 import java.util.Arrays;
 
 /**
- * Created by Administrator on 2017/5/10 0010.
+ * Created by Administrator on 2017/7/5 0005.
  */
-public class Ellipse2D implements MoveableShape {
+public class MultiCircle2D implements MoveableShape{
     private double a;
     private double b;
     private Point center;
     private double angle;  //椭圆长轴与X轴正方向的夹角（逆时针为正）
     protected Drawer drawer;
 
-    public Ellipse2D(double a, double b, Point center, double angle) {
+    public MultiCircle2D(double a, double b, Point center, double angle) {
         if (a >= b) {
             this.a = a;
             this.b = b;
@@ -40,11 +38,11 @@ public class Ellipse2D implements MoveableShape {
     }
 
     public Point getLeftCenter(){
-        return new Point2D((-1)*(a+b)/2,0).clone().inverseCoordinateTransfer(getReferencePoint(),getAngle());
+        return new Point2D((-1)*(a+b)/2,0).clone().inverseCoordinateTransfer(center,angle);
     }
 
     public Point getRightCenter(){
-        return new Point2D((a+b)/2,0).clone().inverseCoordinateTransfer(getReferencePoint(),getAngle());
+        return new Point2D((a+b)/2,0).clone().inverseCoordinateTransfer(center,angle);
     }
 
     public double getSideRadius(){
@@ -232,9 +230,4 @@ public class Ellipse2D implements MoveableShape {
             return center;
     }
 
-
-
 }
-
-
-

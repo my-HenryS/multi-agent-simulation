@@ -108,13 +108,34 @@ public class Point2D extends Vector2D implements Point {
     }
 
     /**
-     * 已知三个点，求构成的角度
-     * @param p 逆时针旋转点
-     * @param q 基准点：(正值，0)
+     * 求点绕正半轴，逆时针转过的角度
      * @return
      */
-    public double getAngle(Point p, Point q) {
-        if((p.getX()==this.getX())||(p.getY()==this.getY()))
+    public double getAngle(){
+        double x = this.getX();
+        double y = this.getY();
+        if(Math.abs(x) < 1.0e-10){
+            if(Math.abs(y) < 1.0e-10)
+                return 0;
+            else if(y > 0)
+                return (Math.PI)/2;
+            else
+                return (-1)*(Math.PI)/2;
+        }
+        else if(x > 0){
+            if (Math.abs(y) < 1.0e-10)
+                return 0;
+            else
+                return Math.atan(y/x);
+        }
+        else{
+            if (Math.abs(y) < 1.0e-10) {
+                return Math.PI;
+            } else
+                return (Math.PI)+(Math.atan(y/x));
+        }
+
+        /*if((p.getX()==this.getX())||(p.getY()==this.getY()))
             return 0;
         double side1 = this.distanceTo(p);
         double side2 = this.distanceTo(q);
@@ -127,7 +148,8 @@ public class Point2D extends Vector2D implements Point {
             angle = Math.acos(cosAngle);
         else
             angle = (-1)*Math.acos(cosAngle);
-        return angle;
+        return angle;*/
+
     }
 
     /**

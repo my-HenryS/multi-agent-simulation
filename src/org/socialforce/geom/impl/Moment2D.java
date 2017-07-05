@@ -43,6 +43,10 @@ public class Moment2D implements Moment {
 
     public String toString(){return "转动惯量为"+M;}
 
+    public void setM(double M){
+        this.M = M;
+    }
+
     @Override
     public boolean equals(Object o) {
         return (o instanceof Moment2D) && (Math.abs(((Moment2D) o).getM() - M) < 10E-7);
