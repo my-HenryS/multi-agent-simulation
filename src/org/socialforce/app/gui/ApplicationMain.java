@@ -1,6 +1,7 @@
 package org.socialforce.app.gui;
 
 import org.socialforce.app.ApplicationListener;
+import org.socialforce.app.Applications.ApplicationLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,16 +16,20 @@ public class ApplicationMain{
     private JButton editModeButton;
     public JPanel demoP;
     private JLabel demoL;
+    private ApplicationLoader loader;
+    SimulationPanelMain mainPanel;
 
     public ApplicationMain(){
+        mainPanel = new SimulationPanelMain();
+        loader = new ApplicationLoader(mainPanel);
         simulationModeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
 
                     JFrame frameS = new JFrame("Epimetheus");
-                    SimulationPanelMain mainPanel = new SimulationPanelMain();
-                    mainPanel.frame.dispose();
+                    mainPanel.setLoader(loader);
+                    SimulationPanelMain.frame.dispose();
                     /*Application application = new ApplicationForDoorTest();//应用在这里！
                      application.setApplicationListener(mainPanel);*/
                     //mainPanel.setLoader(new ApplicationLoader(mainPanel));
@@ -40,4 +45,6 @@ public class ApplicationMain{
             }
         });
     }
+
+    public ApplicationLoader getLoader(){ return loader; }
 }

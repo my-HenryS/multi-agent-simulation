@@ -8,6 +8,7 @@ import org.nd4j.linalg.factory.Nd4j;
 import org.socialforce.container.Pool;
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Force2D;
+import org.socialforce.geom.impl.Moment2D;
 import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.Agent;
@@ -64,7 +65,7 @@ public class NeuralForceModel implements Model{
                 }
             }
             /* end env matrix*/
-            INDArray input = Nd4j.create(new double[]{a_angle, velocity.getX(), 0, 0, 0, n*p, 0, 0, 0, 0, 0});
+            INDArray input = Nd4j.create(new double[]{a_angle, velocity.getX(), 0, 0, 0, n*p/2, 0, n*p/2, 0, 0, 0});
             INDArray output = model.output(input);
             Velocity2D newV = new Velocity2D(output.getDouble(0),output.getDouble(1));
             if(rotated) newV = new Velocity2D(newV.getX(),-newV.getY());
@@ -81,7 +82,7 @@ public class NeuralForceModel implements Model{
 
     @Override
     public Moment interactionMoment(InteractiveEntity source, InteractiveEntity target) {
-        return null;
+        return zeroMoment();
     }
 
     @Override
@@ -106,7 +107,7 @@ public class NeuralForceModel implements Model{
 
     @Override
     public Moment zeroMoment() {
-        return null;
+        return new Moment2D(0);
     }
 
     @Override

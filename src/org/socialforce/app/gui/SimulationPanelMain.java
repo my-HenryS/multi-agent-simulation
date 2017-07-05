@@ -27,9 +27,10 @@ public class SimulationPanelMain implements ApplicationListener {
 
 
 
-    public SimulationPanelMain() {
-        loader = new ApplicationLoader(this);
-        refreshName();
+    protected SimulationPanelMain() {
+        if(loader != null){
+            refreshName();
+        }
         runButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -185,6 +186,7 @@ public class SimulationPanelMain implements ApplicationListener {
 
     public void setLoader(ApplicationLoader loader) {
         this.loader = loader;
+        refreshName();
     }
 
     private ApplicationLoader loader;
