@@ -30,8 +30,9 @@ public class SpinBodyForceRegulation implements ForceRegulation {
         Force2D force2D = (Force2D) forceRegulation.getForce(interactiveEntity,interactiveEntity2);
         Ellipse2D e2= (Ellipse2D) interactiveEntity2.getShape();
         Shape e1 = interactiveEntity.getShape();
-        double[][] temp = e2.closePoint(e1);
-        Point2D p2 = new Point2D(temp[1][0],temp[1][1]);
+        //double[][] temp = e2.closePoint(e1);
+        //Point2D p2 = new Point2D(temp[1][0],temp[1][1]);
+        Point2D p2 = (Point2D)e2.ForcePoint(e1);
         Moment2D moment2D = (Moment2D) force2D.CalculateMoment(p2,e2.getReferencePoint());
         return moment2D;
     }
