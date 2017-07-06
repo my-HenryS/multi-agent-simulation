@@ -48,7 +48,7 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                     int size = 0;
                     SV_RandomAgentGenerator agentGenerator = new SV_RandomTimeAgentGenerator(a,new Box2D(75,-15,46.5,7), template, new Velocity2D(0,10));
                     agentGenerator.apply(currentScene);
-                    PathFinder pathFinder = new AStarPathFinder(currentScene, template, 0.5);
+                    PathFinder pathFinder = new StraightPathFinder(currentScene, template);
                     strategy = new DynamicNearestGoalStrategy(currentScene, pathFinder);
                     strategy.pathDecision();
                     System.out.println("flow now "+a);
