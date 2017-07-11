@@ -8,5 +8,6 @@ import org.socialforce.geom.Palstance;
  */
 public interface Rotateable extends InteractiveEntity {
     Palstance getPalstance();
+    double getIntetia();
     void rotate(Moment moment);
 }

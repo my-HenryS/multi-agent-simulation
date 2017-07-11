@@ -31,7 +31,7 @@ public class BaseAgent extends Entity implements Agent {
         this.currVelocity = velocity;
         this.mass = 80;
         this.intertia = 20;
-        Circle2D circle = new Circle2D(shape.getReferencePoint(),2);
+        Circle2D circle = new Circle2D(shape.getReferencePoint(),5);
         this.view = circle;
     }
 
@@ -211,6 +211,11 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     @Override
+    public double getIntetia() {
+        return intertia;
+    }
+
+    @Override
     public void rotate(Moment moment){
         this.spined.add(moment);
     }
@@ -229,9 +234,7 @@ public class BaseAgent extends Entity implements Agent {
             expected.sub(shape.getReferencePoint());
             expected.add(path.nextStep(shape.getReferencePoint()));
             double size = Vector2D.getRotateAngle(expected , face);
-            spined.add(new Moment2D(size*250));
-
-            spined.add(new Moment2D(-currPal.getOmega() * 80));
+            spined.add(new Moment2D(size*200));
         }
     }
 

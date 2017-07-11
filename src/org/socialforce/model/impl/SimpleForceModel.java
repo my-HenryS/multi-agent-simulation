@@ -2,10 +2,7 @@ package org.socialforce.model.impl;
 
 import org.socialforce.container.Pool;
 import org.socialforce.geom.*;
-import org.socialforce.geom.impl.Force2D;
-import org.socialforce.geom.impl.Moment2D;
-import org.socialforce.geom.impl.Vector2D;
-import org.socialforce.geom.impl.Velocity2D;
+import org.socialforce.geom.impl.*;
 import org.socialforce.model.*;
 
 import java.util.Collection;
@@ -16,8 +13,9 @@ import java.util.List;
  * Created by Ledenel on 2016/8/17.
  */
 public class SimpleForceModel implements Model {
-    double TIME_PER_STEP = 0.004;
+    double TIME_PER_STEP = 0.008;
     double EXPECTED_SPEED = 3;
+    double EXPECTED_PALSTANCE = 0;
     double REACT_TIME = 0.5;
 
     long psyT = 0, bodyT = 0, flT = 0;
@@ -127,6 +125,15 @@ public class SimpleForceModel implements Model {
             force.sub(agent.getVelocity());
             force.scale(agent.getMass() / REACT_TIME);
             agent.push(force);
+
+            if(agent.getShape() instanceof Ellipse2D){
+                Moment moment;
+                Palstance p = agent.getPalstance().clone(), expectP = new Palstance2D(EXPECTED_PALSTANCE);
+                p.scale(-1);
+                expectP.add(p);
+                moment = new Moment2D((expectP.getOmega() * agent.getIntetia()) / REACT_TIME);
+                agent.rotate(moment);
+            }
         }
     }
 
