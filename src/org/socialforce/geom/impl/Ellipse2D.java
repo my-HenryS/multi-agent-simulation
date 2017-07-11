@@ -147,30 +147,32 @@ public class Ellipse2D implements MoveableShape {
 
     @Override
     public boolean contains(Point point) {
-        if((point.distanceTo(this.getLeftCenter()) <= this.getSideRadius())||(point.distanceTo(this.getRightCenter()) <= this.getSideRadius())||(point.distanceTo(center) <= b))
-            return true;
-        return false;
+        return (point.distanceTo(this.getLeftCenter()) <= this.getSideRadius()) || (point.distanceTo(this.getRightCenter()) <= this.getSideRadius()) || (point.distanceTo(center) <= b);
     }
 
     @Override
     public double getDistance(Point point) {
         double distance[] = new double[]{point.distanceTo(this.getLeftCenter())-this.getSideRadius(),point.distanceTo(this.getRightCenter())-this.getSideRadius(),point.distanceTo(center)-b};
-        Arrays.sort(distance);
-        return distance[0];
+        //Arrays.sort(distance);
+        return findMinOf3(distance);
     }
 
     @Override
     public Vector getDirection(Point point) {
-        double distance[] = new double[]{point.distanceTo(this.getLeftCenter())-this.getSideRadius(),point.distanceTo(this.getRightCenter())-this.getSideRadius(),point.distanceTo(center)-b};
-        Arrays.sort(distance);
+        double leftDistance = point.distanceTo(this.getLeftCenter()) - this.getSideRadius();
+        double rightDistance = point.distanceTo(this.getRightCenter()) - this.getSideRadius();
+        double distance[] = new double[]{leftDistance, rightDistance,point.distanceTo(center)-b};
+        double mindist = findMinOf3(distance);
+        //Arrays.sort(distance);
         Vector direction;
-        if(distance[0] == point.distanceTo(this.getLeftCenter())-this.getSideRadius())
+        //double mindist = distance[0];
+        if(mindist == leftDistance)
             direction = this.getLeftCenter().directionTo(point);
-        else if(distance[0] == point.distanceTo(this.getRightCenter())-this.getSideRadius())
+        else if(mindist == rightDistance)
             direction = this.getRightCenter().directionTo(point);
         else
             direction = center.directionTo(point);
-        if(distance[0] <= 0)
+        if(mindist <= 0)
             direction.scale(-1);
         return direction;
     }
@@ -178,29 +180,49 @@ public class Ellipse2D implements MoveableShape {
     @Override
     public double distanceTo(Shape other) {
         double distance[] = new double[]{other.getDistance(this.getLeftCenter())-this.getSideRadius(),other.getDistance(this.getRightCenter())-this.getSideRadius(),other.getDistance(center)-b};
-        Arrays.sort(distance);
-        return distance[0];
+        return findMinOf3(distance);
+
+    }
+
+    private double findMinOf3(double[] distance) {
+        if(distance[0] < distance[1]) {
+            if(distance[0] < distance[2]) {
+                return distance[0];
+            } else {
+                return distance[2];
+            }
+        } else {
+            if(distance[1] < distance[2]) {
+                return distance[1];
+            } else {
+                return distance[2];
+            }
+        }
     }
 
 
     @Override
     public Vector directionTo(Shape other) {
-        double distance[] = new double[]{other.getDistance(this.getLeftCenter())-this.getSideRadius(),other.getDistance(this.getRightCenter())-this.getSideRadius(),other.getDistance(center)-b};
-        Arrays.sort(distance);
+        double leftDistance = other.getDistance(this.getLeftCenter()) - this.getSideRadius();
+        double rightDistance = other.getDistance(this.getRightCenter()) - this.getSideRadius();
+        double distance[] = new double[]{leftDistance, rightDistance,other.getDistance(center)-b};
+        //Arrays.sort(distance);
         Vector direction;
-        if(distance[0] == other.getDistance(this.getLeftCenter())-this.getSideRadius()){
+
+        double mindist = findMinOf3(distance);//distance[0];
+        if(mindist == leftDistance){
             direction = other.getDirection(this.getLeftCenter());
-            if(distance[0] < (-1)*this.getSideRadius())
+            if(mindist < (-1)*this.getSideRadius())
                 direction.scale(-1);
         }
-        else if(distance[0] == other.getDistance(this.getRightCenter())-this.getSideRadius()){
+        else if(mindist == rightDistance){
             direction = other.getDirection(this.getRightCenter());
-            if(distance[0] < (-1)*this.getSideRadius())
+            if(mindist < (-1)*this.getSideRadius())
                 direction.scale(-1);
         }
         else{
             direction = other.getDirection(center);
-            if(distance[0] < (-1)*b)
+            if(mindist < (-1)*b)
                 direction.scale(-1);
         }
         return direction;
@@ -222,11 +244,14 @@ public class Ellipse2D implements MoveableShape {
      * @return
      */
     public Point ForcePoint(Shape other){
-        double distance[] = new double[]{other.getDistance(this.getLeftCenter())-this.getSideRadius(),other.getDistance(this.getRightCenter())-this.getSideRadius(),other.getDistance(center)-b};
-        Arrays.sort(distance);
-        if(distance[0] == other.getDistance(this.getLeftCenter())-this.getSideRadius())
+        double leftDistance = other.getDistance(this.getLeftCenter()) - this.getSideRadius();
+        double rightDistance = other.getDistance(this.getRightCenter()) - this.getSideRadius();
+        double distance[] = new double[]{leftDistance, rightDistance,other.getDistance(center)-b};
+        //Arrays.sort(distance);
+        double mindist = findMinOf3(distance);//distance[0];
+        if(mindist == leftDistance)
             return this.getLeftCenter();
-        else if(distance[0] == other.getDistance(this.getRightCenter())-this.getSideRadius())
+        else if(mindist == rightDistance)
             return this.getRightCenter();
         else
             return center;

@@ -38,7 +38,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
             AgentStepCSVWriter csvWriter = new AgentStepCSVWriter();
             currentScene = iterator.next();
             currentScene.addSceneListener(csvWriter);
-            PathFinder pathFinder = new AStarPathFinder(currentScene, template.getShape());
+            PathFinder pathFinder = new AStarPathFinder(currentScene, new Circle2D(new Point2D(0,0),0.486/2));
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
             while (!toSkip()) {
@@ -55,9 +55,9 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
     @Override
     public void setUpScenes(){
         //template = new BaseAgent(new Circle2D(new Point2D(0,0),0.486/2), new Velocity2D(0,0));
-        template = new BaseAgent(new Ellipse2D(0.486/2,0.2/2,new Point2D(0,0),0), new Velocity2D(0,0));
+        template = new BaseAgent(new Ellipse2D(0.486/2,0.3/2,new Point2D(0,0),0), new Velocity2D(0,0));
         scenes = new LinkedList<>();
-        DoorWidth = 1.36;
+        DoorWidth = 1;
         density = 10;
         setUpT1Scene5();
         for(Scene scene:scenes){
@@ -96,7 +96,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(40,new Box2D(0,-10,10,5)).setValue(template)
+                new RandomEntityGenerator2D(30,new Box2D(0,-10,10,5)).setValue(template)
         );
 
         loader.readParameterSet(parameters);

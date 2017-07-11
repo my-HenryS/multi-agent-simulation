@@ -26,7 +26,7 @@ public class NeuralForceModel implements Model{
     String parentPath = System.getProperty("user.dir")+"/resource/";
     String locationToSave = "neuralNet/robust.net";
 
-    double timePerStep = 0.05;
+    double timePerStep = 0.2;
     double min_div = 0.5;
     double p = 0.3;
     MultiLayerNetwork model = null;

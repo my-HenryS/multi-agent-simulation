@@ -53,9 +53,9 @@ public class ApplicationForCrossFlow extends SimpleApplication {
         SimpleParameterPool parameters = new SimpleParameterPool();
 
         parameters.addValuesAsParameter(new RandomEntityGenerator2D(30,new Box2D(3,1,3,8))
-                .setValue(new BaseAgent(template, new Velocity2D(3,0)))
+                .setValue(new BaseAgent(template, new Velocity2D(1.5,0)))
                                         ,new RandomEntityGenerator2D(1,new Box2D(3,1,5,8))
-                .setValue(new BaseAgent(template, new Velocity2D(3,0)))
+                .setValue(new BaseAgent(template, new Velocity2D(1.5,0)))
         );
 
         //parameters.addValuesAsParameter(new RandomEntityGenerator2D(1,new Box2D(33,1,3,8))

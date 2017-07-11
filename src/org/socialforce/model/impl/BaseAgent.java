@@ -22,8 +22,8 @@ public class BaseAgent extends Entity implements Agent {
     Moment spined;
     boolean escaped = false;
     DistanceShape shape;
-    protected static double forceUpbound = 2450;
-    private static double momentUpbound = 80;
+    protected static double forceUpbound = Double.MAX_VALUE;
+    private static double momentUpbound = Double.MAX_VALUE;
 
     public BaseAgent(DistanceShape shape, Velocity velocity) {
         super(shape);
@@ -119,16 +119,15 @@ public class BaseAgent extends Entity implements Agent {
         this.shape.moveTo(point);
         this.view.moveTo(point);                      //改变视野
         pushed = model.zeroForce();
+
         if (shape instanceof Ellipse2D){
-            if (((Moment2D)spined).getM()> momentUpbound){
-                spined.scale(momentUpbound/((Moment2D) spined).getM());
+            if (Math.abs(((Moment2D)spined).getM())> momentUpbound){
+                spined.scale(momentUpbound/Math.abs(((Moment2D) spined).getM()));
             }
             Palstance next_Omega = new Palstance2D(0),deltaP = this.spined.deltaPalstance(intertia,model.getTimePerStep());
-            currAccPal = deltaP.clone();
-            currAccPal.scale(1/model.getTimePerStep());
             double deltaAngle;
             next_Omega.add(currPal);
-            next_Omega.add(currAccPal);
+            next_Omega.add(deltaP);
             deltaAngle = next_Omega.deltaAngle(model.getTimePerStep());
             this.currPal.add(deltaP);
             ((Ellipse2D) shape).spin(deltaAngle);
@@ -222,11 +221,17 @@ public class BaseAgent extends Entity implements Agent {
      * @see Model
      */
     public void selfAffect(){
+
         if (shape instanceof Ellipse2D){
-        double angle = ((Ellipse2D)shape).getAngle();
-        Vector2D face = new Vector2D(-Math.sin(angle),Math.cos(angle));
-        double size = face.getRotateAngle((Vector2D) currVelocity, face);
-        spined.add(new Moment2D(size*500));
+            double angle = ((Ellipse2D)shape).getAngle();
+            Vector2D face = new Vector2D(-Math.sin(angle),Math.cos(angle));
+            Velocity2D expected = new Velocity2D(0,0);
+            expected.sub(shape.getReferencePoint());
+            expected.add(path.nextStep(shape.getReferencePoint()));
+            double size = Vector2D.getRotateAngle(expected , face);
+            spined.add(new Moment2D(size*250));
+
+            spined.add(new Moment2D(-currPal.getOmega() * 80));
         }
     }
 
