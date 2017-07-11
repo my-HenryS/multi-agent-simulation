@@ -37,15 +37,17 @@ public class DynamicColorDrawer<T extends InteractiveEntity> extends EntityDrawe
     public void renderShape(Graphics2D g, T pattern) {
         color = currentColor(pattern);
         super.renderShape(g, pattern);
-//        this.setColor(new Color(255-color.getRed(),255-color.getGreen(),255-color.getBlue()));
-//        org.socialforce.geom.Point pt = pattern.getShape().getReferencePoint();
-//        Vector target = pt.clone();
-//        Vector scP = pattern.expect().clone();
-//        scP.scale(0.07);
-//        target.add(scP);
-//        double [] targetp = new double[2];
-//        target.get(targetp);
-//        g.draw(new Line2D.Double(pt.getX(), pt.getY(), targetp[0], targetp[1]));
+        this.setColor(new Color(255-color.getRed(),255-color.getGreen(),255-color.getBlue()));
+        org.socialforce.geom.Point pt = pattern.getShape().getReferencePoint();
+        Vector target = pt.clone();
+        Vector scP = ((BaseAgent)pattern).getVelocity().clone();
+        scP.scale(0.07);
+        target.add(scP);
+        double [] targetp = new double[2];
+        target.get(targetp);
+        float thick= (float) 0.05f;
+        g.setStroke(new BasicStroke(thick));
+        g.draw(new Line2D.Double(pt.getX(), pt.getY(), targetp[0], targetp[1]));  //TODO 画线单起一个drawer
 
     }
 }
