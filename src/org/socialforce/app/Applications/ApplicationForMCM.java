@@ -37,7 +37,7 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
         int []alpha = {75};
         int []beta =  {75};
         for(int i = 0; i < 1;i++){
-            for(int a = 6; a<= 24; a+= 1){
+            for(int a = 10; a<= 34; a+= 1){
                 setUpScenes(alpha[i],beta[i]);
                 System.out.println("Scene is "+alpha[i]+","+beta[i]);
                 for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
@@ -46,7 +46,7 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                     double volume = 0, scenery_num = 0;
                     double speed = 0;
                     int size = 0;
-                    SV_RandomAgentGenerator agentGenerator = new SV_RandomTimeAgentGenerator(a,new Box2D(75,-15,46.5,7), template, new Velocity2D(0,10));
+                    SV_RandomAgentGenerator agentGenerator = new SV_RandomTimeAgentGenerator(a,new Box2D(75,-15,46.5,15), template, new Velocity2D(0,10));
                     agentGenerator.apply(currentScene);
                     PathFinder pathFinder = new StraightPathFinder(currentScene, template);
                     strategy = new DynamicNearestGoalStrategy(currentScene, pathFinder);
@@ -91,11 +91,11 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
 
     @Override
     public boolean toSkip(){
-        return Skip || currentScene.getCurrentSteps() > 50000;
+        return Skip || currentScene.getCurrentSteps() > 20000;
     }
 
     public void setUpScenes(double alpha, double beta){
-        double width = 2.2, btm_length = 68, bottom = -15, top_length = 30;
+        double width = 2.2, btm_length = 100, bottom = -15, top_length = 30;
         double tanA = Math.tan(alpha*(Math.PI/180)), tanB = Math.tan(beta*Math.PI/180);
         //梯形数值定义
         double xA = 76.5 + 14.25 * tanB / (tanA + tanB);
@@ -132,9 +132,9 @@ public class ApplicationForMCM extends SimpleApplication implements SocialForceA
                 });
         ParameterPool parameters = new SimpleParameterPool();
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(xC,top - 1,17,1))));
-        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(75,bottom+btm_length/2,29.4,1), 0.5, 13)));
-        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(104.5,bottom+btm_length/2,11,1), 4, 3) ));
-        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(115.7,bottom+btm_length/2,6,1), 10, 3) ));
+        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(75,bottom+btm_length/2+14,29.4,1), 0.5, 13)));
+        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(104.5,bottom+btm_length/2+14,11,1), 4, 3) ));
+        parameters.addLast(genParameter(new SV_Tollbooth(new Box2D(115.7,bottom+btm_length/2+14,6,1), 10, 3) ));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+1.75,top-top_length,0.4,0.4))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+5.55,top-top_length,0.4,0.4))));
         parameters.addLast(genParameter(new SV_Monitor(new Box2D(xC+9.3,top-top_length,0.4,0.4))));

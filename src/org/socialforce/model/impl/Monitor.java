@@ -2,6 +2,7 @@ package org.socialforce.model.impl;
 
 import org.socialforce.container.impl.LinkListAgentPool;
 import org.socialforce.geom.Shape;
+import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.Influential;
 import org.socialforce.model.InteractiveEntity;
@@ -28,7 +29,7 @@ public class Monitor extends Entity implements Influential {
     }
 
     public void affect(Agent target) {
-        velocity += ((BaseAgent) target).currVelocity.length();
+        velocity += ((BaseAgent) target).currVelocity.dot(new Vector2D(0,1));
         vNum += 1;
         if(!agents.contains(target)){   //EC计数不复用Agent
             agents.addLast(target);
