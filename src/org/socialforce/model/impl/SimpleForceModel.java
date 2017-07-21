@@ -111,7 +111,7 @@ public class SimpleForceModel implements Model {
      */
     public void fieldForce(Pool sources) {
         for(Object source : sources){
-            if (!(source instanceof Agent)) {
+            if (source instanceof Star_Planet || !(source instanceof Agent)) {
                 return;
             }
             Agent agent = (Agent) source;
