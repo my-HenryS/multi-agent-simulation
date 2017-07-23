@@ -112,8 +112,13 @@ public class BaseAgent extends Entity implements Agent {
         Vector deltaS;
         next_v.add(currVelocity);
         next_v.add(deltaV);
+        double[] temp = new double[2];
+        next_v.get(temp);
+        if(temp[1] < 0){
+            next_v = new Velocity2D(temp[0],0);
+        }
+        this.currVelocity = next_v;
         deltaS = next_v.deltaDistance(model.getTimePerStep());
-        this.currVelocity.add(deltaV);
         Point point = shape.getReferencePoint();
         point.add(deltaS);
         this.shape.moveTo(point);

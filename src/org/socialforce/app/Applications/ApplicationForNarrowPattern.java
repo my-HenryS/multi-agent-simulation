@@ -37,7 +37,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
             AgentStepCSVWriter csvWriter = new AgentStepCSVWriter();
             currentScene = iterator.next();
             currentScene.addSceneListener(csvWriter);
-            PathFinder pathFinder = new AStarPathFinder(currentScene, template.getShape());
+            PathFinder pathFinder = new AStarPathFinder(currentScene, new Circle2D(new Point2D(0,0),0.486));
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
             while (!toSkip()) {
@@ -232,7 +232,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(40,new Box2D(0,-10,10,5)).setValue(template)
+                new RandomEntityGenerator2D(20,new Box2D(0,-10,10,5)).setValue(template)
         );
 
         loader.readParameterSet(parameters);

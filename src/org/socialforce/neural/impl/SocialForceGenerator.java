@@ -38,7 +38,8 @@ public class SocialForceGenerator extends WallForceGenerator{
                 if(position != null){
                     int x = (int)((position.getX() - dX)/min_div);
                     int y = (int)((position.getY() - dY)/min_div);
-                    tmp[x][y] += p;
+                    if(velocity.get(matrix.indexOf(positions)).get(t)!=null)
+                    tmp[x][y] += p*(velocity.get(matrix.indexOf(positions)).get(t).length());
                 }
             }
             W.add(tmp);
@@ -70,7 +71,7 @@ public class SocialForceGenerator extends WallForceGenerator{
                     surroundings[(i - (x - range))*(range * 2 + 1) + (j - (y - range))] = map[i][j];
             }
         }
-        surroundings[surroundings.length/2] -= p; //抛去行人本身
+        surroundings[surroundings.length/2] = 0; //抛去行人本身
         return surroundings;
     }
 
@@ -85,6 +86,7 @@ public class SocialForceGenerator extends WallForceGenerator{
                     double[] surroundings = getSurrounding(prePoint, j);
                     Vector2D nextStep = getNext(prePoint), acc = calAcc(velocity.get(i).get(j + 1), velocity.get(i).get(j));
                     Vector2D thisVelocity = this.velocity.get(i).get(j).clone(), nextVelocity = this.velocity.get(i).get(j + 1).clone();
+                    nextVelocity = acc;
                     /* 获取旋转角并旋转所有输入输出向量 */
                     double angle = Vector2D.getRotateAngle(new Vector2D(1,0), thisVelocity);
                     nextVelocity.rotate(angle);

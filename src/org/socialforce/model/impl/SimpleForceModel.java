@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class SimpleForceModel implements Model {
     double TIME_PER_STEP = 0.008;
-    double EXPECTED_SPEED = 3;
+    double EXPECTED_SPEED = 1.5;
     double EXPECTED_PALSTANCE = 0;
     double REACT_TIME = 0.5;
 

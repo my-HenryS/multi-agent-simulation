@@ -71,6 +71,9 @@ public class NeuralForceModel implements Model{
             if(rotated) newV = new Velocity2D(newV.getX(),-newV.getY());
             newV.rotate(-angle);
             ((BaseAgent)agent).setCurrVelocity(newV);
+            Force force = new Force2D(newV.getX(),newV.getY());
+            force.scale(agent.getMass());
+            agent.push(force);
         }
 
     }

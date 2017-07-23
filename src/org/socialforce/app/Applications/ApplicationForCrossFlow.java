@@ -58,12 +58,12 @@ public class ApplicationForCrossFlow extends SimpleApplication {
                 .setValue(new BaseAgent(template, new Velocity2D(1.5,0)))
         );
 
-        //parameters.addValuesAsParameter(new RandomEntityGenerator2D(1,new Box2D(33,1,3,8))
-                //.setValue(new BaseAgent(template, new Velocity2D(-3,0)))
-        //);
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(20,new Box2D(33,1,3,8))
+                .setValue(new BaseAgent(template, new Velocity2D(-3,0)))
+        );
 
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
-                .addValue(new Exit(new Box2D(19,3,3,1)))
+                .addValue(new Exit(new Box2D(19,3,3,1.5)))
                 .addValue(new SafetyRegion(new Box2D(46,1,1,8)))
                 .addValue(new SafetyRegion(new Box2D(-6,1,1,8)))
         );
