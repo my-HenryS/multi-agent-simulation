@@ -43,7 +43,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
             while (!toSkip()) {
                 this.StepNext(currentScene);
             }
-            csvWriter.writeCSV("output/agent.csv");
+            //csvWriter.writeCSV("output/agent.csv");
             if(onStop()) return;
         }
     }

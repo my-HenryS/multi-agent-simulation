@@ -44,7 +44,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
             while (!toSkip()) {
                 this.StepNext(currentScene);
             }
-            csvWriter.writeCSV("output/agent.csv");
+            //csvWriter.writeCSV("output/agent.csv");
             if(onStop()) return;
         }
     }
