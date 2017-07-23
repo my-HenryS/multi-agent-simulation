@@ -115,12 +115,12 @@ public class ApplicationForCanteen extends SimpleApplication implements Applicat
         SimpleParameterPool parameters = new SimpleParameterPool();
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(355,new Box2D(0,0,25,18)).setValue(template).setPriority(-2),
+                new RandomEntityGenerator2D(155,new Box2D(0,0,25,18)).setValue(template).setPriority(-2),
                 new RandomEntityGenerator2D(155,new Box2D(0,0,25,18)).setValue(template).setPriority(-2)
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(155,new Box2D(0,18,25,3)).setValue(template).setPriority(-2)
+                new RandomEntityGenerator2D(75,new Box2D(0,18,25,3)).setValue(template).setPriority(-2)
         );
 
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
