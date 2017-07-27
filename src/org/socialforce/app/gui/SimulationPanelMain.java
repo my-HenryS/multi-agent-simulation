@@ -154,6 +154,9 @@ public class SimulationPanelMain implements ApplicationListener {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             //frame.setResizable(false);
             frame.pack();
+            Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+            frame.setLocation((int)(size.getWidth()-frame.getWidth())/2,
+                    (int)(size.getHeight()-frame.getHeight())/2);
             frame.setVisible(true);
 
             //application.start();

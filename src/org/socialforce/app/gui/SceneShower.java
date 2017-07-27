@@ -44,9 +44,6 @@ public class SceneShower implements SceneListener {
     private JPanel showPanel3;
     private JComboBox comboBox1;
     private JPanel Properties;
-    private JSlider slider1;
-    private JLabel agentColorLabel;
-    private JLabel backgroundColorLabel;
     private String title;
 
     private JTextArea textArea;

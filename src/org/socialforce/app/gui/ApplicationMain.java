@@ -37,6 +37,9 @@ public class ApplicationMain{
                     frameS.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     //frame.setResizable(false);
                     frameS.pack();
+                    Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+                    frameS.setLocation((int)(size.getWidth()-frameS.getWidth())/2,
+                            (int)(size.getHeight()-frameS.getHeight())/2);
                     frameS.setVisible(true);
                     //application.start();
                 } catch (HeadlessException x) {
