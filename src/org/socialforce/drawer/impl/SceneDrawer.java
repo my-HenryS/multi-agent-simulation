@@ -258,4 +258,8 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
     public void setDevice(ProxyedGraphics2D device) {
         this.graphics2D = device;
     }
+
+    public EntityDrawerInstaller getEntityDrawerInstaller(){
+        return eInstaller;
+    }
 }
