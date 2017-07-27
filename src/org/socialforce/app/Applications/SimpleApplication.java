@@ -2,6 +2,8 @@ package org.socialforce.app.Applications;
 
 import org.socialforce.app.Application;
 import org.socialforce.app.ApplicationListener;
+import org.socialforce.drawer.impl.SceneDrawer;
+import org.socialforce.drawer.impl.SceneDrawerInstaller;
 import org.socialforce.model.Model;
 import org.socialforce.model.impl.SimpleForceModel;
 import org.socialforce.scene.Scene;
@@ -153,5 +155,9 @@ public abstract class SimpleApplication implements Application {
     public Scene getCurrentScene(){
         return currentScene;
     }
+
+    @Override
+    public void manageDrawer(SceneDrawer drawer){}
+
 
 }

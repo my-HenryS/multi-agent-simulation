@@ -52,7 +52,9 @@ public class SceneShower implements SceneListener {
         textArea = area;
     }
 
-    private DrawerInstaller drawerInstaller;
+    BufferedImage image = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_ARGB);
+
+    private DrawerInstaller drawerInstaller = new SceneDrawerInstaller((Graphics2D) image.getGraphics(), image.getWidth(), image.getHeight());
 
     private Timer timer = new Timer(16, new ActionListener() {
         @Override
@@ -168,8 +170,6 @@ public class SceneShower implements SceneListener {
 
     }
 
-    BufferedImage image;
-
     public Scene getScene() {
         return scene;
     }
@@ -182,8 +182,6 @@ public class SceneShower implements SceneListener {
         this.scene = scene;
         scene.addSceneListener(this);
         // FIXME: 2017/1/2 change this image to dynamic-sized(with components.) or using swing's own double-buffered system.
-        image = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_ARGB);
-        drawerInstaller = new SceneDrawerInstaller((Graphics2D) image.getGraphics(), image.getWidth(), image.getHeight());
         drawerInstaller.addDrawerSupport(scene);
         board.setImage(image);
         board.setScene(scene);

@@ -1,5 +1,8 @@
 package org.socialforce.app;
 
+import org.socialforce.app.gui.SceneShower;
+import org.socialforce.drawer.impl.SceneDrawer;
+import org.socialforce.drawer.impl.SceneDrawerInstaller;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.ValueSet;
 import org.socialforce.strategy.PathFinder;
@@ -85,4 +88,6 @@ public interface Application {
      * @param stepForward
      */
     void setMinStepForward(int stepForward);
+
+    void manageDrawer(SceneDrawer drawer);
 }

@@ -2,8 +2,11 @@ package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
 import org.socialforce.app.impl.SimpleInterpreter;
+import org.socialforce.drawer.impl.GoalDynamicColorMarkDrawer;
+import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.Velocity2D;
+import org.socialforce.model.Agent;
 import org.socialforce.model.impl.BaseAgent;
 import org.socialforce.model.impl.Exit;
 import org.socialforce.model.impl.SafetyRegion;
@@ -17,6 +20,7 @@ import org.socialforce.strategy.DynamicStrategy;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.*;
 
+import java.awt.*;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -94,6 +98,11 @@ public class ApplicationForECStrategy extends SimpleApplication implements Appli
         for(Scene scene:scenes){
             scene.setApplication(this);
         }
+    }
+
+    @Override
+    public void manageDrawer(SceneDrawer drawer){
+        ((GoalDynamicColorMarkDrawer)(drawer.getEntityDrawerInstaller().getSupport(Agent.class).getDrawer())).addSupport(new Point2D(26,2.5), Color.black);
     }
 
 }

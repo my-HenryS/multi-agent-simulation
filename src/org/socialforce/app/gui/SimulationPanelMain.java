@@ -5,6 +5,7 @@ import org.socialforce.app.Application;
 import org.socialforce.app.ApplicationListener;
 import org.socialforce.app.Applications.ApplicationLoader;
 import org.socialforce.app.gui.util.ApplicationDisplayer;
+import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.model.Agent;
 import org.socialforce.scene.Scene;
 
@@ -256,6 +257,7 @@ public class SimulationPanelMain implements ApplicationListener {
     @Override
     public void onStep(Application application) {
         if (application.getCurrentScene().getDrawer() == null) {
+            application.manageDrawer((SceneDrawer)shower1.getDrawerInstaller().getRegisteredDrawers().iterator().next());
             shower1.setScene(application.getCurrentScene());
         }
     }
