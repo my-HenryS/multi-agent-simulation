@@ -4,6 +4,7 @@ import org.socialforce.app.Application;
 import org.socialforce.container.AgentPool;
 import org.socialforce.container.EntityPool;
 import org.socialforce.drawer.Drawable;
+import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.Box;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
@@ -143,5 +144,8 @@ public interface Scene extends Drawable {
     Model getModel();
 
     void pack();
+
+    @Override
+    SceneDrawer getDrawer();
 
 }

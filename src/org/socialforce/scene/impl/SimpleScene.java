@@ -62,7 +62,7 @@ public class SimpleScene implements Scene {
      * @return the drawer.
      */
     @Override
-    public Drawer getDrawer() {
+    public SceneDrawer getDrawer() {
         return drawer;
     }
 
