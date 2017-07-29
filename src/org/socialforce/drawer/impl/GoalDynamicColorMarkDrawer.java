@@ -28,10 +28,6 @@ public class GoalDynamicColorMarkDrawer extends DynamicColorDrawer<Agent> {
 
     public GoalDynamicColorMarkDrawer(Graphics2D device) {
         super(device);
-        supports.add(new Support(new Point2D(26.0,2.5), Color.red));
-        supports.add(new Support(new Point2D(33.5,14), Color.green));
-        supports.add(new Support(new Point2D(14.0,21.5), Color.CYAN));
-        supports.add(new Support(new Point2D(-5.5,5), Color.green));
     }
 
     @Override

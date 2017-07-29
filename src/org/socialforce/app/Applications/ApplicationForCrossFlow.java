@@ -1,9 +1,13 @@
 package org.socialforce.app.Applications;
+import org.socialforce.drawer.Drawer;
+import org.socialforce.drawer.impl.GoalDynamicColorMarkDrawer;
+import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Velocity2D;
+import org.socialforce.model.Agent;
 import org.socialforce.model.impl.*;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
@@ -13,6 +17,7 @@ import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.AStarPathFinder;
 import org.socialforce.strategy.impl.FurthestGoalStrategy;
 
+import java.awt.*;
 import java.util.Iterator;
 /**
  * Created by sunjh1999 on 2017/2/26.
@@ -73,5 +78,14 @@ public class ApplicationForCrossFlow extends SimpleApplication {
         for(Scene scene:scenes){
             scene.setApplication(this);
         }
+    }
+
+    @Override
+    public void manageDrawer(SceneDrawer drawer){
+        Drawer agentDrawer = drawer.getEntityDrawerInstaller().getSupport(Agent.class).getDrawer();
+        if(agentDrawer instanceof GoalDynamicColorMarkDrawer) {
+            ((GoalDynamicColorMarkDrawer) agentDrawer).addSupport(new Point2D(-5.5,5), Color.green);
+        }
+
     }
 }

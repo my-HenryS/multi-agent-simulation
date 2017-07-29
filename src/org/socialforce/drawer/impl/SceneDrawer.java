@@ -19,6 +19,8 @@ import java.awt.geom.Rectangle2D;
  * Created by Ledenel on 2016/8/24.
  */
 public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
+    Color backgroundColor = new Color(70,70,70);
+    Color borderColor = new Color(150,255,150);
     /**
      * draw the pattern on the specific device.
      * @param pattern
@@ -38,7 +40,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
             e.printStackTrace();
         }
 /*/
-        getDevice().setColor(new Color(70,70,70));
+        getDevice().setColor(backgroundColor);
         double pt[] = new double[2];
         double sz[] = new double[2];
         clip.getStartPoint().get(pt);
@@ -49,7 +51,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
         AffineTransform oldT = getDevice().getTransform();
         getDevice().transform(transform);
         getDevice().setStroke(new BasicStroke((float) (1 / getScaleRate())));
-        getDevice().setColor(new Color(150,255,150));
+        getDevice().setColor(borderColor);
         getDevice().draw(new Rectangle2D.Double(pt[0],pt[1],sz[0],sz[1]));
         getDevice().setColor(Color.WHITE);
         for (InteractiveEntity entity : iterable) {
@@ -261,5 +263,13 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
 
     public EntityDrawerInstaller getEntityDrawerInstaller(){
         return eInstaller;
+    }
+
+    public void setBackgroundColor(Color backgroundColor){
+        this.backgroundColor = backgroundColor;
+    }
+
+    public void setBorderColor(Color borderColor){
+        this.borderColor = borderColor;
     }
 }
