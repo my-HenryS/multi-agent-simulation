@@ -38,11 +38,13 @@ public class SimpleSceneParameter implements SceneParameter {
      * 应该是个ValueSet？
      */
     protected LinkedList<SceneValue> values = new LinkedList<>();
+
+    /**
+     * 不试图判断value是否属于同一个class
+     * @param value
+     */
     public void addValue(SceneValue value){
-        if (isValid(value)){
-            values.addLast(value);
-        }
-        else ;//TODO 可能需要一个warning或者什么的，不确定
+        values.addLast(value);
     }
 
     public SceneValue removeValue(){

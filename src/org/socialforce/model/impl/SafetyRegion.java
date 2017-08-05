@@ -11,7 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * 定义Gate类，其继承于父类Entity， 并实现了接口InteractiveEntity 的方法
  *  * Created by Ledenel on 2016/8/14.
  */
-public class SafetyRegion extends Entity implements Influential, SceneListener {
+public class SafetyRegion extends Entity implements Influential{
     LinkedBlockingQueue<Integer> agentEscaping = new LinkedBlockingQueue<>();
     int agentEscapeThisStep = 0;
     public SafetyRegion(Shape shape) {
@@ -68,7 +68,7 @@ public class SafetyRegion extends Entity implements Influential, SceneListener {
     }
 
     @Override
-    public SafetyRegion standardclone() {
+    public SafetyRegion clone() {
         return new SafetyRegion(shape.clone());
     }
 
@@ -81,10 +81,9 @@ public class SafetyRegion extends Entity implements Influential, SceneListener {
         return agentEscaping.stream().mapToInt(num -> num).sum();
     }
 
-    //TODO 将SceneValue的Apply迁移至此
     @Override
-    public void onAdded(Scene scene) {
-
+    public boolean onAdded(Scene scene) {
+        return true;
     }
 
     @Override

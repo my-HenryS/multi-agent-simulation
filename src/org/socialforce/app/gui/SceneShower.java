@@ -43,6 +43,7 @@ public class SceneShower implements SceneListener {
     private JLabel positionLabel;
     private JPanel showPanel3;
     private JComboBox comboBox1;
+    private JPanel Properties;
     private String title;
 
     private JTextArea textArea;
@@ -51,7 +52,9 @@ public class SceneShower implements SceneListener {
         textArea = area;
     }
 
-    private DrawerInstaller drawerInstaller;
+    BufferedImage image = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_ARGB);
+
+    private DrawerInstaller drawerInstaller = new SceneDrawerInstaller((Graphics2D) image.getGraphics(), image.getWidth(), image.getHeight());
 
     private Timer timer = new Timer(16, new ActionListener() {
         @Override
@@ -167,8 +170,6 @@ public class SceneShower implements SceneListener {
 
     }
 
-    BufferedImage image;
-
     public Scene getScene() {
         return scene;
     }
@@ -181,8 +182,6 @@ public class SceneShower implements SceneListener {
         this.scene = scene;
         scene.addSceneListener(this);
         // FIXME: 2017/1/2 change this image to dynamic-sized(with components.) or using swing's own double-buffered system.
-        image = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_ARGB);
-        drawerInstaller = new SceneDrawerInstaller((Graphics2D) image.getGraphics(), image.getWidth(), image.getHeight());
         drawerInstaller.addDrawerSupport(scene);
         board.setImage(image);
         board.setScene(scene);
@@ -210,8 +209,8 @@ public class SceneShower implements SceneListener {
      * @param scene 触发的场景。
      */
     @Override
-    public void onAdded(Scene scene) {
-
+    public boolean onAdded(Scene scene) {
+        return true;
     }
 
     /**
@@ -223,7 +222,7 @@ public class SceneShower implements SceneListener {
     public void onStep(Scene scene) {
         if(scene.getAllAgents().isEmpty()) return;
         this.remainPeopleLabel.setText("" + scene.getAllAgents().size());
-        this.timeLabel.setText(String.format("%.3f", scene.getCurrentSteps() * scene.getApplication().getModel().getTimePerStep()));
+        this.timeLabel.setText(String.format("%.3f", scene.getCurrentSteps() * scene.getModel().getTimePerStep()));
         this.avgVLabel.setText(String.format("%.3f", scene.getAllAgents().stream().mapToDouble(value -> value.getVelocity().length()).average().getAsDouble()));
     }
 
@@ -231,7 +230,7 @@ public class SceneShower implements SceneListener {
         double X,Y;
         double xMin, yMin, xMax, yMax;
         @Override
-        public void onAdded(Scene scene) {
+        public boolean onAdded(Scene scene) {
             Box bounds = scene.getBounds();
             this.X = bounds.getEndPoint().getX() - bounds.getStartPoint().getX();
             this.Y = bounds.getEndPoint().getY() - bounds.getStartPoint().getY();
@@ -241,7 +240,7 @@ public class SceneShower implements SceneListener {
             this.yMax = bounds.getEndPoint().getY();
             HeatMap = new double[(int)Y+1][(int)X+1];
             aggrHeatMap = new double[(int)Y+1][(int)X+1];
-
+            return true;
         }
         public double[][] HeatMap, aggrHeatMap;
 
@@ -320,11 +319,12 @@ public class SceneShower implements SceneListener {
          */
 
         @Override
-        public void onAdded(Scene scene) {
+        public boolean onAdded(Scene scene) {
             title = "最近8秒行人平均速度变化";
             xAxis = "时间";
             yAxis = "平均速度";
             labels = new String[]{"所有行人"};
+            return true;
         }
 
         //Producer
@@ -350,7 +350,7 @@ public class SceneShower implements SceneListener {
          */
 
         @Override
-        public void onAdded(Scene scene) {
+        public boolean onAdded(Scene scene) {
             interval = 40;  //间隔0.32秒采样
             maxDataPerSeries = 200;  //每序列最多数据 （64秒）
             title = "各出口逃生速率变化";
@@ -365,6 +365,7 @@ public class SceneShower implements SceneListener {
             for(int i = 0; i < labelNum; i++){
                 labels[i] = baseLabel + String.valueOf(i);
             }
+            return true;
         }
 
         //Producer

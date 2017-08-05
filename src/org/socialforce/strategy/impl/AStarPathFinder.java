@@ -13,8 +13,10 @@ import org.socialforce.model.InteractiveEntity;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
 
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -55,11 +57,13 @@ public class AStarPathFinder implements PathFinder {
         public Point findNext(Point start_point){
             double x = (start_point.getX() - delta_x ) / min_div;
             double y = (start_point.getY() - delta_y ) / min_div;
+            int xInt = (int)Math.floor(x);
+            int yInt = (int)Math.floor(y);
             double distance = Double.POSITIVE_INFINITY;
             int tempX = 0, tempY = 0, available = 0, offset = 0;
             while(available == 0){
-                for(int i = (int)x-offset; i<= x+offset+1; i++){
-                    for(int j = (int)y-offset; j<= y+offset+1; j++){
+                for(int i = xInt - offset; i<= xInt + offset +1; i++){
+                    for(int j = yInt - offset; j<= yInt + offset + 1; j++){
                         if(available(i,j) && previous[i][j] != null){
                             if(new Point2D(i,j).distanceTo(new Point2D(x,y)) < distance){
                                 tempX = i; tempY = j;
@@ -72,9 +76,7 @@ public class AStarPathFinder implements PathFinder {
                 offset++;
             }
 
-            x = tempX;
-            y = tempY;
-            Point next = previous[(int)x][(int)y];
+            Point next = previous[tempX][tempY];
             Point tobeReturn = next.clone().scaleBy(min_div).moveBy(delta_x, delta_y);
             return tobeReturn;
         }
@@ -138,7 +140,7 @@ public class AStarPathFinder implements PathFinder {
     public AStarPathFinder(Scene targetScene, Agent agent){
         this.goal = goal.clone();
         this.agentShape = agent.getShape().clone();
-        this.templateScene = targetScene.standardclone();
+        this.templateScene = targetScene.clone();
         scene_standardize();
         point_generate();
         start_point_standardize();
@@ -149,7 +151,7 @@ public class AStarPathFinder implements PathFinder {
      */
 
     public AStarPathFinder(Scene scene, Shape templateShape){
-        this.templateScene = scene.standardclone();
+        this.templateScene = scene.cloneWithStatics();
         this.agentShape = templateShape.clone();
         scene_initiate();   //set standard templateScene and goals
         map_initiate();
@@ -159,7 +161,7 @@ public class AStarPathFinder implements PathFinder {
 
     public AStarPathFinder(Scene scene, Shape templateShape, double min_div){
         this.min_div = min_div;
-        this.templateScene = scene.standardclone();
+        this.templateScene = scene.cloneWithStatics();
         this.agentShape = templateShape.clone();
         scene_initiate();   //set standard templateScene and goals
         map_initiate();
@@ -174,7 +176,7 @@ public class AStarPathFinder implements PathFinder {
 
     public void addSituation(Scene scene, Point goal){
         assert(scene.getBounds().equals(templateScene.getBounds()));
-        Scene newScene = scene.standardclone();
+        Scene newScene = scene.cloneWithStatics();
         scene_generate(newScene);
         map_generate(newScene);
         goals.addLast(point_generate(goal.clone()));
@@ -255,17 +257,27 @@ public class AStarPathFinder implements PathFinder {
     private LinkedBlockingQueue<Point> get_surroundings(Point start, Point center, LinkedBlockingQueue<Point> point_set){
         int x = (int)center.getX();
         int y = (int)center.getY();
-        for(int i = x-1; i <= x+1; i++){
-            for(int j = y-1; j<=y+1; j++){
+        LinkedList<Point> surroundingPoints = new LinkedList<>();
+        for(int i = x-1; i <= x+1; i++) {
+            for (int j = y - 1; j <= y + 1; j++) {
                 if(i==x && j==y) continue;
                 if(i==start.getX() && j==start.getY()) continue;
-                Point tmp_point = new Point2D(i,j);
-                if(available(i,j) && map[i][j]==0 && (distance[i][j]==0 || distance[i][j] > distance[x][y]+center.distanceTo(tmp_point) )){
-                    distance[i][j] = distance[x][y]+center.distanceTo(tmp_point);
-                    point_set.add(tmp_point);
-                    previous[i][j] = center;
-                }
-
+                surroundingPoints.add(new Point2D(i,j));
+            }
+        }
+        //随机选取周围的点 防止有向性
+        int availableNum = surroundingPoints.size();
+        Random rand = new Random();
+        for(int t = 0; t < availableNum; t++){
+            int index = rand.nextInt(availableNum - t);
+            Point tmp_point = surroundingPoints.get(index);
+            surroundingPoints.remove(tmp_point);
+            int i = (int)tmp_point.getX();
+            int j = (int)tmp_point.getY();
+            if(available(i,j) && map[i][j]==0 && (distance[i][j]==0 || distance[i][j] > distance[x][y]+center.distanceTo(tmp_point) )){
+                distance[i][j] = distance[x][y]+center.distanceTo(tmp_point);
+                point_set.add(tmp_point);
+                previous[i][j] = center;
             }
         }
         return point_set;

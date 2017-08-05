@@ -1,6 +1,8 @@
 package org.socialforce.geom.impl;
 
 import org.socialforce.geom.Force;
+import org.socialforce.geom.Moment;
+import org.socialforce.geom.Point;
 import org.socialforce.geom.Velocity;
 
 /**
@@ -37,7 +39,7 @@ public class Force2D extends Vector2D implements Force {
      * @return 向量的副本.
      */
     @Override
-    public Force clone() {
+    public Force2D clone() {
         Force2D force = new Force2D();
         force.values[0] = values[0];
         force.values[1] = values[1];
@@ -54,5 +56,15 @@ public class Force2D extends Vector2D implements Force {
             ref = new Force2D(values[0],values[1]);
         ref.scale(1/ref.length());
         return ref;
+    }
+
+    @Override
+    public Moment CalculateMoment(Point pushPoint, Point axis) {
+        Vector2D distance = (Vector2D) axis.directionTo(pushPoint);
+        distance.scale(axis.distanceTo(pushPoint));
+        distance.rotate(Math.PI/2);
+        Vector2D pro = (Vector2D) this.clone();
+        pro.project(distance);
+        return new Moment2D(distance.dot(pro));
     }
 }

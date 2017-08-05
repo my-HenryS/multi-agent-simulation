@@ -1,13 +1,14 @@
 package org.socialforce.scene;
 
-import org.socialforce.app.SocialForceApplication;
+import org.socialforce.app.Application;
 import org.socialforce.container.AgentPool;
 import org.socialforce.container.EntityPool;
 import org.socialforce.drawer.Drawable;
+import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.Box;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.strategy.PathFinder;
+import org.socialforce.model.Model;
 
 import java.util.stream.Stream;
 
@@ -17,7 +18,7 @@ import java.util.stream.Stream;
  * a cloned scene in Cloning strategy,
  * a bucket-self-managed scene in Bucket Clone strategy.
  * TODO 加入clone()方法
- * @see SocialForceApplication
+ * @see Application
  * @see Agent
  * @author Ledenel
  * Created by Ledenel on 2016/7/31.
@@ -42,23 +43,35 @@ public interface Scene extends Drawable {
     EntityPool getStaticEntities();
 
     /**
-     * 向场景中添加一个Agent。
-     * @param agent 要添加的Agent。
-     * @return 若确实添加了Agent，返回true。
+     * 从场景中删除一个Entity。
+     * @param entity 要删除的Entity。
+     * @return 若确实删除了Entity，返回true。
      */
-    default boolean addAgent(Agent agent) {
-        return getAllAgents().add(agent);
+    default boolean removeEntity(InteractiveEntity entity) {
+        boolean flag = removeSceneListener(entity);
+        if(!flag) return false;
+        if(entity instanceof Agent)
+            return getAllAgents().remove((Agent) entity);
+        else
+            return getStaticEntities().remove(entity);
+
     }
 
     /**
-     * 向场景中添加一个静态的实体，
-     * 例如墙，安全区等物体。
-     * @param entity 要添加的静态实体。
-     * @return 若确实添加了该实体，返回true。
+     * 向场景中添加一个Entity。
+     * @param entity 要添加的Entity。
+     * @return 若确实添加Entity，返回true。
      */
-    default boolean addStaticEntity(InteractiveEntity entity) {
-        return getStaticEntities().add(entity);
+    default boolean addEntity(InteractiveEntity entity) {
+        boolean flag = addSceneListener(entity);
+        if(!flag) return false;
+        if(entity instanceof Agent)
+            return getAllAgents().add((Agent) entity);
+        else
+            return getStaticEntities().add(entity);
+
     }
+
 
     /**
      * get a stream with all entities in the scene (including agents, walls, gates, etc.).
@@ -86,18 +99,53 @@ public interface Scene extends Drawable {
      */
     void onAgentEscape(Agent agent);
 
-    SocialForceApplication getApplication();
-    void setApplication(SocialForceApplication application);
+    Application getApplication();
+    void setApplication(Application application);
     boolean isVisible();
     void setVisible(boolean visible);
-   void addSceneListener(SceneListener listener);
+
+    /**
+     * 添加sceneLister并调用Listener的onAdded()方法
+     * @see SceneListener
+     * @param listener 要加入的listener
+     * @return 是否加入成功
+     */
+    boolean addSceneListener(SceneListener listener);
+
+    /**
+     * 删除sceneListener
+     * @param listener 要删除的listener
+     * @return 是否删除成功
+     */
+    boolean removeSceneListener(SceneListener listener);
     // TODO: 2016/9/14 add scene listener support.
 
-    //只拷贝bounds
-    Scene simpleclone();
+    /**
+     * 返回一个和当前scene一样bound的新scene
+     * @return 新的scene
+     */
+    Scene cloneWithBounds();
 
-    //拷贝bounds和
-    Scene standardclone();
+    /**
+     * 返回一个和scene一样静态场景的新的scene
+     * @return 新的scene
+     */
+    Scene cloneWithStatics();
+
+    /**
+     * 设置scene中实体应用的model
+     * @param model 所应用的model
+     */
+    Scene setModel(Model model);
+
+    /**
+     * 返回scene中实体应用的model
+     */
+    Model getModel();
+
     void pack();
+
+    @Override
+    SceneDrawer getDrawer();
 
 }

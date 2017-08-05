@@ -71,4 +71,26 @@ public interface Point extends Vector {
      * @return 曼哈顿距离
      */
     double Manhattan_Distance(Point point);
+
+    /**
+     * 求点绕正半轴，逆时针转过的角度
+     * @return
+     */
+    double getAngle();
+
+    /**
+     * 以center为原点，angle为绕X轴正方向逆时针转过的角度，建立新的坐标系
+     * @param center
+     * @param angle
+     * @return
+     */
+    Point coordinateTransfer(Point center, double angle);
+
+    /**
+     * 恢复为原点坐标系下的坐标
+     * @param center
+     * @param angle
+     * @return
+     */
+    Point inverseCoordinateTransfer(Point center, double angle);
 }

@@ -10,7 +10,7 @@ import org.socialforce.strategy.Path;
  * @author Ledenel sunjh(edit)
  * Created by Ledenel on 2016/7/28.
  */
-public interface Agent extends Influential, Moveable, Blockable {
+public interface Agent extends Influential, Moveable, Blockable,Rotateable {
 
     /**
      * 获取一个Agent的形状

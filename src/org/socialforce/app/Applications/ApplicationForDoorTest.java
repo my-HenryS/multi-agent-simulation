@@ -1,14 +1,11 @@
 package org.socialforce.app.Applications;
 
+import org.socialforce.app.Application;
 import org.socialforce.app.Interpreter;
-import org.socialforce.app.SocialForceApplication;
 import org.socialforce.app.impl.SimpleInterpreter;
 import org.socialforce.geom.DistanceShape;
-import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Point2D;
-import org.socialforce.geom.impl.Rectangle2D;
-import org.socialforce.scene.ParameterPool;
+import org.socialforce.geom.impl.*;
+import org.socialforce.model.impl.*;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
 import org.socialforce.scene.impl.*;
@@ -20,12 +17,10 @@ import org.socialforce.strategy.impl.NearestGoalStrategy;
 import java.io.InputStream;
 import java.util.Iterator;
 
-import static org.socialforce.scene.SceneLoader.genParameter;
-
 /**
  * Created by Whatever on 2017/3/1.
  */
-public class ApplicationForDoorTest extends SimpleApplication implements SocialForceApplication {
+public class ApplicationForDoorTest extends SimpleApplication implements Application {
     DistanceShape template;
     /**
      * start the application immediately.
@@ -57,12 +52,20 @@ public class ApplicationForDoorTest extends SimpleApplication implements SocialF
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader();
-        ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(4,-2,2,5)})));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(100,new Box2D(0,0,10,-10),template)));
-        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,4,8,1))));
-        parameters.addLast(genParameter(new SV_Door(new Rectangle2D(new Point2D(4.5,0.25),1,0.5,0),new Point2D(4,0),new double[]{0,Math.PI/2},1)));
-        parameters.addLast(genParameter(new SV_Door(new Rectangle2D(new Point2D(5.5,0.25),1,0.5,0),new Point2D(6,0),new double[]{-Math.PI/2,0},-1)));
+        loader.setModel(new SimpleForceModel());
+        SimpleParameterPool parameters = new SimpleParameterPool();
+
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(100,new Box2D(0,0,10,-10))
+                .setValue(new BaseAgent(template, new Velocity2D(0,0)))
+        );
+
+        parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
+                .addValue(new SafetyRegion(new Box2D(1,4,8,1)))
+                .addValue(new Exit(new Box2D(4,-2,2,5)))
+                .addValue(new Door(new Rectangle2D(new Point2D(4.5,0.25),1,0.5,0),new Point2D(4,0),new double[]{0,Math.PI/2},1))
+                .addValue(new Door(new Rectangle2D(new Point2D(5.5,0.25),1,0.5,0),new Point2D(6,0),new double[]{-Math.PI/2,0},-1))
+        );
+
         loader.readParameterSet(parameters);
         scenes = loader.readScene();
         for(Scene scene:scenes){

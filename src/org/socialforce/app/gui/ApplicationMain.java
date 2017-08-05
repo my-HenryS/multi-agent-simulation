@@ -1,6 +1,7 @@
 package org.socialforce.app.gui;
 
 import org.socialforce.app.ApplicationListener;
+import org.socialforce.app.Applications.ApplicationLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,23 +16,30 @@ public class ApplicationMain{
     private JButton editModeButton;
     public JPanel demoP;
     private JLabel demoL;
+    private ApplicationLoader loader;
+    SimulationPanelMain mainPanel;
 
     public ApplicationMain(){
+        mainPanel = new SimulationPanelMain();
+        loader = new ApplicationLoader(mainPanel);
         simulationModeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
 
                     JFrame frameS = new JFrame("Epimetheus");
-                    SimulationPanelMain mainPanel = new SimulationPanelMain();
-                    mainPanel.frame.dispose();
-                    /*SocialForceApplication application = new ApplicationForDoorTest();//应用在这里！
+                    mainPanel.setLoader(loader);
+                    SimulationPanelMain.frame.dispose();
+                    /*Application application = new ApplicationForDoorTest();//应用在这里！
                      application.setApplicationListener(mainPanel);*/
                     //mainPanel.setLoader(new ApplicationLoader(mainPanel));
                     frameS.setContentPane(mainPanel.root);
                     frameS.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     //frame.setResizable(false);
                     frameS.pack();
+                    Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+                    frameS.setLocation((int)(size.getWidth()-frameS.getWidth())/2,
+                            (int)(size.getHeight()-frameS.getHeight())/2);
                     frameS.setVisible(true);
                     //application.start();
                 } catch (HeadlessException x) {
@@ -40,4 +48,6 @@ public class ApplicationMain{
             }
         });
     }
+
+    public ApplicationLoader getLoader(){ return loader; }
 }

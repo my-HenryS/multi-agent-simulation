@@ -127,4 +127,9 @@ public abstract class Entity implements InteractiveEntity {
         shape.moveTo(point);
     }
 
+    @Override
+    public Entity clone(){
+        return null;
+    }
+
 }

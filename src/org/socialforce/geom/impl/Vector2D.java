@@ -139,8 +139,8 @@ public class Vector2D implements Vector {
         /*if (this.dimension() == other.dimension()) {
             double[] c = new double[this.dimension()];
             other.get(c);
-            for (int i = 0; i < values.length; i++) {
-                if (values[i] != c[i]) {
+            for (int i = 0; i < parameters.length; i++) {
+                if (parameters[i] != c[i]) {
                     return false;
                 }
             }
@@ -285,7 +285,7 @@ public class Vector2D implements Vector {
      * @return 这个向量的副本.
      */
     @Override
-    public Vector clone() {
+    public Vector2D clone() {
         Vector2D vec = new Vector2D();
         System.arraycopy(values,0,vec.values,0,values.length);
         return vec;
@@ -344,7 +344,7 @@ public class Vector2D implements Vector {
         double angle = Math.acos(getDot(vrR, vbR));
         double cross = vbR.getX() * vrR.getY() - vrR.getX() * vbR.getY();
         if(cross < 0){
-            angle = Math.PI * 2 - angle;
+            angle = - angle;
         }
         return angle;
     }

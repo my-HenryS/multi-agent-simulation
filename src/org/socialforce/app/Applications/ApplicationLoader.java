@@ -1,8 +1,7 @@
 package org.socialforce.app.Applications;
 
-import javafx.application.Application;
 import org.socialforce.app.ApplicationListener;
-import org.socialforce.app.SocialForceApplication;
+import org.socialforce.app.Application;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -10,7 +9,7 @@ import java.util.LinkedList;
 /**
  * Created by Ledenel on 2017/3/2.
  */
-public class ApplicationLoader extends LinkedList<SocialForceApplication> implements Collection<SocialForceApplication> {
+public class ApplicationLoader extends LinkedList<Application> implements Collection<Application> {
     private ApplicationListener listener;
 
     /**
@@ -21,6 +20,7 @@ public class ApplicationLoader extends LinkedList<SocialForceApplication> implem
         super();
         this.listener = listener;
         add(new ApplicationForCanteen());
+        add(new ApplicationForEllipse());
         add(new ApplicationForDoorTest());
         add(new ApplicationForCrossFlow());
         add(new ApplicationForAstrophysics());
@@ -36,23 +36,23 @@ public class ApplicationLoader extends LinkedList<SocialForceApplication> implem
      * <p>
      * <p>This method is equivalent to {@link #addLast}.
      *
-     * @param socialForceApplication element to be appended to this list
+     * @param application element to be appended to this list
      * @return {@code true} (as specified by {@link Collection#add})
      */
     @Override
-    public boolean add(SocialForceApplication socialForceApplication) {
-        boolean k = super.add(socialForceApplication);
-        socialForceApplication.setApplicationListener(listener);
+    public boolean add(Application application) {
+        boolean k = super.add(application);
+        application.setApplicationListener(listener);
         return k;
     }
 
-    private SocialForceApplication selected;
+    private Application selected;
 
-    public void select(SocialForceApplication application) {
+    public void select(Application application) {
         selected = application;
     }
 
-    public SocialForceApplication current() {
+    public Application current() {
         return selected;
     }
 }

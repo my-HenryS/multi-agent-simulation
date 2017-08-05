@@ -1,5 +1,6 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.geom.Affection;
 import org.socialforce.geom.Force;
 import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.*;
@@ -38,7 +39,7 @@ public class WallForce implements ForceRegulation {
      * @return force
      */
     @Override
-    public Force getForce(InteractiveEntity source, InteractiveEntity target) {
+    public Affection getForce(InteractiveEntity source, InteractiveEntity target) {
         if (source.getShape().hits(target.getShape().getBounds())
                 && ((Box2D)source.getShape()).intersect(target.getShape().getBounds()).getReferencePoint() != null){
             Point2D ForcePoint = (Point2D) ((Box2D)source.getShape()).intersect(target.getShape().getBounds()).getReferencePoint();

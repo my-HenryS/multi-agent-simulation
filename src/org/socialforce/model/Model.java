@@ -1,8 +1,12 @@
 package org.socialforce.model;
 
+import org.socialforce.container.Pool;
 import org.socialforce.scene.Scene;
-import org.socialforce.app.SocialForceApplication;
+import org.socialforce.app.Application;
 import org.socialforce.geom.*;
+
+import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * the social force model.
@@ -12,19 +16,19 @@ import org.socialforce.geom.*;
  * the unit of these constraints and forces are standard units.
  *
  * @author Ledenel
- * @see SocialForceApplication
+ * @see Application
  * @see Scene
  * Created by Ledenel on 2016/7/30.
  */
 public interface Model{
 
     /**
-     * 计算在该模型下模型中场对实体的作用力。
+     * 计算在该模型下模型中场对实体的作用力并作用。
      *
-     * @param target 受到作用力的实体。
+     * @param targets 受到作用力的实体们。
      * @return the force. 返回力的大小，其单位是牛。
      */
-    Force fieldForce(InteractiveEntity target);
+    void fieldForce(Pool targets);
 
     /**
      * 计算在该模型下实体之间的作用力。
@@ -35,6 +39,7 @@ public interface Model{
      */
     Force interactionForce(InteractiveEntity source, InteractiveEntity target);
 
+    Moment interactionMoment(InteractiveEntity source, InteractiveEntity target);
     /**
      * 创建并返回零向量。
      *
@@ -60,6 +65,8 @@ public interface Model{
      * @return 仿真步长。
      */
     double getTimePerStep();
+
+    Moment zeroMoment();
 
     Model clone();
 }

@@ -6,6 +6,8 @@
       <xy x="20" y="20" width="1075" height="855"/>
     </constraints>
     <properties>
+      <alignmentX value="0.5"/>
+      <autoscrolls value="false"/>
       <preferredSize width="1024" height="768"/>
     </properties>
     <border type="none"/>

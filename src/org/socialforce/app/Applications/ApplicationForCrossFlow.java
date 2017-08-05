@@ -1,12 +1,14 @@
 package org.socialforce.app.Applications;
+import org.socialforce.drawer.Drawer;
+import org.socialforce.drawer.impl.GoalDynamicColorMarkDrawer;
+import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.impl.Monitor;
-import org.socialforce.model.impl.Wall;
-import org.socialforce.scene.ParameterPool;
+import org.socialforce.geom.impl.Velocity2D;
+import org.socialforce.model.Agent;
+import org.socialforce.model.impl.*;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
 import org.socialforce.scene.impl.*;
@@ -14,10 +16,9 @@ import org.socialforce.strategy.GoalStrategy;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.AStarPathFinder;
 import org.socialforce.strategy.impl.FurthestGoalStrategy;
-import org.socialforce.strategy.impl.NearestGoalStrategy;
-import org.socialforce.strategy.impl.StraightPathFinder;
+
+import java.awt.*;
 import java.util.Iterator;
-import static org.socialforce.scene.SceneLoader.genParameter;
 /**
  * Created by sunjh1999 on 2017/2/26.
  */
@@ -52,17 +53,39 @@ public class ApplicationForCrossFlow extends SimpleApplication {
         SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
                 new Wall[]{
                         new Wall(new Box2D(20,-3,1,15))
-                });
-        ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(24,new Box2D(3,1,3,8),template),new SV_RandomAgentGenerator(40,new Box2D(3,1,5,8),template)));
-        parameters.addLast(genParameter(new SV_RandomAgentGenerator(35,new Box2D(33,1,3,8),template)));
-        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(19,3,3,3)})));
-        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(46,1,1,8))));
-        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(-6,1,1,8))));
+                }).setModel(new NeuralForceModel());
+
+        SimpleParameterPool parameters = new SimpleParameterPool();
+
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(30,new Box2D(3,1,3,8))
+                .setValue(new BaseAgent(template, new Velocity2D(1.5,0)))
+                                        ,new RandomEntityGenerator2D(1,new Box2D(3,1,5,8))
+                .setValue(new BaseAgent(template, new Velocity2D(1.5,0)))
+        );
+
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(20,new Box2D(33,1,3,8))
+                .setValue(new BaseAgent(template, new Velocity2D(-3,0)))
+        );
+
+        parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
+                .addValue(new Exit(new Box2D(19,3,3,1.5)))
+                .addValue(new SafetyRegion(new Box2D(46,1,1,8)))
+                .addValue(new SafetyRegion(new Box2D(-6,1,1,8)))
+        );
+
         loader.readParameterSet(parameters);
         scenes = loader.readScene();
         for(Scene scene:scenes){
             scene.setApplication(this);
         }
+    }
+
+    @Override
+    public void manageDrawer(SceneDrawer drawer){
+        Drawer agentDrawer = drawer.getEntityDrawerInstaller().getSupport(Agent.class).getDrawer();
+        if(agentDrawer instanceof GoalDynamicColorMarkDrawer) {
+            ((GoalDynamicColorMarkDrawer) agentDrawer).addSupport(new Point2D(-5.5,5), Color.green);
+        }
+
     }
 }

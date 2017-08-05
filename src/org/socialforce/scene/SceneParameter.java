@@ -1,5 +1,9 @@
 package org.socialforce.scene;
 
+import org.socialforce.scene.impl.SimpleSceneParameter;
+
+import java.util.LinkedList;
+
 /**
  * the parameter of a scene
  */
@@ -12,4 +16,14 @@ public interface SceneParameter<T extends Comparable<T>> extends Comparable<Scen
     Iterable<SceneValue<T>> sample();
     void addValue(SceneValue value);
     SceneValue removeValue();
+
+    static SceneParameter genParameter(SceneValue... sceneValue){
+        SceneParameter parameter;
+        LinkedList<SceneValue> values = new LinkedList<>();
+        for(SceneValue value : sceneValue){
+            values.addLast(value);
+        }
+        parameter = new SimpleSceneParameter(values);
+        return parameter;
+    }
 }

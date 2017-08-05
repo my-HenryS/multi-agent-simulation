@@ -1,12 +1,9 @@
 package org.socialforce.app.Console;
 
+import org.socialforce.app.Application;
 import org.socialforce.app.ApplicationListener;
-import org.socialforce.app.Applications.ApplicationForCanteen;
-import org.socialforce.app.Applications.ApplicationForECStrategy;
-import org.socialforce.app.Applications.ApplicationForMCM;
 import org.socialforce.app.Applications.ApplicationForMutidoor;
 import org.socialforce.scene.Scene;
-import org.socialforce.app.SocialForceApplication;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
@@ -22,15 +19,15 @@ public class TextOutputMain implements ApplicationListener {
         TextOutputMain.getApplication().start();
     }
 
-    public SocialForceApplication getApplication() {
+    public Application getApplication() {
         return application;
     }
 
-    public void setApplication(SocialForceApplication application) {
+    public void setApplication(Application application) {
         this.application = application;
     }
 
-    SocialForceApplication application;
+    Application application;
 
     /**
      * triggered while a agent is escaped.
@@ -61,13 +58,10 @@ public class TextOutputMain implements ApplicationListener {
 
     }
 
-    /**
-     * triggered while a scene is step-forwarded.
-     *
-     * @param scene the scene steped-forwarded.
-     */
+
     @Override
-    public void onStep(Scene scene) {
+    public void onStep(Application application) {
+        Scene scene = application.getCurrentScene();
         //TODO: Add your output code HERE
         Circle2D circle = new Circle2D(new Point2D(0, 0), 100);
         String[][] SquareRoom = new String[100][80];

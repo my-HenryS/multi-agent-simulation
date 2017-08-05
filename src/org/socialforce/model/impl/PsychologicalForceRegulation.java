@@ -9,7 +9,7 @@ import org.socialforce.model.*;
  */
 
 public class PsychologicalForceRegulation extends TypeMatchRegulation<Blockable, Agent> {
-    public static final double A = 3000;
+    public static final double A = 2000;
     public static final double B = 0.08;
 
     /**

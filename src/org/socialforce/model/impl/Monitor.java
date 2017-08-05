@@ -5,6 +5,7 @@ import org.socialforce.geom.Shape;
 import org.socialforce.model.Agent;
 import org.socialforce.model.Influential;
 import org.socialforce.model.InteractiveEntity;
+import org.socialforce.scene.Scene;
 
 /**
  * Created by sunjh1999 on 2017/1/21.
@@ -46,7 +47,7 @@ public class Monitor extends Entity implements Influential {
     }
 
     @Override
-    public InteractiveEntity standardclone() {
+    public Monitor clone() {
         return new Monitor(shape.clone());
     }
 
@@ -60,5 +61,15 @@ public class Monitor extends Entity implements Influential {
 
     public double sayEC(){
         return EC/(lastT - firstT);
+    }
+
+    @Override
+    public boolean onAdded(Scene scene) {
+        return false;
+    }
+
+    @Override
+    public void onStep(Scene scene) {
+
     }
 }

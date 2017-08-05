@@ -16,6 +16,7 @@ public class Star_Planet extends BaseAgent implements Agent {
     public Star_Planet(DistanceShape shape, Velocity velocity) {
         super(shape,velocity);
         this.view = new Circle2D(shape.getReferencePoint(),100);
+        super.forceUpbound = Double.POSITIVE_INFINITY;
     }
 
     /**
@@ -54,7 +55,7 @@ public class Star_Planet extends BaseAgent implements Agent {
     }
 
     @Override
-    public Star_Planet standardclone() {
+    public Star_Planet clone() {
         return new Star_Planet(shape.clone(), currVelocity.clone());
     }
 

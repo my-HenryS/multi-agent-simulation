@@ -25,6 +25,14 @@ public class EntityDrawerInstaller implements DrawerInstaller {
             this.drawer = drawer;
             this.drawType = drawable;
         }
+
+        protected void changeDrawer(Drawer drawer){
+            this.drawer = drawer;
+        }
+
+        public Drawer getDrawer(){ return drawer;}
+
+        public Class<? extends Drawable> getDrawType(){ return drawType;}
     }
 
     /**
@@ -38,7 +46,7 @@ public class EntityDrawerInstaller implements DrawerInstaller {
      */
     public EntityDrawerInstaller(Graphics2D device) {
         registerDrawer(new PositionDynamicColorMarkDrawer(device), Star_Planet.class);
-        registerDrawer(new HardDynamicColorMarkDrawer(device), Agent.class);
+        registerDrawer(new GoalDynamicColorMarkDrawer(device), Agent.class);
         registerDrawer(new NonPaintDrawer(device), Monitor.class);
         registerDrawer(new EntityDrawer(device), InteractiveEntity.class);
 
@@ -86,5 +94,9 @@ public class EntityDrawerInstaller implements DrawerInstaller {
     @Override
     public Iterable<Drawer> getRegisteredDrawers() {
         return supports.stream().map(support -> support.drawer)::iterator;
+    }
+
+    public Support getSupport(Class<? extends Drawable> type){
+        return supports.stream().filter(support -> support.drawType.equals(type)).findFirst().get();
     }
 }

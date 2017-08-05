@@ -85,7 +85,7 @@ public class Rectangle2DTest {
 
     @Test
     public void equals() throws Exception {
-        assertEquals(testRec,new Rectangle2D(new Point2D(3,3),6,4,Math.PI*3/4));
+        assertTrue(testRec.equals(new Rectangle2D(new Point2D(3,3),6,4,Math.PI*3/4)));
     }
 
 }

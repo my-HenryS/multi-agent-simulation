@@ -13,7 +13,7 @@ import org.socialforce.model.Model;
  * @author Ledenel
  * Created by Ledenel on 2016/7/28.
  */
-public interface Force extends Vector {
+public interface Force  extends Vector,Affection {
     /**
      * 累积的力和获取速度的增量.
      * @param mass 该实体的质量.
@@ -37,4 +37,6 @@ public interface Force extends Vector {
      */
     @Override
     Force2D getRefVector();
+
+    Moment CalculateMoment(Point pushPoint, Point axis);
 }

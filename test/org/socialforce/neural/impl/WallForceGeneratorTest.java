@@ -9,6 +9,9 @@ import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.model.impl.Exit;
+import org.socialforce.model.impl.SafetyRegion;
+import org.socialforce.model.impl.SimpleForceModel;
 import org.socialforce.neural.DataSetGenerator;
 import org.socialforce.scene.ParameterPool;
 import org.socialforce.scene.Scene;
@@ -18,8 +21,6 @@ import org.socialforce.scene.impl.*;
 import java.io.File;
 import java.io.InputStream;
 
-import static org.junit.Assert.*;
-import static org.socialforce.scene.SceneLoader.genParameter;
 
 /**
  * Created by sunjh1999 on 2017/3/27.
@@ -38,11 +39,17 @@ public class WallForceGeneratorTest {
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("T1.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFrom(is);
-        SceneLoader loader = interpreter.setLoader();
-        ParameterPool parameters = new SimpleParameterPool();
-        parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)})));
-        parameters.addLast(genParameter(new SV_Wall(new Box2D[]{new Box2D(4,-4,2,2)})));
-        parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,10,8,1))));
+        SceneLoader loader = interpreter.setLoader().setModel(new SimpleForceModel());
+        SimpleParameterPool parameters = new SimpleParameterPool();
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new Exit(new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)))
+        );
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new Exit(new Box2D(4,-4,2,2)))
+        );
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new SafetyRegion(new Box2D(1,10,8,1)))
+        );
         loader.readParameterSet(parameters);
         scene = loader.readScene().getFirst();
     }

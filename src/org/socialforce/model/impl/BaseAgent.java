@@ -1,10 +1,12 @@
 package org.socialforce.model.impl;
 
 import org.socialforce.geom.*;
-import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Velocity2D;
+import org.socialforce.geom.impl.*;
 import org.socialforce.model.*;
+import org.socialforce.scene.Scene;
 import org.socialforce.strategy.Path;
+
+import java.util.Iterator;
 
 /**
  * 定义BaseAgent类，其继承于父类Entity，并实现了接口Agent 的方法。
@@ -12,20 +14,24 @@ import org.socialforce.strategy.Path;
  */
 public class BaseAgent extends Entity implements Agent {
     Velocity currVelocity, currAcceleration = new Velocity2D(0,0);
+    Palstance currPal=new Palstance2D(0),currAccPal = new Palstance2D(0);
     Path path;
-    double mass;
+    double mass,intertia;
     DistanceShape view;
     Force pushed;
+    Moment spined;
     boolean escaped = false;
     DistanceShape shape;
-    private static final double forceUpbound = 2450;
+    protected static double forceUpbound = Double.MAX_VALUE;
+    private static double momentUpbound = Double.MAX_VALUE;
 
     public BaseAgent(DistanceShape shape, Velocity velocity) {
         super(shape);
         this.shape = shape;
         this.currVelocity = velocity;
         this.mass = 80;
-        Circle2D circle = new Circle2D(shape.getReferencePoint(),2);
+        this.intertia = 20;
+        Circle2D circle = new Circle2D(shape.getReferencePoint(),5);
         this.view = circle;
     }
 
@@ -102,17 +108,31 @@ public class BaseAgent extends Entity implements Agent {
         }
         Velocity next_v = new Velocity2D(0,0), deltaV = this.pushed.deltaVelocity(mass, model.getTimePerStep());
         currAcceleration = deltaV.clone();
-        currAcceleration.scale(1/model.getTimePerStep());
+        currAcceleration.scale(1/model.getTimePerStep());//TODO 为什么还要再scale一次，查明。
         Vector deltaS;
         next_v.add(currVelocity);
         next_v.add(deltaV);
-        deltaS = next_v.deltaDistance(model.getTimePerStep());
         this.currVelocity.add(deltaV);
+        deltaS = next_v.deltaDistance(model.getTimePerStep());
         Point point = shape.getReferencePoint();
         point.add(deltaS);
         this.shape.moveTo(point);
         this.view.moveTo(point);                      //改变视野
         pushed = model.zeroForce();
+
+        if (shape instanceof Ellipse2D){
+            if (Math.abs(((Moment2D)spined).getM())> momentUpbound){
+                spined.scale(momentUpbound/Math.abs(((Moment2D) spined).getM()));
+            }
+            Palstance next_Omega = new Palstance2D(0),deltaP = this.spined.deltaPalstance(intertia,model.getTimePerStep());
+            double deltaAngle;
+            next_Omega.add(currPal);
+            next_Omega.add(deltaP);
+            deltaAngle = next_Omega.deltaAngle(model.getTimePerStep());
+            this.currPal.add(deltaP);
+            ((Ellipse2D) shape).spin(deltaAngle);
+            spined.scale(0);
+        }
     }
 
     /**
@@ -144,6 +164,7 @@ public class BaseAgent extends Entity implements Agent {
     public void setModel(Model model) {
         this.model = model;
         this.pushed = model.zeroForce();
+        this.spined = model.zeroMoment();
     }
 
 
@@ -180,7 +201,23 @@ public class BaseAgent extends Entity implements Agent {
         }
         else {
             target.push(model.interactionForce(this,target));
+            target.rotate(model.interactionMoment(this,target));
         }
+    }
+
+    @Override
+    public Palstance getPalstance() {
+        return currPal;
+    }
+
+    @Override
+    public double getIntetia() {
+        return intertia;
+    }
+
+    @Override
+    public void rotate(Moment moment){
+        this.spined.add(moment);
     }
 
     /**
@@ -189,7 +226,16 @@ public class BaseAgent extends Entity implements Agent {
      * @see Model
      */
     public void selfAffect(){
-        this.push(model.fieldForce(this));
+
+        if (shape instanceof Ellipse2D){
+            double angle = ((Ellipse2D)shape).getAngle();
+            Vector2D face = new Vector2D(-Math.sin(angle),Math.cos(angle));
+            Velocity2D expected = new Velocity2D(0,0);
+            expected.sub(shape.getReferencePoint());
+            expected.add(path.nextStep(shape.getReferencePoint()));
+            double size = Vector2D.getRotateAngle(expected , face);
+            spined.add(new Moment2D(size*200));
+        }
     }
 
     @Override
@@ -209,7 +255,7 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     @Override
-    public BaseAgent standardclone() {
+    public BaseAgent clone() {
         return new BaseAgent(shape.clone(), currVelocity.clone());
     }
 
@@ -227,4 +273,28 @@ public class BaseAgent extends Entity implements Agent {
         return this.getShape().clone();
     }
 
+    /**
+     * Agent加入scene会判断是否与场景中现有entity重叠
+     * @param scene 触发的场景。
+     * @return 返回是否加入成功
+     */
+    @Override
+    public boolean onAdded(Scene scene) {
+        for(Iterator<InteractiveEntity> iterator = scene.getAllEntitiesStream().iterator();iterator.hasNext();){
+            InteractiveEntity entity = iterator.next();
+            if(shape.intersects(entity.getShape())){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void onStep(Scene scene) {
+
+    }
+
+    public void setCurrVelocity(Velocity2D velocity){
+        this.currVelocity = velocity;
+    }
 }
