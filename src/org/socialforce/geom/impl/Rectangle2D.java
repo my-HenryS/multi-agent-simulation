@@ -9,7 +9,7 @@ import org.socialforce.geom.*;
  * 角度采用弧度制
  * Created by Whatever on 2016/10/31.
  */
-public class Rectangle2D implements Shape{
+public class Rectangle2D extends Shape2D implements PhysicalEntity {
     protected Point2D center;
     protected double length,weidth,angle;
 
@@ -53,7 +53,7 @@ public class Rectangle2D implements Shape{
     }
 
     /**
-     * 检查一个点是否属于 <code>Shape</code>.
+     * 检查一个点是否属于 <code>PhysicalEntity</code>.
      * 实现方法是这样的，利用矢量图。以center为圆心，转成BOX2D，然后判断。
      * @param point 将被检查的点.
      * @return 如果该点是该形状上的一部分，就返回真，否则返回假.
@@ -252,7 +252,7 @@ public class Rectangle2D implements Shape{
     }
 
     @Override
-    public Shape expandBy(double extent) {
+    public PhysicalEntity expandBy(double extent) {
         length += 2*extent;
         weidth += 2*extent;
         return this;

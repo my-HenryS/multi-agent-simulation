@@ -1,7 +1,6 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.geom.Moment;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.model.*;
 import org.socialforce.scene.Scene;
 
@@ -10,8 +9,8 @@ import org.socialforce.scene.Scene;
  */
 public class Wall extends Entity implements Blockable, Influential {
     @Override
-    public Shape getView() {
-        return (this.getShape().clone()).expandBy(3);
+    public PhysicalEntity getView() {
+        return (this.getPhysicalEntity().clone()).expandBy(3);
     }
 
     /**
@@ -27,8 +26,8 @@ public class Wall extends Entity implements Blockable, Influential {
         target.rotate(model.interactionMoment(this,target));
     }
 
-    public Wall(Shape shape) {
-        super(shape);
+    public Wall(PhysicalEntity physicalEntity) {
+        super(physicalEntity);
     }
 
     /**
@@ -43,12 +42,12 @@ public class Wall extends Entity implements Blockable, Influential {
 
     @Override
     public Wall clone() {
-        return new Wall(shape.clone());
+        return new Wall(physicalEntity.clone());
     }
 
     @Override
-    public Shape blockSize() {
-        return this.getShape().clone();
+    public PhysicalEntity blockSize() {
+        return this.getPhysicalEntity().clone();
     }
 
     @Override

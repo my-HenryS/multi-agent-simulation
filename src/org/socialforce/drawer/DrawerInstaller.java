@@ -1,7 +1,5 @@
 package org.socialforce.drawer;
 
-import org.socialforce.geom.Shape;
-
 /**
  * Created by Ledenel on 2016/8/24.
  */

@@ -15,9 +15,9 @@ import java.io.Serializable;
  * @see InteractiveEntity
  * Created by Ledenel on 2016/7/28.
  */
-public interface Shape extends Serializable, Cloneable, DimensionEntity, Drawable {
+public interface PhysicalEntity extends Serializable, Cloneable, DimensionEntity, Drawable {
     /**
-     * 检查一个点是否属于 <code>Shape</code>.
+     * 检查一个点是否属于 <code>PhysicalEntity</code>.
      *
      * @param point 将被检查的点.
      *
@@ -80,20 +80,29 @@ public interface Shape extends Serializable, Cloneable, DimensionEntity, Drawabl
      * 创建并返回该形状的副本.
      * @return 该形状的副本.
      */
-    Shape clone();
+    PhysicalEntity clone();
 
 
-    Shape expandBy(double extent);
+    PhysicalEntity expandBy(double extent);
 
-    static Point getPoint(Shape shape, Point point){
-        double dist = shape.getDistance(point);
-        Vector direct = shape.getDirection(point);
+    static Point getPoint(PhysicalEntity physicalEntity, Point point){
+        double dist = physicalEntity.getDistance(point);
+        Vector direct = physicalEntity.getDirection(point);
         double [] cords = new double[2];
         direct.scale(dist);
         direct.get(cords);
         return point.clone().moveBy(-cords[0], -cords[1]);
     }
 
+
+
+    Velocity getVelocity();
+
+    void act(double time);
+
+    void push(Affection affection);
+
+    double getMass();
 }
 
 

@@ -3,7 +3,7 @@ package org.socialforce.geom.impl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.PhysicalEntity;
 
 import static org.junit.Assert.*;
 
@@ -59,7 +59,7 @@ public class Segment2DTest {
 
    @Test
     public void cloneTest() throws Exception {
-       Shape cloned = testline.clone();
+       PhysicalEntity cloned = testline.clone();
        assertFalse(cloned == testline);
        assertEquals(testline,cloned);
 

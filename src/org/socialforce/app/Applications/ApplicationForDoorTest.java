@@ -3,7 +3,7 @@ package org.socialforce.app.Applications;
 import org.socialforce.app.Application;
 import org.socialforce.app.Interpreter;
 import org.socialforce.app.impl.SimpleInterpreter;
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.DistancePhysicalEntity;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.impl.*;
 import org.socialforce.scene.Scene;
@@ -21,7 +21,7 @@ import java.util.Iterator;
  * Created by Whatever on 2017/3/1.
  */
 public class ApplicationForDoorTest extends SimpleApplication implements Application {
-    DistanceShape template;
+    DistancePhysicalEntity template;
     /**
      * start the application immediately.
      */

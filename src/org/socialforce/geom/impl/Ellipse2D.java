@@ -1,14 +1,12 @@
 package org.socialforce.geom.impl;
 
-import org.jfree.layout.CenterLayout;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.*;
-import java.util.Arrays;
 
 /**
  * Created by Administrator on 2017/5/10 0010.
  */
-public class Ellipse2D implements MoveableShape {
+public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEntity {
     private double a;
     private double b;
     private Point center;
@@ -140,7 +138,7 @@ public class Ellipse2D implements MoveableShape {
     }
 
     @Override
-    public Shape expandBy(double extent) {
+    public PhysicalEntity expandBy(double extent) {
         return null;
     }
 
@@ -178,7 +176,7 @@ public class Ellipse2D implements MoveableShape {
     }
 
     @Override
-    public double distanceTo(Shape other) {
+    public double distanceTo(PhysicalEntity other) {
         double distance[] = new double[]{other.getDistance(this.getLeftCenter())-this.getSideRadius(),other.getDistance(this.getRightCenter())-this.getSideRadius(),other.getDistance(center)-b};
         return findMinOf3(distance);
 
@@ -202,7 +200,7 @@ public class Ellipse2D implements MoveableShape {
 
 
     @Override
-    public Vector directionTo(Shape other) {
+    public Vector directionTo(PhysicalEntity other) {
         double leftDistance = other.getDistance(this.getLeftCenter()) - this.getSideRadius();
         double rightDistance = other.getDistance(this.getRightCenter()) - this.getSideRadius();
         double distance[] = new double[]{leftDistance, rightDistance,other.getDistance(center)-b};
@@ -234,7 +232,7 @@ public class Ellipse2D implements MoveableShape {
     }
 
     @Override
-    public boolean intersects(Shape other) {
+    public boolean intersects(PhysicalEntity other) {
         return this.distanceTo(other) <= 0;
     }
 
@@ -243,7 +241,7 @@ public class Ellipse2D implements MoveableShape {
      * @param other
      * @return
      */
-    public Point ForcePoint(Shape other){
+    public Point ForcePoint(PhysicalEntity other){
         double leftDistance = other.getDistance(this.getLeftCenter()) - this.getSideRadius();
         double rightDistance = other.getDistance(this.getRightCenter()) - this.getSideRadius();
         double distance[] = new double[]{leftDistance, rightDistance,other.getDistance(center)-b};

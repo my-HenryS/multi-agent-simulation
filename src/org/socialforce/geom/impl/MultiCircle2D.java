@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * Created by Administrator on 2017/7/5 0005.
  */
-public class MultiCircle2D implements MoveableShape{
+public class MultiCircle2D extends RotatableShape2D implements RotatablePhysicalEntity {
     private double a;
     private double b;
     private Point center;
@@ -138,7 +138,7 @@ public class MultiCircle2D implements MoveableShape{
     }
 
     @Override
-    public Shape expandBy(double extent) {
+    public PhysicalEntity expandBy(double extent) {
         return null;
     }
 
@@ -174,7 +174,7 @@ public class MultiCircle2D implements MoveableShape{
     }
 
     @Override
-    public double distanceTo(Shape other) {
+    public double distanceTo(PhysicalEntity other) {
         double distance[] = new double[]{other.getDistance(this.getLeftCenter())-this.getSideRadius(),other.getDistance(this.getRightCenter())-this.getSideRadius(),other.getDistance(center)-b};
         Arrays.sort(distance);
         return distance[0];
@@ -182,7 +182,7 @@ public class MultiCircle2D implements MoveableShape{
 
 
     @Override
-    public Vector directionTo(Shape other) {
+    public Vector directionTo(PhysicalEntity other) {
         double distance[] = new double[]{other.getDistance(this.getLeftCenter())-this.getSideRadius(),other.getDistance(this.getRightCenter())-this.getSideRadius(),other.getDistance(center)-b};
         Arrays.sort(distance);
         Vector direction;
@@ -210,7 +210,7 @@ public class MultiCircle2D implements MoveableShape{
     }
 
     @Override
-    public boolean intersects(Shape other) {
+    public boolean intersects(PhysicalEntity other) {
         return this.distanceTo(other) <= 0;
     }
 
@@ -219,7 +219,7 @@ public class MultiCircle2D implements MoveableShape{
      * @param other
      * @return
      */
-    public Point ForcePoint(Shape other){
+    public Point ForcePoint(PhysicalEntity other){
         double distance[] = new double[]{other.getDistance(this.getLeftCenter())-this.getSideRadius(),other.getDistance(this.getRightCenter())-this.getSideRadius(),other.getDistance(center)-b};
         Arrays.sort(distance);
         if(distance[0] == other.getDistance(this.getLeftCenter())-this.getSideRadius())

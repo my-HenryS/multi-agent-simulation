@@ -1,21 +1,8 @@
 package org.socialforce.scene.impl;
 
-import org.socialforce.container.EntityPool;
-import org.socialforce.geom.DistanceShape;
-import org.socialforce.geom.Shape;
-import org.socialforce.geom.Velocity;
-import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Point2D;
-import org.socialforce.geom.impl.Semicircle2D;
-import org.socialforce.model.Agent;
-import org.socialforce.model.Blockable;
+import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.scene.EntityGenerator;
-import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneValue;
-
-import java.util.Random;
 
 /**
  * Created by sunjh1999 on 2017/1/21.
@@ -24,7 +11,7 @@ import java.util.Random;
 public class RandomTimeEntityGenerator2D extends RandomEntityGenerator2D implements SceneValue<InteractiveEntity> {
 
 
-    public RandomTimeEntityGenerator2D(int entityNum, Shape Area) {
+    public RandomTimeEntityGenerator2D(int entityNum, PhysicalEntity Area) {
         super(entityNum, Area);
     }
 

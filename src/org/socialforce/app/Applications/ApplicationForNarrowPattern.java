@@ -4,7 +4,6 @@ import org.socialforce.app.Interpreter;
 import org.socialforce.app.Application;
 import org.socialforce.app.impl.AgentStepCSVWriter;
 import org.socialforce.app.impl.SimpleInterpreter;
-import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.impl.*;
 import org.socialforce.scene.Scene;
@@ -279,7 +278,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
 
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)}),new SV_Exit(new Box2D[]{new Box2D(10-DoorWidth,-0.5,DoorWidth,2)})));
 
-        parameters.addLast(genParameter(new SV_Wall(new Shape[]{new Circle2D(new Point2D(3,-4),2),new Circle2D(new Point2D(7,-4),2)}),new SV_Wall(new Shape[]{}),new SV_Wall(new Shape[]{new Box2D(1,-10,1,9),new Box2D(3,-10,1,9),new Box2D(5,-10,1,9),new Box2D(7,-10,1,9),new Box2D(9,-10,1,9)})));
+        parameters.addLast(genParameter(new SV_Wall(new PhysicalEntity[]{new Circle2D(new Point2D(3,-4),2),new Circle2D(new Point2D(7,-4),2)}),new SV_Wall(new PhysicalEntity[]{}),new SV_Wall(new PhysicalEntity[]{new Box2D(1,-10,1,9),new Box2D(3,-10,1,9),new Box2D(5,-10,1,9),new Box2D(7,-10,1,9),new Box2D(9,-10,1,9)})));
 
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,6,8,1))));
 

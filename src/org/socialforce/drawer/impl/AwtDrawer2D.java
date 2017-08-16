@@ -70,7 +70,7 @@ public abstract class AwtDrawer2D<DrawableType extends Drawable> implements Draw
     }
 
     /**
-     * render the shape on the @code {Graphics2D} with color built-in.
+     * render the physicalEntity on the @code {Graphics2D} with color built-in.
      * @param g the graphics
      * @param pattern
      */

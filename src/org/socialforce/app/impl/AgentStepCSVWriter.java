@@ -5,10 +5,8 @@ import org.socialforce.model.Agent;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneListener;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -30,11 +28,11 @@ public class AgentStepCSVWriter implements SceneListener {
             Agent agent = iter.next();
             if(!agentStepMap.containsKey(agent.getName())){
                 List<String> newList = new ArrayList<>();
-                newList.add(agent.getShape().getReferencePoint().toString());
+                newList.add(agent.getPhysicalEntity().getReferencePoint().toString());
                 agentStepMap.put(agent.getName(), newList);
             }
             else{
-                agentStepMap.get(agent.getName()).add(agent.getShape().getReferencePoint().toString());
+                agentStepMap.get(agent.getName()).add(agent.getPhysicalEntity().getReferencePoint().toString());
             }
         }
     }

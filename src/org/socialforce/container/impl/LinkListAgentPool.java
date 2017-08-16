@@ -1,7 +1,6 @@
 package org.socialforce.container.impl;
 
-import org.socialforce.geom.DistanceShape;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.model.Agent;
 import org.socialforce.container.AgentPool;
 
@@ -13,26 +12,26 @@ import java.util.Iterator;
 public class LinkListAgentPool extends LinkListPool<Agent> implements AgentPool {
 
     @Override
-    public Iterable<Agent> select(Shape shape) {
-        return new PoolShapeSelectIterable(shape);
+    public Iterable<Agent> select(PhysicalEntity physicalEntity) {
+        return new PoolShapeSelectIterable(physicalEntity);
     }
 
 
-    protected boolean shapeContains(Agent entity, Shape shape) {
-        return entity.getShape().intersects(shape);
+    protected boolean shapeContains(Agent entity, PhysicalEntity physicalEntity) {
+        return entity.getPhysicalEntity().intersects(physicalEntity);
     }
 
     public class PoolShapeSelectIterable implements Iterable<Agent>{
-        private Shape shape;
+        private PhysicalEntity physicalEntity;
 
-        public PoolShapeSelectIterable(Shape shape) {
-            this.shape = shape;
+        public PoolShapeSelectIterable(PhysicalEntity physicalEntity) {
+            this.physicalEntity = physicalEntity;
         }
 
         @Override
         public Iterator<Agent> iterator() {
             return LinkListAgentPool.this.stream()
-                    .filter(entity -> shapeContains(entity, shape))
+                    .filter(entity -> shapeContains(entity, physicalEntity))
                     .iterator();        }
     }
 

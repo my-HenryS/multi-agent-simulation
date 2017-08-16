@@ -4,8 +4,6 @@ import org.socialforce.geom.Force;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.Vector;
 import org.socialforce.geom.impl.Force2D;
-import org.socialforce.model.ForceRegulation;
-import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.Model;
 
 /**
@@ -27,8 +25,8 @@ public class GravityRegulation extends TypeMatchRegulation<Star_Planet,Star_Plan
      */
     @Override
     public Force getForce(Star_Planet interactiveEntity, Star_Planet interactiveEntity2) {
-        Point point1 = interactiveEntity.getShape().getReferencePoint();
-        Point point2 = interactiveEntity2.getShape().getReferencePoint();
+        Point point1 = interactiveEntity.getPhysicalEntity().getReferencePoint();
+        Point point2 = interactiveEntity2.getPhysicalEntity().getReferencePoint();
         double distance = point1.distanceTo(point2);
         Vector direction = point1.directionTo(point2);
         double f = G_constant*interactiveEntity.getMass()*interactiveEntity2.getMass()/(distance*distance);

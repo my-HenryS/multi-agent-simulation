@@ -17,15 +17,15 @@ public class BaseAgent extends Entity implements Agent {
     Palstance currPal=new Palstance2D(0),currAccPal = new Palstance2D(0);
     Path path;
     double mass,intertia;
-    DistanceShape view;
+    DistancePhysicalEntity view;
     Force pushed;
     Moment spined;
     boolean escaped = false;
-    DistanceShape shape;
+    DistancePhysicalEntity shape;
     protected static double forceUpbound = Double.MAX_VALUE;
     private static double momentUpbound = Double.MAX_VALUE;
 
-    public BaseAgent(DistanceShape shape, Velocity velocity) {
+    public BaseAgent(DistancePhysicalEntity shape, Velocity velocity) {
         super(shape);
         this.shape = shape;
         this.currVelocity = velocity;
@@ -42,7 +42,7 @@ public class BaseAgent extends Entity implements Agent {
      * @return 实体的形状.
      */
     @Override
-    public DistanceShape getShape() {
+    public DistancePhysicalEntity getPhysicalEntity() {
         return shape;
     }
 
@@ -84,11 +84,11 @@ public class BaseAgent extends Entity implements Agent {
      * 该agent只和位于该视域范围内的agent进行交互
      *
      * @return 一个表示该视域范围的形状
-     * @see Shape
+     * @see PhysicalEntity
      */
     @Override
-    // FIXME: 2016/9/3 it should be DistanceShape to support pool selection.
-    public DistanceShape getView() {
+    // FIXME: 2016/9/3 it should be DistancePhysicalEntity to support pool selection.
+    public DistancePhysicalEntity getView() {
         return view;
     }
 
@@ -261,7 +261,7 @@ public class BaseAgent extends Entity implements Agent {
 
 
     public String toString(){
-        return "Shape:" + this.shape.toString() + "\tVelocity:" + this.currVelocity.toString() + "\tForce:" + this.pushed.toString();
+        return "PhysicalEntity:" + this.shape.toString() + "\tVelocity:" + this.currVelocity.toString() + "\tForce:" + this.pushed.toString();
     }
 
     /**
@@ -269,8 +269,8 @@ public class BaseAgent extends Entity implements Agent {
      * @return 代表可阻挡范围的Shape
      */
     @Override
-    public Shape blockSize() {
-        return this.getShape().clone();
+    public PhysicalEntity blockSize() {
+        return this.getPhysicalEntity().clone();
     }
 
     /**
@@ -282,7 +282,7 @@ public class BaseAgent extends Entity implements Agent {
     public boolean onAdded(Scene scene) {
         for(Iterator<InteractiveEntity> iterator = scene.getAllEntitiesStream().iterator();iterator.hasNext();){
             InteractiveEntity entity = iterator.next();
-            if(shape.intersects(entity.getShape())){
+            if(shape.intersects(entity.getPhysicalEntity())){
                 return false;
             }
         }

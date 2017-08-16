@@ -22,8 +22,6 @@ import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.util.*;
-import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -262,7 +260,7 @@ public class SceneShower implements SceneListener {
         @Override
         public void onStep(Scene scene) {
             for(Agent agent: scene.getAllAgents()){
-                org.socialforce.geom.Point position = agent.getShape().getReferencePoint();
+                org.socialforce.geom.Point position = agent.getPhysicalEntity().getReferencePoint();
                 aggrHeatMap[(int)(position.getY() - yMin)][(int)(position.getX() - xMin)] += 1;
             }
             for(int i = 0; i < aggrHeatMap.length; i++){

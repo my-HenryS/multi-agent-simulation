@@ -2,7 +2,6 @@ package org.socialforce.app.gui;
 
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.*;
-import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.scene.Scene;
@@ -320,11 +319,11 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
             SceneDrawer sc = (SceneDrawer) SceneBoard.this.scene.getDrawer();
             double[] point = sc.screenToScene(e.getX(), e.getY());
             try {
-                Agent select = scene.getAllAgents().stream().filter(agent -> agent.getShape().contains(new Point2D(point[0], point[1]))).findFirst().get();
+                Agent select = scene.getAllAgents().stream().filter(agent -> agent.getPhysicalEntity().contains(new Point2D(point[0], point[1]))).findFirst().get();
                 textArea.append(select.toString() + "\n");
                 textArea.append("  "+select.getVelocity().toString() + "\n");
                 textArea.append("  加"+select.getAcceleration().toString() + "\n");
-                textArea.append("  期望位置"+select.getPath().nextStep(select.getShape().getReferencePoint())+ "\n");
+                textArea.append("  期望位置"+select.getPath().nextStep(select.getPhysicalEntity().getReferencePoint())+ "\n");
             } catch (NoSuchElementException ex) {
 
             }

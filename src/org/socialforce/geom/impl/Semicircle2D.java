@@ -6,7 +6,7 @@ import org.socialforce.geom.*;
 /**
  * Created by sunjh1999 on 2016/11/12.
  */
-public class Semicircle2D implements Shape {
+public class Semicircle2D extends Shape2D implements PhysicalEntity  {
     protected Drawer drawer;
     protected Rectangle2D bounding_box;
     protected Circle2D bounding_circle;
@@ -90,12 +90,12 @@ public class Semicircle2D implements Shape {
     }
 
     @Override
-    public Shape clone() {
+    public PhysicalEntity clone() {
         return new Semicircle2D(center, radius, angle);
     }
 
     @Override
-    public Shape expandBy(double extent) {
+    public PhysicalEntity expandBy(double extent) {
         radius += extent;
         return this;
     }

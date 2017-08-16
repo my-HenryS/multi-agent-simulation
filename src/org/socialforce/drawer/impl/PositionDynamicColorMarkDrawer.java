@@ -1,7 +1,6 @@
 package org.socialforce.drawer.impl;
 
 import org.socialforce.geom.*;
-import org.socialforce.model.Agent;
 import org.socialforce.model.impl.Star_Planet;
 
 import java.awt.*;
@@ -23,7 +22,7 @@ public class PositionDynamicColorMarkDrawer extends DynamicColorDrawer<Star_Plan
         Box size = agent.getScene().getBounds();
         double [] sz = new double[2];
         size.getSize().get(sz);
-        org.socialforce.geom.Point p = agent.getShape().getReferencePoint();
+        org.socialforce.geom.Point p = agent.getPhysicalEntity().getReferencePoint();
         int xq = quant(sz[0],p.getX(),size.getStartPoint().getX());
         int yq = quant(sz[1],p.getY(),size.getStartPoint().getY());
         return new Color(255-xq,yq,0);

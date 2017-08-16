@@ -4,21 +4,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.socialforce.app.Interpreter;
 import org.socialforce.app.impl.SimpleInterpreter;
-import org.socialforce.geom.DistanceShape;
-import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.impl.Exit;
 import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.model.impl.SimpleForceModel;
-import org.socialforce.neural.DataSetGenerator;
-import org.socialforce.scene.ParameterPool;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
 import org.socialforce.scene.impl.*;
 
-import java.io.File;
 import java.io.InputStream;
 
 

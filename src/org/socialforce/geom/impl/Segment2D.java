@@ -8,7 +8,7 @@ import org.socialforce.drawer.Drawer;
  * 有两个点定义.
  * Created by Whatever on 2016/8/10.
  */
-public class Segment2D implements Shape {
+public class Segment2D extends Shape2D implements PhysicalEntity {
     //protected Point2D a, b;
     //protected double k1, b1, startX, endX;
     protected double x1, x2, y1, y2;
@@ -328,7 +328,7 @@ public class Segment2D implements Shape {
     }
 
     @Override
-    public Shape expandBy(double extent) {
+    public PhysicalEntity expandBy(double extent) {
         double angel = this.getAngel();
         x1 -= extent*Math.cos(angel);
         x2 += extent*Math.cos(angel);

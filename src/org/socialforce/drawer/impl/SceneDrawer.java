@@ -156,7 +156,7 @@ public class SceneDrawer implements Drawer<ProxyedGraphics2D,Scene> {
 
 //        Iterable<Agent> agents = scene.getAllAgents();
 //        for(Agent agent : agents) {
-//            //agent.getShape().setDrawer();
+//            //agent.getPhysicalEntity().setDrawer();
 //            // 2016/8/24 add factory method for drawer.
 //
 //        }

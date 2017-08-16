@@ -1,9 +1,8 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.model.*;
 import org.socialforce.scene.Scene;
-import org.socialforce.scene.SceneListener;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -14,8 +13,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class SafetyRegion extends Entity implements Influential{
     LinkedBlockingQueue<Integer> agentEscaping = new LinkedBlockingQueue<>();
     int agentEscapeThisStep = 0;
-    public SafetyRegion(Shape shape) {
-        super(shape);
+    public SafetyRegion(PhysicalEntity physicalEntity) {
+        super(physicalEntity);
     }
 
     /**
@@ -28,7 +27,7 @@ public class SafetyRegion extends Entity implements Influential{
     public void affect(Agent target) {
             Agent agent = (Agent) target;
             //agent.push(model.interactionForce(this,agent));
-            if(shape.contains(agent.getShape().getReferencePoint())) {
+            if(physicalEntity.contains(agent.getPhysicalEntity().getReferencePoint())) {
                 //agent exited.
                 if(scene != null) {
                     scene.onAgentEscape(agent); // add valid scene.
@@ -69,12 +68,12 @@ public class SafetyRegion extends Entity implements Influential{
 
     @Override
     public SafetyRegion clone() {
-        return new SafetyRegion(shape.clone());
+        return new SafetyRegion(physicalEntity.clone());
     }
 
     @Override
-    public Shape getView() {
-        return this.getShape();
+    public PhysicalEntity getView() {
+        return this.getPhysicalEntity();
     }
 
     public int getLastSecondEscapedAgents(){

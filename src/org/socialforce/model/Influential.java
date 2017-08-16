@@ -1,7 +1,6 @@
 package org.socialforce.model;
 
-import org.socialforce.geom.DistanceShape;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.PhysicalEntity;
 
 /**
  * 可影响Agent的实体
@@ -13,9 +12,9 @@ public interface Influential extends InteractiveEntity {
      * 获取一个Affectable的可影响范围。
      * 该Affectable只和位于该视域范围内的Affected进行交互
      * @return 一个表示该视域范围的形状
-     * @see Shape
+     * @see PhysicalEntity
      */
-    Shape getView();
+    PhysicalEntity getView();
 
     /**
      * 定义一个实体如何影响Agent

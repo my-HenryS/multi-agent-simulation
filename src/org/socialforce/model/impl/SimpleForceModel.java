@@ -5,7 +5,6 @@ import org.socialforce.geom.*;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.*;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -117,7 +116,7 @@ public class SimpleForceModel implements Model {
             Agent agent = (Agent) source;
             Velocity expected = this.zeroVelocity();
             Force force = this.zeroForce();
-            Point current = agent.getShape().getReferencePoint(), goal = agent.getPath().nextStep(current);
+            Point current = agent.getPhysicalEntity().getReferencePoint(), goal = agent.getPath().nextStep(current);
             expected.sub(current);
             expected.add(goal);
             expected.scale(EXPECTED_SPEED / expected.length());
@@ -126,7 +125,7 @@ public class SimpleForceModel implements Model {
             force.scale(agent.getMass() / REACT_TIME);
             agent.push(force);
 
-            if(agent.getShape() instanceof Ellipse2D){
+            if(agent.getPhysicalEntity() instanceof Ellipse2D){
                 Moment moment;
                 Palstance p = agent.getPalstance().clone(), expectP = new Palstance2D(EXPECTED_PALSTANCE);
                 p.scale(-1);

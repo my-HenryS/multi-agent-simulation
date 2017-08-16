@@ -36,7 +36,7 @@ public class ECStrategy implements DynamicStrategy {
                 int front_num = fronts(agent, goal);
                 //设置最优path
                 Path path = pathFinder.plan_for(goal);
-                double pathLength = path.length(agent.getShape().getReferencePoint());
+                double pathLength = path.length(agent.getPhysicalEntity().getReferencePoint());
                 double velocity = ((SimpleForceModel)agent.getModel()).getExpectedSpeed();
                 double t = pathLength / velocity + front_num / EC(Width.widthOf(goal), ((SimpleForceModel)agent.getModel()).getExpectedSpeed());
                 if(t < factor_t){
@@ -61,7 +61,7 @@ public class ECStrategy implements DynamicStrategy {
         int front_num = 0;
         for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
             Agent target_agent = (Agent) iter.next();
-            if(agent.getShape().getDistance(goal) > target_agent.getShape().getDistance(goal)){
+            if(agent.getPhysicalEntity().getDistance(goal) > target_agent.getPhysicalEntity().getDistance(goal)){
                 front_num += 1;
             }
         }

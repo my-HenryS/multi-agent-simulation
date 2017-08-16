@@ -9,7 +9,7 @@ import org.socialforce.geom.*;
  */
 
 
-public class Circle2D implements DistanceShape {
+public class Circle2D extends Shape2D implements DistancePhysicalEntity {
     /**
      * 半径:二维圆的半径.
      * @see Drawer
@@ -154,12 +154,12 @@ public class Circle2D implements DistanceShape {
      * @return 距离
      */
     @Override
-    public double distanceTo(Shape other) {
+    public double distanceTo(PhysicalEntity other) {
         double distance =  other.getDistance(this.center) - this.radius;
         return distance;
     }
 
-    public Vector directionTo(Shape other){
+    public Vector directionTo(PhysicalEntity other){
         Vector2D vector2D = (Vector2D) other.getDirection(center);
         if(distanceTo(other)<-radius) vector2D.scale(-1);
         return vector2D;
@@ -170,7 +170,7 @@ public class Circle2D implements DistanceShape {
 
 
     @Override
-    public boolean intersects(Shape other) {
+    public boolean intersects(PhysicalEntity other) {
         return distanceTo(other) <= 0;
     }
 

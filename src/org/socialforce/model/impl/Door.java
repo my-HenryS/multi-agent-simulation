@@ -31,8 +31,8 @@ public class Door extends Entity implements Moveable, Influential {
     }
 
     @Override
-    public Shape getView() {
-        return this.getShape();
+    public PhysicalEntity getView() {
+        return this.getPhysicalEntity();
     }
 
     /**
@@ -53,7 +53,7 @@ public class Door extends Entity implements Moveable, Influential {
      * @return 实体的形状.
      */
     @Override
-    public Shape getShape() {
+    public PhysicalEntity getPhysicalEntity() {
         return rectangle2D;
     }
 
@@ -95,7 +95,7 @@ public class Door extends Entity implements Moveable, Influential {
 
     /**
      * 将该实体放置在一个特殊的点上。
-     * TODO the shape will {@code moveTo} that point.
+     * TODO the physicalEntity will {@code moveTo} that point.
      *
      * @param point 目标点。
      */

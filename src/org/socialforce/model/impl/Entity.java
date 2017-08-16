@@ -1,11 +1,10 @@
 package org.socialforce.model.impl;
 
 import org.socialforce.drawer.Drawer;
-import org.socialforce.model.Agent;
+import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.scene.Scene;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
 import org.socialforce.model.Model;
 
 /**
@@ -14,7 +13,7 @@ import org.socialforce.model.Model;
  */
 public abstract class Entity implements InteractiveEntity {
     protected Model model;
-    protected Shape shape;
+    protected PhysicalEntity physicalEntity;
 
     @Override
     public Drawer getDrawer() {
@@ -62,39 +61,38 @@ public abstract class Entity implements InteractiveEntity {
 
     /**
      *
-     * @param shape
+     * @param physicalEntity
      */
-    public Entity(Shape shape) {
-        this.shape = shape;
+    public Entity(PhysicalEntity physicalEntity) {
+        this.physicalEntity = physicalEntity;
     }
 
     /**
      *
      * @param model
-     * @param shape
+     * @param physicalEntity
      */
-    public Entity(Model model, Shape shape) {
+    public Entity(Model model, PhysicalEntity physicalEntity) {
         this.model = model;
-        this.shape = shape;
+        this.physicalEntity = physicalEntity;
     }
 
     /**
      * 设置一个实体的形状
      * 如线，矩形，圆等。
      */
-    public void setShape(Shape shape) {
-        this.shape = shape;
+    public void setPhysicalEntity(PhysicalEntity physicalEntity) {
+        this.physicalEntity = physicalEntity;
     }
 
     /**
      * 获取一个实体的形状
      * 如线，矩形，圆等。
      *
-     * @return shape 实体的形状.
+     * @return physicalEntity 实体的形状.
      */
-    @Override
-    public Shape getShape() {
-        return shape;
+    public PhysicalEntity getPhysicalEntity() {
+        return physicalEntity;
     }
 
     /**
@@ -119,12 +117,12 @@ public abstract class Entity implements InteractiveEntity {
 
     /**
      * 将该实体放置在一个特殊的点上。
-     * TODO the shape will {@code moveTo} that point.
+     * TODO the physicalEntity will {@code moveTo} that point.
      * @param point 目标点。
      */
     @Override
     public void placeOn(Point point) {
-        shape.moveTo(point);
+        physicalEntity.moveTo(point);
     }
 
     @Override

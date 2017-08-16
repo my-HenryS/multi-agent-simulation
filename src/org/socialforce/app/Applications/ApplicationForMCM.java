@@ -1,7 +1,7 @@
 package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.DistancePhysicalEntity;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.*;
@@ -18,7 +18,7 @@ import java.util.Iterator;
  * 暂时不完全可用 还需调整
  */
 public class ApplicationForMCM extends SimpleApplication implements Application {
-    DistanceShape template = new Circle2D(new Point2D(0,0), 2/2);
+    DistancePhysicalEntity template = new Circle2D(new Point2D(0,0), 2/2);
     public ApplicationForMCM(){
 
     }

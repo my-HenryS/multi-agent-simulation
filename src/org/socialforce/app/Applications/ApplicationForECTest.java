@@ -1,7 +1,7 @@
 package org.socialforce.app.Applications;
 
 import org.socialforce.app.*;
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.DistancePhysicalEntity;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.InteractiveEntity;
@@ -22,7 +22,7 @@ import java.util.Iterator;
  * Created by Whatever on 2016/12/2.
  */
 public class ApplicationForECTest extends SimpleApplication implements Application {
-    DistanceShape template;
+    DistancePhysicalEntity template;
 
     public ApplicationForECTest(){
     }

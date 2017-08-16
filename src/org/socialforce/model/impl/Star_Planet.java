@@ -13,7 +13,7 @@ public class Star_Planet extends BaseAgent implements Agent {
     /**
      * @param shape
      */
-    public Star_Planet(DistanceShape shape, Velocity velocity) {
+    public Star_Planet(DistancePhysicalEntity shape, Velocity velocity) {
         super(shape,velocity);
         this.view = new Circle2D(shape.getReferencePoint(),100);
         super.forceUpbound = Double.POSITIVE_INFINITY;
@@ -98,7 +98,7 @@ public class Star_Planet extends BaseAgent implements Agent {
     }
 
     @Override
-    public DistanceShape getView(){
+    public DistancePhysicalEntity getView(){
         return view;
     }
 
