@@ -1,9 +1,6 @@
 package org.socialforce.geom.impl;
 
-import org.socialforce.geom.Affection;
-import org.socialforce.geom.Moment;
-import org.socialforce.geom.Palstance;
-import org.socialforce.geom.RotatablePhysicalEntity;
+import org.socialforce.geom.*;
 
 /**
  * Created by Whatever on 2017/8/16.
@@ -57,4 +54,7 @@ public abstract class RotatableShape2D extends Shape2D implements RotatablePhysi
     public void setInertia(double inertia){
         this.inertia = inertia;
     }
+
+    @Override
+    public abstract PhysicalEntity clone();
 }

@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * Created by Administrator on 2017/7/5 0005.
  */
-public class MultiCircle2D extends RotatableShape2D implements RotatablePhysicalEntity {
+public class MultiCircle2D extends RotatableShape2D implements RotatablePhysicalEntity,DistancePhysicalEntity {
     private double a;
     private double b;
     private Point center;
@@ -106,7 +106,7 @@ public class MultiCircle2D extends RotatableShape2D implements RotatablePhysical
      * @return 椭圆的副本
      */
     @Override
-    public Ellipse2D clone() {
+    public DistancePhysicalEntity clone() {
         return new Ellipse2D(a, b, center.clone(), angle);
     }
 

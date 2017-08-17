@@ -6,7 +6,7 @@ import org.socialforce.geom.*;
 /**
  * Created by Administrator on 2017/5/10 0010.
  */
-public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEntity {
+public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEntity,DistancePhysicalEntity {
     private double a;
     private double b;
     private Point center;
@@ -106,7 +106,7 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
      * @return 椭圆的副本
      */
     @Override
-    public Ellipse2D clone() {
+    public DistancePhysicalEntity clone() {
         return new Ellipse2D(a, b, center.clone(), angle);
     }
 

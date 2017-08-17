@@ -5,11 +5,12 @@ import org.socialforce.geom.*;
 /**
  * Created by Whatever on 2017/8/16.
  */
-public abstract class Shape2D implements PhysicalEntity {
+abstract class Shape2D implements PhysicalEntity {
     Velocity currVelocity, currAcceleration = new Velocity2D(0,0);
     Force pushed;
     Double mass;
     protected static double forceUpbound = Double.MAX_VALUE;
+
 
 
     @Override
@@ -64,5 +65,6 @@ public abstract class Shape2D implements PhysicalEntity {
         return currAcceleration;
     }
 
-
+    @Override
+    public abstract PhysicalEntity clone();
 }
