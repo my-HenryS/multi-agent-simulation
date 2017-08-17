@@ -59,5 +59,10 @@ public abstract class Shape2D implements PhysicalEntity {
         this.currVelocity = velocity;
     }
 
+    @Override
+    public Velocity getAcceleration(){
+        return currAcceleration;
+    }
+
 
 }

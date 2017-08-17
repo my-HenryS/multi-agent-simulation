@@ -104,37 +104,8 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public void act() {
-        if(pushed.length() > forceUpbound){
-            this.pushed = pushed.getRefVector();
-            pushed.scale(forceUpbound);
-        }
-        Velocity next_v = new Velocity2D(0,0), deltaV = this.pushed.deltaVelocity(mass, model.getTimePerStep());
-        currAcceleration = deltaV.clone();
-        currAcceleration.scale(1/model.getTimePerStep());//TODO 为什么还要再scale一次，查明。
-        Vector deltaS;
-        next_v.add(currVelocity);
-        next_v.add(deltaV);
-        this.currVelocity.add(deltaV);
-        deltaS = next_v.deltaDistance(model.getTimePerStep());
-        Point point = shape.getReferencePoint();
-        point.add(deltaS);
-        this.shape.moveTo(point);
-        this.view.moveTo(point);                      //改变视野
-        pushed = model.zeroForce();
-
-        if (shape instanceof Ellipse2D){
-            if (Math.abs(((Moment2D)spined).getM())> momentUpbound){
-                spined.scale(momentUpbound/Math.abs(((Moment2D) spined).getM()));
-            }
-            Palstance next_Omega = new Palstance2D(0),deltaP = this.spined.deltaPalstance(intertia,model.getTimePerStep());
-            double deltaAngle;
-            next_Omega.add(currPal);
-            next_Omega.add(deltaP);
-            deltaAngle = next_Omega.deltaAngle(model.getTimePerStep());
-            this.currPal.add(deltaP);
-            ((Ellipse2D) shape).spin(deltaAngle);
-            spined.scale(0);
-        }
+        shape.act(model.getTimePerStep());
+        view.moveTo(shape.getReferencePoint());
     }
 
     /**
@@ -209,17 +180,21 @@ public class BaseAgent extends Entity implements Agent {
 
     @Override
     public Palstance getPalstance() {
-        return currPal;
+        if(shape instanceof RotatablePhysicalEntity){
+        return ((RotatablePhysicalEntity) shape).getPalstance();}
+        else return new Palstance2D(0);
     }
 
     @Override
     public double getIntetia() {
-        return intertia;
+        if(shape instanceof RotatablePhysicalEntity){
+            return ((RotatablePhysicalEntity) shape).getInertia();}
+        else return 0;
     }
 
     @Override
     public void rotate(Moment moment){
-        this.spined.add(moment);
+        shape.push(moment);
     }
 
     /**
@@ -228,21 +203,20 @@ public class BaseAgent extends Entity implements Agent {
      * @see Model
      */
     public void selfAffect(){
-
-        if (shape instanceof Ellipse2D){
+        if (shape instanceof RotatablePhysicalEntity){
             double angle = ((Ellipse2D)shape).getAngle();
             Vector2D face = new Vector2D(-Math.sin(angle),Math.cos(angle));
             Velocity2D expected = new Velocity2D(0,0);
             expected.sub(shape.getReferencePoint());
             expected.add(path.nextStep(shape.getReferencePoint()));
             double size = Vector2D.getRotateAngle(expected , face);
-            spined.add(new Moment2D(size*200));
+            shape.push(new Moment2D(size*200));
         }
     }
 
     @Override
     public Velocity getAcceleration() {
-        return currAcceleration;
+        return shape.getAcceleration();
     }
 
     /**
@@ -253,7 +227,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public double getMass() {
-        return mass;
+        return shape.getMass();
     }
 
     @Override
