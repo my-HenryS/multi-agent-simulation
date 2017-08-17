@@ -11,6 +11,8 @@ public interface RotatablePhysicalEntity extends DistancePhysicalEntity {
     void spin(double angle);
 
     Palstance getPalstance();
+    void setPalstance(Palstance omega);
 
     double getInertia();
+    void setInertia(double inertia);
 }

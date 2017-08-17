@@ -47,4 +47,14 @@ public abstract class RotatableShape2D extends Shape2D implements RotatablePhysi
         this.spin(deltaAngle);
         spined.scale(0);
     }
+
+    @Override
+    public void setPalstance(Palstance omega){
+        currPal = omega;
+    }
+
+    @Override
+    public void setInertia(double inertia){
+        this.inertia = inertia;
+    }
 }

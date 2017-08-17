@@ -48,4 +48,16 @@ public abstract class Shape2D implements PhysicalEntity {
     public double getMass(){
         return mass;
     }
+
+    @Override
+    public void setMass(double mass){
+        this.mass = mass;
+    }
+
+    @Override
+    public void setVelocity(Velocity velocity){
+        this.currVelocity = velocity;
+    }
+
+
 }

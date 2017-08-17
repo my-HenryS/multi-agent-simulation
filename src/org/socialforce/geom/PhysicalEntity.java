@@ -97,12 +97,14 @@ public interface PhysicalEntity extends Serializable, Cloneable, DimensionEntity
 
 
     Velocity getVelocity();
+    void setVelocity(Velocity velocity);
 
     void act(double time);
 
     void push(Affection affection);
 
     double getMass();
+    void setMass(double mass);
 }
 
 

@@ -28,9 +28,11 @@ public class BaseAgent extends Entity implements Agent {
     public BaseAgent(DistancePhysicalEntity shape, Velocity velocity) {
         super(shape);
         this.shape = shape;
-        this.currVelocity = velocity;
-        this.mass = 80;
-        this.intertia = 20;
+        this.shape.setVelocity(velocity);
+        this.shape.setMass(80);
+        if (this.shape instanceof RotatablePhysicalEntity) {
+            ((RotatablePhysicalEntity) this.shape).setInertia(20);
+        }
         Circle2D circle = new Circle2D(shape.getReferencePoint(),5);
         this.view = circle;
     }
@@ -53,7 +55,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public Velocity getVelocity() {
-        return currVelocity;
+        return shape.getVelocity();
     }
 
     /**
@@ -63,7 +65,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public void push(Force force) {
-        this.pushed.add(force);
+        this.shape.push(force);
     }
 
     /**
