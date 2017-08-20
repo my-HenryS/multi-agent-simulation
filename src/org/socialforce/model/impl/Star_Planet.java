@@ -56,7 +56,7 @@ public class Star_Planet extends BaseAgent implements Agent {
 
     @Override
     public Star_Planet clone() {
-        return new Star_Planet(shape.clone(), currVelocity.clone());
+        return new Star_Planet(shape.clone(), shape.getVelocity().clone());
     }
 
     /**
@@ -66,24 +66,9 @@ public class Star_Planet extends BaseAgent implements Agent {
      */
     @Override
     public Velocity getVelocity() {
-        return currVelocity;
+        return shape.getVelocity();
     }
 
-    public void setVelocity(Velocity velocity){
-        this.currVelocity = velocity;
-    }
-
-
-    /**
-     * 将实体以一定大小的力推向目标点。
-     *
-     * @param force 推时力的大小
-     */
-    @Override
-    public void push(Force force) {
-        Velocity dv = force.deltaVelocity(getMass(),getModel().getTimePerStep());
-        currVelocity.add(dv);
-    }
 
     /**
      * 用大小为force的力推位于特定位置上的点。
@@ -102,14 +87,4 @@ public class Star_Planet extends BaseAgent implements Agent {
         return view;
     }
 
-    public void act(){
-        Point2D point2D = (Point2D) shape.getReferencePoint();
-        Velocity v= currVelocity.clone();
-        Vector vv = v.deltaDistance(model.getTimePerStep());
-        double[] cp = new double[2];
-        vv.get(cp);
-        point2D.moveBy(cp[0],cp[1]);
-        shape.moveTo(point2D);
-        this.view.moveTo(point2D);
-    }
 }

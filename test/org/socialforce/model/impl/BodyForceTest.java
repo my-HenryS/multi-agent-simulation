@@ -44,8 +44,8 @@ public class BodyForceTest {
     public void getForce() throws Exception {
         System.out.println(bodyForce.getForce(targetAgent,baseAgent).toString());
         System.out.println(targetAgent.getPhysicalEntity().distanceTo(baseAgent.getPhysicalEntity()));
-        baseAgent.currVelocity = new Velocity2D(1,0);
-        targetAgent2.currVelocity = new Velocity2D(0,1);
+        baseAgent.setVelocity(new Velocity2D(1,0));
+        targetAgent2.setVelocity(new Velocity2D(0,1));
         System.out.println(bodyForce.getForce(targetAgent2,baseAgent).toString());
     }
 

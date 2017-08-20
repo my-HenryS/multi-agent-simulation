@@ -13,7 +13,6 @@ import java.util.Iterator;
  * Created by Ledenel on 2016/8/15.
  */
 public class BaseAgent extends Entity implements Agent {
-    Velocity currVelocity, currAcceleration = new Velocity2D(0,0);
     Palstance currPal=new Palstance2D(0),currAccPal = new Palstance2D(0);
     Path path;
     double mass,intertia;
@@ -232,12 +231,12 @@ public class BaseAgent extends Entity implements Agent {
 
     @Override
     public BaseAgent clone() {
-        return new BaseAgent(shape.clone(), currVelocity.clone());
+        return new BaseAgent(shape.clone(), getVelocity().clone());
     }
 
 
     public String toString(){
-        return "PhysicalEntity:" + this.shape.toString() + "\tVelocity:" + this.currVelocity.toString() + "\tForce:" + this.pushed.toString();
+        return "PhysicalEntity:" + this.shape.toString() + "\tVelocity:" + getVelocity().toString() + "\tForce:" + this.pushed.toString();
     }
 
     /**
@@ -270,7 +269,7 @@ public class BaseAgent extends Entity implements Agent {
 
     }
 
-    public void setCurrVelocity(Velocity2D velocity){
-        this.currVelocity = velocity;
+    public void setVelocity(Velocity2D velocity){
+        this.shape.setVelocity(velocity);
     }
 }

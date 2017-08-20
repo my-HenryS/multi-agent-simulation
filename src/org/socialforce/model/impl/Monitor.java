@@ -28,7 +28,7 @@ public class Monitor extends Entity implements Influential {
     }
 
     public void affect(Agent target) {
-        velocity += ((BaseAgent) target).currVelocity.length();
+        velocity += target.getVelocity().length();
         vNum += 1;
         if(!agents.contains(target)){   //EC计数不复用Agent
             agents.addLast(target);

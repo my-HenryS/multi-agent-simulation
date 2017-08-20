@@ -54,4 +54,10 @@ public interface Agent extends Influential, Moveable, Blockable,Rotateable {
      */
 
     Velocity getAcceleration();
+
+    /**
+     * 获取加速度
+     */
+
+    Velocity getVelocity();
 }
