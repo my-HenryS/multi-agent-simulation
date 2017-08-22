@@ -7,7 +7,7 @@ import org.socialforce.geom.*;
  */
 abstract class Shape2D implements PhysicalEntity {
     Velocity currVelocity, currAcceleration = new Velocity2D(0,0);
-    Force pushed;
+    Force pushed = new Force2D(0,0);
     Double mass;
     protected static double forceUpbound = Double.MAX_VALUE;
 

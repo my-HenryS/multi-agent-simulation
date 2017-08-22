@@ -7,7 +7,7 @@ import org.socialforce.geom.*;
  */
 public abstract class RotatableShape2D extends Shape2D implements RotatablePhysicalEntity {
     double inertia;
-    Moment spined;
+    Moment spined = new Moment2D(0);
     Palstance currPal=new Palstance2D(0),currAccPal = new Palstance2D(0);
     private static double momentUpbound = Double.MAX_VALUE;
 

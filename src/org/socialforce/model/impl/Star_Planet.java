@@ -2,7 +2,6 @@ package org.socialforce.model.impl;
 
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.Model;
 
@@ -16,7 +15,6 @@ public class Star_Planet extends BaseAgent implements Agent {
     public Star_Planet(DistancePhysicalEntity shape, Velocity velocity) {
         super(shape,velocity);
         this.view = new Circle2D(shape.getReferencePoint(),100);
-        super.forceUpbound = Double.POSITIVE_INFINITY;
     }
 
     /**
@@ -50,13 +48,13 @@ public class Star_Planet extends BaseAgent implements Agent {
      */
     @Override
     public double getMass() {
-        double d = shape.getBounds().getSize().length();
+        double d = physicalEntity.getBounds().getSize().length();
         return d*d*d*8;
     }
 
     @Override
     public Star_Planet clone() {
-        return new Star_Planet(shape.clone(), shape.getVelocity().clone());
+        return new Star_Planet(physicalEntity.clone(), physicalEntity.getVelocity().clone());
     }
 
     /**
@@ -66,7 +64,7 @@ public class Star_Planet extends BaseAgent implements Agent {
      */
     @Override
     public Velocity getVelocity() {
-        return shape.getVelocity();
+        return physicalEntity.getVelocity();
     }
 
 
