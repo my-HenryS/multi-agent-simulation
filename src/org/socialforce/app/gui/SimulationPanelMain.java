@@ -41,7 +41,11 @@ public class SimulationPanelMain implements ApplicationListener {
                 SwingWorker<Void, Application> worker = new SwingWorker<Void, Application>() {
                     @Override
                     protected Void doInBackground() throws Exception {
-                        loader.current().start();
+                        try {
+                            loader.current().start();
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
                         //场景运行完毕后
                         running = false;
                         runButton.setText("Run");
