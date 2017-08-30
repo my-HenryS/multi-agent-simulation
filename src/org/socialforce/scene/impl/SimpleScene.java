@@ -17,11 +17,14 @@ import org.socialforce.scene.SceneListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by Ledenel on 2016/8/22.
  */
 public class SimpleScene implements Scene {
+    CountDownLatch latch = null;
+
     @Override
     public boolean addSceneListener(SceneListener sceneListener) {
         this.sceneListeners.add(sceneListener);
@@ -77,11 +80,26 @@ public class SimpleScene implements Scene {
         entities.addAll(allAgents);
         Iterable<InteractiveEntity> captors = entities.selectClass(Influential.class);
         model.fieldForce(allAgents);
+        int size = 0;
+        for(InteractiveEntity value : captors) {
+            size++;
+        }
+        latch = new CountDownLatch(size);
         for (InteractiveEntity captor : captors){
-            Iterable<Agent> affectableAgents = allAgents.select(((Influential) captor).getView());
-            for (Agent target:affectableAgents){
-                ((Influential) captor).affect(target);
-            }
+            new thread(){
+                public void run(){
+                    Iterable<Agent> affectableAgents = allAgents.select(((Influential) captor).getView());
+                    for (Agent target:affectableAgents){
+                        ((Influential) captor).affect(target);
+                    }
+                    latch.countDown();
+                }
+            }.start();
+        }
+        try {
+            latch.await();  //par-sync
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         Iterable<InteractiveEntity> movables = entities.selectClass(Moveable.class);
         for (InteractiveEntity movable : movables) {
@@ -299,5 +317,7 @@ public class SimpleScene implements Scene {
     }
 
 
-
+    abstract class thread extends Thread {
+        public abstract void run();
+    }
 }
