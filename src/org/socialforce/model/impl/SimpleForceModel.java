@@ -30,6 +30,7 @@ public class SimpleForceModel implements Model {
         regulations.add(new GravityRegulation(Star_Planet.class, Star_Planet.class, this));
         regulations.add(new SpinBodyForceRegulation(this));
         regulations.add(new SpinPsyForceRegulation(this));
+        regulations.add(new DoorTurnRegulation(DoorTurn.class,Agent.class,this));
     }
 
     public SimpleForceModel(double timePerStep){
@@ -67,7 +68,7 @@ public class SimpleForceModel implements Model {
                     moment.add((Moment) temp);
                 }
             }
-            }
+        }
         return moment;
     }
 
