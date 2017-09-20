@@ -58,7 +58,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         template = new BaseAgent(new Ellipse2D(0.486/2,0.3/2,new Point2D(0,0),0), new Velocity2D(0,0));
         scenes = new LinkedList<>();
         DoorWidth = 1.36;
-        density = 10;
+        density = 20;
         setUpT1Scene5();
         for(Scene scene:scenes){
             scene.setApplication(this);
@@ -91,7 +91,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         );
 
         parameters.addValuesAsParameter(new SimpleEntityGenerator()
-                .setValue(new Exit(new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)))
+                .setValue(new DoorTurn(new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)))
                 .setPriority(5)
         );
 

@@ -27,6 +27,7 @@ import java.util.Iterator;
 /**
  * Created by Whatever on 2016/12/15.
  */
+
 public class ApplicationForECStrategy extends SimpleApplication implements Application {
     DistancePhysicalEntity template;
 
@@ -44,8 +45,7 @@ public class ApplicationForECStrategy extends SimpleApplication implements Appli
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
             currentScene = iterator.next();
             int iteration = 0;
-            PathFinder pathFinder = new AStarPathFinder(currentScene, template);
-            strategy = new ECStrategy(currentScene, pathFinder);
+            strategy = Strategy(currentScene);
             //strategy = new DynamicLifeBeltStrategy(scene, pathFinder);
             //strategy = new LifeBeltStrategy(scene, pathFinder);
             //strategy = new NearestGoalStrategy(scene, pathFinder);
@@ -53,12 +53,21 @@ public class ApplicationForECStrategy extends SimpleApplication implements Appli
             while (!toSkip()) {
                 this.StepNext(currentScene);
                 iteration += 1;
-                if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
+                if(iteration % RedecisionSpan() ==0 && strategy instanceof DynamicStrategy){
                     ((DynamicStrategy) strategy).dynamicDecision();
                 }
             }
             if(onStop()) return;
         }
+    }
+
+    private int RedecisionSpan() {
+        return 500;
+    }
+
+    private DynamicStrategy Strategy(Scene currentScene) {
+        PathFinder pathFinder = new AStarPathFinder(currentScene, template);
+        return new ECStrategy(this.currentScene, pathFinder);
     }
 
     @Override
