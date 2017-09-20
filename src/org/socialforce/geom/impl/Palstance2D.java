@@ -2,7 +2,7 @@ package org.socialforce.geom.impl;
 
 import org.socialforce.geom.Palstance;
 
-/**
+/**角速度
  * Created by Administrator on 2017/6/26 0026.
  */
 public class Palstance2D implements Palstance {

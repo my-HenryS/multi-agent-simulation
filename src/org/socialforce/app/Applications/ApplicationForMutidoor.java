@@ -29,6 +29,7 @@ public class ApplicationForMutidoor extends SimpleApplication implements Applica
     DistancePhysicalEntity template;
 
     public ApplicationForMutidoor(){
+
     }
 
     /**
@@ -92,7 +93,7 @@ public class ApplicationForMutidoor extends SimpleApplication implements Applica
                 );
             }
         }
-
+        //parameters.addValuesAsParameter()
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
                 .addValue(new Wall(new Box2D(0,0,5-doorwidth/2,1)))
                 .addValue(new Wall(new Box2D(5+doorwidth/2,0,5-doorwidth/2,1)))

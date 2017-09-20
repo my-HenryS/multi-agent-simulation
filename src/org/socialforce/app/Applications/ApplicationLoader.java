@@ -28,6 +28,7 @@ public class ApplicationLoader extends LinkedList<Application> implements Collec
         add(new ApplicationForECStrategy());
         add(new ApplicationForECTest());
         add(new ApplicationForMCM());
+        add(new ApplicationForTurnDoorTest());
         selected = this.getFirst();
     }
 
