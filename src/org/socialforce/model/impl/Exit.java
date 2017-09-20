@@ -33,7 +33,7 @@ public class Exit extends Entity {
             }
             scene.removeEntity(wall);
         } else /*do nothing*/;
-        return false;
+        return true;
     }
 
     @Override

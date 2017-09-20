@@ -29,4 +29,7 @@ public class DoorTurn extends Exit implements Influential {
     public void affect(Agent target) {
         target.rotate(model.interactionMoment(this,target));
     }
+
+    @Override
+    public DoorTurn clone(){ return new DoorTurn((Box2D) box2D.clone()); }
 }

@@ -1,6 +1,7 @@
 package org.socialforce.model.impl;
 
 import org.socialforce.geom.Affection;
+import org.socialforce.geom.RotatablePhysicalEntity;
 import org.socialforce.geom.Velocity;
 import org.socialforce.geom.impl.Ellipse2D;
 import org.socialforce.geom.impl.Moment2D;
@@ -21,23 +22,16 @@ public class DoorTurnRegulation extends TypeMatchRegulation<DoorTurn,Agent>{
 
     @Override
     public Affection getForce(DoorTurn doorTurn, Agent agent) {
-        if ((agent.getPhysicalEntity() instanceof Rotateable)&&(doorTurn.getView().hits(agent.getPhysicalEntity().getBounds()))){
+        /*if ((agent.getPhysicalEntity() instanceof Rotateable)&&(doorTurn.getView().hits(agent.getPhysicalEntity().getBounds()))){
             double angle = ((Ellipse2D) agent.getPhysicalEntity()).getAngle();
             double angleAcceleration = 11.45 * angle * angle - 22.38 * angle + 7.10;
             return new Moment2D(agent.getIntetia()*angleAcceleration);
-        }
-        /*if ((agent.getPhysicalEntity() instanceof Rotateable)&&(doorTurn.getView().hits(agent.getPhysicalEntity().getBounds()))){
-            double angle = ((Ellipse2D)agent.getPhysicalEntity()).getAngle();
-            Vector2D side = new Vector2D(Math.cos(angle),Math.sin(angle));
-            if (Math.sin(angle) < 0)
-                side.scale(-1);
-            //Velocity2D expected = (Velocity2D)agent.getVelocity();
-            Velocity2D expected = new Velocity2D(0,0);
-            expected.sub(agent.getPhysicalEntity().getReferencePoint());
-            expected.add(agent.getPath().nextStep(agent.getPhysicalEntity().getReferencePoint()));
-            double size = Vector2D.getRotateAngle(expected,side);
-            return new Moment2D(size*200);
         }*/
+        if ((agent.getPhysicalEntity() instanceof RotatablePhysicalEntity)&&(agent.getPhysicalEntity().intersects(doorTurn.getView()))){
+            double angle = ((Ellipse2D)agent.getPhysicalEntity()).getAngle();
+            double size = Math.PI/2 - angle;
+            return new Moment2D(size*400);
+        }
         return new Moment2D(0);
 
     }

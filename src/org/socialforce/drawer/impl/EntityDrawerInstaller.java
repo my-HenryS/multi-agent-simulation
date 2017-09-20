@@ -5,6 +5,7 @@ import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.Exit;
 import org.socialforce.model.impl.Monitor;
 import org.socialforce.model.impl.Star_Planet;
 
@@ -48,6 +49,7 @@ public class EntityDrawerInstaller implements DrawerInstaller {
         registerDrawer(new PositionDynamicColorMarkDrawer(device), Star_Planet.class);
         registerDrawer(new GoalDynamicColorMarkDrawer(device), Agent.class);
         registerDrawer(new NonPaintDrawer(device), Monitor.class);
+        registerDrawer(new NonPaintDrawer(device), Exit.class);
         registerDrawer(new EntityDrawer(device), InteractiveEntity.class);
 
     }
