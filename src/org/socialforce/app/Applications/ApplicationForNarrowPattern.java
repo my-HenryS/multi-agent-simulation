@@ -248,7 +248,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("T1.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFrom(is);
-        SceneLoader loader = interpreter.setLoader().setModel(new CSVReaderModel("input/Scene5Box1.csv", 0.02));
+        SceneLoader loader = interpreter.setLoader().setModel(new CSVReaderModel("input/scene5box3.csv", 0.02));
         SimpleParameterPool parameters = new SimpleParameterPool();
         parameters.addValuesAsParameter(new SimpleEntityGenerator()
                 .setValue(new Exit(new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)))
@@ -260,7 +260,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
                 .setValue(new SafetyRegion(new Box2D(1,10,8,1)))
         );
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(30,new Box2D(0,-10,10,5)).setValue(template)
+                new RandomEntityGenerator2D(26,new Box2D(0,-10,10,5)).setValue(template)
         );
         loader.readParameterSet(parameters);
         scenes.add(loader.readScene().getFirst());
