@@ -60,6 +60,8 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
         //setUpT1Scene2();
         setUpT1Scene3();
         setUpT1Scene4();
+        //setUpT1Scene5();
+        setMap();
         setUpT1Scene5();
         setUpT1Scene6();
         setUpT2Scene();
@@ -231,7 +233,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(20,new Box2D(0,-10,10,5)).setValue(template)
+                new RandomEntityGenerator2D(30,new Box2D(0,-10,10,5)).setValue(template)
         );
 
         loader.readParameterSet(parameters);
@@ -239,6 +241,29 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
             scenes.add(s);
         }
 
+    }
+
+    public void setMap(){
+        double DoorWidth = 1.36;
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("T1.s");
+        Interpreter interpreter = new SimpleInterpreter();
+        interpreter.loadFrom(is);
+        SceneLoader loader = interpreter.setLoader().setModel(new CSVReaderModel("input/Scene5Box1.csv", 0.02));
+        SimpleParameterPool parameters = new SimpleParameterPool();
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new Exit(new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)))
+        );
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new Exit(new Box2D(4,-4,2,2)))
+        );
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new SafetyRegion(new Box2D(1,10,8,1)))
+        );
+        parameters.addValuesAsParameter(
+                new RandomEntityGenerator2D(30,new Box2D(0,-10,10,5)).setValue(template)
+        );
+        loader.readParameterSet(parameters);
+        scenes.add(loader.readScene().getFirst());
     }
 
 
