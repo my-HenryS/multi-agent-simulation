@@ -334,7 +334,7 @@ public class Vector2D implements Vector {
     public double getY(){return values[1];}
 
     /**
-     * 获取从基向量逆时针旋转的到环绕向量的旋转角
+     * 获取从基向量逆时针旋转的到环绕向量的旋转角(取值范围:-π_π)
      * @param vr 环绕向量
      * @param vb 基向量
      * @return 旋转角

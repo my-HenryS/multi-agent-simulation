@@ -137,4 +137,14 @@ public class Vector2DTest {
         assertEquals(new Vector2D(-4,3),a);
 
     }
+
+    @Test
+    public void getRotateAngle() throws Exception{
+        Vector2D vr = new Vector2D(-1,-1);
+        Vector2D vb = new Vector2D(1,0);
+        System.out.print(Vector2D.getRotateAngle(vr,vb));
+
+
+    }
+
 }

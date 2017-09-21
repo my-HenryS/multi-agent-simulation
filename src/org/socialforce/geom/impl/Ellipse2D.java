@@ -22,7 +22,7 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
             this.b = a;
         }
         this.center = center;
-        this.angle = angle;
+        this.angle = angle;  //对angle取余数，将this.angle限制在：-π到π
     }
 
     public double getA() {
@@ -47,6 +47,10 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
 
     public double getSideRadius(){
         return (a-b)/2;
+    }
+
+    public Vector2D getBasicDirection(){
+        return new Vector2D(Math.cos(angle),Math.sin(angle));
     }
 
 

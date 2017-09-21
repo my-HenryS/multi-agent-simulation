@@ -204,6 +204,7 @@ public class BaseAgent extends Entity implements Agent {
             expected.add(path.nextStep(physicalEntity.getReferencePoint()));
             double size = Vector2D.getRotateAngle(expected , face);
             physicalEntity.push(new Moment2D(size*200));
+            //physicalEntity.push(new Moment2D((-2.25)*size*size+4.41*size-1.52));
         }
     }
 
