@@ -22,7 +22,19 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
             this.b = a;
         }
         this.center = center;
-        this.angle = angle;  //对angle取余数，将this.angle限制在：-π到π
+        //对angle取余数，将this.angle限制在：-π到π
+        if((angle < -1*Math.PI)||(angle > Math.PI)){
+            if((Math.PI < angle%(2*Math.PI)) && (angle%(2*Math.PI) < 2*Math.PI))
+                this.angle = angle%(2*Math.PI)-2*Math.PI;
+            else if((-2*Math.PI < angle%(2*Math.PI)) && (angle%(2*Math.PI) < -1*Math.PI))
+                this.angle = angle%(2*Math.PI)+2*Math.PI;
+            else
+                this.angle = angle%(2*Math.PI);
+        }
+        this.angle = angle;
+
+
+
     }
 
     public double getA() {

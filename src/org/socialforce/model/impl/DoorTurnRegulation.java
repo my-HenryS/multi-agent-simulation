@@ -23,14 +23,11 @@ public class DoorTurnRegulation extends TypeMatchRegulation<DoorTurn,Agent>{
     @Override
     public Affection getForce(DoorTurn doorTurn, Agent agent) {
         if ((agent.getPhysicalEntity() instanceof RotatablePhysicalEntity)&&(agent.getPhysicalEntity().intersects(doorTurn.getView()))){
-            Vector2D direction = (((Ellipse2D)agent.getPhysicalEntity()).getBasicDirection());
-            double angle = Vector2D.getRotateAngle(doorTurn.getViewDirection(),direction);
-            if(Math.cos(angle)<1.0e-7) {
-                doorTurn.getViewDirection().clone().scale(-1);
-                angle = Vector2D.getRotateAngle(direction,doorTurn.getViewDirection());
-            }
-            return new Moment2D(angle*400);
-            //return new Moment2D( -5.15*angle*angle+9.78*angle-3.09);
+            double angle = doorTurn.getAngle()-((Ellipse2D)agent.getPhysicalEntity()).getAngle();
+            if(Math.abs(doorTurn.getAngle()-((Ellipse2D)agent.getPhysicalEntity()).getAngle())<Math.abs(Math.PI+doorTurn.getAngle()-((Ellipse2D)agent.getPhysicalEntity()).getAngle()))
+                angle = angle+Math.PI;
+            //return new Moment2D(angle*400);
+            return new Moment2D( -5.15*angle*angle+9.78*angle-3.09);
         }
         return new Moment2D(0);
 

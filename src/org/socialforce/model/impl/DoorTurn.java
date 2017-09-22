@@ -11,16 +11,22 @@ import org.socialforce.model.Influential;
 public class DoorTurn extends Exit implements Influential {
 
     protected Box2D door;
-    protected Vector2D viewPoint;  //门内侧的朝向
+    protected double angle;  //朝门内侧的向量对应的转角(此处根据下面getView的定义，恒为-90度)
 
-    public DoorTurn(Box2D door,Vector2D viewPoint) {
-        super(door);
-        this.door = door;
-        this.viewPoint = viewPoint;
+    public DoorTurn(Box2D box2D,double angle) {
+        super(box2D);
+        door = box2D;
+        this.angle = angle;
     }
 
     @Override
-    public Semicircle2D getView() {
+    public DoubleShape2D getView(){
+        Point2D center = new Point2D((((Box2D)this.getPhysicalEntity()).getXmin()+((Box2D)this.getPhysicalEntity()).getXmax())/2,((Box2D)this.getPhysicalEntity()).getYmin());
+        Circle2D circle2D = new Circle2D(center,((Vector2D)((Box2D)this.getPhysicalEntity()).getSize()).getX()/2);
+        return new DoubleShape2D(door,circle2D);
+    }
+
+    /*public Semicircle2D getView() {
         Vector2D viewBasic = new Vector2D(0,-1);
         double angle = Vector2D.getRotateAngle(viewPoint,viewBasic);
         Point2D center = new Point2D();
@@ -40,7 +46,7 @@ public class DoorTurn extends Exit implements Influential {
             center.moveTo(((Box2D)this.getPhysicalEntity()).getXmin(),(((Box2D)this.getPhysicalEntity()).getYmin()+((Box2D)this.getPhysicalEntity()).getYmax())/2);
             return new Semicircle2D(center,((Vector2D)((Box2D)this.getPhysicalEntity()).getSize()).getY()/2,angle);
       }
-    }
+    }*/
 
     @Override
     public void affect(Agent target) {
@@ -48,9 +54,9 @@ public class DoorTurn extends Exit implements Influential {
     }
 
     @Override
-    public DoorTurn clone(){ return new DoorTurn((Box2D)door.clone(),viewPoint.clone()); }
+    public DoorTurn clone(){ return new DoorTurn((Box2D)door.clone(),angle); }
 
-    public Vector2D getViewDirection(){
-        return viewPoint;
+   public double getAngle(){
+        return angle;
     }
 }

@@ -67,6 +67,15 @@ public class Vector2D implements Vector {
         values[1] = y;
     }
 
+    /**
+     * 由point1指向point2的向量
+     */
+    public Vector2D(Point2D point1,Point2D point2){
+        this();
+        values[0] = point2.getX()-point1.getX();
+        values[1] = point2.getY()-point1.getY();
+    }
+
 
 
     /**
