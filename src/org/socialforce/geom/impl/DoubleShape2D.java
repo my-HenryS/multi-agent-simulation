@@ -80,7 +80,7 @@ public class DoubleShape2D extends Shape2D implements PhysicalEntity {
     @Override
     public void moveTo(Point location) {
         shape[1].moveTo(new Point2D(location.getX()+this.getLinkVector().getX(),location.getY()+this.getLinkVector().getY()));
-        shape[0].moveTo(location);
+        shape[0].moveTo(location.clone());
     }
 
     @Override
@@ -90,7 +90,7 @@ public class DoubleShape2D extends Shape2D implements PhysicalEntity {
 
     @Override
     public PhysicalEntity clone() {
-        return new DoubleShape2D(shape[0],shape[1]);
+        return new DoubleShape2D(shape[0].clone(),shape[1].clone());
     }
 
     public PhysicalEntity getMainShape(){

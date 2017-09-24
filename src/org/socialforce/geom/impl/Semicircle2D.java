@@ -10,20 +10,19 @@ public class Semicircle2D extends Shape2D implements PhysicalEntity  {
     protected Drawer drawer;
     protected Rectangle2D bounding_box;
     protected Circle2D bounding_circle;
-    protected Point2D center;
+    protected Point center;
     protected double radius,angle;
 
-    public Semicircle2D(Point2D center, double radius, double angle){
+    public Semicircle2D(Point center, double radius, double angle){
         this.radius = radius;
         this.center = center;
         this.angle = angle;
-        bounding_circle = new Circle2D(center,radius);
+        bounding_circle = new Circle2D(this.center,radius);
         bounding_box = new Rectangle2D(new Point2D(center.getX()-0.5*radius*Math.sin(angle),center.getY()+0.5*radius*Math.cos(angle)),2*radius,radius,angle);
     }
     @Override
     public void setDrawer(Drawer drawer) {
-        this.drawer = drawer
-        ;
+        this.drawer = drawer;
     }
 
     @Override
@@ -77,7 +76,7 @@ public class Semicircle2D extends Shape2D implements PhysicalEntity  {
     @Override
     public void moveTo(Point location) {
          //并不建议在实际应用中用此方法 最好新建一个半圆形区域
-        bounding_circle.moveTo(location);
+        center = location.clone();
         bounding_box.moveTo(new Point2D(center.getX()-0.5*radius*Math.sin(angle),center.getY()+0.5*radius*Math.cos(angle)));
     }
 

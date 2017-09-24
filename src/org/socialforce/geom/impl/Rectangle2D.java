@@ -190,7 +190,7 @@ public class Rectangle2D extends Shape2D implements PhysicalEntity {
      */
     @Override
     public void moveTo(Point location) {
-        center = (Point2D) location;
+        center = (Point2D) location.clone();
     }
 
     /**
