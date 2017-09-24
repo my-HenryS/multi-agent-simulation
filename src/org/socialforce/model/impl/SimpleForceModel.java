@@ -49,7 +49,7 @@ public class SimpleForceModel implements Model {
     public Force interactionForce(InteractiveEntity source, InteractiveEntity target) {
         Force force = this.zeroForce();
         for (ForceRegulation regulation : regulations) {
-            if (regulation.hasForce(source, target)) {
+            if (Force.class.isAssignableFrom(regulation.forceType()) && regulation.hasForce(source, target)) {
                 Affection temp = regulation.getForce(source, target);
                 if (temp instanceof Force){
                 force.add((Vector) temp);}
@@ -62,7 +62,7 @@ public class SimpleForceModel implements Model {
     public Moment interactionMoment(InteractiveEntity source, InteractiveEntity target) {
         Moment moment = this.zeroMoment();
         for (ForceRegulation regulation : regulations) {
-            if (regulation.hasForce(source,target)) {
+            if (Moment.class.isAssignableFrom(regulation.forceType()) && regulation.hasForce(source,target)) {
                 Affection temp = regulation.getForce(source, target);
                 if (temp instanceof Moment) {
                     moment.add((Moment) temp);

@@ -35,4 +35,9 @@ public class GravityRegulation extends TypeMatchRegulation<Star_Planet,Star_Plan
         direction.get(values);
         return new Force2D(-values[0],-values[1]);
     }
+
+    @Override
+    public Class forceType() {
+        return Force2D.class;
+    }
 }

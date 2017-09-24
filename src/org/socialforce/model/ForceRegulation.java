@@ -24,4 +24,10 @@ public interface ForceRegulation<Source extends InteractiveEntity,Target extends
      * @return force
      */
     Affection getForce(Source source, Target target);
+
+    /**
+     * 指明是哪一种force
+     * @return
+     */
+    Class forceType();
 }

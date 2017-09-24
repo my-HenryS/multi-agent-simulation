@@ -30,4 +30,9 @@ public class DoorForce extends TypeMatchRegulation<Agent,Door>{
     public Force getForce(Agent interactiveEntity, Door interactiveEntity2) {
         return new Force2D(1,1);
     }
+
+    @Override
+    public Class forceType() {
+        return Force2D.class;
+    }
 }

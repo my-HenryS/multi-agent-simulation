@@ -38,4 +38,9 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Blockable,
         force.scale(scale / force.length());
         return force;
     }
+
+    @Override
+    public Class forceType() {
+        return model.zeroForce().getClass();
+    }
 }

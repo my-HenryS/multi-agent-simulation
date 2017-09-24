@@ -50,4 +50,9 @@ public class SpinPsyForceRegulation implements ForceRegulation {
         Moment2D moment2D = (Moment2D) f.CalculateMoment(p2,e2.getReferencePoint());
         return moment2D;
     }
+
+    @Override
+    public Class forceType() {
+        return Moment2D.class;
+    }
 }

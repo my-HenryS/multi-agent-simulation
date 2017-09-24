@@ -1,5 +1,6 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.geom.Affection;
 import org.socialforce.geom.Force;
 import org.socialforce.geom.impl.Force2D;
 import org.socialforce.geom.impl.Vector2D;
@@ -44,5 +45,10 @@ public class BodyForce extends TypeMatchRegulation<Blockable, Agent>{
         n.add(t);
         n.get(temp);
         return new Force2D(temp[0],temp[1]);
+    }
+
+    @Override
+    public Class forceType() {
+        return Force2D.class;
     }
 }
