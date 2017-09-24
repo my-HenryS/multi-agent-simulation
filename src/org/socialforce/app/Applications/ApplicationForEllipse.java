@@ -54,8 +54,8 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
      */
     @Override
     public void setUpScenes(){
-        template = new BaseAgent(new Circle2D(new Point2D(0,0),0.486/2), new Velocity2D(0,0));
-        //template = new BaseAgent(new Ellipse2D(0.486/2,0.3/2,new Point2D(0,0),0), new Velocity2D(0,0));
+        //template = new BaseAgent(new Circle2D(new Point2D(0,0),0.486/2), new Velocity2D(0,0));
+        template = new BaseAgent(new Ellipse2D(0.486/2,0.3/2,new Point2D(0,0),0), new Velocity2D(0,0));
         scenes = new LinkedList<>();
         DoorWidth = 1.36;
         density = 20;
