@@ -84,22 +84,12 @@ public class SimpleScene implements Scene {
         for(InteractiveEntity value : captors) {
             size++;
         }
-        latch = new CountDownLatch(size);
+
         for (InteractiveEntity captor : captors){
-            new thread(){
-                public void run(){
-                    Iterable<Agent> affectableAgents = allAgents.select(((Influential) captor).getView());
-                    for (Agent target:affectableAgents){
-                        ((Influential) captor).affect(target);
-                    }
-                    latch.countDown();
-                }
-            }.start();
-        }
-        try {
-            latch.await();  //par-sync
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            Iterable<Agent> affectableAgents = allAgents.select(((Influential) captor).getView());
+            for (Agent target:affectableAgents){
+                ((Influential) captor).affect(target);
+            }
         }
         Iterable<InteractiveEntity> movables = entities.selectClass(Moveable.class);
         for (InteractiveEntity movable : movables) {
