@@ -100,6 +100,15 @@ public class SimpleScene implements Scene {
         updateStep();
     }
 
+    /**
+     * init the scene (1)prepare agent threads (2)pre-select Movable, Captor, Influential, etc.
+     */
+    @Override
+    public boolean init() {
+
+        return true;
+    }
+
     protected void updateStep() {
         for(SceneListener lis : sceneListeners){
             lis.onStep(this);

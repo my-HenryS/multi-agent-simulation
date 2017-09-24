@@ -49,8 +49,9 @@ public class ApplicationForMCM extends SimpleApplication implements Application 
                     strategy = new DynamicNearestGoalStrategy(currentScene, pathFinder);
                     strategy.pathDecision();
                     System.out.println("flow now "+a);
+                    this.initScene(currentScene);
                     while (!toSkip()) {
-                        this.StepNext(currentScene);
+                        this.stepNext(currentScene);
                         iteration += 1;
                         if(iteration % 60 ==0 && strategy instanceof DynamicStrategy){
                             ((DynamicStrategy) strategy).dynamicDecision();

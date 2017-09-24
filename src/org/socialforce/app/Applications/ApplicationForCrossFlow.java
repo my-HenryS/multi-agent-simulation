@@ -37,8 +37,9 @@ public class ApplicationForCrossFlow extends SimpleApplication {
             PathFinder pathFinder = new AStarPathFinder(currentScene, template);
             GoalStrategy strategy = new FurthestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
+            this.initScene(currentScene);
             while (!toSkip()) {
-                this.StepNext(currentScene);
+                this.stepNext(currentScene);
             }
             if(onStop()) return;
         }

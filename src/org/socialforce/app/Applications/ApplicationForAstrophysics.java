@@ -26,8 +26,9 @@ public class ApplicationForAstrophysics extends SimpleApplication {
         setUpScenes();
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext(); ) {
             currentScene = iterator.next();
+            this.initScene(currentScene);
             while (!toSkip()) {
-                this.StepNext(currentScene);
+                this.stepNext(currentScene);
             }
             if(onStop()) return;
         }

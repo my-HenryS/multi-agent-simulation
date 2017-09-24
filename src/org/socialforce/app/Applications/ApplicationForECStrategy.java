@@ -50,8 +50,9 @@ public class ApplicationForECStrategy extends SimpleApplication implements Appli
             //strategy = new LifeBeltStrategy(scene, pathFinder);
             //strategy = new NearestGoalStrategy(scene, pathFinder);
             strategy.pathDecision();
+            this.initScene(currentScene);
             while (!toSkip()) {
-                this.StepNext(currentScene);
+                this.stepNext(currentScene);
                 iteration += 1;
                 if(iteration % RedecisionSpan() ==0 && strategy instanceof DynamicStrategy){
                     ((DynamicStrategy) strategy).dynamicDecision();

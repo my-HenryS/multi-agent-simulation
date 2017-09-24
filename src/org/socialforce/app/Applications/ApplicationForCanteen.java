@@ -84,8 +84,9 @@ public class ApplicationForCanteen extends SimpleApplication implements Applicat
                 }
                 */
                 strategy.pathDecision();
+                this.initScene(currentScene);
                 while (!toSkip()) {
-                    this.StepNext(currentScene);
+                    this.stepNext(currentScene);
                     iteration += 1;
                     if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
                         ((DynamicStrategy) strategy).dynamicDecision();

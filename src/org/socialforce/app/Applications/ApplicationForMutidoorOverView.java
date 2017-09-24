@@ -32,8 +32,9 @@ public class ApplicationForMutidoorOverView extends SimpleApplication implements
             PathFinder pathFinder = new AStarPathFinder(currentScene, template);
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
+            this.initScene(currentScene);
             while (!toSkip()) {
-                this.StepNext(currentScene);
+                this.stepNext(currentScene);
             }
             if(onStop()) return;
             for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){

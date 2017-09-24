@@ -41,8 +41,9 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
             PathFinder pathFinder = new AStarPathFinder(currentScene, new Circle2D(new Point2D(0,0),0.486/2));
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
+            this.initScene(currentScene);
             while (!toSkip()) {
-                this.StepNext(currentScene);
+                this.stepNext(currentScene);
             }
             //csvWriter.writeCSV("output/agent.csv");
             if(onStop()) return;

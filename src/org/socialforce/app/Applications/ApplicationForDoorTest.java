@@ -33,8 +33,9 @@ public class ApplicationForDoorTest extends SimpleApplication implements Applica
             PathFinder pathFinder = new AStarPathFinder(currentScene, template);
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
+            this.initScene(currentScene);
             while (!toSkip()) {
-                this.StepNext(currentScene);
+                this.stepNext(currentScene);
             }
             if(onStop()) return;
         }
