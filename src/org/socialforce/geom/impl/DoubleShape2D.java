@@ -81,7 +81,7 @@ public class DoubleShape2D extends Shape2D implements PhysicalEntity {
     public void moveTo(Point location) {
         shape[1].moveTo(new Point2D(location.getX()+this.getLinkVector().getX(),location.getY()+this.getLinkVector().getY()));
         shape[0].moveTo(location);
-            }
+    }
 
     @Override
     public PhysicalEntity expandBy(double extent) {
