@@ -172,6 +172,13 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     @Override
+    public void affectAll(Iterable<Agent> affectableAgents) {
+        for(Agent agent:affectableAgents){
+            affect(agent);
+        }
+    }
+
+    @Override
     public Palstance getPalstance() {
         if(physicalEntity instanceof RotatablePhysicalEntity){
         return ((RotatablePhysicalEntity) physicalEntity).getPalstance();}

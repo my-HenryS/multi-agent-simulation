@@ -17,10 +17,18 @@ public interface Influential extends InteractiveEntity {
     PhysicalEntity getView();
 
     /**
-     * 定义一个实体如何影响Agent
+     * 定义一个实体如何影响一个Agent
      * 若target能影响实体本身，则相应影响也在此处定义
      * @see Agent
      * @param target
      */
     void affect(Agent target);
+
+    /**
+     * 定义Influential如何影响所有可能影响的实体
+     * 主要为了affect过程受两个及以上Agent影响而设计，从而避免设计更高层策略
+     * 若对所有Agent影响模式相同，可遍历并调用affect方法影响
+     * @param affectableAgents
+     */
+    void affectAll(Iterable<Agent> affectableAgents);
 }

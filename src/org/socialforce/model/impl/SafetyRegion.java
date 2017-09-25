@@ -34,8 +34,15 @@ public class SafetyRegion extends Entity implements Influential{
                     agentEscapeThisStep ++;
                 }
             }
-
     }
+
+    @Override
+    public void affectAll(Iterable<Agent> affectableAgents) {
+        for(Agent agent:affectableAgents){
+            affect(agent);
+        }
+    }
+
 
     /*
      * get the listener of the application

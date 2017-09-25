@@ -51,6 +51,13 @@ public class ETC_Tollbooth extends Entity implements Influential {
     }
 
     @Override
+    public void affectAll(Iterable<Agent> affectableAgents) {
+        for(Agent agent:affectableAgents){
+            affect(agent);
+        }
+    }
+
+    @Override
     public boolean onAdded(Scene scene) {
         return true;
     }

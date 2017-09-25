@@ -31,6 +31,14 @@ public class Star_Planet extends BaseAgent implements Agent {
             target.push(model.interactionForce(this, target));
     }
 
+    @Override
+    public void affectAll(Iterable<Agent> affectableAgents) {
+        for(Agent agent:affectableAgents){
+            affect(agent);
+        }
+    }
+
+
     /**
      * Planet不影响自己
      * @see Agent
