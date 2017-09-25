@@ -58,7 +58,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         //template = new BaseAgent(new Circle2D(new Point2D(0,0),0.486/2), new Velocity2D(0,0));
         template = new BaseAgent(new Ellipse2D(0.486/2,0.3/2,new Point2D(0,0),0), new Velocity2D(0,0));
         scenes = new LinkedList<>();
-        DoorWidth = 0.68;
+        DoorWidth = 1.36;
         density = 20;
         setUpT1Scene5();
         for(Scene scene:scenes){
@@ -97,7 +97,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(26,new Box2D(0,-10,10,5)).setValue(template)
+                new RandomEntityGenerator2D(20,new Box2D(0,-10,10,5)).setValue(template)
         );
         /*parameters.addValuesAsParameter(
                 new RandomEntityGenerator2D(1,new Box2D(4.3,-3,0.5,2)).setValue(template)
