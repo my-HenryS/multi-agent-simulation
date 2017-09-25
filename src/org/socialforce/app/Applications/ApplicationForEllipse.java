@@ -97,7 +97,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(20,new Box2D(0,-10,10,5)).setValue(template)
+                new RandomEntityGenerator2D(26,new Box2D(0,-10,10,5)).setValue(template)
         );
         /*parameters.addValuesAsParameter(
                 new RandomEntityGenerator2D(1,new Box2D(4.3,-3,0.5,2)).setValue(template)
