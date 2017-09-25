@@ -45,11 +45,6 @@ public interface Agent extends Influential, Moveable, Blockable,Rotateable {
     boolean isEscaped();
 
     /**
-     * 因为Scene不会过滤Agent本身，所以Agent应该定义其如何影响自己
-     */
-    void selfAffect();
-
-    /**
      * 获取加速度
      */
 

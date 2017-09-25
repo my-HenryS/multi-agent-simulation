@@ -46,6 +46,14 @@ public class Door extends Entity implements Moveable, Influential {
         this.push(model.interactionForce(target, this));
     }
 
+    @Override
+    public void affectAll(Iterable<Agent> affectableAgents) {
+        for(Agent agent:affectableAgents){
+            affect(agent);
+        }
+    }
+
+
     /**
      * 获取一个实体的形状
      * 如线，矩形，圆等。

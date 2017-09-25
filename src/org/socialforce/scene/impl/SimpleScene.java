@@ -87,9 +87,7 @@ public class SimpleScene implements Scene {
 
         for (InteractiveEntity captor : captors){
             Iterable<Agent> affectableAgents = allAgents.select(((Influential) captor).getView());
-            for (Agent target:affectableAgents){
-                ((Influential) captor).affect(target);
-            }
+            ((Influential) captor).affectAll(affectableAgents);
         }
         Iterable<InteractiveEntity> movables = entities.selectClass(Moveable.class);
         for (InteractiveEntity movable : movables) {

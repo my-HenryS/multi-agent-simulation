@@ -54,6 +54,14 @@ public class DoorTurn extends Exit implements Influential {
     }
 
     @Override
+    public void affectAll(Iterable<Agent> affectableAgents) {
+        for(Agent agent:affectableAgents){
+            affect(agent);
+        }
+    }
+
+
+    @Override
     public DoorTurn clone(){ return new DoorTurn((Box2D)door.clone(),angle); }
 
    public double getAngle(){

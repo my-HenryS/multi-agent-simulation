@@ -37,7 +37,13 @@ public class Monitor extends Entity implements Influential {
             lastT = scene.getCurrentSteps();
         }
         volume += 1;
+    }
 
+    @Override
+    public void affectAll(Iterable<Agent> affectableAgents) {
+        for(Agent agent:affectableAgents){
+            affect(agent);
+        }
     }
 
     @Override
