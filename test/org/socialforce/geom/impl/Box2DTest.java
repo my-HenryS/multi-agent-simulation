@@ -30,6 +30,7 @@ public class Box2DTest {
         assertEquals(false,testBox.contains(b));
     }
 
+
     @Test
     public void getDistance() throws Exception {
         assertEquals(-1,testBox.getDistance(a),0);
