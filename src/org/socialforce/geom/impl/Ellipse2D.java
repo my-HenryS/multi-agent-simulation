@@ -104,7 +104,7 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
     @Override
     public Point getReferencePoint() {
         return center;
-    }
+    }  //
 
     /**
      * 移动椭圆中心到指定位置
@@ -114,7 +114,7 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
     @Override
     public void moveTo(Point location) {
         center = location.clone();
-    }
+    }  //
 
     /**
      * 创建并返回圆的副本
@@ -124,14 +124,14 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
     @Override
     public DistancePhysicalEntity clone() {
         return new Ellipse2D(a, b, center.clone(), angle);
-    }
+    }  //
 
     /**
      * 获取box的边界
      * @return 椭圆的外切矩形
      */
     @Override
-    public Box getBounds() {
+    public Box getBounds() {   //
         double halfWidth, halfHeight;
         if (Math.abs(angle % (Math.PI)) < 1.0e-10) {
             halfWidth = a;
@@ -160,19 +160,19 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
 
 
     @Override
-    public boolean contains(Point point) {
+    public boolean contains(Point point) {   //
         return (point.distanceTo(this.getLeftCenter()) <= this.getSideRadius()) || (point.distanceTo(this.getRightCenter()) <= this.getSideRadius()) || (point.distanceTo(center) <= b);
     }
 
     @Override
-    public double getDistance(Point point) {
+    public double getDistance(Point point) {   //
         double distance[] = new double[]{point.distanceTo(this.getLeftCenter())-this.getSideRadius(),point.distanceTo(this.getRightCenter())-this.getSideRadius(),point.distanceTo(center)-b};
         //Arrays.sort(distance);
         return findMinOf3(distance);
     }
 
     @Override
-    public Vector getDirection(Point point) {
+    public Vector getDirection(Point point) {  //
         double leftDistance = point.distanceTo(this.getLeftCenter()) - this.getSideRadius();
         double rightDistance = point.distanceTo(this.getRightCenter()) - this.getSideRadius();
         double distance[] = new double[]{leftDistance, rightDistance,point.distanceTo(center)-b};
@@ -192,7 +192,7 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
     }
 
     @Override
-    public double distanceTo(PhysicalEntity other) {
+    public double distanceTo(PhysicalEntity other) {  //
         double distance[] = new double[]{other.getDistance(this.getLeftCenter())-this.getSideRadius(),other.getDistance(this.getRightCenter())-this.getSideRadius(),other.getDistance(center)-b};
         return findMinOf3(distance);
 
@@ -216,7 +216,7 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
 
 
     @Override
-    public Vector directionTo(PhysicalEntity other) {
+    public Vector directionTo(PhysicalEntity other) { //
         double leftDistance = other.getDistance(this.getLeftCenter()) - this.getSideRadius();
         double rightDistance = other.getDistance(this.getRightCenter()) - this.getSideRadius();
         double distance[] = new double[]{leftDistance, rightDistance,other.getDistance(center)-b};
@@ -245,12 +245,12 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
     @Override
     public boolean hits(Box hitbox) {
         return this.distanceTo(hitbox) <= 0;
-    }
+    }  //
 
     @Override
     public boolean intersects(PhysicalEntity other) {
         return this.distanceTo(other) <= 0;
-    }
+    }//
 
     /**
      * 找的本椭圆的受力点
