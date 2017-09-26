@@ -26,7 +26,7 @@ public class BaseAgentTest {
         circle.setRadius(5);
         baseAgent = new BaseAgent(circle, new Velocity2D(0,0));
         baseAgent.view  = circle;
-        baseAgent.setPath(new StraightPath(baseAgent.getShape().getReferencePoint(), new Point2D(4,4)));
+        baseAgent.setPath(new StraightPath(baseAgent.getPhysicalEntity().getReferencePoint(), new Point2D(4,4)));
         baseAgent.setScene(scene);
         baseAgent.setModel(model);
     }

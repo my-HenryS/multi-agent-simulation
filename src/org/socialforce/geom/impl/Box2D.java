@@ -3,15 +3,13 @@ package org.socialforce.geom.impl;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Ledenel on 2016/8/8.
  */
-public class Box2D implements Box {
+public class Box2D extends Shape2D implements Box {
     /**
      * 表明是否有其他对象“等于”这一个.
      * <p>
@@ -110,7 +108,7 @@ public class Box2D implements Box {
     }
 
     /**
-     * 检查点是否属于 <code>Shape</code>.
+     * 检查点是否属于 <code>PhysicalEntity</code>.
      *
      * @param point 将被检查的点.
      * @return 如果点是该形状的一部分，就为真，否则为假.
@@ -317,7 +315,7 @@ public class Box2D implements Box {
      * @return 这个形状的副本.
      */
     @Override
-    public Shape clone() {
+    public PhysicalEntity clone() {
         Box2D cloned = new Box2D();
         cloned.xmin = xmin;
         cloned.xmax = xmax;
@@ -396,6 +394,7 @@ public class Box2D implements Box {
         return ymax;
     }
 
+
     /**
      * 获取维度实体的维度.
      *
@@ -415,10 +414,10 @@ public class Box2D implements Box {
      * @return
      */
     @Override
-    public Shape[] clip(ClippableShape shape) {
+    public PhysicalEntity[] clip(ClippablePhysicalEntity shape) {
         Point[][] dictionary = new Point[2][2];
         if(shape instanceof Box2D){
-            Shape[] Boxes;
+            PhysicalEntity[] Boxes;
             if (hits(shape.getBounds())){
                 if ((((Box2D) shape).getStartPoint().getX()<getStartPoint().getX()&&getEndPoint().getX()<((Box2D) shape).getEndPoint().getX())
                         ||(((Box2D) shape).getStartPoint().getX()>getStartPoint().getX()&&getEndPoint().getX()>((Box2D) shape).getEndPoint().getX())){
@@ -433,14 +432,14 @@ public class Box2D implements Box {
                             dictionary[1][0] = new Point2D(((Box2D) shape).getEndPoint().getX(),getStartPoint().getY());
                             dictionary[0][1] = new Point2D(((Box2D) shape).getStartPoint().getX(),getEndPoint().getY());
                         }
-                        Boxes = new Shape[]{new Box2D((dictionary)[0][0],dictionary[1][0]),new Box2D(dictionary[0][1],dictionary[1][1])};
+                        Boxes = new PhysicalEntity[]{new Box2D((dictionary)[0][0],dictionary[1][0]),new Box2D(dictionary[0][1],dictionary[1][1])};
                         return Boxes;
                     }
                     else throw new IllegalArgumentException("目前阶段不支持以一般方式进行矩形切割，只支持十字形切割");
                 }
                 else throw new IllegalArgumentException("目前阶段不支持以一般方式进行矩形切割，只支持十字形切割");
             }
-            else return new Shape[]{shape};
+            else return new PhysicalEntity[]{shape};
         }
         else throw new IllegalArgumentException("目前阶段不支持其它图形的切割，只支持两个矩形的切割");
     }

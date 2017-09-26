@@ -2,7 +2,7 @@ package org.socialforce.app.Applications;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.impl.GoalDynamicColorMarkDrawer;
 import org.socialforce.drawer.impl.SceneDrawer;
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.DistancePhysicalEntity;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
@@ -23,7 +23,7 @@ import java.util.Iterator;
  * Created by sunjh1999 on 2017/2/26.
  */
 public class ApplicationForCrossFlow extends SimpleApplication {
-    DistanceShape template;
+    DistancePhysicalEntity template;
     public ApplicationForCrossFlow (){
     }
     /**
@@ -37,8 +37,9 @@ public class ApplicationForCrossFlow extends SimpleApplication {
             PathFinder pathFinder = new AStarPathFinder(currentScene, template);
             GoalStrategy strategy = new FurthestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
+            this.initScene(currentScene);
             while (!toSkip()) {
-                this.StepNext(currentScene);
+                this.stepNext(currentScene);
             }
             if(onStop()) return;
         }

@@ -2,6 +2,7 @@ package org.socialforce.app.Console;
 
 import org.socialforce.app.Application;
 import org.socialforce.app.ApplicationListener;
+import org.socialforce.app.Applications.ApplicationForCanteen;
 import org.socialforce.app.Applications.ApplicationForMutidoor;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.impl.Circle2D;
@@ -14,7 +15,7 @@ import org.socialforce.model.Agent;
 public class TextOutputMain implements ApplicationListener {
     public static void main(String[] args) {
         TextOutputMain TextOutputMain = new TextOutputMain();
-        TextOutputMain.setApplication(new ApplicationForMutidoor());//改应用在这里！
+        TextOutputMain.setApplication(new ApplicationForCanteen());//改应用在这里！
         TextOutputMain.getApplication().setApplicationListener(TextOutputMain);
         TextOutputMain.getApplication().start();
     }
@@ -71,8 +72,8 @@ public class TextOutputMain implements ApplicationListener {
             /*if(time%10 ==0){
             System.out.println("目前时间" + time);
             System.out.println("场景中人数" + scene.getAllAgents().size());
-            System.out.println("目前一号智能体的位置是" + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getX() +
-                    "," + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getY());*/
+            System.out.println("目前一号智能体的位置是" + scene.getAllAgents().selectTop(circle).getPhysicalEntity().getReferencePoint().getX() +
+                    "," + scene.getAllAgents().selectTop(circle).getPhysicalEntity().getReferencePoint().getY());*/
             //if (time % 50 == 0) {
                // System.out.println();System.out.println();
                 //System.out.println("-----------------------------------");

@@ -63,7 +63,7 @@ public class ApplicationForCanteen extends SimpleApplication implements Applicat
                 }
                 System.out.print("Population of "+total_num);
                 int iteration = 0;
-                PathFinder pathFinder = new AStarPathFinder(currentScene, template.getShape(), 0.2);
+                PathFinder pathFinder = new AStarPathFinder(currentScene, template.getPhysicalEntity(), 0.2);
                 strategy = new ECStrategy(currentScene, pathFinder);
                 /*
                 if(i<10){
@@ -84,8 +84,9 @@ public class ApplicationForCanteen extends SimpleApplication implements Applicat
                 }
                 */
                 strategy.pathDecision();
+                this.initScene(currentScene);
                 while (!toSkip()) {
-                    this.StepNext(currentScene);
+                    this.stepNext(currentScene);
                     iteration += 1;
                     if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
                         ((DynamicStrategy) strategy).dynamicDecision();

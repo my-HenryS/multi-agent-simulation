@@ -1,6 +1,6 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.model.Agent;
 import org.socialforce.model.Influential;
 import org.socialforce.scene.Scene;
@@ -14,8 +14,8 @@ import java.util.Map;
 public class ETC_Tollbooth extends Entity implements Influential {
     Map<Agent, Integer> agentDictionary = new HashMap<>();
     double interval;
-    public ETC_Tollbooth(Shape shape, double interval) {
-        super(shape);
+    public ETC_Tollbooth(PhysicalEntity physicalEntity, double interval) {
+        super(physicalEntity);
         this.interval = interval;
     }
 
@@ -26,12 +26,12 @@ public class ETC_Tollbooth extends Entity implements Influential {
 
     @Override
     public ETC_Tollbooth clone() {
-        return new ETC_Tollbooth(shape.clone(), interval);
+        return new ETC_Tollbooth(physicalEntity.clone(), interval);
     }
 
     @Override
-    public Shape getView() {
-        return this.shape;
+    public PhysicalEntity getView() {
+        return this.physicalEntity;
     }
 
     @Override
@@ -47,6 +47,13 @@ public class ETC_Tollbooth extends Entity implements Influential {
         }
         else if(agentDictionary.get(agent) == scene.getCurrentSteps()){
             ((SimpleForceModel)agent.getModel()).setExpectedSpeed(((SimpleForceModel)this.model).getExpectedSpeed());
+        }
+    }
+
+    @Override
+    public void affectAll(Iterable<Agent> affectableAgents) {
+        for(Agent agent:affectableAgents){
+            affect(agent);
         }
     }
 

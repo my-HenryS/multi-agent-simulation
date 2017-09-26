@@ -1,10 +1,10 @@
 package org.socialforce.strategy.impl;
 
+import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
 
@@ -16,15 +16,15 @@ import java.util.LinkedList;
  */
 public class StraightPathFinder implements PathFinder {
     LinkedList<Point> goals = new LinkedList<>();
-    Shape agentShape;
+    PhysicalEntity agentPhysicalEntity;
     Scene scene;
 
-    public StraightPathFinder(Scene targetScene, Shape agentShape) {
-        this.agentShape = agentShape.clone();
+    public StraightPathFinder(Scene targetScene, PhysicalEntity agentPhysicalEntity) {
+        this.agentPhysicalEntity = agentPhysicalEntity.clone();
         this.scene = targetScene;
         for(Iterator<InteractiveEntity> iter = scene.getStaticEntities().selectClass(SafetyRegion.class).iterator(); iter.hasNext();){
             SafetyRegion safetyRegion = (SafetyRegion)iter.next();
-            goals.addLast(safetyRegion.getShape().getReferencePoint().clone()) ;
+            goals.addLast(safetyRegion.getPhysicalEntity().getReferencePoint().clone()) ;
         }
     }
 

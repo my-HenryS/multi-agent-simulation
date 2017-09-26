@@ -1,6 +1,5 @@
 package org.socialforce.model.impl;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.api.ndarray.INDArray;
@@ -16,8 +15,6 @@ import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.Model;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.LinkedList;
 
 /**
  * Created by sunjh1999 on 2017/6/17.
@@ -44,7 +41,7 @@ public class NeuralForceModel implements Model{
         for(Object target:targets) {
             Agent agent = (Agent)target;
             Velocity2D expected = (Velocity2D) this.zeroVelocity(), velocity = (Velocity2D) agent.getVelocity();
-            Point current = agent.getShape().getReferencePoint(), goal = agent.getPath().nextStep(current);
+            Point current = agent.getPhysicalEntity().getReferencePoint(), goal = agent.getPath().nextStep(current);
             expected.sub(current);
             expected.add(goal);
             double angle = Vector2D.getRotateAngle(new Vector2D(1,0), velocity);
@@ -60,7 +57,7 @@ public class NeuralForceModel implements Model{
             int n= 0;
             for(Object t_arget:targets){
                 Agent co_Agent = (Agent)t_arget;
-                if(!co_Agent.equals(agent) && co_Agent.getShape().distanceTo(agent.getShape()) < min_div){
+                if(!co_Agent.equals(agent) && co_Agent.getPhysicalEntity().distanceTo(agent.getPhysicalEntity()) < min_div){
                    n++;
                 }
             }
@@ -70,7 +67,7 @@ public class NeuralForceModel implements Model{
             Velocity2D newV = new Velocity2D(output.getDouble(0),output.getDouble(1));
             if(rotated) newV = new Velocity2D(newV.getX(),-newV.getY());
             newV.rotate(-angle);
-            ((BaseAgent)agent).setCurrVelocity(newV);
+            ((BaseAgent)agent).setVelocity(newV);
             Force force = new Force2D(newV.getX(),newV.getY());
             force.scale(agent.getMass());
             agent.push(force);

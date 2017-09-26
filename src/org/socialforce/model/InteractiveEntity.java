@@ -2,9 +2,9 @@ package org.socialforce.model;
 
 import org.socialforce.container.Pool;
 import org.socialforce.drawer.Drawable;
+import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.scene.Scene;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
 import org.socialforce.scene.SceneListener;
 
 /**
@@ -39,7 +39,7 @@ public interface InteractiveEntity extends Drawable, SceneListener{
      *
      * @return 实体的形状.
      */
-    Shape getShape();
+    PhysicalEntity getPhysicalEntity();
 
     /**
      * 获取实体的质量。
@@ -64,7 +64,7 @@ public interface InteractiveEntity extends Drawable, SceneListener{
 
     /**
      * 将该实体放置在一个特殊的点上。
-     * TODO the shape will {@code moveTo} that point.
+     * TODO the physicalEntity will {@code moveTo} that point.
      * @param point 目标点。
      */
     void placeOn(Point point);

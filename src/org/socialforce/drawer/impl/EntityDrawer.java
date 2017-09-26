@@ -5,7 +5,6 @@ import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
 import org.socialforce.geom.*;
 import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.impl.Monitor;
 
 import java.awt.*;
 
@@ -21,22 +20,22 @@ public class EntityDrawer<EntityType extends InteractiveEntity> extends AwtDrawe
     private DrawerInstaller defaultShapeInstaller;
 
     /**
-     * render the shape on the @code {Graphics2D} with color built-in.
+     * render the physicalEntity on the @code {Graphics2D} with color built-in.
      *
      * @param g       the graphics
      * @param pattern
      */
     @Override
     public void renderShape(Graphics2D g, EntityType pattern) {
-        org.socialforce.geom.Shape shape = pattern.getShape();
-        Drawer drawer = shape.getDrawer();
+        PhysicalEntity physicalEntity = pattern.getPhysicalEntity();
+        Drawer drawer = physicalEntity.getDrawer();
         if(drawer != null){
-            colorfulDraw(shape);
+            colorfulDraw(physicalEntity);
         }
         else {
-            defaultShapeInstaller.addDrawerSupport(shape);
-            if(shape.getDrawer() != null){
-                colorfulDraw(shape);
+            defaultShapeInstaller.addDrawerSupport(physicalEntity);
+            if(physicalEntity.getDrawer() != null){
+                colorfulDraw(physicalEntity);
             }
         }
     }

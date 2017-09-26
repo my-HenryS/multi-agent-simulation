@@ -13,10 +13,10 @@ package org.socialforce.geom;
  * (start point)
  *
  * @author Ledenel
- * @see Shape
+ * @see PhysicalEntity
  * Created by Ledenel on 2016/8/1 .
  */
-public interface Box extends Shape,ClippableShape,ClipperShape{
+public interface Box extends PhysicalEntity,ClippablePhysicalEntity,ClipperPhysicalEntity {
     /**
      * 获取box的起点.
      *

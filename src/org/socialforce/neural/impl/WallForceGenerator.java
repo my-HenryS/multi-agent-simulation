@@ -1,12 +1,10 @@
 package org.socialforce.neural.impl;
 
 import org.socialforce.geom.Point;
-import org.socialforce.geom.Vector;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.model.impl.SafetyRegion;
-import org.socialforce.neural.DataSetGenerator;
 import org.socialforce.scene.Scene;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.impl.AStarPathFinder;
@@ -38,7 +36,7 @@ public class WallForceGenerator extends ForceGenerator{
      */
     protected void setMap(Scene scene){
         pathFinder = new AStarPathFinder(scene,new Circle2D(new Point2D(0,0),0.001),min_div);
-        Point goal = scene.getStaticEntities().selectClass(SafetyRegion.class).iterator().next().getShape().getReferencePoint();
+        Point goal = scene.getStaticEntities().selectClass(SafetyRegion.class).iterator().next().getPhysicalEntity().getReferencePoint();
         path = pathFinder.plan_for(goal);
         map = pathFinder.getMap();
         dX = pathFinder.get_deltax();

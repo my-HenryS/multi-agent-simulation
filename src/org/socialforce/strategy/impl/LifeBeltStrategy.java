@@ -29,7 +29,7 @@ public class LifeBeltStrategy extends NearestGoalStrategy implements StaticStrat
                 int front_num = fronts(agent, goal);
                 //设置最优path
                 Path path = pathFinder.plan_for(goal);
-                double pathLength = path.length(agent.getShape().getReferencePoint());
+                double pathLength = path.length(agent.getPhysicalEntity().getReferencePoint());
                 double t =  factorT(pathLength, agent, front_num, goal);
                 if(t < factor_t){
                     factor_t = t;
@@ -44,7 +44,7 @@ public class LifeBeltStrategy extends NearestGoalStrategy implements StaticStrat
         int front_num = 0;
         for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
             Agent target_agent = (Agent) iter.next();
-            if(agent.getShape().getDistance(goal) > target_agent.getShape().getDistance(goal)){
+            if(agent.getPhysicalEntity().getDistance(goal) > target_agent.getPhysicalEntity().getDistance(goal)){
                 front_num += 1;
             }
         }

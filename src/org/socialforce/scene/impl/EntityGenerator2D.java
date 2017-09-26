@@ -1,11 +1,8 @@
 package org.socialforce.scene.impl;
-import org.socialforce.container.EntityPool;
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.model.*;
 import org.socialforce.scene.EntityGenerator;
 import org.socialforce.scene.Scene;
-import org.socialforce.scene.SceneValue;
-import org.socialforce.geom.Shape;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
@@ -17,7 +14,7 @@ import org.socialforce.geom.impl.Semicircle2D;
 public class EntityGenerator2D extends EntityGenerator<InteractiveEntity>{
 
     protected double X_distance,Y_distance;
-    protected Shape Area;
+    protected PhysicalEntity Area;
 
     //point-offset定义方式
     public EntityGenerator2D(Point2D origin, double X_distance, double Y_distance, int x_num, int y_num){
@@ -25,7 +22,7 @@ public class EntityGenerator2D extends EntityGenerator<InteractiveEntity>{
         this.Y_distance = Y_distance;
         this.Area = new Box2D(origin.getX(),origin.getY(),X_distance*x_num,Y_distance*y_num);
     }
-    public EntityGenerator2D(double X_distance, double Y_distance, Shape Area){
+    public EntityGenerator2D(double X_distance, double Y_distance, PhysicalEntity Area){
         this.X_distance = X_distance;
         this.Y_distance = Y_distance;
         this.Area = Area;
@@ -42,7 +39,7 @@ public class EntityGenerator2D extends EntityGenerator<InteractiveEntity>{
                     Point2D point = new Point2D(Area.getBounds().getStartPoint().getX()+i*X_distance,Area.getBounds().getStartPoint().getY()+j*Y_distance);
                     if(Area.contains(point)){
                         InteractiveEntity newEntity = value.clone();
-                        newEntity.getShape().moveTo(point);
+                        newEntity.getPhysicalEntity().moveTo(point);
                         if(commonName != null) {
                             newEntity.setName(commonName);
                         }

@@ -1,14 +1,12 @@
 package org.socialforce.geom.impl;
 
-import org.jfree.layout.CenterLayout;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.*;
-import java.util.Arrays;
 
 /**
  * Created by Administrator on 2017/5/10 0010.
  */
-public class Ellipse2D implements MoveableShape {
+public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEntity,DistancePhysicalEntity {
     private double a;
     private double b;
     private Point center;
@@ -24,7 +22,19 @@ public class Ellipse2D implements MoveableShape {
             this.b = a;
         }
         this.center = center;
+        //对angle取余数，将this.angle限制在：-π到π
+        if((angle < -1*Math.PI)||(angle > Math.PI)){
+            if((Math.PI < angle%(2*Math.PI)) && (angle%(2*Math.PI) < 2*Math.PI))
+                this.angle = angle%(2*Math.PI)-2*Math.PI;
+            else if((-2*Math.PI < angle%(2*Math.PI)) && (angle%(2*Math.PI) < -1*Math.PI))
+                this.angle = angle%(2*Math.PI)+2*Math.PI;
+            else
+                this.angle = angle%(2*Math.PI);
+        }
         this.angle = angle;
+
+
+
     }
 
     public double getA() {
@@ -49,6 +59,10 @@ public class Ellipse2D implements MoveableShape {
 
     public double getSideRadius(){
         return (a-b)/2;
+    }
+
+    public Vector2D getBasicDirection(){
+        return new Vector2D(Math.cos(angle),Math.sin(angle));
     }
 
 
@@ -108,7 +122,7 @@ public class Ellipse2D implements MoveableShape {
      * @return 椭圆的副本
      */
     @Override
-    public Ellipse2D clone() {
+    public DistancePhysicalEntity clone() {
         return new Ellipse2D(a, b, center.clone(), angle);
     }
 
@@ -140,7 +154,7 @@ public class Ellipse2D implements MoveableShape {
     }
 
     @Override
-    public Shape expandBy(double extent) {
+    public PhysicalEntity expandBy(double extent) {
         return null;
     }
 
@@ -178,7 +192,7 @@ public class Ellipse2D implements MoveableShape {
     }
 
     @Override
-    public double distanceTo(Shape other) {
+    public double distanceTo(PhysicalEntity other) {
         double distance[] = new double[]{other.getDistance(this.getLeftCenter())-this.getSideRadius(),other.getDistance(this.getRightCenter())-this.getSideRadius(),other.getDistance(center)-b};
         return findMinOf3(distance);
 
@@ -202,7 +216,7 @@ public class Ellipse2D implements MoveableShape {
 
 
     @Override
-    public Vector directionTo(Shape other) {
+    public Vector directionTo(PhysicalEntity other) {
         double leftDistance = other.getDistance(this.getLeftCenter()) - this.getSideRadius();
         double rightDistance = other.getDistance(this.getRightCenter()) - this.getSideRadius();
         double distance[] = new double[]{leftDistance, rightDistance,other.getDistance(center)-b};
@@ -234,7 +248,7 @@ public class Ellipse2D implements MoveableShape {
     }
 
     @Override
-    public boolean intersects(Shape other) {
+    public boolean intersects(PhysicalEntity other) {
         return this.distanceTo(other) <= 0;
     }
 
@@ -243,7 +257,7 @@ public class Ellipse2D implements MoveableShape {
      * @param other
      * @return
      */
-    public Point ForcePoint(Shape other){
+    public Point ForcePoint(PhysicalEntity other){
         double leftDistance = other.getDistance(this.getLeftCenter()) - this.getSideRadius();
         double rightDistance = other.getDistance(this.getRightCenter()) - this.getSideRadius();
         double distance[] = new double[]{leftDistance, rightDistance,other.getDistance(center)-b};

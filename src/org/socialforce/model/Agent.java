@@ -1,6 +1,6 @@
 package org.socialforce.model;
 
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.DistancePhysicalEntity;
 import org.socialforce.geom.Velocity;
 import org.socialforce.strategy.Path;
 
@@ -18,7 +18,7 @@ public interface Agent extends Influential, Moveable, Blockable,Rotateable {
      *
      * @return 实体的形状.
      */
-    DistanceShape getShape();
+    DistancePhysicalEntity getPhysicalEntity();
     /**
      * 获取agent的路径
      *
@@ -45,13 +45,14 @@ public interface Agent extends Influential, Moveable, Blockable,Rotateable {
     boolean isEscaped();
 
     /**
-     * 因为Scene不会过滤Agent本身，所以Agent应该定义其如何影响自己
+     * 获取加速度
      */
-    void selfAffect();
+
+    Velocity getAcceleration();
 
     /**
      * 获取加速度
      */
 
-    Velocity getAcceleration();
+    Velocity getVelocity();
 }

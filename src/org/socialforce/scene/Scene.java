@@ -31,6 +31,12 @@ public interface Scene extends Drawable {
     void stepNext();
 
     /**
+     * init the scene (1)prepare agent threads (2)pre-select Movable, Captor, Influential, etc.
+     * @return true if success
+     */
+    boolean init();
+
+    /**
      * get a set of agents the scene is managing.
      * @return all agents.
      */

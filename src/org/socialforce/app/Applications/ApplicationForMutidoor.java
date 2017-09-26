@@ -3,7 +3,7 @@ package org.socialforce.app.Applications;
 import org.socialforce.app.Interpreter;
 import org.socialforce.app.Application;
 import org.socialforce.app.impl.SimpleInterpreter;
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.DistancePhysicalEntity;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
@@ -26,9 +26,10 @@ import java.util.Iterator;
  * Created by Administrator on 2017/2/3.
  */
 public class ApplicationForMutidoor extends SimpleApplication implements Application {
-    DistanceShape template;
+    DistancePhysicalEntity template;
 
     public ApplicationForMutidoor(){
+
     }
 
     /**
@@ -43,13 +44,14 @@ public class ApplicationForMutidoor extends SimpleApplication implements Applica
             PathFinder pathFinder = new AStarPathFinder(currentScene, template);
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
+            this.initScene(currentScene);
             while (!toSkip()) {
-                this.StepNext(currentScene);
+                this.stepNext(currentScene);
             }
             if(onStop()) return;
             for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                 Monitor m = (Monitor)iter.next();
-                Point p = m.getShape().getReferencePoint();
+                Point p = m.getPhysicalEntity().getReferencePoint();
                 matrixV[(int)Math.rint((p.getY()+10)/samplewidth)][(int)Math.rint(p.getX()/samplewidth)] = m.sayVelocity();
             }
             for(double [] m1:matrixV){
@@ -92,7 +94,7 @@ public class ApplicationForMutidoor extends SimpleApplication implements Applica
                 );
             }
         }
-
+        //parameters.addValuesAsParameter()
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
                 .addValue(new Wall(new Box2D(0,0,5-doorwidth/2,1)))
                 .addValue(new Wall(new Box2D(5+doorwidth/2,0,5-doorwidth/2,1)))

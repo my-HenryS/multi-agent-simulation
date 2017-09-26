@@ -1,10 +1,10 @@
 package org.socialforce.scene.impl;
 
+import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.*;
 import org.socialforce.scene.EntityGenerator;
 import org.socialforce.scene.Scene;
-import org.socialforce.geom.Shape;
 
 import java.util.Random;
 
@@ -13,9 +13,9 @@ import java.util.Random;
  */
 public class RandomEntityGenerator2D extends EntityGenerator<InteractiveEntity>{
 
-    private Shape Area;
+    private PhysicalEntity Area;
     private int entityNum;
-    public RandomEntityGenerator2D(int entityNum, Shape Area){
+    public RandomEntityGenerator2D(int entityNum, PhysicalEntity Area){
         this.Area = Area;
         this.entityNum = entityNum;
     }
@@ -38,7 +38,7 @@ public class RandomEntityGenerator2D extends EntityGenerator<InteractiveEntity>{
                 Point2D point = new Point2D(rand_x, rand_y);
                 if(Area.contains(point)){
                     InteractiveEntity newEntity = value.clone();
-                    newEntity.getShape().moveTo(point);
+                    newEntity.getPhysicalEntity().moveTo(point);
                     if(commonName != null) {
                         newEntity.setName(commonName);
                     }

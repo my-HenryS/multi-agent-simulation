@@ -1,7 +1,7 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.geom.Affection;
 import org.socialforce.geom.Force;
-import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Force2D;
 import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.model.*;
@@ -33,10 +33,10 @@ public class BodyForce extends TypeMatchRegulation<Blockable, Agent>{
         else
             tempVector = new Vector2D(0,0);
         tempVector.sub(target.getVelocity());
-        n = (Vector2D) target.getShape().directionTo(source.getShape());
+        n = (Vector2D) target.getPhysicalEntity().directionTo(source.getPhysicalEntity());
         n.get(temp);
         t = new Vector2D(-temp[1],temp[0]);
-        distance = (target.getShape().distanceTo(source.getShape()));
+        distance = (target.getPhysicalEntity().distanceTo(source.getPhysicalEntity()));
         if (distance < 0){g = argumentX;}
         bodyForce =  k1*g*Math.abs(distance);
         slidingForce = k2*g*Math.abs(distance)*t.dot(tempVector);
@@ -45,5 +45,10 @@ public class BodyForce extends TypeMatchRegulation<Blockable, Agent>{
         n.add(t);
         n.get(temp);
         return new Force2D(temp[0],temp[1]);
+    }
+
+    @Override
+    public Class forceType() {
+        return Force2D.class;
     }
 }

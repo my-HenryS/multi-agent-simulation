@@ -4,7 +4,6 @@ import org.socialforce.app.Interpreter;
 import org.socialforce.app.Application;
 import org.socialforce.app.impl.AgentStepCSVWriter;
 import org.socialforce.app.impl.SimpleInterpreter;
-import org.socialforce.geom.DistanceShape;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.impl.*;
 import org.socialforce.scene.Scene;
@@ -40,8 +39,9 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
             PathFinder pathFinder = new AStarPathFinder(currentScene, new Circle2D(new Point2D(0,0),0.486));
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
+            this.initScene(currentScene);
             while (!toSkip()) {
-                this.StepNext(currentScene);
+                this.stepNext(currentScene);
             }
             //csvWriter.writeCSV("output/agent.csv");
             if(onStop()) return;
@@ -61,6 +61,8 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
         //setUpT1Scene2();
         setUpT1Scene3();
         setUpT1Scene4();
+        //setUpT1Scene5();
+        setMap();
         setUpT1Scene5();
         setUpT1Scene6();
         setUpT2Scene();
@@ -232,7 +234,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(20,new Box2D(0,-10,10,5)).setValue(template)
+                new RandomEntityGenerator2D(30,new Box2D(0,-10,10,5)).setValue(template)
         );
 
         loader.readParameterSet(parameters);
@@ -240,6 +242,29 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
             scenes.add(s);
         }
 
+    }
+
+    public void setMap(){
+        double DoorWidth = 1.36;
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("T1.s");
+        Interpreter interpreter = new SimpleInterpreter();
+        interpreter.loadFrom(is);
+        SceneLoader loader = interpreter.setLoader().setModel(new CSVReaderModel("input/scene5box3.csv", 0.02));
+        SimpleParameterPool parameters = new SimpleParameterPool();
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new Exit(new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)))
+        );
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new Exit(new Box2D(4,-4,2,2)))
+        );
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new SafetyRegion(new Box2D(1,10,8,1)))
+        );
+        parameters.addValuesAsParameter(
+                new RandomEntityGenerator2D(26,new Box2D(0,-10,10,5)).setValue(template)
+        );
+        loader.readParameterSet(parameters);
+        scenes.add(loader.readScene().getFirst());
     }
 
 
@@ -279,7 +304,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
 
         parameters.addLast(genParameter(new SV_Exit(new Box2D[]{new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)}),new SV_Exit(new Box2D[]{new Box2D(10-DoorWidth,-0.5,DoorWidth,2)})));
 
-        parameters.addLast(genParameter(new SV_Wall(new Shape[]{new Circle2D(new Point2D(3,-4),2),new Circle2D(new Point2D(7,-4),2)}),new SV_Wall(new Shape[]{}),new SV_Wall(new Shape[]{new Box2D(1,-10,1,9),new Box2D(3,-10,1,9),new Box2D(5,-10,1,9),new Box2D(7,-10,1,9),new Box2D(9,-10,1,9)})));
+        parameters.addLast(genParameter(new SV_Wall(new PhysicalEntity[]{new Circle2D(new Point2D(3,-4),2),new Circle2D(new Point2D(7,-4),2)}),new SV_Wall(new PhysicalEntity[]{}),new SV_Wall(new PhysicalEntity[]{new Box2D(1,-10,1,9),new Box2D(3,-10,1,9),new Box2D(5,-10,1,9),new Box2D(7,-10,1,9),new Box2D(9,-10,1,9)})));
 
         parameters.addLast(genParameter(new SV_SafetyRegion(new Box2D(1,6,8,1))));
 

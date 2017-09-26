@@ -1,7 +1,6 @@
 package org.socialforce.drawer.impl;
 
 import org.socialforce.geom.*;
-import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.BaseAgent;
 
@@ -28,7 +27,7 @@ public class DynamicColorDrawer<T extends InteractiveEntity> extends EntityDrawe
     }
 
     /**
-     * render the shape on the @code {Graphics2D} with color built-in.
+     * render the physicalEntity on the @code {Graphics2D} with color built-in.
      *
      * @param g       the graphics
      * @param pattern
@@ -38,7 +37,7 @@ public class DynamicColorDrawer<T extends InteractiveEntity> extends EntityDrawe
         color = currentColor(pattern);
         super.renderShape(g, pattern);
         this.setColor(new Color(255-color.getRed(),255-color.getGreen(),255-color.getBlue()));
-        org.socialforce.geom.Point pt = pattern.getShape().getReferencePoint();
+        org.socialforce.geom.Point pt = pattern.getPhysicalEntity().getReferencePoint();
         Vector target = pt.clone();
         Vector scP = ((BaseAgent)pattern).getVelocity().clone();
         scP.scale(0.07);

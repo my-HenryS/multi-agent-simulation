@@ -1,7 +1,7 @@
 package org.socialforce.app.Applications;
 
 import org.socialforce.app.Application;
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.DistancePhysicalEntity;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.Monitor;
 import org.socialforce.scene.Scene;
@@ -17,7 +17,7 @@ import java.util.Iterator;
  * Created by Administrator on 2017/2/3.
  */
 public class ApplicationForMutidoorOverView extends SimpleApplication implements Application {
-    DistanceShape template;
+    DistancePhysicalEntity template;
 
     public ApplicationForMutidoorOverView(){
     }
@@ -32,8 +32,9 @@ public class ApplicationForMutidoorOverView extends SimpleApplication implements
             PathFinder pathFinder = new AStarPathFinder(currentScene, template);
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
+            this.initScene(currentScene);
             while (!toSkip()) {
-                this.StepNext(currentScene);
+                this.stepNext(currentScene);
             }
             if(onStop()) return;
             for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){

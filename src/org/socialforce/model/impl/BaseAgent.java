@@ -13,24 +13,21 @@ import java.util.Iterator;
  * Created by Ledenel on 2016/8/15.
  */
 public class BaseAgent extends Entity implements Agent {
-    Velocity currVelocity, currAcceleration = new Velocity2D(0,0);
     Palstance currPal=new Palstance2D(0),currAccPal = new Palstance2D(0);
     Path path;
     double mass,intertia;
-    DistanceShape view;
-    Force pushed;
-    Moment spined;
+    DistancePhysicalEntity view;
     boolean escaped = false;
-    DistanceShape shape;
-    protected static double forceUpbound = Double.MAX_VALUE;
-    private static double momentUpbound = Double.MAX_VALUE;
+    DistancePhysicalEntity physicalEntity;
 
-    public BaseAgent(DistanceShape shape, Velocity velocity) {
+    public BaseAgent(DistancePhysicalEntity shape, Velocity velocity) {
         super(shape);
-        this.shape = shape;
-        this.currVelocity = velocity;
-        this.mass = 80;
-        this.intertia = 20;
+        this.physicalEntity = shape;
+        this.physicalEntity.setVelocity(velocity);
+        this.physicalEntity.setMass(80);
+        if (this.physicalEntity instanceof RotatablePhysicalEntity) {
+            ((RotatablePhysicalEntity) this.physicalEntity).setInertia(20);
+        }
         Circle2D circle = new Circle2D(shape.getReferencePoint(),5);
         this.view = circle;
     }
@@ -42,8 +39,8 @@ public class BaseAgent extends Entity implements Agent {
      * @return 实体的形状.
      */
     @Override
-    public DistanceShape getShape() {
-        return shape;
+    public DistancePhysicalEntity getPhysicalEntity() {
+        return physicalEntity;
     }
 
     /**
@@ -53,7 +50,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public Velocity getVelocity() {
-        return currVelocity;
+        return physicalEntity.getVelocity();
     }
 
     /**
@@ -63,7 +60,7 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public void push(Force force) {
-        this.pushed.add(force);
+        this.physicalEntity.push(force);
     }
 
     /**
@@ -84,11 +81,11 @@ public class BaseAgent extends Entity implements Agent {
      * 该agent只和位于该视域范围内的agent进行交互
      *
      * @return 一个表示该视域范围的形状
-     * @see Shape
+     * @see PhysicalEntity
      */
     @Override
-    // FIXME: 2016/9/3 it should be DistanceShape to support pool selection.
-    public DistanceShape getView() {
+    // FIXME: 2016/9/3 it should be DistancePhysicalEntity to support pool selection.
+    public DistancePhysicalEntity getView() {
         return view;
     }
 
@@ -102,37 +99,8 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public void act() {
-        if(pushed.length() > forceUpbound){
-            this.pushed = pushed.getRefVector();
-            pushed.scale(forceUpbound);
-        }
-        Velocity next_v = new Velocity2D(0,0), deltaV = this.pushed.deltaVelocity(mass, model.getTimePerStep());
-        currAcceleration = deltaV.clone();
-        currAcceleration.scale(1/model.getTimePerStep());//TODO 为什么还要再scale一次，查明。
-        Vector deltaS;
-        next_v.add(currVelocity);
-        next_v.add(deltaV);
-        this.currVelocity.add(deltaV);
-        deltaS = next_v.deltaDistance(model.getTimePerStep());
-        Point point = shape.getReferencePoint();
-        point.add(deltaS);
-        this.shape.moveTo(point);
-        this.view.moveTo(point);                      //改变视野
-        pushed = model.zeroForce();
-
-        if (shape instanceof Ellipse2D){
-            if (Math.abs(((Moment2D)spined).getM())> momentUpbound){
-                spined.scale(momentUpbound/Math.abs(((Moment2D) spined).getM()));
-            }
-            Palstance next_Omega = new Palstance2D(0),deltaP = this.spined.deltaPalstance(intertia,model.getTimePerStep());
-            double deltaAngle;
-            next_Omega.add(currPal);
-            next_Omega.add(deltaP);
-            deltaAngle = next_Omega.deltaAngle(model.getTimePerStep());
-            this.currPal.add(deltaP);
-            ((Ellipse2D) shape).spin(deltaAngle);
-            spined.scale(0);
-        }
+        physicalEntity.act(model.getTimePerStep());
+        view.moveTo(physicalEntity.getReferencePoint());
     }
 
     /**
@@ -163,8 +131,6 @@ public class BaseAgent extends Entity implements Agent {
     @Override
     public void setModel(Model model) {
         this.model = model;
-        this.pushed = model.zeroForce();
-        this.spined = model.zeroMoment();
     }
 
 
@@ -206,18 +172,29 @@ public class BaseAgent extends Entity implements Agent {
     }
 
     @Override
+    public void affectAll(Iterable<Agent> affectableAgents) {
+        for(Agent agent:affectableAgents){
+            affect(agent);
+        }
+    }
+
+    @Override
     public Palstance getPalstance() {
-        return currPal;
+        if(physicalEntity instanceof RotatablePhysicalEntity){
+        return ((RotatablePhysicalEntity) physicalEntity).getPalstance();}
+        else return new Palstance2D(0);
     }
 
     @Override
     public double getIntetia() {
-        return intertia;
+        if(physicalEntity instanceof RotatablePhysicalEntity){
+            return ((RotatablePhysicalEntity) physicalEntity).getInertia();}
+        else return 0;
     }
 
     @Override
     public void rotate(Moment moment){
-        this.spined.add(moment);
+        physicalEntity.push(moment);
     }
 
     /**
@@ -226,21 +203,20 @@ public class BaseAgent extends Entity implements Agent {
      * @see Model
      */
     public void selfAffect(){
-
-        if (shape instanceof Ellipse2D){
-            double angle = ((Ellipse2D)shape).getAngle();
+        if (physicalEntity instanceof RotatablePhysicalEntity){
+            double angle = ((Ellipse2D) physicalEntity).getAngle();
             Vector2D face = new Vector2D(-Math.sin(angle),Math.cos(angle));
             Velocity2D expected = new Velocity2D(0,0);
-            expected.sub(shape.getReferencePoint());
-            expected.add(path.nextStep(shape.getReferencePoint()));
+            expected.sub(physicalEntity.getReferencePoint());
+            expected.add(path.nextStep(physicalEntity.getReferencePoint()));
             double size = Vector2D.getRotateAngle(expected , face);
-            spined.add(new Moment2D(size*200));
+            physicalEntity.push(new Moment2D(size*200));
         }
     }
 
     @Override
     public Velocity getAcceleration() {
-        return currAcceleration;
+        return physicalEntity.getAcceleration();
     }
 
     /**
@@ -251,17 +227,17 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public double getMass() {
-        return mass;
+        return physicalEntity.getMass();
     }
 
     @Override
     public BaseAgent clone() {
-        return new BaseAgent(shape.clone(), currVelocity.clone());
+        return new BaseAgent(physicalEntity.clone(), getVelocity().clone());
     }
 
 
     public String toString(){
-        return "Shape:" + this.shape.toString() + "\tVelocity:" + this.currVelocity.toString() + "\tForce:" + this.pushed.toString();
+        return "PhysicalEntity:" + this.physicalEntity.toString() + "\tVelocity:" + getVelocity().toString();
     }
 
     /**
@@ -269,8 +245,8 @@ public class BaseAgent extends Entity implements Agent {
      * @return 代表可阻挡范围的Shape
      */
     @Override
-    public Shape blockSize() {
-        return this.getShape().clone();
+    public PhysicalEntity blockSize() {
+        return this.getPhysicalEntity().clone();
     }
 
     /**
@@ -282,7 +258,7 @@ public class BaseAgent extends Entity implements Agent {
     public boolean onAdded(Scene scene) {
         for(Iterator<InteractiveEntity> iterator = scene.getAllEntitiesStream().iterator();iterator.hasNext();){
             InteractiveEntity entity = iterator.next();
-            if(shape.intersects(entity.getShape())){
+            if(physicalEntity.intersects(entity.getPhysicalEntity())){
                 return false;
             }
         }
@@ -294,7 +270,7 @@ public class BaseAgent extends Entity implements Agent {
 
     }
 
-    public void setCurrVelocity(Velocity2D velocity){
-        this.currVelocity = velocity;
+    public void setVelocity(Velocity2D velocity){
+        this.physicalEntity.setVelocity(velocity);
     }
 }

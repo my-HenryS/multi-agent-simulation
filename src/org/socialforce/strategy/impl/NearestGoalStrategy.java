@@ -34,7 +34,7 @@ public class NearestGoalStrategy implements StaticStrategy{
             for (Point goal : goals) {
                 //设置最优path
                 Path path = pathFinder.plan_for(goal);
-                double pathLength = path.length(agent.getShape().getReferencePoint());
+                double pathLength = path.length(agent.getPhysicalEntity().getReferencePoint());
                 if (pathLength < path_length) {
                     path_length = pathLength;
                     designed_path = path;

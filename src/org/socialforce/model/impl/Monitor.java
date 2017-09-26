@@ -1,10 +1,9 @@
 package org.socialforce.model.impl;
 
 import org.socialforce.container.impl.LinkListAgentPool;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.model.Agent;
 import org.socialforce.model.Influential;
-import org.socialforce.model.InteractiveEntity;
 import org.socialforce.scene.Scene;
 
 /**
@@ -15,8 +14,8 @@ public class Monitor extends Entity implements Influential {
     int vNum = 0, EC;
     int firstT = -1, lastT;
     LinkListAgentPool agents = new LinkListAgentPool();
-    public Monitor(Shape shape) {
-        super(shape);
+    public Monitor(PhysicalEntity physicalEntity) {
+        super(physicalEntity);
     }
 
     public void setTimePerStep(double timePerStep){
@@ -24,12 +23,12 @@ public class Monitor extends Entity implements Influential {
     }
 
     @Override
-    public Shape getView() {
-        return this.getShape();
+    public PhysicalEntity getView() {
+        return this.getPhysicalEntity();
     }
 
     public void affect(Agent target) {
-        velocity += ((BaseAgent) target).currVelocity.length();
+        velocity += target.getVelocity().length();
         vNum += 1;
         if(!agents.contains(target)){   //EC计数不复用Agent
             agents.addLast(target);
@@ -38,7 +37,13 @@ public class Monitor extends Entity implements Influential {
             lastT = scene.getCurrentSteps();
         }
         volume += 1;
+    }
 
+    @Override
+    public void affectAll(Iterable<Agent> affectableAgents) {
+        for(Agent agent:affectableAgents){
+            affect(agent);
+        }
     }
 
     @Override
@@ -48,7 +53,7 @@ public class Monitor extends Entity implements Influential {
 
     @Override
     public Monitor clone() {
-        return new Monitor(shape.clone());
+        return new Monitor(physicalEntity.clone());
     }
 
     public double sayVolume(){

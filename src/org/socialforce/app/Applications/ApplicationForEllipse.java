@@ -38,11 +38,12 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
             AgentStepCSVWriter csvWriter = new AgentStepCSVWriter();
             currentScene = iterator.next();
             currentScene.addSceneListener(csvWriter);
-            PathFinder pathFinder = new AStarPathFinder(currentScene, new Circle2D(new Point2D(0,0),0.486));
+            PathFinder pathFinder = new AStarPathFinder(currentScene, new Circle2D(new Point2D(0,0),0.486/2));
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
+            this.initScene(currentScene);
             while (!toSkip()) {
-                this.StepNext(currentScene);
+                this.stepNext(currentScene);
             }
             //csvWriter.writeCSV("output/agent.csv");
             if(onStop()) return;
@@ -58,7 +59,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         template = new BaseAgent(new Ellipse2D(0.486/2,0.3/2,new Point2D(0,0),0), new Velocity2D(0,0));
         scenes = new LinkedList<>();
         DoorWidth = 1.36;
-        density = 10;
+        density = 20;
         setUpT1Scene5();
         for(Scene scene:scenes){
             scene.setApplication(this);
@@ -91,13 +92,16 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         );
 
         parameters.addValuesAsParameter(new SimpleEntityGenerator()
-                .setValue(new Exit(new Box2D(5-DoorWidth/2,-0.5,DoorWidth,2)))
+                .setValue(new DoorTurn(new Box2D(5-DoorWidth/2,-0.01,DoorWidth,1.02),(Math.PI)/(-2)))
                 .setPriority(5)
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(20,new Box2D(0,-10,10,5)).setValue(template)
+                new RandomEntityGenerator2D(26,new Box2D(0,-10,10,5)).setValue(template)
         );
+        /*parameters.addValuesAsParameter(
+                new RandomEntityGenerator2D(1,new Box2D(4.3,-3,0.5,2)).setValue(template)
+        );*/
 
         loader.readParameterSet(parameters);
         for (Scene s : loader.readScene()){

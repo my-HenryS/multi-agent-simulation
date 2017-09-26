@@ -3,10 +3,9 @@ package org.socialforce.app.Applications;
 import org.socialforce.app.*;
 import org.socialforce.app.impl.SimpleInterpreter;
 import org.socialforce.drawer.Drawer;
-import org.socialforce.drawer.impl.EntityDrawer;
 import org.socialforce.drawer.impl.GoalDynamicColorMarkDrawer;
 import org.socialforce.drawer.impl.SceneDrawer;
-import org.socialforce.geom.DistanceShape;
+import org.socialforce.geom.DistancePhysicalEntity;
 import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
@@ -21,7 +20,6 @@ import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.*;
 
 import java.awt.*;
-import java.io.File;
 import java.io.InputStream;
 import java.util.Iterator;
 
@@ -29,8 +27,9 @@ import java.util.Iterator;
 /**
  * Created by Whatever on 2016/12/15.
  */
+
 public class ApplicationForECStrategy extends SimpleApplication implements Application {
-    DistanceShape template;
+    DistancePhysicalEntity template;
 
     public ApplicationForECStrategy(){
     }
@@ -46,21 +45,30 @@ public class ApplicationForECStrategy extends SimpleApplication implements Appli
         for (Iterator<Scene> iterator = scenes.iterator(); iterator.hasNext();){
             currentScene = iterator.next();
             int iteration = 0;
-            PathFinder pathFinder = new AStarPathFinder(currentScene, template);
-            strategy = new ECStrategy(currentScene, pathFinder);
+            strategy = Strategy(currentScene);
             //strategy = new DynamicLifeBeltStrategy(scene, pathFinder);
             //strategy = new LifeBeltStrategy(scene, pathFinder);
             //strategy = new NearestGoalStrategy(scene, pathFinder);
             strategy.pathDecision();
+            this.initScene(currentScene);
             while (!toSkip()) {
-                this.StepNext(currentScene);
+                this.stepNext(currentScene);
                 iteration += 1;
-                if(iteration % 500 ==0 && strategy instanceof DynamicStrategy){
+                if(iteration % RedecisionSpan() ==0 && strategy instanceof DynamicStrategy){
                     ((DynamicStrategy) strategy).dynamicDecision();
                 }
             }
             if(onStop()) return;
         }
+    }
+
+    private int RedecisionSpan() {
+        return 500;
+    }
+
+    private DynamicStrategy Strategy(Scene currentScene) {
+        PathFinder pathFinder = new AStarPathFinder(currentScene, template);
+        return new ECStrategy(this.currentScene, pathFinder);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package org.socialforce.strategy.impl;
 
 import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Segment2D;
@@ -70,8 +70,8 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
         //System.out.println(paths.toString());
     }
 
-    public void addGate(Shape shape){
-        gates.addLast(new Gate(shape, ""+gateName));
+    public void addGate(PhysicalEntity physicalEntity){
+        gates.addLast(new Gate(physicalEntity, ""+gateName));
     }
 
     public void initMaps(){
@@ -80,13 +80,13 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
                 gate.isExit();
             }
             Scene newScene = prepareScene(gate);
-            pathFinder.addSituation(newScene, gate.getShape().getReferencePoint());
-            fields.addMap(((AStarPath)pathFinder.plan_for(gate.getShape().getReferencePoint())).map, gate.getName());
+            pathFinder.addSituation(newScene, gate.getPhysicalEntity().getReferencePoint());
+            fields.addMap(((AStarPath)pathFinder.plan_for(gate.getPhysicalEntity().getReferencePoint())).map, gate.getName());
             for(String target:graph.find(gate.getName())){
                 Gate t = getGate(target);
                 newScene = prepareScene(gate,t);
-                pathFinder.addSituation(newScene, gate.getShape().getReferencePoint());
-                fields.addMap(((AStarPath)pathFinder.constraint_plan_for(gate.getShape().getReferencePoint(), t.getShape().getReferencePoint())).map, t.getName(), gate.getName());
+                pathFinder.addSituation(newScene, gate.getPhysicalEntity().getReferencePoint());
+                fields.addMap(((AStarPath)pathFinder.constraint_plan_for(gate.getPhysicalEntity().getReferencePoint(), t.getPhysicalEntity().getReferencePoint())).map, t.getName(), gate.getName());
             }
         }
     }
@@ -100,13 +100,13 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
 
     private Scene prepareScene(Gate toAvoid){
         Scene newScene = scene.cloneWithStatics();
-        gates.stream().filter(t -> t.isExit() && !t.equals(toAvoid)).forEach(t -> newScene.getStaticEntities().add(new Wall(((Segment2D) t.getShape()).flatten(0.6))));
+        gates.stream().filter(t -> t.isExit() && !t.equals(toAvoid)).forEach(t -> newScene.getStaticEntities().add(new Wall(((Segment2D) t.getPhysicalEntity()).flatten(0.6))));
         return newScene;
     }
 
     private Scene prepareScene(Gate toAvoid1, Gate toAvoid2){
         Scene newScene = scene.cloneWithStatics();
-        gates.stream().filter(t -> t.isExit() && !t.equals(toAvoid1) && !t.equals(toAvoid2)).forEach(t -> newScene.getStaticEntities().add(new Wall(((Segment2D) t.getShape()).flatten(0.6))));
+        gates.stream().filter(t -> t.isExit() && !t.equals(toAvoid1) && !t.equals(toAvoid2)).forEach(t -> newScene.getStaticEntities().add(new Wall(((Segment2D) t.getPhysicalEntity()).flatten(0.6))));
         return newScene;
     }
 
@@ -121,11 +121,11 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
         for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
             agent = (Agent) iter.next();
             CompoundAStarPath designed_path = null;
-            LinkedList<String> names = fields.nearbyNodes(agent.getShape().getReferencePoint());
+            LinkedList<String> names = fields.nearbyNodes(agent.getPhysicalEntity().getReferencePoint());
             double [] front_num = new double[gates.size()];
             int temp = 0;
             for(Gate gate:gates){
-                front_num[temp++] = fronts(agent, gate.getShape().getReferencePoint());
+                front_num[temp++] = fronts(agent, gate.getPhysicalEntity().getReferencePoint());
             }
             double t = Double.POSITIVE_INFINITY;
             for(Tree<String> path:paths){
@@ -147,7 +147,7 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
                         new_path.addMap(fields.findMap(lastnode.getData(), node.getData()));
                         if(gate.isExit()) new_t += front_num[gates.indexOf(gate)]/EC(gate.getWidth(), ((SimpleForceModel)agent.getModel()).getExpectedSpeed());
                     }
-                    new_t += new_path.length(agent.getShape().getReferencePoint()) / ((SimpleForceModel)agent.getModel()).getExpectedSpeed();
+                    new_t += new_path.length(agent.getPhysicalEntity().getReferencePoint()) / ((SimpleForceModel)agent.getModel()).getExpectedSpeed();
                     if(new_t < t){
                         t = new_t;
                         designed_path = new_path;
@@ -188,17 +188,17 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
     //TODO 不再extends entity
     private class Gate extends Entity{
         double width = 0;
-        public Gate(Shape shape, String name){
-            super(shape);
+        public Gate(PhysicalEntity physicalEntity, String name){
+            super(physicalEntity);
             setName(name);
         }
-        public Gate(Shape shape, String name, double width){
-            super(shape);
+        public Gate(PhysicalEntity physicalEntity, String name, double width){
+            super(physicalEntity);
             setName(name);
             this.width = width;
         }
 
-        public boolean isExit(){ return shape instanceof Segment2D;}
+        public boolean isExit(){ return physicalEntity instanceof Segment2D;}
 
         @Override
         public double getMass() {
@@ -207,7 +207,7 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
 
         @Override
         public Gate clone() {
-            return new Gate(shape.clone(), name, width);
+            return new Gate(physicalEntity.clone(), name, width);
         }
 
         public double getWidth(){ return width;}
@@ -402,7 +402,7 @@ public class CompoundECStrategy extends ECStrategy implements DynamicStrategy {
         int front_num = 0;
         for (Iterator iter = scene.getAllAgents().iterator(); iter.hasNext(); ) {
             Agent target_agent = (Agent) iter.next();
-            if((target_agent.getPath() == null || target_agent.getPath().getCurrentGoal().equals(goal)) && agent.getShape().getDistance(goal) > target_agent.getShape().getDistance(goal)){
+            if((target_agent.getPath() == null || target_agent.getPath().getCurrentGoal().equals(goal)) && agent.getPhysicalEntity().getDistance(goal) > target_agent.getPhysicalEntity().getDistance(goal)){
                 front_num += 1;
             }
         }

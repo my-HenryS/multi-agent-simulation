@@ -10,7 +10,7 @@ import java.util.LinkedList;
  * 以其顶点的数组描述
  * Created by Whatever on 2017/1/29.
  */
-public class Polygon2D implements Shape{
+public class Polygon2D extends Shape2D implements PhysicalEntity {
     public Polygon2D(){}
     public Polygon2D(Point2D[] nods){
         this.nods = nods;
@@ -96,7 +96,7 @@ public class Polygon2D implements Shape{
     }
 
     /**
-     * 检查一个点是否属于 <code>Shape</code>.
+     * 检查一个点是否属于 <code>PhysicalEntity</code>.
      *
      * @param point 将被检查的点.
      * @return 如果该点是该形状上的一部分，就返回真，否则返回假.
@@ -243,12 +243,12 @@ public class Polygon2D implements Shape{
      * @return 该形状的副本.
      */
     @Override
-    public Shape clone() {
+    public PhysicalEntity clone() {
         return new Polygon2D(nods);
     }
 
     @Override
-    public Shape expandBy(double extent) {
+    public PhysicalEntity expandBy(double extent) {
         Point2D center = (Point2D) this.getReferencePoint().clone();
         Vector2D vector = new Vector2D();
         double[] temp = new double[2];

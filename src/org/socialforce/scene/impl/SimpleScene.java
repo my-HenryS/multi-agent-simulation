@@ -17,11 +17,14 @@ import org.socialforce.scene.SceneListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by Ledenel on 2016/8/22.
  */
 public class SimpleScene implements Scene {
+    CountDownLatch latch = null;
+
     @Override
     public boolean addSceneListener(SceneListener sceneListener) {
         this.sceneListeners.add(sceneListener);
@@ -77,11 +80,14 @@ public class SimpleScene implements Scene {
         entities.addAll(allAgents);
         Iterable<InteractiveEntity> captors = entities.selectClass(Influential.class);
         model.fieldForce(allAgents);
+        int size = 0;
+        for(InteractiveEntity value : captors) {
+            size++;
+        }
+
         for (InteractiveEntity captor : captors){
             Iterable<Agent> affectableAgents = allAgents.select(((Influential) captor).getView());
-            for (Agent target:affectableAgents){
-                ((Influential) captor).affect(target);
-            }
+            ((Influential) captor).affectAll(affectableAgents);
         }
         Iterable<InteractiveEntity> movables = entities.selectClass(Moveable.class);
         for (InteractiveEntity movable : movables) {
@@ -90,6 +96,15 @@ public class SimpleScene implements Scene {
         allAgents.removeIf(Agent::isEscaped);
         currentStep++;
         updateStep();
+    }
+
+    /**
+     * init the scene (1)prepare agent threads (2)pre-select Movable, Captor, Influential, etc.
+     */
+    @Override
+    public boolean init() {
+
+        return true;
     }
 
     protected void updateStep() {
@@ -256,7 +271,7 @@ public class SimpleScene implements Scene {
         double xmin = Double.POSITIVE_INFINITY,xmax = Double.NEGATIVE_INFINITY,ymin = Double.POSITIVE_INFINITY,ymax = Double.NEGATIVE_INFINITY;
         Box bound;
         for(Agent agent : allAgents){
-            bound = agent.getShape().getBounds();
+            bound = agent.getPhysicalEntity().getBounds();
             if (bound.getStartPoint().getX() < xmin){
                 xmin = bound.getStartPoint().getX();
             }
@@ -271,7 +286,7 @@ public class SimpleScene implements Scene {
             }
         }
         for (InteractiveEntity entity : statics){
-            bound = entity.getShape().getBounds();
+            bound = entity.getPhysicalEntity().getBounds();
             if (bound.getStartPoint().getX() < xmin){
                 xmin = bound.getStartPoint().getX();
             }
@@ -299,5 +314,7 @@ public class SimpleScene implements Scene {
     }
 
 
-
+    abstract class thread extends Thread {
+        public abstract void run();
+    }
 }

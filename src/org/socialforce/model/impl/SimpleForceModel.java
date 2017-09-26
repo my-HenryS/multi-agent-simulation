@@ -5,7 +5,6 @@ import org.socialforce.geom.*;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.*;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,6 +30,7 @@ public class SimpleForceModel implements Model {
         regulations.add(new GravityRegulation(Star_Planet.class, Star_Planet.class, this));
         regulations.add(new SpinBodyForceRegulation(this));
         regulations.add(new SpinPsyForceRegulation(this));
+        regulations.add(new DoorTurnRegulation(DoorTurn.class,Agent.class,this));
     }
 
     public SimpleForceModel(double timePerStep){
@@ -49,7 +49,7 @@ public class SimpleForceModel implements Model {
     public Force interactionForce(InteractiveEntity source, InteractiveEntity target) {
         Force force = this.zeroForce();
         for (ForceRegulation regulation : regulations) {
-            if (regulation.hasForce(source, target)) {
+            if (Force.class.isAssignableFrom(regulation.forceType()) && regulation.hasForce(source, target)) {
                 Affection temp = regulation.getForce(source, target);
                 if (temp instanceof Force){
                 force.add((Vector) temp);}
@@ -62,13 +62,13 @@ public class SimpleForceModel implements Model {
     public Moment interactionMoment(InteractiveEntity source, InteractiveEntity target) {
         Moment moment = this.zeroMoment();
         for (ForceRegulation regulation : regulations) {
-            if (regulation.hasForce(source,target)) {
+            if (Moment.class.isAssignableFrom(regulation.forceType()) && regulation.hasForce(source,target)) {
                 Affection temp = regulation.getForce(source, target);
                 if (temp instanceof Moment) {
                     moment.add((Moment) temp);
                 }
             }
-            }
+        }
         return moment;
     }
 
@@ -117,7 +117,7 @@ public class SimpleForceModel implements Model {
             Agent agent = (Agent) source;
             Velocity expected = this.zeroVelocity();
             Force force = this.zeroForce();
-            Point current = agent.getShape().getReferencePoint(), goal = agent.getPath().nextStep(current);
+            Point current = agent.getPhysicalEntity().getReferencePoint(), goal = agent.getPath().nextStep(current);
             expected.sub(current);
             expected.add(goal);
             expected.scale(EXPECTED_SPEED / expected.length());
@@ -126,7 +126,7 @@ public class SimpleForceModel implements Model {
             force.scale(agent.getMass() / REACT_TIME);
             agent.push(force);
 
-            if(agent.getShape() instanceof Ellipse2D){
+            if(agent.getPhysicalEntity() instanceof Ellipse2D){
                 Moment moment;
                 Palstance p = agent.getPalstance().clone(), expectP = new Palstance2D(EXPECTED_PALSTANCE);
                 p.scale(-1);

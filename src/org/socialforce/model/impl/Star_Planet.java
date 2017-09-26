@@ -2,7 +2,6 @@ package org.socialforce.model.impl;
 
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.Model;
 
@@ -13,10 +12,9 @@ public class Star_Planet extends BaseAgent implements Agent {
     /**
      * @param shape
      */
-    public Star_Planet(DistanceShape shape, Velocity velocity) {
+    public Star_Planet(DistancePhysicalEntity shape, Velocity velocity) {
         super(shape,velocity);
         this.view = new Circle2D(shape.getReferencePoint(),100);
-        super.forceUpbound = Double.POSITIVE_INFINITY;
     }
 
     /**
@@ -32,6 +30,14 @@ public class Star_Planet extends BaseAgent implements Agent {
         else
             target.push(model.interactionForce(this, target));
     }
+
+    @Override
+    public void affectAll(Iterable<Agent> affectableAgents) {
+        for(Agent agent:affectableAgents){
+            affect(agent);
+        }
+    }
+
 
     /**
      * Planet不影响自己
@@ -50,13 +56,13 @@ public class Star_Planet extends BaseAgent implements Agent {
      */
     @Override
     public double getMass() {
-        double d = shape.getBounds().getSize().length();
+        double d = physicalEntity.getBounds().getSize().length();
         return d*d*d*8;
     }
 
     @Override
     public Star_Planet clone() {
-        return new Star_Planet(shape.clone(), currVelocity.clone());
+        return new Star_Planet(physicalEntity.clone(), physicalEntity.getVelocity().clone());
     }
 
     /**
@@ -66,24 +72,9 @@ public class Star_Planet extends BaseAgent implements Agent {
      */
     @Override
     public Velocity getVelocity() {
-        return currVelocity;
+        return physicalEntity.getVelocity();
     }
 
-    public void setVelocity(Velocity velocity){
-        this.currVelocity = velocity;
-    }
-
-
-    /**
-     * 将实体以一定大小的力推向目标点。
-     *
-     * @param force 推时力的大小
-     */
-    @Override
-    public void push(Force force) {
-        Velocity dv = force.deltaVelocity(getMass(),getModel().getTimePerStep());
-        currVelocity.add(dv);
-    }
 
     /**
      * 用大小为force的力推位于特定位置上的点。
@@ -98,18 +89,8 @@ public class Star_Planet extends BaseAgent implements Agent {
     }
 
     @Override
-    public DistanceShape getView(){
+    public DistancePhysicalEntity getView(){
         return view;
     }
 
-    public void act(){
-        Point2D point2D = (Point2D) shape.getReferencePoint();
-        Velocity v= currVelocity.clone();
-        Vector vv = v.deltaDistance(model.getTimePerStep());
-        double[] cp = new double[2];
-        vv.get(cp);
-        point2D.moveBy(cp[0],cp[1]);
-        shape.moveTo(point2D);
-        this.view.moveTo(point2D);
-    }
 }

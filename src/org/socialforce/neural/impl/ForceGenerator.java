@@ -40,7 +40,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
             csv2matrix(superPath + directory, timeInterval);
             calcVelocity();
         }
-        catch (Exception e){
+        catch (IOException e){
             e.printStackTrace();
         }
     }

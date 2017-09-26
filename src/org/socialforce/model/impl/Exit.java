@@ -1,7 +1,7 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.geom.ClipperShape;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.ClipperPhysicalEntity;
+import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.scene.Scene;
@@ -11,8 +11,8 @@ import org.socialforce.scene.impl.EntityDecorator;
  * Created by sunjh1999 on 2017/5/2.
  */
 public class Exit extends Entity {
-    ClipperShape shape;
-    public Exit(ClipperShape shape) {
+    ClipperPhysicalEntity shape;
+    public Exit(ClipperPhysicalEntity shape) {
         super(shape);
         this.shape = shape;
     }
@@ -25,15 +25,15 @@ public class Exit extends Entity {
                 && shape.getBounds().getStartPoint().getY() != shape.getBounds().getEndPoint().getY()) {
             wall = scene.getStaticEntities().selectTopByClass(shape.getReferencePoint(), Wall.class);
             if(wall == null) return false;
-            Box2D wallShape = (Box2D) wall.getShape();
-            Shape[] boxes =  shape.clip(wallShape);
+            Box2D wallShape = (Box2D) wall.getPhysicalEntity();
+            PhysicalEntity[] boxes =  shape.clip(wallShape);
             for (int j=0;j<boxes.length;j++){
                 temp = new Wall(boxes[j]);
                 EntityDecorator.place(temp,scene,model);
             }
             scene.removeEntity(wall);
         } else /*do nothing*/;
-        return false;
+        return true;
     }
 
     @Override
@@ -48,6 +48,6 @@ public class Exit extends Entity {
 
     @Override
     public Exit clone() {
-        return new Exit((ClipperShape)shape.clone());
+        return new Exit((ClipperPhysicalEntity)shape.clone());
     }
 }

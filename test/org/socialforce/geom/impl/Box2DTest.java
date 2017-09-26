@@ -3,7 +3,7 @@ package org.socialforce.geom.impl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.PhysicalEntity;
 
 import static org.junit.Assert.*;
 
@@ -88,7 +88,7 @@ public class Box2DTest {
 
     @Test
     public void testClone() throws Exception {
-        Shape cloned = testBox.clone();
+        PhysicalEntity cloned = testBox.clone();
         assertEquals(cloned,testBox);
         assertFalse(cloned == testBox);
 
@@ -128,7 +128,7 @@ public class Box2DTest {
     @Test
     public void ClipTest(){
         Box2D clipper = new Box2D(1,-1,1,10);
-        Shape[] boxes = clipper.clip(testBox);
+        PhysicalEntity[] boxes = clipper.clip(testBox);
         assertEquals(boxes[0],new Box2D(0,0,1,4));
         assertEquals(boxes[1],new Box2D(2,0,1,4));
     }

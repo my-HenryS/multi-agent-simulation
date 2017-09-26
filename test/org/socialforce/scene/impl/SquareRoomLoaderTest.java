@@ -32,7 +32,7 @@ public class SquareRoomLoaderTest {
         Scene scene = loader.readScene().getFirst();
         assertEquals(SimpleScene.class,scene.getClass());
         InteractiveEntity entity = scene.getStaticEntities().selectTop(new Circle2D(new Point2D(0,0),100));
-        //assertEquals("wall3",entity.getName());//TODO 这行跑不通，返回的是wall0.以及select(DistanceShape)不是选择相交的而是选择包含的，文档已改。
+        //assertEquals("wall3",entity.getName());//TODO 这行跑不通，返回的是wall0.以及select(DistancePhysicalEntity)不是选择相交的而是选择包含的，文档已改。
         entity = scene.getStaticEntities().selectBottom(new Circle2D(new Point2D(0,0),100));
         assertEquals("wall0",entity.getName());
         entity = scene.getStaticEntities().selectTop(new Point2D(25.5,0));
@@ -43,6 +43,6 @@ public class SquareRoomLoaderTest {
     public void getShapeTest() throws Exception{
         Scene scene = loader.readScene().getFirst();
         InteractiveEntity entity = scene.getStaticEntities().selectBottom(new Circle2D(new Point2D(0,0),100));
-        assertEquals(entity.getShape(),new  Box2D(new Point2D(0, 0), new Point2D(1, 16)));
+        assertEquals(entity.getPhysicalEntity(),new  Box2D(new Point2D(0, 0), new Point2D(1, 16)));
     }
 }

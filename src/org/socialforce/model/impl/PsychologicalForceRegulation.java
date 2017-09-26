@@ -33,9 +33,14 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Blockable,
     @Override
     public Force getForce(Blockable source, Agent target) {
         Force force = model.zeroForce();
-        force.add((target.getShape()).directionTo(source.getShape()));
-        double scale = A * Math.exp(- target.getShape().distanceTo(source.getShape()) / B);
+        force.add((target.getPhysicalEntity()).directionTo(source.getPhysicalEntity()));
+        double scale = A * Math.exp(- (target.getPhysicalEntity().distanceTo(source.getPhysicalEntity()) + 0.1)/ B);
         force.scale(scale / force.length());
         return force;
+    }
+
+    @Override
+    public Class forceType() {
+        return model.zeroForce().getClass();
     }
 }

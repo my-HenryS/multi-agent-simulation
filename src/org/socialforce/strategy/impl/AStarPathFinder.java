@@ -1,11 +1,11 @@
 package org.socialforce.strategy.impl;
 
+import org.socialforce.geom.DistancePhysicalEntity;
 import org.socialforce.model.Blockable;
 import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.scene.Scene;
 import org.socialforce.container.EntityPool;
-import org.socialforce.geom.DistanceShape;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.geom.Point;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
@@ -13,7 +13,6 @@ import org.socialforce.model.InteractiveEntity;
 import org.socialforce.strategy.Path;
 import org.socialforce.strategy.PathFinder;
 
-import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
@@ -29,7 +28,7 @@ public class AStarPathFinder implements PathFinder {
     private int map[][];
     private double distance[][];
     private Point previous[][];
-    private Shape agentShape;
+    private PhysicalEntity agentPhysicalEntity;
     private Scene templateScene;
     private double delta_x = 0;        //偏移量x
     private double delta_y = 0;        //偏移量y
@@ -129,7 +128,7 @@ public class AStarPathFinder implements PathFinder {
         for(Point goal : goals){
             this.goals.addLast(goal.clone());
         }
-        this.agentShape = agent.getShape().clone();
+        this.agentPhysicalEntity = agent.getPhysicalEntity().clone();
         for(Point goal: goals){
             astar(goal);
         }
@@ -139,7 +138,7 @@ public class AStarPathFinder implements PathFinder {
 
     public AStarPathFinder(Scene targetScene, Agent agent){
         this.goal = goal.clone();
-        this.agentShape = agent.getShape().clone();
+        this.agentPhysicalEntity = agent.getPhysicalEntity().clone();
         this.templateScene = targetScene.clone();
         scene_standardize();
         point_generate();
@@ -150,19 +149,19 @@ public class AStarPathFinder implements PathFinder {
     }* assign map with templateScene, agent and goal
      */
 
-    public AStarPathFinder(Scene scene, Shape templateShape){
+    public AStarPathFinder(Scene scene, PhysicalEntity templatePhysicalEntity){
         this.templateScene = scene.cloneWithStatics();
-        this.agentShape = templateShape.clone();
+        this.agentPhysicalEntity = templatePhysicalEntity.clone();
         scene_initiate();   //set standard templateScene and goals
         map_initiate();
         map_generate(templateScene);
         goals.forEach(this::astar);
     }
 
-    public AStarPathFinder(Scene scene, Shape templateShape, double min_div){
+    public AStarPathFinder(Scene scene, PhysicalEntity templatePhysicalEntity, double min_div){
         this.min_div = min_div;
         this.templateScene = scene.cloneWithStatics();
-        this.agentShape = templateShape.clone();
+        this.agentPhysicalEntity = templatePhysicalEntity.clone();
         scene_initiate();   //set standard templateScene and goals
         map_initiate();
         map_generate(templateScene);
@@ -193,7 +192,7 @@ public class AStarPathFinder implements PathFinder {
         delta_y = templateScene.getBounds().getStartPoint().getY();
         for(Iterator<InteractiveEntity> iter = templateScene.getStaticEntities().selectClass(SafetyRegion.class).iterator(); iter.hasNext();){
             SafetyRegion safetyRegion = (SafetyRegion)iter.next();
-            goals.addLast(point_generate(safetyRegion.getShape().getReferencePoint().clone()));
+            goals.addLast(point_generate(safetyRegion.getPhysicalEntity().getReferencePoint().clone()));
         }
         scene_generate(templateScene);
     }
@@ -201,7 +200,7 @@ public class AStarPathFinder implements PathFinder {
     private void scene_generate(Scene scene) {
         EntityPool all_blocks = scene.getStaticEntities();
         for (InteractiveEntity entity : all_blocks) {
-            entity.getShape().moveTo(entity.getShape().getReferencePoint().moveBy(-delta_x, -delta_y));
+            entity.getPhysicalEntity().moveTo(entity.getPhysicalEntity().getReferencePoint().moveBy(-delta_x, -delta_y));
         }
     }
 
@@ -211,8 +210,8 @@ public class AStarPathFinder implements PathFinder {
     }
 
     private void map_initiate(){
-        if(agentShape == null){
-            throw new IllegalStateException("No template shape applied");
+        if(agentPhysicalEntity == null){
+            throw new IllegalStateException("No template physicalEntity applied");
         }
         double x_range = templateScene.getBounds().getEndPoint().getX() - templateScene.getBounds().getStartPoint().getX(),
                 y_range = templateScene.getBounds().getEndPoint().getY() - templateScene.getBounds().getStartPoint().getY();
@@ -225,9 +224,9 @@ public class AStarPathFinder implements PathFinder {
             for (int j = 0; j < map[0].length; j++) {
                 map[i][j] = 0;
                 for (InteractiveEntity entity : all_blocks) {
-                    agentShape.moveTo(new Point2D(i*min_div, j*min_div));
-                    //assert( == entity.getShape().getClass());
-                    if ((entity instanceof Blockable) && ((DistanceShape)agentShape).distanceTo(entity.getShape()) < min_div/2) {
+                    agentPhysicalEntity.moveTo(new Point2D(i*min_div, j*min_div));
+                    //assert( == entity.getPhysicalEntity().getClass());
+                    if ((entity instanceof Blockable) && ((DistancePhysicalEntity) agentPhysicalEntity).distanceTo(entity.getPhysicalEntity()) < min_div/2) {
                         map[i][j] = 1;
                         break;
                     }
@@ -295,7 +294,7 @@ public class AStarPathFinder implements PathFinder {
     public Path plan_for(Point goal) {
         Point destination;
         destination = point_generate(goal.clone());
-        if(agentShape == null){
+        if(agentPhysicalEntity == null){
             throw new IllegalStateException("No agent applied");
         }
 
@@ -314,7 +313,7 @@ public class AStarPathFinder implements PathFinder {
     public Path constraint_plan_for(Point goal, Point ... toBeContained) {
         Point destination;
         destination = point_generate(goal.clone());
-        if(agentShape == null){
+        if(agentPhysicalEntity == null){
             throw new IllegalStateException("No agent applied");
         }
 

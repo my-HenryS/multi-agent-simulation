@@ -30,7 +30,7 @@ public class ModelTestOverall {
     public void getAgent() throws Exception {
         AgentPool allAgents = scene.getAllAgents();
         for (Agent agent: allAgents){
-            agent.setPath(new StraightPath(agent.getShape().getReferencePoint(), new Point2D(4,4)));
+            agent.setPath(new StraightPath(agent.getPhysicalEntity().getReferencePoint(), new Point2D(4,4)));
         }
         scene.stepNext();
 
