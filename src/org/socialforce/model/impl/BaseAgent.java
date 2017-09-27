@@ -26,7 +26,7 @@ public class BaseAgent extends Entity implements Agent {
         this.physicalEntity.setVelocity(velocity);
         this.physicalEntity.setMass(80);
         if (this.physicalEntity instanceof RotatablePhysicalEntity) {
-            ((RotatablePhysicalEntity) this.physicalEntity).setInertia(20);
+            ((RotatablePhysicalEntity) this.physicalEntity).setInertia(4);
         }
         Circle2D circle = new Circle2D(shape.getReferencePoint(),5);
         this.view = circle;

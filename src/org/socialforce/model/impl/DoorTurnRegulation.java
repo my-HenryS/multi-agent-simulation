@@ -26,8 +26,8 @@ public class DoorTurnRegulation extends TypeMatchRegulation<DoorTurn,Agent>{
             double angle = doorTurn.getAngle()-((Ellipse2D)agent.getPhysicalEntity()).getAngle();
             if(Math.abs(doorTurn.getAngle()-((Ellipse2D)agent.getPhysicalEntity()).getAngle())>Math.abs(Math.PI+doorTurn.getAngle()-((Ellipse2D)agent.getPhysicalEntity()).getAngle()))
                 angle = angle+Math.PI;
-            //return new Moment2D(angle*800);
-            return new Moment2D(agent.getIntetia()*(13.71*angle*angle-2.74*angle-2.03));
+            return new Moment2D(angle*400);
+            //return new Moment2D(agent.getIntetia()*(13.71*angle*angle-2.74*angle-2.03));
         }
         return new Moment2D(0);
 

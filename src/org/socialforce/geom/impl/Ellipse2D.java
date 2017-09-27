@@ -155,6 +155,7 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
 
     @Override
     public PhysicalEntity expandBy(double extent) {
+        //Point b = new Point2D(1,1);
         return null;
     }
 

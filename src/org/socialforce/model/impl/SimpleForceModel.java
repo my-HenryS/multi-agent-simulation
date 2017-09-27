@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Ledenel on 2016/8/17.
  */
 public class SimpleForceModel implements Model {
-    double TIME_PER_STEP = 0.008;
+    double TIME_PER_STEP = 0.002;
     double EXPECTED_SPEED = 1.5;
     double EXPECTED_PALSTANCE = 0;
     double REACT_TIME = 0.5;
@@ -131,7 +131,7 @@ public class SimpleForceModel implements Model {
                 Palstance p = agent.getPalstance().clone(), expectP = new Palstance2D(EXPECTED_PALSTANCE);
                 p.scale(-1);
                 expectP.add(p);
-                moment = new Moment2D((expectP.getOmega() * agent.getIntetia()) / REACT_TIME);
+                moment = new Moment2D(5*(expectP.getOmega() * agent.getIntetia()) / REACT_TIME);
                 agent.rotate(moment);
             }
         }
