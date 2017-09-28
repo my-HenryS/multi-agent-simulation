@@ -3,7 +3,7 @@ package org.socialforce.model.impl;
 import org.socialforce.geom.Force;
 import org.socialforce.model.*;
 
-/**
+/**行人规避障碍物的心理力
  * 定义了PsychologicalForceRegulation类，其继承于父类TypeMatchRegulation
  * Created by Ledenel on 2016/8/19.
  */
@@ -34,7 +34,7 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Blockable,
     public Force getForce(Blockable source, Agent target) {
         Force force = model.zeroForce();
         force.add((target.getPhysicalEntity()).directionTo(source.getPhysicalEntity()));
-        double scale = A * Math.exp(- (target.getPhysicalEntity().distanceTo(source.getPhysicalEntity()) + 0.05)/ B);
+        double scale = A * Math.exp(- (target.getPhysicalEntity().distanceTo(source.getPhysicalEntity()) + 0.05)/ B);  //FIXME 心理力的计算公式（修改“0.05”）
         force.scale(scale / force.length());
         return force;
     }

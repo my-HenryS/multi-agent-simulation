@@ -12,8 +12,8 @@ import java.util.List;
  * Created by Ledenel on 2016/8/17.
  */
 public class SimpleForceModel implements Model {
-    double TIME_PER_STEP = 0.002;
-    double EXPECTED_SPEED = 1.5;
+    double TIME_PER_STEP = 0.002;  //FIXME 仿真步长
+    double EXPECTED_SPEED = 1.5;   //FIXME 期望速度
     double EXPECTED_PALSTANCE = 0;
     double REACT_TIME = 0.5;
 
@@ -24,13 +24,13 @@ public class SimpleForceModel implements Model {
 
     public SimpleForceModel() {
         regulations = new LinkedList<>();
-        regulations.add(new PsychologicalForceRegulation(Blockable.class, Agent.class, this));
-        regulations.add(new BodyForce(Blockable.class, Agent.class, this));
-        regulations.add(new DoorForce(Agent.class, Door.class, this));
-        regulations.add(new GravityRegulation(Star_Planet.class, Star_Planet.class, this));
-        regulations.add(new SpinBodyForceRegulation(this));
-        regulations.add(new SpinPsyForceRegulation(this));
-        regulations.add(new DoorTurnRegulation(DoorTurn.class,Agent.class,this));
+        regulations.add(new PsychologicalForceRegulation(Blockable.class, Agent.class, this));  //FIXME 施加心理力：行人规避障碍物的力
+        regulations.add(new BodyForce(Blockable.class, Agent.class, this));                     //FIXME 施加接触力
+        regulations.add(new DoorForce(Agent.class, Door.class, this));                          //FIXME 施加人推门的力
+        regulations.add(new GravityRegulation(Star_Planet.class, Star_Planet.class, this));     //FIXME 施加重力
+        regulations.add(new SpinBodyForceRegulation(this));                                     //FIXME 施加由于接触力产生的转矩
+        regulations.add(new SpinPsyForceRegulation(this));                                      //FIXME 施加由于心理力产生的转矩
+        regulations.add(new DoorTurnRegulation(DoorTurn.class,Agent.class,this));               //FIXME 人过门的时候施加主动侧身的转矩
     }
 
     public SimpleForceModel(double timePerStep){
@@ -124,15 +124,15 @@ public class SimpleForceModel implements Model {
             force.add(expected);
             force.sub(agent.getVelocity());
             force.scale(agent.getMass() / REACT_TIME);
-            agent.push(force);
+            agent.push(force);  //FIXME 施加驱动力：使行人的速度趋向于期望速度
 
             if(agent.getPhysicalEntity() instanceof Ellipse2D){
                 Moment moment;
                 Palstance p = agent.getPalstance().clone(), expectP = new Palstance2D(EXPECTED_PALSTANCE);
                 p.scale(-1);
                 expectP.add(p);
-                moment = new Moment2D(5*(expectP.getOmega() * agent.getIntetia()) / REACT_TIME);
-                agent.rotate(moment);
+                moment = new Moment2D(5*(expectP.getOmega() * agent.getIntetia()) / REACT_TIME);  //FIXME 驱动转矩的计算公式（修改“5”）
+                agent.rotate(moment);  //FIXME 施加驱动转矩：使行人的角速度趋向于0
             }
         }
     }

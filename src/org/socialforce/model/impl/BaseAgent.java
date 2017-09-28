@@ -24,9 +24,9 @@ public class BaseAgent extends Entity implements Agent {
         super(shape);
         this.physicalEntity = shape;
         this.physicalEntity.setVelocity(velocity);
-        this.physicalEntity.setMass(80);
+        this.physicalEntity.setMass(80);  //FIXME 行人的质量
         if (this.physicalEntity instanceof RotatablePhysicalEntity) {
-            ((RotatablePhysicalEntity) this.physicalEntity).setInertia(4);
+            ((RotatablePhysicalEntity) this.physicalEntity).setInertia(4);  //FIXME 行人的转动惯量
         }
         Circle2D circle = new Circle2D(shape.getReferencePoint(),5);
         this.view = circle;
@@ -210,7 +210,7 @@ public class BaseAgent extends Entity implements Agent {
             expected.sub(physicalEntity.getReferencePoint());
             expected.add(path.nextStep(physicalEntity.getReferencePoint()));
             double size = Vector2D.getRotateAngle(expected , face);
-            physicalEntity.push(new Moment2D(size*200));
+            physicalEntity.push(new Moment2D(size*200));  //FIXME 恢复正身转矩的计算公式（修改“200”）
         }
     }
 
