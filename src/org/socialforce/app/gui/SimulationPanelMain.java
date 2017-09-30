@@ -8,6 +8,7 @@ import org.socialforce.app.gui.util.ApplicationDisplayer;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.model.Agent;
 import org.socialforce.scene.Scene;
+import org.socialforce.settings.Settings;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -15,6 +16,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.stream.StreamSupport;
 
 /**
@@ -135,7 +137,44 @@ public class SimulationPanelMain implements ApplicationListener {
             }
         });
         shower1.getBoard().setTextArea(logTextArea);
+        loadButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FileDialog dialog = new FileDialog(getFrame(),"选择配置文件",FileDialog.LOAD);
+                dialog.setVisible(true);
+                fileName = dialog.getFile();
+                reloadSettings();
+            }
+        });
+        reloadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reloadSettings();
+            }
+        });
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FileDialog dialog = new FileDialog(getFrame(),"保存配置文件",FileDialog.SAVE);
+                dialog.setVisible(true);
+                String file = dialog.getFile();
+                fileName = file;
+                SimulationPanelMain.this.nowSettings.setText(fileName);
+                Settings.saveToJson(new File(fileName));
+            }
+        });
     }
+
+    private Frame getFrame() {
+        return (Frame) SimulationPanelMain.this.root.getRootPane().getParent();
+    }
+
+    private void reloadSettings() {
+        this.nowSettings.setText(fileName);
+        Settings.loadFromJson(new File(fileName));
+    }
+
+    private String fileName;
 
     protected void refreshName() {
         currentScnenTextField.setText(loader.current().getName());
@@ -187,6 +226,11 @@ public class SimulationPanelMain implements ApplicationListener {
     private JTextField timePerStepTextField;
     private JButton loadButton;
     private JSlider slider1;
+    private JPanel settings;
+    private JButton loadButton1;
+    private JLabel nowSettings;
+    private JButton reloadButton;
+    private JButton saveButton;
 
     public ApplicationLoader getLoader() {
         return loader;
