@@ -15,7 +15,8 @@ import java.util.List;
 public class SimpleForceModel implements Model {
     @LoadFrom("time_per_step")
     public static double TIME_PER_STEP = 0.002;  //仿真步长
-    double EXPECTED_SPEED = 1.5;   //FIXME 期望速度
+    @LoadFrom("expected_speed")
+    public static double EXPECTED_SPEED = 1.5;   //期望速度
     double EXPECTED_PALSTANCE = 0;
     double REACT_TIME = 0.5;
 
