@@ -140,10 +140,11 @@ public class SimulationPanelMain implements ApplicationListener {
         loadButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FileDialog dialog = new FileDialog(getFrame(),"选择配置文件",FileDialog.LOAD);
-                dialog.setVisible(true);
-                fileName = dialog.getFile();
-                reloadSettings();
+                String file = getFileFromDialog("选择配置文件", FileDialog.LOAD);
+                if (file != null) {
+                    fileName = file;
+                    reloadSettings();
+                }
             }
         });
         reloadButton.addActionListener(new ActionListener() {
@@ -155,14 +156,25 @@ public class SimulationPanelMain implements ApplicationListener {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FileDialog dialog = new FileDialog(getFrame(),"保存配置文件",FileDialog.SAVE);
-                dialog.setVisible(true);
-                String file = dialog.getFile();
-                fileName = file;
-                SimulationPanelMain.this.nowSettings.setText(fileName);
-                Settings.saveToJson(new File(fileName));
+                String saveTip = "保存配置文件";
+                int mode = FileDialog.SAVE;
+                String file = getFileFromDialog(saveTip, mode);
+                if(file != null) {
+                    fileName = file;
+                    SimulationPanelMain.this.nowSettings.setText(fileName);
+                    Settings.saveToJson(new File(fileName));
+                }
             }
         });
+    }
+
+    private String getFileFromDialog(String saveTip, int mode) {
+        FileDialog dialog = new FileDialog(getFrame(), saveTip, mode);
+        dialog.setModal(true);
+        dialog.setMultipleMode(false);
+        dialog.setVisible(true);
+
+        return dialog.getFile();
     }
 
     private Frame getFrame() {
@@ -170,8 +182,12 @@ public class SimulationPanelMain implements ApplicationListener {
     }
 
     private void reloadSettings() {
-        this.nowSettings.setText(fileName);
-        Settings.loadFromJson(new File(fileName));
+        if(fileName != null) {
+            this.nowSettings.setText(fileName);
+            Settings.loadFromJson(new File(fileName));
+        }else {
+            JOptionPane.showMessageDialog(getFrame(), "没有可供加载的配置文件。");
+        }
     }
 
     private String fileName;
