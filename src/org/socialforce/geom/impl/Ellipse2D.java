@@ -22,7 +22,7 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
             this.b = a;
         }
         this.center = center;
-        //对angle取余数，将this.angle限制在：-π到π
+        /*//对angle取余数，将this.angle限制在：-π到π
         if((angle < -1*Math.PI)||(angle > Math.PI)){
             if((Math.PI < angle%(2*Math.PI)) && (angle%(2*Math.PI) < 2*Math.PI))
                 this.angle = angle%(2*Math.PI)-2*Math.PI;
@@ -30,7 +30,7 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
                 this.angle = angle%(2*Math.PI)+2*Math.PI;
             else
                 this.angle = angle%(2*Math.PI);
-        }
+        }*/
         this.angle = angle;
 
 
@@ -50,11 +50,13 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
     }
 
     public Point getLeftCenter(){
-        return new Point2D((-1)*(a+b)/2,0).clone().inverseCoordinateTransfer(getReferencePoint(),getAngle());
+        return new Point2D(center.getX()+(a+b)*(Math.cos(angle))/(-2),center.getY()+(a+b)*(Math.sin(angle))/(-2));
+        //return new Point2D((-1)*(a+b)/2,0).clone().inverseCoordinateTransfer(getReferencePoint(),getAngle());
     }
 
     public Point getRightCenter(){
-        return new Point2D((a+b)/2,0).clone().inverseCoordinateTransfer(getReferencePoint(),getAngle());
+        return new Point2D(center.getX()+(a+b)*(Math.cos(angle))/2,center.getY()+(a+b)*(Math.sin(angle))/2);
+        //return new Point2D((a+b)/2,0).clone().inverseCoordinateTransfer(getReferencePoint(),getAngle());
     }
 
     public double getSideRadius(){
@@ -144,7 +146,7 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
             halfHeight = Math.sqrt((a * a * k * k + b * b) / (k * k + 1));
             halfWidth = Math.sqrt(a * a + b * b - halfHeight * halfHeight);
         }
-        return new Box2D(getReferencePoint().getX() - halfWidth, getReferencePoint().getY() - halfHeight, 2 * halfWidth, 2 * halfHeight);
+        return new Box2D(center.getX() - halfWidth, center.getY() - halfHeight, 2 * halfWidth, 2 * halfHeight);
     }
 
 
@@ -272,7 +274,14 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
             return center;
     }
 
-
+    /**
+     * 椭圆在水平方向上的投影
+     * @param
+     * @return  投影线段两个端点的x坐标
+     */
+    public double[] getProjection(){
+        return new double[]{center.getX()-(a-b)/2-Math.abs(Math.cos(angle)*(a+b)/2),center.getX()+(a-b)/2+Math.abs(Math.cos(angle)*(a+b)/2)};
+    }
 
 }
 

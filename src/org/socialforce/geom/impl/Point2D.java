@@ -178,4 +178,8 @@ public class Point2D extends Vector2D implements Point {
         return q;
     }
 
+    public double getProjection(Segment2D segment){
+        return values[0];
+    }
+
 }

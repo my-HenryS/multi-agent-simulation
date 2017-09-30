@@ -80,18 +80,15 @@ public class SimpleScene implements Scene {
         entities.addAll(allAgents);
         Iterable<InteractiveEntity> captors = entities.selectClass(Influential.class);
         model.fieldForce(allAgents);
-        //找目标
         int size = 0;
         for(InteractiveEntity value : captors) {
             size++;
         }
-        //物理作用
         for (InteractiveEntity captor : captors){
             Iterable<Agent> affectableAgents = allAgents.select(((Influential) captor).getView());
             ((Influential) captor).affectAll(affectableAgents);
         }
         Iterable<InteractiveEntity> movables = entities.selectClass(Moveable.class);
-        //下一步运动
         for (InteractiveEntity movable : movables) {
             ((Moveable)movable).act();
         }
