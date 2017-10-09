@@ -178,8 +178,10 @@ public class Point2D extends Vector2D implements Point {
         return q;
     }
 
-    public double getProjection(Segment2D segment){
-        return values[0];
+    public Point2D getProjection(Segment2D segment){
+        if(segment.getK()>1.0e+7)
+            return new Point2D(segment.getReferencePoint().getX(),values[1]);
+        return new Point2D((segment.getK()*(values[1]-segment.getB())+values[0])/(segment.getK()*segment.getK()+1),((segment.getK()*(values[1]-segment.getB())+values[0])/(segment.getK()*segment.getK()+1))*segment.getK()+segment.getB());
     }
 
 }

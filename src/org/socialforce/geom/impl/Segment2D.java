@@ -327,6 +327,16 @@ public class Segment2D extends Shape2D implements PhysicalEntity {
         return Math.atan2((y2-y1),(x2-x1));
     }
 
+    public double getK(){
+        if(Math.abs(x1-x2)<1.0e-7)
+            return Double.POSITIVE_INFINITY;
+        return (y2-y1)/(x2-x1);
+    }
+
+    public double getB(){
+        return (x1*y2-x2*y1)/(x1-x2);
+    }
+
     @Override
     public PhysicalEntity expandBy(double extent) {
         double angel = this.getAngel();
@@ -336,4 +346,6 @@ public class Segment2D extends Shape2D implements PhysicalEntity {
         y2 += extent*Math.sin(angel);
         return this;
     }
+
+
 }

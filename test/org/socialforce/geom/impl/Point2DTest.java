@@ -90,4 +90,15 @@ public class Point2DTest {
     public void DirectionTo() throws Exception{
         assertEquals(new Vector2D(0.6,0.8),x.directionTo(y));
     }
+
+    @Test
+    public void getProjection() throws Exception{
+        Point2D point = new Point2D(0,0);
+        Segment2D segment1 = new Segment2D(new Point2D(1,0),new Point2D(1,1));
+        Segment2D segment2 = new Segment2D(new Point2D(1,0),new Point2D(0,1));
+        Segment2D segment3 = new Segment2D(new Point2D(1,0),new Point2D(0,-1));
+        assertEquals(new Point2D(1,0),point.getProjection(segment1));
+        assertEquals(new Point2D(0.5,0.5),point.getProjection(segment2));
+        assertEquals(new Point2D(0.5,-0.5),point.getProjection(segment3));
+    }
 }

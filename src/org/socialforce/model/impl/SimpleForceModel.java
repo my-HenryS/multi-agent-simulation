@@ -131,7 +131,7 @@ public class SimpleForceModel implements Model {
                 Palstance p = agent.getPalstance().clone(), expectP = new Palstance2D(EXPECTED_PALSTANCE);
                 p.scale(-1);
                 expectP.add(p);
-                moment = new Moment2D(5*(expectP.getOmega() * agent.getIntetia()) / REACT_TIME);  //FIXME 驱动转矩的计算公式（修改“5”）
+                moment = new Moment2D((expectP.getOmega() * agent.getIntetia()) / REACT_TIME);  //FIXME 驱动转矩的计算公式（修改“5”）
                 agent.rotate(moment);  //FIXME 施加驱动转矩：使行人的角速度趋向于0
             }
         }

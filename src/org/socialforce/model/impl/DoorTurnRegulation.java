@@ -30,7 +30,6 @@ public class DoorTurnRegulation extends TypeMatchRegulation<DoorTurn,Agent>{
             //return new Moment2D(agent.getIntetia()*(13.71*angle*angle-2.74*angle-2.03));
         }
         return new Moment2D(0);
-
     }
 
     @Override

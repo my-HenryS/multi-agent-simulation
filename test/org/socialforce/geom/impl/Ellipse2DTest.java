@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Administrator on 2017/5/10 0010.
@@ -126,6 +127,45 @@ public class Ellipse2DTest {
     public void testClone() throws Exception{
         //assertEquals(ellipseTest.clone(),ellipseTest);
         assertFalse(ellipseTest==ellipseTest.clone());
+    }
+
+    @Test
+    public void getProjection() throws Exception{
+        Ellipse2D ellipse1 = new Ellipse2D(2,1,new Point2D(1,0),Math.PI/3);
+        Ellipse2D ellipse2 = new Ellipse2D(2,1,new Point2D(1,0),4*(Math.PI)/3);
+        Segment2D segment1 = new Segment2D(new Point2D(-1,0),new Point2D(1,0));
+        Segment2D segment2 = new Segment2D(new Point2D(-1*Math.sqrt(3),-1),new Point2D(1*Math.sqrt(3),1));
+        Segment2D segment3 = new Segment2D(new Point2D(-1*Math.sqrt(3),1),new Point2D(1*Math.sqrt(3),-1));
+
+        assertEquals(-0.25,ellipse1.getProjection(segment1).getExtrimePoint()[0].getX(),0.01);
+        assertEquals(0,ellipse1.getProjection(segment1).getExtrimePoint()[0].getY(),0.01);
+        assertEquals(2.25,ellipse1.getProjection(segment1).getExtrimePoint()[1].getX(),0.01);
+        assertEquals(0,ellipse1.getProjection(segment1).getExtrimePoint()[1].getY(),0.01);
+
+        assertEquals(-0.25,ellipse2.getProjection(segment1).getExtrimePoint()[0].getX(),0.01);
+        assertEquals(0,ellipse2.getProjection(segment1).getExtrimePoint()[0].getY(),0.01);
+        assertEquals(2.25,ellipse2.getProjection(segment1).getExtrimePoint()[1].getX(),0.01);
+        assertEquals(0,ellipse2.getProjection(segment1).getExtrimePoint()[1].getY(),0.01);
+
+        assertEquals(-0.808,ellipse1.getProjection(segment2).getExtrimePoint()[0].getX(),0.01);
+        assertEquals(-0.467,ellipse1.getProjection(segment2).getExtrimePoint()[0].getY(),0.01);
+        assertEquals(2.308,ellipse1.getProjection(segment2).getExtrimePoint()[1].getX(),0.01);
+        assertEquals(1.333,ellipse1.getProjection(segment2).getExtrimePoint()[1].getY(),0.01);
+
+        assertEquals(-0.808,ellipse2.getProjection(segment2).getExtrimePoint()[0].getX(),0.01);
+        assertEquals(-0.467,ellipse2.getProjection(segment2).getExtrimePoint()[0].getY(),0.01);
+        assertEquals(2.308,ellipse2.getProjection(segment2).getExtrimePoint()[1].getX(),0.01);
+        assertEquals(1.333,ellipse2.getProjection(segment2).getExtrimePoint()[1].getY(),0.01);
+
+        assertEquals(-0.116,ellipse1.getProjection(segment3).getExtrimePoint()[0].getX(),0.01);
+        assertEquals(0.067,ellipse1.getProjection(segment3).getExtrimePoint()[0].getY(),0.01);
+        assertEquals(1.616,ellipse1.getProjection(segment3).getExtrimePoint()[1].getX(),0.01);
+        assertEquals(-0.933,ellipse1.getProjection(segment3).getExtrimePoint()[1].getY(),0.01);
+
+        assertEquals(-0.116,ellipse2.getProjection(segment3).getExtrimePoint()[0].getX(),0.01);
+        assertEquals(0.067,ellipse2.getProjection(segment3).getExtrimePoint()[0].getY(),0.01);
+        assertEquals(1.616,ellipse2.getProjection(segment3).getExtrimePoint()[1].getX(),0.01);
+        assertEquals(-0.933,ellipse2.getProjection(segment3).getExtrimePoint()[1].getY(),0.01);
     }
 
 

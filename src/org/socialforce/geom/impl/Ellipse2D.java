@@ -275,12 +275,18 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
     }
 
     /**
-     * 椭圆在水平方向上的投影
-     * @param
-     * @return  投影线段两个端点的x坐标
+     * 椭圆在线段的投影
+     * @param  segment（x坐标小的作为点1，x坐标大的作为点2）
+     * @return 投影线段 （x坐标小的作为点1，x坐标大的作为点2）
      */
-    public double[] getProjection(){
-        return new double[]{center.getX()-(a-b)/2-Math.abs(Math.cos(angle)*(a+b)/2),center.getX()+(a-b)/2+Math.abs(Math.cos(angle)*(a+b)/2)};
+    public Segment2D getProjection(Segment2D segment){
+        Point2D center = ((Point2D)this.center).getProjection(segment);
+        double angle = segment.getAngel();
+        double distance = ((a-b)+(a+b)*Math.abs(Math.cos(angle-this.angle)))/2;
+        if(distance < b)
+            distance = b;
+        return new Segment2D(center.clone().moveBy((-1)*distance*Math.cos(angle),(-1)*distance*Math.sin(angle)),center.clone().moveBy(distance*Math.cos(angle),distance*Math.sin(angle)));
+        //return new double[]{center.getX()-(a-b)/2-Math.abs(Math.cos(angle)*(a+b)/2),center.getX()+(a-b)/2+Math.abs(Math.cos(angle)*(a+b)/2)};
     }
 
 }
