@@ -3,6 +3,9 @@ package org.socialforce.geom.impl;
 import org.socialforce.geom.*;
 import org.socialforce.drawer.Drawer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**这是一个二维的线段
  *
  * 有两个点定义.
@@ -345,6 +348,11 @@ public class Segment2D extends Shape2D implements PhysicalEntity {
         y1 -= extent*Math.sin(angel);
         y2 += extent*Math.sin(angel);
         return this;
+    }
+
+    public List<Segment2D> remove(List<Segment2D> blockedLine){
+        List<Segment2D> restLine = new ArrayList<Segment2D>();
+        return restLine;
     }
 
 
