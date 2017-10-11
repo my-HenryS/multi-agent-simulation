@@ -13,7 +13,6 @@ import java.util.Iterator;
  * Created by Ledenel on 2016/8/15.
  */
 public class BaseAgent extends Entity implements Agent {
-    Palstance currPal=new Palstance2D(0),currAccPal = new Palstance2D(0);
     Path path;
     DistancePhysicalEntity view;
     boolean escaped = false;
