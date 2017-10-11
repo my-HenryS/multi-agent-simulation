@@ -142,7 +142,7 @@ public class ApplicationForCanteen extends SimpleApplication implements Applicat
                 .setPriority(2)
         );
 
-        parameters.addValuesAsParameter(new EntityGenerator2D(new Point2D(5.5,4),2,1,6,14)
+        /*parameters.addValuesAsParameter(new EntityGenerator2D(new Point2D(5.5,4),2,1,6,14)
                 .setValue(new Exit(new Box2D(0,0,1.2,0.2)))
         );
 
@@ -156,7 +156,7 @@ public class ApplicationForCanteen extends SimpleApplication implements Applicat
 
         parameters.addValuesAsParameter(new EntityGenerator2D(new Point2D(0.5,9),2.5,1,2,9)
                 .setValue(new Exit(new Box2D(0,0,1.2,0.2)))
-        );
+        );*/
 
         /*
 

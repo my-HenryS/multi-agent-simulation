@@ -23,7 +23,7 @@ public class Exit extends Entity {
         Wall temp;
         if (shape.getBounds().getStartPoint().getX() != shape.getBounds().getEndPoint().getX()
                 && shape.getBounds().getStartPoint().getY() != shape.getBounds().getEndPoint().getY()) {
-            wall = scene.getStaticEntities().selectTopByClass(shape.getReferencePoint(), Wall.class);
+            wall = scene.getStaticEntities().selectTopByClass((Box2D) shape, Wall.class);
             if(wall == null) return false;
             Box2D wallShape = (Box2D) wall.getPhysicalEntity();
             PhysicalEntity[] boxes =  shape.clip(wallShape);

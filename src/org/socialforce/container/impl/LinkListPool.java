@@ -4,6 +4,7 @@ import org.socialforce.container.Pool;
 import org.socialforce.geom.DistancePhysicalEntity;
 import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.geom.Point;
+import org.socialforce.geom.impl.Box2D;
 import org.socialforce.model.InteractiveEntity;
 
 import java.util.Iterator;
@@ -38,6 +39,14 @@ public class LinkListPool<T extends InteractiveEntity> extends LinkedBlockingDeq
                     .filter(entity -> classEquals(entity, aClass) && pointContains(entity, point))
                     .findFirst()
                     .orElse(null);
+    }
+
+    @Override
+    public T selectTopByClass(Box2D box, Class aClass){
+        return this.stream()
+                .filter(entity -> classEquals(entity, aClass) && entity.getPhysicalEntity().hits(box))
+                .findFirst()
+                .orElse(null);
     }
 
     /**
