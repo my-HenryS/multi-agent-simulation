@@ -13,9 +13,7 @@ import java.util.Iterator;
  * Created by Ledenel on 2016/8/15.
  */
 public class BaseAgent extends Entity implements Agent {
-    Palstance currPal=new Palstance2D(0),currAccPal = new Palstance2D(0);
     Path path;
-    double mass,intertia;
     DistancePhysicalEntity view;
     boolean escaped = false;
     DistancePhysicalEntity physicalEntity;
@@ -28,7 +26,7 @@ public class BaseAgent extends Entity implements Agent {
         if (this.physicalEntity instanceof RotatablePhysicalEntity) {
             ((RotatablePhysicalEntity) this.physicalEntity).setInertia(20);  //FIXME 行人的转动惯量
         }
-        Circle2D circle = new Circle2D(shape.getReferencePoint(),5);
+        Circle2D circle = new Circle2D(shape.getReferencePoint(),3);
         this.view = circle;
     }
 
@@ -210,7 +208,7 @@ public class BaseAgent extends Entity implements Agent {
             expected.sub(physicalEntity.getReferencePoint());
             expected.add(path.nextStep(physicalEntity.getReferencePoint()));
             double size = Vector2D.getRotateAngle(expected , face);
-            physicalEntity.push(new Moment2D(size*200));  //FIXME 恢复正身转矩的计算公式（修改“200”）
+            physicalEntity.push(new Moment2D(size*40));  //FIXME 恢复正身转矩的计算公式（修改“200”）
         }
     }
 

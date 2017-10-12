@@ -3,6 +3,11 @@ package org.socialforce.app.Applications;
 import org.socialforce.app.Interpreter;
 import org.socialforce.app.Application;
 import org.socialforce.app.impl.SimpleInterpreter;
+import org.socialforce.drawer.Drawer;
+import org.socialforce.drawer.impl.EntityDrawer;
+import org.socialforce.drawer.impl.EntityDrawerInstaller;
+import org.socialforce.drawer.impl.GoalDynamicColorMarkDrawer;
+import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
@@ -19,6 +24,7 @@ import org.socialforce.strategy.DynamicStrategy;
 import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.*;
 
+import java.awt.*;
 import java.io.InputStream;
 import java.util.Iterator;
 
@@ -176,6 +182,17 @@ public class ApplicationForCanteen extends SimpleApplication implements Applicat
         }
     }
 
+    @Override
+    public void manageDrawer(SceneDrawer drawer){
+        drawer.setBackgroundColor(Color.white);
+        EntityDrawerInstaller installer = drawer.getEntityDrawerInstaller();
+        installer.unregister(Agent.class);
+        installer.unregister(InteractiveEntity.class);
+        EntityDrawer agentDrawer = new EntityDrawer(installer.getDevice());
+        agentDrawer.setColor(Color.blue);
+        installer.registerDrawer(agentDrawer,Agent.class);
+        installer.registerDrawer(new EntityDrawer(installer.getDevice()),InteractiveEntity.class);
+    }
 
 
 }

@@ -36,6 +36,10 @@ public class EntityDrawerInstaller implements DrawerInstaller {
         public Class<? extends Drawable> getDrawType(){ return drawType;}
     }
 
+    Graphics2D device;
+
+    public Graphics2D getDevice(){return device;}
+
     /**
      * 用指定设备构造Drawer的安装器。
      * 其注册顺序是有严格限制的，在指定对象安装时，安装器会寻找“第一个与该对象兼容的类或接口”并返回对应的drawer。
@@ -46,6 +50,7 @@ public class EntityDrawerInstaller implements DrawerInstaller {
      * @param device
      */
     public EntityDrawerInstaller(Graphics2D device) {
+        this.device = device;
         registerDrawer(new PositionDynamicColorMarkDrawer(device), Star_Planet.class);
         registerDrawer(new GoalDynamicColorMarkDrawer(device), Agent.class);
         registerDrawer(new NonPaintDrawer(device), Monitor.class);

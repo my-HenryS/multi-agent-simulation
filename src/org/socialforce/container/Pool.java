@@ -3,6 +3,7 @@ package org.socialforce.container;
 import org.socialforce.geom.DistancePhysicalEntity;
 import org.socialforce.geom.PhysicalEntity;
 import org.socialforce.geom.Point;
+import org.socialforce.geom.impl.Box2D;
 import org.socialforce.model.InteractiveEntity;
 
 import java.util.Collection;
@@ -49,6 +50,8 @@ public interface Pool<T extends InteractiveEntity> extends Collection<T> {
     Iterable<T> selectClass(Class aClass);
 
     T selectTopByClass(Point point, Class aClass);
+
+    T selectTopByClass(Box2D box, Class aClass);
 
     /**
      * 选择覆盖指定点的所有实体。

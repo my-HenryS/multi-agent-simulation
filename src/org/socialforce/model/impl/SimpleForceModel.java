@@ -4,6 +4,7 @@ import org.socialforce.container.Pool;
 import org.socialforce.geom.*;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.*;
+import org.socialforce.settings.LoadFrom;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,8 +13,10 @@ import java.util.List;
  * Created by Ledenel on 2016/8/17.
  */
 public class SimpleForceModel implements Model {
-    double TIME_PER_STEP = 0.002;  //FIXME 仿真步长
-    double EXPECTED_SPEED = 1.5;   //FIXME 期望速度
+    @LoadFrom("time_per_step")
+    public static double TIME_PER_STEP = 0.004;  //仿真步长
+    @LoadFrom("expected_speed")
+    public static double EXPECTED_SPEED = 1.5;   //期望速度
     double EXPECTED_PALSTANCE = 0;
     double REACT_TIME = 0.5;
 
@@ -121,8 +124,9 @@ public class SimpleForceModel implements Model {
             expected.sub(current);
             expected.add(goal);
             expected.scale(EXPECTED_SPEED / expected.length());
+            //expected = 期望速度vt
             force.add(expected);
-            force.sub(agent.getVelocity());
+            force.sub(agent.getVelocity()); //agent.getVelocity()= 当前速度vt
             force.scale(agent.getMass() / REACT_TIME);
             agent.push(force);  //FIXME 施加驱动力：使行人的速度趋向于期望速度
 
