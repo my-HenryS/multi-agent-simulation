@@ -1,9 +1,6 @@
 package org.socialforce.model;
 
-import org.socialforce.geom.Force;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.Vector;
-import org.socialforce.geom.Velocity;
+import org.socialforce.geom.*;
 
 /**
  * 表示可以移动的实体。
@@ -32,9 +29,9 @@ public interface Moveable extends InteractiveEntity {
     /**
      * 将实体以一定大小的力推向目标点。
      *
-     * @param force 推时力的大小
+     * @param affection 推时力的大小
      */
-    void push(Force force);
+    void push(Affection affection);
 
     /**
      * 用大小为force的力推位于特定位置上的点。

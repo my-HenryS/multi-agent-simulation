@@ -54,11 +54,11 @@ public class BaseAgent extends Entity implements Agent {
     /**
      * 将实体以一定大小的力推向目标点。
      *
-     * @param force 推时力的大小
+     * @param affection 推时力的大小
      */
     @Override
-    public void push(Force force) {
-        this.physicalEntity.push(force);
+    public void push(Affection affection) {
+        this.physicalEntity.push(affection);
     }
 
     /**
@@ -164,8 +164,7 @@ public class BaseAgent extends Entity implements Agent {
             this.selfAffect();
         }
         else {
-            target.push(model.interactionForce(this,target));
-            target.rotate(model.interactionMoment(this,target));
+            target.push(model.interactAffection(this,target));
         }
     }
 
@@ -190,10 +189,6 @@ public class BaseAgent extends Entity implements Agent {
         else return 0;
     }
 
-    @Override
-    public void rotate(Moment moment){
-        physicalEntity.push(moment);
-    }
 
     /**
      * BaseAgent以模型场力的形式影响自己

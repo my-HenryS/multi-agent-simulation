@@ -9,7 +9,6 @@ import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.Model;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,13 +71,8 @@ public class CSVReaderModel implements Model {
     }
 
     @Override
-    public Force interactionForce(InteractiveEntity source, InteractiveEntity target) {
-        return zeroForce();
-    }
-
-    @Override
-    public Moment interactionMoment(InteractiveEntity source, InteractiveEntity target) {
-        return zeroMoment();
+    public Affection interactAffection(InteractiveEntity source, InteractiveEntity target) {
+        return new Affection2D();
     }
 
     @Override

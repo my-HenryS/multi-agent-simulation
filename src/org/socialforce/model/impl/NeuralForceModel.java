@@ -6,10 +6,7 @@ import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 import org.socialforce.container.Pool;
 import org.socialforce.geom.*;
-import org.socialforce.geom.impl.Force2D;
-import org.socialforce.geom.impl.Moment2D;
-import org.socialforce.geom.impl.Vector2D;
-import org.socialforce.geom.impl.Velocity2D;
+import org.socialforce.geom.impl.*;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.Model;
@@ -76,13 +73,8 @@ public class NeuralForceModel implements Model{
     }
 
     @Override
-    public Force interactionForce(InteractiveEntity source, InteractiveEntity target) {
-        return zeroForce();
-    }
-
-    @Override
-    public Moment interactionMoment(InteractiveEntity source, InteractiveEntity target) {
-        return zeroMoment();
+    public Affection interactAffection(InteractiveEntity source, InteractiveEntity target) {
+        return new Affection2D();
     }
 
     @Override

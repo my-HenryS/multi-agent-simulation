@@ -1,5 +1,7 @@
 package org.socialforce.geom.impl;
 
+import org.socialforce.geom.Affection;
+import org.socialforce.geom.Force;
 import org.socialforce.geom.Moment;
 import org.socialforce.geom.Palstance;
 
@@ -26,9 +28,13 @@ public class Moment2D implements Moment {
 
     @Override
     public void add(Moment other) {
-        if (other instanceof Moment2D)
-        {
-            M+=((Moment2D) other).getM();
+        this.add((Affection) other);
+    }
+
+    @Override
+    public void add(Affection other) {
+        if(other.getMoment() instanceof Moment2D) {
+            M += ((Moment2D) other.getMoment()).getM();
         }
     }
 
@@ -50,5 +56,15 @@ public class Moment2D implements Moment {
     @Override
     public boolean equals(Object o) {
         return (o instanceof Moment2D) && (Math.abs(((Moment2D) o).getM() - M) < 10E-7);
+    }
+
+    @Override
+    public Force getForce() {
+        return null;
+    }
+
+    @Override
+    public Moment getMoment() {
+        return this;
     }
 }

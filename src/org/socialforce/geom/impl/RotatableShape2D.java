@@ -24,8 +24,8 @@ public abstract class RotatableShape2D extends Shape2D implements RotatablePhysi
     @Override
     public void push(Affection affection){
         super.push(affection);
-        if (affection instanceof Moment2D){
-            spined.add((Moment) affection);
+        if (affection.getMoment() != null){
+            spined.add(affection.getMoment());
         }
     }
 

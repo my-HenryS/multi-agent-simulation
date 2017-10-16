@@ -4,4 +4,8 @@ package org.socialforce.geom;
  * Created by Administrator on 2017/6/23 0023.
  */
 public interface Affection {
+    Force getForce();
+    Moment getMoment();
+
+    void add(Affection affection);
 }

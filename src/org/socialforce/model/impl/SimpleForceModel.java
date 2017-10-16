@@ -14,11 +14,11 @@ import java.util.List;
  */
 public class SimpleForceModel implements Model {
     @LoadFrom("time_per_step")
-    public static double TIME_PER_STEP = 0.004;  //仿真步长
+    public static double TIME_PER_STEP = 0.002;  //仿真步长
     @LoadFrom("expected_speed")
     public static double EXPECTED_SPEED = 1.5;   //期望速度
     double EXPECTED_PALSTANCE = 0;
-    double REACT_TIME = 0.5;
+    double REACT_TIME = 0.3;
 
     long psyT = 0, bodyT = 0, flT = 0;
     int psyN = 0, bodyN = 0, flN = 0;
@@ -27,12 +27,12 @@ public class SimpleForceModel implements Model {
 
     public SimpleForceModel() {
         regulations = new LinkedList<>();
-        regulations.add(new PsychologicalForceRegulation(Blockable.class, Agent.class, this));  //FIXME 施加心理力：行人规避障碍物的力
-        regulations.add(new BodyForce(Blockable.class, Agent.class, this));                     //FIXME 施加接触力
+        //regulations.add(new PsychologicalForceRegulation(Blockable.class, Agent.class, this));  //FIXME 施加心理力：行人规避障碍物的力
+        //regulations.add(new BodyForce(Blockable.class, Agent.class, this));                     //FIXME 施加接触力
         regulations.add(new DoorForce(Agent.class, Door.class, this));                          //FIXME 施加人推门的力
         regulations.add(new GravityRegulation(Star_Planet.class, Star_Planet.class, this));     //FIXME 施加重力
-        regulations.add(new SpinBodyForceRegulation(this));                                     //FIXME 施加由于接触力产生的转矩
-        regulations.add(new SpinPsyForceRegulation(this));                                      //FIXME 施加由于心理力产生的转矩
+        regulations.add(new SpinBodyForceRegulation(Blockable.class, Agent.class, this));                                     //FIXME 施加由于接触力产生的转矩
+        regulations.add(new SpinPsyForceRegulation(Blockable.class, Agent.class, this));                                      //FIXME 施加由于心理力产生的转矩
         regulations.add(new DoorTurnRegulation(DoorTurn.class,Agent.class,this));               //FIXME 人过门的时候施加主动侧身的转矩
     }
 
@@ -49,31 +49,19 @@ public class SimpleForceModel implements Model {
      * @return the force. 返回力的大小，其单位是牛。
      */
     @Override
-    public Force interactionForce(InteractiveEntity source, InteractiveEntity target) {
-        Force force = this.zeroForce();
+    public Affection interactAffection(InteractiveEntity source, InteractiveEntity target) {
+        Affection affection = new Affection2D();
         for (ForceRegulation regulation : regulations) {
-            if (Force.class.isAssignableFrom(regulation.forceType()) && regulation.hasForce(source, target)) {
+            if (regulation.hasForce(source, target)) {
                 Affection temp = regulation.getForce(source, target);
                 if (temp instanceof Force){
-                force.add((Vector) temp);}
-            }
-        }
-        return force;
-    }
-
-    @Override
-    public Moment interactionMoment(InteractiveEntity source, InteractiveEntity target) {
-        Moment moment = this.zeroMoment();
-        for (ForceRegulation regulation : regulations) {
-            if (Moment.class.isAssignableFrom(regulation.forceType()) && regulation.hasForce(source,target)) {
-                Affection temp = regulation.getForce(source, target);
-                if (temp instanceof Moment) {
-                    moment.add((Moment) temp);
+                    affection.add(temp);
                 }
             }
         }
-        return moment;
+        return affection;
     }
+
 
     @Override
     public Vector zeroVector() {
@@ -136,7 +124,7 @@ public class SimpleForceModel implements Model {
                 p.scale(-1);
                 expectP.add(p);
                 moment = new Moment2D(5*(expectP.getOmega() * agent.getIntetia()) / REACT_TIME);  //FIXME 驱动转矩的计算公式（修改“5”）
-                agent.rotate(moment);  //FIXME 施加驱动转矩：使行人的角速度趋向于0
+                agent.push(moment);  //FIXME 施加驱动转矩：使行人的角速度趋向于0
             }
         }
     }

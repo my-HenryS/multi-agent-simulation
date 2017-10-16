@@ -28,7 +28,7 @@ public class Star_Planet extends BaseAgent implements Agent {
             this.selfAffect();
         }
         else
-            target.push(model.interactionForce(this, target));
+            target.push(model.interactAffection(this, target));
     }
 
     @Override
@@ -73,19 +73,6 @@ public class Star_Planet extends BaseAgent implements Agent {
     @Override
     public Velocity getVelocity() {
         return physicalEntity.getVelocity();
-    }
-
-
-    /**
-     * 用大小为force的力推位于特定位置上的点。
-     * 该方法还可以使实体旋转。
-     *
-     * @param force      推力大小
-     * @param startPoint 力作用的位置。
-     */
-    @Override
-    public void push(Force force, Point startPoint) {
-        push(force);
     }
 
     @Override

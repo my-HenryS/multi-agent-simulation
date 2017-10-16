@@ -219,7 +219,7 @@ public class MultiCircle2D extends RotatableShape2D implements RotatablePhysical
      * @param other
      * @return
      */
-    public Point ForcePoint(PhysicalEntity other){
+    public Point forcePoint(PhysicalEntity other){
         double distance[] = new double[]{other.getDistance(this.getLeftCenter())-this.getSideRadius(),other.getDistance(this.getRightCenter())-this.getSideRadius(),other.getDistance(center)-b};
         Arrays.sort(distance);
         if(distance[0] == other.getDistance(this.getLeftCenter())-this.getSideRadius())

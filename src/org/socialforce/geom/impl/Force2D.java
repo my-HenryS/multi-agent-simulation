@@ -1,9 +1,6 @@
 package org.socialforce.geom.impl;
 
-import org.socialforce.geom.Force;
-import org.socialforce.geom.Moment;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.Velocity;
+import org.socialforce.geom.*;
 
 /**
  * Created by Ledenel on 2016/8/16.
@@ -66,5 +63,24 @@ public class Force2D extends Vector2D implements Force {
         Vector2D pro = (Vector2D) this.clone();
         pro.project(distance);
         return new Moment2D(distance.dot(pro));
+    }
+
+    @Override
+    public Force getForce() {
+        return this;
+    }
+
+    @Override
+    public Moment getMoment() {
+        return null;
+    }
+
+    @Override
+    public void add(Affection affection) {
+        super.add(affection.getForce());
+    }
+
+    public void add(Force force) {
+        super.add(force);
     }
 }

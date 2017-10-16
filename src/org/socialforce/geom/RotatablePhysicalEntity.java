@@ -15,4 +15,6 @@ public interface RotatablePhysicalEntity extends PhysicalEntity {
 
     double getInertia();
     void setInertia(double inertia);
+
+    Point forcePoint(PhysicalEntity physicalEntity);
 }

@@ -39,4 +39,6 @@ public interface Force  extends Vector,Affection {
     Force2D getRefVector();
 
     Moment CalculateMoment(Point pushPoint, Point axis);
+
+    void add(Force force);
 }
