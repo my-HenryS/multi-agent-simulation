@@ -3,7 +3,9 @@ package org.socialforce.geom.impl;
 import org.socialforce.geom.*;
 import org.socialforce.drawer.Drawer;
 
-import java.util.ArrayList;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**这是一个二维的线段
@@ -350,9 +352,20 @@ public class Segment2D extends Shape2D implements PhysicalEntity {
         return this;
     }
 
-    public List<Segment2D> remove(List<Segment2D> blockedLine){
-        List<Segment2D> restLine = new ArrayList<Segment2D>();
-        return restLine;
+    public Segment2D[] remove(Segment2D[] segments){
+        double[] segmentLeftX = new double[]{};
+        HashMap map = new HashMap();
+        for(int i = 0; i < segments.length; i++){
+            segmentLeftX[i] = (segments[i].getExtrimePoint())[0].getX();
+            map.put(segmentLeftX[i],segments[i]);
+        }
+        Arrays.sort(segmentLeftX);
+        Segment2D[] segmentSort = new Segment2D[]{};
+        for(int i = 0; i < segmentLeftX.length; i++){
+            segmentSort[i] = (Segment2D) map.get(segmentLeftX[i]);
+        }
+        //segmentSort是segments排序后的结果
+        return null;
     }
 
 

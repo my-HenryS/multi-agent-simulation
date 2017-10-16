@@ -51,5 +51,4 @@ public class DoorTurn extends Exit implements Influential {
     public double getAngle(){
         return angle;
     }
-
 }

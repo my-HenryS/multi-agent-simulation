@@ -100,5 +100,11 @@ public class Segment2DTest {
         assertFalse(testline.hits(new Box2D(0,3,-2,2)));
     }
 
+    @Test
+    public void remove() throws Exception{
+
+
+    }
+
 }
 
