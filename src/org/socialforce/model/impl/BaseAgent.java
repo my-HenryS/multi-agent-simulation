@@ -267,7 +267,6 @@ public class BaseAgent extends Entity implements Agent {
         this.physicalEntity.setVelocity(velocity);
     }
 
-    boolean DoorTurnUnjudged = true;
 
     double EXPECTED_ANGLE = 0;
 

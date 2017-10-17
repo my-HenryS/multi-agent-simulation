@@ -27,12 +27,12 @@ public class SimpleForceModel implements Model {
 
     public SimpleForceModel() {
         regulations = new LinkedList<>();
-        //regulations.add(new PsychologicalForceRegulation(Blockable.class, Agent.class, this));  //FIXME 施加心理力：行人规避障碍物的力
-        //regulations.add(new BodyForce(Blockable.class, Agent.class, this));                     //FIXME 施加接触力
+        regulations.add(new PsychologicalForceRegulation(Blockable.class, Agent.class, this));  //FIXME 施加心理力：行人规避障碍物的力
+        regulations.add(new BodyForce(Blockable.class, Agent.class, this));                     //FIXME 施加接触力
         regulations.add(new DoorForce(Agent.class, Door.class, this));                          //FIXME 施加人推门的力
         regulations.add(new GravityRegulation(Star_Planet.class, Star_Planet.class, this));     //FIXME 施加重力
-        regulations.add(new SpinBodyForceRegulation(Blockable.class, Agent.class, this));                                     //FIXME 施加由于接触力产生的转矩
-        regulations.add(new SpinPsyForceRegulation(Blockable.class, Agent.class, this));                                      //FIXME 施加由于心理力产生的转矩
+        regulations.add(new SpinBodyForceRegulation(Blockable.class, Agent.class, this));       //FIXME 施加由于接触力产生的转矩
+        regulations.add(new SpinPsyForceRegulation(Blockable.class, Agent.class, this));        //FIXME 施加由于心理力产生的转矩
         regulations.add(new DoorTurnRegulation(DoorTurn.class,Agent.class,this));               //FIXME 人过门的时候施加主动侧身的转矩
     }
 

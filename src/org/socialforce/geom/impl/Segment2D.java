@@ -4,6 +4,7 @@ import org.socialforce.geom.*;
 import org.socialforce.drawer.Drawer;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -352,8 +353,8 @@ public class Segment2D extends Shape2D implements PhysicalEntity {
         return this;
     }
 
-    public Segment2D[] remove(Segment2D[] segments){
-        double[] segmentLeftX = new double[]{};
+    public Segment2D[] remove(List<Segment2D> segments){
+        /*double[] segmentLeftX = new double[]{};
         HashMap map = new HashMap();
         for(int i = 0; i < segments.length; i++){
             segmentLeftX[i] = (segments[i].getExtrimePoint())[0].getX();
@@ -363,9 +364,63 @@ public class Segment2D extends Shape2D implements PhysicalEntity {
         Segment2D[] segmentSort = new Segment2D[]{};
         for(int i = 0; i < segmentLeftX.length; i++){
             segmentSort[i] = (Segment2D) map.get(segmentLeftX[i]);
+        }*/
+
+        //排序
+        double[] leftX = new double[segments.size()];
+        double[] tempX = new double[segments.size()];
+        double[] rightX = new double[segments.size()];
+        HashMap map = new HashMap();
+        int i;
+        for(i = 0; i < segments.size(); i++){
+            leftX[i] = (segments.get(i)).getExtrimePoint()[0].getX();
+            tempX[i] = (segments.get(i)).getExtrimePoint()[1].getX();
+            map.put(leftX[i],tempX[i]);
         }
-        //segmentSort是segments排序后的结果
-        return null;
+        Arrays.sort(leftX);
+        for(i = 0; i < leftX.length; i++){
+            rightX[i] = (double) map.get(leftX[i]);
+        }
+        //融合
+        int count = 0;
+        double[][] blockLine = new double[2][leftX.length];
+        blockLine[0][0] = leftX[0];
+        blockLine[1][0] = rightX[0];
+        for(i = 0; i < (leftX.length-1); i++){
+            if(blockLine[1][count] < leftX[i+1]){
+                //blockLine[1][count] = rightX[i];
+                count++;
+                blockLine[0][count] = leftX[i+1];
+                blockLine[1][count] = rightX[i+1];
+            }
+            else{
+                if(blockLine[1][count] < rightX[i+1])
+                    blockLine[1][count] = rightX[i+1];
+                else
+                    blockLine[1][count] = rightX[i];
+            }
+        }
+        //去除
+        List<Double> pointX = new ArrayList<>();
+        pointX.add(this.getExtrimePoint()[0].getX());
+        for(i = 0; i < count+1; i++){
+            for(int j = 0; j < 2; j++){
+                pointX.add(blockLine[j][i]);
+            }
+        }
+        if(blockLine[0][0] <= this.getExtrimePoint()[0].getX()){
+            pointX.remove(this.getExtrimePoint()[0].getX());
+            pointX.remove(blockLine[0][0]);
+        }
+        if(blockLine[1][count] >= this.getExtrimePoint()[1].getX())
+            pointX.remove(blockLine[1][count]);
+        else
+            pointX.add(this.getExtrimePoint()[1].getX());
+        Segment2D[] restLine = new Segment2D[pointX.size()/2];
+        for(i = 0; i < pointX.size()/2; i++){
+            restLine[i] = new Segment2D(new Point2D(pointX.get(2*i),pointX.get(2*i)*getK()+getB()),new Point2D(pointX.get(2*i+1),pointX.get(2*i+1)*getK()+getB()));
+        }
+        return restLine;
     }
 
 

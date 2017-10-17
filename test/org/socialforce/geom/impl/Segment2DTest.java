@@ -5,6 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.socialforce.geom.PhysicalEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -102,9 +105,18 @@ public class Segment2DTest {
 
     @Test
     public void remove() throws Exception{
-
-
+        Segment2D segment1 = new Segment2D(new Point2D(0.0,0.0),new Point2D(10.0,5.0));
+        List<Segment2D> segments1 = new ArrayList<>();
+        segments1.add(new Segment2D(new Point2D(-2.0,-1.0),new Point2D(1.0,0.5)));
+        segments1.add(new Segment2D(new Point2D(2.0,1.0),new Point2D(4.0,2.0)));
+        segments1.add(new Segment2D(new Point2D(3.0,1.5),new Point2D(6.0,3.0)));
+        segments1.add(new Segment2D(new Point2D(4.0,2.0),new Point2D(5.0,2.5)));
+        segments1.add(new Segment2D(new Point2D(7.0,3.5),new Point2D(9.0,4.5)));
+        segments1.add(new Segment2D(new Point2D(9.0,4.5),new Point2D(9.5,4.75)));
+        Segment2D[] restLine = segment1.remove(segments1);
+        for(Segment2D segment : restLine){
+            System.out.println(segment.getExtrimePoint()[0].getX()+" "+segment.getExtrimePoint()[0].getY()+" "+segment.getExtrimePoint()[1].getX()+" "+segment.getExtrimePoint()[1].getY());
+        }
     }
-
 }
 
