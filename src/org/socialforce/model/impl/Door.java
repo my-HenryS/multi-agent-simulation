@@ -130,7 +130,7 @@ public class Door extends Entity implements Moveable, Influential {
     /**
      * 将实体以一定大小的力推向目标点。
      *
-     * @param force 推时力的大小
+     * @param affection 推时力的大小
      */
     @Override
     public void push(Affection affection) {

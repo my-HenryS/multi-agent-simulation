@@ -27,13 +27,11 @@ public class SimpleForceModel implements Model {
 
     public SimpleForceModel() {
         regulations = new LinkedList<>();
-        //regulations.add(new PsychologicalForceRegulation(Blockable.class, Agent.class, this));  //FIXME 施加心理力：行人规避障碍物的力
-        //regulations.add(new BodyForce(Blockable.class, Agent.class, this));                     //FIXME 施加接触力
-        regulations.add(new DoorForce(Agent.class, Door.class, this));                          //FIXME 施加人推门的力
-        regulations.add(new GravityRegulation(Star_Planet.class, Star_Planet.class, this));     //FIXME 施加重力
-        regulations.add(new SpinBodyForceRegulation(Blockable.class, Agent.class, this));                                     //FIXME 施加由于接触力产生的转矩
-        regulations.add(new SpinPsyForceRegulation(Blockable.class, Agent.class, this));                                      //FIXME 施加由于心理力产生的转矩
-        regulations.add(new DoorTurnRegulation(DoorTurn.class,Agent.class,this));               //FIXME 人过门的时候施加主动侧身的转矩
+        regulations.add(new PsychologicalForceRegulation(Blockable.class, Agent.class, this));
+        regulations.add(new BodyForce(Blockable.class, Agent.class, this));
+        regulations.add(new DoorForce(Agent.class, Door.class, this));
+        regulations.add(new GravityRegulation(Star_Planet.class, Star_Planet.class, this));
+
     }
 
     public SimpleForceModel(double timePerStep){
@@ -114,16 +112,9 @@ public class SimpleForceModel implements Model {
             force.add(expected);
             force.sub(agent.getVelocity()); //agent.getVelocity()= 当前速度vt
             force.scale(agent.getMass() / REACT_TIME);
-            agent.push(force);  //FIXME 施加驱动力：使行人的速度趋向于期望速度
+            agent.push(force);
 
-            if(agent.getPhysicalEntity() instanceof Ellipse2D){
-                Moment moment;
-                Palstance p = agent.getPalstance().clone(), expectP = new Palstance2D(EXPECTED_PALSTANCE);
-                p.scale(-1);
-                expectP.add(p);
-                moment = new Moment2D(5*(expectP.getOmega() * agent.getIntetia()) / REACT_TIME);  //FIXME 驱动转矩的计算公式（修改“5”）
-                agent.push(moment);  //FIXME 施加驱动转矩：使行人的角速度趋向于0
-            }
+
         }
     }
 

@@ -196,15 +196,6 @@ public class BaseAgent extends Entity implements Agent {
      * @see Model
      */
     public void selfAffect(){
-        if (physicalEntity instanceof RotatablePhysicalEntity){
-            double angle = ((Ellipse2D) physicalEntity).getAngle();
-            Vector2D face = new Vector2D(-Math.sin(angle),Math.cos(angle));
-            Velocity2D expected = new Velocity2D(0,0);
-            expected.sub(physicalEntity.getReferencePoint());
-            expected.add(path.nextStep(physicalEntity.getReferencePoint()));
-            double size = Vector2D.getRotateAngle(expected , face);
-            physicalEntity.push(new Moment2D(size*40));  //FIXME 恢复正身转矩的计算公式（修改“200”）
-        }
     }
 
     @Override
@@ -267,16 +258,5 @@ public class BaseAgent extends Entity implements Agent {
         this.physicalEntity.setVelocity(velocity);
     }
 
-    boolean DoorTurnUnjudged = true;
-
-    double EXPECTED_ANGLE = 0;
-
-    public void setExpectedAngle(double Expect) {
-        EXPECTED_ANGLE = Expect;
-    }
-
-    public double getExpectedAngle() {
-        return EXPECTED_ANGLE;
-    }
 
 }

@@ -25,7 +25,6 @@ public class ShapeDrawer2DInstaller implements DrawerInstaller {
         registerDrawer(new SolidCircle2DDrawer(graphics2D),Circle2D.class);
         registerDrawer(new SolidRectangle2DDrawer(graphics2D),Rectangle2D.class);
         registerDrawer(new SolidSegment2DDrawer(graphics2D), Segment2D.class);
-        registerDrawer(new SolidEllipse2DDrawer(graphics2D), Ellipse2D.class);
    }
 
     Map<Class<? extends Drawable>,Drawer> drawerMap = new HashMap<>(1000);

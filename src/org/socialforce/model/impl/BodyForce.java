@@ -1,8 +1,6 @@
 package org.socialforce.model.impl;
 
 import org.socialforce.geom.Affection;
-import org.socialforce.geom.Force;
-import org.socialforce.geom.impl.Ellipse2D;
 import org.socialforce.geom.impl.Force2D;
 import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.model.*;

@@ -54,51 +54,12 @@ public class Point2DTest {
         assertEquals((Math.PI)/4,c.getAngle(),1e-7);
     }
 
-    @Test
-    public void coordinateTransfer() throws Exception {
-        Point2D a = new Point2D(0,0);
-        Point2D c = new Point2D(1,1);
-        Point A = a.coordinateTransfer(c,(Math.PI)/4);
-        assertEquals((-1)*Math.sqrt(2),A.getX(),1e-7);
-        assertEquals(0,A.getY(),1e-7);
 
-        Point2D test = new Point2D(0,0);
-        Point2D center = new Point2D(1,1);
-        Point result = test.coordinateTransfer(center,7*(Math.PI)/4);
-        assertEquals(0,result.getX(),1e-7);
-        assertEquals((-1)*Math.sqrt(2),result.getY(),1e-7);
-
-
-    }
-
-    @Test
-    public void inverseCoordinateTransfer() throws Exception {
-        Point2D A = new Point2D(1*Math.sqrt(2),0);
-        Point2D c = new Point2D(1,1);
-        Point a = A.inverseCoordinateTransfer(c,5*(Math.PI)/4);
-        assertEquals(0,a.getX(),1e-7);
-        assertEquals(0,a.getY(),1e-7);
-
-        Point2D test = new Point2D(0,Math.sqrt(2));
-        Point2D center = new Point2D(1,1);
-        Point result = test.inverseCoordinateTransfer(center,3*(Math.PI)/4);
-        assertEquals(0,result.getX(),1e-7);
-        assertEquals(0,result.getY(),1e-7);
-    }
 
     @Test
     public void DirectionTo() throws Exception{
         assertEquals(new Vector2D(0.6,0.8),x.directionTo(y));
     }
 
-    @Test
-    public void getProjection() throws Exception{
-        Point2D point = new Point2D(0,0);
-        Segment2D segment1 = new Segment2D(new Point2D(1,0),new Point2D(1,1));
-        Segment2D segment2 = new Segment2D(new Point2D(1,0),new Point2D(0,1));
-        Segment2D segment3 = new Segment2D(new Point2D(1,0),new Point2D(0,-1));
-        assertEquals(new Point2D(1,0),point.getProjection(segment1));
-        assertEquals(new Point2D(0.5,0.5),point.getProjection(segment2));
-        assertEquals(new Point2D(0.5,-0.5),point.getProjection(segment3));
-    }
+
 }
