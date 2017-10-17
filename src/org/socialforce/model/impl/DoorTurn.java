@@ -22,10 +22,10 @@ public class DoorTurn extends Exit implements Influential {
 
     @Override
     public PhysicalEntity getView(){
-        return this.getPhysicalEntity();
-        /*Point2D center = new Point2D((((Box2D)this.getPhysicalEntity()).getXmin()+((Box2D)this.getPhysicalEntity()).getXmax())/2,((Box2D)this.getPhysicalEntity()).getYmin());
+        //return this.getPhysicalEntity();
+        Point2D center = new Point2D((((Box2D)this.getPhysicalEntity()).getXmin()+((Box2D)this.getPhysicalEntity()).getXmax())/2,((Box2D)this.getPhysicalEntity()).getYmin());
         Circle2D circle2D = new Circle2D(center,((Vector2D)((Box2D)this.getPhysicalEntity()).getSize()).getX()/2);
-        return new DoubleShape2D(door,circle2D);*/
+        return new DoubleShape2D(door,circle2D);
     }
 
     @Override

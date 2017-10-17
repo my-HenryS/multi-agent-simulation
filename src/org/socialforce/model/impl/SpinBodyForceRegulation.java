@@ -25,7 +25,7 @@ public class SpinBodyForceRegulation extends BodyForce{
     @Override
     public Affection getForce(Blockable source, Agent target) {
         Force2D force2D = (Force2D) super.getForce(source,target);
-        if(target instanceof RotatablePhysicalEntity) {
+        if(target.getPhysicalEntity() instanceof RotatablePhysicalEntity) {
             RotatablePhysicalEntity e2 = (RotatablePhysicalEntity) target.getPhysicalEntity();
             PhysicalEntity e1 = source.getPhysicalEntity();
             //double[][] temp = e2.closePoint(e1);

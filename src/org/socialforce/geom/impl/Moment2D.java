@@ -60,7 +60,7 @@ public class Moment2D implements Moment {
 
     @Override
     public Force getForce() {
-        return null;
+        return new Force2D(0,0);
     }
 
     @Override
