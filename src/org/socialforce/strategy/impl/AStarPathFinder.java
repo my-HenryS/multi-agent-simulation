@@ -173,6 +173,7 @@ public class AStarPathFinder implements PathFinder {
         goals.clear();
     }
 
+    //TODO 有关修改场景后的A*规划交由更高级策略控制
     public void addSituation(Scene scene, Point goal){
         assert(scene.getBounds().equals(templateScene.getBounds()));
         Scene newScene = scene.cloneWithStatics();

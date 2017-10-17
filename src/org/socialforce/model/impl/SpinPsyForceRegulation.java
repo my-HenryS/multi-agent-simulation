@@ -2,23 +2,18 @@ package org.socialforce.model.impl;
 
 import org.socialforce.geom.Affection;
 import org.socialforce.geom.PhysicalEntity;
-import org.socialforce.geom.impl.Ellipse2D;
-import org.socialforce.geom.impl.Force2D;
-import org.socialforce.geom.impl.Moment2D;
-import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.Agent;
-import org.socialforce.model.Blockable;
-import org.socialforce.model.ForceRegulation;
-import org.socialforce.model.InteractiveEntity;
+import org.socialforce.geom.RotatablePhysicalEntity;
+import org.socialforce.geom.impl.*;
+import org.socialforce.model.*;
 
 /**
  * Created by Whatever on 2017/6/27.
  */
-public class SpinPsyForceRegulation implements ForceRegulation {
-    public SpinPsyForceRegulation(SimpleForceModel model){
-        p = new PsychologicalForceRegulation(Blockable.class, Agent.class,model);
+public class SpinPsyForceRegulation extends PsychologicalForceRegulation{
+
+    public SpinPsyForceRegulation(Class<Blockable> agentClass, Class<Agent> agentClass2, Model model) {
+        super(agentClass, agentClass2, model);
     }
-    private PsychologicalForceRegulation p;
     /**
      * 判断源实体和目标实体之间是否有作用力。
      *
@@ -28,31 +23,31 @@ public class SpinPsyForceRegulation implements ForceRegulation {
      */
     @Override
     public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
-        return p.hasForce(source,target) && ((Agent)target).getPhysicalEntity().distanceTo(source.getPhysicalEntity()) >=0  && target.getPhysicalEntity() instanceof Ellipse2D;
+        return super.hasForce(source,target);
     }
 
     /**
      * 获取源实体和目标实体之间的作用力。
      *
-     * @param interactiveEntity
-     * @param interactiveEntity2
+     * @param source
+     * @param target
      * @return force
      */
     @Override
-    public Affection getForce(InteractiveEntity interactiveEntity, InteractiveEntity interactiveEntity2) {
-        Ellipse2D e2= (Ellipse2D) interactiveEntity2.getPhysicalEntity();
-        PhysicalEntity e1 = interactiveEntity.getPhysicalEntity();
-        //double[][] temp = e2.closePoint(e1);
-        //Point2D p2 = new Point2D(temp[1][0],temp[1][1]);
-        Point2D p2 = (Point2D)e2.ForcePoint(e1);
-        Force2D f = new Force2D(0,0);
-        f.add(p.getForce((Blockable) interactiveEntity,(Agent) interactiveEntity2));
-        Moment2D moment2D = (Moment2D) f.CalculateMoment(p2,e2.getReferencePoint());
-        return moment2D;
+    public Affection getForce(Blockable source, Agent target) {
+        Force2D force2D = (Force2D) super.getForce(source,target);
+        if(target instanceof RotatablePhysicalEntity) {
+            RotatablePhysicalEntity e2 = (RotatablePhysicalEntity) target.getPhysicalEntity();
+            PhysicalEntity e1 = source.getPhysicalEntity();
+            //double[][] temp = e2.closePoint(e1);
+            //Point2D p2 = new Point2D(temp[1][0],temp[1][1]);
+            Point2D p2 = (Point2D) e2.forcePoint(e1);
+            Moment2D moment2D = (Moment2D) force2D.CalculateMoment(p2, e2.getReferencePoint());
+            return new Affection2D(moment2D, force2D);
+        }
+        else{
+            return force2D;
+        }
     }
 
-    @Override
-    public Class forceType() {
-        return Moment2D.class;
-    }
 }

@@ -34,7 +34,7 @@ public class DoorTurn extends Exit implements Influential {
 
     @Override
     public void affect(Agent target) {
-        target.rotate(model.interactionMoment(this,target));
+        target.push(model.interactAffection(this,target));
     }
 
     @Override

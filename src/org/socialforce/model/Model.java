@@ -5,9 +5,6 @@ import org.socialforce.scene.Scene;
 import org.socialforce.app.Application;
 import org.socialforce.geom.*;
 
-import java.util.Collection;
-import java.util.LinkedList;
-
 /**
  * the social force model.
  * a social force model is used to manage constraints,
@@ -37,9 +34,8 @@ public interface Model{
      * @param target 受力的作用的实体。
      * @return the force. 返回力的大小，其单位是牛。
      */
-    Force interactionForce(InteractiveEntity source, InteractiveEntity target);
+    Affection interactAffection(InteractiveEntity source, InteractiveEntity target);
 
-    Moment interactionMoment(InteractiveEntity source, InteractiveEntity target);
     /**
      * 创建并返回零向量。
      *

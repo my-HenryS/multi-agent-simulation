@@ -32,8 +32,4 @@ public class DoorTurnRegulation extends TypeMatchRegulation<DoorTurn,Agent>{
         return new Moment2D(0);
     }
 
-    @Override
-    public Class forceType() {
-        return Moment2D.class;
-    }
 }

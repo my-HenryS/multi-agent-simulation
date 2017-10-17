@@ -22,8 +22,7 @@ public class Wall extends Entity implements Blockable, Influential {
      */
 
     public void affect(Agent target) {
-        target.push(model.interactionForce(this,target));
-        target.rotate(model.interactionMoment(this,target));
+        target.push(model.interactAffection(this,target));
     }
 
     @Override

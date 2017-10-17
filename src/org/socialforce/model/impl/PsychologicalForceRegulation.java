@@ -1,5 +1,6 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.geom.Affection;
 import org.socialforce.geom.Force;
 import org.socialforce.model.*;
 
@@ -31,7 +32,7 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Blockable,
      * @return force
      */
     @Override
-    public Force getForce(Blockable source, Agent target) {
+    public Affection getForce(Blockable source, Agent target) {
         Force force = model.zeroForce();
         force.add((target.getPhysicalEntity()).directionTo(source.getPhysicalEntity()));
         double scale = A * Math.exp(- (target.getPhysicalEntity().distanceTo(source.getPhysicalEntity()) + 0.05)/ B);  //FIXME 心理力的计算公式（修改“0.05”）
@@ -39,8 +40,4 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Blockable,
         return force;
     }
 
-    @Override
-    public Class forceType() {
-        return model.zeroForce().getClass();
-    }
 }

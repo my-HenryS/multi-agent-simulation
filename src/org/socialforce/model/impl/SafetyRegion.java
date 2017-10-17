@@ -26,7 +26,7 @@ public class SafetyRegion extends Entity implements Influential{
      */
     public void affect(Agent target) {
             Agent agent = (Agent) target;
-            //agent.push(model.interactionForce(this,agent));
+            //agent.push(model.interactAffection(this,agent));
             if(physicalEntity.contains(agent.getPhysicalEntity().getReferencePoint())) {
                 //agent exited.
                 if(scene != null) {

@@ -260,7 +260,7 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
      * @param other
      * @return
      */
-    public Point ForcePoint(PhysicalEntity other){
+    public Point forcePoint(PhysicalEntity other){
         double leftDistance = other.getDistance(this.getLeftCenter()) - this.getSideRadius();
         double rightDistance = other.getDistance(this.getRightCenter()) - this.getSideRadius();
         double distance[] = new double[]{leftDistance, rightDistance,other.getDistance(center)-b};

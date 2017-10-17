@@ -42,8 +42,8 @@ public class Door extends Entity implements Moveable, Influential {
      */
     @Override
     public void affect(Agent target) {
-        target.push(model.interactionForce(this, target));
-        this.push(model.interactionForce(target, this));
+        target.push(model.interactAffection(this, target));
+        this.push(model.interactAffection(target, this));
     }
 
     @Override
@@ -133,8 +133,8 @@ public class Door extends Entity implements Moveable, Influential {
      * @param force 推时力的大小
      */
     @Override
-    public void push(Force force) {
-        Force temp = force.clone();
+    public void push(Affection affection) {
+        Force temp = affection.getForce().clone();
         temp.dot(new Vector2D(1,0));
         pushed += (int) temp.length();
     }

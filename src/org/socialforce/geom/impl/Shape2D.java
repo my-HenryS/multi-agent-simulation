@@ -40,8 +40,8 @@ abstract class Shape2D implements PhysicalEntity {
 
     @Override
     public void push(Affection affection){
-        if(affection instanceof Force2D){
-            pushed.add((Force2D)affection);
+        if(affection.getForce() != null){
+            pushed.add(affection.getForce());
         }
     }
 

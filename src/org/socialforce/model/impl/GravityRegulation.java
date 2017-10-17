@@ -29,15 +29,10 @@ public class GravityRegulation extends TypeMatchRegulation<Star_Planet,Star_Plan
         Point point2 = interactiveEntity2.getPhysicalEntity().getReferencePoint();
         double distance = point1.distanceTo(point2);
         Vector direction = point1.directionTo(point2);
-        double f = G_constant*interactiveEntity.getMass()*interactiveEntity2.getMass()/(distance*distance);
+        double f = G_constant * interactiveEntity.getMass() * interactiveEntity2.getMass() / (distance * distance);
         direction.scale(f);
         double[] values = new double[2];
         direction.get(values);
-        return new Force2D(-values[0],-values[1]);
-    }
-
-    @Override
-    public Class forceType() {
-        return Force2D.class;
+        return new Force2D(-values[0], -values[1]);
     }
 }
