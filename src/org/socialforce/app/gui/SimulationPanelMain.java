@@ -25,7 +25,7 @@ import java.util.stream.StreamSupport;
 public class SimulationPanelMain implements ApplicationListener {
     private boolean paused = false;
     private boolean running = false;
-    int maxDelay = 40;
+    int maxDelay = 20;
     public static JFrame frame;
 
 

@@ -52,6 +52,7 @@ public class Settings {
     }
 
     public static void saveToJson(File file) {
+        System.out.println("file.getAbsolutePath() = " + file.getAbsolutePath());
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(file);

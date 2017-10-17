@@ -72,7 +72,7 @@ public class Force2D extends Vector2D implements Force {
 
     @Override
     public Moment getMoment() {
-        return null;
+        return new Moment2D(0);
     }
 
     @Override

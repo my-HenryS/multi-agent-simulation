@@ -54,9 +54,7 @@ public class SimpleForceModel implements Model {
         for (ForceRegulation regulation : regulations) {
             if (regulation.hasForce(source, target)) {
                 Affection temp = regulation.getForce(source, target);
-                if (temp instanceof Force){
-                    affection.add(temp);
-                }
+                affection.add(temp);
             }
         }
         return affection;

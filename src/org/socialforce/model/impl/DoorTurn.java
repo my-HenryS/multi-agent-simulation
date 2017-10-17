@@ -6,11 +6,6 @@ import org.socialforce.geom.impl.*;
 import org.socialforce.model.Agent;
 import org.socialforce.model.Influential;
 
-import javax.swing.text.Segment;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * Created by Administrator on 2017/9/15 0015.
  */
@@ -27,6 +22,7 @@ public class DoorTurn extends Exit implements Influential {
 
     @Override
     public PhysicalEntity getView(){
+        //return this.getPhysicalEntity();
         Point2D center = new Point2D((((Box2D)this.getPhysicalEntity()).getXmin()+((Box2D)this.getPhysicalEntity()).getXmax())/2,((Box2D)this.getPhysicalEntity()).getYmin());
         Circle2D circle2D = new Circle2D(center,((Vector2D)((Box2D)this.getPhysicalEntity()).getSize()).getX()/2);
         return new DoubleShape2D(door,circle2D);
@@ -48,7 +44,7 @@ public class DoorTurn extends Exit implements Influential {
     @Override
     public DoorTurn clone(){ return new DoorTurn((Box2D)door.clone(),angle); }
 
-    public double getAngle(){
+   public double getAngle(){
         return angle;
     }
 }
