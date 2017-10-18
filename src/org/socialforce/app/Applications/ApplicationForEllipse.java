@@ -92,7 +92,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         );
 
         parameters.addValuesAsParameter(new SimpleEntityGenerator()
-                .setValue(new DoorTurn(new Box2D(5-DoorWidth/2,-0.01,DoorWidth,1.02),Math.PI/(-2)))  //FIXME 主动侧身作用区域（出口）的大小
+                .setValue(new DoorTurn(new Box2D(5-DoorWidth/2,-0.01,DoorWidth,1.02),new Segment2D(new Point2D(5-DoorWidth/2,-0.01),new Point2D(5+DoorWidth/2,-0.01)),0.4))  //FIXME 主动侧身作用区域（出口）的大小
                 .setPriority(5)
         );
 

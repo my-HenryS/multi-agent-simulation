@@ -16,33 +16,35 @@ public class DoorTurn extends Exit implements Influential {
 
     protected Box2D door;
     protected Segment2D doorLine;     //过门线（门内侧）
+    protected double width;
 
 
-    public DoorTurn(Box2D box2D, Segment2D segment2D) {
+    public DoorTurn(Box2D box2D, Segment2D segment2D, double width) {
         super(box2D);
         door = box2D;
         doorLine = segment2D;
+        this.width = width;
     }
 
     /**
      * 门前预判区域
-     * @param width
+     * @param
      * @return
      */
-    public Rectangle2D getDoorZone(double width){
+    public Rectangle2D getDoorZone(){
         doorLine.clone().moveTo(doorLine.getReferencePoint().clone().moveBy(0,width/(-2)));
         return doorLine.flatten(width);
     }
 
     @Override
     public DoorTurn clone() {
-        return new DoorTurn((Box2D) door.clone(),doorLine.clone());
+        return new DoorTurn((Box2D) door.clone(),doorLine.clone(),width);
     }
 
 
     @Override
     public PhysicalEntity getView() {
-        return new DoubleShape2D(door.clone(), getDoorZone(0.4).clone());
+        return new DoubleShape2D(door.clone(), getDoorZone().clone());
     }
 
     @Override
@@ -52,9 +54,7 @@ public class DoorTurn extends Exit implements Influential {
 
     @Override
     public void affectAll(Iterable<Agent> affectableAgents) {
-
         List<Agent> judgedAgent = new ArrayList<>();
-        //List<Agent> unjudgedAgent = new ArrayList<>();
         List<Segment2D> blockedLine = new ArrayList<>();
         for (Agent agent : affectableAgents) {
             if(agent.getPhysicalEntity().intersects(doorLine)) {
@@ -62,31 +62,29 @@ public class DoorTurn extends Exit implements Influential {
                 affect(agent);
                 blockedLine.add(((Ellipse2D) agent.getPhysicalEntity()).getProjection(doorLine));
             }
-        }
-
-
-        if (!judgedAgent.isEmpty()) {
-            for (Agent agent : judgedAgent){
+            else if(agent.getPhysicalEntity().intersects(door))
                 affect(agent);
-                blockedLine.add(((Ellipse2D) agent.getPhysicalEntity()).getProjection(doorLine));
-            }
-            double expectedAngle;
-            Segment2D agentProjection;
-            Segment2D comparedProjection = new Segment2D(new Point2D(0, 0), new Point2D(1.0e-7, 0));  //???
+        }
+        if(!judgedAgent.isEmpty()) {
             Segment2D[] restLine = doorLine.remove(blockedLine);
-            for (Agent agent : unjudgedAgent) {
-                ((BaseAgent) agent).DoorTurnUnjudged = false;
-                agentProjection = ((Ellipse2D) agent.getPhysicalEntity()).getProjection(doorLine);
-                for(Segment2D segment : restLine) {
-                    if ((agentProjection.intersect(segment)) && (comparedProjection.getLenth() < segment.getLenth()))
-                        comparedProjection = segment;
-                }
-                if (agentProjection.getLenth() > comparedProjection.getLenth()) {
-                    expectedAngle = Math.acos(comparedProjection.getLenth() / (2 * ((Ellipse2D) agent.getPhysicalEntity()).getA()));
-                    ((BaseAgent) agent).setExpectedAngle(expectedAngle);
-                    affect(agent);
+            Segment2D agentProjection;
+            for (Agent agent : affectableAgents) {
+                if (agent.getPhysicalEntity().intersects(getDoorZone())) {
+                    agentProjection = ((Ellipse2D) agent.getPhysicalEntity()).getProjection(doorLine);
+                    Segment2D hitProjection = new Segment2D(new Point2D(0, 0), new Point2D(1.0e-7, 0));
+                    for (Segment2D segment : restLine) {
+                        if ((agentProjection.intersect(segment)) && (hitProjection.getLenth() < segment.getLenth()))
+                            hitProjection = segment;
+                    }
+                    if (agentProjection.getLenth() > hitProjection.getLenth()) {
+                        ((BaseAgent) agent).setExpectedAngle(Math.acos(hitProjection.getLenth() / (2 * ((Ellipse2D) agent.getPhysicalEntity()).getA())));
+                        affect(agent);
+                    }
                 }
             }
         }
     }
+
+
+
 }
