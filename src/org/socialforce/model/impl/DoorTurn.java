@@ -7,7 +7,9 @@ import org.socialforce.model.Agent;
 import org.socialforce.model.Influential;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/9/15 0015.
@@ -44,7 +46,7 @@ public class DoorTurn extends Exit implements Influential {
 
     @Override
     public PhysicalEntity getView() {
-        return new DoubleShape2D(door.clone(), getDoorZone().clone());
+        return doorLine;
     }
 
     @Override
@@ -54,34 +56,32 @@ public class DoorTurn extends Exit implements Influential {
 
     @Override
     public void affectAll(Iterable<Agent> affectableAgents) {
-        List<Agent> judgedAgent = new ArrayList<>();
-        List<Segment2D> blockedLine = new ArrayList<>();
+        List<Segment2D> blockedLines = new ArrayList<>();
+        Map<Agent, Segment2D> projectionMap = new HashMap<>();
+        int agentNum = 0;
         for (Agent agent : affectableAgents) {
-            if(agent.getPhysicalEntity().intersects(doorLine)) {
-                judgedAgent.add(agent);
-                affect(agent);
-                blockedLine.add(((Ellipse2D) agent.getPhysicalEntity()).getProjection(doorLine));
-            }
-            else if(agent.getPhysicalEntity().intersects(door))
-                affect(agent);
+            Segment2D projection = ((Ellipse2D) agent.getPhysicalEntity()).getProjection(doorLine);
+            blockedLines.add(projection);
+            projectionMap.put(agent, projection);
+            agentNum += 1;
         }
-        if(!judgedAgent.isEmpty()) {
-            Segment2D[] restLine = doorLine.remove(blockedLine);
+        if(agentNum <= 1) return;
+        for (Agent agent : affectableAgents) {
             Segment2D agentProjection;
-            for (Agent agent : affectableAgents) {
-                if (agent.getPhysicalEntity().intersects(getDoorZone())) {
-                    agentProjection = ((Ellipse2D) agent.getPhysicalEntity()).getProjection(doorLine);
-                    Segment2D hitProjection = new Segment2D(new Point2D(0, 0), new Point2D(1.0e-7, 0));
-                    for (Segment2D segment : restLine) {
-                        if ((agentProjection.intersect(segment)) && (hitProjection.getLenth() < segment.getLenth()))
-                            hitProjection = segment;
-                    }
-                    if (agentProjection.getLenth() > hitProjection.getLenth()) {
-                        ((BaseAgent) agent).setExpectedAngle(Math.acos(hitProjection.getLenth() / (2 * ((Ellipse2D) agent.getPhysicalEntity()).getA())));
-                        affect(agent);
-                    }
-                }
+            agentProjection = projectionMap.get(agent);
+            blockedLines.remove(agentProjection);
+            Segment2D[] restLine = doorLine.remove(blockedLines);
+            Segment2D hitProjection = new Segment2D(new Point2D(0, 0), new Point2D(1.0e-7, 0));
+            for (Segment2D segment : restLine) {
+                if ((agentProjection.intersect(segment)) && (hitProjection.getLenth() < segment.getLenth()))
+                    hitProjection = segment;
             }
+            if (hitProjection.getLenth() > 0) {
+                ((BaseAgent) agent).setExpectedAngle(Math.acos(hitProjection.getLenth() / (2 * ((Ellipse2D) agent.getPhysicalEntity()).getA())));
+                System.out.println(hitProjection.getLenth());
+                affect(agent);
+            }
+            blockedLines.add(agentProjection);
         }
     }
 

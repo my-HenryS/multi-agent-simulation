@@ -92,12 +92,12 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         );
 
         parameters.addValuesAsParameter(new SimpleEntityGenerator()
-                .setValue(new DoorTurn(new Box2D(5-DoorWidth/2,-0.01,DoorWidth,1.02),new Segment2D(new Point2D(5-DoorWidth/2,-0.01),new Point2D(5+DoorWidth/2,-0.01)),0.4))  //FIXME 主动侧身作用区域（出口）的大小
+                .setValue(new DoorTurn(new Box2D(5-DoorWidth/2,-0.01,DoorWidth,1.02),new Segment2D(new Point2D(5-DoorWidth/2,-0.1),new Point2D(5+DoorWidth/2,-0.1)),0.4))  //FIXME 主动侧身作用区域（出口）的大小
                 .setPriority(5)
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(50,new Box2D(0,-10,10,5)).setValue(template)  //FIXME 行人的总数（修改“26”）
+                new RandomEntityGenerator2D(26,new Box2D(0,-10,10,5)).setValue(template)  //FIXME 行人的总数（修改“26”）
         );
         /*parameters.addValuesAsParameter(
                 new RandomEntityGenerator2D(1,new Box2D(4.3,-3,0.5,2)).setValue(template)
