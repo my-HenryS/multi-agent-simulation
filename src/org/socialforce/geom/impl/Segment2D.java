@@ -39,10 +39,19 @@ public class Segment2D extends Shape2D implements PhysicalEntity {
         }
         //this.a = a;
         //this.b = b;
-        x1 = a.getX();
-        x2 = b.getX();
-        y1 = a.getY();
-        y2 = b.getY();
+        if(a.getX() < b.getX()) {
+            x1 = a.getX();
+            x2 = b.getX();
+            y1 = a.getY();
+            y2 = b.getY();
+        }
+        if(a.getX() > b.getX()) {
+            x1 = b.getX();
+            x2 = a.getX();
+            y1 = b.getY();
+            y2 = a.getY();
+        }
+
        /* if (x1 != x2) {
             k1 = (y1 - y2) / (x1 - x2);
             b1 = y1 - k1 * x1;
@@ -292,8 +301,7 @@ public class Segment2D extends Shape2D implements PhysicalEntity {
         double py4 = line.getExtrimePoint()[1].getY();
         boolean flag = false;
         double d = (x2-x1)*(py4-py3) - (y2-y1)*(px4-px3);
-        if(d!=0)
-        {
+        if(d!=0){
             double r = ((y1-py3)*(px4-px3)-(x1-px3)*(py4-py3))/d;
             double s = ((y1-py3)*(x2-x1)-(x1-px3)*(y2-y1))/d;
             if((r>=0) && (r <= 1) && (s >=0) && (s<=1))
@@ -301,6 +309,21 @@ public class Segment2D extends Shape2D implements PhysicalEntity {
                 flag = true;
             }
         }
+        else {
+            if((x1 == x2)&&(px3 != px4)){
+                if((x1 >= px3)&&(x1 <= px4))
+                    flag = true;
+            }
+            else if((x1 != x2)&&(px3 == px4)){
+                if((px3 >= x1)&&(px3 <= x2))
+                    flag = true;
+            }
+            else{
+                if(this.contains(line.getExtrimePoint()[0])||this.contains(line.getExtrimePoint()[1])||line.contains(getExtrimePoint()[0])||line.contains(getExtrimePoint()[1]))
+                    flag = true;
+            }
+        }
+
         return flag;
     }
 
@@ -334,7 +357,7 @@ public class Segment2D extends Shape2D implements PhysicalEntity {
     }
 
     public double getK(){
-        if(Math.abs(x1-x2)<1.0e-7)
+        if(Math.abs(x1-x2) < 1.0e-7)
             return Double.POSITIVE_INFINITY;
         return (y2-y1)/(x2-x1);
     }

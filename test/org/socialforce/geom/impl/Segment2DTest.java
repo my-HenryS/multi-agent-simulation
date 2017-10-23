@@ -94,6 +94,16 @@ public class Segment2DTest {
         assertTrue(vecline.intersect(new Segment2D(a,new Point2D(5,7))));
         assertTrue(testline.intersect(new Segment2D(new Point2D(2,-1),new Point2D(0,4))));
         assertFalse(testline.intersect(new Segment2D(new Point2D(2,-1),new Point2D(0,-7))));
+
+        Segment2D test1 = new Segment2D(new Point2D(-1,0),new Point2D(5,0));
+        Segment2D test2 = new Segment2D(new Point2D(3,0),new Point2D(6,0));
+        Segment2D test3 = new Segment2D(new Point2D(0,-5),new Point2D(0,5));
+        Segment2D test4 = new Segment2D(new Point2D(0,1),new Point2D(0,4));
+        Segment2D test5 = new Segment2D(new Point2D(3,1),new Point2D(6,1));
+        assertTrue(test1.intersect(test2));
+        assertTrue(test3.intersect(test4));
+        assertTrue(test1.intersect(test3));
+        assertFalse(test1.intersect(test5));
     }
 
     @Test
