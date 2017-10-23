@@ -353,6 +353,8 @@ public class Segment2D extends Shape2D implements PhysicalEntity {
     }
 
     public double getAngel(){
+        if(x1 == x2)
+            return Math.PI/2;
         return Math.atan2((y2-y1),(x2-x1));
     }
 
