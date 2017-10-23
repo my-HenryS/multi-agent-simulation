@@ -3,7 +3,6 @@ package org.socialforce.geom.impl;
 import org.socialforce.geom.*;
 import org.socialforce.drawer.Drawer;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -345,14 +344,14 @@ public class Segment2D extends Shape2D implements PhysicalEntity {
     }
 
     public Rectangle2D flatten(double width){
-        return new Rectangle2D((Point2D) getReferencePoint(),getLenth(),width,getAngel());
+        return new Rectangle2D((Point2D) getReferencePoint(),getLenth(),width, getAngle());
     }
 
     public double getLenth(){
         return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
     }
 
-    public double getAngel(){
+    public double getAngle(){
         if(x1 == x2)
             return Math.PI/2;
         return Math.atan2((y2-y1),(x2-x1));
@@ -370,7 +369,7 @@ public class Segment2D extends Shape2D implements PhysicalEntity {
 
     @Override
     public PhysicalEntity expandBy(double extent) {
-        double angel = this.getAngel();
+        double angel = this.getAngle();
         x1 -= extent*Math.cos(angel);
         x2 += extent*Math.cos(angel);
         y1 -= extent*Math.sin(angel);

@@ -281,7 +281,7 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
      */
     public Segment2D getProjection(Segment2D segment){
         Point2D center = ((Point2D)this.center).getProjection(segment);
-        double angle = segment.getAngel();
+        double angle = segment.getAngle();
         double distance = ((a-b)+(a+b)*Math.abs(Math.cos(angle-this.angle)))/2;
         if(distance < b)
             distance = b;
