@@ -76,9 +76,9 @@ public class DoorTurn extends Exit implements Influential {
                 if ((agentProjection.intersect(segment)) && (hitProjection.getLenth() < segment.getLenth()))
                     hitProjection = segment;
             }
-            if (hitProjection.getLenth() > 0) {
-                ((BaseAgent) agent).setExpectedAngle(Math.acos(hitProjection.getLenth() / (2 * ((Ellipse2D) agent.getPhysicalEntity()).getA())));
-                System.out.println(((BaseAgent) agent).getExpectedAngle()); //todo 调试后删掉
+            if (hitProjection.getLenth() < agentProjection.getLenth()) {
+                ((BaseAgent) agent).setExpectedAngle(Math.acos(hitProjection.getLenth() / (2 * (((Ellipse2D) agent.getPhysicalEntity()).getA()))));
+                System.out.println(hitProjection.getLenth()); //todo 调试后删掉
                 affect(agent);
             }
             blockedLines.add(agentProjection);
