@@ -1,10 +1,12 @@
 package org.socialforce.neural.impl;
 
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.geom.impl.Point2Dcompare;
 import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.scene.Scene;
 
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.ArrayList;
 /**
@@ -82,23 +84,62 @@ public class SocialForceGenerator extends WallForceGenerator{
      */
     public double[] getNeighbor(int i, int t){
         double[] neighbor=new double[20];
+        ArrayList<Double> neighbor1=new ArrayList<Double>();
         Point2D prePoint = matrix.get(i).get(t);
         Vector2D thisVelocity = this.velocity.get(i).get(t).clone();
-        ArrayList<LinkedList<Point2D>> newmatrix=(ArrayList<LinkedList<Point2D>>)matrix.clone();
-        ArrayList<ArrayList<Vector2D>> newvelocity=(ArrayList<ArrayList<Vector2D>>)this.velocity.clone();
-        newmatrix.remove(i);
-        newvelocity.remove(i);
-        ArrayList<>
-        for(int c=0;c<newmatrix.size();c++){
-            if(available(i,t)){
-
+        ArrayList<Point2Dcompare> delpoints=new ArrayList<>();
+        for(int c=0;c<matrix.size();c++){
+            if(c==i)
+                continue;
+            if(available(c,t)){
+                Point2Dcompare temp=new Point2Dcompare(c,matrix.get(c).get(t).getX()-prePoint.getX(),matrix.get(c).get(t).getY()-prePoint.getY());
+                delpoints.add(temp);
             }
         }
+        Collections.sort(delpoints);
+        int time=0;
+        for(Point2Dcompare delpoint:delpoints){     //排列方式delx,dely,delvx,delvy
+            if(time==5)
+                break;
+            neighbor1.add(delpoint.getX());
+            neighbor1.add(delpoint.getY());
+            int index=delpoint.getIndex();
+            Vector2D otherVelocity=this.velocity.get(index).get(t).clone();
+            neighbor1.add(otherVelocity.getX()-thisVelocity.getX());
+            neighbor1.add(otherVelocity.getY()-thisVelocity.getY());
+            time=time+1;
+        }
+        for(int s=0;s<neighbor1.size();s++){
+            neighbor[s]=neighbor1.get(s);
+        }
+        return neighbor;
+    }
+    public void genOutput() {
+
+        for (int i = 0 ; i < matrix.size() ; i++) {
+            for (int j = 0; j < matrix.get(i).size(); j++) {
+                if (available(i, j)) {
+                    Point2D prePoint = matrix.get(i).get(j);
+                    double[] neighbor = getNeighbor(i, j);
+         //           Vector2D nextStep = getNext(prePoint), acc = calAcc(velocity.get(i).get(j + 1), velocity.get(i).get(j));
+                    Vector2D thisVelocity = this.velocity.get(i).get(j).clone(), nextVelocity = this.velocity.get(i).get(j + 1).clone();
 
 
-
-
-        return surroundings;
+                    LinkedList<Double>tempA = new LinkedList<>();
+        //            tempA.add(nextVelocity.getX()); //加速度x轴
+        //            tempA.add(nextVelocity.getY()); //加速度y轴
+        //            tempA.add(Vector2D.getRotateAngle(nextStep, new Vector2D(1,0)));  //A*方向和速度夹角
+        //            tempA.add(thisVelocity.getX());   //速度大小 （已旋转至x正向）
+                    //tempA[5] = thisVelocity.getY();  旋转之后恒为0
+                    for(int t = 0; t < neighbor.length; t++){
+                        tempA.add(neighbor[t]);
+                    }
+                    tempA.add(thisVelocity.getX());
+                    tempA.add(thisVelocity.getY());
+                    outputs.add(tempA.toArray(new Double[tempA.size()]));
+                }
+            }
+        }
     }
 
     @Override

@@ -30,7 +30,7 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
 
     @Before
     public void setUp() throws Exception {
-        generator = new SocialForceGenerator(0.2,2,0.5); //timestep intercept min-div
+        generator = new SocialForceGenerator(0.04,5,0.5); //timestep intercept min-div
         setMap();
     }
 
@@ -115,28 +115,29 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
 
     @Test
     public void genOutput() throws Exception {
-        generator.readFile("/input/Scene5Box1.csv", 2);
-        generator.genOutput(scene);
-        generator.readFile("/input/Scene5Box2.csv", 2);
-        generator.genOutput(scene);
-        setMap2();
-        for(int i = 1; i <= 6; i++){
-            generator.readFile("/input/bend"+i+".csv", 2);
-            generator.genOutput(scene);
-        }
-        setMap6();
-        generator.readFile("/input/straight1.csv", 2);
-        generator.genOutput(scene);
-        generator.readFile("/input/straight2.csv", 2);
-        generator.genOutput(scene);
-        generator.readFile("/input/straight3.csv", 2);
-        generator.genOutput(scene);
+//        generator.readFile("/input/Scene5Box1.csv", 2);
+//        generator.genOutput(scene);
+//        generator.readFile("/input/Scene5Box2.csv", 2);
+//        generator.genOutput(scene);
+//        setMap2();
+//        for(int i = 1; i <= 6; i++){
+//            generator.readFile("/input/bend"+i+".csv", 2);
+//            generator.genOutput(scene);
+//        }
+//        setMap6();
+//        generator.readFile("/input/straight1.csv", 2);
+//        generator.genOutput(scene);
+//        generator.readFile("/input/straight2.csv", 2);
+//        generator.genOutput(scene);
+//        generator.readFile("/input/straight3.csv", 2);
+//        generator.genOutput(scene);
         //generator.readFile("result2.csv", 1);
         //generator.genOutput(scene);
-        //setMap5();
-        //generator.readFile("/input/对流1.csv", 1);
-        //generator.genOutput(scene);
-        generator.toFile("/output/MultiSet.csv", 1);
+        setMap5();
+        generator.readFile("/input/对流1.csv", 1);
+        generator.genOutput();
+
+        generator.toFile("/output/MultiSetzzh.csv", 1);
     }
 
 }

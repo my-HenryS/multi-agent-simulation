@@ -30,7 +30,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
         this.timestep = timestep;
         formater.setMaximumFractionDigits(intercept);
         formater.setGroupingSize(0);
-        formater.setRoundingMode(RoundingMode.FLOOR);
+        formater.setRoundingMode(RoundingMode.HALF_UP);
     }
 
     public void readFile(String directory, int timeInterval){
@@ -57,7 +57,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
             for(int i = 0 ; i < line.length ; i++){
                 if(i % timeInterval != 0) continue;
                 if(line[i] != null && line[i].length() > 0){
-                    String templine = line[i].substring(1,line[i].length()-1);//去括号
+                    String templine = line[i].substring(0,line[i].length());//去括号
                     axis = templine.split(",");//获得每一个单元格的x,y，存在axis[]数组中
                     tempR.add(new Point2D(Double.parseDouble(axis[0])/10,Double.parseDouble(axis[1])/10));//tempR存的是每一个人的所有位置数据
                 }
