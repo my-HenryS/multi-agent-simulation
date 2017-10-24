@@ -24,9 +24,13 @@ public class DoorTurnRegulation extends TypeMatchRegulation<DoorTurn,Agent>{
     public Affection getForce(DoorTurn doorTurn, Agent agent) {
         if(agent.getPhysicalEntity() instanceof RotatablePhysicalEntity){
             double angle = ((BaseAgent)agent).getExpectedAngle()-((Ellipse2D)agent.getPhysicalEntity()).getAngle();
-            if(Math.abs(((BaseAgent)agent).getExpectedAngle()-((Ellipse2D)agent.getPhysicalEntity()).getAngle()) > Math.abs(Math.PI+((BaseAgent)agent).getExpectedAngle()-((Ellipse2D)agent.getPhysicalEntity()).getAngle()))
-                angle = angle+Math.PI;
-            return new Moment2D(angle*400);  //FIXME 主动侧身转矩的计算公式（修改“400”）
+            if(Math.abs(angle) > Math.abs(((BaseAgent)agent).getExpectedAngle()-(((Ellipse2D)agent.getPhysicalEntity()).getAngle()+Math.PI)))
+                angle = angle-Math.PI;
+            if(angle > Math.abs((Math.PI-((BaseAgent)agent).getExpectedAngle())-((Ellipse2D)agent.getPhysicalEntity()).getAngle()))
+                angle = (Math.PI-((BaseAgent)agent).getExpectedAngle())-((Ellipse2D)agent.getPhysicalEntity()).getAngle();
+            if(angle > Math.abs((Math.PI-((BaseAgent)agent).getExpectedAngle())-(((Ellipse2D)agent.getPhysicalEntity()).getAngle()+Math.PI)))
+                angle = angle-Math.PI;
+            return new Moment2D(angle*800);  //FIXME 主动侧身转矩的计算公式（修改“400”）
             //return new Moment2D(agent.getIntetia()*(13.71*angle*angle-2.74*angle-2.03));
         }
         return new Moment2D(0);
