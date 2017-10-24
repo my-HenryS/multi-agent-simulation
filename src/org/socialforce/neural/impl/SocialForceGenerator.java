@@ -4,13 +4,14 @@ import org.socialforce.geom.impl.Point2D;
 import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.scene.Scene;
 
-import java.util.LinkedList;
 
+import java.util.LinkedList;
+import java.util.ArrayList;
 /**
  * Created by sunjh1999 on 2017/3/31.
  */
 public class SocialForceGenerator extends WallForceGenerator{
-    LinkedList<double[][]> W; //权值矩阵
+    LinkedList<double[][]> W; //权值矩阵，每一个时刻的加权map（全）
     double p = 0.3; //行人的影响系数
     double w = 0.1; //墙的影响系数
     double expectV = 6; //期望速度
@@ -52,7 +53,7 @@ public class SocialForceGenerator extends WallForceGenerator{
     }
 
     /**
-     * 行人在t时刻下的周围权值矩阵情况
+     * 行人在t时刻下的周围权值矩阵情况 //行人在t时刻下周围人与自己的相对位置速度情况
      * @param c 行人坐标
      * @param t t时刻
      * @return
@@ -71,6 +72,32 @@ public class SocialForceGenerator extends WallForceGenerator{
             }
         }
         surroundings[surroundings.length/2] -= p; //抛去行人本身
+        return surroundings;
+    }
+    /**
+     * 行人在t时刻下周围人与自己的相对位置速度情况
+     * @param i 行人坐标
+     * @param t t时刻
+     * @return
+     */
+    public double[] getNeighbor(int i, int t){
+        double[] neighbor=new double[20];
+        Point2D prePoint = matrix.get(i).get(t);
+        Vector2D thisVelocity = this.velocity.get(i).get(t).clone();
+        ArrayList<LinkedList<Point2D>> newmatrix=(ArrayList<LinkedList<Point2D>>)matrix.clone();
+        ArrayList<ArrayList<Vector2D>> newvelocity=(ArrayList<ArrayList<Vector2D>>)this.velocity.clone();
+        newmatrix.remove(i);
+        newvelocity.remove(i);
+        ArrayList<>
+        for(int c=0;c<newmatrix.size();c++){
+            if(available(i,t)){
+
+            }
+        }
+
+
+
+
         return surroundings;
     }
 
