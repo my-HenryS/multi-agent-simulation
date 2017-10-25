@@ -141,7 +141,7 @@ public class SocialForceGenerator extends WallForceGenerator{
                     for(int t = 0; t < neighbor.length; t++){
                         tempA.add(neighbor[t]);
                     }
-                    tempA.add(100000.0);
+                    tempA.add(100000.00);
                     tempA.add(thisVelocity.getX());
                     tempA.add(thisVelocity.getY());
                     outputs.add(tempA.toArray(new Double[tempA.size()]));
