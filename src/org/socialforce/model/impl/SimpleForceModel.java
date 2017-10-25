@@ -18,7 +18,7 @@ public class SimpleForceModel implements Model {
     @LoadFrom("expected_speed")
     public static double EXPECTED_SPEED = 1.5;   //期望速度
     double EXPECTED_PALSTANCE = 0;
-    double REACT_TIME = 0.3;
+    double REACT_TIME = 0.5;
 
     long psyT = 0, bodyT = 0, flT = 0;
     int psyN = 0, bodyN = 0, flN = 0;

@@ -46,7 +46,8 @@ public class DoorTurn extends Exit implements Influential {
 
     @Override
     public PhysicalEntity getView() {
-        return doorLine;
+        //return doorLine
+        return getDoorZone();
     }
 
     @Override
@@ -78,7 +79,6 @@ public class DoorTurn extends Exit implements Influential {
             }
             if (hitProjection.getLenth() < agentProjection.getLenth()) {
                 ((BaseAgent) agent).setExpectedAngle(Math.acos(hitProjection.getLenth() / (2 * (((Ellipse2D) agent.getPhysicalEntity()).getA()))));
-                System.out.println(hitProjection.getLenth()); //todo 调试后删掉
                 affect(agent);
             }
             blockedLines.add(agentProjection);
