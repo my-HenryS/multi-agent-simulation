@@ -57,7 +57,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
             for(int i = 0 ; i < line.length ; i++){
                 if(i % timeInterval != 0) continue;
                 if(line[i] != null && line[i].length() > 0){
-                    String templine = line[i].substring(1,line[i].length()-1);
+                    String templine = line[i].substring(1,line[i].length()-1);  //去掉括号
                     axis = templine.split(",");
                     tempR.add(new Point2D(Double.parseDouble(axis[0])/10,Double.parseDouble(axis[1])/10));
                 }
@@ -73,9 +73,9 @@ public abstract class ForceGenerator implements DataSetGenerator {
         for(LinkedList<Point2D> tempR : matrix){
             ArrayList<Vector2D> tempV = new ArrayList<>();
             for(Point2D tempT : tempR){
-                if(tempT != null && tempR.indexOf(tempT)>=1 && tempR.get(tempR.indexOf(tempT)-1)!=null){
-                    Point2D preT = tempR.get(tempR.indexOf(tempT)-1);
-                    tempV.add(new Vector2D((tempT.getX()-preT.getX())/timestep,(tempT.getY()-preT.getY())/timestep));
+                if(tempT != null && tempR.indexOf(tempT)+1 < tempR.size() && tempR.get(tempR.indexOf(tempT)+1)!=null){
+                    Point2D nexT = tempR.get(tempR.indexOf(tempT)+1);
+                    tempV.add(new Vector2D((nexT.getX()-tempT.getX())/timestep,(nexT.getY()-tempT.getY())/timestep));
                 }
                 else{
                     tempV.add(null);
