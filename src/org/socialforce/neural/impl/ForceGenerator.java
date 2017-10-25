@@ -20,8 +20,8 @@ import java.util.List;
 public abstract class ForceGenerator implements DataSetGenerator {
     protected double timestep;  //步长、决定：位置差-速度关系、速度差-加速度关系
     DecimalFormat formater = new DecimalFormat();
-    protected ArrayList<LinkedList<Point2D>> matrix;
-    protected ArrayList<ArrayList<Vector2D>> velocity;
+    protected ArrayList<LinkedList<Point2D>> matrix;//matrix存的是所有人的位置数据
+    protected ArrayList<ArrayList<Vector2D>> velocity;//velocity存的是所有人的速度数据
     LinkedList<Double[]> outputs = new LinkedList<>();
     private String superPath = System.getProperty("user.dir")+"/resource/";
 
@@ -30,7 +30,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
         this.timestep = timestep;
         formater.setMaximumFractionDigits(intercept);
         formater.setGroupingSize(0);
-        formater.setRoundingMode(RoundingMode.FLOOR);
+        formater.setRoundingMode(RoundingMode.HALF_UP);
     }
 
     public void readFile(String directory, int timeInterval){
@@ -51,21 +51,21 @@ public abstract class ForceGenerator implements DataSetGenerator {
         File file = new File(directory);
         FileReader fReader = new FileReader(file);
         CSVReader csvReader = new CSVReader(fReader);
-        List<String[]> lines = csvReader.readAll();
+        List<String[]> lines = csvReader.readAll();//每行是一个人的所有时刻的数据
         for(String[] line : lines){
             tempR = new LinkedList<>();
             for(int i = 0 ; i < line.length ; i++){
                 if(i % timeInterval != 0) continue;
                 if(line[i] != null && line[i].length() > 0){
-                    String templine = line[i].substring(1,line[i].length()-1);  //去掉括号
-                    axis = templine.split(",");
-                    tempR.add(new Point2D(Double.parseDouble(axis[0])/10,Double.parseDouble(axis[1])/10));
+                    String templine = line[i].substring(0,line[i].length());//去括号
+                    axis = templine.split(",");//获得每一个单元格的x,y，存在axis[]数组中
+                    tempR.add(new Point2D(Double.parseDouble(axis[0])/10,Double.parseDouble(axis[1])/10));//tempR存的是每一个人的所有位置数据
                 }
                 else{
                     tempR.add(null);
                 }
             }
-            matrix.add(tempR);
+            matrix.add(tempR);//matrix存的是所有人的位置数据
         }
     }
 

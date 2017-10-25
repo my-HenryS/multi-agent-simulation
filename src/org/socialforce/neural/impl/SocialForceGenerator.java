@@ -1,16 +1,19 @@
 package org.socialforce.neural.impl;
 
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.geom.impl.Point2Dcompare;
 import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.scene.Scene;
 
-import java.util.LinkedList;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.ArrayList;
 /**
  * Created by sunjh1999 on 2017/3/31.
  */
 public class SocialForceGenerator extends WallForceGenerator{
-    LinkedList<double[][]> W; //权值矩阵
+    LinkedList<double[][]> W; //权值矩阵，每一个时刻的加权map（全）
     double p = 0.3; //行人的影响系数
     double w = 0.1; //墙的影响系数
     double expectV = 6; //期望速度
@@ -53,7 +56,7 @@ public class SocialForceGenerator extends WallForceGenerator{
     }
 
     /**
-     * 行人在t时刻下的周围权值矩阵情况
+     * 行人在t时刻下的周围权值矩阵情况 //行人在t时刻下周围人与自己的相对位置速度情况
      * @param c 行人坐标
      * @param t t时刻
      * @return
@@ -73,6 +76,79 @@ public class SocialForceGenerator extends WallForceGenerator{
         }
         surroundings[surroundings.length/2] = 0; //抛去行人本身
         return surroundings;
+    }
+    /**
+     * 行人在t时刻下周围人与自己的相对位置速度情况
+     * @param i 行人坐标
+     * @param t t时刻
+     * @return
+     */
+    public double[] getNeighbor(int i, int t){
+        double[] neighbor=new double[30];
+        ArrayList<Double> neighbor1=new ArrayList<Double>();
+        Point2D prePoint = matrix.get(i).get(t);
+        Vector2D thisVelocity = this.velocity.get(i).get(t).clone();
+        ArrayList<Point2Dcompare> delpoints=new ArrayList<>();
+        for(int c=0;c<matrix.size();c++){
+            if(c==i)
+                continue;
+            if(available(c,t)){
+                Point2Dcompare temp=new Point2Dcompare(c,matrix.get(c).get(t).getX()-prePoint.getX(),matrix.get(c).get(t).getY()-prePoint.getY());
+                delpoints.add(temp);
+            }
+        }
+        Collections.sort(delpoints);
+        int time=0;
+        for(Point2Dcompare delpoint:delpoints){     //排列方式delx,dely,delvx,delvy
+            if(time==5)
+                break;
+            neighbor1.add((double)delpoint.getIndex());
+            neighbor1.add(delpoint.getX());
+            neighbor1.add(delpoint.getY());
+            int index=delpoint.getIndex();
+            Vector2D otherVelocity=this.velocity.get(index).get(t).clone();
+            neighbor1.add(otherVelocity.getX()-thisVelocity.getX());
+            neighbor1.add(otherVelocity.getY()-thisVelocity.getY());
+            neighbor1.add(100000.0);
+            time=time+1;
+        }
+        for(int s=0;s<neighbor1.size();s++){
+            neighbor[s]=neighbor1.get(s);
+        }
+        return neighbor;
+    }
+    public void genOutput() {
+
+//        for (int i = 0 ; i < matrix.size() ; i++) {
+//            for (int j = 0; j < matrix.get(i).size(); j++) {
+        int i=2,j=4;
+                if (available(i, j)) {
+                    Point2D prePoint = matrix.get(i).get(j);
+                    double[] neighbor = getNeighbor(i, j);
+         //           Vector2D nextStep = getNext(prePoint), acc = calAcc(velocity.get(i).get(j + 1), velocity.get(i).get(j));
+                    Vector2D thisVelocity = this.velocity.get(i).get(j).clone(), nextVelocity = this.velocity.get(i).get(j + 1).clone();
+
+
+                    LinkedList<Double>tempA = new LinkedList<>();
+                    tempA.add((double)i);
+                    tempA.add((double)j);
+                    tempA.add(100000.0);
+
+        //            tempA.add(nextVelocity.getX()); //加速度x轴
+        //            tempA.add(nextVelocity.getY()); //加速度y轴
+        //            tempA.add(Vector2D.getRotateAngle(nextStep, new Vector2D(1,0)));  //A*方向和速度夹角
+        //            tempA.add(thisVelocity.getX());   //速度大小 （已旋转至x正向）
+                    //tempA[5] = thisVelocity.getY();  旋转之后恒为0
+                    for(int t = 0; t < neighbor.length; t++){
+                        tempA.add(neighbor[t]);
+                    }
+                    tempA.add(100000.00);
+                    tempA.add(thisVelocity.getX());
+                    tempA.add(thisVelocity.getY());
+                    outputs.add(tempA.toArray(new Double[tempA.size()]));
+      //          }
+      //      }
+        }
     }
 
     @Override
