@@ -18,7 +18,8 @@ public class SimpleForceModel implements Model {
     @LoadFrom("expected_speed")
     public static double EXPECTED_SPEED = 1.5;   //期望速度
     double EXPECTED_PALSTANCE = 0;
-    double REACT_TIME = 0.5;
+    double REACT_TIME_NORMAL = 0.5;
+    double REACT_TIME_TANGENT = 0.3;
 
     long psyT = 0, bodyT = 0, flT = 0;
     int psyN = 0, bodyN = 0, flN = 0;
@@ -104,24 +105,39 @@ public class SimpleForceModel implements Model {
                 return;
             }
             Agent agent = (Agent) source;
-            Velocity expected = this.zeroVelocity();
+            Velocity expected = this.zeroVelocity();  //expected:期望速度vt，agent.getVelocity():当前速度v0
             Force force = this.zeroForce();
             Point current = agent.getPhysicalEntity().getReferencePoint(), goal = agent.getPath().nextStep(current);
             expected.sub(current);
             expected.add(goal);
             expected.scale(EXPECTED_SPEED / expected.length());
-            //expected = 期望速度vt
-            force.add(expected);
-            force.sub(agent.getVelocity()); //agent.getVelocity()= 当前速度vt
-            force.scale(agent.getMass() / REACT_TIME);
+
+            Velocity normal = agent.getVelocity().clone();
+            normal.scale(Vector2D.getDot((Vector2D)expected,(Vector2D)agent.getVelocity())/agent.getVelocity().length()-1);
+            Velocity tangent = expected.clone();
+            tangent.sub(normal);
+
+            normal.scale(agent.getMass() / REACT_TIME_NORMAL);
+            tangent.scale(agent.getMass() / REACT_TIME_TANGENT);
+
+            force.add(normal);
+            force.add(tangent);
+
+
+
+            /*force.add(expected);
+            force.sub(agent.getVelocity());
+            force.scale(agent.getMass() / REACT_TIME_NORMAL);*/
             agent.push(force);  //FIXME 施加驱动力：使行人的速度趋向于期望速度
+
+
 
             if(agent.getPhysicalEntity() instanceof Ellipse2D){
                 Moment moment;
                 Palstance p = agent.getPalstance().clone(), expectP = new Palstance2D(EXPECTED_PALSTANCE);
                 p.scale(-1);
                 expectP.add(p);
-                moment = new Moment2D(5*(expectP.getOmega() * agent.getIntetia()) / REACT_TIME);  //FIXME 驱动转矩的计算公式（修改“5”）
+                moment = new Moment2D(5*(expectP.getOmega() * agent.getIntetia()) / REACT_TIME_NORMAL);  //FIXME 驱动转矩的计算公式（修改“5”）
                 agent.push(moment);  //FIXME 施加驱动转矩：使行人的角速度趋向于0
             }
         }
