@@ -18,8 +18,8 @@ public class SimpleForceModel implements Model {
     @LoadFrom("expected_speed")
     public static double EXPECTED_SPEED = 1.5;   //期望速度
     double EXPECTED_PALSTANCE = 0;
-    double REACT_TIME_NORMAL = 0.5;
-    double REACT_TIME_TANGENT = 0.3;
+    double REACT_TIME_NORMAL = 0.5;     //变速
+    double REACT_TIME_TANGENT = 0.2;    //转向
 
     long psyT = 0, bodyT = 0, flT = 0;
     int psyN = 0, bodyN = 0, flN = 0;
@@ -111,18 +111,23 @@ public class SimpleForceModel implements Model {
             expected.sub(current);
             expected.add(goal);
             expected.scale(EXPECTED_SPEED / expected.length());
-            Velocity normal = agent.getVelocity().clone();
-            Velocity tangent = expected.clone();
-            normal.scale(Vector2D.getDot((Vector2D)expected,(Vector2D)agent.getVelocity())/agent.getVelocity().length());
-            tangent.sub(normal);
-            normal.sub(agent.getVelocity());
-            normal.scale(agent.getMass() / REACT_TIME_NORMAL);
-            tangent.scale(agent.getMass() / REACT_TIME_TANGENT);
-            force.add(normal);
-            force.add(tangent);
-            /*force.add(expected);
-            force.sub(agent.getVelocity());
-            force.scale(agent.getMass() / REACT_TIME_NORMAL);*/
+            if(agent.getVelocity().length() == 0){
+                force.add(expected);
+                force.sub(agent.getVelocity());
+                force.scale(agent.getMass() / REACT_TIME_NORMAL);
+            }
+            else{
+                Velocity normal = agent.getVelocity().clone();  //法向（变速）
+                normal.scale(1/normal.length());
+                normal.scale(Vector2D.getDot((Vector2D)expected,(Vector2D)normal));
+                Velocity tangent = expected.clone();            //切向（变向）
+                tangent.sub(normal);
+                normal.sub(agent.getVelocity());
+                normal.scale(agent.getMass() / REACT_TIME_NORMAL);
+                tangent.scale(agent.getMass() / REACT_TIME_TANGENT);
+                force.add(normal);
+                force.add(tangent);
+            }
             agent.push(force);  //FIXME 施加驱动力：使行人的速度趋向于期望速度
             if(agent.getPhysicalEntity() instanceof Ellipse2D){
                 Moment moment;
