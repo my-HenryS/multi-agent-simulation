@@ -111,27 +111,19 @@ public class SimpleForceModel implements Model {
             expected.sub(current);
             expected.add(goal);
             expected.scale(EXPECTED_SPEED / expected.length());
-
             Velocity normal = agent.getVelocity().clone();
-            normal.scale(Vector2D.getDot((Vector2D)expected,(Vector2D)agent.getVelocity())/agent.getVelocity().length()-1);
             Velocity tangent = expected.clone();
+            normal.scale(Vector2D.getDot((Vector2D)expected,(Vector2D)agent.getVelocity())/agent.getVelocity().length());
             tangent.sub(normal);
-
+            normal.sub(agent.getVelocity());
             normal.scale(agent.getMass() / REACT_TIME_NORMAL);
             tangent.scale(agent.getMass() / REACT_TIME_TANGENT);
-
             force.add(normal);
             force.add(tangent);
-
-
-
             /*force.add(expected);
             force.sub(agent.getVelocity());
             force.scale(agent.getMass() / REACT_TIME_NORMAL);*/
             agent.push(force);  //FIXME 施加驱动力：使行人的速度趋向于期望速度
-
-
-
             if(agent.getPhysicalEntity() instanceof Ellipse2D){
                 Moment moment;
                 Palstance p = agent.getPalstance().clone(), expectP = new Palstance2D(EXPECTED_PALSTANCE);
