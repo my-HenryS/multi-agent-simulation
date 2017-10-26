@@ -44,7 +44,7 @@ public class RobustNeuralNetwork {
         //First: get the dataset using the record reader. CSVRecordReader handles loading/parsing
         int numLinesToSkip = 0;
         String parentPath = System.getProperty("user.dir")+"/resource/";
-        String filePath = "output/MultiSet.csv";
+        String filePath = "output/MultiSetzzh.csv";
         String delimiter = ",";
 
         String locationToSave = "neuralNet/robust.net";
@@ -72,7 +72,7 @@ public class RobustNeuralNetwork {
         normalizer.transform(testData);*/
 
 
-        final int numInputs = 11;
+        final int numInputs = 22;
         int outputNum = labelIndexTo - labelIndexFrom + 1;
         int iterations = 4000;
         int nEpoch = 80;

@@ -3,6 +3,7 @@ package org.socialforce.neural.impl;
 import org.junit.Before;
 import org.junit.Test;
 import org.socialforce.geom.impl.Box2D;
+import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.model.impl.SimpleForceModel;
 import org.socialforce.model.impl.Wall;
@@ -125,6 +126,7 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
         generator.genOutput();
 
         generator.toFile("/output/MultiSetzzh.csv", 1);
+
     }
 
 }
