@@ -16,7 +16,7 @@ public class SimpleForceModel implements Model {
     @LoadFrom("time_per_step")
     public static double TIME_PER_STEP = 0.002;  //仿真步长
     @LoadFrom("expected_speed")
-    public static double EXPECTED_SPEED = 1.5;   //期望速度
+    public static double EXPECTED_SPEED = 1.2;   //期望速度
     double EXPECTED_PALSTANCE = 0;
     double REACT_TIME_NORMAL = 0.5;     //变速
     double REACT_TIME_TANGENT = 0.2;    //转向

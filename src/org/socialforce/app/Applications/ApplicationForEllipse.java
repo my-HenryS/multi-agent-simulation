@@ -38,7 +38,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
             AgentStepCSVWriter csvWriter = new AgentStepCSVWriter();
             currentScene = iterator.next();
             currentScene.addSceneListener(csvWriter);
-            PathFinder pathFinder = new AStarPathFinder(currentScene, new Circle2D(new Point2D(0,0),0.3/2));
+            PathFinder pathFinder = new AStarPathFinder(currentScene, new Circle2D(new Point2D(0,0),0.25/2));
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
             this.initScene(currentScene);
@@ -56,9 +56,9 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
     @Override
     public void setUpScenes(){
         //template = new BaseAgent(new Circle2D(new Point2D(0,0),0.486/2), new Velocity2D(0,0));   //FIXME 行人的形状切换为圆
-        template = new BaseAgent(new Ellipse2D(0.486/2,0.3/2,new Point2D(0,0),0), new Velocity2D(0,0));  //FIXME 行人的形状切换为椭圆
+        template = new BaseAgent(new Ellipse2D(0.45/2,0.25/2,new Point2D(0,0),0), new Velocity2D(0,0));  //FIXME 行人的形状切换为椭圆
         scenes = new LinkedList<>();
-        DoorWidth = 1.0;  //FIXME 门宽
+        DoorWidth = 0.5;  //FIXME 门宽
         density = 20;
         setUpT1Scene5();
         for(Scene scene:scenes){
@@ -76,14 +76,14 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader().setModel(new SimpleForceModel());
         SimpleParameterPool parameters = new SimpleParameterPool();
-        parameters.addValuesAsParameter(
+        /*parameters.addValuesAsParameter(
                 new SimpleEntityGenerator()
                         .setValue(new Wall(new Box2D(4,-4,2,2)))
                         .setPriority(10)
                 ,new SimpleEntityGenerator()
                         .setValue(new Wall(new Circle2D(new Point2D(5,-3),1)))
                         .setPriority(10)
-        );
+        );*/
 
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
                 .addValue(new SafetyRegion(new Box2D(1,10,8,1)))
@@ -97,7 +97,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(26,new Box2D(0,-10,10,5)).setValue(template)  //FIXME 行人的总数（修改“26”）
+                new RandomEntityGenerator2D(50,new Box2D(0,-10,10,5)).setValue(template)  //FIXME 行人的总数（修改“26”）
         );
         /*parameters.addValuesAsParameter(
                 new RandomEntityGenerator2D(1,new Box2D(4.3,-3,0.5,2)).setValue(template)
