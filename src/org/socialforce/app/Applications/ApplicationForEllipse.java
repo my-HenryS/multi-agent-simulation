@@ -58,7 +58,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         //template = new BaseAgent(new Circle2D(new Point2D(0,0),0.486/2), new Velocity2D(0,0));   //FIXME 行人的形状切换为圆
         template = new BaseAgent(new Ellipse2D(0.45/2,0.25/2,new Point2D(0,0),0), new Velocity2D(0,0));  //FIXME 行人的形状切换为椭圆
         scenes = new LinkedList<>();
-        DoorWidth = 1.0;  //FIXME 门宽
+        DoorWidth = 0.5;  //FIXME 门宽
         density = 20;
         setUpT1Scene5();
         for(Scene scene:scenes){
