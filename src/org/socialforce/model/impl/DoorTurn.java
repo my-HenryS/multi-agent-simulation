@@ -57,6 +57,7 @@ public class DoorTurn extends Exit implements Influential {
 
     @Override
     public void affectAll(Iterable<Agent> affectableAgents) {
+
         List<Segment2D> blockedLines = new ArrayList<>();
         Map<Agent, Segment2D> projectionMap = new HashMap<>();
         int agentNum = 0;
