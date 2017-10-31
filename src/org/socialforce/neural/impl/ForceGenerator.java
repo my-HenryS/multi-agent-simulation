@@ -59,7 +59,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
                 if(line[i] != null && line[i].length() > 0){
                     String templine = line[i].substring(0,line[i].length());//去括号
                     axis = templine.split(",");//获得每一个单元格的x,y，存在axis[]数组中
-                    tempR.add(new Point2D(Double.parseDouble(axis[0])/10,Double.parseDouble(axis[1])/10));//tempR存的是每一个人的所有位置数据
+                    tempR.add(new Point2D(Double.parseDouble(axis[0]),Double.parseDouble(axis[1])));//tempR存的是每一个人的所有位置数据
                 }
                 else{
                     tempR.add(null);
@@ -72,9 +72,19 @@ public abstract class ForceGenerator implements DataSetGenerator {
     public void calcVelocity(){
         for(LinkedList<Point2D> tempR : matrix){
             ArrayList<Vector2D> tempV = new ArrayList<>();
-            for(Point2D tempT : tempR){
-                if(tempT != null && tempR.indexOf(tempT)+1 < tempR.size() && tempR.get(tempR.indexOf(tempT)+1)!=null){
-                    Point2D nexT = tempR.get(tempR.indexOf(tempT)+1);
+//            for(Point2D tempT : tempR){
+//                if(tempT != null && tempR.indexOf(tempT)+1 < tempR.size() && tempR.get(tempR.indexOf(tempT)+1)!=null){
+//                    Point2D nexT = tempR.get(tempR.indexOf(tempT)+1);
+//                    tempV.add(new Vector2D((nexT.getX()-tempT.getX())/timestep,(nexT.getY()-tempT.getY())/timestep));
+//                }
+//                else{
+//                    tempV.add(null);
+//                }
+//            }
+                for(int i=0;i<tempR.size();i++){
+                    Point2D tempT=tempR.get(i);
+                if(tempT != null && i+1 < tempR.size() && tempR.get(i+1)!=null){
+                    Point2D nexT = tempR.get(i+1);
                     tempV.add(new Vector2D((nexT.getX()-tempT.getX())/timestep,(nexT.getY()-tempT.getY())/timestep));
                 }
                 else{

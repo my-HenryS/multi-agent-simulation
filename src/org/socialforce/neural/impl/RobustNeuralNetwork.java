@@ -44,7 +44,7 @@ public class RobustNeuralNetwork {
         //First: get the dataset using the record reader. CSVRecordReader handles loading/parsing
         int numLinesToSkip = 0;
         String parentPath = System.getProperty("user.dir")+"/resource/";
-        String filePath = "output/MultiSet.csv";
+        String filePath = "output/MultiSetzzh.csv";
         String delimiter = ",";
 
         String locationToSave = "neuralNet/robust.net";
@@ -55,7 +55,7 @@ public class RobustNeuralNetwork {
         //Second: the RecordReaderDataSetIterator handles conversion to DataSet objects, ready for use in neural network
         int labelIndexFrom = 0;     //Row 0 to row 1 of each column REPRESENTS the labels
         int labelIndexTo = 1;
-        int batchSize = 21255;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ;    //Number of the used data
+        int batchSize = 3323;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ;    //Number of the used data
 
         DataSetIterator iterator = new RecordReaderDataSetIterator(recordReader, batchSize, labelIndexFrom, labelIndexTo, true);
         DataSet allData = iterator.next();
@@ -72,7 +72,7 @@ public class RobustNeuralNetwork {
         normalizer.transform(testData);*/
 
 
-        final int numInputs = 11;
+        final int numInputs = 22;
         int outputNum = labelIndexTo - labelIndexFrom + 1;
         int iterations = 4000;
         int nEpoch = 80;
@@ -89,9 +89,9 @@ public class RobustNeuralNetwork {
                 .weightInit(WeightInit.XAVIER)
                 .updater(Updater.NESTEROVS).momentum(momentum)
                 .list()
-                .layer(0, new DenseLayer.Builder().nIn(numInputs).nOut(50)
+                .layer(0, new DenseLayer.Builder().nIn(numInputs).nOut(80)
                         .activation(Activation.RELU).build())
-                .layer(1, new DenseLayer.Builder().nIn(50).nOut(40)
+                .layer(1, new DenseLayer.Builder().nIn(80).nOut(40)
                         .activation(Activation.RELU).build())
                 .layer(2, new OutputLayer.Builder(LossFunctions.LossFunction.MSE)
                         .activation(Activation.IDENTITY)

@@ -37,7 +37,7 @@ public interface Vector extends Cloneable, Serializable, DimensionEntity {
      *
      * @param other 被减向量.
      */
-    void sub(Vector other);
+    Vector sub(Vector other);
 
     /**
      * 一个向量乘一个数.

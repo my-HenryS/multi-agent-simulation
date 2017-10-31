@@ -3,6 +3,7 @@ package org.socialforce.neural.impl;
 import org.junit.Before;
 import org.junit.Test;
 import org.socialforce.geom.impl.Box2D;
+import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.model.impl.SafetyRegion;
 import org.socialforce.model.impl.SimpleForceModel;
 import org.socialforce.model.impl.Wall;
@@ -17,7 +18,7 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
 
     @Before
     public void setUp() throws Exception {
-        generator = new SocialForceGenerator(0.04,5,0.5); //timestep intercept min-div
+        generator = new SocialForceGenerator(2.0/30,5,0.5); //timestep intercept min-div
         setMap();
     }
 
@@ -121,10 +122,11 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
         //generator.readFile("result2.csv", 1);
         //generator.genOutput(scene);
         setMap5();
-        generator.readFile("/input/对流1.csv", 1);
+        generator.readFile("/input/对流1新.csv", 2);
         generator.genOutput();
 
         generator.toFile("/output/MultiSetzzh.csv", 1);
+
     }
 
 }
