@@ -38,10 +38,20 @@ public class RandomEntityGenerator2D extends EntityGenerator<InteractiveEntity>{
                 Point2D point = new Point2D(rand_x, rand_y);
                 if(Area.contains(point)){
                     InteractiveEntity newEntity = value.clone();
+                    if(variance != 0){
+                        double seed = Math.sqrt(variance)*rand.nextGaussian();
+                        while(Math.abs(seed) > max_extent) {
+                             seed = Math.sqrt(variance)*rand.nextGaussian();
+                        }
+                        newEntity.getPhysicalEntity().expandBy(seed);
+                    }
+
+
                     newEntity.getPhysicalEntity().moveTo(point);
                     if(commonName != null) {
                         newEntity.setName(commonName);
                     }
+
                     if(EntityDecorator.place(newEntity, scene, model))
                         cur_num ++;
                 }
@@ -62,6 +72,14 @@ public class RandomEntityGenerator2D extends EntityGenerator<InteractiveEntity>{
 
     public RandomEntityGenerator2D setValue(InteractiveEntity value) {
         this.value = value;
+        return this;
+    }
+
+    double variance = 0;  //方差
+    double max_extent = Double.MAX_VALUE; //最大偏差
+    public RandomEntityGenerator2D setGaussianParameter(double variance, double max_extent) {
+        this.variance = variance;
+        this.max_extent = Math.abs(max_extent);
         return this;
     }
 }

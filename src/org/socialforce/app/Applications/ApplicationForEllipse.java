@@ -58,7 +58,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         //template = new BaseAgent(new Circle2D(new Point2D(0,0),0.486/2), new Velocity2D(0,0));   //FIXME 行人的形状切换为圆
         template = new BaseAgent(new Ellipse2D(0.45/2,0.25/2,new Point2D(0,0),0), new Velocity2D(0,0));  //FIXME 行人的形状切换为椭圆
         scenes = new LinkedList<>();
-        DoorWidth = 0.6;  //FIXME 门宽
+        DoorWidth = 0.9;  //FIXME 门宽
         density = 20;
         setUpT1Scene5();
         for(Scene scene:scenes){
@@ -97,7 +97,10 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(50,new Box2D(0,-10,10,5)).setValue(template)  //FIXME 行人的总数（修改“26”）
+                new RandomEntityGenerator2D(30,new Box2D(0,-10,10,5))
+                        .setValue(template)
+                        .setGaussianParameter(1,0.025)
+                //FIXME 行人的总数（修改“26”）
         );
         /*parameters.addValuesAsParameter(
                 new RandomEntityGenerator2D(1,new Box2D(4.3,-3,0.5,2)).setValue(template)

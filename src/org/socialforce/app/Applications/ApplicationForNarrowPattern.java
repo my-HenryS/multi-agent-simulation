@@ -234,7 +234,9 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(30,new Box2D(0,-10,10,5)).setValue(template)
+                new RandomEntityGenerator2D(30,new Box2D(0,-10,10,5))
+                        .setValue(template)
+                        .setGaussianParameter(1,0.03)
         );
 
         loader.readParameterSet(parameters);
