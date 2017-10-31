@@ -18,7 +18,7 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
 
     @Before
     public void setUp() throws Exception {
-        generator = new SocialForceGenerator(0.04,5,0.5); //timestep intercept min-div
+        generator = new SocialForceGenerator(1.0/30,5,0.5); //timestep intercept min-div
         setMap();
     }
 
@@ -122,7 +122,7 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
         //generator.readFile("result2.csv", 1);
         //generator.genOutput(scene);
         setMap5();
-        generator.readFile("/input/对流1.csv", 1);
+        generator.readFile("/input/对流1新.csv", 1);
         generator.genOutput();
 
         generator.toFile("/output/MultiSetzzh.csv", 1);
