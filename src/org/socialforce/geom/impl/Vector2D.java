@@ -117,11 +117,12 @@ public class Vector2D implements Vector {
      * @param other 被减数.
      */
     @Override
-    public void sub(Vector other) {
+    public Vector2D sub(Vector other) {
         double[] otherv = quiteConvert(other).values;
         for (int i = 0; i < values.length; i++) {
             values[i] -= otherv[i];
         }
+        return this;
     }
 
     /**

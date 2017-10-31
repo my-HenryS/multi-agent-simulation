@@ -84,7 +84,7 @@ public class SocialForceGenerator extends WallForceGenerator{
      * @return
      */
     public double[] getNeighbor(int i, int t){
-        double[] neighbor=new double[]{100,100,0,0,100,100,0,0,100,100,0,0,100,100,0,0,100,100,0,0};
+        double[] neighbor=new double[]{3,3,0,0,3,3,0,0,3,3,0,0,3,3,0,0,3,3,0,0};
         ArrayList<Double> neighbor1=new ArrayList<Double>();
         Point2D prePoint = matrix.get(i).get(t);
         Vector2D thisVelocity = this.velocity.get(i).get(t).clone();
@@ -134,32 +134,39 @@ public class SocialForceGenerator extends WallForceGenerator{
                     }else
                         nextStep=new Vector2D(0,0);
 
-//                      /* 获取旋转角并旋转所有输入输出向量 */
-//                    double angle = Vector2D.getRotateAngle(new Vector2D(1,0), thisVelocity);
-//                    nextVelocity.rotate(angle);
-//                    nextStep.rotate(angle);
-//                    thisVelocity.rotate(angle);
-//                    rotateNeighbor(neighbor,angle);
+                      /* 获取旋转角并旋转所有输入输出向量 */
+                    double angle = Vector2D.getRotateAngle(new Vector2D(1,0), thisVelocity);
+                    nextVelocity.rotate(angle);
+                    nextStep.rotate(angle);
+                    thisVelocity.rotate(angle);
+                    rotateNeighbor(neighbor,angle);
 
 
-
+/* 翻转 */
+                    if(nextStep.getY() < 0){
+                        nextStep = new Vector2D(nextStep.getX(),-nextStep.getY());
+                        nextVelocity = new Vector2D(nextVelocity.getX(), -nextVelocity.getY());
+                        for(int t = 1; t < neighbor.length; t+=2){
+                            neighbor[t] = - neighbor[t];
+                        }
+                    }
 
 
                     LinkedList<Double>tempA = new LinkedList<>();
-                    tempA.add((double)i);
-                    tempA.add((double)j);
-                    tempA.add(prePoint.getX());
-                    tempA.add(prePoint.getY());
+//                    tempA.add((double)i);
+//                    tempA.add((double)j);
+//                    tempA.add(prePoint.getX());
+//                    tempA.add(prePoint.getY());
 
-//                    tempA.add(nextVelocity.getX()); //下一步长速度x轴
-//                    tempA.add(nextVelocity.getY()); //下一步长速度y轴
+                    tempA.add(nextVelocity.getX()); //下一步长速度x轴
+                    tempA.add(nextVelocity.getY()); //下一步长速度y轴
 
-//                    tempA.add(Vector2D.getRotateAngle(new Vector2D(1,0),nextStep));  //A*方向和速度夹角
+                    tempA.add(Vector2D.getRotateAngle(nextStep,new Vector2D(1,0)));  //A*方向和速度夹角
                     tempA.add(thisVelocity.getX());   //速度大小 （已旋转至x正向）
-                    tempA.add(thisVelocity.getY());
-//                    for(int t = 0; t < neighbor.length; t++){
-//                        tempA.add(neighbor[t]);
-//                    }
+ //                   tempA.add(thisVelocity.getY());
+                    for(int t = 0; t < neighbor.length; t++){
+                        tempA.add(neighbor[t]);
+                    }
                     outputs.add(tempA.toArray(new Double[tempA.size()]));
                 }
             }

@@ -12,6 +12,8 @@ import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.Model;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by sunjh1999 on 2017/6/17.
@@ -20,7 +22,7 @@ public class NeuralForceModel implements Model{
     String parentPath = System.getProperty("user.dir")+"/resource/";
     String locationToSave = "neuralNet/robust.net";
 
-    double timePerStep = 0.2;
+    double timePerStep = 2.0/30;
     double min_div = 0.5;
     double p = 0.3;
     MultiLayerNetwork model = null;
@@ -37,29 +39,44 @@ public class NeuralForceModel implements Model{
     public void fieldForce(Pool targets) {
         for(Object target:targets) {
             Agent agent = (Agent)target;
-            Velocity2D expected = (Velocity2D) this.zeroVelocity(), velocity = (Velocity2D) agent.getVelocity();
-            Point current = agent.getPhysicalEntity().getReferencePoint(), goal = agent.getPath().nextStep(current);
-            expected.sub(current);
-            expected.add(goal);
+            Velocity2D velocity = (Velocity2D) agent.getVelocity();
+            Vector2D expected;
+            Point position = agent.getPhysicalEntity().getReferencePoint();
+            expected =(Vector2D) agent.getPath().nextStep(position).sub(position);
+
+            LinkedList<Vector2D> results = new LinkedList<>();
+            results = getNearest5(targets, agent);
+
+
             double angle = Vector2D.getRotateAngle(new Vector2D(1,0), velocity);
             velocity.rotate(angle);
             expected.rotate(angle);
+            for(Vector2D vector2D:results){
+                vector2D.rotate(angle);
+            }
+
             boolean rotated = false;
             if(expected.getY() < 0){
                 expected = new Velocity2D(expected.getX(),-expected.getY());
+                for(Vector2D vector2D:results){
+                    vector2D.get(new double[]{vector2D.getX(), - vector2D.getY()});
+                }
                 rotated = true;
             }
             double a_angle = Vector2D.getRotateAngle(expected, new Vector2D(1,0));
-            /* env matrix TODO replace by matrix instead of n^2 iteration*/
-            int n= 0;
-            for(Object t_arget:targets){
-                Agent co_Agent = (Agent)t_arget;
-                if(!co_Agent.equals(agent) && co_Agent.getPhysicalEntity().distanceTo(agent.getPhysicalEntity()) < min_div){
-                   n++;
-                }
+            LinkedList<Double> tempA = new LinkedList<>();
+            tempA.add(a_angle);
+            tempA.add(velocity.getX());
+            for(Vector2D vector2D:results){
+                tempA.add(vector2D.getX());
+                tempA.add(vector2D.getY());
             }
-            /* end env matrix*/
-            INDArray input = Nd4j.create(new double[]{a_angle, velocity.getX(), 0, 0, 0, n*p/2, 0, n*p/2, 0, 0, 0});
+            double[] result = new double[22];
+            for(int i =0; i < 22;i++){
+                result[i] = tempA.get(i);
+            }
+
+            INDArray input = Nd4j.create(result);
             INDArray output = model.output(input);
             Velocity2D newV = new Velocity2D(output.getDouble(0),output.getDouble(1));
             if(rotated) newV = new Velocity2D(newV.getX(),-newV.getY());
@@ -105,5 +122,40 @@ public class NeuralForceModel implements Model{
     @Override
     public Model clone() {
         return new NeuralForceModel();
+    }
+
+    private LinkedList<Vector2D> getNearest5(Pool targets, Agent affected_agent){
+
+        LinkedList<Vector2D> velocities = new LinkedList<>();
+        LinkedList<Vector2D> positions = new LinkedList<>();
+        for(Object target:targets) {
+            Agent agent = (Agent)target;
+            if(agent.equals(affected_agent)) continue;
+            velocities.add((Vector2D) agent.getVelocity().clone().sub(affected_agent.getVelocity()));
+            positions.add((Vector2D) agent.getPhysicalEntity().getReferencePoint().clone().sub(affected_agent.getPhysicalEntity().getReferencePoint()));
+        }
+        for(int i = 0; i < positions.size()-1; i++){
+            if(positions.get(i).length() > positions.get(i+1).length()){
+                switch_vector(positions,i,i+1);
+                switch_vector(velocities,i,i+1);
+                if(i >= 1) i-=2;
+            }
+        }
+
+        LinkedList<Vector2D> result = new LinkedList<>();
+        for(int i = 0; i < 5; i++){
+            result.add(positions.get(i));
+        }
+        for(int i = 0; i < 5; i++){
+            result.add(velocities.get(i));
+        }
+        return result;
+
+    }
+    private <T> void switch_vector(List<T> list, int i, int j){
+        T temp;
+        temp = list.get(i);
+        list.set(i,list.get(j));
+        list.set(j, temp);
     }
 }
