@@ -54,7 +54,7 @@ public class ApplicationForCrossFlow extends SimpleApplication {
         SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
                 new Wall[]{
                         new Wall(new Box2D(20,-3,1,15))
-                }).setModel(new NeuralForceModel());
+                }).setModel(new NeuralForceModel()); //加静态（两边的墙）
 
         SimpleParameterPool parameters = new SimpleParameterPool();
 
@@ -69,7 +69,7 @@ public class ApplicationForCrossFlow extends SimpleApplication {
         );
 
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
-                .addValue(new Exit(new Box2D(19,3,3,1.5)))
+                .addValue(new Exit(new Box2D(19,3,3,1.5)))  //切门
                 .addValue(new SafetyRegion(new Box2D(46,1,1,8)))
                 .addValue(new SafetyRegion(new Box2D(-6,1,1,8)))
         );

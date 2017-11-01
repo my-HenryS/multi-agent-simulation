@@ -2,6 +2,7 @@ package org.socialforce.model.impl;
 
 
 import org.socialforce.geom.PhysicalEntity;
+import org.socialforce.geom.RotatablePhysicalEntity;
 import org.socialforce.geom.impl.*;
 import org.socialforce.model.Agent;
 import org.socialforce.model.Influential;
@@ -18,14 +19,12 @@ public class DoorTurn extends Exit implements Influential {
 
     protected Box2D door;
     protected Segment2D doorLine;     //过门线（门内侧）
-    protected double width;
 
 
-    public DoorTurn(Box2D box2D, Segment2D segment2D, double width) {
+    public DoorTurn(Box2D box2D, Segment2D segment2D) {
         super(box2D);
         door = box2D;
         doorLine = segment2D;
-        this.width = width;
     }
 
     /**
@@ -34,20 +33,19 @@ public class DoorTurn extends Exit implements Influential {
      * @return
      */
     public Rectangle2D getDoorZone(){
-        doorLine.clone().moveTo(doorLine.getReferencePoint().clone().moveBy(0,width/(-2)));
-        return doorLine.flatten(width);
+        doorLine.clone().moveTo(doorLine.getReferencePoint().clone().moveBy(0,0.5/(-2)));
+        return doorLine.flatten(0.5);
     }
 
     @Override
     public DoorTurn clone() {
-        return new DoorTurn((Box2D) door.clone(),doorLine.clone(),width);
+        return new DoorTurn((Box2D) door.clone(),doorLine.clone());
     }
 
 
     @Override
     public PhysicalEntity getView() {
-        //return doorLine
-        return getDoorZone();
+        return doorLine;
     }
 
     @Override
@@ -57,15 +55,16 @@ public class DoorTurn extends Exit implements Influential {
 
     @Override
     public void affectAll(Iterable<Agent> affectableAgents) {
-
         List<Segment2D> blockedLines = new ArrayList<>();
         Map<Agent, Segment2D> projectionMap = new HashMap<>();
         int agentNum = 0;
         for (Agent agent : affectableAgents) {
-            Segment2D projection = ((Ellipse2D) agent.getPhysicalEntity()).getProjection(doorLine);
-            blockedLines.add(projection);
-            projectionMap.put(agent, projection);
-            agentNum += 1;
+            if(agent.getPhysicalEntity() instanceof RotatablePhysicalEntity){
+                Segment2D projection = ((Ellipse2D) agent.getPhysicalEntity()).getProjection(doorLine);
+                blockedLines.add(projection);
+                projectionMap.put(agent, projection);
+                agentNum += 1;
+            }
         }
         if(agentNum <= 1) return;
         for (Agent agent : affectableAgents) {
@@ -85,7 +84,4 @@ public class DoorTurn extends Exit implements Influential {
             blockedLines.add(agentProjection);
         }
     }
-
-
-
 }
