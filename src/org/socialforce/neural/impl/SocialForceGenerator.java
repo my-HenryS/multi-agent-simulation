@@ -84,7 +84,7 @@ public class SocialForceGenerator extends WallForceGenerator{
      * @return
      */
     public double[] getNeighbor(int i, int t){
-        double[] neighbor=new double[]{100,100,0,0,100,100,0,0,100,100,0,0,100,100,0,0,100,100,0,0};
+        double[] neighbor=new double[20];
         ArrayList<Double> neighbor1=new ArrayList<Double>();
         Point2D prePoint = matrix.get(i).get(t);
         Vector2D thisVelocity = this.velocity.get(i).get(t).clone();
@@ -131,7 +131,7 @@ public class SocialForceGenerator extends WallForceGenerator{
                 }else{
                     delpoint.setY(-(1+delpoint.getY()/3));
                 }
-            } 
+            }
             //以上是对三米之内的行人进行归一化处理
             neighbor1.add(delpoint.getX());
             neighbor1.add(delpoint.getY());
