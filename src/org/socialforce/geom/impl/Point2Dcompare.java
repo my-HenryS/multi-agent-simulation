@@ -18,6 +18,8 @@ public class Point2Dcompare extends Point2D implements Comparable<Point2Dcompare
         super(x,y);
         this.index = index;
     }
+    public void setX(double x){this.values[0]=x;}
+    public void setY(double y){this.values[1]=y;}
 
     //从大到小排列
     public int compareTo(Point2Dcompare other){
