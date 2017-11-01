@@ -84,7 +84,7 @@ public class SocialForceGenerator extends WallForceGenerator{
      * @return
      */
     public double[] getNeighbor(int i, int t){
-        double[] neighbor=new double[]{100,100,0,0,100,100,0,0,100,100,0,0,100,100,0,0,100,100,0,0};
+        double[] neighbor=new double[20];
         ArrayList<Double> neighbor1=new ArrayList<Double>();
         Point2D prePoint = matrix.get(i).get(t);
         Vector2D thisVelocity = this.velocity.get(i).get(t).clone();
@@ -103,12 +103,43 @@ public class SocialForceGenerator extends WallForceGenerator{
         for(Point2Dcompare delpoint:delpoints){     //排列方式delx,dely,delvx,delvy
             if(time==5)
                 break;
+            /*以下是对三米之内的行人进行归一化处理
+            */
+            if(delpoint.getX()>=0) {
+                if(delpoint.getX()>3){
+                    delpoint.setX(0);
+                }else{
+                    delpoint.setX(1-delpoint.getX()/3);
+                }
+            }else{
+                if(delpoint.getX()<-3){
+                    delpoint.setX(0);
+                }else{
+                    delpoint.setX(-(1+delpoint.getX()/3));
+                }
+            }
+
+            if(delpoint.getY()>=0) {
+                if(delpoint.getY()>3){
+                    delpoint.setY(0);
+                }else{
+                    delpoint.setY(1-delpoint.getY()/3);
+                }
+            }else{
+                if(delpoint.getY()<-3){
+                    delpoint.setY(0);
+                }else{
+                    delpoint.setY(-(1+delpoint.getY()/3));
+                }
+            }
+            //以上是对三米之内的行人进行归一化处理
             neighbor1.add(delpoint.getX());
             neighbor1.add(delpoint.getY());
             int index=delpoint.getIndex();
             Vector2D otherVelocity=this.velocity.get(index).get(t).clone();
-            neighbor1.add(otherVelocity.getX()-thisVelocity.getX());
-            neighbor1.add(otherVelocity.getY()-thisVelocity.getY());
+            boolean toofar=(delpoint.getX()==0)||(delpoint.getY()==0);
+            neighbor1.add(toofar?0:otherVelocity.getX()-thisVelocity.getX());
+            neighbor1.add(toofar?0:otherVelocity.getY()-thisVelocity.getY());
             time=time+1;
         }
         for(int s=0;s<neighbor1.size();s++){
@@ -156,7 +187,7 @@ public class SocialForceGenerator extends WallForceGenerator{
 
 //                    tempA.add(Vector2D.getRotateAngle(new Vector2D(1,0),nextStep));  //A*方向和速度夹角
                     tempA.add(thisVelocity.getX());   //速度大小 （已旋转至x正向）
-                    tempA.add(thisVelocity.getY());
+//                    tempA.add(thisVelocity.getY());
 //                    for(int t = 0; t < neighbor.length; t++){
 //                        tempA.add(neighbor[t]);
 //                    }
