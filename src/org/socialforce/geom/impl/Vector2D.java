@@ -253,6 +253,14 @@ public class Vector2D implements Vector {
         System.arraycopy(values,0,this.values,0,Math.min(values.length,this.values.length));
     }
 
+    public void setX(double x) {
+        this.values[0] = x;
+    }
+
+    public void setY(double y){
+        this.values[1] = y;
+    }
+
     /**
      * 在一个特定的方向上设定这个向量.
      *

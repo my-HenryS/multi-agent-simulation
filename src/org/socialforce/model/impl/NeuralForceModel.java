@@ -47,7 +47,6 @@ public class NeuralForceModel implements Model{
             LinkedList<Vector2D> results = new LinkedList<>();
             results = getNearest5(targets, agent);
 
-
             double angle = Vector2D.getRotateAngle(new Vector2D(1,0), velocity);
             velocity.rotate(angle);
             expected.rotate(angle);
@@ -55,14 +54,14 @@ public class NeuralForceModel implements Model{
                 vector2D.rotate(angle);
             }
 
-            boolean rotated = false;
+            /*boolean rotated = false;
             if(expected.getY() < 0){
                 expected = new Velocity2D(expected.getX(),-expected.getY());
                 for(Vector2D vector2D:results){
                     vector2D.get(new double[]{vector2D.getX(), - vector2D.getY()});
                 }
                 rotated = true;
-            }
+            }*/
             double a_angle = Vector2D.getRotateAngle(expected, new Vector2D(1,0));
             LinkedList<Double> tempA = new LinkedList<>();
             tempA.add(a_angle);
@@ -79,7 +78,7 @@ public class NeuralForceModel implements Model{
             INDArray input = Nd4j.create(result);
             INDArray output = model.output(input);
             Velocity2D newV = new Velocity2D(output.getDouble(0),output.getDouble(1));
-            if(rotated) newV = new Velocity2D(newV.getX(),-newV.getY());
+            //if(rotated) newV = new Velocity2D(newV.getX(),-newV.getY());
             newV.rotate(-angle);
             ((BaseAgent)agent).setVelocity(newV);
             Force force = new Force2D(newV.getX(),newV.getY());
@@ -144,10 +143,36 @@ public class NeuralForceModel implements Model{
 
         LinkedList<Vector2D> result = new LinkedList<>();
         for(int i = 0; i < 5; i++){
-            result.add(positions.get(i));
-        }
-        for(int i = 0; i < 5; i++){
-            result.add(velocities.get(i));
+            Vector2D delpoint = positions.get(i);
+            if(delpoint.getX()>=0) {
+                if(delpoint.getX()>3){
+                    delpoint.setX(0);
+                }else{
+                    delpoint.setX(1-delpoint.getX()/3);
+                }
+            }else{
+                if(delpoint.getX()<-3){
+                    delpoint.setX(0);
+                }else{
+                    delpoint.setX(-(1+delpoint.getX()/3));
+                }
+            }
+
+            if(delpoint.getY()>=0) {
+                if(delpoint.getY()>3){
+                    delpoint.setY(0);
+                }else{
+                    delpoint.setY(1-delpoint.getY()/3);
+                }
+            }else{
+                if(delpoint.getY()<-3){
+                    delpoint.setY(0);
+                }else{
+                    delpoint.setY(-(1+delpoint.getY()/3));
+                }
+            }
+            result.add(delpoint);
+            result.add((delpoint.getX()==0)||(delpoint.getY()==0)?new Vector2D(0,0):velocities.get(i));
         }
         return result;
 
