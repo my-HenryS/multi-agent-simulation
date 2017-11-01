@@ -84,7 +84,7 @@ public class SocialForceGenerator extends WallForceGenerator{
      * @return
      */
     public double[] getNeighbor(int i, int t){
-        double[] neighbor=new double[20];
+        double[] neighbor=new double[]{100,100,0,0,100,100,0,0,100,100,0,0,100,100,0,0,100,100,0,0};
         ArrayList<Double> neighbor1=new ArrayList<Double>();
         Point2D prePoint = matrix.get(i).get(t);
         Vector2D thisVelocity = this.velocity.get(i).get(t).clone();
@@ -187,7 +187,7 @@ public class SocialForceGenerator extends WallForceGenerator{
 
 //                    tempA.add(Vector2D.getRotateAngle(new Vector2D(1,0),nextStep));  //A*方向和速度夹角
                     tempA.add(thisVelocity.getX());   //速度大小 （已旋转至x正向）
-//                    tempA.add(thisVelocity.getY());
+                    tempA.add(thisVelocity.getY());
 //                    for(int t = 0; t < neighbor.length; t++){
 //                        tempA.add(neighbor[t]);
 //                    }
