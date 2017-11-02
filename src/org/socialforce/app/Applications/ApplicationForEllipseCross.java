@@ -1,12 +1,10 @@
 package org.socialforce.app.Applications;
+
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.impl.GoalDynamicColorMarkDrawer;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.DistancePhysicalEntity;
-import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Point2D;
-import org.socialforce.geom.impl.Velocity2D;
+import org.socialforce.geom.impl.*;
 import org.socialforce.model.Agent;
 import org.socialforce.model.impl.*;
 import org.socialforce.scene.Scene;
@@ -19,12 +17,13 @@ import org.socialforce.strategy.impl.FurthestGoalStrategy;
 
 import java.awt.*;
 import java.util.Iterator;
+
 /**
- * Created by sunjh1999 on 2017/2/26.
+ * Created by Administrator on 2017/11/1 0001.
  */
-public class ApplicationForCrossFlow extends SimpleApplication {
+public class ApplicationForEllipseCross extends SimpleApplication{
     DistancePhysicalEntity template;
-    public ApplicationForCrossFlow (){
+    public ApplicationForEllipseCross (){
     }
     /**
      * start the application immediately.
@@ -50,18 +49,20 @@ public class ApplicationForCrossFlow extends SimpleApplication {
      */
     @Override
     public void setUpScenes(){
-        template = new Circle2D(new Point2D(0,0),0.486/2);
+        //template = new Circle2D(new Point2D(0,0),0.45/2);
+        template = new Ellipse2D(0.45/2,0.25/2,new Point2D(0,0),0);  //FIXME 行人的形状切换为椭圆
+
         SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
                 new Wall[]{
-                        new Wall(new Box2D(20,-3,1,15))
-                }).setModel(new NeuralForceModel());
+                        new Wall(new Box2D(20,-3,1,15))  //加两侧的墙
+                }).setModel(new SimpleForceModel());
 
         SimpleParameterPool parameters = new SimpleParameterPool();
 
-        parameters.addValuesAsParameter(new RandomEntityGenerator2D(30,new Box2D(3,1,3,8))
-                .setValue(new BaseAgent(template, new Velocity2D(1.5,0)))
-                                        ,new RandomEntityGenerator2D(1,new Box2D(3,1,5,8))
-                .setValue(new BaseAgent(template, new Velocity2D(1.5,0)))
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(20,new Box2D(3,1,3,8))
+                        .setValue(new BaseAgent(template, new Velocity2D(1.5,0)))
+                ,new RandomEntityGenerator2D(1,new Box2D(3,1,5,8))
+                        .setValue(new BaseAgent(template, new Velocity2D(1.5,0)))
         );
 
         parameters.addValuesAsParameter(new RandomEntityGenerator2D(20,new Box2D(33,1,3,8))
@@ -69,7 +70,7 @@ public class ApplicationForCrossFlow extends SimpleApplication {
         );
 
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
-                .addValue(new Exit(new Box2D(19,3,3,1.5)))
+                .addValue(new Exit(new Box2D(19,3,3,1.5)))  //切门
                 .addValue(new SafetyRegion(new Box2D(46,1,1,8)))
                 .addValue(new SafetyRegion(new Box2D(-6,1,1,8)))
         );

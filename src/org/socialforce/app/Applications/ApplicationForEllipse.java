@@ -4,7 +4,12 @@ import org.socialforce.app.Application;
 import org.socialforce.app.Interpreter;
 import org.socialforce.app.impl.AgentStepCSVWriter;
 import org.socialforce.app.impl.SimpleInterpreter;
+import org.socialforce.drawer.impl.EntityDrawer;
+import org.socialforce.drawer.impl.EntityDrawerInstaller;
+import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.impl.*;
+import org.socialforce.model.Agent;
+import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.*;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
@@ -17,6 +22,7 @@ import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.AStarPathFinder;
 import org.socialforce.strategy.impl.NearestGoalStrategy;
 
+import java.awt.*;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -110,6 +116,17 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         for (Scene s : loader.readScene()){
             scenes.add(s);
         }
-
     }
+
+/*    @Override
+    public void manageDrawer(SceneDrawer drawer){
+        drawer.setBackgroundColor(Color.white);
+        EntityDrawerInstaller installer = drawer.getEntityDrawerInstaller();
+        installer.unregister(Agent.class);
+        installer.unregister(InteractiveEntity.class);
+        EntityDrawer agentDrawer = new EntityDrawer(installer.getDevice());
+        agentDrawer.setColor(Color.yellow);
+        installer.registerDrawer(agentDrawer,Agent.class);
+        installer.registerDrawer(new EntityDrawer(installer.getDevice()),InteractiveEntity.class);
+    }*/
 }
