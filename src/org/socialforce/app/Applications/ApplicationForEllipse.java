@@ -103,7 +103,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(51,new Box2D(0,-10,10,5))
+                new RandomEntityGenerator2D(50,new Box2D(0,-10,10,5))
                         .setValue(template)
                         .setGaussianParameter(1,0.025)
                 //FIXME 行人的总数（修改“26”）
