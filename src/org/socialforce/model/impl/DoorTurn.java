@@ -32,9 +32,8 @@ public class DoorTurn extends Exit implements Influential {
      * @param
      * @return
      */
-    public Rectangle2D getDoorZone(){
-        doorLine.clone().moveTo(doorLine.getReferencePoint().clone().moveBy(0,0.5/(-2)));
-        return doorLine.flatten(0.5);
+    public Box2D getDoorZone(){
+        return new Box2D(doorLine.getExtrimePoint()[0].getX(),doorLine.getExtrimePoint()[0].getY()-doorLine.getLenth()/2,doorLine.getLenth(),doorLine.getLenth()/2);
     }
 
     @Override
@@ -45,7 +44,7 @@ public class DoorTurn extends Exit implements Influential {
 
     @Override
     public PhysicalEntity getView() {
-        return doorLine;
+        return getDoorZone();
     }
 
     @Override
