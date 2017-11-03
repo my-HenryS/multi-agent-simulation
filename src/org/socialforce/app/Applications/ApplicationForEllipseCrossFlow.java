@@ -49,8 +49,8 @@ public class ApplicationForEllipseCrossFlow extends SimpleApplication{
      */
     @Override
     public void setUpScenes(){
-        template = new Circle2D(new Point2D(0,0),0.45/2);
-        //template = new Ellipse2D(0.45/2,0.25/2,new Point2D(0,0),0);  //FIXME 行人的形状切换为椭圆
+        //template = new Circle2D(new Point2D(0,0),0.45/2);
+        template = new Ellipse2D(0.45/2,0.25/2,new Point2D(0,0),0);  //FIXME 行人的形状切换为椭圆
 
         SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
                 new Wall[]{

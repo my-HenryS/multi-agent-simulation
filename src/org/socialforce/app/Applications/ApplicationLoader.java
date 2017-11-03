@@ -29,7 +29,7 @@ public class ApplicationLoader extends LinkedList<Application> implements Collec
         add(new ApplicationForECTest());
         add(new ApplicationForMCM());
         add(new ApplicationForTurnDoorTest());
-        add(new ApplicationForEllipseCross());
+        add(new ApplicationForEllipseCrossFlow());
         selected = this.getFirst();
     }
 
