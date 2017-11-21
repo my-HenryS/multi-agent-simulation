@@ -62,7 +62,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
         setUpT1Scene3();
         setUpT1Scene4();
         //setUpT1Scene5();
-        setMap();
+        //setMap();
         setUpT1Scene5();
         setUpT1Scene6();
         setUpT2Scene();
@@ -211,7 +211,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("T1.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFrom(is);
-        SceneLoader loader = interpreter.setLoader().setModel(new SimpleForceModel());
+        SceneLoader loader = interpreter.setLoader().setModel(new NeuralForceModel());
         SimpleParameterPool parameters = new SimpleParameterPool();
         parameters.addValuesAsParameter(
                 new SimpleEntityGenerator()

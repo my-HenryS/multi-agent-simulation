@@ -147,7 +147,8 @@ public class SocialForceGenerator extends WallForceGenerator{
         }
         return neighbor;
     }
-    public void genOutput() {
+    public void genOutput(Scene scene) {
+        setMap(scene);
 
         for (int i = 0 ; i < matrix.size() ; i++) {
             for (int j = 0; j < matrix.get(i).size(); j++) {
@@ -158,12 +159,7 @@ public class SocialForceGenerator extends WallForceGenerator{
                     Vector2D nextStep;
                 //    Vector2D acc = calAcc(velocity.get(i).get(j + 1), velocity.get(i).get(j));
                     Vector2D thisVelocity = this.velocity.get(i).get(j).clone(), nextVelocity = this.velocity.get(i).get(j + 1).clone();
-                    if(thisVelocity.getX()>0){
-                        nextStep=new Vector2D(1,0);
-                    }else if(thisVelocity.getX()<0){
-                        nextStep=new Vector2D(-1,0);
-                    }else
-                        nextStep=new Vector2D(0,0);
+                    nextStep = getNext(prePoint);
 
 //                      /* 获取旋转角并旋转所有输入输出向量 */
                     double angle = Vector2D.getRotateAngle(new Vector2D(1,0), thisVelocity);
@@ -196,8 +192,7 @@ public class SocialForceGenerator extends WallForceGenerator{
         }
     }
 
-    @Override
-    public void genOutput(Scene scene) {
+    public void genOutput_old(Scene scene) {
         setMap(scene);
         genW();
         for (int i = 0 ; i < matrix.size() ; i++) {

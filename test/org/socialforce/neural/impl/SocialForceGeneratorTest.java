@@ -245,8 +245,12 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
 //        generator.genOutput(scene);
         //generator.readFile("result2.csv", 1);
         //generator.genOutput(scene);
-        setMapA2();
+        setMapA3();
         generator.readFile("/input/横向障碍物-宽门-无奖励-1.csv", 3);
+        generator.genOutput(scene);
+        generator.readFile("/input/横向障碍物-宽门-无奖励-2.csv", 3);
+        generator.genOutput(scene);
+        generator.readFile("/input/横向障碍物-宽门-无奖励-3.csv", 3);
         generator.genOutput(scene);
 
         generator.toFile("/output/MultiSetzzh.csv", 1);
