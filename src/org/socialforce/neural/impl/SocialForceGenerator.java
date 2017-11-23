@@ -169,7 +169,13 @@ public class SocialForceGenerator extends WallForceGenerator{
                     rotateNeighbor(neighbor,angle);
 
 
-
+                    if(nextStep.getY() < 0){
+                        nextStep = new Vector2D(nextStep.getX(),-nextStep.getY());
+                        nextVelocity = new Vector2D(nextVelocity.getX(), -nextVelocity.getY());
+                        for(int t = 1; t < neighbor.length; t+=2){
+                            neighbor[t] = - neighbor[t];
+                        }
+                    }
 
 
                     LinkedList<Double>tempA = new LinkedList<>();
