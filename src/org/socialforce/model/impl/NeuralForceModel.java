@@ -54,14 +54,14 @@ public class NeuralForceModel implements Model{
                 vector2D.rotate(angle);
             }
 
-            /*boolean rotated = false;
+            boolean rotated = false;
             if(expected.getY() < 0){
                 expected = new Velocity2D(expected.getX(),-expected.getY());
                 for(Vector2D vector2D:results){
                     vector2D.get(new double[]{vector2D.getX(), - vector2D.getY()});
                 }
                 rotated = true;
-            }*/
+            }
             double a_angle = Vector2D.getRotateAngle(expected, new Vector2D(1,0));
             LinkedList<Double> tempA = new LinkedList<>();
             tempA.add(a_angle);
@@ -78,8 +78,11 @@ public class NeuralForceModel implements Model{
             INDArray input = Nd4j.create(result);
             INDArray output = model.output(input);
             Velocity2D newV = new Velocity2D(output.getDouble(0),output.getDouble(1));
-            //if(rotated) newV = new Velocity2D(newV.getX(),-newV.getY());
+            if(rotated) newV = new Velocity2D(newV.getX(),-newV.getY());
             newV.rotate(-angle);
+            if(newV.length() > 3){
+                newV = newV;
+            }
             ((BaseAgent)agent).setVelocity(newV);
             Force force = new Force2D(newV.getX(),newV.getY());
             force.scale(agent.getMass());
