@@ -26,7 +26,6 @@ public class Monitor extends Entity implements Influential {
     public PhysicalEntity getView() {
         return this.getPhysicalEntity();
     }
-
     public void affect(Agent target) {
         velocity += target.getVelocity().length();
         vNum += 1;

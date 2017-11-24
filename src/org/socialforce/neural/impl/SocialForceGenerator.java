@@ -211,14 +211,14 @@ public class SocialForceGenerator extends WallForceGenerator{
                  //   nextStep = getNext(prePoint);
                     if(thisVelocity.getX()>0){
                         nextStep=new Vector2D(1,0);
-                    }else if(thisVelocity.getX()>0){
+                    }else if(thisVelocity.getX()<0){
                         nextStep=new Vector2D(-1,0);
                     }else
                         nextStep=new Vector2D(0,0);
 //                      /* 获取旋转角并旋转所有输入输出向量 */
                     double angle = Vector2D.getRotateAngle(new Vector2D(1,0), thisVelocity);
                     nextVelocity.rotate(angle);
-                    nextStep.rotate(angle); 
+                    nextStep.rotate(angle);
                     thisVelocity.rotate(angle);
                     rotateNeighbor(neighbor,angle);
 
