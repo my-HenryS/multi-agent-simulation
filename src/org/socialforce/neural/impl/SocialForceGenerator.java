@@ -218,7 +218,7 @@ public class SocialForceGenerator extends WallForceGenerator{
 //                      /* 获取旋转角并旋转所有输入输出向量 */
                     double angle = Vector2D.getRotateAngle(new Vector2D(1,0), thisVelocity);
                     nextVelocity.rotate(angle);
-                    nextStep.rotate(angle);
+                    nextStep.rotate(angle); 
                     thisVelocity.rotate(angle);
                     rotateNeighbor(neighbor,angle);
 
