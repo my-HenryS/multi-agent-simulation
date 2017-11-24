@@ -4,7 +4,7 @@ Scene:
 
 Walls:
     Wall:
-        Box:0,0,11,0.4;
+        Box:0,0,11,1;
     Wall:
         Box:-1,-10,0,1;
     Wall:

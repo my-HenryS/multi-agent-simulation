@@ -197,6 +197,60 @@ public class SocialForceGenerator extends WallForceGenerator{
             }
         }
     }
+    public void genOutputduiliu(Scene scene) {
+
+        for (int i = 0 ; i < matrix.size() ; i++) {
+            for (int j = 0; j < matrix.get(i).size(); j++) {
+                if (available(i, j)) {
+                    Point2D prePoint = matrix.get(i).get(j);
+                    double[] neighbor = getNeighbor(i, j);
+                    //    Vector2D nextStep = getNext(prePoint);
+                    Vector2D nextStep;
+                    //    Vector2D acc = calAcc(velocity.get(i).get(j + 1), velocity.get(i).get(j));
+                    Vector2D thisVelocity = this.velocity.get(i).get(j).clone(), nextVelocity = this.velocity.get(i).get(j + 1).clone();
+                 //   nextStep = getNext(prePoint);
+                    if(thisVelocity.getX()>0){
+                        nextStep=new Vector2D(1,0);
+                    }else if(thisVelocity.getX()>0){
+                        nextStep=new Vector2D(-1,0);
+                    }else
+                        nextStep=new Vector2D(0,0);
+//                      /* 获取旋转角并旋转所有输入输出向量 */
+                    double angle = Vector2D.getRotateAngle(new Vector2D(1,0), thisVelocity);
+                    nextVelocity.rotate(angle);
+                    nextStep.rotate(angle);
+                    thisVelocity.rotate(angle);
+                    rotateNeighbor(neighbor,angle);
+
+
+                    if(nextStep.getY() < 0){
+                        nextStep = new Vector2D(nextStep.getX(),-nextStep.getY());
+                        nextVelocity = new Vector2D(nextVelocity.getX(), -nextVelocity.getY());
+                        for(int t = 1; t < neighbor.length; t+=2){
+                            neighbor[t] = - neighbor[t];
+                        }
+                    }
+
+
+                    LinkedList<Double>tempA = new LinkedList<>();
+                    //tempA.add((double)i);
+                    //tempA.add((double)j);
+                    //tempA.add(prePoint.getX());
+                    //tempA.add(prePoint.getY());
+
+                    tempA.add(nextVelocity.getX()); //下一步长速度x轴
+                    tempA.add(nextVelocity.getY()); //下一步长速度y轴
+
+                    tempA.add(Vector2D.getRotateAngle(nextStep,new Vector2D(1,0)));  //A*方向和速度夹角
+                    tempA.add(thisVelocity.getX());   //速度大小 （已旋转至x正向）
+                    for(int t = 0; t < neighbor.length; t++){
+                        tempA.add(neighbor[t]);
+                    }
+                    outputs.add(tempA.toArray(new Double[tempA.size()]));
+                }
+            }
+        }
+    }
 
     public void genOutput_old(Scene scene) {
         setMap(scene);

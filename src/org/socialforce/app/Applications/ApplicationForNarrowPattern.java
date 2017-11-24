@@ -55,7 +55,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
     public void setUpScenes(){
         template = new BaseAgent(new Circle2D(new Point2D(0,0),0.486/2), new Velocity2D(0,0));
         scenes = new LinkedList<>();
-        DoorWidth = 1.36;
+        DoorWidth = 1.2;
         density = 10;
         //setUpT1Scene1();
         //setUpT1Scene2();
@@ -233,10 +233,21 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
                 .setPriority(5)
         );
 
-        parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(30,new Box2D(0,-10,10,5))
+       /* parameters.addValuesAsParameter(
+                new RandomEntityGenerator2D(40,new Box2D(0,-10,10,5))
                         .setValue(template)
-                        .setGaussianParameter(1,0.03)
+                        .setGaussianParameter(1,0.03)*/
+
+        parameters.addValuesAsParameter(
+                new MultipleEntitiesGenerator()
+                        .addValue(new BaseAgent(new Circle2D(new Point2D(5,-2), 0.486/2), new Velocity2D(0,0)))
+                        .addValue(new BaseAgent(new Circle2D(new Point2D(2,-2), 0.486/2), new Velocity2D(0,0)))
+                        .addValue(new BaseAgent(new Circle2D(new Point2D(7,-2), 0.486/2), new Velocity2D(0,0)))
+                        .addValue(new BaseAgent(new Circle2D(new Point2D(5,-4), 0.486/2), new Velocity2D(0,0)))
+                        .addValue(new BaseAgent(new Circle2D(new Point2D(2,-4), 0.486/2), new Velocity2D(0,0)))
+                        .addValue(new BaseAgent(new Circle2D(new Point2D(7,-4), 0.486/2), new Velocity2D(0,0)))
+                        .addValue(new BaseAgent(new Circle2D(new Point2D(5,-6), 0.486/2), new Velocity2D(0,0)))
+                        .addValue(new BaseAgent(new Circle2D(new Point2D(2,-6), 0.486/2), new Velocity2D(0,0)))
         );
 
         loader.readParameterSet(parameters);
