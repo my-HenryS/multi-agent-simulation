@@ -59,8 +59,8 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
         density = 10;
         //setUpT1Scene1();
         //setUpT1Scene2();
-        setUpT1Scene3();
-        setUpT1Scene4();
+ //       setUpT1Scene3();
+ //       setUpT1Scene4();
         //setUpT1Scene5();
         //setMap();
         setUpT1Scene5();
@@ -224,7 +224,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
 
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
                 .addValue(new SafetyRegion(new Box2D(1,10,8,1)))
-                .addValue(new Monitor(new Box2D(0,0,10,1)))
+                .addValue(new Monitor(new Box2D(0,0,10,2)))
 
         );
 

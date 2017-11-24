@@ -252,7 +252,30 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
         generator.genOutput(scene);
         generator.readFile("/input/横向障碍物-宽门-无奖励-3.csv", 3);
         generator.genOutput(scene);
-
+        setMapA2();
+        generator.readFile("/input/横向障碍物-宽门-近-无奖励.csv", 3);
+        generator.genOutput(scene);
+        setMapA4();
+        generator.readFile("/input/纵向障碍物-宽门-无奖励_1.csv", 3);
+        generator.genOutput(scene);
+        generator.readFile("/input/纵向障碍物-宽门-无奖励_2.csv", 3);
+        generator.genOutput(scene);
+        generator.readFile("/input/纵向障碍物-宽门-无奖励_3.csv", 3);
+        generator.genOutput(scene);
+        setMapA5();
+        generator.readFile("/input/横向障碍物-窄门-无奖励-1.csv", 3);
+        generator.genOutput(scene);
+        generator.readFile("/input/横向障碍物-窄门-无奖励-2.csv", 3);
+        generator.genOutput(scene);
+        generator.readFile("/input/横向障碍物-窄门-无奖励-3.csv", 3);
+        generator.genOutput(scene);
+        setMapA6();
+        generator.readFile("/input/纵向障碍物-窄门-无奖励_1.csv", 3);
+        generator.genOutput(scene);
+        generator.readFile("/input/纵向障碍物-窄门-无奖励_2.csv", 3);
+        generator.genOutput(scene);
+        generator.readFile("/input/纵向障碍物-窄门-无奖励_3.csv", 3);
+        generator.genOutput(scene);
         generator.toFile("/output/MultiSetzzh.csv", 1);
 
     }
