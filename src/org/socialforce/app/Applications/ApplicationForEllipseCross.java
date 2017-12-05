@@ -4,9 +4,15 @@ import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.impl.GoalDynamicColorMarkDrawer;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.DistancePhysicalEntity;
-import org.socialforce.geom.impl.*;
+import org.socialforce.geom.impl.Box2D;
+import org.socialforce.geom.impl.Ellipse2D;
+import org.socialforce.geom.impl.Point2D;
+import org.socialforce.geom.impl.Velocity2D;
 import org.socialforce.model.Agent;
-import org.socialforce.model.impl.*;
+import org.socialforce.model.impl.BaseAgent;
+import org.socialforce.model.impl.SafetyRegion;
+import org.socialforce.model.impl.SimpleForceModel;
+import org.socialforce.model.impl.Wall;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
 import org.socialforce.scene.impl.*;
@@ -18,12 +24,12 @@ import org.socialforce.strategy.impl.FurthestGoalStrategy;
 import java.awt.*;
 import java.util.Iterator;
 
-/**窄（单人）
- * Created by Administrator on 2017/11/3 0003.
+/**宽（多人）
+ * Created by Administrator on 2017/12/4 0004.
  */
-public class ApplicationForEllipseCrossFlow extends SimpleApplication{
+public class ApplicationForEllipseCross extends SimpleApplication {
     DistancePhysicalEntity template;
-    public ApplicationForEllipseCrossFlow (){
+    public ApplicationForEllipseCross (){
     }
     /**
      * start the application immediately.
@@ -54,30 +60,25 @@ public class ApplicationForEllipseCrossFlow extends SimpleApplication{
 
         SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
                 new Wall[]{
-                        new Wall(new Box2D(0,5.4,40,0.4)),
-                        new Wall(new Box2D(0,4.2,40,0.4))
+                        new Wall(new Box2D(0,6,40,1)),
+                        new Wall(new Box2D(0,3,40,1))  //两边的墙（在这里加墙）
                 }).setModel(new SimpleForceModel());
 
         SimpleParameterPool parameters = new SimpleParameterPool();
 
-        parameters.addValuesAsParameter(new SimpleEntityGenerator()
-                .setValue(new CrossFlow(new Box2D(15,4.6,10,0.8)))  //FIXME 主动侧身作用区域的大小
-                .setPriority(5)
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(15,new Box2D(9,3,8,3))
+                .setValue(new BaseAgent(template, new Velocity2D(3,0)))
+                .setGaussianParameter(1,0.025)
         );
 
-        parameters.addValuesAsParameter(new RandomEntityGenerator2D(15,new Box2D(1,4.6,9,0.8))
-                .setValue(new BaseAgent(template, new Velocity2D(1.5,0)))
-                .setGaussianParameter(1,0.015)
-        );
-
-        parameters.addValuesAsParameter(new RandomEntityGenerator2D(15,new Box2D(30,4.6,9,0.8))
-                .setValue(new BaseAgent(template, new Velocity2D(-1.5,0)))
-                .setGaussianParameter(1,0.015)
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(15,new Box2D(31,3,8,3))
+                .setValue(new BaseAgent(template, new Velocity2D(-3,0)))
+                .setGaussianParameter(1,0.025)
         );
 
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
-                .addValue(new SafetyRegion(new Box2D(46,4,1,1)))
-                .addValue(new SafetyRegion(new Box2D(-6,5,1,1)))
+                .addValue(new SafetyRegion(new Box2D(46,1,1,8)))
+                .addValue(new SafetyRegion(new Box2D(-6,1,1,8)))
         );
 
         loader.readParameterSet(parameters);
@@ -91,7 +92,7 @@ public class ApplicationForEllipseCrossFlow extends SimpleApplication{
     public void manageDrawer(SceneDrawer drawer){
         Drawer agentDrawer = drawer.getEntityDrawerInstaller().getSupport(Agent.class).getDrawer();
         if(agentDrawer instanceof GoalDynamicColorMarkDrawer) {
-            ((GoalDynamicColorMarkDrawer) agentDrawer).addSupport(new Point2D(-5.5,5.5), Color.green);  //SafetyRegion的中心点
+            ((GoalDynamicColorMarkDrawer) agentDrawer).addSupport(new Point2D(-5.5,5), Color.green);
         }
 
     }
