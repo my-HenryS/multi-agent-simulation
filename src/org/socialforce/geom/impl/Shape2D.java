@@ -26,7 +26,7 @@ abstract class Shape2D implements PhysicalEntity {
         }
         Velocity next_v = new Velocity2D(0,0), deltaV = this.pushed.deltaVelocity(mass, time);
         currAcceleration = deltaV.clone();
-        currAcceleration.scale(1/time);//TODO 为什么还要再scale一次，查明。
+        currAcceleration.scale(1/time); //计算加速度
         Vector deltaS;
         next_v.add(currVelocity);
         next_v.add(deltaV);

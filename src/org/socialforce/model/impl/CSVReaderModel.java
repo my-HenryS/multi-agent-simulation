@@ -63,8 +63,14 @@ public class CSVReaderModel implements Model {
         int i = 0;
         for(Object target : targets){
             Agent agent = (Agent)target;
-            if(matrix.get(i).get(timeStamp) != null)
-            agent.getPhysicalEntity().moveTo(matrix.get(i).get(timeStamp));
+            if(matrix.get(i).get(timeStamp) != null) {
+                Point position = matrix.get(i).get(timeStamp), currPosition = agent.getPosition();
+                Velocity velocity = new Velocity2D((position.getX() - currPosition.getX())/timePerStep,(position.getY() - currPosition.getY())/timePerStep);
+                agent.getPhysicalEntity().setVelocity(velocity);
+            }
+            else{
+                agent.getPhysicalEntity().moveTo(new Point2D(0,0));
+            }
             i++;
         }
         timeStamp++;

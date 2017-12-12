@@ -89,6 +89,11 @@ public class DoubleShape2D extends Shape2D implements PhysicalEntity {
     }
 
     @Override
+    public double getArea() {
+        return shape[0].getArea()+shape[1].getArea();  //TODO 减去相交部分
+    }
+
+    @Override
     public PhysicalEntity clone() {
         return new DoubleShape2D(shape[0].clone(),shape[1].clone());
     }

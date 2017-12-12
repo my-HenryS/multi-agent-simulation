@@ -142,6 +142,11 @@ public class MultiCircle2D extends RotatableShape2D implements RotatablePhysical
         return null;
     }
 
+    @Override
+    public double getArea() {
+        return 0;   //TODO compute area
+    }
+
 
     @Override
     public boolean contains(Point point) {

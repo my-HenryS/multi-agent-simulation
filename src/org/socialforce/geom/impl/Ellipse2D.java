@@ -162,6 +162,11 @@ public class Ellipse2D extends RotatableShape2D implements RotatablePhysicalEnti
         return this;
     }
 
+    @Override
+    public double getArea() {
+        return Math.PI*a*b;
+    }
+
 
     @Override
     public boolean contains(Point point) {
