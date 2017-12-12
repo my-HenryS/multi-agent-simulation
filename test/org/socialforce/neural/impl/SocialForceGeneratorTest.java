@@ -57,6 +57,28 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
         loader.readParameterSet(parameters);
         scene = loader.readScene().getFirst();
     }
+    //横向障碍物-近-宽门 快速场景 门与障碍物的坐标有变化 数据需y方向处理
+    public void setMapA2fast(){
+        SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(0, 0, 19.21, 10.77)),
+                new Wall[]{
+                        new Wall(new Box2D(3.41,9.75,9.05,0.53)), //上
+                        new Wall(new Box2D(3.41,3.21,9.05,0.53)), //下
+                        new Wall(new Box2D(3.41,3.74,0.53,6.01)), //左
+                        //以上固定不动
+                        new Wall(new Box2D(11.93,7.26,0.53,2.49)),//右上
+                        new Wall(new Box2D(11.93,3.74,0.53,2.52)),//右下
+                        //上边两个是门
+                        new Wall(new Box2D(10.26,6.15,0.58,1.15)),//横向障碍物
+
+
+                }).setModel(new SimpleForceModel());
+        SimpleParameterPool parameters = new SimpleParameterPool();
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new SafetyRegion(new Box2D(14.05,6.81,0.1,0.1)))  //不动
+        );
+        loader.readParameterSet(parameters);
+        scene = loader.readScene().getFirst();
+    }
     //横向障碍物-宽门
     public void setMapA3(){
         SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(0, 0, 19.21, 10.77)),
@@ -69,6 +91,28 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
                         new Wall(new Box2D(11.93,3.74,0.53,2.65)),//右下
                         //上边两个是门
                         new Wall(new Box2D(9.33,6.32,0.58,1.18)),//横向障碍物
+
+
+                }).setModel(new SimpleForceModel());
+        SimpleParameterPool parameters = new SimpleParameterPool();
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new SafetyRegion(new Box2D(14.05,6.81,0.1,0.1)))  //不动
+        );
+        loader.readParameterSet(parameters);
+        scene = loader.readScene().getFirst();
+    }
+    //横向障碍物-宽门 快速场景 门与障碍物的坐标有变化 数据需y方向处理
+    public void setMapA3fast(){
+        SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(0, 0, 19.21, 10.77)),
+                new Wall[]{
+                        new Wall(new Box2D(3.41,9.75,9.05,0.53)), //上
+                        new Wall(new Box2D(3.41,3.21,9.05,0.53)), //下
+                        new Wall(new Box2D(3.41,3.74,0.53,6.01)), //左
+                        //以上固定不动
+                        new Wall(new Box2D(11.93,7.26,0.53,2.49)),//右上
+                        new Wall(new Box2D(11.93,3.74,0.53,2.52)),//右下
+                        //上边两个是门
+                        new Wall(new Box2D(9.33,6.15,0.58,1.15)),//横向障碍物
 
 
                 }).setModel(new SimpleForceModel());
@@ -101,6 +145,28 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
         loader.readParameterSet(parameters);
         scene = loader.readScene().getFirst();
     }
+    //纵向障碍物-宽门 快速场景 门与障碍物的坐标有变化 数据需y方向处理
+    public void setMapA4fast(){
+        SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(0, 0, 19.21, 10.77)),
+                new Wall[]{
+                        new Wall(new Box2D(3.41,9.75,9.05,0.53)), //上
+                        new Wall(new Box2D(3.41,3.21,9.05,0.53)), //下
+                        new Wall(new Box2D(3.41,3.74,0.53,6.01)), //左
+                        //以上固定不动
+                        new Wall(new Box2D(11.93,7.26,0.53,2.49)),//右上
+                        new Wall(new Box2D(11.93,3.74,0.53,2.52)),//右下
+                        //上边两个是门
+                        new Wall(new Box2D(9.75,6.49,1.18,0.57)),//纵向障碍物
+
+
+                }).setModel(new SimpleForceModel());
+        SimpleParameterPool parameters = new SimpleParameterPool();
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new SafetyRegion(new Box2D(14.05,6.81,0.1,0.1)))  //不动
+        );
+        loader.readParameterSet(parameters);
+        scene = loader.readScene().getFirst();
+    }
     //横向障碍物-窄门
     public void setMapA5(){
         SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(0, 0, 19.21, 10.77)),
@@ -113,6 +179,26 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
                         new Wall(new Box2D(11.93,3.74,0.53,2.79)),//右下
                         //上边两个是门
                         new Wall(new Box2D(9.33,6.32,0.58,1.18)),//横向障碍物
+                }).setModel(new SimpleForceModel());
+        SimpleParameterPool parameters = new SimpleParameterPool();
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new SafetyRegion(new Box2D(14.05,6.81,0.1,0.1)))  //不动
+        );
+        loader.readParameterSet(parameters);
+        scene = loader.readScene().getFirst();
+    }
+    //横向障碍物-窄门 快速场景 门与障碍物的坐标有变化 数据需y方向处理
+    public void setMapA5fast(){
+        SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(0, 0, 19.21, 10.77)),
+                new Wall[]{
+                        new Wall(new Box2D(3.41,9.75,9.05,0.53)), //上
+                        new Wall(new Box2D(3.41,3.21,9.05,0.53)), //下
+                        new Wall(new Box2D(3.41,3.74,0.53,6.01)), //左
+                        //以上固定不动
+                        new Wall(new Box2D(11.93,7.14,0.53,2.61)),//右上
+                        new Wall(new Box2D(11.93,3.74,0.53,2.7)),//右下
+                        //上边两个是门
+                        new Wall(new Box2D(9.33,6.15,0.58,1.15)),//横向障碍物
                 }).setModel(new SimpleForceModel());
         SimpleParameterPool parameters = new SimpleParameterPool();
         parameters.addValuesAsParameter(new SimpleEntityGenerator()
@@ -137,6 +223,48 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
         SimpleParameterPool parameters = new SimpleParameterPool();
         parameters.addValuesAsParameter(new SimpleEntityGenerator()
                 .setValue(new SafetyRegion(new Box2D(14.05,6.81,0.1,0.1)))  //不动
+        );
+        loader.readParameterSet(parameters);
+        scene = loader.readScene().getFirst();
+    }
+    //纵向障碍物-窄门 快速场景 门与障碍物的坐标有变化 数据需y方向处理
+    public void setMapA6fast(){
+        SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(0, 0, 19.21, 10.77)),
+                new Wall[]{
+                        new Wall(new Box2D(3.41,9.75,9.05,0.53)), //上
+                        new Wall(new Box2D(3.41,3.21,9.05,0.53)), //下
+                        new Wall(new Box2D(3.41,3.74,0.53,6.01)), //左
+                        //以上固定不动
+                        new Wall(new Box2D(11.93,7.14,0.53,2.61)),//右上
+                        new Wall(new Box2D(11.93,3.74,0.53,2.7)),//右下
+                        //上边两个是门
+                        new Wall(new Box2D(9.75,6.49,1.18,0.57)),//纵向障碍物
+
+                }).setModel(new SimpleForceModel());
+        SimpleParameterPool parameters = new SimpleParameterPool();
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new SafetyRegion(new Box2D(14.05,6.81,0.1,0.1)))  //不动
+        );
+        loader.readParameterSet(parameters);
+        scene = loader.readScene().getFirst();
+    }
+//测试场景 数据需y方向处理
+    public void setMaptest(){
+        SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(0, 0, 10.78, 10.78)),
+                new Wall[]{
+                        new Wall(new Box2D(0,8.5,9.91,0.53)), //上
+                        new Wall(new Box2D(0,0.47,9.91,0.53)), //下
+                        new Wall(new Box2D(0,1,0.53,7.5)), //左
+                        //以上固定不动
+                        new Wall(new Box2D(9.38,4.62,0.53,3.88)),//右上
+                        new Wall(new Box2D(9.38,1,0.53,2.92)),//右下
+                        //上边两个是门
+                        new Wall(new Box2D(4.89,4.11,0.61,0.61)),//纵向障碍物
+                        new Wall(new Box2D(6.41,4.11,0.61,0.61)),//纵向障碍物
+                }).setModel(new SimpleForceModel());
+        SimpleParameterPool parameters = new SimpleParameterPool();
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new SafetyRegion(new Box2D(10.63,4.36,0.1,0.1)))  //不动
         );
         loader.readParameterSet(parameters);
         scene = loader.readScene().getFirst();
@@ -252,38 +380,38 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
         generator.genOutputduiliu(scene);
         generator.readFile("/input/对流3.csv", 3);
         generator.genOutputduiliu(scene);
-        setMapA3();
-        generator.readFile("/input/横向障碍物-宽门-无奖励-1.csv", 3);
-        generator.genOutput(scene);
-        generator.readFile("/input/横向障碍物-宽门-无奖励-2.csv", 3);
-        generator.genOutput(scene);
-        generator.readFile("/input/横向障碍物-宽门-无奖励-3.csv", 3);
-        generator.genOutput(scene);
-        setMapA2();
-        generator.readFile("/input/横向障碍物-宽门-近-无奖励.csv", 3);
-        generator.genOutput(scene);
-        setMapA4();
-        generator.readFile("/input/纵向障碍物-宽门-无奖励_1.csv", 3);
-        generator.genOutput(scene);
-        generator.readFile("/input/纵向障碍物-宽门-无奖励_2.csv", 3);
-        generator.genOutput(scene);
-        generator.readFile("/input/纵向障碍物-宽门-无奖励_3.csv", 3);
-        generator.genOutput(scene);
-        setMapA5();
-        generator.readFile("/input/横向障碍物-窄门-无奖励-1.csv", 3);
-        generator.genOutput(scene);
-        generator.readFile("/input/横向障碍物-窄门-无奖励-2.csv", 3);
-        generator.genOutput(scene);
-        generator.readFile("/input/横向障碍物-窄门-无奖励-3.csv", 3);
-        generator.genOutput(scene);
-        setMapA6();
-        generator.readFile("/input/纵向障碍物-窄门-无奖励_1.csv", 3);
-        generator.genOutput(scene);
-        generator.readFile("/input/纵向障碍物-窄门-无奖励_2.csv", 3);
-        generator.genOutput(scene);
-        generator.readFile("/input/纵向障碍物-窄门-无奖励_3.csv", 3);
-        generator.genOutput(scene);
-        generator.toFile("/output/MultiSetzzh.csv", 1);
+//        setMapA3();
+//        generator.readFile("/input/横向障碍物-宽门-无奖励-1.csv", 3);
+//        generator.genOutput(scene);
+//        generator.readFile("/input/横向障碍物-宽门-无奖励-2.csv", 3);
+//        generator.genOutput(scene);
+//        generator.readFile("/input/横向障碍物-宽门-无奖励-3.csv", 3);
+//        generator.genOutput(scene);
+//        setMapA2();
+//        generator.readFile("/input/横向障碍物-宽门-近-无奖励.csv", 3);
+//        generator.genOutput(scene);
+//        setMapA4();
+//        generator.readFile("/input/纵向障碍物-宽门-无奖励_1.csv", 3);
+//        generator.genOutput(scene);
+//        generator.readFile("/input/纵向障碍物-宽门-无奖励_2.csv", 3);
+//        generator.genOutput(scene);
+//        generator.readFile("/input/纵向障碍物-宽门-无奖励_3.csv", 3);
+//        generator.genOutput(scene);
+//        setMapA5();
+//        generator.readFile("/input/横向障碍物-窄门-无奖励-1.csv", 3);
+//        generator.genOutput(scene);
+//        generator.readFile("/input/横向障碍物-窄门-无奖励-2.csv", 3);
+//        generator.genOutput(scene);
+//        generator.readFile("/input/横向障碍物-窄门-无奖励-3.csv", 3);
+//        generator.genOutput(scene);
+//        setMapA6();
+//        generator.readFile("/input/纵向障碍物-窄门-无奖励_1.csv", 3);
+//        generator.genOutput(scene);
+//        generator.readFile("/input/纵向障碍物-窄门-无奖励_2.csv", 3);
+//        generator.genOutput(scene);
+//        generator.readFile("/input/纵向障碍物-窄门-无奖励_3.csv", 3);
+//        generator.genOutput(scene);
+//        generator.toFile("/output/MultiSetzzh.csv", 1);
 
     }
 
