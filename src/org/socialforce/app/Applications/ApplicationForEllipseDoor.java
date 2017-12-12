@@ -26,7 +26,7 @@ import java.util.LinkedList;
  */
 public class ApplicationForEllipseDoor extends SimpleApplication implements Application {
     BaseAgent template;
-    double DoorWidth;
+    double DoorWidth,BlockLength ,BlockDistance;
     int density;
     /**
      * start the application immediately.
@@ -60,6 +60,9 @@ public class ApplicationForEllipseDoor extends SimpleApplication implements Appl
         scenes = new LinkedList<>();
         DoorWidth = 1.0;  //FIXME 门宽
         density = 20;
+        BlockLength = 1.0;       //FIXME 纵向障碍物的长度
+        BlockDistance = 1.0;     //FIXME 横向障碍物距门线的距离
+
         setUpT1Scene5();
         for(Scene scene:scenes){
             scene.setApplication(this);
@@ -77,14 +80,14 @@ public class ApplicationForEllipseDoor extends SimpleApplication implements Appl
         SceneLoader loader = interpreter.setLoader().setModel(new SimpleForceModel());
         SimpleParameterPool parameters = new SimpleParameterPool();
 
-//        parameters.addValuesAsParameter(
-//                new SimpleEntityGenerator()
-//                        .setValue(new Wall(new Box2D(5-0.01,-1.0,0.02,1.0)))
-//                        .setPriority(10)
-//                ,new SimpleEntityGenerator()
-//                        .setValue(new Wall(new Box2D(5-0.5,-1.0,1.0,0.02)))
-//                        .setPriority(10)
-//        );
+        parameters.addValuesAsParameter(
+                new SimpleEntityGenerator()
+                        .setValue(new Wall(new Box2D(5-0.01,(-1)*BlockLength,0.02,BlockLength)))
+                        .setPriority(10)
+                ,new SimpleEntityGenerator()
+                        .setValue(new Wall(new Box2D(5-0.5,(-1)*(BlockDistance+0.02),1.0,0.02)))
+                        .setPriority(10)
+        );
 
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
                 .addValue(new SafetyRegion(new Box2D(1,10,8,1)))
@@ -93,19 +96,16 @@ public class ApplicationForEllipseDoor extends SimpleApplication implements Appl
         );
 
         parameters.addValuesAsParameter(new SimpleEntityGenerator()
-                .setValue(new DoorTurn(new Box2D(5-DoorWidth/2,-0.01,DoorWidth,1.02),new Segment2D(new Point2D(5-DoorWidth/2,-0.01),new Point2D(5+DoorWidth/2,-0.01))))  //FIXME 主动侧身作用区域（出口）的大小
+                .setValue(new DoorTurn(new Box2D(5-DoorWidth/2,-0.01,DoorWidth,0.412),new Segment2D(new Point2D(5-DoorWidth/2,-0.01),new Point2D(5+DoorWidth/2,-0.01))))  //FIXME 主动侧身作用区域（出口）的大小
                 .setPriority(5)
         );
 
         parameters.addValuesAsParameter(
                 new RandomEntityGenerator2D(30,new Box2D(3,-4,4,3))
                         .setValue(template)
-                        .setGaussianParameter(1,0.025)
+                        .setGaussianParameter(1,0.015)
                 //FIXME 行人的总数（修改“26”）
         );
-        /*parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(1,new Box2D(4.3,-3,0.5,2)).setValue(template)
-        );*/
 
         loader.readParameterSet(parameters);
         for (Scene s : loader.readScene()){
@@ -113,15 +113,4 @@ public class ApplicationForEllipseDoor extends SimpleApplication implements Appl
         }
     }
 
-/*    @Override
-    public void manageDrawer(SceneDrawer drawer){
-        drawer.setBackgroundColor(Color.white);
-        EntityDrawerInstaller installer = drawer.getEntityDrawerInstaller();
-        installer.unregister(Agent.class);
-        installer.unregister(InteractiveEntity.class);
-        EntityDrawer agentDrawer = new EntityDrawer(installer.getDevice());
-        agentDrawer.setColor(Color.yellow);
-        installer.registerDrawer(agentDrawer,Agent.class);
-        installer.registerDrawer(new EntityDrawer(installer.getDevice()),InteractiveEntity.class);
-    }*/
 }

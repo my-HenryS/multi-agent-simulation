@@ -32,6 +32,7 @@ public class ApplicationLoader extends LinkedList<Application> implements Collec
         add(new ApplicationForEllipseCross());
         add(new ApplicationForEllipseCrossFlow());
         add(new ApplicationForEllipseDoor());
+        add(new ApplicationForSubway());
         selected = this.getFirst();
     }
 
