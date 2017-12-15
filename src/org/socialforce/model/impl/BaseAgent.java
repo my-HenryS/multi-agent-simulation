@@ -51,6 +51,11 @@ public class BaseAgent extends Entity implements Agent {
         return physicalEntity.getVelocity();
     }
 
+    @Override
+    public Point getPosition() {
+        return physicalEntity.getReferencePoint();
+    }
+
     /**
      * 将实体以一定大小的力推向目标点。
      *

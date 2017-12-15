@@ -3,10 +3,7 @@ import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.impl.GoalDynamicColorMarkDrawer;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.DistancePhysicalEntity;
-import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Point2D;
-import org.socialforce.geom.impl.Velocity2D;
+import org.socialforce.geom.impl.*;
 import org.socialforce.model.Agent;
 import org.socialforce.model.impl.*;
 import org.socialforce.scene.Scene;
@@ -50,21 +47,21 @@ public class ApplicationForCrossFlow extends SimpleApplication {
      */
     @Override
     public void setUpScenes(){
-        template = new Circle2D(new Point2D(0,0),0.486/2);
+        template =new Ellipse2D(0.45/2,0.25/2,new Point2D(0,0),0);  //FIXME 行人的形状切换为椭圆
         SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(-50, -50, 100, 100)),
                 new Wall[]{
                        // new Wall(new Box2D(20,-3,1,15))
-                }).setModel(new NeuralForceModel());
+                }).setModel(new SimpleForceModel());
 
         SimpleParameterPool parameters = new SimpleParameterPool();
 
-        parameters.addValuesAsParameter(new RandomEntityGenerator2D(30,new Box2D(3,1,3,8))
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(10,new Box2D(3,1,3,8))
                 .setValue(new BaseAgent(template, new Velocity2D(1,0)))
                                         ,new RandomEntityGenerator2D(1,new Box2D(3,1,5,8))
                 .setValue(new BaseAgent(template, new Velocity2D(1,0)))
         );
 
-        parameters.addValuesAsParameter(new RandomEntityGenerator2D(20,new Box2D(33,1,3,8))
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(10,new Box2D(33,1,3,8))
                 .setValue(new BaseAgent(template, new Velocity2D(-1,0)))
         );
 

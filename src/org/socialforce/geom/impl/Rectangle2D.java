@@ -11,14 +11,14 @@ import org.socialforce.geom.*;
  */
 public class Rectangle2D extends Shape2D implements PhysicalEntity {
     protected Point2D center;
-    protected double length,weidth,angle;
+    protected double length, width,angle;
 
     public Rectangle2D(){}
 
-    public Rectangle2D(Point2D center,double length,double weidth,double angle){
+    public Rectangle2D(Point2D center, double length, double width, double angle){
         this.center = center;
         this.length = length;
-        this.weidth = weidth;
+        this.width = width;
         this.angle = angle;
     }
 
@@ -94,10 +94,10 @@ public class Rectangle2D extends Shape2D implements PhysicalEntity {
         Point2D point1,point2,point3,point4;
         Vector distance = new Vector2D(0,0);
         double distanceN = Double.POSITIVE_INFINITY, temp;
-        point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-        point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-        point3 = new Point2D(center.getX()+length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
-        point4 = new Point2D(center.getX()-length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
+        point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        point3 = new Point2D(center.getX()+length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
+        point4 = new Point2D(center.getX()-length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
         bounds = new Segment2D[]{new Segment2D(point1,point2),new Segment2D(point2,point3),new Segment2D(point3,point4),new Segment2D(point4,point1)};
         for (int i = 0;i < bounds.length;i++){
             temp = bounds[i].getDistance(point);
@@ -115,10 +115,10 @@ public class Rectangle2D extends Shape2D implements PhysicalEntity {
         Point2D point1,point2,point3,point4;
         Vector distance = new Vector2D(0,0);
         double distanceN = Double.POSITIVE_INFINITY, temp;
-        point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-        point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-        point3 = new Point2D(center.getX()+length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
-        point4 = new Point2D(center.getX()-length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
+        point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        point3 = new Point2D(center.getX()+length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
+        point4 = new Point2D(center.getX()-length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
         bounds = new Segment2D[]{new Segment2D(point1,point2),new Segment2D(point2,point3),new Segment2D(point3,point4),new Segment2D(point4,point1)};
         for (int i = 0;i < bounds.length;i++){
             temp = bounds[i].getDistance(point);
@@ -151,8 +151,8 @@ public class Rectangle2D extends Shape2D implements PhysicalEntity {
     @Override
     public Box getBounds() {
         Point2D point1,point2;
-        point1 = new Point2D(center.getX()-Math.abs(length*Math.cos(angle)/2)-Math.abs(weidth*Math.sin(angle)/2),center.getY()-Math.abs(length*Math.sin(angle)/2)-Math.abs(weidth*Math.cos(angle)/2));
-        point2 = new Point2D(center.getX()+Math.abs(length*Math.cos(angle)/2)+Math.abs(weidth*Math.sin(angle)/2),center.getY()+Math.abs(length*Math.sin(angle)/2)+Math.abs(weidth*Math.cos(angle)/2));
+        point1 = new Point2D(center.getX()-Math.abs(length*Math.cos(angle)/2)-Math.abs(width *Math.sin(angle)/2),center.getY()-Math.abs(length*Math.sin(angle)/2)-Math.abs(width *Math.cos(angle)/2));
+        point2 = new Point2D(center.getX()+Math.abs(length*Math.cos(angle)/2)+Math.abs(width *Math.sin(angle)/2),center.getY()+Math.abs(length*Math.sin(angle)/2)+Math.abs(width *Math.cos(angle)/2));
         return new Box2D(point1,point2);
     }
 
@@ -167,10 +167,10 @@ public class Rectangle2D extends Shape2D implements PhysicalEntity {
         Segment2D[] bounds;
         Point2D point1,point2,point3,point4;
         if (!getBounds().hits(hitbox)){return false;}
-        else point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-        point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-        point3 = new Point2D(center.getX()+length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
-        point4 = new Point2D(center.getX()-length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
+        else point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        point3 = new Point2D(center.getX()+length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
+        point4 = new Point2D(center.getX()-length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
         bounds = new Segment2D[]{new Segment2D(point1,point2),new Segment2D(point2,point3),new Segment2D(point3,point4),new Segment2D(point4,point1)};
         for (int i = 0;i < bounds.length;i++){
             if (bounds[i].hits(hitbox)){
@@ -200,7 +200,7 @@ public class Rectangle2D extends Shape2D implements PhysicalEntity {
      */
     @Override
     public Rectangle2D clone() {
-        return new Rectangle2D((Point2D) center.clone(),length,weidth,angle);
+        return new Rectangle2D((Point2D) center.clone(),length, width,angle);
     }
 
     /**
@@ -224,7 +224,7 @@ public class Rectangle2D extends Shape2D implements PhysicalEntity {
     }
 
     public double[] getScale(){
-        return new double[]{length,weidth};
+        return new double[]{length, width};
     }
 
 
@@ -244,17 +244,22 @@ public class Rectangle2D extends Shape2D implements PhysicalEntity {
 
     public Point[] extremePoints(){
         Point[] extremePoints = new Point[4];
-        extremePoints[0] = new Point2D(center.getX()-length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-        extremePoints[1] = new Point2D(center.getX()+length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-        extremePoints[2] = new Point2D(center.getX()+length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
-        extremePoints[3] = new Point2D(center.getX()-length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
+        extremePoints[0] = new Point2D(center.getX()-length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        extremePoints[1] = new Point2D(center.getX()+length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        extremePoints[2] = new Point2D(center.getX()+length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
+        extremePoints[3] = new Point2D(center.getX()-length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
         return extremePoints;
     }
 
     @Override
     public PhysicalEntity expandBy(double extent) {
         length += 2*extent;
-        weidth += 2*extent;
+        width += 2*extent;
         return this;
+    }
+
+    @Override
+    public double getArea() {
+        return length* width;
     }
 }

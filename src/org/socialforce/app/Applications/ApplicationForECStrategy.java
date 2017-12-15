@@ -68,7 +68,7 @@ public class ApplicationForECStrategy extends SimpleApplication implements Appli
 
     private DynamicStrategy Strategy(Scene currentScene) {
         PathFinder pathFinder = new AStarPathFinder(currentScene, template);
-        return new ECStrategy(this.currentScene, pathFinder);
+        return new DynamicLifeBeltStrategy(this.currentScene, pathFinder);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class ApplicationForECStrategy extends SimpleApplication implements Appli
         loader.setModel(new SimpleForceModel());
         SimpleParameterPool parameters = new SimpleParameterPool();
 
-        parameters.addValuesAsParameter(new RandomEntityGenerator2D(405,new Box2D(4,4 ,27.5,15.5))
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(205,new Box2D(4,4 ,27.5,15.5))
                 .setValue(new BaseAgent(template, new Velocity2D(0,0)))
         );
 

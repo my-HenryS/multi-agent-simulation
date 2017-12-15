@@ -107,6 +107,8 @@ public interface PhysicalEntity extends Serializable, Cloneable, DimensionEntity
     void setMass(double mass);
 
     public Velocity getAcceleration();
+
+    double getArea();
 }
 
 

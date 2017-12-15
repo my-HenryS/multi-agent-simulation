@@ -260,4 +260,9 @@ public class Polygon2D extends Shape2D implements PhysicalEntity {
         }
         return this;
     }
+
+    @Override
+    public double getArea() {
+        return 0;   //TODO compute area
+    }
 }

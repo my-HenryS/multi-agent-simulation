@@ -25,7 +25,7 @@ import java.util.stream.StreamSupport;
 public class SimulationPanelMain implements ApplicationListener {
     private boolean paused = false;
     private boolean running = false;
-    int maxDelay = 20;
+    int maxDelay = 40;
     public static JFrame frame;
 
 
@@ -198,8 +198,8 @@ public class SimulationPanelMain implements ApplicationListener {
 
     public static void main(String[] args) {
         try {
-            BeautyEyeLNFHelper.launchBeautyEyeLNF();
-            UIManager.put("RootPane.setupButtonVisible",false);
+            //BeautyEyeLNFHelper.launchBeautyEyeLNF();
+            //UIManager.put("RootPane.setupButtonVisible",false);
         } catch (Exception e) {
         }
         try {

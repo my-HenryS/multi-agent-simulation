@@ -22,7 +22,7 @@ public class NeuralForceModel implements Model{
     String parentPath = System.getProperty("user.dir")+"/resource/";
     String locationToSave = "neuralNet/robust.net";
 
-    double timePerStep = 3.0/30;
+    double timePerStep = 2.0/30;
     double min_div = 0.5;
     double p = 0.3;
     MultiLayerNetwork model = null;
@@ -80,9 +80,6 @@ public class NeuralForceModel implements Model{
             Velocity2D newV = new Velocity2D(output.getDouble(0),output.getDouble(1));
             if(rotated) newV = new Velocity2D(newV.getX(),-newV.getY());
             newV.rotate(-angle);
-            if(newV.length() > 3){
-                newV = newV;
-            }
             ((BaseAgent)agent).setVelocity(newV);
             Force force = new Force2D(newV.getX(),newV.getY());
             force.scale(agent.getMass());
