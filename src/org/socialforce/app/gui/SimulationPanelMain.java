@@ -198,8 +198,8 @@ public class SimulationPanelMain implements ApplicationListener {
 
     public static void main(String[] args) {
         try {
-            //BeautyEyeLNFHelper.launchBeautyEyeLNF();
-            //UIManager.put("RootPane.setupButtonVisible",false);
+            BeautyEyeLNFHelper.launchBeautyEyeLNF();
+            UIManager.put("RootPane.setupButtonVisible",false);
         } catch (Exception e) {
         }
         try {

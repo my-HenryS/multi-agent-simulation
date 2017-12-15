@@ -83,8 +83,9 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
  //       setUpT1Scene3();
  //       setUpT1Scene4();
         //setUpT1Scene5();
-        setMap();
-        setUpA4Map();
+        //setMap();
+       // setUpA4Map();
+        setMaptest();
         //setUpT1Scene5();
         //setUpT1Scene6();
         //setUpT2Scene();
@@ -397,6 +398,33 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
         }
     }
 
+
+    public void setMaptest(){
+        SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(0, 0, 10.78, 10.78)),
+                new Wall[]{
+                        new Wall(new Box2D(0,8.5,9.91,0.53)), //上
+                        new Wall(new Box2D(0,0.47,9.91,0.53)), //下
+                        new Wall(new Box2D(0,1,0.53,7.5)), //左
+                        //以上固定不动
+                        new Wall(new Box2D(9.38,4.62,0.53,3.88)),//右上
+                        new Wall(new Box2D(9.38,1,0.53,2.92)),//右下
+                        //上边两个是门
+                        new Wall(new Box2D(4.89,4.11,0.61,0.61)),//纵向障碍物
+                        new Wall(new Box2D(6.41,4.11,0.61,0.61)),//纵向障碍物
+                }).setModel(new SimpleForceModel());
+        SimpleParameterPool parameters = new SimpleParameterPool();
+        parameters.addValuesAsParameter(new SimpleEntityGenerator()
+                .setValue(new SafetyRegion(new Box2D(10.63,4.36,0.1,0.1)))  //不动
+        );
+        parameters.addValuesAsParameter(
+                new RandomEntityGenerator2D(26,new Box2D(3.5,3.5,3,4))
+                        .setValue(template)
+        );
+        loader.readParameterSet(parameters);
+        for (Scene s : loader.readScene()){
+            scenes.add(s);
+        }
+    }
 
     /**
      * 螺旋形走廊，连续拐角
