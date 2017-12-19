@@ -50,8 +50,17 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
             this.initScene(currentScene);
             while (!toSkip()) {
                 this.stepNext(currentScene);
+                int timeStamp = 0;
+                if(timeStamp % 100 == 0){
+                    for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
+                        Monitor monitor = (Monitor)iter.next();
+                        double speed = monitor.sayVelocity();
+                        double rho = monitor.sayRho();
+                        System.out.println(speed+"\t"+rho);
+                    }
+                }
             }
-            //csvWriter.writeCSV("output/agent.csv");
+            csvWriter.writeCSV("output/agent.csv");
             if(onStop()) return;
         }
     }
@@ -93,7 +102,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
 
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
                 .addValue(new SafetyRegion(new Box2D(1,10,8,1)))
-                .addValue(new Monitor(new Box2D(0,0,10,1)))
+                .addValue(new Monitor(new Box2D(5-DoorWidth/2,0,DoorWidth,0.4)))
 
         );
 
@@ -106,7 +115,7 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
                 new RandomEntityGenerator2D(50,new Box2D(0,-10,10,5))
                         .setValue(template)
                         .setGaussianParameter(1,0.025)
-                //FIXME 行人的总数（修改“26”）
+                        .setCommonName("Agent")  //行人标号
         );
         /*parameters.addValuesAsParameter(
                 new RandomEntityGenerator2D(1,new Box2D(4.3,-3,0.5,2)).setValue(template)

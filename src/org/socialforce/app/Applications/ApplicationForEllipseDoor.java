@@ -5,6 +5,7 @@ import org.socialforce.app.Interpreter;
 import org.socialforce.app.impl.AgentStepCSVWriter;
 import org.socialforce.app.impl.SimpleInterpreter;
 import org.socialforce.geom.impl.*;
+import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.*;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
@@ -44,8 +45,17 @@ public class ApplicationForEllipseDoor extends SimpleApplication implements Appl
             this.initScene(currentScene);
             while (!toSkip()) {
                 this.stepNext(currentScene);
+                int timeStamp = 0;
+                if(timeStamp % 100 == 0){
+                    for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
+                        Monitor monitor = (Monitor)iter.next();
+                        double speed = monitor.sayVelocity();
+                        double rho = monitor.sayRho();
+                        System.out.println(speed+"\t"+rho);
+                    }
+                }
             }
-            //csvWriter.writeCSV("output/agent.csv");
+            csvWriter.writeCSV("output/agent.csv");
             if(onStop()) return;
         }
     }
@@ -60,8 +70,8 @@ public class ApplicationForEllipseDoor extends SimpleApplication implements Appl
         scenes = new LinkedList<>();
         DoorWidth = 1.0;  //FIXME 门宽
         density = 20;
-        BlockLength = 1.0;       //FIXME 纵向障碍物的长度
-        BlockDistance = 1.0;     //FIXME 横向障碍物距门线的距离
+        BlockLength = 2.0;       //FIXME 纵向障碍物的长度
+        BlockDistance = 1.5;     //FIXME 横向障碍物距门线的距离
 
         setUpT1Scene5();
         for(Scene scene:scenes){
@@ -80,19 +90,18 @@ public class ApplicationForEllipseDoor extends SimpleApplication implements Appl
         SceneLoader loader = interpreter.setLoader().setModel(new SimpleForceModel());
         SimpleParameterPool parameters = new SimpleParameterPool();
 
-        parameters.addValuesAsParameter(
-                new SimpleEntityGenerator()
-                        .setValue(new Wall(new Box2D(5-0.01,(-1)*BlockLength,0.02,BlockLength)))
-                        .setPriority(10)
-                ,new SimpleEntityGenerator()
-                        .setValue(new Wall(new Box2D(5-0.5,(-1)*(BlockDistance+0.02),1.0,0.02)))
-                        .setPriority(10)
-        );
+//        parameters.addValuesAsParameter(
+//                new SimpleEntityGenerator()
+//                        .setValue(new Wall(new Box2D(5-0.01,(-1)*BlockLength,0.02,BlockLength)))
+//                        .setPriority(10)
+//                ,new SimpleEntityGenerator()
+//                        .setValue(new Wall(new Box2D(5-0.5,(-1)*(BlockDistance+0.02),1.0,0.02)))
+//                        .setPriority(10)
+//        );
 
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
                 .addValue(new SafetyRegion(new Box2D(1,10,8,1)))
-                .addValue(new Monitor(new Box2D(0,0,10,1)))
-
+                .addValue(new Monitor(new Box2D(5-DoorWidth/2,0,DoorWidth,0.4)))
         );
 
         parameters.addValuesAsParameter(new SimpleEntityGenerator()
@@ -104,6 +113,7 @@ public class ApplicationForEllipseDoor extends SimpleApplication implements Appl
                 new RandomEntityGenerator2D(30,new Box2D(3,-4,4,3))
                         .setValue(template)
                         .setGaussianParameter(1,0.015)
+                        .setCommonName("Agent")  //行人标号
                 //FIXME 行人的总数（修改“26”）
         );
 

@@ -61,7 +61,8 @@ public class ApplicationForSubway extends SimpleApplication implements Applicati
                 new Wall[]{
                         new Wall(new Box2D(17.6,9.4,3.4,0.4)),
                         new Wall(new Box2D(17.6,2.0,3.4,0.4)),
-                        new Wall(new Box2D(17.6,2.4,0.4,7.0))
+                        new Wall(new Box2D(17.6,2.4,0.4,7.0)),
+                        //new Wall(new Box2D(20.6,2.4,0.4,7))
                 }).setModel(new SimpleForceModel());
 
         SimpleParameterPool parameters = new SimpleParameterPool();
@@ -76,41 +77,42 @@ public class ApplicationForSubway extends SimpleApplication implements Applicati
                 .setPriority(5)
         );
 
-        parameters.addValuesAsParameter(new RandomEntityGenerator2D(4,new Box2D(14.0,3.3,1.6,0.6))
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(4,new Box2D(16.0,3.3,0.8,0.5))
                 .setValue(new BaseAgent(template, new Velocity2D(1.5,0)))
                 .setGaussianParameter(1,0.025)
         );
 
-        parameters.addValuesAsParameter(new RandomEntityGenerator2D(4,new Box2D(14.0,5.5,1.6,0.6))
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(4,new Box2D(16.0,5.5,0.8,0.5))
                 .setValue(new BaseAgent(template, new Velocity2D(1.5,0)))
                 .setGaussianParameter(1,0.025)
         );
 
-        parameters.addValuesAsParameter(new RandomEntityGenerator2D(3,new Box2D(14.0,6.0,1.6,0.6))
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(3,new Box2D(16.0,6.0,0.8,0.5))
                 .setValue(new BaseAgent(template, new Velocity2D(1.5,0)))
                 .setGaussianParameter(1,0.025)
         );
 
-        parameters.addValuesAsParameter(new RandomEntityGenerator2D(4,new Box2D(14.0,7.9,1.6,0.6))
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(4,new Box2D(16.0,7.9,0.8,0.5))
                 .setValue(new BaseAgent(template, new Velocity2D(1.5,0)))
                 .setGaussianParameter(1,0.025)
         );
 
 
-        parameters.addValuesAsParameter(new RandomEntityGenerator2D(7,new Box2D(18.0,3.5,2.0,2.0))
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(7,new Box2D(18.0,3.9,1.0,1.3))
                 .setValue(new BaseAgent(template, new Velocity2D(-1.5,0)))
                 .setGaussianParameter(1,0.025)
         );
 
-        parameters.addValuesAsParameter(new RandomEntityGenerator2D(8,new Box2D(18.0,6.2,2.0,2.0))
+        parameters.addValuesAsParameter(new RandomEntityGenerator2D(8,new Box2D(18.0,6.6,1.0,1.3))
                 .setValue(new BaseAgent(template, new Velocity2D(-1.5,0)))
                 .setGaussianParameter(1,0.025)
         );
 
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
-                .addValue(new SafetyRegion(new Box2D(20.6,2.4,0.4,7)))
-                .addValue(new SafetyRegion(new Box2D(10,2.4,0.4,7)))
+                .addValue(new SafetyRegion(new Box2D(34.6,2.4,0.4,7)))
+                .addValue(new SafetyRegion(new Box2D(0,2.4,0.4,7)))
         );
+
 
         loader.readParameterSet(parameters);
         scenes = loader.readScene();
@@ -123,7 +125,7 @@ public class ApplicationForSubway extends SimpleApplication implements Applicati
     public void manageDrawer(SceneDrawer drawer){
         Drawer agentDrawer = drawer.getEntityDrawerInstaller().getSupport(Agent.class).getDrawer();
         if(agentDrawer instanceof GoalDynamicColorMarkDrawer) {
-            ((GoalDynamicColorMarkDrawer) agentDrawer).addSupport(new Point2D(8.2,5.9), Color.green);  //SafetyRegion的中心点
+            ((GoalDynamicColorMarkDrawer) agentDrawer).addSupport(new Point2D(0.2,5.9), Color.green);  //SafetyRegion的中心点
         }
     }
 

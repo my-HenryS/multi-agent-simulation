@@ -1,6 +1,7 @@
 package org.socialforce.app.impl;
 
 import com.opencsv.CSVWriter;
+import org.socialforce.geom.impl.Ellipse2D;
 import org.socialforce.model.Agent;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneListener;
@@ -32,7 +33,8 @@ public class AgentStepCSVWriter implements SceneListener {
                 agentStepMap.put(agent.getName(), newList);
             }
             else{
-                agentStepMap.get(agent.getName()).add(agent.getPhysicalEntity().getReferencePoint().toString());
+                //agentStepMap.get(agent.getName()).add(agent.getPhysicalEntity().getReferencePoint().toString());          //输出位置
+                agentStepMap.get(agent.getName()).add(String.valueOf(((Ellipse2D)agent.getPhysicalEntity()).getAngle()));   //输出角度
             }
         }
     }
