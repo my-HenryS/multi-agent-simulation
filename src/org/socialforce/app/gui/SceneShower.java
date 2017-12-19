@@ -8,10 +8,12 @@ import org.socialforce.drawer.DrawerInstaller;
 import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.drawer.impl.SceneDrawerInstaller;
 import org.socialforce.geom.Box;
+import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Tuple2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.SafetyRegion;
+import org.socialforce.model.impl.Wall;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneListener;
 import org.tc33.jheatchart.HeatChart;
@@ -52,10 +54,10 @@ public class SceneShower implements SceneListener {
 
     BufferedImage image = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_ARGB);
 
-    private DrawerInstaller drawerInstaller = new SceneDrawerInstaller((Graphics2D) image.getGraphics(), image.getWidth(), image.getHeight());
+        private DrawerInstaller drawerInstaller = new SceneDrawerInstaller((Graphics2D) image.getGraphics(), image.getWidth(), image.getHeight());
 
-    private Timer timer = new Timer(16, new ActionListener() {
-        @Override
+        private Timer timer = new Timer(16, new ActionListener() {
+            @Override
         public void actionPerformed(ActionEvent e) {
             if(visibleCheckBox.isSelected() && scene.getDrawer() != null && scene.getAllAgents().size() != 0) {
                 if(tabbedPane.getSelectedIndex() == 0){
@@ -177,6 +179,7 @@ public class SceneShower implements SceneListener {
     ExitCapacityListener ecListener;
 
     public void setScene(Scene scene) {
+
         this.scene = scene;
         scene.addSceneListener(this);
         // FIXME: 2017/1/2 change this image to dynamic-sized(with components.) or using swing's own double-buffered system.

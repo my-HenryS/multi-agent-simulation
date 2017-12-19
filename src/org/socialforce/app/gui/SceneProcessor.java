@@ -1,10 +1,22 @@
 package org.socialforce.app.gui;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.socialforce.drawer.DrawerInstaller;
 import org.socialforce.drawer.impl.SceneDrawer;
+import org.socialforce.drawer.impl.SceneDrawerInstaller;
 import org.socialforce.geom.*;
+import org.socialforce.geom.impl.Box2D;
 import org.socialforce.geom.impl.Point2D;
+import org.socialforce.geom.impl.Tuple2D;
 import org.socialforce.model.Agent;
+import org.socialforce.model.InteractiveEntity;
+import org.socialforce.model.impl.Wall;
 import org.socialforce.scene.Scene;
+import org.socialforce.scene.SceneListener;
+import org.springframework.remoting.support.DefaultRemoteInvocationExecutor;
 
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
@@ -12,11 +24,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.NoSuchElementException;
+import java.util.concurrent.LinkedBlockingQueue;
+
 
 /**
- * Created by Ledenel on 2016/10/23.
+ * Coped and modified by RespawningChar on 2017/11/10.
  */
-public class SceneBoard extends JPanel/* implements Scrollable*/ {
+
+public class SceneProcessor extends JPanel/* implements Scrollable*/ {
 
 
     private final MouseWheelMoved mouseWheelMoved;
@@ -33,6 +48,10 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
         return scene;
     }
 
+    /**
+     * Iiitial sceneBoard
+     * @param scene
+     */
     public void setScene(Scene scene) {
         this.scene = scene;
         SceneDrawer drawer = (SceneDrawer) scene.getDrawer();
@@ -57,7 +76,7 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
      * Creates a new <code>JPanel</code> with a double buffer
      * and a flow layout.
      */
-    public SceneBoard() {
+    public SceneProcessor() {
         //this.setPreferredSize(new Dimension(800,800));
         resizeListener = new ResizeListener();
         this.setBackground(Color.white);
@@ -67,6 +86,10 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
 
     Scene scene;
 
+    BufferedImage image = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_ARGB);
+
+    private DrawerInstaller drawerInstaller = new SceneDrawerInstaller((Graphics2D) image.getGraphics(), image.getWidth(), image.getHeight());
+
     public BufferedImage getImage() {
         return image;
     }
@@ -75,12 +98,51 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
         this.image = image;
     }
 
-    BufferedImage image;
+    public DrawerInstaller getDrawerInstaller() {
+        return drawerInstaller;
+    }
+
+    private abstract class DynamicsListener implements SceneListener {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        LinkedBlockingQueue<Tuple2D<Double, String>> series = new LinkedBlockingQueue<>();   //储存新进入的数据缓存
+        String [] labels;   //所有序列的labels
+        Integer timeCount = 0, dataCount = 0;  //时间数，数据数
+        int interval = 10;  //间隔0.08秒采样
+        int maxDataPerSeries = 100;  //每序列最多数据 （8秒）
+        String title = "", xAxis = "", yAxis = "";
+
+        //Consumer
+        public Image getImage(){
+            int temp = 0;
+            for(Tuple2D<Double, String> data: series){
+                dataset.addValue(data.getFirst(), data.getSecond(), dataCount);
+                temp++;
+                if(temp % labels.length == 0){
+                    temp = 0;
+                    dataCount++;
+                }
+            }
+            series.clear();
+            while(dataset.getColumnCount() >= maxDataPerSeries){
+                dataset.removeColumn(0);    //当超过8秒的数据时，删除前面的数据
+            }
+            JFreeChart chart = ChartFactory.createLineChart(title, xAxis, yAxis, dataset,
+                    PlotOrientation.VERTICAL,
+                    true, true, true
+            );
+            chart.getCategoryPlot().getDomainAxis().setTickLabelsVisible(false);
+            chart.getCategoryPlot().getDomainAxis().setTickMarksVisible(false);
+            //chart.getCategoryPlot().getRangeAxis().setRange(0,); 设定y轴坐标上下限
+            Image image = chart.createBufferedImage(660,500);
+            return image;
+        }
+
+    }
 
     public void refresh(Graphics g) {
         if (image != null) {
             //synchronized (image) {
-                g.drawImage(image, 0, 0, null);
+            g.drawImage(image, 0, 0, null);
             //}
         }
     }
@@ -118,7 +180,10 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
      */
 
 
-
+    /**
+     * ???????
+     * @param g
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -289,8 +354,8 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
 
     protected void syncToDrawer(SceneDrawer sc) {
         synchronized (sc) {
-            sc.setCtrlHeight(SceneBoard.this.getHeight());
-            sc.setCtrlWidth(SceneBoard.this.getWidth());
+            sc.setCtrlHeight(SceneProcessor.this.getHeight());
+            sc.setCtrlWidth(SceneProcessor.this.getWidth());
         }
     }
 
@@ -312,22 +377,20 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
         return preferredSize;
     }
 
-
+    /**
+     * Events executed when mouse used.
+     */
     private class DragMouseAdapter extends MouseAdapter {
         boolean dragging = false;
-
+        int brush = 0;
         @Override
         public void mouseClicked(MouseEvent e){
-            SceneDrawer sc = (SceneDrawer) SceneBoard.this.scene.getDrawer();
+            SceneDrawer sc = (SceneDrawer) SceneProcessor.this.scene.getDrawer();
             double[] point = sc.screenToScene(e.getX(), e.getY());
-            try {
-                Agent select = scene.getAllAgents().stream().filter(agent -> agent.getPhysicalEntity().contains(new Point2D(point[0], point[1]))).findFirst().get();
-                textArea.append(select.toString() + "\n");
-                textArea.append("  "+select.getVelocity().toString() + "\n");
-                textArea.append("  加"+select.getAcceleration().toString() + "\n");
-                textArea.append("  期望位置"+select.getPath().nextStep(select.getPhysicalEntity().getReferencePoint())+ "\n");
-            } catch (NoSuchElementException ex) {
-
+            Wall wall=new Wall(new Box2D(point[0],point[1],3,3));
+            scene.addEntity(wall);
+            switch (brush)
+            {
             }
         }
 
@@ -339,11 +402,14 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
         @Override
         public void mousePressed(MouseEvent e) {
             super.mousePressed(e);
-            SceneDrawer sc = (SceneDrawer) SceneBoard.this.scene.getDrawer();
+            SceneDrawer sc = (SceneDrawer) SceneProcessor.this.scene.getDrawer();
+            double[] point = sc.screenToScene(e.getX(), e.getY());
+            Wall wall=new Wall(new Box2D(point[0],point[1],5,3));
+            scene.addEntity(wall);
+            sc.draw(scene);
             lastX = e.getX() - sc.getOffsetX();
             lastY = e.getY() - sc.getOffsetY();
             dragging = true;
-
         }
 
 
@@ -372,9 +438,17 @@ public class SceneBoard extends JPanel/* implements Scrollable*/ {
         @Override
         public void mouseDragged(MouseEvent e) {
             super.mouseDragged(e);
-            SceneDrawer sc = (SceneDrawer) SceneBoard.this.scene.getDrawer();
+            SceneDrawer sc = (SceneDrawer) SceneProcessor.this.scene.getDrawer();
+            double[] point = sc.screenToScene(e.getX(), e.getY());
+            Wall wall=new Wall(new Box2D(point[0],point[1],3,5));
+            scene.addEntity(wall);
             sc.setOffsetX(e.getX() - lastX);
             sc.setOffsetY(e.getY() - lastY);
+           // InteractiveEntity entity = scene.getStaticEntities().selectTop(new Point2D(e.getX(), e.getY()));
+           // entity.placeOn(new Point2D(e.getX(), e.getY()));
+           // sc.draw(scene);
         }
     }
+
+
 }
