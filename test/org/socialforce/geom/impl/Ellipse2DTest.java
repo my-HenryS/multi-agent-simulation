@@ -2,6 +2,7 @@ package org.socialforce.geom.impl;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.socialforce.geom.DistancePhysicalEntity;
 
 import java.util.Arrays;
 
@@ -29,6 +30,13 @@ public class Ellipse2DTest {
     @Test
     public void getReferencePoint() throws Exception {
         assertEquals(center,ellipseTest.getReferencePoint());
+    }
+
+    @Test
+    public void clones() throws Exception {
+        Ellipse2D ShapeA = new Ellipse2D(0.5,0.3,new Point2D(0,0),0);
+        DistancePhysicalEntity ShapeB = ShapeA.clone();
+        assertEquals(ShapeA.getReferencePoint(),ShapeB.getReferencePoint());
     }
 
     @Test
