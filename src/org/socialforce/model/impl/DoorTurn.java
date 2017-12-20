@@ -44,7 +44,8 @@ public class DoorTurn extends Exit implements Influential {
 
     @Override
     public PhysicalEntity getView() {
-        return getDoorZone();
+        return doorLine;
+        //return getDoorZone();
     }
 
     @Override
