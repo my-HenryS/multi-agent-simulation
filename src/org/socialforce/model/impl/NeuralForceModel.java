@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class NeuralForceModel implements Model{
     String parentPath = System.getProperty("user.dir")+"/resource/";
-    String locationToSave = "neuralNet/robust.net";
+    String locationToSave = "neuralNet/慢速成功.net";
 
     double timePerStep = 2.0/30;
     double min_div = 0.5;
@@ -140,9 +140,10 @@ public class NeuralForceModel implements Model{
                 if(i >= 1) i-=2;
             }
         }
-
+        int neigernumber=positions.size()<5?positions.size():5;
         LinkedList<Vector2D> result = new LinkedList<>();
-        for(int i = 0; i < 5; i++){
+
+        for(int i = 0; i < neigernumber; i++){
             Vector2D delpoint = positions.get(i);
             if(delpoint.getX()>=0) {
                 if(delpoint.getX()>3){
@@ -173,6 +174,12 @@ public class NeuralForceModel implements Model{
             }
             result.add(delpoint);
             result.add((delpoint.getX()==0)||(delpoint.getY()==0)?new Vector2D(0,0):velocities.get(i));
+        }
+        if(neigernumber<5){
+            for(int i=0;i<5-neigernumber;i++){
+                result.add(new Vector2D(0,0));
+                result.add(new Vector2D(0,0));
+            }
         }
         return result;
 

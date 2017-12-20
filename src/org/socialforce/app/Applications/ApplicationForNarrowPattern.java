@@ -49,7 +49,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
             int timeStamp = 0;
             while (!toSkip()) {
                 this.stepNext(currentScene);
-                if(timeStamp % 3 == 0){
+                if(timeStamp % 10 == 0){ //社会力100 神经网络3 真实50帧10 30帧6
                     for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                         Monitor monitor = (Monitor)iter.next();
                         double speed = monitor.sayVelocity();
@@ -59,14 +59,14 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
                 }
                 timeStamp++;
             }
-            csvWriter.writeCSV("output/agent.csv");
+            csvWriter.writeCSV("output/社会力轨迹.csv");
             if(onStop()) return;
         }
     }
 
     @Override
     public boolean toSkip(){
-        return Skip || currentScene.getAllAgents().size() < 5;
+        return Skip;
     }
 
     /**
@@ -83,8 +83,8 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
  //       setUpT1Scene3();
  //       setUpT1Scene4();
         //setUpT1Scene5();
-        //setMap();
-       // setUpA4Map();
+      //  setMap();
+      //  setUpA4Map();
         setMaptest();
         //setUpT1Scene5();
         //setUpT1Scene6();
@@ -237,7 +237,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
                         //上边两个是门
                         new Wall(new Box2D(9.33,6.32,0.58,1.18)),//横向障碍物
 
-                }).setModel(new SimpleForceModel());
+                }).setModel(new NeuralForceModel());
         SimpleParameterPool parameters = new SimpleParameterPool();
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
                 .addValue(new SafetyRegion(new Box2D(14.05,3.81,1,9)))  //不动
@@ -380,7 +380,8 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
                         //上边两个是门
                         new Wall(new Box2D(9.33,6.32,0.58,1.18)),//横向障碍物
 
-                }).setModel(new CSVReaderModel("input/横向障碍物-宽门-无奖励-1.csv", 1.0/30));
+                }).setModel(new NeuralForceModel());
+                //setModel(new CSVReaderModel("input/横向障碍物-宽门-无奖励-1.csv", 1.0/30));
         SimpleParameterPool parameters = new SimpleParameterPool();
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
                 .addValue(new SafetyRegion(new Box2D(14.05,3.81,1,9)))  //不动
@@ -411,11 +412,14 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
                         //上边两个是门
                         new Wall(new Box2D(4.89,4.11,0.61,0.61)),//纵向障碍物
                         new Wall(new Box2D(6.41,4.11,0.61,0.61)),//纵向障碍物
-                }).setModel(new NeuralForceModel());
+                }).setModel(new CSVReaderModel("input/test/纵向-窄门-慢.csv",1.0/50));
+                //setModel(new SimpleForceModel());
+                //setModel(new CSVReaderModel("input/test/纵向-窄门-慢.csv",1.0/50));
+                //setModel(new NeuralForceModel()); 
         SimpleParameterPool parameters = new SimpleParameterPool();
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
-                .addValue(new SafetyRegion(new Box2D(10.63,0.36,0.1,10)))  //不动
-                .addValue(new Monitor(new Box2D(8.38,3.92,1.53,0.7)))
+                .addValue(new SafetyRegion(new Box2D(10.77,4.2,0.5,0.5)))  //不动
+                .addValue(new Monitor(new Box2D(8.3,3.92,1.53,0.7)))
         );
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
                 .addValue(new BaseAgent(new Circle2D(new Point2D(0.769,1.338), 0.486/2), new Velocity2D(0,0)))

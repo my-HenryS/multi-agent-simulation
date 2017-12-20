@@ -49,7 +49,7 @@ public class CSVReaderModel implements Model {
                 if(line[i] != null && line[i].length() > 0){
                     String templine = line[i].substring(0,line[i].length());
                     axis = templine.split(",");
-                    tempR.add(new Point2D(Double.parseDouble(axis[0]),Double.parseDouble(axis[1])));
+                    tempR.add(new Point2D(Double.parseDouble(axis[0]),0.92*Double.parseDouble(axis[1]))); //12332456
                 }
                 else{
                     tempR.add(null);

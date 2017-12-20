@@ -252,6 +252,7 @@ public class SocialForceGenerator extends WallForceGenerator{
         }
     }
 
+
     public void genOutput_old(Scene scene) {
         setMap(scene);
         genW();
