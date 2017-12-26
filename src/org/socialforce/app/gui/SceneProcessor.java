@@ -52,9 +52,13 @@ public class SceneProcessor extends JPanel/* implements Scrollable*/ {
      * Iiitial sceneBoard
      * @param scene
      */
+    public SceneListener sceneListener;
     public void setScene(Scene scene) {
         this.scene = scene;
-        SceneDrawer drawer = (SceneDrawer) scene.getDrawer();
+        //FIXME:Need to add operations to scene to insure the drawer it gets is not null
+        this.scene.addSceneListener(this.sceneListener);
+        drawerInstaller.addDrawerSupport(this.scene);
+        SceneDrawer drawer = (SceneDrawer) scene.getDrawer();// what you get is null @2017/12/26
         syncToDrawer(drawer);
         drawer.setScaleRate(drawer.calcScaleRate(scene.getBounds()));
         this.removeComponentListener(resizeListener);
