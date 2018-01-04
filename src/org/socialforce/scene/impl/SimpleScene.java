@@ -305,6 +305,16 @@ public class SimpleScene implements Scene {
     Model model;
     public Scene setModel(Model model){
         this.model = model;
+        if(allAgents != null) {
+            for (Agent ag : allAgents) {
+                ag.setModel(model);
+            }
+        }
+        if(statics != null) {
+            for (InteractiveEntity e : statics) {
+                e.setModel(model);
+            }
+        }
         return this;
     }
 

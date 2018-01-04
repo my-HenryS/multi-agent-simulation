@@ -70,6 +70,7 @@ public interface Scene extends Drawable {
      */
     default boolean addEntity(InteractiveEntity entity) {
         boolean flag = addSceneListener(entity);
+        entity.setModel(getModel());
         if(!flag) return false;
         if(entity instanceof Agent)
             return getAllAgents().add((Agent) entity);

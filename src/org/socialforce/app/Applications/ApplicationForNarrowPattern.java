@@ -381,7 +381,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
                         new Wall(new Box2D(9.33,6.32,0.58,1.18)),//横向障碍物
 
                 }).setModel(new NeuralForceModel());
-                //setModel(new CSVReaderModel("input/横向障碍物-宽门-无奖励-1.csv", 1.0/30));
+                //setModel(new CSVReaderModelRev("input/横向障碍物-宽门-无奖励-1.csv", 1.0/30));
         SimpleParameterPool parameters = new SimpleParameterPool();
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
                 .addValue(new SafetyRegion(new Box2D(14.05,3.81,1,9)))  //不动
@@ -414,7 +414,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
                         new Wall(new Box2D(6.41,4.11,0.61,0.61)),//纵向障碍物
                 }).setModel(new CSVReaderModel("input/test/纵向-窄门-慢.csv",1.0/50));
                 //setModel(new SimpleForceModel());
-                //setModel(new CSVReaderModel("input/test/纵向-窄门-慢.csv",1.0/50));
+                //setModel(new CSVReaderModelRev("input/test/纵向-窄门-慢.csv",1.0/50));
                 //setModel(new NeuralForceModel()); 
         SimpleParameterPool parameters = new SimpleParameterPool();
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()

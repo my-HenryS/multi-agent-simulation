@@ -96,6 +96,11 @@ public abstract class SimpleApplication implements Application {
         return scene.init();
     }
 
+    public void stepCurrent() {
+        stepNext(currentScene);
+    }
+
+
     public void stepNext(Scene scene){
         if (!Pause){
             long startT = System.currentTimeMillis();

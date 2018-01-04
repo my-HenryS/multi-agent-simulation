@@ -46,6 +46,12 @@ public class ShapeDrawer2DInstaller implements DrawerInstaller {
             drawable.setDrawer(supported);
             return true;
         } else {
+            for(Map.Entry<Class<? extends Drawable>, Drawer> x : drawerMap.entrySet()) {
+                if(x.getKey().isAssignableFrom(drawable.getClass())) {
+                    drawable.setDrawer(x.getValue());
+                    return true;
+                }
+            }
             return false;
         }
     }

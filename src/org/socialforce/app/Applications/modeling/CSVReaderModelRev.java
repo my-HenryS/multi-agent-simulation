@@ -1,4 +1,4 @@
-package org.socialforce.model.impl;
+package org.socialforce.app.Applications.modeling;
 
 import com.opencsv.CSVReader;
 import org.socialforce.container.Pool;
@@ -12,13 +12,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by sunjh1999 on 2017/9/21.
  */
-public class CSVReaderModel implements Model {
+public class CSVReaderModelRev implements Model {
     String parentPath = System.getProperty("user.dir")+"/resource/";
 
     double timePerStep = 0;
@@ -30,7 +29,7 @@ public class CSVReaderModel implements Model {
         return matrix.size();
     }
 
-    public CSVReaderModel(String filename, double timePerStep){
+    public CSVReaderModelRev(String filename, double timePerStep){
         this.timePerStep = timePerStep;
         this.filename = filename;
 
@@ -135,6 +134,6 @@ public class CSVReaderModel implements Model {
 
     @Override
     public Model clone() {
-        return new CSVReaderModel(filename, timePerStep);
+        return new CSVReaderModelRev(filename, timePerStep);
     }
 }

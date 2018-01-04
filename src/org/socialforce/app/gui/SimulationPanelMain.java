@@ -69,7 +69,8 @@ public class SimulationPanelMain implements ApplicationListener {
                     skipButton.setEnabled(true);
                     pauseButton.setEnabled(true);
                     /*设定延时*/
-                    int delay =  (int)(maxDelay * (1 - (double)slider1.getValue() / 100));
+ //=  (int)(maxDelay * (1 - (double)slider1.getValue() / 100));
+                    int delay = getMaxDelay();
                     loader.current().setMinStepForward(delay);
                 }
 
@@ -132,7 +133,7 @@ public class SimulationPanelMain implements ApplicationListener {
         slider1.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                int delay =  (int)(maxDelay * (1 - (double)slider1.getValue() / 100));
+                int delay = getMaxDelay();
                 loader.current().setMinStepForward(delay);
             }
         });
@@ -166,6 +167,13 @@ public class SimulationPanelMain implements ApplicationListener {
                 }
             }
         });
+    }
+
+    private int getMaxDelay() {
+        int framerate = slider1.getValue();
+        double delayd = 1000.0 / (framerate+1e-6);
+        int delay = (int)Math.round(delayd);
+        return delay;
     }
 
     private String getFileFromDialog(String saveTip, int mode) {

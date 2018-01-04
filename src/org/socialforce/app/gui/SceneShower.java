@@ -261,13 +261,13 @@ public class SceneShower implements SceneListener {
         public void onStep(Scene scene) {
             for(Agent agent: scene.getAllAgents()){
                 org.socialforce.geom.Point position = agent.getPhysicalEntity().getReferencePoint();
-                aggrHeatMap[(int)(position.getY() - yMin)][(int)(position.getX() - xMin)] += 1;
+//                aggrHeatMap[(int)(position.getY() - yMin)][(int)(position.getX() - xMin)] += 1;
             }
-            for(int i = 0; i < aggrHeatMap.length; i++){
-                for(int j = 0; j < aggrHeatMap[i].length; j++){
-                    HeatMap[i][j] = aggrHeatMap[aggrHeatMap.length - i - 1][j] / scene.getCurrentSteps();
-                }
-            }
+//            for(int i = 0; i < aggrHeatMap.length; i++){
+//                for(int j = 0; j < aggrHeatMap[i].length; j++){
+//                    HeatMap[i][j] = aggrHeatMap[aggrHeatMap.length - i - 1][j] / scene.getCurrentSteps();
+//                }
+//            }
         }
 
     }

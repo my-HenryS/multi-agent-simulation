@@ -32,11 +32,12 @@ public class GoalDynamicColorMarkDrawer extends DynamicColorDrawer<Agent> {
 
     @Override
     public Color currentColor(Agent agent) {
-        Point goal = agent.getPath().getGoal();
-        for(Support support:supports){
-            if(goal.equals(support.goal)) return support.color;
+        if(agent.getPath() != null) {
+            Point goal = agent.getPath().getGoal(); // TODO 2018/1/4 agent may not have paths.
+            for (Support support : supports) {
+                if (goal.equals(support.goal)) return support.color;
+            }
         }
-
         return baseColor;
         //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(33.5,14))) ((AwtDrawer2D)drawer).setColor(Color.green);
         //         if(entity instanceof Agent && ((Agent) entity).getPath().getGoal().equals(new Point2D(14.0,21.5))) ((AwtDrawer2D)drawer).setColor(Color.blue);
