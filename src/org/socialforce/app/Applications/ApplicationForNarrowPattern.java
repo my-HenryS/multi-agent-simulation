@@ -413,7 +413,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
                         new Wall(new Box2D(4.89,4.11,0.61,0.61)),//纵向障碍物
                         new Wall(new Box2D(6.41,4.11,0.61,0.61)),//纵向障碍物
                 }).setModel(new CSVReaderModel("input/test/纵向-窄门-慢.csv",1.0/50));
-                //setModel(new SimpleForceModel());
+                //setModel(new SocialForce());
                 //setModel(new CSVReaderModelRev("input/test/纵向-窄门-慢.csv",1.0/50));
                 //setModel(new NeuralForceModel()); 
         SimpleParameterPool parameters = new SimpleParameterPool();
