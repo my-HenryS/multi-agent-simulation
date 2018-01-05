@@ -27,11 +27,12 @@ import java.util.stream.Stream;
 public class ApplicationModelingReal extends SimpleApplication {
 
     private final SocialForce socialForce = new SocialForce(1.0 / 30);
-    private CSVReaderModelRev realModel = new CSVReaderModelRev("/input/纵向障碍物-宽门-无奖励_2.csv", 1.0 / 30);
+    private final String filename = "/input/纵向障碍物-宽门-无奖励_2.csv";
+    private CSVReaderModelRev realModel = new CSVReaderModelRev(filename, 1.0 / 30);
 
     //纵向障碍物-宽门
     public Scene setMapA4() {
-        realModel = new CSVReaderModelRev("/input/纵向障碍物-宽门-无奖励_2.csv", 1.0 / 30);
+        realModel = new CSVReaderModelRev(filename, 1.0 / 30);
         SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(0, 0, 19.21, 10.77)),
                 new Wall[]{
                         new Wall(new Box2D(3.41, 9.75, 9.05, 0.53 + 5)), //上
