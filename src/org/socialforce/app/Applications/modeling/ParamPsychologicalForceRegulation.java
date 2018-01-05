@@ -31,7 +31,7 @@ public class ParamPsychologicalForceRegulation extends TypeMatchRegulation<Block
         B = b;
     }
 
-    private double B = 0.08;
+    private double B = 0.08 / 2 + 0.08/4;
 
     /**
      *TODO regulate 是翻译成调节还是控制，还是计算的意思？
