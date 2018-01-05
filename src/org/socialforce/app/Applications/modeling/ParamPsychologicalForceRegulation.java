@@ -13,7 +13,7 @@ import org.socialforce.model.impl.TypeMatchRegulation;
  */
 
 public class ParamPsychologicalForceRegulation extends TypeMatchRegulation<Blockable, Agent> {
-    private double A = 2000;
+    private double A = 500+250;
 
     public double getA() {
         return A;

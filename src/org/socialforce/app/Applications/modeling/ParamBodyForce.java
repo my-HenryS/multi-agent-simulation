@@ -15,7 +15,7 @@ import org.socialforce.model.impl.TypeMatchRegulation;
  */
 public class ParamBodyForce extends TypeMatchRegulation<Blockable, Agent>{
 
-    private double k1 = 1.2 * 100000;
+    private double k1 = 1.2 * 100000 / 2;
 
     public double getK1() {
         return k1;
@@ -41,7 +41,7 @@ public class ParamBodyForce extends TypeMatchRegulation<Blockable, Agent>{
         this.g = g;
     }
 
-    private double k2 = 2.4 * 100000;
+    private double k2 = 2.4 * 100000 / 2 / 2 / 2;
     private double g = 1;
 
     public ParamBodyForce(Class<Blockable> blockableClass, Class<Agent> agentClass, Model model) {
