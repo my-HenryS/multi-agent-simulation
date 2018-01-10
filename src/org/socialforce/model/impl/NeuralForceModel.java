@@ -20,9 +20,9 @@ import java.util.List;
  */
 public class NeuralForceModel implements Model{
     String parentPath = System.getProperty("user.dir")+"/resource/";
-    String locationToSave = "neuralNet/慢速成功.net";
+    String locationToSave = "neuralNet/fastStep2.net";
 
-    double timePerStep = 2.0/30;
+    double timePerStep = 1.0/30;
     double min_div = 0.5;
     double p = 0.3;
     MultiLayerNetwork model = null;
@@ -40,6 +40,7 @@ public class NeuralForceModel implements Model{
         for(Object target:targets) {
             Agent agent = (Agent)target;
             Velocity2D velocity = (Velocity2D) agent.getVelocity();
+            velocity.scale(1.0/2);
             Vector2D expected;
             Point position = agent.getPhysicalEntity().getReferencePoint();
             expected =(Vector2D) agent.getPath().nextStep(position).sub(position);
@@ -77,7 +78,7 @@ public class NeuralForceModel implements Model{
 
             INDArray input = Nd4j.create(result);
             INDArray output = model.output(input);
-            Velocity2D newV = new Velocity2D(output.getDouble(0),output.getDouble(1));
+            Velocity2D newV = new Velocity2D(output.getDouble(0)*2,output.getDouble(1)*2);
             if(rotated) newV = new Velocity2D(newV.getX(),-newV.getY());
             newV.rotate(-angle);
             ((BaseAgent)agent).setVelocity(newV);

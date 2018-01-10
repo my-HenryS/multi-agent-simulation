@@ -59,7 +59,7 @@ public abstract class ForceGenerator implements DataSetGenerator {
                 if(line[i] != null && line[i].length() > 0){
                     String templine = line[i].substring(0,line[i].length());//去括号
                     axis = templine.split(",");//获得每一个单元格的x,y，存在axis[]数组中
-                    tempR.add(new Point2D(Double.parseDouble(axis[0]),Double.parseDouble(axis[1])));//tempR存的是每一个人的所有位置数据 561652165
+                    tempR.add(new Point2D(Double.parseDouble(axis[0]),0.935*Double.parseDouble(axis[1])));//tempR存的是每一个人的所有位置数据 561652165
                 }
                 else{
                     tempR.add(null);

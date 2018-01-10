@@ -14,7 +14,7 @@ import java.util.*;
  */
 public class AgentStepCSVWriter implements SceneListener {
     Map<String, List<String>> agentStepMap=new HashMap<>();
-    double time_per_step = 1.0/15;
+    double time_per_step = 1.0/30;
 
     @Override
     public boolean onAdded(Scene scene) {

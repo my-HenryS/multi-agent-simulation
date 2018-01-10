@@ -49,7 +49,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
             int timeStamp = 0;
             while (!toSkip()) {
                 this.stepNext(currentScene);
-                if(timeStamp % 10 == 0){ //社会力100 神经网络3 真实50帧10 30帧6
+                if(timeStamp % 100 == 0){ //社会力100 神经网络慢速3  真实50帧10 30帧6
                     for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                         Monitor monitor = (Monitor)iter.next();
                         double speed = monitor.sayVelocity();
@@ -59,7 +59,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
                 }
                 timeStamp++;
             }
-            csvWriter.writeCSV("output/社会力轨迹.csv");
+            csvWriter.writeCSV("output/社会力快速轨迹.csv");
             if(onStop()) return;
         }
     }
@@ -86,6 +86,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
       //  setMap();
       //  setUpA4Map();
         setMaptest();
+     //   setMapfasttest();
         //setUpT1Scene5();
         //setUpT1Scene6();
         //setUpT2Scene();
@@ -412,54 +413,192 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
                         //上边两个是门
                         new Wall(new Box2D(4.89,4.11,0.61,0.61)),//纵向障碍物
                         new Wall(new Box2D(6.41,4.11,0.61,0.61)),//纵向障碍物
-                }).setModel(new CSVReaderModel("input/test/纵向-窄门-慢.csv",1.0/50));
-                //setModel(new SimpleForceModel());
-                //setModel(new CSVReaderModel("input/test/纵向-窄门-慢.csv",1.0/50));
-                //setModel(new NeuralForceModel()); 
+                }).setModel(new NeuralForceModel());
+        //setModel(new CSVReaderModel("input/test/纵向-窄门-快.csv",1.0/50));
+               // .setModel(new SimpleForceModel());
+                //setModel(new CSVReaderModel("input/test/纵向-窄门-慢改.csv",1.0/50));
+
         SimpleParameterPool parameters = new SimpleParameterPool();
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
                 .addValue(new SafetyRegion(new Box2D(10.77,4.2,0.5,0.5)))  //不动
                 .addValue(new Monitor(new Box2D(8.3,3.92,1.53,0.7)))
         );
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
-                .addValue(new BaseAgent(new Circle2D(new Point2D(0.769,1.338), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.360,1.518), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.858,1.912), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(0.997,2.149), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.613,2.362), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.151,2.520), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.667,2.542), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.211,2.756), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.459,2.880), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.799,3.060), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.248,3.285), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.123,3.724), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.724,3.521), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.926,3.848), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.981,3.960), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(3.175,4.782), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.157,4.219), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.904,4.444), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.246,4.827), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.368,4.872), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.428,5.311), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(0.775,5.311), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.368,5.547), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.801,5.772), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.406,5.761), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.856,5.907), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.471,6.110), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.001,6.244), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.502,6.391), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.647,6.548), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.248,6.469), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.154,6.739), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.715,7.066), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.183,7.111), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.303,7.651), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(2.599,7.212), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(3.471,6.717), 0.486/2), new Velocity2D(0,0)))
-                .addValue(new BaseAgent(new Circle2D(new Point2D(1.311,7.313), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1.037,1.524), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(3.574,1.803), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(2.365,1.869), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1.057,2.081), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(2.422,2.493), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1.567,2.304), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(3.933,2.415), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(3.448,2.604), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1.847,2.771), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(4.1,2.905), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1.949,3.339), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1.567,3.695), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(3.813,3.339), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(2.576,3.706), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(3.830,3.840), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(4.953,4.855), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1.715,4.329), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(2.821,4.296), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(3.146,4.786), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(2.092,4.775), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(3.665,5.244), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1.185,5.320), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1.795,5.298), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(2.434,5.409), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(3.226,5.587), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(3.887,5.654), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1.835,5.899), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(2.667,5.859), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(3.260,6.222), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(2.063,6.366), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1.544,6.333), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(2.599,6.333), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1.972,6.912), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(2.519,6.878), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(2.411,7.683), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(3.129,6.934), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(5.107,6.133), 0.486/2), new Velocity2D(1,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1.345,6.956), 0.486/2), new Velocity2D(1,0)))
+                .setCommonName("Agent")
+        );
+//下面是第三帧
+//        parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1,1.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2,1.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3,1.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(4,1.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(5,1.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(6,1.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(7,1.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(8,1.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1,2.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2,2.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3,2.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(4,2.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(5,2.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(6,2.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(7,2.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(8,2.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1,3), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2,3), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3,3), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(4,3), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(5,3), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(6,3), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(7,3), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(8,3), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1,3.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2,3.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3,3.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(4,3.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(5,3.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(6,3.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(7,3.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(8,3.5), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1,6), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2,6), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3,6), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(4,6), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(5,6), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(6,6), 0.486/2), new Velocity2D(0,0)))
+//                .setCommonName("Agent")
+//        );
+        loader.readParameterSet(parameters);
+        for (Scene s : loader.readScene()){
+            scenes.add(s);
+        }
+    }
+
+    public void setMapfasttest(){
+        SceneLoader loader = new StandardSceneLoader(new SimpleScene(new Box2D(0, 0, 20, 20)),
+                new Wall[]{
+                        new Wall(new Box2D(3.41,9.75,9.05,0.53)), //上
+                        new Wall(new Box2D(3.41,3.21,9.05,0.53)), //下
+                        new Wall(new Box2D(3.41,3.74,0.53,6.01)), //左
+                        //以上固定不动
+                        new Wall(new Box2D(11.93,7.26,0.53,2.49)),//右上
+                        new Wall(new Box2D(11.93,3.74,0.53,2.52)),//右下
+                        //上边两个是门
+                        new Wall(new Box2D(9.75,6.49,1.18,0.57)),//纵向障碍物
+                }).setModel(new CSVReaderModel("input/fast/纵向障碍物-宽门-有奖励-2.csv",1.0/30));
+        //setModel(new SimpleForceModel());
+        //setModel(new CSVReaderModel("input/test/纵向-窄门-慢改.csv",1.0/50));
+        //setModel(new NeuralForceModel());
+        SimpleParameterPool parameters = new SimpleParameterPool();
+        parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
+                .addValue(new SafetyRegion(new Box2D(10.05,6.81,0.1,0.1)))  //不动
+        );
+//        parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1.037,1.524), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3.574,1.803), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2.365,1.869), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1.057,2.081), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2.422,2.493), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1.567,2.304), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3.933,2.415), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3.448,2.604), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1.847,2.771), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(4.1,2.905), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1.949,3.339), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1.567,3.695), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3.813,3.339), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2.576,3.706), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3.830,3.840), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(4.953,4.855), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1.715,4.329), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2.821,4.296), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3.146,4.786), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2.092,4.775), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3.665,5.244), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1.185,5.320), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1.795,5.298), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2.434,5.409), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3.226,5.587), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3.887,5.654), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1.835,5.899), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2.667,5.859), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3.260,6.222), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2.063,6.366), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1.544,6.333), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2.599,6.333), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1.972,6.912), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2.519,6.878), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(2.411,7.683), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(3.129,6.934), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(5.107,6.133), 0.486/2), new Velocity2D(0,0)))
+//                .addValue(new BaseAgent(new Circle2D(new Point2D(1.345,6.956), 0.486/2), new Velocity2D(0,0)))
+//                .setCommonName("Agent")
+//        );
+        parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1,1.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(2,1.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(3,1.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(4,1.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(5,1.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(6,1.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(7,1.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(8,1.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1,2.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(2,2.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(3,2.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(4,2.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(5,2.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(6,2.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(7,2.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(8,2.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1,3), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(2,3), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(3,3), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(4,3), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(5,3), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(6,3), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(7,3), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(8,3), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(1,3.5), 0.486/2), new Velocity2D(0,0)))
+                .addValue(new BaseAgent(new Circle2D(new Point2D(2,3.5), 0.486/2), new Velocity2D(0,0)))
                 .setCommonName("Agent")
         );
         loader.readParameterSet(parameters);
@@ -467,7 +606,6 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
             scenes.add(s);
         }
     }
-
     /**
      * 螺旋形走廊，连续拐角
      */
