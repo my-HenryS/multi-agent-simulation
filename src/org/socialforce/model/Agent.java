@@ -1,6 +1,7 @@
 package org.socialforce.model;
 
 import org.socialforce.geom.DistancePhysicalEntity;
+import org.socialforce.geom.Point;
 import org.socialforce.geom.Velocity;
 import org.socialforce.strategy.Path;
 
@@ -55,4 +56,10 @@ public interface Agent extends Influential, Moveable, Blockable,Rotateable {
      */
 
     Velocity getVelocity();
+
+    /**
+     * 获取位置
+     */
+
+    Point getPosition();
 }

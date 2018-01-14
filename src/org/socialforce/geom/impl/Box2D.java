@@ -449,6 +449,11 @@ public class Box2D extends Shape2D implements Box {
        return this;
     }
 
+    @Override
+    public double getArea() {
+        return (xmax - xmin)*(ymax - ymin);
+    }
+
     public String toString(){
         return "左下右上坐标为： ("+xmin+"," +ymin+")，("+xmax+ ","+ymax+ ")";
     }

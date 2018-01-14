@@ -4,11 +4,7 @@ import org.socialforce.app.Application;
 import org.socialforce.app.Interpreter;
 import org.socialforce.app.impl.AgentStepCSVWriter;
 import org.socialforce.app.impl.SimpleInterpreter;
-import org.socialforce.drawer.impl.EntityDrawer;
-import org.socialforce.drawer.impl.EntityDrawerInstaller;
-import org.socialforce.drawer.impl.SceneDrawer;
 import org.socialforce.geom.impl.*;
-import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.*;
 import org.socialforce.scene.Scene;
@@ -22,17 +18,16 @@ import org.socialforce.strategy.PathFinder;
 import org.socialforce.strategy.impl.AStarPathFinder;
 import org.socialforce.strategy.impl.NearestGoalStrategy;
 
-import java.awt.*;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-/**无障碍物
- * Created by sunjh1999 on 2017/7/4.
+/**辐条障碍物
+ * Created by Administrator on 2017/12/4 0004.
  */
-public class ApplicationForEllipse extends SimpleApplication implements Application {
+public class ApplicationForEllipseDoor extends SimpleApplication implements Application {
     BaseAgent template;
-    double DoorWidth;
+    double DoorWidth,BlockLength ,BlockDistance;
     int density;
     /**
      * start the application immediately.
@@ -75,6 +70,9 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         scenes = new LinkedList<>();
         DoorWidth = 1.0;  //FIXME 门宽
         density = 20;
+        BlockLength = 2.0;       //FIXME 纵向障碍物的长度
+        BlockDistance = 1.5;     //FIXME 横向障碍物距门线的距离
+
         setUpT1Scene5();
         for(Scene scene:scenes){
             scene.setApplication(this);
@@ -86,40 +84,38 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
      */
     protected void setUpT1Scene5(){
 
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream("T1.s");
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("T4.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFrom(is);
         SceneLoader loader = interpreter.setLoader().setModel(new SimpleForceModel());
         SimpleParameterPool parameters = new SimpleParameterPool();
-        /*parameters.addValuesAsParameter(
-                new SimpleEntityGenerator()
-                        .setValue(new Wall(new Box2D(4,-4,2,2)))
-                        .setPriority(10)
-                ,new SimpleEntityGenerator()
-                        .setValue(new Wall(new Circle2D(new Point2D(5,-3),1)))
-                        .setPriority(10)
-        );*/
+
+//        parameters.addValuesAsParameter(
+//                new SimpleEntityGenerator()
+//                        .setValue(new Wall(new Box2D(5-0.01,(-1)*BlockLength,0.02,BlockLength)))
+//                        .setPriority(10)
+//                ,new SimpleEntityGenerator()
+//                        .setValue(new Wall(new Box2D(5-0.5,(-1)*(BlockDistance+0.02),1.0,0.02)))
+//                        .setPriority(10)
+//        );
 
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
                 .addValue(new SafetyRegion(new Box2D(1,10,8,1)))
                 .addValue(new Monitor(new Box2D(5-DoorWidth/2,0,DoorWidth,0.4)))
-
         );
 
         parameters.addValuesAsParameter(new SimpleEntityGenerator()
-                .setValue(new DoorTurn(new Box2D(5-DoorWidth/2,-0.01,DoorWidth,1.02),new Segment2D(new Point2D(5-DoorWidth/2,-0.01),new Point2D(5+DoorWidth/2,-0.01))))  //FIXME 主动侧身作用区域（出口）的大小
+                .setValue(new DoorTurn(new Box2D(5-DoorWidth/2,-0.01,DoorWidth,0.412),new Segment2D(new Point2D(5-DoorWidth/2,-0.01),new Point2D(5+DoorWidth/2,-0.01))))  //FIXME 主动侧身作用区域（出口）的大小
                 .setPriority(5)
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(50,new Box2D(0,-10,10,5))
+                new RandomEntityGenerator2D(30,new Box2D(3,-4,4,3))
                         .setValue(template)
-                        .setGaussianParameter(1,0.025)
+                        .setGaussianParameter(1,0.015)
                         .setCommonName("Agent")  //行人标号
+                //FIXME 行人的总数（修改“26”）
         );
-        /*parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(1,new Box2D(4.3,-3,0.5,2)).setValue(template)
-        );*/
 
         loader.readParameterSet(parameters);
         for (Scene s : loader.readScene()){
@@ -127,15 +123,4 @@ public class ApplicationForEllipse extends SimpleApplication implements Applicat
         }
     }
 
-/*    @Override
-    public void manageDrawer(SceneDrawer drawer){
-        drawer.setBackgroundColor(Color.white);
-        EntityDrawerInstaller installer = drawer.getEntityDrawerInstaller();
-        installer.unregister(Agent.class);
-        installer.unregister(InteractiveEntity.class);
-        EntityDrawer agentDrawer = new EntityDrawer(installer.getDevice());
-        agentDrawer.setColor(Color.yellow);
-        installer.registerDrawer(agentDrawer,Agent.class);
-        installer.registerDrawer(new EntityDrawer(installer.getDevice()),InteractiveEntity.class);
-    }*/
 }

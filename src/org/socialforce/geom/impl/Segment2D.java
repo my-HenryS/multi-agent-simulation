@@ -377,6 +377,11 @@ public class Segment2D extends Shape2D implements PhysicalEntity {
         return this;
     }
 
+    @Override
+    public double getArea() {
+        return 0;
+    }
+
     public Segment2D[] remove(List<Segment2D> segments){
         /*double[] segmentLeftX = new double[]{};
         HashMap map = new HashMap();

@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * Created by sunjh1999 on 2017/5/2.
  */
 public class MultipleEntitiesGenerator extends EntityGenerator<InteractiveEntity> {
-
+    int num = 0;
     protected LinkedList<InteractiveEntity> values = new LinkedList<>();
 
     @Override
@@ -20,7 +20,7 @@ public class MultipleEntitiesGenerator extends EntityGenerator<InteractiveEntity
         for(InteractiveEntity value : values){
             InteractiveEntity newEntity = value.clone();
             if(commonName != null) {
-                newEntity.setName(commonName);
+                newEntity.setName(commonName+String.valueOf(num++));
             }
             EntityDecorator.place(newEntity, scene, model);
         }

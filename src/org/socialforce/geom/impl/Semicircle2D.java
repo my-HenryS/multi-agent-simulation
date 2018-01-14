@@ -98,4 +98,9 @@ public class Semicircle2D extends Shape2D implements PhysicalEntity  {
         radius += extent;
         return this;
     }
+
+    @Override
+    public double getArea() {
+        return Math.PI*radius*radius/2;
+    }
 }

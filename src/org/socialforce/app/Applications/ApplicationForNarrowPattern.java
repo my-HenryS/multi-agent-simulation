@@ -5,6 +5,7 @@ import org.socialforce.app.Application;
 import org.socialforce.app.impl.AgentStepCSVWriter;
 import org.socialforce.app.impl.SimpleInterpreter;
 import org.socialforce.geom.impl.*;
+import org.socialforce.model.InteractiveEntity;
 import org.socialforce.model.impl.*;
 import org.socialforce.scene.Scene;
 import org.socialforce.scene.SceneLoader;
@@ -42,6 +43,15 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
             this.initScene(currentScene);
             while (!toSkip()) {
                 this.stepNext(currentScene);
+                int timeStamp = 0;
+                if(timeStamp % 33 == 0){
+                    for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
+                        Monitor monitor = (Monitor)iter.next();
+                        double speed = monitor.sayVelocity();
+                        double rho = monitor.sayRho();
+                        System.out.println(speed+"\t"+rho);
+                    }
+                }
             }
             //csvWriter.writeCSV("output/agent.csv");
             if(onStop()) return;
@@ -62,7 +72,7 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
         setUpT1Scene3();
         setUpT1Scene4();
         //setUpT1Scene5();
-        setMap();
+       // setMap();
         setUpT1Scene5();
         setUpT1Scene6();
         setUpT2Scene();

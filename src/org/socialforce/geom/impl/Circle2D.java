@@ -190,4 +190,9 @@ public class Circle2D extends Shape2D implements DistancePhysicalEntity {
         radius += extent;
         return this;
     }
+
+    @Override
+    public double getArea() {
+        return Math.PI*radius*radius;
+    }
 }

@@ -16,7 +16,7 @@ public class SimpleForceModel implements Model {
     @LoadFrom("time_per_step")
     public static double TIME_PER_STEP = 0.002;  //仿真步长
     @LoadFrom("expected_speed")
-    public static double EXPECTED_SPEED = 2;   //期望速度
+    public static double EXPECTED_SPEED = 1.2;   //期望速度
     double EXPECTED_PALSTANCE = 0;
     double REACT_TIME_NORMAL = 0.5;     //变速
     double REACT_TIME_TANGENT = 0.2;    //转向
@@ -35,6 +35,7 @@ public class SimpleForceModel implements Model {
         regulations.add(new SpinBodyForceRegulation(Blockable.class, Agent.class, this));       //FIXME 施加由于接触力产生的转矩
         regulations.add(new SpinPsyForceRegulation(Blockable.class, Agent.class, this));        //FIXME 施加由于心理力产生的转矩
         regulations.add(new DoorTurnRegulation(DoorTurn.class,Agent.class,this));               //FIXME 人过门的时候施加主动侧身的转矩
+        regulations.add(new CrossFlowRegulation(CrossFlow.class,Agent.class,this));             //FIXME 窄通道对流的时候施加主动侧身的转矩
     }
 
     public SimpleForceModel(double timePerStep){
