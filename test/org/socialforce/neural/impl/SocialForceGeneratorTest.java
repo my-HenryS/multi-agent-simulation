@@ -17,7 +17,7 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
 
     @Before
     public void setUp() throws Exception {
-        generator = new SocialForceGenerator(3.0/30,5,0.3); //timestep intercept min-div
+        generator = new SocialForceGenerator(2.0/30,5,0.3); //timestep intercept min-div
         setMap();
     }
 //对流场景的map
@@ -420,38 +420,77 @@ public class SocialForceGeneratorTest extends WallForceGeneratorTest{
 //        generator.genOutputduiliu(scene);
 //        generator.readFile("input/fast/对流3.csv", 1);
 //        generator.genOutputduiliu(scene);
-        setMapA2fast();
-        generator.readFile("input/fast/横向障碍物宽门近.csv", 1);
+//        setMapA2fast();
+//        generator.readFile("input/fast/横向障碍物宽门近.csv", 2);
+//        generator.genOutput(scene);
+//        setMapA3fast();
+//        generator.readFile("input/fast/横向障碍物宽门-1.csv", 2);
+//        generator.genOutput(scene);
+//        generator.readFile("input/fast/横向障碍物宽门-2.csv", 2);
+//        generator.genOutput(scene);
+//        generator.readFile("input/fast/横向障碍物宽门-3.csv", 2);
+//        generator.genOutput(scene);
+//        setMapA4fast();
+//        generator.readFile("input/fast/纵向障碍物宽门-1.csv", 2);
+//        generator.genOutput(scene);
+//        generator.readFile("input/fast/纵向障碍物宽门-2.csv", 2);
+//        generator.genOutput(scene);
+//        generator.readFile("input/fast/纵向障碍物宽门-3.csv", 2);
+//        generator.genOutput(scene);
+//        setMapA5fast();
+//        generator.readFile("input/fast/横向障碍物窄门-1.csv", 2);
+//        generator.genOutput(scene);
+//        generator.readFile("input/fast/横向障碍物窄门-2.csv", 2);
+//        generator.genOutput(scene);
+//        generator.readFile("input/fast/横向障碍物窄门-3.csv", 2);
+//        generator.genOutput(scene);
+//        setMapA6fast();
+//        generator.readFile("input/fast/纵向障碍物窄门-1.csv", 2);
+//        generator.genOutput(scene);
+//        generator.readFile("input/fast/纵向障碍物窄门-2.csv", 2);
+//        generator.genOutput(scene);
+//        generator.readFile("input/fast/纵向障碍物窄门-3.csv", 2);
+//        generator.genOutput(scene);
+//        generator.toFile("/output/MultiSetfast_7.csv", 2);
+        setMapA1();
+        generator.readFile("input/对流1新.csv", 2);
+        generator.genOutputduiliu(scene);
+        generator.readFile("input/对流2新.csv", 2);
+        generator.genOutputduiliu(scene);
+        generator.readFile("input/对流3.csv", 2);
+        generator.genOutputduiliu(scene);
+        setMapA2();
+        generator.readFile("input/横向障碍物-宽门-近-无奖励.csv", 2);
         generator.genOutput(scene);
-        setMapA3fast();
-        generator.readFile("input/fast/横向障碍物宽门-1.csv", 1);
+        setMapA3();
+        generator.readFile("input/横向障碍物-宽门-无奖励_1.csv", 2);
         generator.genOutput(scene);
-        generator.readFile("input/fast/横向障碍物宽门-2.csv", 1);
+        generator.readFile("input/横向障碍物-宽门-无奖励_2.csv", 2);
         generator.genOutput(scene);
-        generator.readFile("input/fast/横向障碍物宽门-3.csv", 1);
+        generator.readFile("input/横向障碍物-宽门-无奖励_3.csv", 2);
         generator.genOutput(scene);
-        setMapA4fast();
-        generator.readFile("input/fast/纵向障碍物宽门-1.csv", 1);
+        setMapA4();
+        generator.readFile("input/纵向障碍物-宽门-无奖励_1.csv", 2);
         generator.genOutput(scene);
-        generator.readFile("input/fast/纵向障碍物宽门-2.csv", 1);
+        generator.readFile("input/纵向障碍物-宽门-无奖励_2.csv", 2);
         generator.genOutput(scene);
-        generator.readFile("input/fast/纵向障碍物宽门-3.csv", 1);
+        generator.readFile("input/纵向障碍物-宽门-无奖励_3.csv", 2);
         generator.genOutput(scene);
-        setMapA5fast();
-        generator.readFile("input/fast/横向障碍物窄门-1.csv", 1);
+        setMapA5();
+        generator.readFile("input/横向障碍物-窄门-无奖励-1.csv", 2);
         generator.genOutput(scene);
-        generator.readFile("input/fast/横向障碍物窄门-2.csv", 1);
+        generator.readFile("input/横向障碍物-窄门-无奖励-2.csv", 2);
         generator.genOutput(scene);
-        generator.readFile("input/fast/横向障碍物窄门-3.csv", 1);
+        generator.readFile("input/横向障碍物-窄门-无奖励-3.csv", 2);
         generator.genOutput(scene);
-        setMapA6fast();
-        generator.readFile("input/fast/纵向障碍物窄门-1.csv", 1);
+        setMapA6();
+        generator.readFile("input/纵向障碍物-窄门-无奖励_1.csv", 2);
         generator.genOutput(scene);
-        generator.readFile("input/fast/纵向障碍物窄门-2.csv", 1);
+        generator.readFile("input/纵向障碍物-窄门-无奖励_2.csv", 2);
         generator.genOutput(scene);
-        generator.readFile("input/fast/纵向障碍物窄门-3.csv", 1);
+        generator.readFile("input/纵向障碍物-窄门-无奖励_3.csv", 2);
         generator.genOutput(scene);
-        generator.toFile("/output/MultiSetfast.csv", 1);
+        generator.toFile("/output/MultiSetfast_7.csv", 2);
     }
 
 }

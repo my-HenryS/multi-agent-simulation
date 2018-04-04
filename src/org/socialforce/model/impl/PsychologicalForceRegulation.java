@@ -2,6 +2,7 @@ package org.socialforce.model.impl;
 
 import org.socialforce.geom.Affection;
 import org.socialforce.geom.Force;
+import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.model.*;
 
 /**行人规避障碍物的心理力
@@ -10,8 +11,9 @@ import org.socialforce.model.*;
  */
 
 public class PsychologicalForceRegulation extends TypeMatchRegulation<Blockable, Agent> {
-    public static final double A = 2000;
-    public static final double B = 0.08;
+    public static final double A = 2000.0;
+    public static final double B = 0.10;
+
 
     /**
      *TODO regulate 是翻译成调节还是控制，还是计算的意思？
@@ -33,9 +35,12 @@ public class PsychologicalForceRegulation extends TypeMatchRegulation<Blockable,
      */
     @Override
     public Affection getForce(Blockable source, Agent target) {
+        Vector2D a = (Vector2D) target.getPhysicalEntity().directionTo(source.getPhysicalEntity());
+        Vector2D b = (Vector2D) target.getPhysicalEntity().getDirection(target.getPath().getGoal());
+        double value_of_cos = (a.dot(b)) / (Math.sqrt(Math.pow(a.getX(),2) + Math.pow(a.getY(),2)) + Math.sqrt(Math.pow(b.getX(),2) + Math.pow(b.getY(),2)));
         Force force = model.zeroForce();
         force.add((target.getPhysicalEntity()).directionTo(source.getPhysicalEntity()));
-        double scale = A * Math.exp(- (target.getPhysicalEntity().distanceTo(source.getPhysicalEntity()) + 0.05)/ B);  //FIXME 心理力的计算公式（修改“0.05”）
+        double scale = A * Math.exp(- (target.getPhysicalEntity().distanceTo(source.getPhysicalEntity()) + 0.05)/ B );  //FIXME 心理力的计算公式（修改“0.05”）
         force.scale(scale / force.length());
         return force;
     }

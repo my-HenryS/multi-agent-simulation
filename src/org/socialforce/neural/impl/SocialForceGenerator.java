@@ -84,7 +84,7 @@ public class SocialForceGenerator extends WallForceGenerator{
      * @return
      */
     public double[] getNeighbor(int i, int t){
-        double[] neighbor=new double[20];
+        double[] neighbor=new double[28];
         ArrayList<Double> neighbor1=new ArrayList<Double>();
         Point2D prePoint = matrix.get(i).get(t);
         Vector2D thisVelocity = this.velocity.get(i).get(t).clone();
@@ -101,7 +101,7 @@ public class SocialForceGenerator extends WallForceGenerator{
         Collections.sort(delpoints);
         int time=0;
         for(Point2Dcompare delpoint:delpoints){     //排列方式delx,dely,delvx,delvy
-            if(time==5)
+            if(time==7)
                 break;
             /*以下是对三米之内的行人进行归一化处理
             */

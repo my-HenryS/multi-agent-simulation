@@ -19,7 +19,7 @@ public class Circle2D extends Shape2D implements DistancePhysicalEntity {
      * 二维圆的中心点.
      * @see Drawer
      */
-    protected Point center = new Point2D(0,0);
+    public Point center = new Point2D(0,0);
     protected Drawer drawer;
 
     /**

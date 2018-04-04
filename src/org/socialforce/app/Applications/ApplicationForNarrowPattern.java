@@ -49,17 +49,17 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
             int timeStamp = 0;
             while (!toSkip()) {
                 this.stepNext(currentScene);
-                if(timeStamp % 100 == 0){ //社会力100 神经网络慢速3  真实50帧10 30帧6
+                if(timeStamp % 1 == 0){ //社会力100 神经网络慢速3  真实50帧10 30帧6
                     for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                         Monitor monitor = (Monitor)iter.next();
                         double speed = monitor.sayVelocity();
                         double rho = monitor.sayRho();
-                        System.out.println(speed+"\t"+rho);
+                        System.out.println(speed+","+rho);
                     }
                 }
                 timeStamp++;
             }
-            csvWriter.writeCSV("output/社会力快速轨迹.csv");
+            csvWriter.writeCSV("output/7.csv");
             if(onStop()) return;
         }
     }
@@ -381,8 +381,8 @@ public class ApplicationForNarrowPattern extends SimpleApplication implements Ap
                         //上边两个是门
                         new Wall(new Box2D(9.33,6.32,0.58,1.18)),//横向障碍物
 
-                }).setModel(new NeuralForceModel());
-                //setModel(new CSVReaderModel("input/横向障碍物-宽门-无奖励-1.csv", 1.0/30));
+                }).setModel(new CSVReaderModel("input/横向障碍物-宽门-无奖励-1.csv", 1.0/30));
+//                setModel(new CSVReaderModel("input/横向障碍物-宽门-无奖励-1.csv", 1.0/30));
         SimpleParameterPool parameters = new SimpleParameterPool();
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
                 .addValue(new SafetyRegion(new Box2D(14.05,3.81,1,9)))  //不动

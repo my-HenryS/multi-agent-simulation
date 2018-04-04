@@ -20,9 +20,9 @@ import java.util.List;
  */
 public class NeuralForceModel implements Model{
     String parentPath = System.getProperty("user.dir")+"/resource/";
-    String locationToSave = "neuralNet/fastStep2.net";
+    String locationToSave = "neuralNet/new_7.net";
 
-    double timePerStep = 1.0/30;
+    double timePerStep = 2.0/30;
     double min_div = 0.5;
     double p = 0.3;
     MultiLayerNetwork model = null;
@@ -40,13 +40,13 @@ public class NeuralForceModel implements Model{
         for(Object target:targets) {
             Agent agent = (Agent)target;
             Velocity2D velocity = (Velocity2D) agent.getVelocity();
-            velocity.scale(1.0/2);
+            velocity.scale(1.0/1);
             Vector2D expected;
             Point position = agent.getPhysicalEntity().getReferencePoint();
             expected =(Vector2D) agent.getPath().nextStep(position).sub(position);
 
             LinkedList<Vector2D> results = new LinkedList<>();
-            results = getNearest5(targets, agent);
+            results = getNearest7(targets, agent);
 
             double angle = Vector2D.getRotateAngle(new Vector2D(1,0), velocity);
             velocity.rotate(angle);
@@ -71,14 +71,16 @@ public class NeuralForceModel implements Model{
                 tempA.add(vector2D.getX());
                 tempA.add(vector2D.getY());
             }
-            double[] result = new double[22];
-            for(int i =0; i < 22;i++){
+            double[] result = new double[30];
+            for(int i =0; i < 30;i++){
                 result[i] = tempA.get(i);
             }
 
             INDArray input = Nd4j.create(result);
             INDArray output = model.output(input);
-            Velocity2D newV = new Velocity2D(output.getDouble(0)*2,output.getDouble(1)*2);
+//            Velocity2D newV = new Velocity2D(output.getDouble(0)*2,output.getDouble(1)*2);
+            Velocity2D newV = new Velocity2D(output.getDouble(0),output.getDouble(1));
+
             if(rotated) newV = new Velocity2D(newV.getX(),-newV.getY());
             newV.rotate(-angle);
             ((BaseAgent)agent).setVelocity(newV);
@@ -124,7 +126,7 @@ public class NeuralForceModel implements Model{
         return new NeuralForceModel();
     }
 
-    private LinkedList<Vector2D> getNearest5(Pool targets, Agent affected_agent){
+    private LinkedList<Vector2D> getNearest7(Pool targets, Agent affected_agent){
 
         LinkedList<Vector2D> velocities = new LinkedList<>();
         LinkedList<Vector2D> positions = new LinkedList<>();
@@ -141,7 +143,7 @@ public class NeuralForceModel implements Model{
                 if(i >= 1) i-=2;
             }
         }
-        int neigernumber=positions.size()<5?positions.size():5;
+        int neigernumber=positions.size()<7?positions.size():7;
         LinkedList<Vector2D> result = new LinkedList<>();
 
         for(int i = 0; i < neigernumber; i++){
@@ -176,8 +178,8 @@ public class NeuralForceModel implements Model{
             result.add(delpoint);
             result.add((delpoint.getX()==0)||(delpoint.getY()==0)?new Vector2D(0,0):velocities.get(i));
         }
-        if(neigernumber<5){
-            for(int i=0;i<5-neigernumber;i++){
+        if(neigernumber<7){
+            for(int i=0;i<7-neigernumber;i++){
                 result.add(new Vector2D(0,0));
                 result.add(new Vector2D(0,0));
             }
