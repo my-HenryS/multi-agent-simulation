@@ -2,6 +2,7 @@ package org.socialforce.model.impl;
 
 import org.socialforce.container.impl.LinkListAgentPool;
 import org.socialforce.geom.PhysicalEntity;
+import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.model.Agent;
 import org.socialforce.model.Influential;
 import org.socialforce.scene.Scene;
@@ -29,8 +30,10 @@ public class Monitor extends Entity implements Influential {
         double velocities = 0;
         int agentNum = 0;
         for(Agent agent:affectableAgents){
-            velocities += agent.getVelocity().length();
-            agentNum++;
+            if(physicalEntity.contains(agent.getPhysicalEntity().getReferencePoint())) {
+                velocities += agent.getVelocity().length();
+                agentNum++;
+            }
         }
         averV = agentNum != 0 ? velocities / agentNum : 0;
         rho = agentNum / physicalEntity.getArea();

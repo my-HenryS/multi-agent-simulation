@@ -43,10 +43,10 @@ public class ApplicationForEllipseDoor extends SimpleApplication implements Appl
             GoalStrategy strategy = new NearestGoalStrategy(currentScene, pathFinder);
             strategy.pathDecision();
             this.initScene(currentScene);
+            int timeStamp = 0;
             while (!toSkip()) {
                 this.stepNext(currentScene);
-                int timeStamp = 0;
-                if(timeStamp % 100 == 0){
+                if(timeStamp % 4 == 0){
                     for(Iterator<InteractiveEntity> iter = currentScene.getStaticEntities().selectClass(Monitor.class).iterator(); iter.hasNext();){
                         Monitor monitor = (Monitor)iter.next();
                         double speed = monitor.sayVelocity();
@@ -54,6 +54,7 @@ public class ApplicationForEllipseDoor extends SimpleApplication implements Appl
                         System.out.println(speed+"\t"+rho);
                     }
                 }
+                timeStamp += 1;
             }
             csvWriter.writeCSV("output/agent.csv");
             if(onStop()) return;
@@ -68,7 +69,7 @@ public class ApplicationForEllipseDoor extends SimpleApplication implements Appl
         //template = new BaseAgent(new Circle2D(new Point2D(0,0),0.45/2), new Velocity2D(0,0));   //FIXME 行人的形状切换为圆
         template = new BaseAgent(new Ellipse2D(0.45/2,0.25/2,new Point2D(0,0),0), new Velocity2D(0,0));  //FIXME 行人的形状切换为椭圆
         scenes = new LinkedList<>();
-        DoorWidth = 1.0;  //FIXME 门宽
+        DoorWidth = 0.7;  //FIXME 门宽
         density = 20;
         BlockLength = 2.0;       //FIXME 纵向障碍物的长度
         BlockDistance = 1.5;     //FIXME 横向障碍物距门线的距离
@@ -87,6 +88,7 @@ public class ApplicationForEllipseDoor extends SimpleApplication implements Appl
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("T4.s");
         Interpreter interpreter = new SimpleInterpreter();
         interpreter.loadFrom(is);
+        //SceneLoader loader = interpreter.setLoader().setModel(new CSVReaderModel("input/横向障碍物-窄门-有奖励-1.csv",1.0/40));
         SceneLoader loader = interpreter.setLoader().setModel(new SimpleForceModel());
         SimpleParameterPool parameters = new SimpleParameterPool();
 
@@ -101,7 +103,8 @@ public class ApplicationForEllipseDoor extends SimpleApplication implements Appl
 
         parameters.addValuesAsParameter(new MultipleEntitiesGenerator()
                 .addValue(new SafetyRegion(new Box2D(1,10,8,1)))
-                .addValue(new Monitor(new Box2D(5-DoorWidth/2,0,DoorWidth,0.4)))
+                //.addValue(new Monitor(new Box2D(5-DoorWidth/2,-0.6,DoorWidth,1)))
+                .addValue(new Monitor(new Box2D(11.36,6.524,1,0.7)))
         );
 
         parameters.addValuesAsParameter(new SimpleEntityGenerator()
@@ -110,7 +113,7 @@ public class ApplicationForEllipseDoor extends SimpleApplication implements Appl
         );
 
         parameters.addValuesAsParameter(
-                new RandomEntityGenerator2D(30,new Box2D(3,-4,4,3))
+                new RandomEntityGenerator2D(26,new Box2D(3,-4,4,3))
                         .setValue(template)
                         .setGaussianParameter(1,0.015)
                         .setCommonName("Agent")  //行人标号
