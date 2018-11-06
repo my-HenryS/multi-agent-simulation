@@ -1,35 +1,32 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.app.*;
 import org.socialforce.geom.*;
-import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Velocity2D;
+import org.socialforce.geom.impl.*;
 import org.socialforce.model.*;
+import org.socialforce.scene.Scene;
 import org.socialforce.strategy.Path;
+
+import java.util.Iterator;
 
 /**
  * 定义BaseAgent类，其继承于父类Entity，并实现了接口Agent 的方法。
  * Created by Ledenel on 2016/8/15.
  */
 public class BaseAgent extends Entity implements Agent {
-    Velocity currVelocity;
     Path path;
-    double mass;
-    int currTimestamp;
-    DistanceShape view;
-    Force pushed;
-    Velocity deltaV;
-    Vector deltaS;
+    DistancePhysicalEntity view;
     boolean escaped = false;
-    DistanceShape shape;
+    DistancePhysicalEntity physicalEntity;
 
-    public BaseAgent(DistanceShape shape) {
+    public BaseAgent(DistancePhysicalEntity shape, Velocity velocity) {
         super(shape);
-        this.shape = shape;
-        this.currTimestamp = 0;
-        this.currVelocity = new Velocity2D(0, 0);
-        this.mass = 80;
-        Circle2D circle = new Circle2D(shape.getReferencePoint(),2);
+        this.physicalEntity = shape;
+        this.physicalEntity.setVelocity(velocity);
+        this.physicalEntity.setMass(80);  //FIXME 行人的质量
+        if (this.physicalEntity instanceof RotatablePhysicalEntity) {
+            ((RotatablePhysicalEntity) this.physicalEntity).setInertia(4);  //FIXME 行人的转动惯量
+        }
+        Circle2D circle = new Circle2D(shape.getReferencePoint(),3);
         this.view = circle;
     }
 
@@ -40,8 +37,8 @@ public class BaseAgent extends Entity implements Agent {
      * @return 实体的形状.
      */
     @Override
-    public DistanceShape getShape() {
-        return shape;
+    public DistancePhysicalEntity getPhysicalEntity() {
+        return physicalEntity;
     }
 
     /**
@@ -51,17 +48,22 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public Velocity getVelocity() {
-        return currVelocity;
+        return physicalEntity.getVelocity();
+    }
+
+    @Override
+    public Point getPosition() {
+        return physicalEntity.getReferencePoint();
     }
 
     /**
      * 将实体以一定大小的力推向目标点。
      *
-     * @param force 推时力的大小
+     * @param affection 推时力的大小
      */
     @Override
-    public void push(Force force) {
-        this.pushed.add(force);
+    public void push(Affection affection) {
+        this.physicalEntity.push(affection);
     }
 
     /**
@@ -72,6 +74,7 @@ public class BaseAgent extends Entity implements Agent {
      * @param startPoint 力作用的位置。
      */
     @Override
+    @Deprecated
     public void push(Force force, Point startPoint) {
         push(force);
     }
@@ -81,106 +84,26 @@ public class BaseAgent extends Entity implements Agent {
      * 该agent只和位于该视域范围内的agent进行交互
      *
      * @return 一个表示该视域范围的形状
-     * @see Shape
+     * @see PhysicalEntity
      */
     @Override
-    // FIXME: 2016/9/3 it should be DistanceShape to support pool selection.
-    public DistanceShape getView() {
+    // FIXME: 2016/9/3 it should be DistancePhysicalEntity to support pool selection.
+    public DistancePhysicalEntity getView() {
         return view;
     }
 
 
-    /**
-     * 获取一个agent的期望速度。
-     * 该agent的速度通常来说取决于其自身及其目标。
-     *
-     * @return 期望速度
-     * @see Velocity
-     */
-    @Override
-    public Velocity expect() {
-        Point point = this.shape.getReferencePoint();
-        return model.getAgentMotivation(point, path.getCurrentGoal(point));
-    }
 
     /**
-     * 决定下一步，agent要走向的目标点。
-     * 同时，agent也会被社会力驱动。
-     * 最终的结果会被act() 方法使用。
-     * 如果当前的时间步长和该agent不同步，那么该agnet 会试着跟上
-     * (或者忽略当agent的时间落后于真正的时间)  TODO?
-     *
-     * @param currSteps 当前的时间
-     * @return 代表要移动的距离和方向的向量。
-     */
-    @Override
-    public Vector determineNext(int currSteps) {
-        if (currSteps >= this.currTimestamp) {
-            this.pushed = model.getPower(this);
-            int dt = currSteps - this.currTimestamp + 1;
-            Iterable<InteractiveEntity> statics = scene.getStaticEntities().select(view);
-            Iterable<Agent> neighbors = scene.getAllAgents().select(view);
-            for (InteractiveEntity entity : statics) {
-
-                entity.affect(this);
-            }
-            for (Agent agent : neighbors) {
-                agent.affect(this);
-            }
-            Velocity temp_v = new Velocity2D(0,0);
-            deltaV = this.pushed.deltaVelocity(mass, dt * model.getTimePerStep());
-            temp_v.add(currVelocity);
-            temp_v.add(deltaV);
-            deltaS = temp_v.deltaDistance(dt * model.getTimePerStep());
-            this.currTimestamp = currSteps;
-            return deltaS;
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * 决定下一步，agent要走向的目标点。
-     * 同时，agent也会被社会力驱动。
-     * 最终的结果会被act() 方法使用。
-     *
-     * @return 代表要移动的距离和方向的向量。
-     */
-    @Override
-    public Vector determineNext() {
-        return determineNext(currTimestamp);
-    }
-
-
-    /**
-     * 获取当前时刻，agent的timestep （TODO这里的这个timestep翻译成时刻？）
-     * timestep从0开始（仿真开始）
-     *
-     * @return 当前的timestep
-     */
-    @Override
-    public int getCurrentSteps() {
-        return currTimestamp;
-    }
-
-    /**
-     * 使用determineNext()方法计算出的结果。
-     * 该方法会将时间往前推进一步。
-     * 当act()成功执行，其还会将之前determineNext()方法计算出的结果清零。
-     * 当无法获得该agent通过determineNext()方法计算所得的结果时，不会有移动。
-     * 当agnet到达目标（或者逃出）时，不会有移动。
+     * 按照当前TimePerStep内受到的作用力的和移动Agent
+     * 当act()成功执行，其还会将当前受力。
+     * 当无法获得该agent被affect而计算所得的结果时，不会有移动。
+     * 当agent到达目标（或者逃出）时，不会有移动。
      */
     @Override
     public void act() {
-        this.currTimestamp++;
-        this.currVelocity.add(deltaV);
-        Point point = shape.getReferencePoint();
-        point.add(deltaS);
-        this.shape.moveTo(point);
-        this.view.moveTo(point);                      //改变视野
-        deltaS = model.zeroVector();
-        deltaV = model.zeroVelocity();
-        pushed = model.zeroForce();
+        physicalEntity.act(model.getTimePerStep());
+        view.moveTo(physicalEntity.getReferencePoint());
     }
 
     /**
@@ -203,27 +126,16 @@ public class BaseAgent extends Entity implements Agent {
         this.path = path;
     }
 
-    protected Scene scene;
-
     /**
-     * 获取当前场景的具体内容
+     * 设置社会力模型，并依照模型维度初始化零向量。
      *
-     * @return 场景
+     * @param model 模型
      */
     @Override
-    public Scene getScene() {
-        return scene;
+    public void setModel(Model model) {
+        this.model = model;
     }
 
-    /**
-     * 设置agent所处的场景
-     *
-     * @param scene 被设置的场景
-     */
-    @Override
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
 
     /**
      * 标明这个Agent已经逃离，稍后将被移除。
@@ -247,16 +159,62 @@ public class BaseAgent extends Entity implements Agent {
      * 当前this所影响的实体
      * 例如，墙会影响agent(反作用，反推)
      *
-     * @param affectedEntity 被影响的实体
+     * @param target 被影响的实体
      * @see Agent
-     * @see SocialForceModel
+     * @see Model
      */
     @Override
-    public void affect(InteractiveEntity affectedEntity) {
-        if (affectedEntity instanceof Agent && !this.equals(affectedEntity)) {
-            Agent agent = (Agent) affectedEntity;
-            agent.push(model.calculate(this, affectedEntity));
+    public void affect(Agent target) {
+        if (this.equals(target)) {
+            this.selfAffect();
         }
+        else {
+            target.push(model.interactAffection(this,target));
+        }
+    }
+
+    @Override
+    public void affectAll(Iterable<Agent> affectableAgents) {
+        for(Agent agent:affectableAgents){
+            affect(agent);
+        }
+    }
+
+    @Override
+    public Palstance getPalstance() {
+        if(physicalEntity instanceof RotatablePhysicalEntity){
+        return ((RotatablePhysicalEntity) physicalEntity).getPalstance();}
+        else return new Palstance2D(0);
+    }
+
+    @Override
+    public double getIntetia() {
+        if(physicalEntity instanceof RotatablePhysicalEntity){
+            return ((RotatablePhysicalEntity) physicalEntity).getInertia();}
+        else return 0;
+    }
+
+
+    /**
+     * BaseAgent以模型场力的形式影响自己
+     * @see Agent
+     * @see Model
+     */
+    public void selfAffect(){
+        if (physicalEntity instanceof RotatablePhysicalEntity){
+            double angle = ((Ellipse2D) physicalEntity).getAngle();
+            Vector2D face = new Vector2D(-Math.sin(angle),Math.cos(angle));
+            Velocity2D expected = new Velocity2D(0,0);
+            expected.sub(physicalEntity.getReferencePoint());
+            expected.add(path.nextStep(physicalEntity.getReferencePoint()));
+            double size = Vector2D.getRotateAngle(expected , face);
+            physicalEntity.push(new Moment2D(size*40));  //FIXME 恢复正身转矩的计算公式（修改“40”）
+        }
+    }
+
+    @Override
+    public Velocity getAcceleration() {
+        return physicalEntity.getAcceleration();
     }
 
     /**
@@ -267,11 +225,62 @@ public class BaseAgent extends Entity implements Agent {
      */
     @Override
     public double getMass() {
-        return mass;
+        return physicalEntity.getMass();
+    }
+
+    @Override
+    public BaseAgent clone() {
+        return new BaseAgent(physicalEntity.clone(), getVelocity().clone());
     }
 
 
     public String toString(){
-        return this.shape.toString();
+        return "PhysicalEntity:" + this.physicalEntity.toString() + "\tVelocity:" + getVelocity().toString();
     }
+
+    /**
+     * 一个Blockable可阻挡的面积
+     * @return 代表可阻挡范围的Shape
+     */
+    @Override
+    public PhysicalEntity blockSize() {
+        return this.getPhysicalEntity().clone();
+    }
+
+    /**
+     * Agent加入scene会判断是否与场景中现有entity重叠
+     * @param scene 触发的场景。
+     * @return 返回是否加入成功
+     */
+    @Override
+    public boolean onAdded(Scene scene) {
+        for(Iterator<InteractiveEntity> iterator = scene.getAllEntitiesStream().iterator();iterator.hasNext();){
+            InteractiveEntity entity = iterator.next();
+            if(physicalEntity.intersects(entity.getPhysicalEntity())){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void onStep(Scene scene) {
+
+    }
+
+    public void setVelocity(Velocity2D velocity){
+        this.physicalEntity.setVelocity(velocity);
+    }
+
+
+    double EXPECTED_ANGLE = 0;
+
+    public void setExpectedAngle(double Expect) {
+        EXPECTED_ANGLE = Expect;
+    }
+
+    public double getExpectedAngle() {
+        return EXPECTED_ANGLE;
+    }
+
 }

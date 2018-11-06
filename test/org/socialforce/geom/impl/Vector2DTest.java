@@ -128,13 +128,23 @@ public class Vector2DTest {
 
     @Test
     public void SpinTest() throws Exception{
-        zero.spin(1231);
+        zero.rotate(1231);
         assertEquals(new Vector2D(0,0),zero);
         Vector2D vector2D = new Vector2D(5,0);
-        vector2D.spin(Math.atan2(4,3));
+        vector2D.rotate(Math.atan2(4,3));
         assertEquals(a,vector2D);
-        a.spin(Math.PI/2);
+        a.rotate(Math.PI/2);
         assertEquals(new Vector2D(-4,3),a);
 
     }
+
+    @Test
+    public void getRotateAngle() throws Exception{
+        Vector2D vr = new Vector2D(-1,-1);
+        Vector2D vb = new Vector2D(1,0);
+        System.out.print(Vector2D.getRotateAngle(vr,vb));
+
+
+    }
+
 }

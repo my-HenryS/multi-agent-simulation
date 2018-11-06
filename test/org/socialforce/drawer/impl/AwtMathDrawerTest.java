@@ -18,7 +18,7 @@ public abstract class AwtMathDrawerTest {
         Graphics2D gra = image.createGraphics();
 
 
-        // transform shape to a coorniate x[-5,5], y[-5,5].
+        // transform physicalEntity to a coorniate x[-5,5], y[-5,5].
 
         AffineTransform transform = new AffineTransform();
 

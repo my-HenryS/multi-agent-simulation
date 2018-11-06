@@ -3,15 +3,13 @@ package org.socialforce.geom.impl;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.geom.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Ledenel on 2016/8/8.
  */
-public class Box2D implements Box {
+public class Box2D extends Shape2D implements Box {
     /**
      * 表明是否有其他对象“等于”这一个.
      * <p>
@@ -110,7 +108,7 @@ public class Box2D implements Box {
     }
 
     /**
-     * 检查点是否属于 <code>Shape</code>.
+     * 检查点是否属于 <code>PhysicalEntity</code>.
      *
      * @param point 将被检查的点.
      * @return 如果点是该形状的一部分，就为真，否则为假.
@@ -271,14 +269,11 @@ public class Box2D implements Box {
     @Override
     public boolean hits(Box hitbox) {
         Box2D in = quiteConvert(hitbox);
-        return ((ymin <= in.ymin && in.ymin <= ymax) ||
-                (ymin <= in.ymax && in.ymax <= ymax)||
-                (ymin <= in.ymax && in.ymin <= ymin)||
-                (in.ymin <= ymax && ymax <= in.ymax)) &&
-                ((xmin <= in.xmin && in.xmin <= xmax) ||
-                 (xmin <= in.xmax && in.xmax <= xmax)||
-                 (in.xmin <= xmin && xmin <= in.xmax)
-                ||(in.xmin <= xmax && xmax <= in.xmax));
+        double zx = Math.abs(xmin + xmax - in.xmin - in.xmax); //两矩形重心在x轴上距离的2倍
+        double zy = Math.abs(ymin + ymax - in.ymin - in.ymax); //两矩形重心在y轴上距离的2倍
+        double x = (xmax - xmin) + (in.xmax - in.xmin); //两矩形在x轴上边长的和
+        double y = (ymax - ymin) + (in.ymax - in.ymin); //两矩形在y轴上边长的和
+        return zx<=x && zy<=y;
     }
 
     /**
@@ -317,7 +312,7 @@ public class Box2D implements Box {
      * @return 这个形状的副本.
      */
     @Override
-    public Shape clone() {
+    public PhysicalEntity clone() {
         Box2D cloned = new Box2D();
         cloned.xmin = xmin;
         cloned.xmax = xmax;
@@ -396,6 +391,7 @@ public class Box2D implements Box {
         return ymax;
     }
 
+
     /**
      * 获取维度实体的维度.
      *
@@ -415,15 +411,13 @@ public class Box2D implements Box {
      * @return
      */
     @Override
-    public Shape[] clip(ClippableShape shape) {
+    public PhysicalEntity[] clip(ClippablePhysicalEntity shape) {
         Point[][] dictionary = new Point[2][2];
         if(shape instanceof Box2D){
-            Shape[] Boxes;
+            PhysicalEntity[] Boxes;
             if (hits(shape.getBounds())){
-                if ((((Box2D) shape).getStartPoint().getX()<getStartPoint().getX()&&getEndPoint().getX()<((Box2D) shape).getEndPoint().getX())
-                        ||(((Box2D) shape).getStartPoint().getX()>getStartPoint().getX()&&getEndPoint().getX()>((Box2D) shape).getEndPoint().getX())){
-                    if ((((Box2D) shape).getStartPoint().getY()<getStartPoint().getY()&&getEndPoint().getY()<((Box2D) shape).getEndPoint().getY())
-                            ||(((Box2D) shape).getStartPoint().getY()>getStartPoint().getY()&&getEndPoint().getY()>((Box2D) shape).getEndPoint().getY())){
+                if((xmin <= ((Box2D) shape).getXmin() && ((Box2D) shape).getXmax() <= xmax && ymax <= ((Box2D) shape).getYmax() && ((Box2D) shape).getYmin() <= ymin)
+                    || (xmin >= ((Box2D) shape).getXmin() && ((Box2D) shape).getXmax() >= xmax && ymax >= ((Box2D) shape).getYmax() && ((Box2D) shape).getYmin() >= ymin)){
                         dictionary[0][0] = ((Box2D) shape).getStartPoint();
                         dictionary[1][1] = ((Box2D) shape).getEndPoint();
                         if (((Box2D) shape).getStartPoint().getX()<getStartPoint().getX()){
@@ -433,42 +427,31 @@ public class Box2D implements Box {
                             dictionary[1][0] = new Point2D(((Box2D) shape).getEndPoint().getX(),getStartPoint().getY());
                             dictionary[0][1] = new Point2D(((Box2D) shape).getStartPoint().getX(),getEndPoint().getY());
                         }
-                        Boxes = new Shape[]{new Box2D((dictionary)[0][0],dictionary[1][0]),new Box2D(dictionary[0][1],dictionary[1][1])};
+                        Boxes = new PhysicalEntity[]{new Box2D((dictionary)[0][0],dictionary[1][0]),new Box2D(dictionary[0][1],dictionary[1][1])};
                         return Boxes;
                     }
-                    else throw new IllegalArgumentException("目前阶段不支持以一般方式进行矩形切割，只支持十字形切割");
+                else{
+                    //System.out.println("目前阶段不支持以一般方式进行矩形切割，只支持十字形切割");
+                    return new PhysicalEntity[]{shape};
                 }
-                else throw new IllegalArgumentException("目前阶段不支持以一般方式进行矩形切割，只支持十字形切割");
-            }
-            else return new Shape[]{shape};
+                }
+            else return new PhysicalEntity[]{shape};
         }
         else throw new IllegalArgumentException("目前阶段不支持其它图形的切割，只支持两个矩形的切割");
     }
 
-    /**
-     * 控制伸展的方向。
-     * true为X方向，false为Y方向。
-     * 默认为向X方向伸展，即true
-     */
-    protected boolean xAxisExpanded = true;
-    public void setxAxisExpanded(boolean direction){
-        xAxisExpanded = direction;
+   @Override
+    public Box2D expandBy(double extent) {
+        xmin -= extent;
+        ymin -= extent;
+        xmax += extent;
+        ymax += extent;
+       return this;
     }
+
     @Override
-    public void expandTo(double width) {
-        double tempmin,tempmax;
-        if (xAxisExpanded){
-            tempmin = (xmax+xmin-width)/2;
-            tempmax = (xmin+xmax+width)/2;
-            xmin = tempmin;
-            xmax = tempmax;
-        }
-        else {
-            tempmin = (ymax+ymin-width)/2;
-            tempmax = (ymin+ymax+width)/2;
-            ymin = tempmin;
-            ymax = tempmax;
-        }
+    public double getArea() {
+        return (xmax - xmin)*(ymax - ymin);
     }
 
     public String toString(){

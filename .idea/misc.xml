@@ -17,21 +17,31 @@
     <option name="OPTION_DEPRECATED_LIST" value="true" />
     <option name="OTHER_OPTIONS" value="-encoding UTF-8 -charset UTF-8" />
     <option name="HEAP_SIZE" />
-    <option name="LOCALE" value="en_US" />
+    <option name="LOCALE" value="zh_CN" />
     <option name="OPEN_IN_BROWSER" value="true" />
     <option name="OPTION_INCLUDE_LIBS" value="false" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
-    <OptionsSetting value="true" id="Add" />
-    <OptionsSetting value="true" id="Remove" />
-    <OptionsSetting value="true" id="Checkout" />
-    <OptionsSetting value="true" id="Update" />
-    <OptionsSetting value="true" id="Status" />
-    <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
-    <ConfirmationsSetting value="0" id="Remove" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/../dl4j-examples/arbiter-examples/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/datavec-examples/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/dl4j-cuda-specific-examples/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/dl4j-examples/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/dl4j-spark-examples/dl4j-spark/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/dl4j-spark-examples/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/nd4j-examples/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/pom.xml" />
+        <option value="$PROJECT_DIR$/../dl4j-examples/rl4j-examples/pom.xml" />
+      </set>
+    </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.8 (1)" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

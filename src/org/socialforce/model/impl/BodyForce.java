@@ -1,7 +1,8 @@
 package org.socialforce.model.impl;
 
+import org.socialforce.geom.Affection;
 import org.socialforce.geom.Force;
-import org.socialforce.geom.impl.Circle2D;
+import org.socialforce.geom.impl.Ellipse2D;
 import org.socialforce.geom.impl.Force2D;
 import org.socialforce.geom.impl.Vector2D;
 import org.socialforce.model.*;
@@ -13,35 +14,35 @@ import org.socialforce.model.*;
  * Created by Whatever on 2016/8/26.
  *
  */
-public class BodyForce implements ForceRegulation{
-    @Override
-    public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
-        if ((source instanceof Agent && target instanceof Agent || source instanceof Wall && target instanceof Agent ) &&
-                ((Agent) target).getShape().intersects(source.getShape())){
-            return true;
-        }
-        else
-        return false;
+public class BodyForce extends TypeMatchRegulation<Blockable, Agent>{
+    public BodyForce(Class<Blockable> blockableClass, Class<Agent> agentClass, Model model) {
+        super(blockableClass, agentClass, model);
     }
 
     @Override
-    public Force getForce(InteractiveEntity source, InteractiveEntity target) {
+    public boolean hasForce(InteractiveEntity source, InteractiveEntity target) {
+        return super.hasForce(source,target) && ((Agent)target).getPhysicalEntity().distanceTo(source.getPhysicalEntity()) <=0;
+    }
+
+    @Override
+    public Affection getForce(Blockable source, Agent target) {
         double k1,k2,g,bodyForce,slidingForce,distance,argumentX;
         Vector2D t,n,tempVector;
         k1 = 1.2 * 100000;
         k2 = 2.4 * 100000;
-        g = 0;
-        argumentX = 1;
+        g = 1;
         double temp[] = new double[2];
         if (source instanceof Moveable){
-        tempVector = (Vector2D) ((Moveable)source).getVelocity().clone();}
-        else tempVector = new Vector2D(0,0);
-        tempVector.sub(((Agent)target).getVelocity());
-        n = (Vector2D) ((Circle2D)target.getShape()).directionTo(source.getShape());
+            tempVector = (Vector2D)((Moveable)source).getVelocity().clone();
+        }
+        else
+            tempVector = new Vector2D(0,0);
+        tempVector.sub(target.getVelocity());
+        n = (Vector2D) target.getPhysicalEntity().directionTo(source.getPhysicalEntity());
         n.get(temp);
         t = new Vector2D(-temp[1],temp[0]);
-        distance = ((Circle2D)target.getShape()).distanceTo(source.getShape());
-        if (distance < 0){g = argumentX;}
+        distance = (target.getPhysicalEntity().distanceTo(source.getPhysicalEntity()));
+        if (distance > 0){g = 0;}
         bodyForce =  k1*g*Math.abs(distance);
         slidingForce = k2*g*Math.abs(distance)*t.dot(tempVector);
         n.scale(bodyForce);
@@ -50,4 +51,5 @@ public class BodyForce implements ForceRegulation{
         n.get(temp);
         return new Force2D(temp[0],temp[1]);
     }
+
 }

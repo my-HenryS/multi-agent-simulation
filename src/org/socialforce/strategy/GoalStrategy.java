@@ -11,6 +11,9 @@ import org.socialforce.model.Agent;
  * Created by sunjh1999 on 2016/12/14.
  */
 public interface GoalStrategy {
+    /**
+     * 为Agent选择出口，规划路径
+     */
     void pathDecision();
 }
 

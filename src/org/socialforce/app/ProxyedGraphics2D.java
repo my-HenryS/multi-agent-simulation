@@ -66,12 +66,12 @@ public class ProxyedGraphics2D extends Graphics2D {
     }
 
     /**
-     * Strokes the outline of a <code>Shape</code> using the settings of the
+     * Strokes the outline of a <code>PhysicalEntity</code> using the settings of the
      * current <code>Graphics2D</code> context.  The rendering attributes
      * applied include the <code>Clip</code>, <code>Transform</code>,
      * <code>Paint</code>, <code>Composite</code> and
      * <code>Stroke</code> attributes.
-     * @param s the <code>Shape</code> to be rendered
+     * @param s the <code>PhysicalEntity</code> to be rendered
      * @see #setStroke
      * @see #setPaint
      * @see Graphics#setColor
@@ -355,11 +355,11 @@ public class ProxyedGraphics2D extends Graphics2D {
     }
 
     /**
-     * Fills the interior of a <code>Shape</code> using the settings of the
+     * Fills the interior of a <code>PhysicalEntity</code> using the settings of the
      * <code>Graphics2D</code> context. The rendering attributes applied
      * include the <code>Clip</code>, <code>Transform</code>,
      * <code>Paint</code>, and <code>Composite</code>.
-     * @param s the <code>Shape</code> to be filled
+     * @param s the <code>PhysicalEntity</code> to be filled
      * @see #setPaint
      * @see Graphics#setColor
      * @see #transform
@@ -374,24 +374,24 @@ public class ProxyedGraphics2D extends Graphics2D {
     }
 
     /**
-     * Checks whether or not the specified <code>Shape</code> intersects
+     * Checks whether or not the specified <code>PhysicalEntity</code> intersects
      * the specified {@link Rectangle}, which is in device
      * space. If <code>onStroke</code> is false, this method checks
-     * whether or not the interior of the specified <code>Shape</code>
+     * whether or not the interior of the specified <code>PhysicalEntity</code>
      * intersects the specified <code>Rectangle</code>.  If
      * <code>onStroke</code> is <code>true</code>, this method checks
      * whether or not the <code>Stroke</code> of the specified
-     * <code>Shape</code> outline intersects the specified
+     * <code>PhysicalEntity</code> outline intersects the specified
      * <code>Rectangle</code>.
      * The rendering attributes taken into account include the
      * <code>Clip</code>, <code>Transform</code>, and <code>Stroke</code>
      * attributes.
      * @param rect the area in device space to check for a hit
-     * @param s the <code>Shape</code> to check for a hit
+     * @param s the <code>PhysicalEntity</code> to check for a hit
      * @param onStroke flag used to choose between testing the
-     * stroked or the filled shape.  If the flag is <code>true</code>, the
+     * stroked or the filled physicalEntity.  If the flag is <code>true</code>, the
      * <code>Stroke</code> outline is tested.  If the flag is
-     * <code>false</code>, the filled <code>Shape</code> is tested.
+     * <code>false</code>, the filled <code>PhysicalEntity</code> is tested.
      * @return <code>true</code> if there is a hit; <code>false</code>
      * otherwise.
      * @see #setStroke
@@ -470,7 +470,7 @@ public class ProxyedGraphics2D extends Graphics2D {
     /**
      * Sets the <code>Stroke</code> for the <code>Graphics2D</code> context.
      * @param s the <code>Stroke</code> object to be used to stroke a
-     * <code>Shape</code> during the rendering process
+     * <code>PhysicalEntity</code> during the rendering process
      * @see BasicStroke
      * @see #getStroke
      */
@@ -484,7 +484,7 @@ public class ProxyedGraphics2D extends Graphics2D {
      * Hint categories include controls for rendering quality and overall
      * time/quality trade-off in the rendering process.  Refer to the
      * <code>RenderingHints</code> class for definitions of some common
-     * keys and values.
+     * keys and parameters.
      * @param hintKey the key of the hint to be set.
      * @param hintValue the value indicating preferences for the specified
      * hint category.
@@ -501,10 +501,10 @@ public class ProxyedGraphics2D extends Graphics2D {
      * Hint categories include controls for rendering quality and overall
      * time/quality trade-off in the rendering process.  Refer to the
      * <code>RenderingHints</code> class for definitions of some common
-     * keys and values.
+     * keys and parameters.
      * @param hintKey the key corresponding to the hint to get.
      * @return an object representing the value for the specified hint key.
-     * Some of the keys and their associated values are defined in the
+     * Some of the keys and their associated parameters are defined in the
      * <code>RenderingHints</code> class.
      * @see RenderingHints
      * @see #setRenderingHint(RenderingHints.Key, Object)
@@ -515,15 +515,15 @@ public class ProxyedGraphics2D extends Graphics2D {
     }
 
     /**
-     * Replaces the values of all preferences for the rendering
+     * Replaces the parameters of all preferences for the rendering
      * algorithms with the specified <code>hints</code>.
-     * The existing values for all rendering hints are discarded and
-     * the new set of known hints and values are initialized from the
+     * The existing parameters for all rendering hints are discarded and
+     * the new set of known hints and parameters are initialized from the
      * specified {@link Map} object.
      * Hint categories include controls for rendering quality and
      * overall time/quality trade-off in the rendering process.
      * Refer to the <code>RenderingHints</code> class for definitions of
-     * some common keys and values.
+     * some common keys and parameters.
      * @param hints the rendering hints to be set
      * @see #getRenderingHints
      * @see RenderingHints
@@ -534,16 +534,16 @@ public class ProxyedGraphics2D extends Graphics2D {
     }
 
     /**
-     * Sets the values of an arbitrary number of preferences for the
+     * Sets the parameters of an arbitrary number of preferences for the
      * rendering algorithms.
-     * Only values for the rendering hints that are present in the
+     * Only parameters for the rendering hints that are present in the
      * specified <code>Map</code> object are modified.
      * All other preferences not present in the specified
      * object are left unmodified.
      * Hint categories include controls for rendering quality and
      * overall time/quality trade-off in the rendering process.
      * Refer to the <code>RenderingHints</code> class for definitions of
-     * some common keys and values.
+     * some common keys and parameters.
      * @param hints the rendering hints to be set
      * @see RenderingHints
      */
@@ -559,7 +559,7 @@ public class ProxyedGraphics2D extends Graphics2D {
      * Returns all of the hint key/value pairs that were ever specified in
      * one operation.  Refer to the
      * <code>RenderingHints</code> class for definitions of some common
-     * keys and values.
+     * keys and parameters.
      * @return a reference to an instance of <code>RenderingHints</code>
      * that contains the current preferences.
      * @see RenderingHints
@@ -840,8 +840,8 @@ public class ProxyedGraphics2D extends Graphics2D {
 
     /**
      * Intersects the current <code>Clip</code> with the interior of the
-     * specified <code>Shape</code> and sets the <code>Clip</code> to the
-     * resulting intersection.  The specified <code>Shape</code> is
+     * specified <code>PhysicalEntity</code> and sets the <code>Clip</code> to the
+     * resulting intersection.  The specified <code>PhysicalEntity</code> is
      * transformed with the current <code>Graphics2D</code>
      * <code>Transform</code> before being intersected with the current
      * <code>Clip</code>.  This method is used to make the current
@@ -851,9 +851,9 @@ public class ProxyedGraphics2D extends Graphics2D {
      * clipping associated with device bounds and visibility.  If no clip has
      * previously been set, or if the clip has been cleared using
      * {@link Graphics#setClip(Shape) setClip} with a <code>null</code>
-     * argument, the specified <code>Shape</code> becomes the new
+     * argument, the specified <code>PhysicalEntity</code> becomes the new
      * user clip.
-     * @param s the <code>Shape</code> to be intersected with the current
+     * @param s the <code>PhysicalEntity</code> to be intersected with the current
      *          <code>Clip</code>.  If <code>s</code> is <code>null</code>,
      *          this method clears the current <code>Clip</code>.
      */
@@ -986,7 +986,7 @@ public class ProxyedGraphics2D extends Graphics2D {
      * <p>
      * Pixels that are of colors other than those two colors are changed
      * in an unpredictable but reversible manner; if the same figure is
-     * drawn twice, then all pixels are restored to their original values.
+     * drawn twice, then all pixels are restored to their original parameters.
      * @param     c1 the XOR alternation color
      */
     @Override
@@ -1119,7 +1119,7 @@ public class ProxyedGraphics2D extends Graphics2D {
      * If no clip has previously been set, or if the clip has been
      * cleared using <code>setClip(null)</code>, this method returns
      * <code>null</code>.
-     * @return a <code>Shape</code> object representing the
+     * @return a <code>PhysicalEntity</code> object representing the
      *              current clipping area, or <code>null</code> if
      *              no clip is set.
      * @see         Graphics#getClipBounds
@@ -1134,16 +1134,16 @@ public class ProxyedGraphics2D extends Graphics2D {
     }
 
     /**
-     * Sets the current clipping area to an arbitrary clip shape.
-     * Not all objects that implement the <code>Shape</code>
+     * Sets the current clipping area to an arbitrary clip physicalEntity.
+     * Not all objects that implement the <code>PhysicalEntity</code>
      * interface can be used to set the clip.  The only
-     * <code>Shape</code> objects that are guaranteed to be
-     * supported are <code>Shape</code> objects that are
+     * <code>PhysicalEntity</code> objects that are guaranteed to be
+     * supported are <code>PhysicalEntity</code> objects that are
      * obtained via the <code>getClip</code> method and via
      * <code>Rectangle</code> objects.  This method sets the
      * user clip, which is independent of the clipping associated
      * with device bounds and window visibility.
-     * @param clip the <code>Shape</code> to use to set the clip
+     * @param clip the <code>PhysicalEntity</code> to use to set the clip
      * @see         Graphics#getClip()
      * @see         Graphics#clipRect
      * @see         Graphics#setClip(int, int, int, int)
@@ -1955,7 +1955,7 @@ public class ProxyedGraphics2D extends Graphics2D {
      * cleared using <code>setClip(null)</code>, this method returns the
      * specified <code>Rectangle</code>.
      * @param  r    the rectangle where the current clipping area is
-     *              copied to.  Any current values in this rectangle are
+     *              copied to.  Any current parameters in this rectangle are
      *              overwritten.
      * @return the bounding rectangle of the current clipping area.
      */

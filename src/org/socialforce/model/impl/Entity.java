@@ -1,18 +1,31 @@
 package org.socialforce.model.impl;
 
-import org.socialforce.app.Scene;
+import org.socialforce.drawer.Drawer;
+import org.socialforce.geom.PhysicalEntity;
+import org.socialforce.scene.Scene;
 import org.socialforce.model.InteractiveEntity;
 import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
-import org.socialforce.model.SocialForceModel;
+import org.socialforce.model.Model;
 
 /**
  * 定义了抽象类Entity，其实现了接口InteractiveEntity的方法。
  *  * Created by Ledenel on 2016/8/14.
  */
 public abstract class Entity implements InteractiveEntity {
-    protected SocialForceModel model;
-    protected Shape shape;
+    protected Model model;
+    protected PhysicalEntity physicalEntity;
+
+    @Override
+    public Drawer getDrawer() {
+        return drawer;
+    }
+
+    @Override
+    public void setDrawer(Drawer drawer) {
+        this.drawer = drawer;
+    }
+
+    protected Drawer drawer;
 
     @Override
     public Scene getScene() {
@@ -48,39 +61,38 @@ public abstract class Entity implements InteractiveEntity {
 
     /**
      *
-     * @param shape
+     * @param physicalEntity
      */
-    public Entity(Shape shape) {
-        this.shape = shape;
+    public Entity(PhysicalEntity physicalEntity) {
+        this.physicalEntity = physicalEntity;
     }
 
     /**
      *
      * @param model
-     * @param shape
+     * @param physicalEntity
      */
-    public Entity(SocialForceModel model, Shape shape) {
+    public Entity(Model model, PhysicalEntity physicalEntity) {
         this.model = model;
-        this.shape = shape;
+        this.physicalEntity = physicalEntity;
     }
 
     /**
      * 设置一个实体的形状
      * 如线，矩形，圆等。
      */
-    public void setShape(Shape shape) {
-        this.shape = shape;
+    public void setPhysicalEntity(PhysicalEntity physicalEntity) {
+        this.physicalEntity = physicalEntity;
     }
 
     /**
      * 获取一个实体的形状
      * 如线，矩形，圆等。
      *
-     * @return shape 实体的形状.
+     * @return physicalEntity 实体的形状.
      */
-    @Override
-    public Shape getShape() {
-        return shape;
+    public PhysicalEntity getPhysicalEntity() {
+        return physicalEntity;
     }
 
     /**
@@ -89,7 +101,7 @@ public abstract class Entity implements InteractiveEntity {
      * @return model 模型
      */
     @Override
-    public SocialForceModel getModel() {
+    public Model getModel() {
         return model;
     }
 
@@ -99,17 +111,23 @@ public abstract class Entity implements InteractiveEntity {
      * @param model 模型
      */
     @Override
-    public void setModel(SocialForceModel model) {
+    public void setModel(Model model) {
         this.model = model;
     }
 
     /**
      * 将该实体放置在一个特殊的点上。
-     * TODO the shape will {@code moveTo} that point.
+     * TODO the physicalEntity will {@code moveTo} that point.
      * @param point 目标点。
      */
     @Override
     public void placeOn(Point point) {
-        shape.moveTo(point);
+        physicalEntity.moveTo(point);
     }
+
+    @Override
+    public Entity clone(){
+        return null;
+    }
+
 }

@@ -1,9 +1,8 @@
 package org.socialforce.strategy;
 
-import org.socialforce.app.Scene;
 import org.socialforce.geom.Point;
 import org.socialforce.model.Agent;
-import org.socialforce.strategy.Path;
+import org.socialforce.scene.Scene;
 
 /**
  *在场景中，agent 的路径搜索器，
@@ -15,25 +14,34 @@ import org.socialforce.strategy.Path;
 public interface PathFinder {
 
     /**
-     * 获取Pathfinder为Agent生成的路径。
+     * 获取Pathfinder根据goal生成的矢量场。
      * @return 搜索出的路径。
      */
-    Path plan_for();
+    Path plan_for(Point goal);
 
     /**
-     * 设置Pathfinder的参数。
-     * @param agent 目标agent
+     * 获取Pathfinder根据goal且必须包含某些给定点的矢量场。
+     * @return 搜索出的路径。
      */
-    void applyAgent(Agent agent);
+    Path constraint_plan_for(Point goal, Point ... toBeContained);
 
     /**
-     * 设置Pathfinder的参数。
-     * @param goal 目标位置
+     * 获取goals集合
      */
-    void applyGoal(Point goal);
+    Point[] getGoals();
 
     /**
-     * 后续处理，目前特指对pathfinder的更改复原（在scene的clone()实现后取消）。
+     * 改动模板scene并使得PathFinder可以根据goal生成新的路径
      */
-    void postProcessing();
+    void addSituation(Scene scene, Point goal);
+
+    /**
+     * 加入新的goal生成新的路径
+     */
+    void addSituation(Point goal);
+
+    /**
+     * 清除缓存
+     */
+    void clearCache();
 }

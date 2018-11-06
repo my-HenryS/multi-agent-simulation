@@ -7,21 +7,24 @@ package org.socialforce.geom;
  * Created by Ledenel on 2016/7/28.
  */
 public interface Point extends Vector {
-    
+
     /**
      * 获取该点的X坐标
+     *
      * @return X坐标
-     */ 
+     */
     double getX();
-    
+
     /**
      * 获取该点的Y坐标.
+     *
      * @return Y坐标
-     */ 
+     */
     double getY();
 
     /**
      * 获取该点到另一个点的距离.
+     *
      * @param other 需要计算距离的另一个点
      * @return 距离.
      */
@@ -31,6 +34,7 @@ public interface Point extends Vector {
      * 获取该点到另一个点的方向矢量.
      * 这个向量的模长为1.
      * 方向指向目标点
+     *
      * @param other 需要计算距离的另一个点
      * @return 距离.
      */
@@ -38,12 +42,14 @@ public interface Point extends Vector {
 
     /**
      * 创建并返回这个点的副本.
+     *
      * @return 这个点的副本.
      */
     Point clone();
 
     /**
      * 将该点移动到目标位置
+     *
      * @param x x轴坐标
      * @param y y轴坐标
      * @return 移动后的点.
@@ -52,6 +58,7 @@ public interface Point extends Vector {
 
     /**
      * 将该点根据偏移量移动到目标位置
+     *
      * @param x x轴坐标偏差
      * @param y y轴坐标偏差
      * @return 移动后的点.
@@ -60,6 +67,7 @@ public interface Point extends Vector {
 
     /**
      * 将该点根据乘数移动到目标位置
+     *
      * @param s 乘数
      * @return 移动后的点.
      */
@@ -67,8 +75,10 @@ public interface Point extends Vector {
 
     /**
      * 计算该点和其他点的曼哈顿距离
+     *
      * @param point 其他点
      * @return 曼哈顿距离
      */
     double Manhattan_Distance(Point point);
+
 }

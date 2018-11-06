@@ -1,17 +1,19 @@
 package org.socialforce.geom.impl;
 
-import org.socialforce.geom.Box;
+import org.socialforce.geom.*;
 import org.socialforce.drawer.Drawer;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
-import org.socialforce.geom.Vector;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**这是一个二维的线段
  *
  * 有两个点定义.
  * Created by Whatever on 2016/8/10.
  */
-public class Segment2D implements Shape {
+public class Segment2D extends Shape2D implements PhysicalEntity {
     //protected Point2D a, b;
     //protected double k1, b1, startX, endX;
     protected double x1, x2, y1, y2;
@@ -36,10 +38,19 @@ public class Segment2D implements Shape {
         }
         //this.a = a;
         //this.b = b;
-        x1 = a.getX();
-        x2 = b.getX();
-        y1 = a.getY();
-        y2 = b.getY();
+        if(a.getX() < b.getX()) {
+            x1 = a.getX();
+            x2 = b.getX();
+            y1 = a.getY();
+            y2 = b.getY();
+        }
+        if(a.getX() > b.getX()) {
+            x1 = b.getX();
+            x2 = a.getX();
+            y1 = b.getY();
+            y2 = a.getY();
+        }
+
        /* if (x1 != x2) {
             k1 = (y1 - y2) / (x1 - x2);
             b1 = y1 - k1 * x1;
@@ -289,8 +300,7 @@ public class Segment2D implements Shape {
         double py4 = line.getExtrimePoint()[1].getY();
         boolean flag = false;
         double d = (x2-x1)*(py4-py3) - (y2-y1)*(px4-px3);
-        if(d!=0)
-        {
+        if(d!=0){
             double r = ((y1-py3)*(px4-px3)-(x1-px3)*(py4-py3))/d;
             double s = ((y1-py3)*(x2-x1)-(x1-px3)*(y2-y1))/d;
             if((r>=0) && (r <= 1) && (s >=0) && (s<=1))
@@ -298,6 +308,21 @@ public class Segment2D implements Shape {
                 flag = true;
             }
         }
+        else {
+            if((x1 == x2)&&(px3 != px4)){
+                if((x1 >= px3)&&(x1 <= px4))
+                    flag = true;
+            }
+            else if((x1 != x2)&&(px3 == px4)){
+                if((px3 >= x1)&&(px3 <= x2))
+                    flag = true;
+            }
+            else{
+                if(this.contains(line.getExtrimePoint()[0])||this.contains(line.getExtrimePoint()[1])||line.contains(getExtrimePoint()[0])||line.contains(getExtrimePoint()[1]))
+                    flag = true;
+            }
+        }
+
         return flag;
     }
 
@@ -310,11 +335,122 @@ public class Segment2D implements Shape {
         Vector2D v1,v2;
         v1 = new Vector2D(x1-center.getX(),y1 - center.getY());
         v2 = new Vector2D(x2-center.getX(),y2 - center.getY());
-        v1.spin(angle);
-        v2.spin(angle);
+        v1.rotate(angle);
+        v2.rotate(angle);
         x1 = center.getX()+v1.values[0];
         x2 = center.getX()+v2.values[0];
         y1 = center.getX()+v1.values[1];
         y2 = center.getX()+v2.values[1];
     }
+
+    public Rectangle2D flatten(double width){
+        return new Rectangle2D((Point2D) getReferencePoint(),getLenth(),width, getAngle());
+    }
+
+    public double getLenth(){
+        return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+    }
+
+    public double getAngle(){
+        if(x1 == x2)
+            return Math.PI/2;
+        return Math.atan2((y2-y1),(x2-x1));
+    }
+
+    public double getK(){
+        if(Math.abs(x1-x2) < 1.0e-7)
+            return Double.POSITIVE_INFINITY;
+        return (y2-y1)/(x2-x1);
+    }
+
+    public double getB(){
+        return (x1*y2-x2*y1)/(x1-x2);
+    }
+
+    @Override
+    public PhysicalEntity expandBy(double extent) {
+        double angel = this.getAngle();
+        x1 -= extent*Math.cos(angel);
+        x2 += extent*Math.cos(angel);
+        y1 -= extent*Math.sin(angel);
+        y2 += extent*Math.sin(angel);
+        return this;
+    }
+
+    @Override
+    public double getArea() {
+        return 0;
+    }
+
+    public Segment2D[] remove(List<Segment2D> segments){
+        /*double[] segmentLeftX = new double[]{};
+        HashMap map = new HashMap();
+        for(int i = 0; i < segments.length; i++){
+            segmentLeftX[i] = (segments[i].getExtrimePoint())[0].getX();
+            map.put(segmentLeftX[i],segments[i]);
+        }
+        Arrays.sort(segmentLeftX);
+        Segment2D[] segmentSort = new Segment2D[]{};
+        for(int i = 0; i < segmentLeftX.length; i++){
+            segmentSort[i] = (Segment2D) map.get(segmentLeftX[i]);
+        }*/
+
+        //排序
+        double[] leftX = new double[segments.size()];
+        double[] tempX = new double[segments.size()];
+        double[] rightX = new double[segments.size()];
+        HashMap map = new HashMap();
+        int i;
+        for(i = 0; i < segments.size(); i++){
+            leftX[i] = (segments.get(i)).getExtrimePoint()[0].getX();
+            tempX[i] = (segments.get(i)).getExtrimePoint()[1].getX();
+            map.put(leftX[i],tempX[i]);
+        }
+        Arrays.sort(leftX);
+        for(i = 0; i < leftX.length; i++){
+            rightX[i] = (double) map.get(leftX[i]);
+        }
+        //融合
+        int count = 0;
+        double[][] blockLine = new double[2][leftX.length];
+        blockLine[0][0] = leftX[0];
+        blockLine[1][0] = rightX[0];
+        for(i = 0; i < (leftX.length-1); i++){
+            if(blockLine[1][count] < leftX[i+1]){
+                //blockLine[1][count] = rightX[i];
+                count++;
+                blockLine[0][count] = leftX[i+1];
+                blockLine[1][count] = rightX[i+1];
+            }
+            else{
+                if(blockLine[1][count] < rightX[i+1])
+                    blockLine[1][count] = rightX[i+1];
+                else
+                    blockLine[1][count] = rightX[i];
+            }
+        }
+        //去除
+        List<Double> pointX = new ArrayList<>();
+        pointX.add(this.getExtrimePoint()[0].getX());
+        for(i = 0; i < count+1; i++){
+            for(int j = 0; j < 2; j++){
+                pointX.add(blockLine[j][i]);
+            }
+        }
+        if(blockLine[0][0] <= this.getExtrimePoint()[0].getX()){
+            pointX.remove(this.getExtrimePoint()[0].getX());
+            pointX.remove(blockLine[0][0]);
+        }
+        if(blockLine[1][count] >= this.getExtrimePoint()[1].getX())
+            pointX.remove(blockLine[1][count]);
+        else
+            pointX.add(this.getExtrimePoint()[1].getX());
+        Segment2D[] restLine = new Segment2D[pointX.size()/2];
+        for(i = 0; i < pointX.size()/2; i++){
+            restLine[i] = new Segment2D(new Point2D(pointX.get(2*i),pointX.get(2*i)*getK()+getB()),new Point2D(pointX.get(2*i+1),pointX.get(2*i+1)*getK()+getB()));
+        }
+        return restLine;
+    }
+
+
 }

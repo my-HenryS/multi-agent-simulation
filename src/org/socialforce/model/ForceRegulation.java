@@ -1,5 +1,6 @@
 package org.socialforce.model;
 
+import org.socialforce.geom.Affection;
 import org.socialforce.geom.Force;
 
 /**
@@ -9,18 +10,20 @@ import org.socialforce.geom.Force;
  */
 public interface ForceRegulation<Source extends InteractiveEntity,Target extends InteractiveEntity> {
     /**
-     *判断源实体和目标实体之间是否有作用力。
+     * 判断源实体和目标实体之间是否有作用力。
+     *
      * @param source
      * @param target
      * @return true 当源实体和目标实体之间是有作用力时返回真。
      */
-    boolean hasForce(InteractiveEntity source,InteractiveEntity target);
+    boolean hasForce(InteractiveEntity source, InteractiveEntity target);
 
     /**
-     *获取源实体和目标实体之间的作用力。
+     * 获取源实体和目标实体之间的作用力。
+     *
      * @param source
      * @param target
      * @return force
      */
-    Force getForce(Source source, Target target);
+    Affection getForce(Source source, Target target);
 }

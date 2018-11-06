@@ -1,10 +1,7 @@
 package org.socialforce.geom.impl;
 
 import org.socialforce.drawer.Drawer;
-import org.socialforce.geom.Box;
-import org.socialforce.geom.Point;
-import org.socialforce.geom.Shape;
-import org.socialforce.geom.Vector;
+import org.socialforce.geom.*;
 
 /**
  * 一个任意的二维矩形
@@ -12,18 +9,19 @@ import org.socialforce.geom.Vector;
  * 角度采用弧度制
  * Created by Whatever on 2016/10/31.
  */
-public class Rectangle2D implements Shape {
+public class Rectangle2D extends Shape2D implements PhysicalEntity {
     protected Point2D center;
-    protected double length,weidth,angle;
+    protected double length, width,angle;
 
     public Rectangle2D(){}
 
-    public Rectangle2D(Point2D center,double length,double weidth,double angle){
+    public Rectangle2D(Point2D center, double length, double width, double angle){
         this.center = center;
         this.length = length;
-        this.weidth = weidth;
+        this.width = width;
         this.angle = angle;
     }
+
     /**
      * set the drawer for the drawable.
      *
@@ -55,7 +53,7 @@ public class Rectangle2D implements Shape {
     }
 
     /**
-     * 检查一个点是否属于 <code>Shape</code>.
+     * 检查一个点是否属于 <code>PhysicalEntity</code>.
      * 实现方法是这样的，利用矢量图。以center为圆心，转成BOX2D，然后判断。
      * @param point 将被检查的点.
      * @return 如果该点是该形状上的一部分，就返回真，否则返回假.
@@ -69,10 +67,10 @@ public class Rectangle2D implements Shape {
         Vector2D distance = (Vector2D) center.directionTo(point);
         distance.scale(Math.abs(center.distanceTo(point)));
         rectangle2D.spin(-temp);
-        distance.spin(-temp);
+        distance.rotate(-temp);
         bound = rectangle2D.getBounds();
         Point2D point2D = new Point2D(center.getX()+distance.values[0],center.getY()+distance.values[1]);
-        //result = bound.contains(new Point2D(center.getX()+distance.values[0],center.getY()+distance.values[1]));
+        //result = bound.contains(new Point2D(center.getX()+distance.parameters[0],center.getY()+distance.parameters[1]));
         if (bound.getDistance(point2D)<10e-7){
             result = true;
         }
@@ -96,10 +94,10 @@ public class Rectangle2D implements Shape {
         Point2D point1,point2,point3,point4;
         Vector distance = new Vector2D(0,0);
         double distanceN = Double.POSITIVE_INFINITY, temp;
-        point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-        point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-        point3 = new Point2D(center.getX()+length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
-        point4 = new Point2D(center.getX()-length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
+        point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        point3 = new Point2D(center.getX()+length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
+        point4 = new Point2D(center.getX()-length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
         bounds = new Segment2D[]{new Segment2D(point1,point2),new Segment2D(point2,point3),new Segment2D(point3,point4),new Segment2D(point4,point1)};
         for (int i = 0;i < bounds.length;i++){
             temp = bounds[i].getDistance(point);
@@ -117,10 +115,10 @@ public class Rectangle2D implements Shape {
         Point2D point1,point2,point3,point4;
         Vector distance = new Vector2D(0,0);
         double distanceN = Double.POSITIVE_INFINITY, temp;
-        point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-        point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-        point3 = new Point2D(center.getX()+length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
-        point4 = new Point2D(center.getX()-length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
+        point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        point3 = new Point2D(center.getX()+length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
+        point4 = new Point2D(center.getX()-length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
         bounds = new Segment2D[]{new Segment2D(point1,point2),new Segment2D(point2,point3),new Segment2D(point3,point4),new Segment2D(point4,point1)};
         for (int i = 0;i < bounds.length;i++){
             temp = bounds[i].getDistance(point);
@@ -153,8 +151,8 @@ public class Rectangle2D implements Shape {
     @Override
     public Box getBounds() {
         Point2D point1,point2;
-        point1 = new Point2D(center.getX()-Math.abs(length*Math.cos(angle)/2)-Math.abs(weidth*Math.sin(angle)/2),center.getY()-Math.abs(length*Math.sin(angle)/2)-Math.abs(weidth*Math.cos(angle)/2));
-        point2 = new Point2D(center.getX()+Math.abs(length*Math.cos(angle)/2)+Math.abs(weidth*Math.sin(angle)/2),center.getY()+Math.abs(length*Math.sin(angle)/2)+Math.abs(weidth*Math.cos(angle)/2));
+        point1 = new Point2D(center.getX()-Math.abs(length*Math.cos(angle)/2)-Math.abs(width *Math.sin(angle)/2),center.getY()-Math.abs(length*Math.sin(angle)/2)-Math.abs(width *Math.cos(angle)/2));
+        point2 = new Point2D(center.getX()+Math.abs(length*Math.cos(angle)/2)+Math.abs(width *Math.sin(angle)/2),center.getY()+Math.abs(length*Math.sin(angle)/2)+Math.abs(width *Math.cos(angle)/2));
         return new Box2D(point1,point2);
     }
 
@@ -169,10 +167,10 @@ public class Rectangle2D implements Shape {
         Segment2D[] bounds;
         Point2D point1,point2,point3,point4;
         if (!getBounds().hits(hitbox)){return false;}
-        else point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-        point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-        point3 = new Point2D(center.getX()+length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
-        point4 = new Point2D(center.getX()-length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
+        else point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        point3 = new Point2D(center.getX()+length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
+        point4 = new Point2D(center.getX()-length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
         bounds = new Segment2D[]{new Segment2D(point1,point2),new Segment2D(point2,point3),new Segment2D(point3,point4),new Segment2D(point4,point1)};
         for (int i = 0;i < bounds.length;i++){
             if (bounds[i].hits(hitbox)){
@@ -192,7 +190,7 @@ public class Rectangle2D implements Shape {
      */
     @Override
     public void moveTo(Point location) {
-        center = (Point2D) location;
+        center = (Point2D) location.clone();
     }
 
     /**
@@ -201,8 +199,8 @@ public class Rectangle2D implements Shape {
      * @return 该形状的副本.
      */
     @Override
-    public Shape clone() {
-        return new Rectangle2D(center,length,weidth,angle);
+    public Rectangle2D clone() {
+        return new Rectangle2D((Point2D) center.clone(),length, width,angle);
     }
 
     /**
@@ -213,37 +211,55 @@ public class Rectangle2D implements Shape {
         this.angle = this.angle +angle;
     }
 
+    public void spin(Point point, double angle){
+        Vector2D vector2D = new Vector2D(center.getX()-point.getX(),center.getY()-point.getY());
+        this.angle = this.angle +angle;
+        vector2D.rotate(angle);
+        center.moveTo(point.getX(),point.getY());
+        center.moveBy(vector2D.values[0],vector2D.values[1]);
+    }
+
     public double getAngle(){
         return angle;
     }
 
     public double[] getScale(){
-        return new double[]{length,weidth};
+        return new double[]{length, width};
     }
-    @Override
-    public boolean equals(Object obj){
-        if (obj instanceof Rectangle2D){
-            Point2D point1,point2,point3,point4,objPoint1,objPoint2,objPoint3,objPoint4;
-            point1 = new Point2D(center.getX()-length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-            point2 = new Point2D(center.getX()+length*Math.cos(angle)/2+weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2-weidth*Math.cos(angle)/2);
-            point3 = new Point2D(center.getX()+length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
-            point4 = new Point2D(center.getX()-length*Math.cos(angle)/2-weidth*Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+weidth*Math.cos(angle)/2);
-            Point2D[] point = new Point2D[]{point1,point2,point3,point4};
-            objPoint1 = new Point2D(((Rectangle2D) obj).center.getX()-((Rectangle2D) obj).length*Math.cos(((Rectangle2D) obj).angle)/2+((Rectangle2D) obj).weidth*Math.sin(((Rectangle2D) obj).angle)/2,((Rectangle2D) obj).center.getY()-((Rectangle2D) obj).length*Math.sin(((Rectangle2D) obj).angle)/2-((Rectangle2D) obj).weidth*Math.cos(((Rectangle2D) obj).angle)/2);
-            objPoint2 = new Point2D(((Rectangle2D) obj).center.getX()+((Rectangle2D) obj).length*Math.cos(((Rectangle2D) obj).angle)/2+((Rectangle2D) obj).weidth*Math.sin(((Rectangle2D) obj).angle)/2,((Rectangle2D) obj).center.getY()+((Rectangle2D) obj).length*Math.sin(((Rectangle2D) obj).angle)/2-((Rectangle2D) obj).weidth*Math.cos(((Rectangle2D) obj).angle)/2);
-            objPoint3 = new Point2D(((Rectangle2D) obj).center.getX()+((Rectangle2D) obj).length*Math.cos(((Rectangle2D) obj).angle)/2-((Rectangle2D) obj).weidth*Math.sin(((Rectangle2D) obj).angle)/2,((Rectangle2D) obj).center.getY()+((Rectangle2D) obj).length*Math.sin(((Rectangle2D) obj).angle)/2+((Rectangle2D) obj).weidth*Math.cos(((Rectangle2D) obj).angle)/2);
-            objPoint4 = new Point2D(((Rectangle2D) obj).center.getX()-((Rectangle2D) obj).length*Math.cos(((Rectangle2D) obj).angle)/2-((Rectangle2D) obj).weidth*Math.sin(((Rectangle2D) obj).angle)/2,((Rectangle2D) obj).center.getY()-((Rectangle2D) obj).length*Math.sin(((Rectangle2D) obj).angle)/2+((Rectangle2D) obj).weidth*Math.cos(((Rectangle2D) obj).angle)/2);
-            Point2D[] objPoint = new Point2D[]{objPoint1,objPoint2,objPoint3,objPoint4};
-            for (int i = 0;i < point.length;i++){
-                if (!((Rectangle2D) obj).contains(point[i])){
-                    return false;
-                }
-                if (!contains(objPoint[i])){
-                    return false;
-                }
+
+
+    public boolean equals(Rectangle2D obj){
+        Point[] point = extremePoints();
+        Point[] objPoint = obj.extremePoints();
+        for (int i = 0;i < point.length;i++){
+            if (!(obj).contains(point[i])){
+                return false;
             }
-            return true; //既不大于也不小于，则等于
+            if (!contains(objPoint[i])){
+                return false;
+            }
         }
-        else return false;
+        return true; //既不大于也不小于，则等于
+    }
+
+    public Point[] extremePoints(){
+        Point[] extremePoints = new Point[4];
+        extremePoints[0] = new Point2D(center.getX()-length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        extremePoints[1] = new Point2D(center.getX()+length*Math.cos(angle)/2+ width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2- width *Math.cos(angle)/2);
+        extremePoints[2] = new Point2D(center.getX()+length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()+length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
+        extremePoints[3] = new Point2D(center.getX()-length*Math.cos(angle)/2- width *Math.sin(angle)/2,center.getY()-length*Math.sin(angle)/2+ width *Math.cos(angle)/2);
+        return extremePoints;
+    }
+
+    @Override
+    public PhysicalEntity expandBy(double extent) {
+        length += 2*extent;
+        width += 2*extent;
+        return this;
+    }
+
+    @Override
+    public double getArea() {
+        return length* width;
     }
 }

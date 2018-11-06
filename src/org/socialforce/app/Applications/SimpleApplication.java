@@ -1,173 +1,57 @@
 package org.socialforce.app.Applications;
 
-import org.socialforce.app.*;
-import org.socialforce.app.impl.preset.SVSR_AgentGenerator;
-import org.socialforce.app.impl.preset.SVSR_Exit;
-import org.socialforce.app.impl.preset.SVSR_SafetyRegion;
-import org.socialforce.app.impl.preset.SquareRoomLoader;
-import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.Circle2D;
-import org.socialforce.geom.impl.Point2D;
-import org.socialforce.model.*;
-import org.socialforce.model.impl.*;
+import org.socialforce.app.Application;
+import org.socialforce.app.ApplicationListener;
+import org.socialforce.drawer.impl.SceneDrawer;
+import org.socialforce.drawer.impl.SceneDrawerInstaller;
+import org.socialforce.model.Model;
+import org.socialforce.model.impl.SimpleForceModel;
+import org.socialforce.scene.Scene;
+import org.socialforce.scene.ValueSet;
+import org.socialforce.strategy.GoalStrategy;
 import org.socialforce.strategy.PathFinder;
-import org.socialforce.strategy.impl.AStarPathFinder;
 
-import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
- * Created by Whatever on 2016/10/22.
+ * Created by Whatever on 2016/12/2.
  */
-public class SimpleApplication implements SocialForceApplication {
-    public SimpleApplication() {
-        singleScene = loader.readScene();
-        singleScene.setApplication(this);
-        SetUp();
-    }
+public abstract class SimpleApplication implements Application {
+    protected GoalStrategy strategy;
+    protected LinkedList<Scene> scenes;
+    protected Scene currentScene;
+    protected ApplicationListener listener;
+    protected boolean Pause = false, Skip = false;
+    protected int minStepForward = 0;
 
-    public void SetUp() {
-        SVSR_Exit exit = new SVSR_Exit();
-        SVSR_AgentGenerator agentGenerator = new SVSR_AgentGenerator(0.7, 0.7, 1, new Box2D(1,1,25,15));
-        SVSR_SafetyRegion safetyRegion = new SVSR_SafetyRegion();
-        exit.setValue((new Box2D[]{new Box2D(-1, 5, 4, 3), new Box2D(10, -1, 3, 4), new Box2D(10, 14, 3, 4), new Box2D(24, 6, 4, 3)}));
-        exit.apply(singleScene);
-        agentGenerator.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(-2, 5, -4, 6)));
-        safetyRegion.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(10, -1, 6, -4)));
-        safetyRegion.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(10, 19, 6, 4)));
-        safetyRegion.apply(singleScene);
-        safetyRegion.setValue(new SafetyRegion(new Box2D(28, 6, 4, 6)));
-        safetyRegion.apply(singleScene);
-        /*singleScene.getStaticEntities().add(model.createStatic(new Box2D(0,0,1,7), SimpleSocialForceModel.STATIC_TYPE_WALL));
-        singleScene.getStaticEntities().add(model.createStatic(new Box2D(0,11,1,5), SimpleSocialForceModel.STATIC_TYPE_WALL));
-        singleScene.getStaticEntities().add(model.createStatic(new Box2D(1,0,11,1), SimpleSocialForceModel.STATIC_TYPE_WALL));
-        singleScene.getStaticEntities().add(model.createStatic(new Box2D(15,0,11,1), SimpleSocialForceModel.STATIC_TYPE_WALL));
-        singleScene.getStaticEntities().add(model.createStatic(new Box2D(1,15,10,1), SimpleSocialForceModel.STATIC_TYPE_WALL));
-        singleScene.getStaticEntities().add(model.createStatic(new Box2D(15,15,10,1), SimpleSocialForceModel.STATIC_TYPE_WALL));
-        singleScene.getStaticEntities().add(model.createStatic(new Box2D(25,1,1,7), SimpleSocialForceModel.STATIC_TYPE_WALL));
-        singleScene.getStaticEntities().add(model.createStatic(new Box2D(25,12,1,4), SimpleSocialForceModel.STATIC_TYPE_WALL));
-        */
-        //为解决穿墙的问题把墙每隔一米切分成多个墙
-        /*
-        for (InteractiveEntity entity : singleScene.getStaticEntities()){
-            if (entity instanceof ComplexBox2D){
-                Box2D[] temp = ((ComplexBox2D) entity).BreakDown();
-                Box2D[] temp1;
-                List<Box2D> list = new ArrayList<Box2D>();
-                double Xmin = ((ComplexBox2D) entity).getBounds().getStartPoint().getX();
-                double Ymin = ((ComplexBox2D) entity).getBounds().getStartPoint().getY();
-                double Xmax = ((ComplexBox2D) entity).getBounds().getEndPoint().getX();
-                double Ymax = ((ComplexBox2D) entity).getBounds().getEndPoint().getY();
-                double min = Xmin,max = Xmax;
-                int flag =0;
-                if (Ymax - Ymin > Xmax - Xmin){min = Ymin;max = Ymax;flag = 1;}
-                for (double a = min;a<max;a++){
-                    for (int b = 0;b < temp.length;b++) {
-                        if (flag == 0) {
-                            if (temp[b].contains(new Point2D(a, Ymax)) && temp[b].contains(new Point2D(a + 1, Ymax))) {
-                                list.add(new Box2D(new Point2D(a, Ymin), new Point2D(a + 1, Ymax)));
-                            }
-                        }
-                        if (flag == 1) {
-                            if (temp[b].contains(new Point2D(Xmax, a)) && temp[b].contains(new Point2D(Xmax, a+1))) {
-                                list.add(new Box2D(new Point2D(Xmin,a ), new Point2D(Xmax, a+1)));
-                            }
-                        }
-                    }
-                }
-                temp1 = list.toArray(new Box2D[1]);
-                for (int i = 0; i < temp1.length;i++){
-                    singleScene.getStaticEntities().add(new Wall(temp1[i]));
-                }
-                singleScene.getStaticEntities().remove(entity);
-            }
-        }
-        */
-    }
-
-    /**
-     * start the application immediately.
-     */
     @Override
-    public void start() {
-        Agent agent;
-        Point2D goal, temp;
-        for (Iterator iter = singleScene.getAllAgents().iterator(); iter.hasNext(); ) {
-            //给所有agent设置path
-            agent = (Agent) iter.next();
-            goal = new Point2D(-3, 8);
-            temp = new Point2D(13, -3);
-            if (temp.distanceTo(agent.getShape().getReferencePoint()) < goal.distanceTo(agent.getShape().getReferencePoint())) {
-                goal = temp;
-            }
-            temp = new Point2D(13, 20);
-            if (temp.distanceTo(agent.getShape().getReferencePoint()) < goal.distanceTo(agent.getShape().getReferencePoint())) {
-                goal = temp;
-            }
-            temp = new Point2D(30, 9);
-            if (temp.distanceTo(agent.getShape().getReferencePoint()) < goal.distanceTo(agent.getShape().getReferencePoint())) {
-                goal = temp;
-            }
-            switch ((int) goal.getY()) {
-                case -3:
-                    temp = new Point2D(13, 1);
-                    break;
-                case 8:
-                    temp = new Point2D(1, 8);
-                    break;
-                case 20:
-                    temp = new Point2D(13, 13);
-                    break;
-                case 9:
-                    temp = new Point2D(23, 9);
-                    break;
-            }
-            //agent.setPath(new StraightPath(agent.getShape().getReferencePoint(), goal));
-            //System.out.println(agent.getPath().toString());
-            agent.setPath(new AStarPathFinder(singleScene, agent, goal).plan_for());
-        }
-
-        while (!singleScene.getAllAgents().isEmpty()) {
-            singleScene.stepNext();
-            try {
-                Thread.sleep(0);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public void stop() {
+        throw new UnsupportedOperationException("不支持类型" + this.getClass() + "的应用停止。");
     }
 
-
-    protected SceneLoader loader = new SquareRoomLoader();
-
-    protected SocialForceModel model = new SimpleSocialForceModel();
-
-    /**
-     * get the social force model the application is using.
-     *
-     * @return the model.
-     */
     @Override
-    public SocialForceModel getModel() {
-        return model;
+    public String getName() {
+        return name;
     }
 
-    /**
-     * set the social force model for the application.
-     *
-     * @param model the model to be set.
-     */
     @Override
-    public void setModel(SocialForceModel model) {
-        this.model = model;
+    public void setName(String name) {
+        this.name = name;
     }
 
+    String name = this.getClass().getSimpleName();
 
-    protected Scene singleScene = new SimpleScene(new Box2D(-50, -50, 100, 100));
+
+    public SimpleApplication(){
+
+    }
+    /**
+     * 需要根据parameter的map来生成一系列scene
+     */
+    public void setUpScenes(){
+        scenes = new LinkedList<>();
+    }
 
     /**
      * get all the scenes the applicaion is simulating.
@@ -175,13 +59,9 @@ public class SimpleApplication implements SocialForceApplication {
      * @return all scenes to simulate.
      */
     @Override
-    public Iterable<Scene> getAllScenes() {
-        return Stream.of(singleScene)::iterator;
+    public LinkedList<Scene> getAllScenes() {
+        return scenes;
     }
-
-
-    protected ApplicationListener listener;
-
     /**
      * get the application listener for the application.
      *
@@ -204,13 +84,83 @@ public class SimpleApplication implements SocialForceApplication {
 
     @Override
     public Scene findScene(ValueSet set) {
-        return singleScene;
+        return null;
     }
-
-    protected List<PathFinder> pathFinder;
 
     @Override
     public List<PathFinder> getAllPathFinders() {
-        return pathFinder;
+        return null;
     }
+
+    public boolean initScene(Scene scene){
+        return scene.init();
+    }
+
+    public void stepNext(Scene scene){
+        if (!Pause){
+            long startT = System.currentTimeMillis();
+            scene.stepNext();
+            long span = System.currentTimeMillis() - startT;
+            long sleepT = (span < minStepForward) ? minStepForward - span : 0;
+            try {
+                Thread.sleep(sleepT);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            ApplicationListener listener = this.getApplicationListener();// 2016/8/23 add step for all agent and statics.
+            if (listener != null) {
+                listener.onStep(this);
+            }
+        }
+        else;//do nothing
+    }
+
+    public void setMinStepForward(int stepForward){
+        this.minStepForward = stepForward;
+    }
+
+    @Override
+    public void pause(){
+        Pause = true;
+    }
+
+    @Override
+    public void resume(){
+        Pause = false;
+    }
+
+    public void skip(){
+        this.Skip = true;
+    }
+
+    public boolean toSkip() {
+        return Skip || currentScene.getAllAgents().isEmpty();
+    }
+
+    boolean terminate = false;
+
+    public void terminate(){
+        skip();
+        terminate = true;
+    }
+
+    /**
+     * 在scene运行结束时调用
+     * @return 是否结束application
+     */
+    public boolean onStop() {
+        boolean tempT = terminate;
+        Skip = false;
+        terminate = false;
+        return tempT;
+    }
+
+    public Scene getCurrentScene(){
+        return currentScene;
+    }
+
+    @Override
+    public void manageDrawer(SceneDrawer drawer){}
+
+
 }

@@ -67,6 +67,15 @@ public class Vector2D implements Vector {
         values[1] = y;
     }
 
+    /**
+     * 由point1指向point2的向量
+     */
+    public Vector2D(Point2D point1,Point2D point2){
+        this();
+        values[0] = point2.getX()-point1.getX();
+        values[1] = point2.getY()-point1.getY();
+    }
+
 
 
     /**
@@ -108,11 +117,12 @@ public class Vector2D implements Vector {
      * @param other 被减数.
      */
     @Override
-    public void sub(Vector other) {
+    public Vector2D sub(Vector other) {
         double[] otherv = quiteConvert(other).values;
         for (int i = 0; i < values.length; i++) {
             values[i] -= otherv[i];
         }
+        return this;
     }
 
     /**
@@ -139,8 +149,8 @@ public class Vector2D implements Vector {
         /*if (this.dimension() == other.dimension()) {
             double[] c = new double[this.dimension()];
             other.get(c);
-            for (int i = 0; i < values.length; i++) {
-                if (values[i] != c[i]) {
+            for (int i = 0; i < parameters.length; i++) {
+                if (parameters[i] != c[i]) {
                     return false;
                 }
             }
@@ -285,7 +295,7 @@ public class Vector2D implements Vector {
      * @return 这个向量的副本.
      */
     @Override
-    public Vector clone() {
+    public Vector2D clone() {
         Vector2D vec = new Vector2D();
         System.arraycopy(values,0,vec.values,0,values.length);
         return vec;
@@ -298,8 +308,8 @@ public class Vector2D implements Vector {
      * 零向量没有参考向量
      * @return 参考向量，即单位向量
      */
-    public Vector getRefVector(){
-        Vector ref;
+    public Vector2D getRefVector(){
+        Vector2D ref;
         if (values[0] == 0 && values[1] == 0){
             return new Vector2D(0,0);
         }
@@ -313,7 +323,7 @@ public class Vector2D implements Vector {
      * 逆时针旋转某个角度
      * @param angle 旋转的角度，为弧度制
      */
-    public void spin(double angle){
+    public void rotate(double angle){
         double r,t;
         r = length();
         t = 0;
@@ -328,7 +338,34 @@ public class Vector2D implements Vector {
     }
 
     public String toString(){
-        return "坐标为： ("+values[0]+"," +values[1]+")";
+        return "("+values[0]+"," +values[1]+")";
+    }
+    public double getX(){return values[0];}
+    public double getY(){return values[1];}
+
+    /**
+     * 获取从基向量逆时针旋转的到环绕向量的旋转角(取值范围:-π_π)
+     * @param vr 环绕向量
+     * @param vb 基向量
+     * @return 旋转角
+     */
+    public static double getRotateAngle(Vector2D vr, Vector2D vb){
+        Vector2D vrR = vr.getRefVector(), vbR = vb.getRefVector();
+        double angle = Math.acos(getDot(vrR, vbR));
+        double cross = vbR.getX() * vrR.getY() - vrR.getX() * vbR.getY();
+        if(cross < 0){
+            angle = - angle;
+        }
+        return angle;
     }
 
+    /**
+     * 获取两个向量的点积
+     * @param v1 向量1
+     * @param v2 向量2
+     * @return 点积
+     */
+    public static double getDot(Vector2D v1, Vector2D v2){
+        return v1.getX() * v2.getX() + v1.getY() * v2.getY();
+    }
 }

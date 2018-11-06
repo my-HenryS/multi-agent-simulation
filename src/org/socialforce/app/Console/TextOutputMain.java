@@ -1,16 +1,13 @@
 package org.socialforce.app.Console;
 
+import org.socialforce.app.Application;
 import org.socialforce.app.ApplicationListener;
-import org.socialforce.app.Applications.ApplicationForECStrategy;
-import org.socialforce.app.Applications.ApplicationForECTest;
-import org.socialforce.app.Scene;
-import org.socialforce.app.Applications.SimpleApplication;
-import org.socialforce.app.SocialForceApplication;
+import org.socialforce.app.Applications.ApplicationForCanteen;
+import org.socialforce.app.Applications.ApplicationForMutidoor;
+import org.socialforce.scene.Scene;
 import org.socialforce.geom.impl.Circle2D;
 import org.socialforce.geom.impl.Point2D;
 import org.socialforce.model.Agent;
-import org.socialforce.model.InteractiveEntity;
-import org.socialforce.model.impl.BaseAgent;
 
 /**
  * Created by Whatever on 2016/10/22.
@@ -18,20 +15,20 @@ import org.socialforce.model.impl.BaseAgent;
 public class TextOutputMain implements ApplicationListener {
     public static void main(String[] args) {
         TextOutputMain TextOutputMain = new TextOutputMain();
-        TextOutputMain.setApplication(new ApplicationForECStrategy());//改应用在这里！
+        TextOutputMain.setApplication(new ApplicationForCanteen());//改应用在这里！
         TextOutputMain.getApplication().setApplicationListener(TextOutputMain);
         TextOutputMain.getApplication().start();
     }
 
-    public SocialForceApplication getApplication() {
+    public Application getApplication() {
         return application;
     }
 
-    public void setApplication(SocialForceApplication application) {
+    public void setApplication(Application application) {
         this.application = application;
     }
 
-    SocialForceApplication application;
+    Application application;
 
     /**
      * triggered while a agent is escaped.
@@ -62,27 +59,25 @@ public class TextOutputMain implements ApplicationListener {
 
     }
 
-    /**
-     * triggered while a scene is step-forwarded.
-     *
-     * @param scene the scene steped-forwarded.
-     */
+
     @Override
-    public void onStep(Scene scene) {
+    public void onStep(Application application) {
+        Scene scene = application.getCurrentScene();
         //TODO: Add your output code HERE
         Circle2D circle = new Circle2D(new Point2D(0, 0), 100);
         String[][] SquareRoom = new String[100][80];
         int number = scene.getAllAgents().size();
         int time = scene.getCurrentSteps();
-        if (!scene.getAllAgents().isEmpty()) {
+        if (scene.getAllAgents().size() != 0) {
             /*if(time%10 ==0){
             System.out.println("目前时间" + time);
             System.out.println("场景中人数" + scene.getAllAgents().size());
-            System.out.println("目前一号智能体的位置是" + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getX() +
-                    "," + scene.getAllAgents().selectTop(circle).getShape().getReferencePoint().getY());*/
-            if (time % 150 == 0) {
+            System.out.println("目前一号智能体的位置是" + scene.getAllAgents().selectTop(circle).getPhysicalEntity().getReferencePoint().getX() +
+                    "," + scene.getAllAgents().selectTop(circle).getPhysicalEntity().getReferencePoint().getY());*/
+            //if (time % 50 == 0) {
                // System.out.println();System.out.println();
-                System.out.println("目前时间" + time*0.002);System.out.println();System.out.println();Iterable<Agent> agents = scene.getAllAgents();
+                //System.out.println("-----------------------------------");
+            //System.out.println();System.out.println();Iterable<Agent> agents = scene.getAllAgents();
                 /*
                 for (int i = -20; i < 80; i++) {
                     for (int j = -20; j < 60; j++) {
@@ -117,7 +112,8 @@ public class TextOutputMain implements ApplicationListener {
                     System.out.println();
                 }
             */
-            }
+            //}
         }
     }
+
 }

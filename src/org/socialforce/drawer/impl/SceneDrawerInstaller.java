@@ -1,20 +1,19 @@
 package org.socialforce.drawer.impl;
 
-import org.socialforce.app.Scene;
+import org.socialforce.scene.Scene;
 import org.socialforce.drawer.Drawable;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
-import org.socialforce.model.Agent;
 import org.socialforce.model.InteractiveEntity;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
  * Created by Ledenel on 2016/8/27.
  */
 public class SceneDrawerInstaller implements DrawerInstaller {
+
     /**
      * creates and set a proper drawer for a drawable.
      *
@@ -24,12 +23,12 @@ public class SceneDrawerInstaller implements DrawerInstaller {
     @Override
     public boolean addDrawerSupport(Drawable drawable) {
         if (drawable instanceof Scene) {
-            drawable.setDrawer(sceneDrawer);
+            if (drawable.getDrawer() == null)drawable.setDrawer(sceneDrawer);
             Scene scene = (Scene) drawable;
             Iterable<InteractiveEntity> iterable = scene.getAllEntitiesStream()::iterator;
             boolean succ = true;
             for(InteractiveEntity entity : iterable) {
-                succ = succ && sceneDrawer.installer.addDrawerSupport(entity.getShape());
+                succ = succ && sceneDrawer.eInstaller.addDrawerSupport(entity);
             }
             return succ;
         }

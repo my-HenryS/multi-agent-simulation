@@ -1,11 +1,9 @@
 package org.socialforce.app;
 
-import org.socialforce.model.Agent;
-
 /**
  * the listener for a social force simulation application.
  * @author Ledenel
- * @see SocialForceApplication
+ * @see Application
  * Created by Ledenel on 2016/8/3.
  */
 public interface ApplicationListener extends AgentEscapeListener {
@@ -21,9 +19,9 @@ public interface ApplicationListener extends AgentEscapeListener {
     void onStop(boolean terminated);
 
     /**
-     * triggered while a scene is step-forwarded.
-     * @param scene the scene steped-forwarded.
+     * triggered while a application is step-forwarded.
+     * @param application the application steped-forwarded.
      */
-    void onStep(Scene scene);
+    void onStep(Application application);
 
 }

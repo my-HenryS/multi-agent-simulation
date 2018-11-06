@@ -3,8 +3,7 @@ package org.socialforce.drawer.impl;
 import org.socialforce.drawer.Drawable;
 import org.socialforce.drawer.Drawer;
 import org.socialforce.drawer.DrawerInstaller;
-import org.socialforce.geom.impl.Box2D;
-import org.socialforce.geom.impl.Circle2D;
+import org.socialforce.geom.impl.*;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -24,6 +23,9 @@ public class ShapeDrawer2DInstaller implements DrawerInstaller {
         this.graphics2D = graphics2D;
         registerDrawer(new SolidBox2DDrawer(graphics2D),Box2D.class);
         registerDrawer(new SolidCircle2DDrawer(graphics2D),Circle2D.class);
+        registerDrawer(new SolidRectangle2DDrawer(graphics2D),Rectangle2D.class);
+        registerDrawer(new SolidSegment2DDrawer(graphics2D), Segment2D.class);
+        registerDrawer(new SolidEllipse2DDrawer(graphics2D), Ellipse2D.class);
    }
 
     Map<Class<? extends Drawable>,Drawer> drawerMap = new HashMap<>(1000);

@@ -49,7 +49,13 @@ public abstract class AwtDrawer2D<DrawableType extends Drawable> implements Draw
         this.color = new Color(r,g,b,a);
     }
 
-    protected Color color = Color.black;
+    public void setColor(Color color){
+        this.color = color;
+        this.device.setColor(this.color);
+    }
+
+
+    protected Color color = Color.gray;
 
     //protected Rectangle2D bound = new Rectangle2D.Double();
 
@@ -64,7 +70,7 @@ public abstract class AwtDrawer2D<DrawableType extends Drawable> implements Draw
     }
 
     /**
-     * render the shape on the @code {Graphics2D} with color built-in.
+     * render the physicalEntity on the @code {Graphics2D} with color built-in.
      * @param g the graphics
      * @param pattern
      */

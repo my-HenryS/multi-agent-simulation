@@ -3,7 +3,10 @@ package org.socialforce.geom.impl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.socialforce.geom.Shape;
+import org.socialforce.geom.PhysicalEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -59,7 +62,7 @@ public class Segment2DTest {
 
    @Test
     public void cloneTest() throws Exception {
-       Shape cloned = testline.clone();
+       PhysicalEntity cloned = testline.clone();
        assertFalse(cloned == testline);
        assertEquals(testline,cloned);
 
@@ -91,6 +94,16 @@ public class Segment2DTest {
         assertTrue(vecline.intersect(new Segment2D(a,new Point2D(5,7))));
         assertTrue(testline.intersect(new Segment2D(new Point2D(2,-1),new Point2D(0,4))));
         assertFalse(testline.intersect(new Segment2D(new Point2D(2,-1),new Point2D(0,-7))));
+
+        Segment2D test1 = new Segment2D(new Point2D(-1,0),new Point2D(5,0));
+        Segment2D test2 = new Segment2D(new Point2D(3,0),new Point2D(6,0));
+        Segment2D test3 = new Segment2D(new Point2D(0,-5),new Point2D(0,5));
+        Segment2D test4 = new Segment2D(new Point2D(0,1),new Point2D(0,4));
+        Segment2D test5 = new Segment2D(new Point2D(3,1),new Point2D(6,1));
+        assertTrue(test1.intersect(test2));
+        assertTrue(test3.intersect(test4));
+        assertTrue(test1.intersect(test3));
+        assertFalse(test1.intersect(test5));
     }
 
     @Test
@@ -100,5 +113,20 @@ public class Segment2DTest {
         assertFalse(testline.hits(new Box2D(0,3,-2,2)));
     }
 
+    @Test
+    public void remove() throws Exception{
+        Segment2D segment1 = new Segment2D(new Point2D(0.0,0.0),new Point2D(10.0,5.0));
+        List<Segment2D> segments1 = new ArrayList<>();
+        segments1.add(new Segment2D(new Point2D(-2.0,-1.0),new Point2D(1.0,0.5)));
+        segments1.add(new Segment2D(new Point2D(2.0,1.0),new Point2D(4.0,2.0)));
+        segments1.add(new Segment2D(new Point2D(3.0,1.5),new Point2D(6.0,3.0)));
+        segments1.add(new Segment2D(new Point2D(4.0,2.0),new Point2D(5.0,2.5)));
+        segments1.add(new Segment2D(new Point2D(7.0,3.5),new Point2D(9.0,4.5)));
+        segments1.add(new Segment2D(new Point2D(9.0,4.5),new Point2D(9.5,4.75)));
+        Segment2D[] restLine = segment1.remove(segments1);
+        for(Segment2D segment : restLine){
+            System.out.println(segment.getExtrimePoint()[0].getX()+" "+segment.getExtrimePoint()[0].getY()+" "+segment.getExtrimePoint()[1].getX()+" "+segment.getExtrimePoint()[1].getY());
+        }
+    }
 }
 

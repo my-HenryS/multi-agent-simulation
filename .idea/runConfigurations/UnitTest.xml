@@ -2,7 +2,7 @@
   <configuration default="false" name="UnitTest" type="JUnit" factoryName="JUnit" singleton="true">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
       <pattern>
-        <option name="PATTERN" value="org.socialforce.geom.impl.*" />
+        <option name="PATTERN" value="org.socialforce.geom.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
