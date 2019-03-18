@@ -1,5 +1,5 @@
 #intellij idea workspace
 
-.idea/workspace.xml
+.idea/*
 .classpath
 .project
